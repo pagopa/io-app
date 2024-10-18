@@ -448,7 +448,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -457,7 +457,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -492,22 +492,23 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -980,7 +981,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -989,7 +990,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1024,22 +1025,23 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -1512,7 +1514,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -1521,7 +1523,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1556,22 +1558,23 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -2044,7 +2047,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -2053,7 +2056,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2088,22 +2091,23 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -2576,7 +2580,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -2585,7 +2589,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2620,22 +2624,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -2742,7 +2747,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -2751,7 +2756,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2786,22 +2791,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -3274,7 +3280,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -3283,7 +3289,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3318,22 +3324,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -3440,7 +3447,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -3449,7 +3456,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3484,22 +3491,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -3972,7 +3980,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -3981,7 +3989,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4016,22 +4024,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -4138,7 +4147,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -4147,7 +4156,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4182,22 +4191,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -4670,7 +4680,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -4679,7 +4689,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4714,22 +4724,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }
@@ -4836,7 +4847,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
@@ -4845,7 +4856,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4880,22 +4891,23 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                               <View
                                 style={
                                   {
-                                    "flex": 1,
+                                    "flexGrow": 1,
                                   }
                                 }
                               >
                                 <Text
+                                  allowFontScaling={false}
+                                  maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
+                                        "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "lineHeight": 20,
-                                      },
-                                      {
-                                        "color": "#0073E6",
                                       },
                                     ]
                                   }

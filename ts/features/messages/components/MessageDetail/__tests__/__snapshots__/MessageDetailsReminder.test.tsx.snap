@@ -1540,33 +1540,20 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             <Text
                               accessibilityRole="text"
                               allowFontScaling={false}
-                              color="warning-850"
-                              defaultColor="black"
-                              defaultWeight="Bold"
-                              dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
+                                  {},
                                   {
                                     "color": "#614C15",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Expires on 21/03/2024 at 18:44
                             </Text>
@@ -1578,18 +1565,20 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               }
                             />
                             <Text
+                              allowFontScaling={false}
                               ellipsizeMode="tail"
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
+                                  {},
                                   {
+                                    "color": "#614C15",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "700",
-                                  },
-                                  {
-                                    "color": "#614C15",
+                                    "lineHeight": 20,
                                   },
                                 ]
                               }
@@ -2056,33 +2045,20 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
-                            color="warning-850"
-                            defaultColor="black"
-                            defaultWeight="Bold"
-                            dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                },
+                                {},
                                 {
                                   "color": "#614C15",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             Expired on 21 Mar at 18:44
                           </Text>

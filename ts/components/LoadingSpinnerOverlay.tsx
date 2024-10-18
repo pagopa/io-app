@@ -2,7 +2,8 @@ import {
   ButtonOutline,
   H3,
   IOColors,
-  hexToRgba
+  hexToRgba,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
@@ -34,37 +35,45 @@ const LoadingSpinnerOverlay = ({
   loadingCaption,
   loadingOpacity = 0.7,
   onCancel
-}: Props) => (
-  <Overlay
-    backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
-    foreground={
-      isLoading && (
-        <BoxedRefreshIndicator
-          caption={
-            <View style={styles.textCaption}>
-              <H3 accessible={true} style={{ textAlign: "center" }}>
-                {loadingCaption || I18n.t("global.remoteStates.wait")}
-              </H3>
-            </View>
-          }
-          action={
-            onCancel && (
-              <View style={IOStyles.selfCenter}>
-                <ButtonOutline
-                  accessibilityLabel={I18n.t("global.buttons.cancel")}
-                  onPress={onCancel}
-                  testID="loadingSpinnerOverlayCancelButton"
-                  label={I18n.t("global.buttons.cancel")}
-                />
+}: Props) => {
+  const theme = useIOTheme();
+
+  return (
+    <Overlay
+      backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
+      foreground={
+        isLoading && (
+          <BoxedRefreshIndicator
+            caption={
+              <View style={styles.textCaption}>
+                <H3
+                  color={theme["textHeading-secondary"]}
+                  accessible={true}
+                  style={{ textAlign: "center" }}
+                >
+                  {loadingCaption || I18n.t("global.remoteStates.wait")}
+                </H3>
               </View>
-            )
-          }
-        />
-      )
-    }
-  >
-    {children}
-  </Overlay>
-);
+            }
+            action={
+              onCancel && (
+                <View style={IOStyles.selfCenter}>
+                  <ButtonOutline
+                    accessibilityLabel={I18n.t("global.buttons.cancel")}
+                    onPress={onCancel}
+                    testID="loadingSpinnerOverlayCancelButton"
+                    label={I18n.t("global.buttons.cancel")}
+                  />
+                </View>
+              )
+            }
+          />
+        )
+      }
+    >
+      {children}
+    </Overlay>
+  );
+};
 
 export default LoadingSpinnerOverlay;

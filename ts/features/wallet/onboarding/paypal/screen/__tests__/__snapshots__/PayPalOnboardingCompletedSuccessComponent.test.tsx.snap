@@ -575,36 +575,26 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={false}
-                                      color="white"
-                                      defaultColor="white"
-                                      defaultWeight="Bold"
                                       ellipsizeMode="tail"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                        }
-                                      }
                                       importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
-                                          {
-                                            "alignSelf": "center",
-                                          },
-                                          {
-                                            "fontSize": 16,
-                                          },
+                                          {},
                                           {
                                             "color": "#FFFFFF",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "700",
+                                            "lineHeight": 20,
+                                          },
+                                          {
+                                            "alignSelf": "center",
                                           },
                                         ]
                                       }
-                                      weight="Bold"
                                     >
                                       Continua
                                     </Text>

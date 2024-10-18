@@ -1,25 +1,9 @@
-import React from "react";
-import {
-  Body,
-  ExternalTypographyProps,
-  IOColors,
-  IOFontWeight,
-  IOTheme,
-  TypographyProps
-} from "@pagopa/io-app-design-system";
+import { Body } from "@pagopa/io-app-design-system";
+import React, { ComponentProps } from "react";
 
-type PartialAllowedColors = Extract<
-  IOColors,
-  "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
->;
-type AllowedColors = PartialAllowedColors | IOTheme["textBody-default"];
-type AllowedWeight = IOFontWeight | "Regular" | "Semibold";
-
-export type BodyProps = ExternalTypographyProps<
-  TypographyProps<AllowedWeight, AllowedColors> & {
-    text: string | React.ReactElement;
-  }
->;
+export type BodyProps = ComponentProps<typeof Body> & {
+  text: string | React.ReactElement;
+};
 
 type PropsComposedBody = {
   body: Array<BodyProps>;

@@ -9,11 +9,13 @@ import { MessageFooter } from "../MessageFooter";
 import * as standardPayments from "../../../messages/store/reducers/payments";
 import * as payments from "../../store/reducers/payments";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 describe("MessageFooter", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
     jest
       .spyOn(standardPayments, "canNavigateToPaymentFromMessageSelector")
       .mockReturnValue(true);

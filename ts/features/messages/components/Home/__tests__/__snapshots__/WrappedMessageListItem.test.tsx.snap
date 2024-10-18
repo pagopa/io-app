@@ -596,73 +596,48 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -676,131 +651,81 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -907,22 +832,26 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                       }
                                     />
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "alignSelf": "center",
                                             "color": "#555C70",
-                                            "flexShrink": 1,
-                                            "fontSize": 12,
-                                            "lineHeight": 16,
-                                            "textTransform": "uppercase",
-                                          },
-                                          {
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 16,
+                                          },
+                                          {
+                                            "alignSelf": "center",
+                                            "flexShrink": 1,
+                                            "letterSpacing": 0.5,
+                                            "textTransform": "uppercase",
                                           },
                                         ]
                                       }
@@ -1635,73 +1564,48 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -1715,131 +1619,81 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -2001,22 +1855,26 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                       }
                                     />
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "alignSelf": "center",
                                             "color": "#555C70",
-                                            "flexShrink": 1,
-                                            "fontSize": 12,
-                                            "lineHeight": 16,
-                                            "textTransform": "uppercase",
-                                          },
-                                          {
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 16,
+                                          },
+                                          {
+                                            "alignSelf": "center",
+                                            "flexShrink": 1,
+                                            "letterSpacing": 0.5,
+                                            "textTransform": "uppercase",
                                           },
                                         ]
                                       }
@@ -2850,73 +2708,48 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -2930,131 +2763,81 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -3161,22 +2944,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       }
                                     />
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "alignSelf": "center",
                                             "color": "#555C70",
-                                            "flexShrink": 1,
-                                            "fontSize": 12,
-                                            "lineHeight": 16,
-                                            "textTransform": "uppercase",
-                                          },
-                                          {
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 16,
+                                          },
+                                          {
+                                            "alignSelf": "center",
+                                            "flexShrink": 1,
+                                            "letterSpacing": 0.5,
+                                            "textTransform": "uppercase",
                                           },
                                         ]
                                       }
@@ -3920,73 +3707,48 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -4000,131 +3762,81 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -4286,22 +3998,26 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                       }
                                     />
                                     <Text
+                                      allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "alignSelf": "center",
                                             "color": "#555C70",
-                                            "flexShrink": 1,
-                                            "fontSize": 12,
-                                            "lineHeight": 16,
-                                            "textTransform": "uppercase",
-                                          },
-                                          {
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 16,
+                                          },
+                                          {
+                                            "alignSelf": "center",
+                                            "flexShrink": 1,
+                                            "letterSpacing": 0.5,
+                                            "textTransform": "uppercase",
                                           },
                                         ]
                                       }
@@ -5045,73 +4761,48 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -5125,131 +4816,81 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -5990,73 +5631,48 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -6070,131 +5686,81 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -6869,73 +6435,48 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -6949,131 +6490,81 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>
@@ -7693,73 +7184,48 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Organization name
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="grey-700"
-                                    defaultColor="blue"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontSize="regular"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "marginLeft": 8,
-                                        },
-                                        {
-                                          "fontSize": 14,
-                                          "lineHeight": 21,
-                                        },
+                                        {},
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "marginLeft": 8,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     01/02/90
                                   </Text>
@@ -7773,131 +7239,81 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     numberOfLines={2}
                                     style={
                                       [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 24,
+                                        },
                                         {
                                           "flex": 1,
                                         },
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                        },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Service name
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="black"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="caption1"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 12,
-                                          "textTransform": "uppercase",
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 12,
-                                            "textTransform": "uppercase",
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 12,
                                             "fontStyle": "normal",
-                                            "fontWeight": "400",
+                                            "fontWeight": "600",
+                                            "lineHeight": 18,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                        • 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Bold"
-                                      dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
+                                          {},
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#0E0F13",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Regular"
                                     >
                                       Message title
                                     </Text>

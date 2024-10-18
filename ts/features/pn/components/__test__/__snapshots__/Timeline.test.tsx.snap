@@ -354,65 +354,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             1
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             01
                           </Text>
@@ -479,33 +458,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Depositata
                           </Text>
@@ -518,33 +485,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             01:00
                           </Text>
@@ -573,65 +531,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             3
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             02
                           </Text>
@@ -696,33 +633,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Annullata
                           </Text>
@@ -735,33 +660,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             03:00
                           </Text>
@@ -790,65 +706,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             6
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             03
                           </Text>
@@ -913,33 +808,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Consegnata
                           </Text>
@@ -952,33 +835,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             05:00
                           </Text>
@@ -1007,65 +881,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             9
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             04
                           </Text>
@@ -1130,33 +983,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Invio in corso
                           </Text>
@@ -1169,33 +1010,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             07:00
                           </Text>
@@ -1224,65 +1056,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             11
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             05
                           </Text>
@@ -1347,33 +1158,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Perfezionata per decorrenza termini
                           </Text>
@@ -1386,33 +1185,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             09:00
                           </Text>
@@ -1441,65 +1231,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             14
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             06
                           </Text>
@@ -1564,33 +1333,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Destinatario irreperibile
                           </Text>
@@ -1603,33 +1360,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             11:00
                           </Text>
@@ -1658,65 +1406,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             15
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             07
                           </Text>
@@ -1781,33 +1508,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Avvenuto accesso
                           </Text>
@@ -1820,33 +1535,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             13:00
                           </Text>
@@ -1875,65 +1581,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             18
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             08
                           </Text>
@@ -1998,33 +1683,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Pagata
                           </Text>
@@ -2037,33 +1710,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             15:00
                           </Text>
@@ -2092,65 +1756,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             21
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             09
                           </Text>
@@ -2215,33 +1858,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             REFUSED
                           </Text>
@@ -2254,33 +1885,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             17:00
                           </Text>
@@ -2309,65 +1931,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             24
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             10
                           </Text>
@@ -2432,33 +2033,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             IN VALIDATION
                           </Text>
@@ -2471,33 +2060,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             19:00
                           </Text>
@@ -2526,65 +2106,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             27
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             11
                           </Text>
@@ -2649,33 +2208,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Depositata
                           </Text>
@@ -2688,33 +2235,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             21:00
                           </Text>
@@ -2743,65 +2281,44 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             30
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             12
                           </Text>
@@ -2868,33 +2385,21 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Annullata
                           </Text>
@@ -2907,33 +2412,24 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           />
                           <Text
                             allowFontScaling={false}
-                            color="grey-450"
-                            defaultColor="black"
-                            defaultWeight="Regular"
                             dynamicTypeRamp="caption1"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 12,
-                                "textTransform": "uppercase",
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
                                 {
-                                  "fontSize": 12,
+                                  "letterSpacing": 0.5,
                                   "textTransform": "uppercase",
                                 },
                                 {
                                   "color": "#99A3C1",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 12,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": undefined,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             23:00
                           </Text>

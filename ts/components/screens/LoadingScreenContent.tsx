@@ -7,6 +7,7 @@ import {
   ContentWrapper,
   H3,
   IOStyles,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -36,6 +37,7 @@ type LoadingScreenContentProps = WithTestID<{
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
+  const theme = useIOTheme();
   const { contentTitle, children, headerVisible, testID } = props;
 
   React.useEffect(() => {
@@ -66,7 +68,11 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
             <LoadingIndicator />
           </View>
           <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
-          <H3 style={styles.contentTitle} accessibilityLabel={contentTitle}>
+          <H3
+            color={theme["textHeading-secondary"]}
+            style={styles.contentTitle}
+            accessibilityLabel={contentTitle}
+          >
             {contentTitle}
           </H3>
         </View>

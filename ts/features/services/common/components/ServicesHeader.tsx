@@ -1,5 +1,3 @@
-import React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
 import {
   Avatar,
   H3,
@@ -8,8 +6,11 @@ import {
   IOStyles,
   IOVisualCostants,
   LabelSmall,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -37,19 +38,23 @@ export const ServicesHeader = ({
   logoUri,
   title,
   subTitle
-}: ServicesHeaderProps) => (
-  <View style={styles.container} testID="services-header">
-    <View style={styles.itemAvatar}>
-      <Avatar logoUri={logoUri} size="medium" />
+}: ServicesHeaderProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={styles.container} testID="services-header">
+      <View style={styles.itemAvatar}>
+        <Avatar logoUri={logoUri} size="medium" />
+      </View>
+      <View style={IOStyles.flex}>
+        <H3 color={theme["textHeading-secondary"]}>{title}</H3>
+        <LabelSmall color="grey-700" weight="Bold">
+          {subTitle}
+        </LabelSmall>
+      </View>
     </View>
-    <View style={IOStyles.flex}>
-      <H3>{title}</H3>
-      <LabelSmall fontSize="regular" color="grey-700">
-        {subTitle}
-      </LabelSmall>
-    </View>
-  </View>
-);
+  );
+};
 
 export const ServicesHeaderSkeleton = () => (
   <View

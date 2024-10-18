@@ -16,6 +16,7 @@ import { InitializedProfile } from "../../../../definitions/backend/InitializedP
 import ROUTES from "../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import TosScreen from "../TosScreen";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
 
 const CurrentTestToSVersion = 2.0;
 
@@ -23,6 +24,7 @@ const CurrentTestToSVersion = 2.0;
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
+  mockAccessibilityInfo(false);
 });
 
 afterAll(() => {

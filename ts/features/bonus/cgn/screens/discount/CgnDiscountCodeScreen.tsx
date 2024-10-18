@@ -92,10 +92,10 @@ const CgnDiscountCodeScreen = () => {
             </View>
             <VSpacer size={4} />
             <H1
-              style={[
+              textStyle={StyleSheet.flatten([
                 styles.labelCode,
-                isDiscountCodeExpired ? styles.codeExpired : undefined
-              ]}
+                isDiscountCodeExpired && { textDecorationLine: "line-through" }
+              ])}
             >
               {discountCode}
             </H1>
@@ -145,9 +145,6 @@ const styles = StyleSheet.create({
   labelCode: {
     alignSelf: "center",
     textAlign: "center"
-  },
-  codeExpired: {
-    textDecorationLine: "line-through"
   }
 });
 

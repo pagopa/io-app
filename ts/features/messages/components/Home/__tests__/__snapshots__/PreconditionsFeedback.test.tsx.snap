@@ -521,36 +521,24 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
                         />
                         <Text
                           allowFontScaling={false}
-                          color="bluegreyDark"
-                          defaultColor="bluegreyDark"
-                          defaultWeight="Semibold"
                           dynamicTypeRamp="title2"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 22,
-                              "lineHeight": 33,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           style={
                             [
+                              {},
                               {
-                                "textAlign": "center",
-                              },
-                              {
+                                "color": "#2B2E38",
+                                "fontFamily": "Titillium Sans Pro",
                                 "fontSize": 22,
+                                "fontStyle": "normal",
+                                "fontWeight": "600",
                                 "lineHeight": 33,
                               },
                               {
-                                "color": "#17324D",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontStyle": "normal",
-                                "fontWeight": "600",
+                                "textAlign": "center",
                               },
                             ]
                           }
-                          weight="Semibold"
                         >
                           The title
                         </Text>
@@ -1089,36 +1077,24 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                         />
                         <Text
                           allowFontScaling={false}
-                          color="bluegreyDark"
-                          defaultColor="bluegreyDark"
-                          defaultWeight="Semibold"
                           dynamicTypeRamp="title2"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 22,
-                              "lineHeight": 33,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           style={
                             [
+                              {},
                               {
-                                "textAlign": "center",
-                              },
-                              {
+                                "color": "#2B2E38",
+                                "fontFamily": "Titillium Sans Pro",
                                 "fontSize": 22,
+                                "fontStyle": "normal",
+                                "fontWeight": "600",
                                 "lineHeight": 33,
                               },
                               {
-                                "color": "#17324D",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontStyle": "normal",
-                                "fontWeight": "600",
+                                "textAlign": "center",
                               },
                             ]
                           }
-                          weight="Semibold"
                         >
                           The title
                         </Text>
@@ -1131,36 +1107,24 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
                         />
                         <Text
                           allowFontScaling={false}
-                          color="grey-650"
-                          defaultColor="blue"
-                          defaultWeight="Bold"
                           dynamicTypeRamp="footnote"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 14,
-                              "lineHeight": 21,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           style={
                             [
+                              {},
                               {
-                                "textAlign": "center",
-                              },
-                              {
+                                "color": "#555C70",
+                                "fontFamily": "Titillium Sans Pro",
                                 "fontSize": 14,
+                                "fontStyle": "normal",
+                                "fontWeight": "400",
                                 "lineHeight": 21,
                               },
                               {
-                                "color": "#636B82",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
+                                "textAlign": "center",
                               },
                             ]
                           }
-                          weight="Regular"
                         >
                           The subtitle
                         </Text>

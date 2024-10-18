@@ -8,11 +8,13 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PreconditionsTitle } from "../PreconditionsTitle";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("PreconditionsTitle", () => {
   afterEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot when title content is 'empty'", () => {
     jest
