@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
+  Alert,
   Divider,
   IOColors,
   IOLogoPaymentType,
@@ -22,6 +23,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { getPayerInfoLabel } from "../utils";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -186,6 +188,12 @@ const PaymentsBizEventsTransactionInfoSection = ({
             </>
           )}
         </View>
+        {transactionInfo?.origin === OriginEnum.PM && (
+          <Alert
+            variant="info"
+            content={I18n.t("transaction.details.bannerImported.content")}
+          />
+        )}
       </View>
     </>
   );

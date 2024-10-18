@@ -8,15 +8,21 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import {
   trackAddFirstCredential,
   trackBackToWallet,
-  trackSaveCredentialSuccess
+  trackSaveCredentialSuccess,
+  updateITWStatusAndIDProperties
 } from "../../analytics";
+import { useIOStore } from "../../../../store/hooks";
 
-const ITW_CREDENTIAL = "ITW_ID";
+const ITW_CREDENTIAL = "ITW_ID_V2";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
+  const store = useIOStore();
 
-  useFocusEffect(() => trackSaveCredentialSuccess(ITW_CREDENTIAL));
+  useFocusEffect(() => {
+    trackSaveCredentialSuccess(ITW_CREDENTIAL);
+    updateITWStatusAndIDProperties(store.getState());
+  });
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
@@ -28,9 +34,10 @@ export const ItwIssuanceEidResultScreen = () => {
     trackAddFirstCredential();
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     machineRef.send({ type: "go-to-wallet" });
     trackBackToWallet({ exit_page: route.name, credential: ITW_CREDENTIAL });
+    updateITWStatusAndIDProperties(store.getState());
   };
 
   return (
