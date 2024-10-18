@@ -30,7 +30,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "start:after-pull": "yarn install && (cd ios && bundle exec pod install) && yarn generate && yarn start",
+    "sync": "yarn install && bundle && (cd ios && bundle exec pod install) && yarn generate",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
