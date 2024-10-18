@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H6,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -8,7 +9,6 @@ import { useContext } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import wrongFormatImage from "../../../../../img/features/euCovidCert/certificate_wrong_format.png";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import { H4 } from "../../../../components/core/typography/H4";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
@@ -36,12 +36,12 @@ const CopyWithTitleItem: React.FC<{
 }> = ({ title, toCopy, testId }) => (
   <>
     <View>
-      <H4 weight={"Regular"}>{title}</H4>
+      <H6 weight={"Regular"}>{title}</H6>
     </View>
     <View style={styles.row}>
-      <H4 weight={"Bold"} testID={`${testId}ToCopy`} style={styles.shrink}>
+      <H6 testID={`${testId}ToCopy`} style={styles.shrink}>
         {toCopy}
-      </H4>
+      </H6>
       <HSpacer size={16} />
       <CopyButtonComponent textToCopy={toCopy} />
     </View>
@@ -66,9 +66,7 @@ const EuCovidCertWrongFormatKoComponent: React.FC<{
       }
       title={I18n.t("features.euCovidCertificate.ko.wrongFormat.title")}
     />
-    <H4 weight={"Regular"}>
-      {I18n.t("features.euCovidCertificate.ko.wrongFormat.subtitle")}
-    </H4>
+    <H6>{I18n.t("features.euCovidCertificate.ko.wrongFormat.subtitle")}</H6>
     <VSpacer size={16} />
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.authorizationCode")}

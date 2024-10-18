@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { H4 } from "../core/typography/H4";
+import { H6, IOColors } from "@pagopa/io-app-design-system";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 
@@ -62,7 +61,7 @@ export const SelectionBox = (props: Props) => (
       {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
 
       <View style={styles.selectionBoxContent}>
-        <H4 numberOfLines={1}>{props.mainText}</H4>
+        <H6 numberOfLines={1}>{props.mainText}</H6>
         <LabelSmall numberOfLines={1} color="bluegrey" weight="Regular">
           {props.subText}
         </LabelSmall>
@@ -70,9 +69,9 @@ export const SelectionBox = (props: Props) => (
 
       {props.ctaText && (
         <View style={styles.selectionBoxTrail}>
-          <H4 color="blue" weight="Semibold">
+          <H6 color="blue" weight="Semibold">
             {props.ctaText}
-          </H4>
+          </H6>
         </View>
       )}
     </View>

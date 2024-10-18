@@ -3,7 +3,13 @@
  * with different appearences based on
  * the props passed
  */
-import { Body, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  H6,
+  IOColors,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -18,7 +24,6 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { H5 } from "../../core/typography/H5";
 import Logo, { cardIcons } from "./Logo";
 
 interface BaseProps {
@@ -218,9 +223,9 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <H5 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
+          <H6 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
-          </H5>
+          </H6>
           <VSpacer size={16} />
           <Body color="bluegreyDark">{creditCard.holder.toUpperCase()}</Body>
         </View>

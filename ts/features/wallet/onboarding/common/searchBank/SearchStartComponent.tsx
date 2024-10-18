@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Body, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H2, H6, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
-import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
 
@@ -63,12 +62,12 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
 
       <VSpacer size={24} />
       <Body>
-        <H4 weight={"Regular"} color={"bluegreyDark"}>
+        <H6 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text1}
-        </H4>
+        </H6>
 
         {props.methodType === "cobadge" && props.bankName ? (
-          <H4 color={"bluegreyDark"}>{props.bankName}</H4>
+          <H6 color={"bluegreyDark"}>{props.bankName}</H6>
         ) : (
           <Link
             onPress={
@@ -84,9 +83,9 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
 
       <VSpacer size={24} />
       <Body accessibilityRole="link">
-        <H4 weight={"Regular"} color={"bluegreyDark"}>
+        <H6 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text3}
-        </H4>
+        </H6>
         <Link
           onPress={
             props.methodType === "cobadge" ? props.openTosModal : props.onSearch

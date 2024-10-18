@@ -15,7 +15,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -168,7 +167,7 @@ const AuthorizationScreenContent = ({
     <View style={[IOStyles.row, IOStyles.alignCenter]}>
       <Icon name="initiatives" size={24} color="bluegrey" />
       <HSpacer size={16} />
-      <H3
+      <H6
         color="bluegrey"
         style={{
           // this should not happen, but the current typography adds 4
@@ -179,7 +178,7 @@ const AuthorizationScreenContent = ({
         }}
       >
         {I18n.t("idpay.payment.authorization.infoDivider")}
-      </H3>
+      </H6>
     </View>
     <VSpacer size={16} />
 
@@ -229,7 +228,7 @@ const AuthorizationScreenSkeleton = () => (
     <View style={[IOStyles.row, IOStyles.alignCenter]}>
       <Icon name="initiatives" size={24} color="bluegrey" />
       <HSpacer size={16} />
-      <H3
+      <H6
         color="bluegrey"
         style={{
           // see previous comment
@@ -237,7 +236,7 @@ const AuthorizationScreenSkeleton = () => (
         }}
       >
         {I18n.t("idpay.payment.authorization.infoDivider")}
-      </H3>
+      </H6>
     </View>
     <VSpacer size={16} />
     <ListItemInfo

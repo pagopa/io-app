@@ -4,9 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { H2, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { H2, H6, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
@@ -67,7 +66,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
           <View style={[IOStyles.row, { paddingVertical: 8 }]}>
             <LogoPaymentWithFallback brand={brand} />
             <HSpacer size={8} />
-            <H4>•••• {maskedPan}</H4>
+            <H6>•••• {maskedPan}</H6>
           </View>
         )}
         <VSpacer size={16} />

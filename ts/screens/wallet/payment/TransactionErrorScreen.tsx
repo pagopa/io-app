@@ -5,6 +5,7 @@
 import {
   ButtonOutline,
   ButtonSolid,
+  H6,
   IOPictograms,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -24,7 +25,6 @@ import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
 import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
-import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
@@ -136,12 +136,12 @@ const ErrorCodeCopyComponent = ({
   error: keyof typeof Detail_v2Enum;
 }): React.ReactElement => (
   <View testID={"error-code-copy-component"}>
-    <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+    <H6 weight={"Regular"} style={{ textAlign: "center" }}>
       {I18n.t("wallet.errors.assistanceLabel")}
-    </H4>
-    <H4 weight={"Bold"} testID={"error-code"} style={{ textAlign: "center" }}>
+    </H6>
+    <H6 testID={"error-code"} style={{ textAlign: "center" }}>
       {error}
-    </H4>
+    </H6>
     <VSpacer size={16} />
     <CopyButtonComponent textToCopy={error} />
   </View>
@@ -222,9 +222,9 @@ export const errorTransactionUIElements = (
     validError,
     E.fold(
       _ => (
-        <H4 weight={"Regular"} testID={genericErrorSubTestID}>
+        <H6 weight={"Regular"} testID={genericErrorSubTestID}>
           {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
-        </H4>
+        </H6>
       ),
       error => <ErrorCodeCopyComponent error={error} />
     )
@@ -280,13 +280,13 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.ONGOING"),
         subtitle: (
-          <H4
+          <H6
             weight={"Regular"}
             style={{ textAlign: "center" }}
             testID={"ongoing-subtitle"}
           >
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
-          </H4>
+          </H6>
         ),
         footerButtons: canShowHelpButton
           ? {
@@ -302,13 +302,13 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.EXPIRED"),
         subtitle: (
-          <H4
+          <H6
             weight={"Regular"}
             style={{ textAlign: "center" }}
             testID={"expired-subtitle"}
           >
             {I18n.t("wallet.errors.contactECsubtitle")}
-          </H4>
+          </H6>
         ),
         footerButtons: { primaryActionProps: { ...closeButtonCancel } }
       };
@@ -317,13 +317,13 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.REVOKED"),
         subtitle: (
-          <H4
+          <H6
             weight={"Regular"}
             style={{ textAlign: "center" }}
             testID={"revoked-subtitle"}
           >
             {I18n.t("wallet.errors.contactECsubtitle")}
-          </H4>
+          </H6>
         ),
         footerButtons: {
           primaryActionProps: { ...closeButtonCancel }
@@ -334,13 +334,13 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.NOT_FOUND"),
         subtitle: (
-          <H4
+          <H6
             weight={"Regular"}
             style={{ textAlign: "center" }}
             testID={"not-found-subtitle"}
           >
             {I18n.t("wallet.errors.NOT_FOUND_SUBTITLE")}
-          </H4>
+          </H6>
         ),
         footerButtons: { primaryActionProps: { ...closeButtonConfirm } }
       };
@@ -350,9 +350,9 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.GENERIC_ERROR"),
         subtitle: (
-          <H4 weight={"Regular"} testID={genericErrorSubTestID}>
+          <H6 weight={"Regular"} testID={genericErrorSubTestID}>
             {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
-          </H4>
+          </H6>
         ),
         footerButtons: canShowHelpButton
           ? {

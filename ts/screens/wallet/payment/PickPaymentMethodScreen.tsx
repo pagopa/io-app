@@ -6,6 +6,7 @@ import {
   Divider,
   FooterWithButtons,
   H2,
+  H6,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -27,7 +28,6 @@ import {
   isLoading as isLoadingRemote,
   isLoading as isRemoteLoading
 } from "../../../common/model/RemoteValue";
-import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
@@ -108,9 +108,9 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
             <VSpacer size={16} />
             {methodsCanPay.length > 0 ? (
               <>
-                <H4 weight={"Regular"} color={"bluegreyDark"}>
+                <H6 weight={"Regular"} color={"bluegreyDark"}>
                   {I18n.t("wallet.payWith.text")}
-                </H4>
+                </H6>
                 <FlatList
                   testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
@@ -135,21 +135,21 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <VSpacer size={16} />
               </>
             ) : (
-              <H4
+              <H6
                 weight={"Regular"}
                 color={"bluegreyDark"}
                 testID={"noWallets"}
               >
                 {I18n.t("wallet.payWith.noWallets.text")}
-              </H4>
+              </H6>
             )}
 
             {methodsCanPayButDisabled.length > 0 && (
               <>
                 <VSpacer size={16} />
-                <H4 color={"bluegreyDark"}>
+                <H6 color={"bluegreyDark"}>
                   {I18n.t("wallet.payWith.pickPaymentMethod.disabled.title")}
-                </H4>
+                </H6>
                 <VSpacer size={16} />
                 <FlatList
                   testID={"DisabledPaymentMethodList"}
@@ -175,11 +175,11 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
             {methodsCantPay.length > 0 && (
               <>
                 <VSpacer size={16} />
-                <H4 color={"bluegreyDark"}>
+                <H6 color={"bluegreyDark"}>
                   {I18n.t(
                     "wallet.payWith.pickPaymentMethod.notAvailable.title"
                   )}
-                </H4>
+                </H6>
                 <VSpacer size={16} />
                 <FlatList
                   testID={"notPayablePaymentMethodList"}

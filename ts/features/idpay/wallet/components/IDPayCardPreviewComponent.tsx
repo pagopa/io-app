@@ -1,4 +1,5 @@
 import {
+  H6,
   HSpacer,
   IOColors,
   VSpacer,
@@ -17,7 +18,6 @@ import {
 } from "react-native";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -79,9 +79,9 @@ const IDPayCardPreviewComponent = (props: Props) => {
           accessibilityRole={"button"}
         >
           <View style={[IOStyles.flex, IOStyles.row]}>
-            <H4 style={IOStyles.flex} ellipsizeMode="tail" numberOfLines={1}>
+            <H6 style={IOStyles.flex} ellipsizeMode="tail" numberOfLines={1}>
               {initiativeName}
-            </H4>
+            </H6>
             <HSpacer size={8} />
             <LabelSmall
               weight="Semibold"

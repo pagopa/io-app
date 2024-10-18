@@ -1,6 +1,7 @@
 import {
   FooterWithButtons,
   H2,
+  H6,
   HSpacer,
   IOColors,
   IOToast,
@@ -35,8 +36,6 @@ import {
   isReady
 } from "../../../common/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { H3 } from "../../../components/core/typography/H3";
-import { H4 } from "../../../components/core/typography/H4";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -435,9 +434,9 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
               <View style={styles.iconRow}>
                 <Icon name="info" size={20} color="bluegrey" />
                 <HSpacer size={8} />
-                <H3 color="bluegrey" accessibilityRole="header">
+                <H6 color="bluegrey" accessibilityRole="header">
                   {I18n.t("wallet.ConfirmPayment.paymentInformations")}
-                </H3>
+                </H6>
               </View>
 
               <VSpacer size={16} />
@@ -446,9 +445,9 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
                 accessibilityLabel={`${paymentReason}, ${formattedSingleAmount}`}
                 accessible
               >
-                <H4 weight="Semibold" color="bluegreyDark" numberOfLines={1}>
+                <H6 weight="Semibold" color="bluegreyDark" numberOfLines={1}>
                   {paymentReason}
-                </H4>
+                </H6>
 
                 <LabelSmall color="bluegrey" weight="Regular">
                   {formattedSingleAmount}
@@ -460,9 +459,9 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
               <View style={styles.iconRow}>
                 <CardIcon width={20} height={20} />
                 <HSpacer size={8} />
-                <H3 color="bluegrey" accessibilityRole="header">
+                <H6 color="bluegrey" accessibilityRole="header">
                   {I18n.t("wallet.ConfirmPayment.payWith")}
-                </H3>
+                </H6>
               </View>
 
               <VSpacer size={16} />
@@ -483,9 +482,9 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
               <View style={styles.iconRow}>
                 <TagIcon width={20} height={20} />
                 <HSpacer size={8} />
-                <H3 color="bluegrey" accessibilityRole="header">
+                <H6 color="bluegrey" accessibilityRole="header">
                   {I18n.t("wallet.ConfirmPayment.transactionCosts")}
-                </H3>
+                </H6>
               </View>
 
               <VSpacer size={16} />

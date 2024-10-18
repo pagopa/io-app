@@ -2,6 +2,7 @@ import {
   Body,
   FooterWithButtons,
   H1,
+  H6,
   IOColors,
   IOIcons,
   IOStyles,
@@ -20,8 +21,6 @@ import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H4 } from "../../../../components/core/typography/H4";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -87,9 +86,9 @@ export const InitiativeConfigurationIntroScreen = () => {
               <VSpacer size={8} />
               <Body>{I18n.t("idpay.configuration.intro.body")}</Body>
               <VSpacer size={24} />
-              <H3 color="bluegrey">
+              <H6 color="bluegrey">
                 {I18n.t("idpay.configuration.intro.requiredData.title")}
-              </H3>
+              </H6>
               <VSpacer size={8} />
               <RequiredDataItem
                 icon="creditCard"
@@ -150,9 +149,9 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
         </View>
       )}
       <View>
-        <H4 weight="Semibold" color="bluegreyDark">
+        <H6 weight="Semibold" color="bluegreyDark">
           {props.title}
-        </H4>
+        </H6>
         <LabelSmall weight="Regular" color="bluegrey">
           {props.subTitle}
         </LabelSmall>

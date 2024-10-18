@@ -1,10 +1,9 @@
-import { Body, ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, ButtonOutline, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { BadgeComponent } from "../../../components/screens/BadgeComponent";
@@ -161,9 +160,9 @@ const CreditCardOnboardingAttemptDetailScreen = () => {
     >
       <SlidedContentComponent hasFlatBottom={true}>
         <VSpacer size={4} />
-        <H3 color={"bluegreyDark"}>
+        <H6 color={"bluegreyDark"}>
           {I18n.t("wallet.creditCard.onboardingAttempts.detailTitle")}
-        </H3>
+        </H6>
         {renderSeparator()}
         <View style={styles.badge}>
           <BadgeComponent color={conditionalData.color} />

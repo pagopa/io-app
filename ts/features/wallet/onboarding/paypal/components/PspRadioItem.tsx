@@ -2,6 +2,7 @@
 import {
   ButtonSolid,
   ContentWrapper,
+  H6,
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -10,7 +11,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { H4 } from "../../../../../components/core/typography/H4";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
@@ -101,13 +101,13 @@ export const PspRadioItem = (
         imgDimensions,
         O.fold(
           () => (
-            <H4
+            <H6
               weight={"Semibold"}
               color={"bluegreyDark"}
               testID={"pspNameTestID"}
             >
               {psp.name}
-            </H4>
+            </H6>
           ),
           imgDim => (
             <Image

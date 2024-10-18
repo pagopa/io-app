@@ -1,6 +1,7 @@
 import {
   FooterWithButtons,
   H2,
+  H6,
   IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -19,8 +20,6 @@ import {
 } from "../../../common/model/RemoteValue";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
-import { H4 } from "../../../components/core/typography/H4";
-import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -95,12 +94,8 @@ class PickPspScreen extends React.Component<PickPspScreenProps> {
   private headerItem = (
     <View style={styles.padded}>
       <View style={styles.header}>
-        <H5 weight="Regular" color="bluegrey">
-          {I18n.t("wallet.pickPsp.provider")}
-        </H5>
-        <H5 weight="Regular" color="bluegrey">{`${I18n.t(
-          "wallet.pickPsp.maxFee"
-        )} (€)`}</H5>
+        <H6 color="bluegrey">{I18n.t("wallet.pickPsp.provider")}</H6>
+        <H6 color="bluegrey">{`${I18n.t("wallet.pickPsp.maxFee")} (€)`}</H6>
       </View>
       <VSpacer size={16} />
       <ItemSeparatorComponent noPadded />
@@ -135,15 +130,15 @@ class PickPspScreen extends React.Component<PickPspScreenProps> {
               <View style={styles.padded}>
                 <H2>{I18n.t("wallet.pickPsp.title")}</H2>
                 <VSpacer size={8} />
-                <H4 weight="Regular" color="bluegreyDark">
+                <H6 weight="Regular" color="bluegreyDark">
                   {I18n.t("wallet.pickPsp.info")}
-                </H4>
-                <H4 weight="Regular" color="bluegreyDark">
+                </H6>
+                <H6 weight="Regular" color="bluegreyDark">
                   {I18n.t("wallet.pickPsp.info2")}
-                  <H4 color="bluegreyDark">{` ${I18n.t(
+                  <H6 color="bluegreyDark">{` ${I18n.t(
                     "wallet.pickPsp.info2Bold"
-                  )}`}</H4>
-                </H4>
+                  )}`}</H6>
+                </H6>
               </View>
               <VSpacer size={16} />
               <FlatList

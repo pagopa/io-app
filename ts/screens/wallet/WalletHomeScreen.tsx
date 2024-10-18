@@ -2,6 +2,7 @@ import {
   Body,
   ButtonOutline,
   ButtonSolid,
+  H6,
   IOColors,
   IOToast,
   VSpacer
@@ -21,7 +22,6 @@ import {
 import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
@@ -347,9 +347,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private transactionError() {
     return (
       <View style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}>
-        <H3 weight="Semibold" color="bluegreyDark">
-          {I18n.t("wallet.latestTransactions")}
-        </H3>
+        <H6 color="bluegreyDark">{I18n.t("wallet.latestTransactions")}</H6>
         <VSpacer size={16} />
         <ButtonOutline
           fullWidth

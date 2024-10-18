@@ -1,6 +1,7 @@
 import {
   FooterWithButtons,
   H2,
+  H6,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -10,7 +11,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
-import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
@@ -56,12 +56,12 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
             {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
           </H2>
           <VSpacer size={8} />
-          <H4 weight={"Regular"} style={styles.flexStart}>
+          <H6 style={styles.flexStart}>
             {I18n.t("wallet.onboarding.bPay.add.label", {
               current: props.currentIndex + 1,
               length: props.accountsNumber
             })}
-          </H4>
+          </H6>
           <VSpacer size={24} />
           <BPayCard phone={props.account.numberObfuscated} />
         </View>

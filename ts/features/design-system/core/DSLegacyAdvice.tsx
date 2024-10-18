@@ -1,4 +1,4 @@
-import { Body, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H6, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -7,7 +7,6 @@ import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
-import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -37,11 +36,11 @@ export const DSLegacyAdvice = () => (
       </InfoBox>
     </View>
     <InfoBox alignedCentral={true} iconSize={24} iconColor={"bluegreyDark"}>
-      <H5 weight={"Regular"}>
+      <H6>
         {
           "Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti restituiremo l'importo al più presto."
         }
-      </H5>
+      </H6>
     </InfoBox>
     <InfoScreenComponent
       image={<Icon name="info" />}

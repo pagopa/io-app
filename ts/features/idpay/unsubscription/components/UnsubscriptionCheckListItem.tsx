@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { HSpacer, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, HSpacer, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
-import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
@@ -17,7 +16,7 @@ const UnsubscriptionCheckListItem = (props: Props) => (
   <View style={styles.listItem}>
     <View style={IOStyles.row}>
       <View style={IOStyles.flex}>
-        <H4>{props.title}</H4>
+        <H6>{props.title}</H6>
         <VSpacer size={4} />
         <LabelSmall color="bluegrey" weight="Regular">
           {props.subtitle}

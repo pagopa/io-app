@@ -8,9 +8,9 @@ import {
   HSpacer,
   VSpacer,
   ContentWrapper,
-  Body
+  Body,
+  H6
 } from "@pagopa/io-app-design-system";
-import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
@@ -51,7 +51,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
   return (
     <>
       <View style={styles.infoBox}>
-        <H4>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H4>
+        <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
         <VSpacer size={4} />
         <Body numberOfLines={3} ellipsizeMode="tail">
           {content}

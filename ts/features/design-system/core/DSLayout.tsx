@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   Divider,
   H2,
+  H6,
   HStack,
   IOAppMargin,
   IOColors,
@@ -12,7 +13,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import { H3 } from "../../../components/core/typography/H3";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
@@ -42,13 +42,13 @@ const Grid = () => {
         <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
           Grid
         </H2>
-        <H3
+        <H6
           color={theme["textHeading-default"]}
           weight={"Semibold"}
           style={{ marginBottom: 16 }}
         >
           ContentWrapper
-        </H3>
+        </H6>
       </ContentWrapper>
 
       <VStack space={16}>
@@ -96,9 +96,9 @@ const Spacing = () => {
       <VStack space={24}>
         {/* VSPACER */}
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
+          <H6 color={theme["textHeading-default"]} weight={"Semibold"}>
             VSpacer
-          </H3>
+          </H6>
 
           {/* Vertical */}
           <VStack space={16}>
@@ -114,9 +114,9 @@ const Spacing = () => {
 
         {/* HSPACER */}
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
+          <H6 color={theme["textHeading-default"]} weight={"Semibold"}>
             HSpacer
-          </H3>
+          </H6>
 
           {/* Horizontal */}
           <HStack space={8}>
@@ -145,9 +145,9 @@ const Stack = () => {
 
       <VStack space={24}>
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
+          <H6 color={theme["textHeading-default"]} weight={"Semibold"}>
             VStack
-          </H3>
+          </H6>
 
           <View>
             <DSComponentViewerBox name="VStack, space 16">
@@ -178,9 +178,9 @@ const Stack = () => {
         </VStack>
 
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
+          <H6 color={theme["textHeading-default"]} weight={"Semibold"}>
             HStack
-          </H3>
+          </H6>
 
           <DSComponentViewerBox name="HStack, space 16">
             <View
@@ -298,13 +298,13 @@ const DividerRow = () => {
           Divider
         </H2>
 
-        <H3
+        <H6
           color={theme["textHeading-default"]}
           weight={"Semibold"}
           style={{ marginBottom: 16 }}
         >
           Default (Horizontal)
-        </H3>
+        </H6>
 
         <Divider />
       </ContentWrapper>

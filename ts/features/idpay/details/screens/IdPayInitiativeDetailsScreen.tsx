@@ -3,6 +3,7 @@ import {
   ButtonSolid,
   Chip,
   ContentWrapper,
+  H6,
   Pictogram,
   Tag,
   VSpacer
@@ -24,7 +25,6 @@ import {
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { BonusStatus } from "../../../../components/BonusCard/type";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import {
@@ -225,11 +225,11 @@ const IdPayInitiativeDetailsScreen = () => {
                   <View style={styles.newInitiativeMessageContainer}>
                     <Pictogram name="empty" size={72} />
                     <VSpacer size={16} />
-                    <H3>
+                    <H6>
                       {I18n.t(
                         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
                       )}
-                    </H3>
+                    </H6>
                     <VSpacer size={8} />
                     <Body style={{ textAlign: "center" }}>
                       {I18n.t(

@@ -13,13 +13,13 @@ import * as TE from "fp-ts/lib/TaskEither";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
-import { H3 } from "../../components/core/typography/H3";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 
 import {
   Body,
   ButtonSolid,
+  H6,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -387,7 +387,7 @@ export const AuthSessionPage = () => {
             <View style={styles.errorContainer}>
               <Pictogram name={"processing"} size={120} />
               <VSpacer size={16} />
-              <H3 style={styles.title}>{I18n.t("spid.pending_login.title")}</H3>
+              <H6 style={styles.title}>{I18n.t("spid.pending_login.title")}</H6>
               <VSpacer size={16} />
               <Body>{I18n.t("spid.pending_login.details")}</Body>
             </View>

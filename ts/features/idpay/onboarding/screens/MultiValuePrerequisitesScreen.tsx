@@ -3,6 +3,7 @@ import {
   Body,
   FooterWithButtons,
   H1,
+  H6,
   IOColors,
   IOStyles,
   Icon,
@@ -13,7 +14,6 @@ import { default as React } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -100,7 +100,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
           <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
           <VSpacer size={24} />
-          <H4>{selfDeclaration.description}</H4>
+          <H6>{selfDeclaration.description}</H6>
           <ScrollView>
             {selfDeclaration.value.map((answer, index) => (
               <CustomListItem
@@ -141,9 +141,7 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
       <View
         style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.innerListItem]}
       >
-        <H4 weight={checked ? "Semibold" : "Regular"} color={"bluegreyDark"}>
-          {text}
-        </H4>
+        <H6 color={"bluegreyDark"}>{text}</H6>
         <Icon
           name={checked ? "legRadioOn" : "legRadioOff"}
           size={24}

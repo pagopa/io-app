@@ -9,7 +9,7 @@
  * icon  |
  *       input
  */
-import { HSpacer, IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { H6, HSpacer, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
 import * as React from "react";
@@ -30,7 +30,6 @@ import { WithTestID } from "../../types/WithTestID";
 
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { makeFontStyleObject } from "../core/fonts";
-import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";
 import TextInputMask from "../ui/MaskedInput";
 import variables from "../../theme/variables";
@@ -178,7 +177,7 @@ export const LabelledItem: React.FC<Props> = ({
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
         >
-          <H5 color={labelColor}>{props.label}</H5>
+          <H6 color={labelColor}>{props.label}</H6>
         </View>
       )}
 
@@ -276,13 +275,13 @@ export const LabelledItem: React.FC<Props> = ({
           accessibilityElementsHidden={true}
           key={"description"}
         >
-          <H5
+          <H6
             weight={"Regular"}
             color={descriptionColor}
-            testID="H5-description"
+            testID="H6-description"
           >
             {props.description}
-          </H5>
+          </H6>
         </View>
       )}
     </View>

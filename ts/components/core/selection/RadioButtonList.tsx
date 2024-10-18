@@ -1,8 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import * as React from "react";
 import { ReactNode } from "react";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
-import { H4 } from "../typography/H4";
+import { H6, IOColors, Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../variables/IOStyles";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
@@ -79,14 +78,14 @@ const getBody = <T,>(
   const bodyType = typeof radioItem.body === "string" ? "string" : "node";
   if (bodyType === "string") {
     return (
-      <H4
+      <H6
         style={IOStyles.flex}
         color={"bluegreyDark"}
         weight={"Regular"}
         onPress={onItemPress}
       >
         {radioItem.body}
-      </H4>
+      </H6>
     );
   }
   // node type
@@ -107,9 +106,9 @@ const getBody = <T,>(
 export const RadioButtonList = <T,>(props: Props<T>) => (
   <View>
     {props.head && (
-      <H4 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
+      <H6 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
         {props.head}
-      </H4>
+      </H6>
     )}
     <View style={styles.itemsContainer}>
       {props.items.map(item => (

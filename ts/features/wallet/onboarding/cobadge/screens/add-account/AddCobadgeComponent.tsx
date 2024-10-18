@@ -6,13 +6,13 @@ import {
   Body,
   FooterWithButtons,
   H2,
+  H6,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { H4 } from "../../../../../../components/core/typography/H4";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -81,9 +81,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <H2 style={styles.title}>{screenTitle}</H2>
             <VSpacer size={8} />
-            <H4 weight={"Regular"} style={styles.flexStart}>
-              {label}
-            </H4>
+            <H6 style={styles.flexStart}>{label}</H6>
             <VSpacer size={24} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <VSpacer size={24} />

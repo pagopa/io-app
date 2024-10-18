@@ -2,6 +2,7 @@ import {
   Body,
   FooterWithButtons,
   H2,
+  H6,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, { useEffect, useState } from "react";
@@ -18,7 +19,6 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -59,16 +59,16 @@ const RadioListHeader = (props: {
   const weight = "Regular";
   return (
     <View style={{ flexDirection: "row" }}>
-      <H4 color={color} weight={weight}>
+      <H6 color={color} weight={weight}>
         {props.leftColumnTitle}
-      </H4>
-      <H4
+      </H6>
+      <H6
         color={color}
         weight={weight}
         style={styles.radioListHeaderRightColumn}
       >
         {props.rightColumnTitle}
-      </H4>
+      </H6>
     </View>
   );
 };

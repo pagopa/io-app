@@ -1,4 +1,4 @@
-import { IOColors, IOToast } from "@pagopa/io-app-design-system";
+import { H6, IOColors, IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as AR from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
@@ -9,7 +9,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {
@@ -117,9 +116,9 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
       <View style={IOStyles.horizontalContentPadding}>
-        <H3 weight={"Semibold"} color={"bluegreyDark"}>
+        <H6 weight={"Semibold"} color={"bluegreyDark"}>
           {I18n.t("wallet.featured")}
-        </H3>
+        </H6>
       </View>
       <ScrollView
         horizontal={true}

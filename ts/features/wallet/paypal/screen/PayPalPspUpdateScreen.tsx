@@ -2,6 +2,7 @@ import {
   Body,
   FooterWithButtons,
   H2,
+  H6,
   Icon,
   PressableListItemBase,
   VSpacer
@@ -19,7 +20,6 @@ import {
 } from "react-native";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { H4 } from "../../../../components/core/typography/H4";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -70,16 +70,16 @@ const PspListHeader = (props: {
   const weight = "Regular";
   return (
     <View style={{ flexDirection: "row" }}>
-      <H4 color={color} weight={weight}>
+      <H6 color={color} weight={weight}>
         {props.leftColumnTitle}
-      </H4>
-      <H4
+      </H6>
+      <H6
         color={color}
         weight={weight}
         style={styles.radioListHeaderRightColumn}
       >
         {props.rightColumnTitle}
-      </H4>
+      </H6>
     </View>
   );
 };
@@ -112,13 +112,9 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
           imgDimensions,
           O.fold(
             () => (
-              <H4
-                weight={"Semibold"}
-                color={"bluegreyDark"}
-                testID={"pspNameTestID"}
-              >
+              <H6 color={"bluegreyDark"} testID={"pspNameTestID"}>
                 {psp.name}
-              </H4>
+              </H6>
             ),
             imgDim => (
               <Image

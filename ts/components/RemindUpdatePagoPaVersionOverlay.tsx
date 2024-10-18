@@ -1,11 +1,16 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { Image, Linking, StyleSheet, View } from "react-native";
-import { Body, ButtonSolid, H2, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonSolid,
+  H2,
+  H6,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
-import { H3 } from "./core/typography/H3";
 import { IOStyles } from "./core/variables/IOStyles";
 
 type State = { hasError: boolean };
@@ -51,7 +56,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
         hasError: true
       });
       // After 5 seconds restore state
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       this.idTimeout = setTimeout(() => {
         this.setState({
           hasError: false
@@ -88,7 +93,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           <React.Fragment>
             <VSpacer size={24} />
             <View style={IOStyles.alignCenter}>
-              <H3>{I18n.t("wallet.alert.msgErrorUpdateApp")}</H3>
+              <H6>{I18n.t("wallet.alert.msgErrorUpdateApp")}</H6>
             </View>
           </React.Fragment>
         )}

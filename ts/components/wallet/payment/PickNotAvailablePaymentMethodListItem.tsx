@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import I18n from "../../../i18n";
@@ -13,7 +13,6 @@ import { PaymentMethod } from "../../../types/pagopa";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
-import { H4 } from "../../core/typography/H4";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
@@ -29,11 +28,11 @@ const unacceptedBottomSheetTitle = () =>
 const unacceptedBottomSheetBody = () => (
   <>
     <VSpacer size={24} />
-    <H4 weight={"Regular"}>
+    <H6 weight={"Regular"}>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.unaccepted.bottomSheetDescription"
       )}
-    </H4>
+    </H6>
     <VSpacer size={24} />
   </>
 );
@@ -45,11 +44,11 @@ const paymentDisabledBottomSheetTitle = () =>
 const paymentDisabledBottomSheetBody = () => (
   <>
     <VSpacer size={24} />
-    <H4 weight={"Regular"}>
+    <H6 weight={"Regular"}>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetDescription"
       )}
-    </H4>
+    </H6>
     <VSpacer size={24} />
   </>
 );

@@ -20,6 +20,7 @@ import {
   ContentWrapper,
   FooterWithButtons,
   H2,
+  H6,
   HSpacer,
   IOToast,
   NativeSwitch,
@@ -31,8 +32,6 @@ import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { H4 } from "../../components/core/typography/H4";
-import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
@@ -252,7 +251,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <ContentWrapper>
               <H2>{I18n.t("wallet.saveCard.title")}</H2>
-              <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
+              <H6>{I18n.t("wallet.saveCard.subtitle")}</H6>
               <VSpacer size={16} />
               <CardComponent
                 wallet={wallet}
@@ -266,17 +265,15 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
                 iconSize={24}
                 iconColor="bluegreyDark"
               >
-                <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
+                <H6>{I18n.t("wallet.saveCard.notice")}</H6>
               </InfoBox>
               <VSpacer size={24} />
               <View style={styles.preferredMethodContainer}>
                 <View style={IOStyles.flex}>
-                  <H4 weight={"Semibold"} color={"bluegreyDark"}>
+                  <H6 color={"bluegreyDark"}>
                     {I18n.t("wallet.saveCard.infoTitle")}
-                  </H4>
-                  <H5 weight={"Regular"} color={"bluegrey"}>
-                    {I18n.t("wallet.saveCard.info")}
-                  </H5>
+                  </H6>
+                  <H6 color={"bluegrey"}>{I18n.t("wallet.saveCard.info")}</H6>
                 </View>
                 <HSpacer size={16} />
                 <View style={{ paddingTop: 7 }}>
