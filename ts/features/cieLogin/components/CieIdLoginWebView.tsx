@@ -137,7 +137,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
         // TODO: error tracking opening url https://pagopa.atlassian.net/browse/IOPID-2079
         Linking.openURL(
           `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
-        ).catch(navigateToCieIdAuthenticationError); // ! generic error or cieID auth error?
+        ).catch(handleLoginFailure);
       } else {
         openCieIdApp(
           url,
@@ -152,7 +152,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
         );
       }
     },
-    [handleLoginFailure, isUat, navigateToCieIdAuthenticationError]
+    [handleLoginFailure, isUat]
   );
 
   const handleOnShouldStartLoadWithRequest = (
