@@ -2,6 +2,7 @@ import {
   H6,
   HSpacer,
   IOColors,
+  LabelSmall,
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
@@ -18,7 +19,6 @@ import {
 } from "react-native";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 

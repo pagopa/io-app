@@ -1,6 +1,5 @@
-import { Body, IOToast } from "@pagopa/io-app-design-system";
+import { Body, IOToast, LabelSmall } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 

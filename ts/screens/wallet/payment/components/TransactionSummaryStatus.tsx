@@ -1,8 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
-import { IOIcons } from "@pagopa/io-app-design-system";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { IOIcons, LabelSmall } from "@pagopa/io-app-design-system";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import I18n from "../../../../i18n";
 import { getV2ErrorMainType } from "../../../../utils/payment";

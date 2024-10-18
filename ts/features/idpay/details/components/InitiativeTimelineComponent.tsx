@@ -1,9 +1,14 @@
-import { Body, Divider, H6, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  Divider,
+  H6,
+  LabelSmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {

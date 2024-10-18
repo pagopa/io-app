@@ -1,8 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { H6, HSpacer, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  H6,
+  HSpacer,
+  IOColors,
+  LabelSmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
 type Props = {

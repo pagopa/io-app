@@ -1,9 +1,8 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { H6 } from "@pagopa/io-app-design-system";
+import { H6, LabelSmall } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { TestID } from "../types/WithTestID";
-import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";
 
 type MoreInfoProps = {
@@ -51,7 +50,7 @@ export const PreferencesListItem = (props: Props): React.ReactElement => (
           accessibilityHint={I18n.t("accessibility.doubleTapToActivateHint")}
           onPress={props.moreInfo.moreInfoTap}
         >
-          <LabelSmall accessibilityRole="link">
+          <LabelSmall accessibilityRole="link" color="blue">
             {props.moreInfo.moreInfoText}
           </LabelSmall>
         </H6>

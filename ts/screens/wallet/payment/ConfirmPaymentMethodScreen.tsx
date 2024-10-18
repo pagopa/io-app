@@ -6,6 +6,7 @@ import {
   IOColors,
   IOToast,
   Icon,
+  LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -36,7 +37,6 @@ import {
   isReady
 } from "../../../common/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -525,7 +525,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
                       )} `}
                     </LabelSmall>
 
-                    <LabelSmall weight="Semibold">
+                    <LabelSmall weight="Semibold" color="blue">
                       {I18n.t(
                         "wallet.onboarding.paypal.paymentCheckout.privacyTerms"
                       )}

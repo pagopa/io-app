@@ -6,9 +6,9 @@ import {
   VSpacer,
   Pictogram,
   IOPictograms,
-  H6
+  H6,
+  LabelSmall
 } from "@pagopa/io-app-design-system";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 
 type Props = {
   title: string;

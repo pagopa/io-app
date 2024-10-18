@@ -8,12 +8,12 @@ import {
   IOAppMargin,
   IOColors,
   IOSpacer,
+  LabelSmall,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
