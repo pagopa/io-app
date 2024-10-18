@@ -79,7 +79,7 @@ export type FeaturesState = {
   profileSettings: ProfileSettingsState & PersistPartial;
   mixpanel: MixpanelState;
   ingress: IngressScreenState;
-  LandingBanners: LandingScreenBannerState;
+  landingBanners: LandingScreenBannerState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -104,7 +104,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   profileSettings: profileSettingsReducerPersistor,
   mixpanel: mixpanelReducer,
   ingress: ingressScreenReducer,
-  LandingBanners: landingScreenBannersReducer
+  landingBanners: landingScreenBannersReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

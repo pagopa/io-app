@@ -5,7 +5,7 @@ import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 import { LandingScreenBannerId } from "./reducer";
 
 const localBannerVisibilitySelector = (state: GlobalState) =>
-  state.features.LandingBanners;
+  state.features.landingBanners;
 
 type StructuredSelectorOutput = {
   [key in LandingScreenBannerId]: boolean;
