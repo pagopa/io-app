@@ -1,6 +1,7 @@
 import {
   Body,
   ButtonOutline,
+  H4,
   IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -19,7 +20,6 @@ import {
 import { connect } from "react-redux";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { H2 } from "../../components/core/typography/H2";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -284,13 +284,11 @@ class TransactionDetailsScreen extends React.Component<
           {/** Total amount (amount + fee) */}
           <View style={IOStyles.rowSpaceBetween}>
             <View style={[IOStyles.flex, IOStyles.selfCenter]}>
-              <H2 weight="Bold" color="bluegreyDark">
+              <H4 color="bluegreyDark">
                 {I18n.t("wallet.firstTransactionSummary.total")}
-              </H2>
+              </H4>
             </View>
-            <H2 weight="Bold" color="bluegreyDark">
-              {data.totalAmount}
-            </H2>
+            <H4 color="bluegreyDark">{data.totalAmount}</H4>
           </View>
 
           {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (

@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer, ButtonOutline, Body } from "@pagopa/io-app-design-system";
+import { VSpacer, ButtonOutline, Body, H4 } from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -61,7 +61,6 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../utils/supportAssistance";
-import { H2 } from "../../components/core/typography/H2";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -363,11 +362,11 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 {/** total amount */}
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <View style={IOStyles.flex}>
-                    <H2>{I18n.t("wallet.firstTransactionSummary.total")}</H2>
+                    <H4>{I18n.t("wallet.firstTransactionSummary.total")}</H4>
                   </View>
-                  <H2>
+                  <H4>
                     {formatNumberCentsToAmount(data.grandTotal.value, true)}
-                  </H2>
+                  </H4>
                 </View>
 
                 {this.renderSeparator()}

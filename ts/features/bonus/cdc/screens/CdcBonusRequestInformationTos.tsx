@@ -1,4 +1,9 @@
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  H4,
+  H6,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
@@ -10,8 +15,6 @@ import {
   View
 } from "react-native";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import { H2 } from "../../../../components/core/typography/H2";
-import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -62,10 +65,10 @@ const CdcBonusRequestInformationTos = () => {
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <View style={styles.headerContainer}>
             <View style={IOStyles.flex}>
-              <H4 weight={"Regular"} color={"bluegrey"}>
+              <H6 weight={"Regular"} color={"bluegrey"}>
                 {cdcInfo.sponsorship_description}
-              </H4>
-              <H2>{bonusTypeLocalizedContent.title}</H2>
+              </H6>
+              <H4>{bonusTypeLocalizedContent.title}</H4>
             </View>
             {cdcLogo && (
               <Image

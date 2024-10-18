@@ -1,7 +1,6 @@
 import { HStack, IOColors, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, View } from "react-native";
-import { H2 as LegacyH2 } from "../../../components/core/typography/H2";
 import { H3 as LegacyH3 } from "../../../components/core/typography/H3";
 import { H4 as LegacyH4 } from "../../../components/core/typography/H4";
 import { H5 as LegacyH5 } from "../../../components/core/typography/H5";
@@ -14,7 +13,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 export const DSLegacyTypography = () => (
   <DesignSystemScreen title={"Legacy typography"}>
     <VStack space={40}>
-      <LegacyH2Row />
       <LegacyH3Row />
       <LegacyH4Row />
       <LegacyH5Row />
@@ -26,19 +24,7 @@ export const DSLegacyTypography = () => (
   </DesignSystemScreen>
 );
 
-const getTitle = (element: string) => `Heading ${element}`;
-const getLongerTitle = (element: string) =>
-  `Very loooong looong title set with Heading ${element}`;
-
 const typeSpecimenMargin = 8;
-
-const LegacyH2Row = () => (
-  <VStack space={typeSpecimenMargin}>
-    <LegacyH2>{getTitle("H2")}</LegacyH2>
-    <LegacyH2>{getLongerTitle("H2")}</LegacyH2>
-    <LegacyH2 weight={"Semibold"}>{getTitle("H2 Semibold")}</LegacyH2>
-  </VStack>
-);
 
 const LegacyH3Row = () => (
   <VStack space={typeSpecimenMargin}>

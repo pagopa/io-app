@@ -3,7 +3,6 @@ import TestRenderer from "react-test-renderer";
 import type { IOColors } from "@pagopa/io-app-design-system";
 import { IOFontWeight } from "../../fonts";
 import { calculateWeightColor } from "../common";
-import { H2 } from "../H2";
 import { H3 } from "../H3";
 import { H4 } from "../H4";
 import { H5 } from "../H5";
@@ -13,10 +12,6 @@ import { Link } from "../Link";
 import { Monospace } from "../Monospace";
 
 describe("Test Typography Components", () => {
-  it("H2 Snapshot", () => {
-    const h2Default = TestRenderer.create(<H2>Text</H2>).toJSON();
-    expect(h2Default).toMatchSnapshot();
-  });
   it("H3 Snapshot", () => {
     // Semibold weight, default weight
     const h3Default = TestRenderer.create(<H3>Text</H3>).toJSON();

@@ -1,10 +1,9 @@
-import { Body, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H4, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { H2 } from "../core/typography/H2";
 
 type Props = {
   image: React.ReactNode;
@@ -53,14 +52,14 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
     <View style={styles.main} testID="InfoScreenComponent">
       {props.image}
       <VSpacer size={24} />
-      <H2
+      <H4
         testID="infoScreenTitle"
         accessible
         ref={elementRef}
         style={styles.textAlignCenter}
       >
         {props.title}
-      </H2>
+      </H4>
       <VSpacer size={16} />
       {renderNode(props.body)}
     </View>

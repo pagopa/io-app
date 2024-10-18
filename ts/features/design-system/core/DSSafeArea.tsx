@@ -2,11 +2,11 @@ import * as React from "react";
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import {
   Body,
+  H4,
   IOColors,
   IOVisualCostants,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 export const DSSafeArea = () => (
@@ -14,11 +14,11 @@ export const DSSafeArea = () => (
     <SafeAreaView style={{ flex: 1, backgroundColor: IOColors["error-100"] }}>
       <ScrollView contentContainerStyle={{ backgroundColor: IOColors.white }}>
         <View style={{ flex: 1 }}>
-          <H2>Start</H2>
+          <H4>Start</H4>
           {[...Array(50)].map((_el, i) => (
             <Body key={`body-${i}`}>Repeated text</Body>
           ))}
-          <H2>End</H2>
+          <H4>End</H4>
         </View>
       </ScrollView>
       <View

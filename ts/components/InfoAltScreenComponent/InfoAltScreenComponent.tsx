@@ -4,12 +4,12 @@ import {
   VSpacer,
   IOPictograms,
   Pictogram,
-  Body
+  Body,
+  H4
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { H2 } from "../core/typography/H2";
 
 type Props = {
   image: IOPictograms;
@@ -60,14 +60,14 @@ export const InfoAltScreenComponent = ({ image, title, body }: Props) => {
     <View style={styles.main} testID="InfoAltScreenComponent">
       <Pictogram name={image} />
       <VSpacer size={24} />
-      <H2
+      <H4
         testID="infoScreenTitle"
         accessible
         ref={elementRef}
         style={styles.textAlignCenter}
       >
         {title}
-      </H2>
+      </H4>
       {body && (
         <>
           <VSpacer size={16} />

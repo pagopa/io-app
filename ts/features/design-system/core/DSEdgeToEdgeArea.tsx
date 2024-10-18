@@ -6,11 +6,11 @@ import {
 } from "react-native-safe-area-context";
 import {
   Body,
+  H4,
   IOColors,
   IOVisualCostants,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { H2 } from "../../../components/core/typography/H2";
 
 const bottomBarHeight: number = 70;
 const topBarHeight: number = 55;
@@ -33,11 +33,11 @@ export const DSEdgeToEdgeArea = () => {
             backgroundColor: IOColors.white
           }}
         >
-          <H2>Start</H2>
+          <H4>Start</H4>
           {[...Array(50)].map((_el, i) => (
             <Body key={`body-${i}`}>Repeated text</Body>
           ))}
-          <H2>End</H2>
+          <H4>End</H4>
         </ScrollView>
         {/* TOP BAR: Start */}
         <View

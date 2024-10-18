@@ -6,9 +6,9 @@ import {
   hexToRgba,
   ContentWrapper,
   IOVisualCostants,
-  Body
+  Body,
+  H4
 } from "@pagopa/io-app-design-system";
-import { H2 } from "../../../components/core/typography/H2";
 
 const bottomBarHeight: number = 70;
 
@@ -32,11 +32,11 @@ export const DSFullScreenModal = () => {
           doesn't manage properly the padding values set directly */}
         <ContentWrapper>
           <View style={{ paddingBottom: insets.bottom + bottomBarHeight }}>
-            <H2>Start</H2>
+            <H4>Start</H4>
             {[...Array(50)].map((_el, i) => (
               <Body key={`body-${i}`}>Repeated text</Body>
             ))}
-            <H2>End</H2>
+            <H4>End</H4>
           </View>
         </ContentWrapper>
       </ScrollView>

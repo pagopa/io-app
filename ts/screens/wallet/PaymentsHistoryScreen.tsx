@@ -1,7 +1,11 @@
-import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ContentWrapper,
+  H4,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
 import * as React from "react";
-import { H2 } from "../../components/core/typography/H2";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -17,7 +21,7 @@ import { useIOSelector } from "../../store/hooks";
 
 const ListEmptyComponent = (): React.JSX.Element => (
   <ContentWrapper>
-    <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
+    <H4>{I18n.t("payment.details.list.empty.title")}</H4>
     <VSpacer size={16} />
     <Body>{I18n.t("payment.details.list.empty.description")}</Body>
     <VSpacer size={24} />

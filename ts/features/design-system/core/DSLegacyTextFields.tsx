@@ -1,11 +1,10 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { H4, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useState } from "react";
 import { View } from "react-native";
 
 import { LabelledItem } from "../../../components/LabelledItem";
-import { H2 } from "../../../components/core/typography/H2";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
 import {
@@ -204,13 +203,9 @@ const LegacyTextFields = () => {
         </View>
       </View>
 
-      <H2
-        color={"bluegrey"}
-        weight={"Semibold"}
-        style={{ marginBottom: 12, marginTop: 48 }}
-      >
+      <H4 color={"bluegrey"} style={{ marginBottom: 12, marginTop: 48 }}>
         Authentication
-      </H2>
+      </H4>
 
       <LabelledItem
         label={"Username"}
@@ -233,13 +228,9 @@ const LegacyTextFields = () => {
         }}
       />
 
-      <H2
-        color={"bluegrey"}
-        weight={"Semibold"}
-        style={{ marginBottom: 12, marginTop: 48 }}
-      >
+      <H4 color={"bluegrey"} style={{ marginBottom: 12, marginTop: 48 }}>
         Payments
-      </H2>
+      </H4>
       <LabelledItem
         label={"Card number"}
         icon={detectedBrand.iconForm}
