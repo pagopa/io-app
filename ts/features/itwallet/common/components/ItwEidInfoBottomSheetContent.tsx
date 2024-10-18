@@ -1,14 +1,14 @@
 import React from "react";
 import { View } from "react-native";
 import {
+  Alert,
+  ButtonSolid,
   Divider,
+  H4,
   HStack,
   Icon,
   IOStyles,
-  VStack,
-  H4,
-  Alert,
-  ButtonSolid
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
@@ -21,6 +21,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
+import { trackWalletStartDeactivation } from "../../analytics";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 
 export const ItwEidInfoBottomSheetTitle = () => (
@@ -44,10 +45,12 @@ const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });
 
-    const navigateToWalletRevocationScreen = () =>
+    const navigateToWalletRevocationScreen = () => {
+      trackWalletStartDeactivation();
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });
+    };
 
     return (
       <VStack space={24}>

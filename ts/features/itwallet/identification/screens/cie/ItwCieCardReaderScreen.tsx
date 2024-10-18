@@ -1,22 +1,22 @@
 import {
+  Body,
   ButtonLink,
   ContentWrapper,
   H3,
   IOColors,
   IOPictograms,
   IOStyles,
-  VSpacer,
-  Body
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import React, { memo, useCallback, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Platform,
   ScrollView,
-  View,
   StyleSheet,
-  AccessibilityInfo
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -36,15 +36,12 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import {
   selectCieAuthUrlOption,
   selectCiePin,
-  selectIdentification,
   selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { itwIdpHintTest } from "../../../../../config";
 import {
-  trackItwIdRequestFailure,
-  trackItwIdRequestTimeout,
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingSuccess,
@@ -163,8 +160,6 @@ export const ItwCieCardReaderScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const identification =
-    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const cieAuthUrl = ItwEidIssuanceMachineContext.useSelector(
     selectCieAuthUrlOption
@@ -217,12 +212,13 @@ export const ItwCieCardReaderScreen = () => {
   const handleCieReadError = (error: Cie.CieError) => {
     handleAccessibilityAnnouncement(error);
 
-    // TODO Add **trackItWalletCieCardReadingFailure({ reason: "ADPU not supported" })** when ItwADPUnotsupported screen is added
-
     switch (error.type) {
       case Cie.CieErrorType.WEB_VIEW_ERROR:
         break;
       case Cie.CieErrorType.NFC_ERROR:
+        if (error.message === "APDU not supported") {
+          trackItWalletCieCardReadingFailure({ reason: error.message });
+        }
         setReadingState(ReadingState.error);
         break;
       case Cie.CieErrorType.PIN_LOCKED:
@@ -239,11 +235,7 @@ export const ItwCieCardReaderScreen = () => {
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN);
         break;
       case Cie.CieErrorType.GENERIC:
-        trackItwIdRequestTimeout(identification?.mode);
-        break;
       case Cie.CieErrorType.AUTHENTICATION_ERROR:
-        trackItwIdRequestFailure(identification?.mode);
-        break;
       default:
         trackItWalletCieCardReadingFailure({ reason: "KO" });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
