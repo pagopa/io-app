@@ -30,10 +30,6 @@ export const ItwUpcomingWalletBanner = ({
         content={I18n.t(
           "features.itWallet.discovery.upcomingWalletBanner.content"
         )}
-        // action={I18n.t(
-        //   "features.itWallet.discovery.upcomingWalletBanner.action"
-        // )}
-        // onPress={() => Linking.openURL("https://io.italia.it/documenti-su-io/")} //At the moment, the page is not available
       />
       {bottomSpacing && <VSpacer size={bottomSpacing} />}
     </>
