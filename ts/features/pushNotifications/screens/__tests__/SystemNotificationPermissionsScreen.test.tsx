@@ -90,10 +90,6 @@ describe("SystemNotificationPermissionsScreen", () => {
     expect(analyticsMock.mock.calls[0].length).toBe(1);
     expect(analyticsMock.mock.calls[0][0]).toBe("dismiss");
 
-    expect(analyticsMock.mock.calls.length).toBe(1);
-    expect(analyticsMock.mock.calls[0].length).toBe(1);
-    expect(analyticsMock.mock.calls[0][0]).toBe("dismiss");
-
     expect(settingsSpy.mock.calls.length).toBe(0);
     expect(mockGoBack.mock.calls.length).toBe(1);
     expect(mockGoBack.mock.calls[0].length).toBe(0);

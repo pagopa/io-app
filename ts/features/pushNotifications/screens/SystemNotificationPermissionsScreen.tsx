@@ -20,11 +20,6 @@ export const SystemNotificationPermissionsScreen = () => {
     navigation.goBack();
   }, [navigation]);
 
-  const onDismiss = () => {
-    trackSystemNotificationPermissionScreenOutcome("dismiss");
-    navigation.goBack();
-  };
-
   useEffect(() => {
     navigation.setOptions({
       header: () => (
