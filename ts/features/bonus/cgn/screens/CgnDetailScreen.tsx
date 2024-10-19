@@ -37,6 +37,7 @@ import { profileSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { capitalizeTextName } from "../../../../utils/strings";
 import { openWebUrl } from "../../../../utils/url";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
 import { ID_CGN_TYPE } from "../../common/utils";
@@ -197,7 +198,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           }}
         >
           {pot.isSome(currentProfile)
-            ? `${currentProfile.value.name} ${currentProfile.value.family_name}`
+            ? `${capitalizeTextName(
+                currentProfile.value.name
+              )} ${capitalizeTextName(currentProfile.value.family_name)}`
             : ""}
         </H4>
       }

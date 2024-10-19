@@ -740,6 +740,10 @@ authentication:
         description: Se hai SPID, entra su IO inserendo le tue credenziali. Puoi usare anche il tuo volto o l’impronta o il codice impostato per l’app del tuo fornitore di SPID.
         primary_action_label: Entra con SPID
       secondary_action_label: Chiudi
+    cie_not_installed:
+      title: Non riusciamo a trovare l'app CieID
+      description: Per accedere, devi avere l'app installata sul tuo dispositivo.
+      primary_action_label: Scarica CieID
   cie:
     genericTitle: Entra con CIE
     cie: CIE
@@ -1393,6 +1397,9 @@ wallet:
         subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
         primaryAction: Chiudi
         secondaryAction: Scopri di più
+        bottomSheet:
+          title: "Cosa fare se il salvataggio non va a buon fine?"
+          description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: La sessione è scaduta
         subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
@@ -1941,6 +1948,17 @@ wallet:
         subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
         primaryAction: Aggiungi carta
         secondaryAction: Usa altri metodi
+      PAYMENT_REVERSED:
+        title: Il pagamento non è andato a buon fine
+        subtitle: L’importo autorizzato è stato rimborsato sul tuo metodo di pagamento. Il trasferimento di denaro potrebbe richiedere del tempo.
+        primaryAction: Scopri di più
+        secondaryAction: Chiudi
+      PAYPAL_REMOVED_ERROR:
+        title: Autorizzazione negata
+        subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
+      IN_APP_BROWSER_CLOSED_BY_USER:
+        title: Hai interrotto il pagamento
+        subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2145,6 +2163,9 @@ messagePDFPreview:
     opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
     saving: "Si è verificato un errore salvando il documento."
 notifications:
+  profileBanner:
+    title: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO."
+    cta: "Attiva notifiche push"
   installation:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato un errore
@@ -2652,7 +2673,7 @@ bonus:
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
-    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
+    departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
     merchantsList:
       news: novità
       online: Online
@@ -2691,25 +2712,12 @@ bonus:
           byDistance: Per vicinanza alla tua posizione
           byName: Ordine alfabetico
     merchantDetail:
-      bucket:
-        alert:
-          cta: Ho capito!
-        error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
         deals: Opportunità
         description: Descrizione
-        services: Servizi
         contactInfo: Contatti e informazioni
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
-        website: Vai al sito del partner
+        website: Visita il sito del partner
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e tempo libero
@@ -2725,6 +2733,19 @@ bonus:
       information:
         address: Indirizzo
         allNational: Tutti i punti vendita sul territorio nazionale
+      discount:
+        description: Descrizione
+        conditions: Condizioni
+        validity: Validità
+        cta:
+          api: Attiva codice sconto
+          static: Vai al codice sconto
+          bucket: Vai al codice sconto
+          landingpage: Vai all'opportunità
+        secondaryCta: Vai all'opportunità
+        title: Ecco il codice sconto!
+        expired: Codice sconto scaduto!
+        copyButton: Copia codice sconto
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
@@ -2932,12 +2953,6 @@ features:
         title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
         subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
-  uaDonations:
-    webViewScreen:
-      headerTitle: Donazione
-      errors:
-        data:
-          buttonTitle: Torna indietro
   pn:
     service:
       activate: "Attiva il servizio"
@@ -3156,10 +3171,8 @@ features:
         title: Operazioni precedenti
         bottomSheet:
           title: Dove trovo la ricevuta di pagamento?
-          noticeHeading: Avvisi pagati di recente
-          noticeBody: "Stiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
-          allNoticesHeading: Tutti gli altri avvisi
-          allNoticesBody: Per le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore.
+          notice: "**Avvisi pagati di recente**\nStiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
+          allNotices: "**Tutti gli altri avvisi**\nPer le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore."
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3189,12 +3202,24 @@ features:
         explainationContent: "Quando hai salvato questo metodo, hai autorizzato {{pspBusinessName}} a gestire le transazioni eseguite tramite “PayPal pagamento veloce”.\n\nSe vuoi usare un altro gestore, aggiungi nuovamente il metodo al tuo Portafoglio.\n\nPer revocare l’autorizzazione, rimuovi il metodo dal Portafoglio.\n\nUsa l’app PayPal per modificare la carta o conto bancario su cui addebitare le spese."
     errors:
       transactionCreationError: C’è un problema con i sistemi di pagamento.
+    checkout:
+      bottomSheet:
+        PAYMENT_REVERSED:
+          title: "Cosa fare se il pagamento non va a buon fine?"
+          payNotice: "**Paga l'avviso**\nRicorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci tramite IO, [scopri gli altri canali abilitati a pagoPA]({{url}})"
+          waitRefund: "**Attendi il rimborso**\nDi solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il trasferimento di denaro sul tuo conto o carta potrebbe richiedere più tempo."
+          contactSupport: "**Contatta l'assistenza**\nSe dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’assistenza."
   itWallet:
     credentialName:
       eid: Identità Digitale
-      mdl: Patente di Guida
+      mdl: Patente di guida
       dc: Carta Europea della Disabilità
       ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
+    ipzsPrivacy:
+      title: I tuoi Documenti su IO sono al sicuro
+      warning: Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.
+      button:
+        label: Continua
     wallet:
       active: Attivo
       inactive: Non attivo
@@ -3230,13 +3255,13 @@ features:
         placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
-        issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
+        authenticSource: Origine dei dati
         mdl:
-          category: "Licenza {{category}}"
+          category: "Patente {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
@@ -3246,16 +3271,16 @@ features:
         content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida, la Tessera Sanitaria e presto molti altri. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      tos: Premendo **Continua** dichiari di aver letto l’[informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
         action: Scopri di più
     identification:
       mode:
-        title: Per iniziare, attiva Documenti su IO
-        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        title: Verfica la tua identità
+        description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
           spid:
@@ -3267,7 +3292,6 @@ features:
           cieId:
             title: CieID
             subtitle: Usa credenziali e app CieID
-        privacy: Identificandoti dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione) di **Istituto Poligrafico e Zecca dello Stato**.
       nfc:
         title: Attiva l'NFC per continuare
         description: Per consentire a IO di leggere la tua CIE, attiva l'NFC dalle Impostazioni del tuo dispositivo.
@@ -3291,12 +3315,12 @@ features:
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
-        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della credenziale"
+        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della versione digitale del documento."
         requiredClaims: Dati richiesti
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
-          1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
+          1: I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}})."
       eidPreview:
         title: Identità verificata
         subtitle: "Stai attivando **Documenti su IO** come:"
@@ -3309,9 +3333,12 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
+          authSource:
+            title: "Chi è?"
+            subtitle: "È l’ente che detiene i dati contenuti all’interno del tuo documento."
         actions:
-          primary: Aggiungi al portafoglio
+          primary: Aggiungi al Portafoglio
           secondary: Annulla
       eidResult:
         success:
@@ -3326,9 +3353,9 @@ features:
         toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Non puoi attivare Documenti con un’identità diversa da quella che usi per accedere a IO. Verifica le credenziali di accesso e riprova.
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
         primaryAction: Ho capito
-        secondaryAction: Segnala un problema
+        secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
         body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
@@ -3339,8 +3366,8 @@ features:
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
       asyncCredentialError:
-        title: Motorizzazione Civile ha preso in carico la tua richiesta
-        body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
+        title: La Motorizzazione Civile ha preso in carico la tua richiesta
+        body: Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
       credentialAlreadyAdded:
         title: Hai già questo documento
@@ -3363,10 +3390,10 @@ features:
     presentation:
       alerts:
         mdl:
-          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle forze dell'ordine."
+          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
           action: Scopri di più
         ehc:
-          content: "La tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico e consente, mostrandola, di accedere a tutti i servizi previsti."
+          content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
@@ -3397,7 +3424,7 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Nascosto"
-        fiscalCode: Codice fiscale
+        fiscalCode: Il tuo Codice Fiscale
         status:
           valid: Valida
           expired: Non valida
@@ -3415,7 +3442,7 @@ features:
         toast:
           removed: Fatto!
       ctas:
-        openPdf: "Apri documento PDF"
+        openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
       trustmark:
@@ -3423,6 +3450,18 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
+    walletRevocation:
+      cta: Disattiva Documenti su IO
+      confirmScreen:
+        title: Vuoi davvero disattivare Documenti su IO?
+        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
+        action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
 support:
   ticketList:
     noTicket:
@@ -3440,6 +3479,9 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
+  errorGetZendeskToken: 
+    title: Al momento non riusciamo ad aprire una richiesta di assistenza
+    subtitle: Riprova più tardi
   askPermissions:
     nameSurname: "Nome e Cognome"
     fiscalCode: "Codice fiscale"
@@ -4019,6 +4061,8 @@ transaction:
     totalFee: Il totale comprende
     totalFeePsp: "di commissione, applicata da {{pspName}}."
     totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
+    bannerImported:
+      content: "La ricevuta pagoPA non è disponibile. Rivolgiti all’Ente Creditore se hai bisogno della quietanza di pagamento, cioè il documento che attesta di aver saldato un debito."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
@@ -4079,8 +4123,8 @@ FIMS:
       successToast: "Fatto! Controlla la tua casella di posta."
       errorToast: "C’è stato un problema nell’invio della richiesta. Riprova"
     profileCTA:
-      title: Accessi a servizi di terze parti
-      subTitle: Rivedi gli accessi effettuati a servizi di terze parti tramite IO
+      title: "Controlla i tuoi accessi"
+      subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
       header: Accessi a servizi di terze parti
       body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email

@@ -52,6 +52,7 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { itwIpzsPrivacyUrl } from "../../../../config";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -190,7 +191,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           styles={{ body: { fontSize: 14 } }}
           onLinkOpen={trackOpenItwTos}
         >
-          {I18n.t("features.itWallet.issuance.credentialAuth.tos")}
+          {I18n.t("features.itWallet.issuance.credentialAuth.tos", {
+            privacyUrl: itwIpzsPrivacyUrl
+          })}
         </ItwMarkdown>
       </ContentWrapper>
       <FooterActions

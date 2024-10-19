@@ -2,6 +2,7 @@ import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
@@ -21,7 +22,9 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { WalletCardCategoryFilter } from "../types";
+import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -51,7 +54,12 @@ const WalletCardsContainer = () => {
   if (cards.length === 0) {
     // In this case we can display the empty state: we do not have cards to display and
     // the wallet is not in a loading state anymore
-    return <WalletEmptyScreenContent />;
+    return (
+      <View style={IOStyles.flex}>
+        <ItwBanners />
+        <WalletEmptyScreenContent />
+      </View>
+    );
   }
 
   const shouldRender = (filter: WalletCardCategoryFilter) =>
@@ -63,7 +71,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+        <ItwBanners />
         {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
         {shouldRender("other") && (
           <OtherCardsContainer isStacked={stackCards} />
@@ -80,13 +88,23 @@ const ItwCardsContainer = ({
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const navigation = useIONavigation();
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
       title: <ItwEidInfoBottomSheetTitle />,
-      component: <ItwEidInfoBottomSheetContent />
+      // Navigation does not seem to work when the bottom sheet's component is not inline
+      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
     },
     EID_INFO_BOTTOM_PADDING
+  );
+
+  useFocusEffect(
+    React.useCallback(
+      // Automatically dismiss the bottom sheet when focus is lost
+      () => eidInfoBottomSheet.dismiss,
+      [eidInfoBottomSheet.dismiss]
+    )
   );
 
   if (!isItwTrialEnabled || !isItwEnabled) {
@@ -159,5 +177,15 @@ const OtherCardsContainer = ({
     />
   );
 };
+
+/**
+ * Wrapper components for ITW banners.
+ */
+const ItwBanners = () => (
+  <>
+    <ItwUpcomingWalletBanner bottomSpacing={24} />
+    <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+  </>
+);
 
 export { WalletCardsContainer };

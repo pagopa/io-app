@@ -15,19 +15,16 @@ import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfi
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { Sections } from "../../../definitions/content/Sections";
-import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
-import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
+import { Banner } from "../../../definitions/content/Banner";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
   premiumMessagesOptInEnabled,
-  scanAdditionalBarcodesEnabled,
-  uaDonationsEnabled
+  scanAdditionalBarcodesEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
-import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { StatusMessage } from "../../../definitions/content/StatusMessage";
@@ -135,75 +132,6 @@ export const assistanceToolConfigSelector = createSelector(
       backendStatus,
       O.map(bs => bs.config.assistanceTool.tool),
       O.toUndefined
-    )
-);
-
-/**
- * return the remote config about Ukrainian donations enabled/disabled
- * if there is no data, false is the default value -> (donation disabled)
- */
-export const isUaDonationsEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    (uaDonationsEnabled &&
-      pipe(
-        backendStatus,
-        O.map(bs => bs.config.uaDonations.enabled),
-        O.toUndefined
-      )) ??
-    false
-);
-
-/**
- * return the remote config about Ukrainian donations banner if available
- */
-export const uaDonationsBannerConfigSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): UaDonationsBanner | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.uaDonations.banner),
-      O.toUndefined
-    )
-);
-
-/**
- * Transform a UaDonationsConfig to `some(UaDonationsBanner)` if all the required conditions are met:
- * - local feature flag === true
- * - remote feature flag === true
- * - banner visible === true
- * - The description in the current locale is not an empty string
- *
- * Return `O.none` otherwise.
- * @param uaConfig
- * @param locale
- */
-const filterBannerVisible = (
-  uaConfig: UaDonationsConfig,
-  locale: LocalizedMessageKeys
-): O.Option<UaDonationsBanner> =>
-  uaDonationsEnabled &&
-  uaConfig.enabled &&
-  uaConfig.banner.visible &&
-  !isStringNullyOrEmpty(uaConfig.banner.description[locale])
-    ? O.some(uaConfig.banner)
-    : O.none;
-
-/**
- * The donation data is an information that we can or we cannot render, based on some conditions.
- * We represent this information using an {@link Option} in order to avoid chaining multiple boolean condition at component level
- * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
- * Return `O.none` otherwise
- */
-export const uaDonationsBannerSelector = createSelector(
-  [
-    backendStatusSelector,
-    (_: GlobalState, locale: LocalizedMessageKeys) => locale
-  ],
-  (backendStatus, locale): O.Option<UaDonationsBanner> =>
-    pipe(
-      backendStatus,
-      O.chain(bs => filterBannerVisible(bs.config.uaDonations, locale))
     )
 );
 
@@ -516,6 +444,41 @@ export const isItwEnabledSelector = createSelector(
           ) && bs.config.itw.enabled
       ),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote feature flag about the payment feedback banner enabled/disabled
+ * that is shown after a successful payment.
+ */
+export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.newPaymentSection.feedbackBanner?.min_app_version.ios
+            : bs.config.newPaymentSection.feedbackBanner?.min_app_version
+                .android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return the remote config about the payment feedback banner
+ */
+export const paymentsFeedbackBannerConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): Banner | undefined =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.newPaymentSection.feedbackBanner),
+      O.toUndefined
     )
 );
 

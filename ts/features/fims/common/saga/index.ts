@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { fork, select } from "typed-redux-saga/macro";
+import { call, fork, select } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { createFimsClient } from "../../history/api/client";
@@ -9,7 +9,7 @@ import { watchFimsSSOSaga } from "../../singleSignOn/saga";
 const FIMS_DEV_ENV_TOKEN = "";
 
 export function* watchFimsSaga(): SagaIterator {
-  const fimsClient = createFimsClient(apiUrlPrefix);
+  const fimsClient = yield* call(createFimsClient, apiUrlPrefix);
 
   const sessionToken = yield* select(sessionTokenSelector);
   yield* fork(watchFimsSSOSaga);

@@ -18,6 +18,7 @@ import {
   BodyProps,
   ComposedBodyFromArray
 } from "../core/typography/ComposedBodyFromArray";
+
 export type CustomWizardScreenProps = {
   title: string;
   description?: string | Array<BodyProps>;
@@ -38,6 +39,7 @@ export type CustomWizardScreenProps = {
 
 /**
  * A common screen used in a wizard flow to show a pictogram, a title, a description and one or two buttons.
+ * @deprecated This component is deprecated. Use `IOScrollViewCentredContent` instead.
  */
 const CustomWizardScreen = ({
   title,

@@ -4,9 +4,10 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
+import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../ItwIssuanceCredentialTrustIssuerScreen";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 
 describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
   it("it should render the screen correctly", () => {
@@ -17,9 +18,16 @@ describe("ItwIssuanceCredentialTrustIssuerScreen", () => {
 
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <ItwIssuanceCredentialTrustIssuerScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

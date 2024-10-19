@@ -8,9 +8,9 @@ import {
 import { CredentialIssuanceFailure } from "./failure";
 
 export type Context = {
-  credentialType: string | undefined;
   wiaCryptoContext: CryptoContext | undefined;
   walletInstanceAttestation: string | undefined;
+  credentialType: string | undefined;
   issuerConf: IssuerConfiguration | undefined;
   clientId: string | undefined;
   codeVerifier: string | undefined;
@@ -21,9 +21,9 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,
+  credentialType: undefined,
   issuerConf: undefined,
   clientId: undefined,
   codeVerifier: undefined,

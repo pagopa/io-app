@@ -21,6 +21,7 @@ const renderComponent = () => {
 
   const logic = itwEidIssuanceMachine.provide({
     actions: {
+      onInit: jest.fn(),
       navigateToTosScreen: () => undefined
     }
   });

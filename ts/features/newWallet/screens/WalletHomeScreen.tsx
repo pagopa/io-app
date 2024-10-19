@@ -23,12 +23,11 @@ import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedire
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 import {
-  trackAllCredentialProfileProperties,
+  trackAllCredentialProfileAndSuperProperties,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useOnWalletUserSessionRefresh } from "../hooks/useOnWalletUserSessionRefresh";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -36,23 +35,13 @@ const WalletHomeScreen = ({ route }: Props) => {
   const store = useIOStore();
   useFocusEffect(() => {
     trackOpenWalletScreen();
-    void trackAllCredentialProfileProperties(store.getState());
+    void trackAllCredentialProfileAndSuperProperties(store.getState());
   });
 
   const dispatch = useIODispatch();
   const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      trackOpenWalletScreen();
-    }, [])
-  );
-
   useOnFirstRender(() => {
-    fetchWalletSectionData();
-  });
-
-  useOnWalletUserSessionRefresh(() => {
     fetchWalletSectionData();
   });
 

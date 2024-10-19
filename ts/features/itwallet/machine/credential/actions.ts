@@ -1,20 +1,24 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assertEvent } from "xstate";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIODispatch } from "../../../../store/hooks";
+import { checkCurrentSession } from "../../../../store/actions/authentication";
+import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
 export default (
   navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>,
+  store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
   navigateToTrustIssuerScreen: () => {
@@ -44,7 +48,16 @@ export default (
   >) => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
     if (context.credentialType) {
-      trackSaveCredentialSuccess(CREDENTIALS_MAP[context.credentialType]);
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackSaveCredentialSuccess(credential);
+      void updateMixpanelProfileProperties(store.getState(), {
+        property: credential,
+        value: "valid"
+      });
+      void updateMixpanelSuperProperties(store.getState(), {
+        property: credential,
+        value: "valid"
+      });
     }
     navigation.reset({
       index: 1,
@@ -59,6 +72,22 @@ export default (
     });
   },
 
+  storeWalletInstanceAttestation: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(
+      context.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    store.dispatch(
+      itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
+    );
+  },
+
   storeCredential: ({
     context
   }: ActionArgs<
@@ -67,8 +96,7 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-
-    dispatch(itwCredentialsStore([context.credential]));
+    store.dispatch(itwCredentialsStore([context.credential]));
   },
 
   closeIssuance: ({
@@ -88,5 +116,17 @@ export default (
   },
 
   handleSessionExpired: () =>
-    dispatch(checkCurrentSession.success({ isSessionValid: false }))
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
+
+  onInit: assign<
+    Context,
+    CredentialIssuanceEvents,
+    unknown,
+    CredentialIssuanceEvents,
+    any
+  >(() => ({
+    walletInstanceAttestation: itwWalletInstanceAttestationSelector(
+      store.getState()
+    )
+  }))
 });

@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
 import {
@@ -10,18 +11,18 @@ import {
   SubscriptionStateEnum
 } from "../../../../../../definitions/trial_system/SubscriptionState";
 import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
+import { itwTrialId } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { itwTrialId } from "../../../../../config";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
@@ -125,10 +126,15 @@ const renderComponent = ({
       } as BackendStatusState
     } as GlobalState)
   );
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <WalletCardOnboardingScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

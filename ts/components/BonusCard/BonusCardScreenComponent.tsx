@@ -1,4 +1,4 @@
-import { ActionProp } from "@pagopa/io-app-design-system";
+import { HeaderActionProps } from "@pagopa/io-app-design-system";
 import { default as React, ReactNode } from "react";
 import { Dimensions } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
@@ -9,7 +9,7 @@ import { BonusCard } from "./BonusCard";
 
 type BaseProps = {
   title?: string;
-  headerAction?: ActionProp;
+  headerAction?: HeaderActionProps;
   children?: ReactNode;
   actions?: IOScrollViewActions;
 };

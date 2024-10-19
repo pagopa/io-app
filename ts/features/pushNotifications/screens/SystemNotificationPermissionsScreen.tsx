@@ -1,16 +1,5 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  ButtonLink,
-  ButtonSolid,
-  ContentWrapper,
-  IconButton,
-  IOStyles,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { WizardBody } from "../../../components/screens/WizardScreen";
+import React, { useCallback, useEffect } from "react";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { openSystemNotificationSettingsScreen } from "../utils";
 import I18n from "../../../i18n";
@@ -20,19 +9,16 @@ import {
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "../analytics";
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    alignSelf: "flex-end",
-    marginRight: IOVisualCostants.appMarginDefault,
-    marginTop: IOVisualCostants.appMarginDefault
-  }
-});
+import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
 
 export const SystemNotificationPermissionsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const safeAreaInsets = useSafeAreaInsets();
+
+  const onDismiss = useCallback(() => {
+    trackSystemNotificationPermissionScreenOutcome("dismiss");
+    navigation.goBack();
+  }, [navigation]);
 
   const onDismiss = () => {
     trackSystemNotificationPermissionScreenOutcome("dismiss");
@@ -40,57 +26,47 @@ export const SystemNotificationPermissionsScreen = () => {
   };
 
   useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          ignoreSafeAreaMargin={true}
+          title={""}
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: onDismiss
+          }}
+        />
+      )
+    });
+
     trackSystemNotificationPermissionScreenShown();
     dispatch(setEngagementScreenShown());
-  }, [dispatch]);
+  }, [dispatch, navigation, onDismiss]);
 
   return (
-    <View
-      style={[
-        IOStyles.flex,
-        {
-          paddingBottom: safeAreaInsets.bottom
-        }
-      ]}
-    >
-      <View style={styles.headerContainer}>
-        <IconButton
-          icon="closeMedium"
-          color="neutral"
-          onPress={onDismiss}
-          testID="notifications-modal-close-button"
-          accessibilityLabel={I18n.t("global.buttons.close")}
-        />
-      </View>
-      <WizardBody
-        pictogram={"reactivate"}
-        title={I18n.t("notifications.modal.title")}
-        description={I18n.t("notifications.modal.content")}
-      />
-      <ContentWrapper>
-        <ButtonSolid
-          label={I18n.t("notifications.modal.primaryButton")}
-          fullWidth={true}
-          onPress={() => {
+    <IOScrollViewCentredContent
+      pictogram="reactivate"
+      title={I18n.t("notifications.modal.title")}
+      description={I18n.t("notifications.modal.content")}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("notifications.modal.primaryButton"),
+          onPress: () => {
             trackSystemNotificationPermissionScreenOutcome("activate");
             openSystemNotificationSettingsScreen();
             navigation.goBack();
-          }}
-          testID="notifications-modal-open-system-settings-button"
-        />
-
-        <>
-          <VSpacer size={24} />
-          <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink
-              label={I18n.t("notifications.modal.secondaryButton")}
-              onPress={onDismiss}
-              testID="notifications-modal-not-now-button"
-            />
-          </View>
-          <VSpacer size={16} />
-        </>
-      </ContentWrapper>
-    </View>
+          },
+          testID: "notifications-modal-open-system-settings-button"
+        },
+        secondary: {
+          label: I18n.t("notifications.modal.secondaryButton"),
+          onPress: onDismiss,
+          testID: "notifications-modal-not-now-button"
+        }
+      }}
+    />
   );
 };
