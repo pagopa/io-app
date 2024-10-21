@@ -1771,33 +1771,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
                                         dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
+                                              "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         <Text
                                           style={{}}
@@ -1825,33 +1813,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       />
                                       <Text
                                         allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
                                         dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
+                                              "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         <Text
                                           style={{}}
@@ -1871,37 +1847,24 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           <Text
                                             accessibilityRole="link"
                                             allowFontScaling={false}
-                                            color="blue"
-                                            defaultColor="blue"
-                                            defaultWeight="Semibold"
-                                            dynamicTypeRamp="footnote"
-                                            font="TitilliumSansPro"
-                                            fontStyle={
-                                              {
-                                                "fontSize": 16,
-                                                "lineHeight": 24,
-                                                "textDecorationLine": "underline",
-                                              }
-                                            }
                                             maxFontSizeMultiplier={1.25}
                                             numberOfLines={1}
                                             onPress={[Function]}
                                             style={
                                               [
                                                 {
-                                                  "fontSize": 16,
-                                                  "lineHeight": 24,
                                                   "textDecorationLine": "underline",
                                                 },
                                                 {
-                                                  "color": "#0073E6",
+                                                  "color": "#0B3EE3",
                                                   "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 16,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
+                                                  "lineHeight": 24,
                                                 },
                                               ]
                                             }
-                                            weight="Semibold"
                                           >
                                             <Text
                                               style={
@@ -3709,33 +3672,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
                                         dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
+                                              "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         <Text
                                           style={{}}
@@ -3763,33 +3714,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       />
                                       <Text
                                         allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
                                         dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
+                                              "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         <Text
                                           style={{}}
@@ -4126,33 +4065,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
                                         dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
+                                              "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         <Text
                                           style={{}}
@@ -4180,33 +4107,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       />
                                       <Text
                                         allowFontScaling={false}
-                                        color="bluegrey"
-                                        defaultColor="bluegrey"
-                                        defaultWeight="Regular"
                                         dynamicTypeRamp="body"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
-                                            },
-                                            {
-                                              "color": "#475A6D",
+                                              "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         <Text
                                           style={{}}
@@ -4226,37 +4141,24 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           <Text
                                             accessibilityRole="link"
                                             allowFontScaling={false}
-                                            color="blue"
-                                            defaultColor="blue"
-                                            defaultWeight="Semibold"
-                                            dynamicTypeRamp="footnote"
-                                            font="TitilliumSansPro"
-                                            fontStyle={
-                                              {
-                                                "fontSize": 16,
-                                                "lineHeight": 24,
-                                                "textDecorationLine": "underline",
-                                              }
-                                            }
                                             maxFontSizeMultiplier={1.25}
                                             numberOfLines={1}
                                             onPress={[Function]}
                                             style={
                                               [
                                                 {
-                                                  "fontSize": 16,
-                                                  "lineHeight": 24,
                                                   "textDecorationLine": "underline",
                                                 },
                                                 {
-                                                  "color": "#0073E6",
+                                                  "color": "#0B3EE3",
                                                   "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 16,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
+                                                  "lineHeight": 24,
                                                 },
                                               ]
                                             }
-                                            weight="Semibold"
                                           >
                                             <Text
                                               style={
