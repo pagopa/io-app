@@ -63,13 +63,13 @@ describe("getPayerInfoLabel", () => {
   it("should return only the taxCode if name is not provided", () => {
     const payer = { taxCode: "123456789" };
     const result = getPayerInfoLabel(payer);
-    expect(result).toBe("(123456789)");
+    expect(result).toBe("123456789");
   });
 
   it("should return name and taxCode formatted correctly", () => {
     const payer = { name: "John Doe", taxCode: "123456789" };
     const result = getPayerInfoLabel(payer);
-    expect(result).toBe("John Doe\n(123456789)");
+    expect(result).toBe("John Doe\n123456789");
   });
 
   it("should return an empty string if both name and taxCode are not provided", () => {
@@ -81,7 +81,7 @@ describe("getPayerInfoLabel", () => {
   it("should trim extra spaces", () => {
     const payer = { name: "  John Doe  ", taxCode: "  123456789  " };
     const result = getPayerInfoLabel(payer);
-    expect(result).toBe("John Doe\n(123456789)");
+    expect(result).toBe("John Doe\n123456789");
   });
 });
 
