@@ -44,7 +44,6 @@ export const PreferencesListItem = (props: Props): React.ReactElement => (
       </LabelSmall>
       {props.moreInfo && (
         <H6
-          weight={"Regular"}
           color={"bluegrey"}
           accessibilityRole="link"
           accessibilityHint={I18n.t("accessibility.doubleTapToActivateHint")}
