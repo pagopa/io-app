@@ -1,8 +1,4 @@
-import {
-  GradientScrollView,
-  IOStyles,
-  IOToast
-} from "@pagopa/io-app-design-system";
+import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
@@ -23,11 +19,12 @@ import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedire
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 import {
-  trackAllCredentialProfileProperties,
+  trackAllCredentialProfileAndSuperProperties,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { IOScrollView } from "../../../components/ui/IOScrollView";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -35,17 +32,11 @@ const WalletHomeScreen = ({ route }: Props) => {
   const store = useIOStore();
   useFocusEffect(() => {
     trackOpenWalletScreen();
-    void trackAllCredentialProfileProperties(store.getState());
+    void trackAllCredentialProfileAndSuperProperties(store.getState());
   });
 
   const dispatch = useIODispatch();
   const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      trackOpenWalletScreen();
-    }, [])
-  );
 
   useOnFirstRender(() => {
     fetchWalletSectionData();
@@ -103,19 +94,21 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   }
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        testID: "walletAddCardButtonTestID",
-        label: I18n.t("features.wallet.home.cta"),
-        accessibilityLabel: I18n.t("features.wallet.home.cta"),
-        icon: "addSmall",
-        iconPosition: "end",
-        onPress: handleAddToWalletButtonPress
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          testID: "walletAddCardButtonTestID",
+          label: I18n.t("features.wallet.home.cta"),
+          icon: "addSmall",
+          iconPosition: "end",
+          onPress: handleAddToWalletButtonPress
+        }
       }}
       excludeSafeAreaMargins={true}
     >
       {children}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
