@@ -10,11 +10,13 @@ import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { TabNavigationContainer } from "../TabNavigationContainer";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { setShownMessageCategoryAction } from "../../../store/actions";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("TabNavigationContainer", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot when shownCategory is INBOX", () => {
     const screen = renderScreen("INBOX");
