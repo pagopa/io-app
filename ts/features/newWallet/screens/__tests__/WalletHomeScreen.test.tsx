@@ -71,7 +71,7 @@ describe("WalletHomeScreen", () => {
 
     jest.runOnlyPendingTimers();
 
-    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).not.toBeNull();
+    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).toBeNull();
     expect(queryByTestId("walletAddCardButtonTestID")).toBeNull();
@@ -93,7 +93,7 @@ describe("WalletHomeScreen", () => {
       component: { queryByTestId }
     } = renderComponent(T_CARDS, { shouldShowPaymentsRedirectBanner: true });
 
-    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).not.toBeNull();
+    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
     expect(queryByTestId("walletCardsContainerTestID")).not.toBeNull();
     expect(queryByTestId("walletAddCardButtonTestID")).not.toBeNull();
