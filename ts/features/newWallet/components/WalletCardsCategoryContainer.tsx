@@ -15,7 +15,6 @@ import { renderWalletCardFn } from "../utils";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
-  isStacked?: boolean;
   header?: ListItemHeader;
   topElement?: JSX.Element;
 }>;
@@ -33,7 +32,6 @@ const itemLayoutAnimation =
  */
 export const WalletCardsCategoryContainer = ({
   cards,
-  isStacked = false,
   header,
   topElement,
   testID
@@ -44,9 +42,8 @@ export const WalletCardsCategoryContainer = ({
     <Animated.FlatList
       scrollEnabled={false}
       data={cards}
-      ItemSeparatorComponent={() => (!isStacked ? <VSpacer size={16} /> : null)}
       renderItem={({ index, item }) =>
-        renderWalletCardFn(item, isStacked && index < cards.length - 1)
+        renderWalletCardFn(item, index < cards.length - 1)
       }
       itemLayoutAnimation={itemLayoutAnimation}
       entering={FadeInDown.duration(150)}
