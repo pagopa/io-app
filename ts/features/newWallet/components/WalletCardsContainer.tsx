@@ -24,6 +24,7 @@ import {
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { WalletCardCategoryFilter } from "../types";
+import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
@@ -53,7 +54,12 @@ const WalletCardsContainer = () => {
   if (cards.length === 0) {
     // In this case we can display the empty state: we do not have cards to display and
     // the wallet is not in a loading state anymore
-    return <WalletEmptyScreenContent />;
+    return (
+      <View style={IOStyles.flex}>
+        <ItwBanners />
+        <WalletEmptyScreenContent />
+      </View>
+    );
   }
 
   const shouldRender = (filter: WalletCardCategoryFilter) =>
@@ -65,7 +71,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+        <ItwBanners />
         {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
         {shouldRender("other") && (
           <OtherCardsContainer isStacked={stackCards} />
@@ -171,5 +177,15 @@ const OtherCardsContainer = ({
     />
   );
 };
+
+/**
+ * Wrapper components for ITW banners.
+ */
+const ItwBanners = () => (
+  <>
+    <ItwUpcomingWalletBanner bottomSpacing={24} />
+    <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+  </>
+);
 
 export { WalletCardsContainer };
