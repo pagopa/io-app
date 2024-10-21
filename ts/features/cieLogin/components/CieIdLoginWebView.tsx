@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { Linking, Platform, StyleSheet } from "react-native";
+import { Linking, Platform, StyleSheet, View } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
 import { useLollipopLoginSource } from "../../lollipop/hooks/useLollipopLoginSource";
@@ -19,6 +23,7 @@ import { loggedInAuthSelector } from "../../../store/reducers/authentication";
 import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAuthentication";
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
+import { apiUrlPrefix } from "../../../config";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -46,6 +51,12 @@ export type CieIdLoginProps = {
   spidLevel: SpidLevel;
   isUat: boolean;
 };
+
+const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
+  <View style={styles.loader}>
+    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
+  </View>
+);
 
 const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const navigation = useIONavigation();
@@ -179,15 +190,21 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     return !isLoginUrlWithToken;
   };
 
-  // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-  if (!webviewSource) {
-    return (
-      <LoadingSpinnerOverlay
-        isLoading
-        onCancel={navigateToCieIdAuthenticationError}
-      />
-    );
-  }
+  const handleLoadingError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
+      // TODO: error tracking  https://pagopa.atlassian.net/browse/IOPID-2079
+      const webViewHttpError = error as WebViewHttpErrorEvent;
+      if (webViewHttpError.nativeEvent.statusCode) {
+        const { statusCode, url } = webViewHttpError.nativeEvent;
+        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+          navigateToCieIdAuthenticationError();
+        }
+      } else {
+        navigateToCieIdAuthenticationError();
+      }
+    },
+    [navigateToCieIdAuthenticationError]
+  );
 
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
@@ -195,15 +212,25 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webView}
-        startInLoadingState={true}
-        userAgent={defaultUserAgent}
-        javaScriptEnabled={true}
-        originWhitelist={originSchemasWhiteList}
-        onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-        source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
-      />
+      {(webviewSource || authenticatedUrl) && (
+        <WebView
+          ref={webView}
+          startInLoadingState={true}
+          userAgent={defaultUserAgent}
+          javaScriptEnabled={true}
+          renderLoading={() => (
+            <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+          )}
+          originWhitelist={originSchemasWhiteList}
+          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+          onHttpError={handleLoadingError}
+          onError={handleLoadingError}
+          source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
+        />
+      )}
+      {!webviewSource && (
+        <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+      )}
     </SafeAreaView>
   );
 };
@@ -213,7 +240,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 16
-  }
+  },
+  loader: { position: "absolute", width: "100%", height: "100%" }
 });
 
 export default CieIdLoginWebView;
