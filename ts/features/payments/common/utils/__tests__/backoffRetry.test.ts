@@ -8,22 +8,22 @@ describe("getTimeRemainingText", () => {
 
   it('should return "1 secondo" if 1 second is remaining', () => {
     const futureDate = new Date(Date.now() + 1000); // 1 second in the future
-    expect(getTimeRemainingText(futureDate)).toBe("1 secondo");
+    expect(getTimeRemainingText(futureDate)).toBe("1 second");
   });
 
   it("should return correct string for seconds remaining", () => {
     const futureDate = new Date(Date.now() + 5000); // 5 seconds in the future
-    expect(getTimeRemainingText(futureDate)).toBe("5 secondi");
+    expect(getTimeRemainingText(futureDate)).toBe("5 seconds");
   });
 
   it('should return "1 minuto" if 1 minute is remaining', () => {
     const futureDate = new Date(Date.now() + 60000); // 1 minute in the future
-    expect(getTimeRemainingText(futureDate)).toBe("1 minuto");
+    expect(getTimeRemainingText(futureDate)).toBe("1 minute");
   });
 
   it("should return correct string for minutes remaining", () => {
     const futureDate = new Date(Date.now() + 120000); // 2 minutes in the future
-    expect(getTimeRemainingText(futureDate)).toBe("2 minuti");
+    expect(getTimeRemainingText(futureDate)).toBe("2 minutes");
   });
 });
 
