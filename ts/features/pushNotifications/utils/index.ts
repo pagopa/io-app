@@ -1,8 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import * as E from "fp-ts/lib/Either";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
+import { captureException, captureMessage } from "@sentry/react-native";
 import { v4 as uuid } from "uuid";
 import { PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
@@ -14,71 +10,70 @@ export enum AuthorizationStatus {
   NotDetermined = 0,
   StatusDenied = 1,
   Authorized = 2,
-  Provisional = 3
+  Provisional = 3,
+  Ephemeral = 4 // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
 }
 
-const checkPermissionAndroid = () =>
-  new Promise<boolean>(resolve =>
-    PushNotification.checkPermissions(data => {
-      // On Android, only 'alert' has a value
-      resolve(!!data.alert);
-    })
-  );
-
-const checkPermissioniOS = () =>
-  new Promise<boolean>(resolve =>
-    PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
-      resolve(
-        authorizationStatus !== AuthorizationStatus.NotDetermined &&
-          authorizationStatus !== AuthorizationStatus.StatusDenied
-      );
-    })
-  );
-
 export const checkNotificationPermissions = () =>
-  isIos ? checkPermissioniOS() : checkPermissionAndroid();
+  new Promise<boolean>(resolve => {
+    try {
+      if (isIos) {
+        PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
+          // On iOS, 'authorizationStatus' is the parameter that
+          // reflects the notification permission status ('alert'
+          // is just one of the presentation's options)
+          resolve(
+            authorizationStatus !== undefined &&
+              authorizationStatus !== AuthorizationStatus.NotDetermined &&
+              authorizationStatus !== AuthorizationStatus.StatusDenied
+          );
+        });
+      } else {
+        PushNotification.checkPermissions(data => {
+          // On Android, only 'alert' has a value
+          resolve(!!data.alert);
+        });
+      }
+    } catch (e) {
+      captureException(e);
+      captureMessage(
+        `[PushNotifications] 'checkNotificationPermissions' has thrown an exception on ${
+          isIos ? "iOS" : "Android"
+        }`
+      );
+      resolve(false);
+    }
+  });
 
-const requestPermissioniOS = () =>
-  pipe(
-    TE.tryCatch(
-      () =>
-        PushNotificationIOS.requestPermissions({
+export const requestNotificationPermissions = async () => {
+  try {
+    if (isIos) {
+      const pushNotificationPermissions =
+        await PushNotificationIOS.requestPermissions({
           alert: true,
           badge: true,
           sound: true
-        }),
-      E.toError
-    ),
-    TE.map(
-      ({ authorizationStatus }) =>
-        authorizationStatus === AuthorizationStatus.Authorized
-    )
-  );
-
-const requestPermissionAndroid = () =>
-  pipe(
-    TE.tryCatch(
-      () =>
-        PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-        ),
-      E.toError
-    ),
-    TE.map(
-      permissionStatus =>
-        permissionStatus === PermissionsAndroid.RESULTS.GRANTED
-    )
-  );
-
-export const requestNotificationPermissions = () =>
-  pipe(
-    isIos,
-    B.fold(
-      () => requestPermissionAndroid(),
-      () => requestPermissioniOS()
-    ),
-    TE.getOrElse(() => T.of(false))
-  )();
+        });
+      return (
+        pushNotificationPermissions.authorizationStatus ===
+        AuthorizationStatus.Authorized
+      );
+    } else {
+      const permissionStatus = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      );
+      return permissionStatus === PermissionsAndroid.RESULTS.GRANTED;
+    }
+  } catch (e) {
+    captureException(e);
+    captureMessage(
+      `[PushNotifications] 'requestNotificationPermissions' has thrown an exception on ${
+        isIos ? "iOS" : "Android"
+      }`
+    );
+    return false;
+  }
+};
 
 /**
  * Remove all the local notifications related to authentication with spid.
