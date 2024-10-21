@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Badge,
   Body,
@@ -9,27 +8,28 @@ import {
   ListItemAction,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { FlatList, RefreshControl, View } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
+import { FlatList, RefreshControl, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { CgnDetailsParamsList } from "../../navigation/params";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { cgnCategoriesListSelector } from "../../store/reducers/categories";
-import { cgnCategories } from "../../store/actions/categories";
-import CGN_ROUTES from "../../navigation/routes";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { isDesignSystemEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import CGN_ROUTES from "../../navigation/routes";
+import { cgnCategories } from "../../store/actions/categories";
+import { cgnCategoriesListSelector } from "../../store/reducers/categories";
+import { getCategorySpecs } from "../../utils/filters";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
-  const isFirstRender = React.useRef<boolean>(true);
+  const [isFirstRender, setIsFirstRender] = React.useState<boolean>(true);
   const dispatch = useIODispatch();
   const potCategories = useIOSelector(cgnCategoriesListSelector);
 
@@ -63,11 +63,10 @@ export const CgnMerchantCategoriesListScreen = () => {
   );
 
   React.useEffect(() => {
-    if (!isFirstRender.current && isError) {
+    if (isError) {
       IOToast.error(I18n.t("global.genericError"));
     }
-    // eslint-disable-next-line functional/immutable-data
-    isFirstRender.current = false;
+    setIsFirstRender(false);
   }, [isError]);
 
   const renderCategoryElement = (
@@ -130,7 +129,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         renderItem={({ item, index }) => renderCategoryElement(item, index)}
         refreshControl={
           <RefreshControl
-            refreshing={pot.isLoading(potCategories)}
+            refreshing={isFirstRender && pot.isLoading(potCategories)}
             onRefresh={loadCategories}
           />
         }
