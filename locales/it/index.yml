@@ -2673,7 +2673,7 @@ bonus:
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
-    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
+    departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
     merchantsList:
       news: novità
       online: Online
@@ -2717,7 +2717,7 @@ bonus:
         description: Descrizione
         contactInfo: Contatti e informazioni
       cta:
-        website: Vai al sito del partner
+        website: Visita il sito del partner
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e tempo libero
@@ -3212,7 +3212,7 @@ features:
   itWallet:
     credentialName:
       eid: Identità Digitale
-      mdl: Patente di Guida
+      mdl: Patente di guida
       dc: Carta Europea della Disabilità
       ts: Tessera Sanitaria - Tessera europea di assicurazione malattia
     ipzsPrivacy:
@@ -3261,7 +3261,7 @@ features:
         attachments: "Allegati"
         authenticSource: Origine dei dati
         mdl:
-          category: "Licenza {{category}}"
+          category: "Patente {{category}}"
           issuedDate: "Valida dal"
           expirationDate: "Valida fino"
           restrictionConditions: "Codici"
@@ -3271,16 +3271,16 @@ features:
         content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
-      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti personali**, come la Patente di guida e la Tessera Sanitaria. \n Attiva la funzionalità *Documenti su IO* per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario solo la prima volta."
-      tos: Per maggiori informazioni, leggi l’[informativa Privacy](https://io.italia.it/informativa-sperimentazione) e i [Termini e Condizioni d’uso](https://io.italia.it/tos-sperimentazione)
+      content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
+      tos: Premendo **Continua** dichiari di aver letto l’[informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
         action: Scopri di più
     identification:
       mode:
-        title: Per iniziare, attiva Documenti su IO
-        description: È un passaggio necessario solo la prima volta per garantire la sicurezza dei tuoi dati.
+        title: Verfica la tua identità
+        description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
           spid:
@@ -3315,12 +3315,12 @@ features:
     issuance:
       credentialAuth:
         title: "{{credentialName}}: dati necessari"
-        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della credenziale"
+        subtitle: "Saranno condivisi con **{{organization}}** per il rilascio della versione digitale del documento."
         requiredClaims: Dati richiesti
         disclaimer:
           0: I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.
-          1: I dati saranno condivisi solo per il tempo necessario al rilascio della credenziale.
-        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy](https://io.italia.it/informativa-ipzs-sperimentazione)."
+          1: I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento.
+        tos: "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}})."
       eidPreview:
         title: Identità verificata
         subtitle: "Stai attivando **Documenti su IO** come:"
@@ -3333,12 +3333,12 @@ features:
         bottomSheet:
           about:
             title: "Chi è?"
-            subtitle: "È l'ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti."
+            subtitle: "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
           authSource:
             title: "Chi è?"
-            subtitle: "È l'ente che detiene i dati contenuti all'interno del tuo documento."
+            subtitle: "È l’ente che detiene i dati contenuti all’interno del tuo documento."
         actions:
-          primary: Aggiungi al portafoglio
+          primary: Aggiungi al Portafoglio
           secondary: Annulla
       eidResult:
         success:
@@ -3366,8 +3366,8 @@ features:
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
       asyncCredentialError:
-        title: Motorizzazione Civile ha preso in carico la tua richiesta
-        body: Riceverai un messaggio in app per continuare appena Motorizzazione Civile avrà elaborato la tua richiesta.
+        title: La Motorizzazione Civile ha preso in carico la tua richiesta
+        body: Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.
         primaryAction: Ho capito
       credentialAlreadyAdded:
         title: Hai già questo documento
@@ -3390,10 +3390,10 @@ features:
     presentation:
       alerts:
         mdl:
-          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle forze dell'ordine."
+          content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
           action: Scopri di più
         ehc:
-          content: "La tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO è equivalente al documento fisico e consente, mostrandola, di accedere a tutti i servizi previsti."
+          content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
           action: "Scopri di più"
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
@@ -3427,7 +3427,7 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Nascosto"
-        fiscalCode: Codice fiscale
+        fiscalCode: Il tuo Codice Fiscale
         status:
           valid: Valida
           expired: Non valida
