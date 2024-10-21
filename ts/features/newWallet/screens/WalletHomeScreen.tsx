@@ -1,8 +1,4 @@
-import {
-  GradientScrollView,
-  IOStyles,
-  IOToast
-} from "@pagopa/io-app-design-system";
+import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
@@ -28,6 +24,7 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { IOScrollView } from "../../../components/ui/IOScrollView";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -97,19 +94,21 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
   }
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        testID: "walletAddCardButtonTestID",
-        label: I18n.t("features.wallet.home.cta"),
-        accessibilityLabel: I18n.t("features.wallet.home.cta"),
-        icon: "addSmall",
-        iconPosition: "end",
-        onPress: handleAddToWalletButtonPress
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          testID: "walletAddCardButtonTestID",
+          label: I18n.t("features.wallet.home.cta"),
+          icon: "addSmall",
+          iconPosition: "end",
+          onPress: handleAddToWalletButtonPress
+        }
       }}
       excludeSafeAreaMargins={true}
     >
       {children}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 
