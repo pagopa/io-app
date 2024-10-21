@@ -1,11 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import { Body, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
   useIOBottomSheetAutoresizableModal
 } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 /**
  * This custom hook, usePaymentsLegacyAttachmentBottomSheet, is designed to display a bottom sheet
@@ -16,41 +17,20 @@ const usePaymentsLegacyAttachmentBottomSheet = (): IOBottomSheetModal =>
     title: I18n.t("features.payments.transactions.legacy.bottomSheet.title"),
     component: (
       <View>
-        <ParagraphWithTitle
-          title={I18n.t(
-            "features.payments.transactions.legacy.bottomSheet.noticeHeading"
-          )}
-          body={I18n.t(
-            "features.payments.transactions.legacy.bottomSheet.noticeBody"
+        <IOMarkdown
+          content={I18n.t(
+            "features.payments.transactions.legacy.bottomSheet.notice"
           )}
         />
         <VSpacer size={24} />
-        <ParagraphWithTitle
-          title={I18n.t(
-            "features.payments.transactions.legacy.bottomSheet.allNoticesHeading"
-          )}
-          body={I18n.t(
-            "features.payments.transactions.legacy.bottomSheet.allNoticesBody"
+        <IOMarkdown
+          content={I18n.t(
+            "features.payments.transactions.legacy.bottomSheet.allNotices"
           )}
         />
         <VSpacer size={48} />
       </View>
     )
   });
-
-type ParagraphWithTitleProps = {
-  title: string;
-  body: string;
-};
-
-const ParagraphWithTitle = ({ title, body }: ParagraphWithTitleProps) => (
-  <View>
-    <Body weight="Semibold" color="black">
-      {title}
-    </Body>
-    <VSpacer size={8} />
-    <Body>{body}</Body>
-  </View>
-);
 
 export { usePaymentsLegacyAttachmentBottomSheet };

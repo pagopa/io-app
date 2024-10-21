@@ -1,14 +1,15 @@
 import React, { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
+import { useIODispatch } from "../../../store/hooks";
+import { zendeskSupportCancel } from "../store/actions";
 
 const RequestZandeskTokenErrorScreen = () => {
-  const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const handleOnClose = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+    dispatch(zendeskSupportCancel());
+  }, [dispatch]);
 
   return (
     <OperationResultScreenContent
