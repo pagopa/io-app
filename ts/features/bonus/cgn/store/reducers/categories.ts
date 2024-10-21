@@ -16,7 +16,7 @@ export type CgnCategoriesState = {
 };
 
 const INITIAL_STATE: CgnCategoriesState = {
-  list: pot.none
+  list: pot.noneLoading
 };
 
 const reducer = (
