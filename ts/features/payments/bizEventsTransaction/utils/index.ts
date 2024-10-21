@@ -65,7 +65,7 @@ export const getPayerInfoLabel = (payer: InfoNotice["payer"]): string => {
   }
 
   const name = payer.name ? payer.name.trim() : "";
-  const taxCode = payer.taxCode ? `(${payer.taxCode.trim()})` : "";
+  const taxCode = payer.taxCode ? payer.taxCode.trim() : "";
 
   const payerInfo =
     name && taxCode ? `${name}\n${taxCode}` : `${name}${taxCode}`;
