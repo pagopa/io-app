@@ -1,7 +1,7 @@
 import {
   Avatar,
   Body,
-  ButtonText,
+  ButtonLink,
   ForceScrollDownView,
   H2,
   H6,
@@ -131,13 +131,10 @@ export const FimsFlowSuccessBody = ({
         <Subtitle />
 
         <VSpacer size={24} />
-        <ButtonText
-          weight="Bold"
-          color="blueIO-500"
+        <ButtonLink
+          label={I18n.t("global.why")}
           onPress={BottomSheet.present}
-        >
-          {I18n.t("global.why")}
-        </ButtonText>
+        />
         <VSpacer size={24} />
         <ListItemHeader label="Dati richiesti" iconName="security" />
         <FimsClaimsList claims={consents.user_metadata} />
