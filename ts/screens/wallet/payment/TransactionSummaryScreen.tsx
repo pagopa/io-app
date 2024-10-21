@@ -67,7 +67,6 @@ import {
 } from "../../../utils/supportAssistance";
 import { useFooterActionsMeasurements } from "../../../hooks/useFooterActionsMeasurements";
 import { TransactionSummary } from "./components/TransactionSummary";
-import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { useStartOrResumePayment } from "./hooks/useStartOrResumePayment";
 
@@ -403,15 +402,6 @@ const TransactionSummaryScreen = (): React.ReactElement => {
             organizationFiscalCode={organizationFiscalCode}
             isPaid={isPaid}
           />
-
-          {showsInlineError && pot.isError(paymentVerification) && (
-            <TransactionSummaryErrorDetails
-              error={error}
-              paymentNoticeNumber={paymentNoticeNumber}
-              organizationFiscalCode={organizationFiscalCode}
-              messageId={messageId}
-            />
-          )}
         </ContentWrapper>
       </ScrollView>
 

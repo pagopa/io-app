@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
-import { ContentWrapper, IOColors } from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import {
   PaymentHistory,
@@ -25,7 +25,6 @@ import { getIuv } from "../../utils/payment";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 
-import { Body } from "../core/typography/Body";
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
 type Props = Readonly<{

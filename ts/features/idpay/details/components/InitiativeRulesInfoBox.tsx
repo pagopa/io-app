@@ -1,17 +1,17 @@
+import {
+  Body,
+  ButtonSolid,
+  ContentWrapper,
+  H6,
+  HSpacer,
+  IOColors,
+  Icon,
+  Label,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import {
-  ButtonSolid,
-  IOColors,
-  Icon,
-  HSpacer,
-  VSpacer,
-  ContentWrapper
-} from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
-import { H4 } from "../../../../components/core/typography/H4";
-import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
@@ -51,7 +51,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
   return (
     <>
       <View style={styles.infoBox}>
-        <H4>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H4>
+        <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
         <VSpacer size={4} />
         <Body numberOfLines={3} ellipsizeMode="tail">
           {content}
@@ -60,9 +60,9 @@ const InitiativeRulesInfoBox = (props: Props) => {
         <View style={IOStyles.row}>
           <Icon name="categLearning" color="blue" />
           <HSpacer size={8} />
-          <Link onPress={() => present()}>
+          <Label asLink onPress={() => present()}>
             {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}
-          </Link>
+          </Label>
         </View>
       </View>
       <VSpacer size={16} />

@@ -1,6 +1,8 @@
 import {
+  Body,
   ContentWrapper,
   FooterWithButtons,
+  H2,
   IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -10,8 +12,6 @@ import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
@@ -158,7 +158,7 @@ const UnsubscriptionConfirmationScreen = () => {
       <ScrollView>
         <ContentWrapper>
           <VSpacer size={16} />
-          <H1>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H1>
+          <H2>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
           <VSpacer size={16} />

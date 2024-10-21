@@ -1,4 +1,4 @@
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import { H6, IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import {
@@ -13,7 +13,6 @@ import { Dispatch } from "redux";
 import cgnBackground from "../../../../../img/bonus/cgn/cgn-preview.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -81,9 +80,7 @@ const CgnCardList = (props: Props) => (
             ]}
             testID={"cgn-card-component"}
           >
-            <H3 color={"black"} weight={"Bold"}>
-              {I18n.t("bonus.cgn.name")}
-            </H3>
+            <H6 color={"black"}>{I18n.t("bonus.cgn.name")}</H6>
             <Image
               accessibilityIgnoresInvertColors
               source={cgnLogo}

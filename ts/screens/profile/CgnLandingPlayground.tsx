@@ -1,6 +1,7 @@
 import {
   ButtonOutline,
   ButtonSolid,
+  H6,
   IOColors,
   IOVisualCostants,
   VSpacer
@@ -14,7 +15,6 @@ import {
   View
 } from "react-native";
 import WebviewComponent from "../../components/WebviewComponent";
-import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
@@ -53,7 +53,7 @@ const CgnLandingPlayground = () => {
         ]}
       >
         <View>
-          <H5>{"Link alla landing"}</H5>
+          <H6>{"Link alla landing"}</H6>
           <TextInput
             accessibilityLabel="URL address"
             style={styles.textInput}
@@ -64,7 +64,7 @@ const CgnLandingPlayground = () => {
             autoCorrect={false}
           />
           <VSpacer size={8} />
-          <H5>{"Referer"}</H5>
+          <H6>{"Referer"}</H6>
           <TextInput
             accessibilityLabel="Referer field"
             style={styles.textInput}

@@ -1,7 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { H4, LoadingSpinner, VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
+import {
+  Body,
+  H4,
+  LoadingSpinner,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 

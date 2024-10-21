@@ -9,6 +9,7 @@ import {
   HSpacer,
   IOColors,
   IOToast,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -27,7 +28,6 @@ import {
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { Link } from "../../components/core/typography/Link";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -421,13 +421,14 @@ const AddCardScreen: React.FC = () => {
 
             <VSpacer size={16} />
 
-            <Link
+            <Label
+              asLink
               accessibilityRole="link"
               accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
               onPress={openSupportedCardsPage}
             >
               {I18n.t("wallet.openAcceptedCardsPageCTA")}
-            </Link>
+            </Label>
           </ContentWrapper>
         </ScrollView>
         <SectionStatusComponent sectionKey={"credit_card"} />

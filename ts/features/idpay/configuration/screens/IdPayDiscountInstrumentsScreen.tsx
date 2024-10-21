@@ -1,4 +1,4 @@
-import { Divider, H1, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, Divider, H1, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,
@@ -10,7 +10,6 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { Body } from "../../../../components/core/typography/Body";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";

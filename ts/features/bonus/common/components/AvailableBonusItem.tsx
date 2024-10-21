@@ -1,4 +1,4 @@
-import { HSpacer } from "@pagopa/io-app-design-system";
+import { Body, H6, HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
@@ -7,8 +7,6 @@ import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
@@ -81,9 +79,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     >
       <View style={styles.columnLeft}>
         <View style={[IOStyles.row, IOStyles.alignCenter, disabledStyle]}>
-          <H3 weight="Bold" color="bluegreyDark">
-            {bonusTypeLocalizedContent.name}
-          </H3>
+          <H6 color="bluegreyDark">{bonusTypeLocalizedContent.name}</H6>
           <HSpacer size={8} />
           {renderBadge(state)}
         </View>

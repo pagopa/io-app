@@ -1,4 +1,5 @@
 import {
+  Body,
   IOColors,
   IOVisualCostants,
   hexToRgba
@@ -7,7 +8,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
-import { Body } from "../core/typography/Body";
 import { Overlay } from "./Overlay";
 
 const opaqueBgColor = hexToRgba(IOColors.black, 0.6);

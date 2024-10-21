@@ -12,7 +12,7 @@ describe("StatusContent", () => {
         accessibilityLabel={"a label"}
         accessibilityRole={"link"}
         backgroundColor={"aqua"}
-        foregroundColor={"bluegreyDark"}
+        foregroundColor={"grey-700"}
         iconName="ok"
         ref={viewRef}
       />

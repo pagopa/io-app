@@ -1,6 +1,5 @@
-import { Banner, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import React, { ComponentProps, useMemo } from "react";
-import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";

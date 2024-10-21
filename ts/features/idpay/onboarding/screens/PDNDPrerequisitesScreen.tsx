@@ -1,7 +1,9 @@
 import {
+  Body,
   ButtonSolid,
   ContentWrapper,
   FooterWithButtons,
+  H2,
   ModuleSummary,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,8 +13,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -101,7 +101,7 @@ export const PDNDPrerequisitesScreen = () => {
       <ScrollView>
         <View style={IOStyles.horizontalContentPadding}>
           <VSpacer size={16} />
-          <H1>{I18n.t("idpay.onboarding.PDNDPrerequisites.title")}</H1>
+          <H2>{I18n.t("idpay.onboarding.PDNDPrerequisites.title")}</H2>
           <VSpacer size={16} />
           <Body>
             {I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {

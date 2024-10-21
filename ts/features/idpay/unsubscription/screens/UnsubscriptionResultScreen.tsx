@@ -1,6 +1,7 @@
 import {
   Body,
   ButtonOutline,
+  H6,
   IOPictograms,
   IOStyles,
   Pictogram,
@@ -8,7 +9,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -63,7 +63,7 @@ const UnsubscriptionResultScreen = () => {
         <View style={styles.content}>
           <Pictogram name={pictogram} size={80} />
           <VSpacer size={16} />
-          <H3>{title}</H3>
+          <H6>{title}</H6>
           <VSpacer size={16} />
           <Body style={{ textAlign: "center" }}>{content}</Body>
         </View>

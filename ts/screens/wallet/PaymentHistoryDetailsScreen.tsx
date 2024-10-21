@@ -3,15 +3,19 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
+import {
+  VSpacer,
+  ButtonOutline,
+  Body,
+  H4,
+  Label
+} from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
-import { Body } from "../../components/core/typography/Body";
-import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -62,7 +66,6 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../utils/supportAssistance";
-import { H2 } from "../../components/core/typography/H2";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -83,7 +86,7 @@ const renderItem = (label: string, value?: string) => {
   return (
     <React.Fragment>
       <Body>{label}</Body>
-      <Label weight="Bold" color="bluegrey">
+      <Label weight="Bold" color="grey-700">
         {value}
       </Label>
       <VSpacer size={16} />
@@ -256,7 +259,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       <View style={IOStyles.flex}>
         <Body>{label}</Body>
       </View>
-      <Label weight="Bold" color="bluegreyDark">
+      <Label weight="Bold" color="grey-700">
         {value}
       </Label>
     </View>
@@ -364,11 +367,11 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 {/** total amount */}
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <View style={IOStyles.flex}>
-                    <H2>{I18n.t("wallet.firstTransactionSummary.total")}</H2>
+                    <H4>{I18n.t("wallet.firstTransactionSummary.total")}</H4>
                   </View>
-                  <H2>
+                  <H4>
                     {formatNumberCentsToAmount(data.grandTotal.value, true)}
-                  </H2>
+                  </H4>
                 </View>
 
                 {this.renderSeparator()}

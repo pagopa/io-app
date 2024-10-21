@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { H4 } from "@pagopa/io-app-design-system";
 import customVariables from "../../../../../theme/variables";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H2 } from "../../../../../components/core/typography/H2";
 
 type Props = {
   onPress?: () => void;
@@ -35,7 +35,7 @@ const CgnMerchantCategoryItem = (props: Props) => (
       onPress={props.onPress}
     >
       <View style={[IOStyles.flex, IOStyles.row]}>
-        <H2 color={"white"}>{props.title}</H2>
+        <H4 color={"white"}>{props.title}</H4>
       </View>
       {props.child}
     </TouchableDefaultOpacity>
