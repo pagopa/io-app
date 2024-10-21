@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.73.0-rc.3](https://github.com/pagopa/io-app/compare/2.73.0-rc.2...2.73.0-rc.3) (2024-10-18)
+
+
+### Features
+
+* [[IOBP-782](https://pagopa.atlassian.net/browse/IOBP-782)] Add biz events receipt migration banner info ([#6188](https://github.com/pagopa/io-app/issues/6188)) ([7fdb1dc](https://github.com/pagopa/io-app/commit/7fdb1dc2ce6571e9196eda58f1f15c45f0432472))
+* **IT Wallet:** [[SIW-1584](https://pagopa.atlassian.net/browse/SIW-1584)] Add IPZS privacy screen ([#6270](https://github.com/pagopa/io-app/issues/6270)) ([d15d93f](https://github.com/pagopa/io-app/commit/d15d93f3f28cf6641b9472837e610fcfbad10860))
+* **IT Wallet:** [[SIW-1742](https://pagopa.atlassian.net/browse/SIW-1742)] Display credentials authentic source ([#6294](https://github.com/pagopa/io-app/issues/6294)) ([24a9b41](https://github.com/pagopa/io-app/commit/24a9b414d12d85449991e516f6037d3622d0e8d5))
+* [[IOBP-619](https://pagopa.atlassian.net/browse/IOBP-619),[IOBP-805](https://pagopa.atlassian.net/browse/IOBP-805)] Add payment feedback banner feature flag and remote configuration ([#6072](https://github.com/pagopa/io-app/issues/6072)) ([0bb2e40](https://github.com/pagopa/io-app/commit/0bb2e4076e6816dc9d4b2fca3f8376bc10d3ced0))
+* [[IOBP-835](https://pagopa.atlassian.net/browse/IOBP-835)] Replaced payment onboarding Auth error link with bottom sheet info ([#6168](https://github.com/pagopa/io-app/issues/6168)) ([08d5d02](https://github.com/pagopa/io-app/commit/08d5d027d448ef0b501fbcc052170c2f9786a90e))
+* [[IOBP-873](https://pagopa.atlassian.net/browse/IOBP-873),[IOBP-775](https://pagopa.atlassian.net/browse/IOBP-775)] Adapted new biz events definitions API ([#6187](https://github.com/pagopa/io-app/issues/6187)) ([bdb3b8b](https://github.com/pagopa/io-app/commit/bdb3b8b16c3243719c98f2c85799edd96904ca19)), closes [1#diff-3fff3cd14c95f8b3a7e92dd7068c16482411814c40a802c8ea63c2c42dbed954](https://github.com/pagopa/1/issues/diff-3fff3cd14c95f8b3a7e92dd7068c16482411814c40a802c8ea63c2c42dbed954)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1761](https://pagopa.atlassian.net/browse/SIW-1761)] Crash when integrity service is not available  ([#6292](https://github.com/pagopa/io-app/issues/6292)) ([4c3eab8](https://github.com/pagopa/io-app/commit/4c3eab8c4159e06da6599dd36f0637fa835bff97))
+* **IT Wallet:** [[SIW-1766](https://pagopa.atlassian.net/browse/SIW-1766)] Enable banners with empty wallet ([#6305](https://github.com/pagopa/io-app/issues/6305)) ([bf3fd6d](https://github.com/pagopa/io-app/commit/bf3fd6dcc0b8463fe7347219713aab4371e5934b))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1648](https://pagopa.atlassian.net/browse/SIW-1648)] Mixpanel events new features ([#6235](https://github.com/pagopa/io-app/issues/6235)) ([7492e94](https://github.com/pagopa/io-app/commit/7492e945bb3019d8be64df0f8509d04333d592f2))
+* **IT Wallet:** [[SIW-1743](https://pagopa.atlassian.net/browse/SIW-1743)] Display upcoming ITWallet banner for users not yet enabled ([#6283](https://github.com/pagopa/io-app/issues/6283)) ([932886f](https://github.com/pagopa/io-app/commit/932886f159798598782167864a19b83dd3f494e6))
+* **IT Wallet:** [[SIW-1745](https://pagopa.atlassian.net/browse/SIW-1745)] IT Wallet copy review ([#6302](https://github.com/pagopa/io-app/issues/6302)) ([ba54dae](https://github.com/pagopa/io-app/commit/ba54dae13dd8988d5ade63130ccf3245c7b75088))
+* **IT Wallet:** [[SIW-1764](https://pagopa.atlassian.net/browse/SIW-1764)] Add ipzs privacy policy link inside credential details bottomSheet ([#6301](https://github.com/pagopa/io-app/issues/6301)) ([e51a6f1](https://github.com/pagopa/io-app/commit/e51a6f1d87adc31ecb4c94f6080a8c3bee2b5e87))
+* **IT Wallet:** [[SIW-1765](https://pagopa.atlassian.net/browse/SIW-1765)] Remove secondary CTA on integrity error ([#6303](https://github.com/pagopa/io-app/issues/6303)) ([3bc4854](https://github.com/pagopa/io-app/commit/3bc48540c0028f790092257dc36ab9eb4f3644ed))
+* [[IOBP-852](https://pagopa.atlassian.net/browse/IOBP-852)] Add FCI redirect support from barcode scan screen ([#6215](https://github.com/pagopa/io-app/issues/6215)) ([5a24088](https://github.com/pagopa/io-app/commit/5a2408897923a0d3a44bd2dfc011fe478795345f))
+* [[PE-737](https://pagopa.atlassian.net/browse/PE-737)] CGN capitalize text apostrophe case ([#6293](https://github.com/pagopa/io-app/issues/6293)) ([5552357](https://github.com/pagopa/io-app/commit/55523573af54dc8a72a5b873173d3d7277f3a6bf))
+
 ## [2.73.0-rc.2](https://github.com/pagopa/io-app/compare/2.73.0-rc.1...2.73.0-rc.2) (2024-10-16)
 
 
