@@ -28,6 +28,7 @@ export const itwEidIssuanceMachine = setup({
   },
   actions: {
     navigateToTosScreen: notImplemented,
+    navigateToIpzsPrivacyScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
@@ -48,6 +49,7 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
+    trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented
   },
@@ -106,7 +108,7 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            target: "UserIdentification"
+            target: "IpzsPrivacyAcceptance"
           }
         ]
       }
@@ -144,7 +146,11 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "revokeWalletInstance",
         onDone: {
-          actions: ["resetWalletInstance", "closeIssuance"]
+          actions: [
+            "resetWalletInstance",
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
+          ]
         },
         onError: {
           actions: assign(
@@ -168,7 +174,7 @@ export const itwEidIssuanceMachine = setup({
             })),
             { type: "storeWalletInstanceAttestation" }
           ],
-          target: "UserIdentification"
+          target: "IpzsPrivacyAcceptance"
         },
         onError: [
           {
@@ -180,6 +186,20 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    IpzsPrivacyAcceptance: {
+      description:
+        "This state handles the acceptance of the IPZS privacy policy",
+      entry: "navigateToIpzsPrivacyScreen",
+      on: {
+        "accept-ipzs-privacy": {
+          target: "UserIdentification"
+        },
+        error: {
+          target: "#itwEidIssuanceMachine.Failure"
+        },
+        back: "#itwEidIssuanceMachine.TosAcceptance"
       }
     },
     UserIdentification: {
@@ -210,7 +230,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification.Completed"
               }
             ],
-            back: "#itwEidIssuanceMachine.TosAcceptance"
+            back: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
           }
         },
         Spid: {
