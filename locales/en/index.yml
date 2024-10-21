@@ -3144,6 +3144,12 @@ features:
         welfare: Iniziative welfare
         payments: Metodi di pagamento
   payments:
+    backoff:
+      second: "1 second"
+      seconds: "{{seconds}} seconds"
+      minute: "1 minute"
+      minutes: "{{minutes}} minutes"
+      retryCountDown: "You can try again in {{time}}"
     title: Payments
     cta: Paga un avviso
     remoteAlert:

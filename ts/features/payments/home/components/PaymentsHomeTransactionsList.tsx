@@ -2,7 +2,8 @@ import {
   Divider,
   IOStyles,
   ListItemHeader,
-  ListItemTransaction
+  ListItemTransaction,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
@@ -20,11 +21,24 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
+import { paymentsBackoffRetrySelector } from "../../common/store/selectors";
+import {
+  clearPaymentsBackoffRetry,
+  increasePaymentsBackoffRetry
+} from "../../common/store/actions";
+import {
+  canRetry,
+  getTimeRemainingText
+} from "../../common/utils/backoffRetry";
+import { PaymentsBackoffRetry } from "../../common/types/PaymentsBackoffRetry";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 
 type Props = {
   enforcedLoadingState?: boolean;
 };
+
+const PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF: PaymentsBackoffRetry =
+  "PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF";
 
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
@@ -33,6 +47,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const latestTransactionsPot = useIOSelector(
     walletLatestTransactionsBizEventsListPotSelector
   );
+  const transactionsBackoff = useIOSelector(
+    paymentsBackoffRetrySelector(PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF)
+  );
+  const toast = useIOToast();
 
   const isLoading =
     (!pot.isSome(latestTransactionsPot) &&
@@ -45,6 +63,17 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
     }
   });
+
+  React.useEffect(() => {
+    if (
+      pot.isSome(latestTransactionsPot) &&
+      !pot.isLoading(latestTransactionsPot)
+    ) {
+      dispatch(
+        clearPaymentsBackoffRetry(PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF)
+      );
+    }
+  }, [dispatch, latestTransactionsPot]);
 
   const handleNavigateToTransactionDetails = React.useCallback(
     (transaction: NoticeListItem) => {
@@ -67,6 +96,20 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   );
 
   const handleOnRetry = () => {
+    if (
+      transactionsBackoff?.allowedRetryTimestamp &&
+      !canRetry(transactionsBackoff?.allowedRetryTimestamp)
+    ) {
+      toast.error(
+        I18n.t("features.payments.backoff.retryCountDown", {
+          time: getTimeRemainingText(transactionsBackoff?.allowedRetryTimestamp)
+        })
+      );
+      return;
+    }
+    dispatch(
+      increasePaymentsBackoffRetry(PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF)
+    );
     dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
   };
 
