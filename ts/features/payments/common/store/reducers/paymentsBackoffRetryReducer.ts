@@ -18,7 +18,6 @@ const reducer = (
   action: Action
 ): PaymentsBackoffRetryState => {
   switch (action.type) {
-    // ADD PENDING ACTION WHILE REFRESHING THE PAGOPA TOKEN
     case getType(increasePaymentsBackoffRetry):
       const retryCount =
         state[action.payload]?.retryCount === undefined

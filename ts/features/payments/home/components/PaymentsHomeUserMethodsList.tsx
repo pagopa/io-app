@@ -137,9 +137,11 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
       isError ? (
         <BannerErrorState
           color="neutral"
-          label="Il caricamento dei metodi è fallito."
+          label={I18n.t("features.payments.methods.error.banner.label")}
           icon="warningFilled"
-          actionText="Prova di nuovo"
+          actionText={I18n.t(
+            "features.payments.methods.error.banner.retryButton"
+          )}
           onPress={handleOnRetry}
         />
       ) : (
