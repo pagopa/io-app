@@ -67,7 +67,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const loginUri = getCieIDLoginUri(spidLevel, isUat);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
+    navigation.replace(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_CIE_ID_ERROR
     });
   }, [navigation]);
@@ -87,7 +87,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           idp: "cie"
         })
       );
-      navigation.navigate(ROUTES.AUTHENTICATION, {
+      navigation.replace(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTH_ERROR_SCREEN,
         params: {
           errorCode: code,
