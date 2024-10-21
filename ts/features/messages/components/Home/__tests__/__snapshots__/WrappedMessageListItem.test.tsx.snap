@@ -611,7 +611,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -1579,7 +1579,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -2723,7 +2723,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -3722,7 +3722,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -4776,7 +4776,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -5646,7 +5646,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -6450,7 +6450,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
@@ -7199,7 +7199,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "lineHeight": 25,
                                         },
                                         {
-                                          "flex": 1,
+                                          "flexGrow": 1,
                                         },
                                       ]
                                     }
