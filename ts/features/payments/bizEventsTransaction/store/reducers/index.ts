@@ -22,7 +22,7 @@ export type PaymentsBizEventsTransactionState = {
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
   transactions: pot.noneLoading,
-  latestTransactions: pot.noneLoading,
+  latestTransactions: pot.none,
   details: pot.noneLoading,
   receiptDocument: pot.none
 };

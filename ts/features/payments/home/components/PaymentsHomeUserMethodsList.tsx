@@ -2,6 +2,7 @@ import {
   Banner,
   IOVisualCostants,
   ListItemHeader,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -22,6 +23,16 @@ import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
+import { paymentsBackoffRetrySelector } from "../../common/store/selectors";
+import {
+  clearPaymentsBackoffRetry,
+  increasePaymentsBackoffRetry
+} from "../../common/store/actions";
+import {
+  canRetry,
+  getTimeRemainingText
+} from "../../common/utils/backoffRetry";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselSkeleton
@@ -31,11 +42,14 @@ type Props = {
   enforcedLoadingState?: boolean;
 };
 
+const PAYMENTS_HOME_USER_METHODS_BACKOFF = "PAYMENTS_HOME_USER_METHODS_BACKOFF";
+
 const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const bannerRef = React.createRef<View>();
 
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const toast = useIOToast();
 
   const shouldShowAddMethodsBanner = useIOSelector(
     isAddMethodsBannerVisibleSelector
@@ -43,6 +57,13 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+  const paymentsUserMethodsBackoff = useIOSelector(
+    paymentsBackoffRetrySelector(PAYMENTS_HOME_USER_METHODS_BACKOFF)
+  );
+  const isError = React.useMemo(
+    () => pot.isError(paymentMethodsPot) && !pot.isSome(paymentMethodsPot),
+    [paymentMethodsPot]
+  );
 
   const isLoading =
     (!pot.isSome(paymentMethodsPot) && pot.isLoading(paymentMethodsPot)) ||
@@ -54,6 +75,12 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
       dispatch(getPaymentsWalletUserMethods.request());
     }
   });
+
+  React.useEffect(() => {
+    if (pot.isSome(paymentMethodsPot) && !pot.isLoading(paymentMethodsPot)) {
+      dispatch(clearPaymentsBackoffRetry(PAYMENTS_HOME_USER_METHODS_BACKOFF));
+    }
+  }, [dispatch, paymentMethodsPot]);
 
   const handleOnMethodPress = (walletId: string) => () => {
     navigation.navigate(
@@ -80,6 +107,24 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     });
   };
 
+  const handleOnRetry = React.useCallback(() => {
+    if (
+      paymentsUserMethodsBackoff?.allowedRetryTimestamp &&
+      !canRetry(paymentsUserMethodsBackoff?.allowedRetryTimestamp)
+    ) {
+      toast.error(
+        I18n.t("features.payments.backoff.retryCountDown", {
+          time: getTimeRemainingText(
+            paymentsUserMethodsBackoff?.allowedRetryTimestamp
+          )
+        })
+      );
+      return;
+    }
+    dispatch(increasePaymentsBackoffRetry(PAYMENTS_HOME_USER_METHODS_BACKOFF));
+    dispatch(getPaymentsWalletUserMethods.request());
+  }, [dispatch, paymentsUserMethodsBackoff, toast]);
+
   const userMethods = paymentMethods.map(
     (method: WalletInfo): PaymentCardSmallProps => ({
       ...getPaymentCardPropsFromWalletInfo(method),
@@ -87,7 +132,28 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     })
   );
 
-  if (!isLoading && isEmpty) {
+  const PaymentCardsCarouselContent = React.useMemo(
+    () =>
+      isError ? (
+        <BannerErrorState
+          color="neutral"
+          label={I18n.t("features.payments.methods.error.banner.label")}
+          icon="warningFilled"
+          actionText={I18n.t(
+            "features.payments.methods.error.banner.retryButton"
+          )}
+          onPress={handleOnRetry}
+        />
+      ) : (
+        <PaymentCardsCarousel
+          cards={userMethods}
+          testID="PaymentsHomeUserMethodsListTestID"
+        />
+      ),
+    [isError, userMethods, handleOnRetry]
+  );
+
+  if (!isLoading && !pot.isError(paymentMethodsPot) && isEmpty) {
     if (!shouldShowAddMethodsBanner) {
       return null;
     }
@@ -110,26 +176,29 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     );
   }
 
+  const showAddButton = !isError && !isLoading;
+
   return (
     <View>
       <ListItemHeader
         label={I18n.t("features.payments.methods.title")}
         accessibilityLabel={I18n.t("features.payments.methods.title")}
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            label: I18n.t("features.payments.methods.button"),
-            onPress: handleOnAddMethodPress
-          }
-        }}
+        endElement={
+          showAddButton
+            ? {
+                type: "buttonLink",
+                componentProps: {
+                  label: I18n.t("features.payments.methods.button"),
+                  onPress: handleOnAddMethodPress
+                }
+              }
+            : undefined
+        }
       />
-      {isLoading ? (
+      {isLoading && !pot.isError(paymentMethodsPot) ? (
         <PaymentCardsCarouselSkeleton testID="PaymentsHomeUserMethodsListTestID-loading" />
       ) : (
-        <PaymentCardsCarousel
-          cards={userMethods}
-          testID="PaymentsHomeUserMethodsListTestID"
-        />
+        PaymentCardsCarouselContent
       )}
       <VSpacer size={24} />
     </View>

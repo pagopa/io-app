@@ -3147,6 +3147,12 @@ features:
         welfare: Iniziative welfare
         payments: Metodi di pagamento
   payments:
+    backoff:
+      second: "1 secondo"
+      seconds: "{{seconds}} secondi"
+      minute: "1 minuto"
+      minutes: "{{minutes}} minuti"
+      retryCountDown: "Puoi riprovare tra {{time}}."
     title: Pagamenti
     cta: Paga un avviso
     remoteAlert:
@@ -3159,6 +3165,10 @@ features:
         action: Aggiungi un metodo
       status:
         expired: Scaduta
+      error:
+        banner:
+          label: Il caricamento dei metodi è fallito.
+          retryButton: Prova di nuovo
     transactions:
       showLegacyTransactions: Mostra precedenti
       legacy:
@@ -3190,6 +3200,10 @@ features:
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
+      error:
+        banner:
+          label: "Il caricamento delle ricevute è fallito."
+          retryButton: "Prova di nuovo"
     details:
       payPal:
         banner:
