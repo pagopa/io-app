@@ -36,7 +36,7 @@ const CopyWithTitleItem: React.FC<{
 }> = ({ title, toCopy, testId }) => (
   <>
     <View>
-      <H6 weight={"Regular"}>{title}</H6>
+      <H6>{title}</H6>
     </View>
     <View style={styles.row}>
       <H6 testID={`${testId}ToCopy`} style={styles.shrink}>

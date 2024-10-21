@@ -9,7 +9,7 @@ import {
   HSpacer,
   IOColors,
   IOToast,
-  LabelLink,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -421,13 +421,14 @@ const AddCardScreen: React.FC = () => {
 
             <VSpacer size={16} />
 
-            <LabelLink
+            <Label
+              asLink
               accessibilityRole="link"
               accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
               onPress={openSupportedCardsPage}
             >
               {I18n.t("wallet.openAcceptedCardsPageCTA")}
-            </LabelLink>
+            </Label>
           </ContentWrapper>
         </ScrollView>
         <SectionStatusComponent sectionKey={"credit_card"} />

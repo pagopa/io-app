@@ -4,7 +4,7 @@ import {
   FooterWithButtons,
   H2,
   IOColors,
-  LabelLink,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -188,9 +188,9 @@ class ManualDataInsertionScreen extends React.Component<
             <ContentWrapper>
               <H2>{I18n.t("wallet.insertManually.title")}</H2>
               <Body>{I18n.t("wallet.insertManually.info")}</Body>
-              <LabelLink onPress={this.showModal}>
+              <Label asLink onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
-              </LabelLink>
+              </Label>
               <VSpacer size={16} />
               <LabelledItem
                 isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}

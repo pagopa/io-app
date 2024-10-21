@@ -15,7 +15,7 @@ export default (onAdd?: () => void) => {
     <View>
       <InternationalCircuitIconsBar />
       <VSpacer size={16} />
-      <H6 weight={"Regular"} color={"bluegreyDark"}>
+      <H6 color={"bluegreyDark"}>
         {I18n.t("wallet.bancomat.details.debit.body")}
       </H6>
       <VSpacer size={16} />

@@ -1,4 +1,4 @@
-import { Body, LabelLink, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, Label, VSpacer } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
@@ -41,11 +41,11 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <LabelLink onPress={handleOnPress} testID="additionalInformation">
+        <Label asLink onPress={handleOnPress} testID="additionalInformation">
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}
-        </LabelLink>
+        </Label>
       </Body>
     </>
   );

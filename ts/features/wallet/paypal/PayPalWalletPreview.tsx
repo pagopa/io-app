@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { Body } from "@pagopa/io-app-design-system";
 import payPalCard from "../../../../img/wallet/cards-icons/paypal_card.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -35,7 +36,10 @@ const PayPalWalletPreview: React.FunctionComponent<Props> = props => {
     <CardLogoPreview
       accessibilityLabel={getAccessibilityRepresentation()}
       left={
-        <Body style={[IOStyles.flex, { paddingRight: 16 }]} numberOfLines={1}>
+        <Body
+          style={StyleSheet.flatten([IOStyles.flex, { paddingRight: 16 }])}
+          numberOfLines={1}
+        >
           {getPaypalAccountEmail(props.paypal.info)}
         </Body>
       }

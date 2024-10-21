@@ -275,11 +275,7 @@ export const LabelledItem: React.FC<Props> = ({
           accessibilityElementsHidden={true}
           key={"description"}
         >
-          <H6
-            weight={"Regular"}
-            color={descriptionColor}
-            testID="H6-description"
-          >
+          <H6 color={descriptionColor} testID="H6-description">
             {props.description}
           </H6>
         </View>

@@ -29,7 +29,7 @@ const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
     <View style={{ flexDirection: "row" }}>
       <Icon name={icon} size={20} color="bluegrey" />
       <HSpacer size={16} />
-      <H6 weight={"Regular"}>{text.toUpperCase()}</H6>
+      <H6>{text.toUpperCase()}</H6>
     </View>
     <RawCheckBox checked={checked} onPress={() => onPress(value)} />
   </Pressable>

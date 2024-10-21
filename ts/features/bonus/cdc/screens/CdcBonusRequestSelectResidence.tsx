@@ -77,9 +77,7 @@ const CdcBonusRequestSelectResidence = () => {
               >
                 <Icon name="bonus" size={20} />
                 <HSpacer size={16} />
-                <H6 weight={"Semibold"} color={"bluegrey"}>
-                  {b.year}
-                </H6>
+                <H6>{b.year}</H6>
               </View>
               <RadioButtonList<ResidentChoice>
                 key={b.year}

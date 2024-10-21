@@ -3,7 +3,7 @@ import {
   ButtonOutline,
   H4,
   IOColors,
-  LabelLink,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -228,7 +228,8 @@ class TransactionDetailsScreen extends React.Component<
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-          <LabelLink
+          <Label
+            asLink
             onPress={this.handleOnFullReasonPress}
             accessible
             accessibilityRole={"button"}
@@ -239,7 +240,7 @@ class TransactionDetailsScreen extends React.Component<
             }`}
           >
             {I18n.t("wallet.transactionFullReason")}
-          </LabelLink>
+          </Label>
           {this.state.showFullReason && (
             <Body
               selectable={true}

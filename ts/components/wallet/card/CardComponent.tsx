@@ -223,7 +223,7 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <H6 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
+          <H6 color={isCardExpired ? "red" : "bluegreyDark"}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </H6>
           <VSpacer size={16} />

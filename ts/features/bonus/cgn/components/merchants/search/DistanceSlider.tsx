@@ -17,10 +17,10 @@ const MIN_VALUE = 1;
 export const DistanceSlider = (props: Props) => (
   <>
     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-      <H6 weight={"Regular"} color={"bluegrey"}>
+      <H6 color={"bluegrey"}>
         {I18n.t("bonus.cgn.merchantsList.filter.sliderLabel")}
       </H6>
-      <H6 weight={"Regular"} color={"grey"}>
+      <H6 color={"grey"}>
         {`${props.value} ${I18n.t(
           "bonus.cgn.merchantsList.filter.sliderUnit"
         )}`}

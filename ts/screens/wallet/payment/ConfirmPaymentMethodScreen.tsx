@@ -445,9 +445,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
                 accessibilityLabel={`${paymentReason}, ${formattedSingleAmount}`}
                 accessible
               >
-                <H6 weight="Semibold" color="bluegreyDark" numberOfLines={1}>
-                  {paymentReason}
-                </H6>
+                <H6 numberOfLines={1}>{paymentReason}</H6>
 
                 <LabelSmall color="bluegrey" weight="Regular">
                   {formattedSingleAmount}

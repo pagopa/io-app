@@ -49,9 +49,7 @@ const topLeft = (phone: string) => (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon name="phone" size={24} />
         <HSpacer size={8} />
-        <H6 weight={"Regular"} testID="phone">
-          {phone}
-        </H6>
+        <H6 testID="phone">{phone}</H6>
       </View>
     )}
   </View>
@@ -72,9 +70,7 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => (
           O.fold(
             () => undefined,
             nameSurname => (
-              <H6 weight={"Regular"} testID={"nameSurname"}>
-                {nameSurname.toLocaleUpperCase()}
-              </H6>
+              <H6 testID={"nameSurname"}>{nameSurname.toLocaleUpperCase()}</H6>
             )
           )
         )}

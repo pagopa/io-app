@@ -116,9 +116,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
       <View style={IOStyles.horizontalContentPadding}>
-        <H6 weight={"Semibold"} color={"bluegreyDark"}>
-          {I18n.t("wallet.featured")}
-        </H6>
+        <H6>{I18n.t("wallet.featured")}</H6>
       </View>
       <ScrollView
         horizontal={true}

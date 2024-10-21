@@ -136,7 +136,7 @@ const ErrorCodeCopyComponent = ({
   error: keyof typeof Detail_v2Enum;
 }): React.ReactElement => (
   <View testID={"error-code-copy-component"}>
-    <H6 weight={"Regular"} style={{ textAlign: "center" }}>
+    <H6 style={{ textAlign: "center" }}>
       {I18n.t("wallet.errors.assistanceLabel")}
     </H6>
     <H6 testID={"error-code"} style={{ textAlign: "center" }}>
@@ -222,7 +222,7 @@ export const errorTransactionUIElements = (
     validError,
     E.fold(
       _ => (
-        <H6 weight={"Regular"} testID={genericErrorSubTestID}>
+        <H6 testID={genericErrorSubTestID}>
           {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
         </H6>
       ),
@@ -280,11 +280,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.ONGOING"),
         subtitle: (
-          <H6
-            weight={"Regular"}
-            style={{ textAlign: "center" }}
-            testID={"ongoing-subtitle"}
-          >
+          <H6 style={{ textAlign: "center" }} testID={"ongoing-subtitle"}>
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
           </H6>
         ),
@@ -302,11 +298,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.EXPIRED"),
         subtitle: (
-          <H6
-            weight={"Regular"}
-            style={{ textAlign: "center" }}
-            testID={"expired-subtitle"}
-          >
+          <H6 style={{ textAlign: "center" }} testID={"expired-subtitle"}>
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H6>
         ),
@@ -317,11 +309,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.REVOKED"),
         subtitle: (
-          <H6
-            weight={"Regular"}
-            style={{ textAlign: "center" }}
-            testID={"revoked-subtitle"}
-          >
+          <H6 style={{ textAlign: "center" }} testID={"revoked-subtitle"}>
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H6>
         ),
@@ -334,11 +322,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.NOT_FOUND"),
         subtitle: (
-          <H6
-            weight={"Regular"}
-            style={{ textAlign: "center" }}
-            testID={"not-found-subtitle"}
-          >
+          <H6 style={{ textAlign: "center" }} testID={"not-found-subtitle"}>
             {I18n.t("wallet.errors.NOT_FOUND_SUBTITLE")}
           </H6>
         ),
@@ -350,7 +334,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.GENERIC_ERROR"),
         subtitle: (
-          <H6 weight={"Regular"} testID={genericErrorSubTestID}>
+          <H6 testID={genericErrorSubTestID}>
             {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
           </H6>
         ),

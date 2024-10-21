@@ -65,9 +65,7 @@ const CdcBonusRequestInformationTos = () => {
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <View style={styles.headerContainer}>
             <View style={IOStyles.flex}>
-              <H6 weight={"Regular"} color={"bluegrey"}>
-                {cdcInfo.sponsorship_description}
-              </H6>
+              <H6 color={"bluegrey"}>{cdcInfo.sponsorship_description}</H6>
               <H4>{bonusTypeLocalizedContent.title}</H4>
             </View>
             {cdcLogo && (

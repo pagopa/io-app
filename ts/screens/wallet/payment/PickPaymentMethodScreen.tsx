@@ -108,9 +108,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
             <VSpacer size={16} />
             {methodsCanPay.length > 0 ? (
               <>
-                <H6 weight={"Regular"} color={"bluegreyDark"}>
-                  {I18n.t("wallet.payWith.text")}
-                </H6>
+                <H6>{I18n.t("wallet.payWith.text")}</H6>
                 <FlatList
                   testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
@@ -135,11 +133,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <VSpacer size={16} />
               </>
             ) : (
-              <H6
-                weight={"Regular"}
-                color={"bluegreyDark"}
-                testID={"noWallets"}
-              >
+              <H6 testID={"noWallets"}>
                 {I18n.t("wallet.payWith.noWallets.text")}
               </H6>
             )}

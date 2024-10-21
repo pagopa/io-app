@@ -3,7 +3,7 @@ import {
   FooterWithButtons,
   H2,
   H6,
-  LabelLink,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, { useEffect, useState } from "react";
@@ -56,17 +56,10 @@ const RadioListHeader = (props: {
   rightColumnTitle: string;
 }) => {
   const color = "bluegrey";
-  const weight = "Regular";
   return (
     <View style={{ flexDirection: "row" }}>
-      <H6 color={color} weight={weight}>
-        {props.leftColumnTitle}
-      </H6>
-      <H6
-        color={color}
-        weight={weight}
-        style={styles.radioListHeaderRightColumn}
-      >
+      <H6 color={color}>{props.leftColumnTitle}</H6>
+      <H6 color={color} style={styles.radioListHeaderRightColumn}>
         {props.rightColumnTitle}
       </H6>
     </View>
@@ -144,12 +137,13 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               <VSpacer size={8} />
               <ScrollView>
                 <Body>{locales.body}</Body>
-                <LabelLink
+                <Label
+                  asLink
                   onPress={presentWhatIsPspBottomSheet}
                   testID={"whatIsPSPTestID"}
                 >
                   {locales.link}
-                </LabelLink>
+                </Label>
                 <VSpacer size={24} />
                 <RadioListHeader
                   leftColumnTitle={locales.leftColumnTitle}

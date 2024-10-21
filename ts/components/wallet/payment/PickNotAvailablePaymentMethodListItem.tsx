@@ -28,7 +28,7 @@ const unacceptedBottomSheetTitle = () =>
 const unacceptedBottomSheetBody = () => (
   <>
     <VSpacer size={24} />
-    <H6 weight={"Regular"}>
+    <H6>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.unaccepted.bottomSheetDescription"
       )}
@@ -44,7 +44,7 @@ const paymentDisabledBottomSheetTitle = () =>
 const paymentDisabledBottomSheetBody = () => (
   <>
     <VSpacer size={24} />
-    <H6 weight={"Regular"}>
+    <H6>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetDescription"
       )}

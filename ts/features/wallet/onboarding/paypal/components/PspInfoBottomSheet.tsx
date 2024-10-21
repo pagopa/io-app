@@ -1,11 +1,4 @@
-import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import {
-  Body,
-  Icon,
-  Label,
-  LabelLink,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, Icon, Label, VSpacer } from "@pagopa/io-app-design-system";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as React from "react";
 import { ReactNode } from "react";
@@ -63,19 +56,16 @@ const getItem = (props: Props) => [
   {
     icon: <Icon name="security" size={iconSize} color="blue" />,
     description: (
-      <View>
-        <TouchableWithoutFeedback
-          accessibilityRole="button"
-          onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
-        >
-          <LabelLink weight={"Semibold"}>
-            {I18n.t(
-              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",
-              { psp: props.pspName }
-            )}
-          </LabelLink>
-        </TouchableWithoutFeedback>
-      </View>
+      <Label
+        asLink
+        weight={"Semibold"}
+        onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
+      >
+        {I18n.t(
+          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",
+          { psp: props.pspName }
+        )}
+      </Label>
     )
   }
 ];

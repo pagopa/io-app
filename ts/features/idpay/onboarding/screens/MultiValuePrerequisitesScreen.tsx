@@ -7,7 +7,7 @@ import {
   IOColors,
   IOStyles,
   Icon,
-  LabelLink,
+  Label,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -98,9 +98,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
           <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-          <LabelLink>
-            {I18n.t("idpay.onboarding.multiPrerequisites.link")}
-          </LabelLink>
+          <Label>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Label>
           <VSpacer size={24} />
           <H6>{selfDeclaration.description}</H6>
           <ScrollView>

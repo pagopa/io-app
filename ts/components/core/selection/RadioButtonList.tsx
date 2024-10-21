@@ -78,12 +78,7 @@ const getBody = <T,>(
   const bodyType = typeof radioItem.body === "string" ? "string" : "node";
   if (bodyType === "string") {
     return (
-      <H6
-        style={IOStyles.flex}
-        color={"bluegreyDark"}
-        weight={"Regular"}
-        onPress={onItemPress}
-      >
+      <H6 style={IOStyles.flex} color={"bluegreyDark"} onPress={onItemPress}>
         {radioItem.body}
       </H6>
     );
@@ -106,7 +101,7 @@ const getBody = <T,>(
 export const RadioButtonList = <T,>(props: Props<T>) => (
   <View>
     {props.head && (
-      <H6 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
+      <H6 color={"bluegreyDark"} style={styles.head}>
         {props.head}
       </H6>
     )}

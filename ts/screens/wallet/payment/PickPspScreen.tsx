@@ -130,10 +130,8 @@ class PickPspScreen extends React.Component<PickPspScreenProps> {
               <View style={styles.padded}>
                 <H2>{I18n.t("wallet.pickPsp.title")}</H2>
                 <VSpacer size={8} />
-                <H6 weight="Regular" color="bluegreyDark">
-                  {I18n.t("wallet.pickPsp.info")}
-                </H6>
-                <H6 weight="Regular" color="bluegreyDark">
+                <H6>{I18n.t("wallet.pickPsp.info")}</H6>
+                <H6>
                   {I18n.t("wallet.pickPsp.info2")}
                   <H6 color="bluegreyDark">{` ${I18n.t(
                     "wallet.pickPsp.info2Bold"

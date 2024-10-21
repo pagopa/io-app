@@ -1,8 +1,8 @@
 import React, { ComponentProps, forwardRef } from "react";
 import { AccessibilityRole, StyleSheet, View } from "react-native";
 import {
-  FontSize,
   IOColors,
+  IOFontSize,
   IOIcons,
   Icon,
   Label
@@ -34,7 +34,7 @@ type Props = WithTestID<{
   accessibilityRole?: AccessibilityRole;
   backgroundColor: IOColors;
   iconName: IOIcons;
-  fontSize?: FontSize;
+  fontSize?: IOFontSize;
   foregroundColor: ComponentProps<typeof Label>["color"];
   labelPaddingVertical?: number;
 }>;
@@ -81,11 +81,10 @@ const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
       </View>
       <Label
         color={foregroundColor}
-        fontSize={fontSize}
-        style={[
+        style={StyleSheet.flatten([
           styles.text,
           labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
-        ]}
+        ])}
         weight={"Regular"}
       >
         {children}

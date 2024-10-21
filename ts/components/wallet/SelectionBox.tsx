@@ -68,9 +68,7 @@ export const SelectionBox = (props: Props) => (
 
       {props.ctaText && (
         <View style={styles.selectionBoxTrail}>
-          <H6 color="blue" weight="Semibold">
-            {props.ctaText}
-          </H6>
+          <H6 color="blue">{props.ctaText}</H6>
         </View>
       )}
     </View>

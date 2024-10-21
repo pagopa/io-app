@@ -170,19 +170,19 @@ export default class ListItemComponent extends React.Component<Props> {
                 ))}
             </View>
             {this.props.subTitle && (
-              <Body
-                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-                style={[
-                  { alignSelf: "flex-start" },
-                  {
-                    paddingRight:
-                      this.props.paddingRightDescription ||
-                      PADDING_R_DESCRIPTION
-                  }
-                ]}
+              <View
+                style={{
+                  alignSelf: "flex-start",
+                  paddingRight:
+                    this.props.paddingRightDescription || PADDING_R_DESCRIPTION
+                }}
               >
-                {this.props.subTitle}
-              </Body>
+                <Body
+                  numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+                >
+                  {this.props.subTitle}
+                </Body>
+              </View>
             )}
           </View>
           {this.props.iconName !== undefined &&

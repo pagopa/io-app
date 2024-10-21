@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Body, H2, H6, LabelLink, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H2, H6, Label, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
 
@@ -61,37 +61,37 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
 
       <VSpacer size={24} />
       <Body>
-        <H6 weight={"Regular"} color={"bluegreyDark"}>
-          {locales.text1}
-        </H6>
+        <H6 color={"bluegreyDark"}>{locales.text1}</H6>
 
         {props.methodType === "cobadge" && props.bankName ? (
           <H6 color={"bluegreyDark"}>{props.bankName}</H6>
         ) : (
-          <LabelLink
+          <Label
+            asLink
             onPress={
               props.methodType === "cobadge"
-                ? props.openParticipatingBanksModal
+                ? () => props.openParticipatingBanksModal?.()
                 : props.openTosModal
             }
           >
             {locales.text2}
-          </LabelLink>
+          </Label>
         )}
       </Body>
 
       <VSpacer size={24} />
       <Body accessibilityRole="link">
-        <H6 weight={"Regular"} color={"bluegreyDark"}>
-          {locales.text3}
-        </H6>
-        <LabelLink
+        <H6 color={"bluegreyDark"}>{locales.text3}</H6>
+        <Label
+          asLink
           onPress={
-            props.methodType === "cobadge" ? props.openTosModal : props.onSearch
+            props.methodType === "cobadge"
+              ? props.openTosModal
+              : () => props.onSearch?.()
           }
         >
           {locales.text4}
-        </LabelLink>
+        </Label>
       </Body>
     </>
   );

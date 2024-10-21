@@ -149,9 +149,7 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
         </View>
       )}
       <View>
-        <H6 weight="Semibold" color="bluegreyDark">
-          {props.title}
-        </H6>
+        <H6 color="bluegreyDark">{props.title}</H6>
         <LabelSmall weight="Regular" color="bluegrey">
           {props.subTitle}
         </LabelSmall>

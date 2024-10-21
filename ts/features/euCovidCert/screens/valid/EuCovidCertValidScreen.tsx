@@ -146,12 +146,8 @@ const addBottomSheetItem = (config: {
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>
-          <H4 color={"bluegreyDark"} weight={"Semibold"}>
-            {config.title}
-          </H4>
-          <H6 color={"bluegrey"} weight={"Regular"}>
-            {config.subTitle}
-          </H6>
+          <H4 color={"bluegreyDark"}>{config.title}</H4>
+          <H6 color={"bluegrey"}>{config.subTitle}</H6>
         </View>
         <Icon name="chevronRightListItem" size={24} color="blue" />
       </View>
@@ -182,10 +178,10 @@ const Footer = (props: FooterProps): React.ReactElement => {
       })}
     </View>,
     <View style={IOStyles.flex}>
-      <H4 color={"bluegreyDark"} weight={"Semibold"}>
+      <H4 color={"bluegreyDark"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.title")}
       </H4>
-      <H6 color={"bluegrey"} weight={"Regular"}>
+      <H6 color={"bluegrey"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
       </H6>
       <VSpacer size={32} />

@@ -1,4 +1,4 @@
-import { LabelLink, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { Label, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -273,16 +273,16 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       />
       <VSpacer size={24} />
       <View style={styles.linkRow}>
-        <LabelLink onPress={handlePrivacyLinkPress}>
+        <Label asLink onPress={handlePrivacyLinkPress}>
           {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-        </LabelLink>
+        </Label>
       </View>
       <View style={styles.linkRow}>
-        <LabelLink onPress={handleUnsubscribePress} color="red">
+        <Label asLink onPress={handleUnsubscribePress}>
           {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
             initiativeName
           })}
-        </LabelLink>
+        </Label>
       </View>
       <VSpacer size={48} />
     </>

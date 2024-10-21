@@ -4,7 +4,6 @@ import {
   H2,
   HSpacer,
   Icon,
-  LabelLink,
   LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -52,9 +51,6 @@ export const IbanOnboardingScreen = () => {
         <H2>{I18n.t("idpay.configuration.iban.onboarding.header")}</H2>
         <VSpacer size={16} />
         <Body>{I18n.t("idpay.configuration.iban.onboarding.body")}</Body>
-        <LabelLink>
-          {I18n.t("idpay.configuration.iban.onboarding.body")}
-        </LabelLink>
         <VSpacer size={24} />
         <LabelledItem
           isValid={O.isSome(iban.value)}

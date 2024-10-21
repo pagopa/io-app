@@ -83,12 +83,7 @@ const IDPayCardPreviewComponent = (props: Props) => {
               {initiativeName}
             </H6>
             <HSpacer size={8} />
-            <LabelSmall
-              weight="Semibold"
-              fontSize="regular"
-              color="black"
-              ellipsizeMode={"tail"}
-            >
+            <LabelSmall weight="Semibold" color="black" ellipsizeMode={"tail"}>
               {availableAmount}
             </LabelSmall>
           </View>

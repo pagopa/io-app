@@ -100,15 +100,7 @@ export const PspRadioItem = (
       {pipe(
         imgDimensions,
         O.fold(
-          () => (
-            <H6
-              weight={"Semibold"}
-              color={"bluegreyDark"}
-              testID={"pspNameTestID"}
-            >
-              {psp.name}
-            </H6>
-          ),
+          () => <H6 testID={"pspNameTestID"}>{psp.name}</H6>,
           imgDim => (
             <Image
               accessibilityIgnoresInvertColors

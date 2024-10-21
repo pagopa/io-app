@@ -70,7 +70,7 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
           <H6 color={"bluegreyDark"} numberOfLines={1}>
             {title}
           </H6>
-          <H6 weight={"Regular"} color={"bluegreyDark"} numberOfLines={2}>
+          <H6 color={"bluegreyDark"} numberOfLines={2}>
             {description}
           </H6>
         </View>

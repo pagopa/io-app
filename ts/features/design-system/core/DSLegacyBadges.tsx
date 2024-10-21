@@ -29,9 +29,7 @@ export const DSLegacyBadges = () => (
 
     <VSpacer size={24} />
 
-    <H6 weight="Semibold" color="bluegreyDark">
-      DiscountValueBox (CGN)
-    </H6>
+    <H6>DiscountValueBox (CGN)</H6>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
       <CgnDiscountValueBox value={25} small />
@@ -43,9 +41,7 @@ export const DSLegacyBadges = () => (
 
     <H4>Notifications</H4>
     <VSpacer size={16} />
-    <H6 weight="Semibold" color="bluegreyDark">
-      CustomBadge
-    </H6>
+    <H6>CustomBadge</H6>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
       <View style={styles.fakeNavItem}>

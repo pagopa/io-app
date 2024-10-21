@@ -129,9 +129,7 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <H2>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H2>
           <VSpacer size={16} />
-          <H6 weight={"Regular"} color={"bluegreyDark"}>
-            {I18n.t("wallet.onboarding.coBadge.chooseType.description")}
-          </H6>
+          <H6>{I18n.t("wallet.onboarding.coBadge.chooseType.description")}</H6>
           <VSpacer size={16} />
           <FlatList
             removeClippedSubviews={false}
