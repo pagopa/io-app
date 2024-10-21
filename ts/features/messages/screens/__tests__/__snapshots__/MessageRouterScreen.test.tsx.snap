@@ -200,11 +200,15 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -218,6 +222,9 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "rowGap": 24,
                               }
                             }
                           >
@@ -406,13 +413,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Loading message details"
                               allowFontScaling={false}
@@ -1055,11 +1055,15 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -1073,6 +1077,9 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "rowGap": 24,
                               }
                             }
                           >
@@ -1261,13 +1268,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Loading message details"
                               allowFontScaling={false}
@@ -2979,11 +2979,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -2997,6 +3001,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "rowGap": 24,
                               }
                             }
                           >
@@ -3185,13 +3192,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Loading message details"
                               allowFontScaling={false}
@@ -3834,11 +3834,15 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -3852,6 +3856,9 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "rowGap": 24,
                               }
                             }
                           >
@@ -4040,13 +4047,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Loading message details"
                               allowFontScaling={false}
