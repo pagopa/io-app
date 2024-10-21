@@ -685,33 +685,21 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                       >
                         <Text
                           allowFontScaling={false}
-                          color="bluegreyDark"
-                          defaultColor="bluegreyDark"
-                          defaultWeight="Semibold"
                           dynamicTypeRamp="title2"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 22,
-                              "lineHeight": 33,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           style={
                             [
+                              {},
                               {
-                                "fontSize": 22,
-                                "lineHeight": 33,
-                              },
-                              {
-                                "color": "#17324D",
+                                "color": "#0E0F13",
                                 "fontFamily": "Titillium Sans Pro",
+                                "fontSize": 22,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
+                                "lineHeight": 33,
                               },
                             ]
                           }
-                          weight="Semibold"
                         >
                           This is a title
                         </Text>
