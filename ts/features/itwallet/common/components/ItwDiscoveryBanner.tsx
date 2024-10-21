@@ -51,8 +51,8 @@ export const ItwDiscoveryBannerStandalone = (
     [isVisible, isItwTrialActive, isItwValid, isItwEnabled]
   );
   // end logic
-  const { fallbackComponent } = props;
   if (shouldBeHidden) {
+    const { fallbackComponent } = props;
     if (fallbackComponent) {
       return fallbackComponent;
     }
