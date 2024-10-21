@@ -229,36 +229,24 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
         <Text
           accessible={true}
           allowFontScaling={false}
-          color="bluegreyDark"
-          defaultColor="bluegreyDark"
-          defaultWeight="Semibold"
           dynamicTypeRamp="title2"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 22,
-              "lineHeight": 33,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
+              {},
               {
-                "textAlign": "center",
-              },
-              {
+                "color": "#2B2E38",
+                "fontFamily": "Titillium Sans Pro",
                 "fontSize": 22,
+                "fontStyle": "normal",
+                "fontWeight": "600",
                 "lineHeight": 33,
               },
               {
-                "color": "#17324D",
-                "fontFamily": "Titillium Sans Pro",
-                "fontStyle": "normal",
-                "fontWeight": "600",
+                "textAlign": "center",
               },
             ]
           }
-          weight="Semibold"
         >
           This is the loading caption
         </Text>
@@ -351,24 +339,27 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
               allowFontScaling={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.3}
+              maxFontSizeMultiplier={1.25}
               numberOfLines={1}
               style={
                 [
+                  {},
                   {
+                    "color": "#0E0F13",
                     "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "700",
+                    "lineHeight": undefined,
                   },
-                  {
-                    "alignSelf": "center",
-                  },
-                  {
-                    "color": "#0073E6",
-                  },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "alignSelf": "center",
+                    },
+                    {
+                      "color": undefined,
+                    },
+                  ],
                 ]
               }
             >
@@ -655,36 +646,24 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
         <Text
           accessible={true}
           allowFontScaling={false}
-          color="bluegreyDark"
-          defaultColor="bluegreyDark"
-          defaultWeight="Semibold"
           dynamicTypeRamp="title2"
-          font="TitilliumSansPro"
-          fontStyle={
-            {
-              "fontSize": 22,
-              "lineHeight": 33,
-            }
-          }
           maxFontSizeMultiplier={1.25}
           style={
             [
+              {},
               {
-                "textAlign": "center",
-              },
-              {
+                "color": "#2B2E38",
+                "fontFamily": "Titillium Sans Pro",
                 "fontSize": 22,
+                "fontStyle": "normal",
+                "fontWeight": "600",
                 "lineHeight": 33,
               },
               {
-                "color": "#17324D",
-                "fontFamily": "Titillium Sans Pro",
-                "fontStyle": "normal",
-                "fontWeight": "600",
+                "textAlign": "center",
               },
             ]
           }
-          weight="Semibold"
         >
           Wait a few seconds..
         </Text>

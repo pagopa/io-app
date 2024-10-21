@@ -1,5 +1,3 @@
-import React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
 import {
   Avatar,
   H3,
@@ -11,6 +9,8 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -47,8 +47,8 @@ export const ServicesHeader = ({
         <Avatar logoUri={logoUri} size="medium" />
       </View>
       <View style={IOStyles.flex}>
-        <H3>{title}</H3>
-        <LabelSmall fontSize="regular" color={theme["textBody-tertiary"]}>
+        <H3 color={theme["textHeading-secondary"]}>{title}</H3>
+        <LabelSmall color={theme["textBody-tertiary"]} weight="Bold">
           {subTitle}
         </LabelSmall>
       </View>

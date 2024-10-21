@@ -1,8 +1,6 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import * as React from "react";
-import { View, StyleSheet, Platform, AccessibilityInfo } from "react-native";
 import {
   ContentWrapper,
   H3,
@@ -10,6 +8,8 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { WithTestID } from "../../types/WithTestID";
@@ -30,8 +30,8 @@ type LoadingScreenContentProps = WithTestID<{
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
-  const { contentTitle, children, headerVisible, testID } = props;
   const theme = useIOTheme();
+  const { contentTitle, children, headerVisible, testID } = props;
 
   React.useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -66,7 +66,11 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
           >
             <LoadingIndicator />
           </View>
-          <H3 style={{ textAlign: "center" }} accessibilityLabel={contentTitle}>
+          <H3
+            style={{ textAlign: "center" }}
+            color={theme["textHeading-secondary"]}
+            accessibilityLabel={contentTitle}
+          >
             {contentTitle}
           </H3>
         </VStack>

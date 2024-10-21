@@ -49,7 +49,11 @@ const LoadingSpinnerOverlay = ({
           <BoxedRefreshIndicator
             caption={
               <View style={styles.textCaption}>
-                <H3 accessible={true} style={{ textAlign: "center" }}>
+                <H3
+                  color={theme["textHeading-secondary"]}
+                  accessible={true}
+                  style={{ textAlign: "center" }}
+                >
                   {loadingCaption || I18n.t("global.remoteStates.wait")}
                 </H3>
               </View>
