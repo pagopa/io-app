@@ -98,9 +98,7 @@ const FiscalCodeScreen = () => {
           ]}
           testID="barcode-box"
         >
-          <LabelSmall weight="Semibold" color="black">
-            {nameSurname}
-          </LabelSmall>
+          <LabelSmall weight="Semibold">{nameSurname}</LabelSmall>
           <Barcode
             value={fiscalCode}
             width={1.3}
