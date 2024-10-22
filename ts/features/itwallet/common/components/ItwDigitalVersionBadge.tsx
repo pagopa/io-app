@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     textTransform: "uppercase",
     flexShrink: 1,
-    ...makeFontStyleObject(12, "ReadexPro", 16, "Regular")
+    ...makeFontStyleObject(12, "Titillio", 16, "Regular")
   }
 });
 
