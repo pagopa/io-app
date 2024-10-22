@@ -717,17 +717,12 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         </View>
       </View>
       <Modal
-        accessibilityPositionChangeAnnouncement=""
         accessible={false}
         backdropComponent={[Function]}
         enableDismissOnClose={true}
+        enableDynamicSizing={false}
         footerComponent={[Function]}
         handleComponent={[Function]}
-        handleComponentAccessibility={
-          {
-            "accessible": false,
-          }
-        }
         hardwareAccelerated={false}
         importantForAccessibility="yes"
         onDismiss={[Function]}

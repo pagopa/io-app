@@ -1421,6 +1421,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -1623,6 +1624,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}

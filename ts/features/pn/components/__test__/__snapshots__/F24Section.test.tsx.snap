@@ -594,6 +594,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           accessible={false}
                           backdropComponent={[Function]}
                           enableDismissOnClose={true}
+                          enableDynamicSizing={false}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
                           hardwareAccelerated={false}

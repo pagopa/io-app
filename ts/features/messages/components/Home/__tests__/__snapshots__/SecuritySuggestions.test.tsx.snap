@@ -335,6 +335,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}

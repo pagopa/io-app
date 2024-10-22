@@ -1690,17 +1690,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <Modal
-                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           enableDismissOnClose={true}
+                          enableDynamicSizing={false}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          handleComponentAccessibility={
-                            {
-                              "accessible": false,
-                            }
-                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
                           onDismiss={[Function]}
@@ -3591,17 +3586,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <Modal
-                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           enableDismissOnClose={true}
+                          enableDynamicSizing={false}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          handleComponentAccessibility={
-                            {
-                              "accessible": false,
-                            }
-                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
                           onDismiss={[Function]}
@@ -3984,17 +3974,12 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <Modal
-                          accessibilityPositionChangeAnnouncement=""
                           accessible={false}
                           backdropComponent={[Function]}
                           enableDismissOnClose={true}
+                          enableDynamicSizing={false}
                           footerComponent={[Function]}
                           handleComponent={[Function]}
-                          handleComponentAccessibility={
-                            {
-                              "accessible": false,
-                            }
-                          }
                           hardwareAccelerated={false}
                           importantForAccessibility="yes"
                           onDismiss={[Function]}

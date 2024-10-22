@@ -870,6 +870,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -1072,6 +1073,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}

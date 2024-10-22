@@ -994,6 +994,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -2439,6 +2440,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -3885,6 +3887,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -5331,6 +5334,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -7069,6 +7073,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}

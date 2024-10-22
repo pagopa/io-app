@@ -502,6 +502,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -1052,6 +1053,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -1661,6 +1663,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -2457,6 +2460,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -3321,6 +3325,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -4312,6 +4317,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -5439,6 +5445,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
@@ -7446,6 +7453,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         accessible={false}
                         backdropComponent={[Function]}
                         enableDismissOnClose={true}
+                        enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
                         hardwareAccelerated={false}

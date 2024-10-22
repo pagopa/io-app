@@ -882,6 +882,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -2201,6 +2202,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -3520,6 +3522,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -4839,6 +4842,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -6158,6 +6162,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -7477,6 +7482,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -8796,6 +8802,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -10115,6 +10122,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -11434,6 +11442,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -12753,6 +12762,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -14072,6 +14082,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -15391,6 +15402,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -16710,6 +16722,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -18029,6 +18042,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -19348,6 +19362,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -20667,6 +20682,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -21986,6 +22002,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
@@ -23305,6 +23322,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               accessible={false}
                               backdropComponent={[Function]}
                               enableDismissOnClose={true}
+                              enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               hardwareAccelerated={false}
