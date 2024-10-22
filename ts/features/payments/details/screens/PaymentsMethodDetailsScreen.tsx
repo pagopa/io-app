@@ -90,14 +90,20 @@ const PaymentsMethodDetailsScreen = () => {
 };
 
 const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {
-  if (details?.lastFourDigits !== undefined) {
-    const capitalizedCardCircuit = capitalize(
-      details.brand?.toLowerCase() ?? ""
-    );
-    return `${capitalizedCardCircuit} ••${details.lastFourDigits}`;
+  switch (details?.type) {
+    case "BPAY":
+      return "BPAY";
+    case "PAYPAL":
+      return "PayPal";
+    default:
+      if (details?.lastFourDigits !== undefined) {
+        const capitalizedCardCircuit = capitalize(
+          details.brand?.toLowerCase() ?? ""
+        );
+        return `${capitalizedCardCircuit} ••${details.lastFourDigits}`;
+      }
+      return "";
   }
-
-  return "";
 };
 
 export default PaymentsMethodDetailsScreen;
