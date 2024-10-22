@@ -92,7 +92,7 @@ const PaymentsMethodDetailsScreen = () => {
 const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {
   switch (details?.type) {
     case "BPAY":
-      return "BPAY";
+      return "BANCOMAT Pay";
     case "PAYPAL":
       return "PayPal";
     default:
