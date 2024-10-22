@@ -10,6 +10,7 @@ import { FIMS_ROUTES } from "../../navigation";
 import * as urlUtils from "../../../../../utils/url";
 import * as otherHooks from "../../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../../i18n";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 const mockGoBack = jest.fn();
 const mockSetOptions = jest.fn();
@@ -27,6 +28,7 @@ describe("FimsUpdateAppAlert", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    mockAccessibilityInfo();
   });
   it("should match snapshot", () => {
     const component = renderComponent();
