@@ -61,7 +61,7 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
           <H6>{I18n.t("bonus.cgn.name")}</H6>
           {isExpired && expiredTag}
         </View>
-        <LabelSmallAlt style={{ width: "70%" }}>
+        <LabelSmallAlt color="blueItalia-850" style={{ width: "70%" }}>
           {I18n.t("bonus.cgn.departmentName")}
         </LabelSmallAlt>
         <LabelSmallAlt color="blueItalia-850">

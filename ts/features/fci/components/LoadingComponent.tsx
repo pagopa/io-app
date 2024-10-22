@@ -1,6 +1,12 @@
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Body, H3, VSpacer, WithTestID } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  H3,
+  useIOTheme,
+  VSpacer,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
 const styles = StyleSheet.create({
@@ -8,9 +14,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  },
-  textAlignCenter: {
-    textAlign: "center"
   }
 });
 
@@ -26,18 +29,23 @@ type Props = WithTestID<
  * It can be used to display a loading spinner with optionally a caption title and subtitle.
  */
 const LoadingComponent = (props: Props) => {
+  const theme = useIOTheme();
   const { captionTitle, captionSubtitle } = props;
 
   return (
     <SafeAreaView style={styles.main} testID={props.testID}>
       <LoadingIndicator />
       <VSpacer size={48} />
-      <H3 style={styles.textAlignCenter} testID="LoadingSpinnerCaptionTitleID">
+      <H3
+        color={theme["textHeading-secondary"]}
+        style={{ textAlign: "center" }}
+        testID="LoadingSpinnerCaptionTitleID"
+      >
         {captionTitle}
       </H3>
       <VSpacer />
       <Body
-        style={styles.textAlignCenter}
+        style={{ textAlign: "center" }}
         testID="LoadingSpinnerCaptionSubTitleID"
       >
         {captionSubtitle}

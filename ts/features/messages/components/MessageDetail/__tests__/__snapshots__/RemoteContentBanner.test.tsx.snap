@@ -410,33 +410,21 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           >
                             <Text
                               allowFontScaling={false}
-                              color="grey-700"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
                               dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  },
+                                  {},
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               This is a dynamic message: its content may change over time to give you up-to-date information.
                             </Text>
@@ -534,18 +522,18 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                     allowFontScaling={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.3}
+                                    maxFontSizeMultiplier={1.25}
                                     numberOfLines={1}
                                     style={
                                       [
+                                        {},
                                         {
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "700",
-                                        },
-                                        {
-                                          "color": "#0073E6",
+                                          "lineHeight": undefined,
                                         },
                                         {
                                           "color": undefined,
@@ -790,130 +778,82 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="bluegrey"
-                                defaultColor="bluegrey"
-                                defaultWeight="Regular"
                                 dynamicTypeRamp="body"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
                                     {
                                       "textAlign": "left",
                                     },
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "color": "#475A6D",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                    },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="bluegrey"
-                                  defaultColor="bluegrey"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="body"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   It's a message that the sender can edit 
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="bluegrey"
-                                  defaultColor="bluegrey"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="body"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   after you've received it
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="bluegrey"
-                                  defaultColor="bluegrey"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="body"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   . This way, the information it includes will always be up-to-date.
 
@@ -921,65 +861,41 @@ The sender can edit the information in a dynamic message only
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="bluegrey"
-                                  defaultColor="bluegrey"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="body"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   specific cases
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="bluegrey"
-                                  defaultColor="bluegrey"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="body"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 24,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "color": "#475A6D",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   . For example, to change outdated information or replace an attachment that is no longer valid.
 

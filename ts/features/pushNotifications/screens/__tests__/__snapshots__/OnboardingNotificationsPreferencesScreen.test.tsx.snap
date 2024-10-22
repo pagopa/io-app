@@ -207,33 +207,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="largeTitle"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 31,
-                                  "lineHeight": 43,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 31,
-                                    "lineHeight": 43,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 31,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 43,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -246,33 +234,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#475A6D",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Choose how to receive messages and reminders.
                             </Text>
@@ -463,65 +439,41 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     You have a notice due soon
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#0E0F13",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     Log in to pay the notice issued by ACI
                                   </Text>
@@ -586,37 +538,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -679,33 +619,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Include the sender and subject of the message in the push notification
                               </Text>
@@ -719,37 +647,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityRole="link"
                                 allowFontScaling={false}
-                                color="blue"
-                                defaultColor="blue"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontSize="small"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                    "textDecorationLine": "underline",
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
                                     {
-                                      "fontSize": 14,
-                                      "lineHeight": 24,
                                       "textDecorationLine": "underline",
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 18,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -813,37 +728,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -906,33 +809,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
                               </Text>
@@ -979,33 +870,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
@@ -1146,33 +1025,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 <View>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
@@ -1288,36 +1155,26 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Continue
                               </Text>
@@ -1344,7 +1201,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -1397,24 +1254,29 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />
@@ -1790,33 +1652,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="largeTitle"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 31,
-                                  "lineHeight": 43,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 31,
-                                    "lineHeight": 43,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 31,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 43,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -1829,33 +1679,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#475A6D",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Choose how to receive messages and reminders.
                             </Text>
@@ -2046,65 +1884,41 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     You have a new message
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#0E0F13",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     Open the app to read the content
                                   </Text>
@@ -2169,37 +1983,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -2262,33 +2064,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Include the sender and subject of the message in the push notification
                               </Text>
@@ -2302,37 +2092,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityRole="link"
                                 allowFontScaling={false}
-                                color="blue"
-                                defaultColor="blue"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontSize="small"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                    "textDecorationLine": "underline",
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
                                     {
-                                      "fontSize": 14,
-                                      "lineHeight": 24,
                                       "textDecorationLine": "underline",
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 18,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -2396,37 +2173,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -2489,33 +2254,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
                               </Text>
@@ -2562,33 +2315,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
@@ -2729,33 +2470,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 <View>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
@@ -2872,36 +2601,26 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Continue
                               </Text>
@@ -2928,7 +2647,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -2981,24 +2700,29 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />
@@ -3374,33 +3098,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="largeTitle"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 31,
-                                  "lineHeight": 43,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 31,
-                                    "lineHeight": 43,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 31,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 43,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -3413,33 +3125,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#475A6D",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Choose how to receive messages and reminders.
                             </Text>
@@ -3630,65 +3330,41 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     You have a notice due tomorrow
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#0E0F13",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     Log in to pay for it
                                   </Text>
@@ -3753,37 +3429,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -3846,33 +3510,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Include the sender and subject of the message in the push notification
                               </Text>
@@ -3886,37 +3538,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityRole="link"
                                 allowFontScaling={false}
-                                color="blue"
-                                defaultColor="blue"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontSize="small"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                    "textDecorationLine": "underline",
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
                                     {
-                                      "fontSize": 14,
-                                      "lineHeight": 24,
                                       "textDecorationLine": "underline",
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 18,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -3980,37 +3619,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -4073,33 +3700,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
                               </Text>
@@ -4146,33 +3761,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
@@ -4313,33 +3916,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 <View>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
@@ -4456,36 +4047,26 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Continue
                               </Text>
@@ -4512,7 +4093,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -4565,24 +4146,29 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />
@@ -4958,33 +4544,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="largeTitle"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 31,
-                                  "lineHeight": 43,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 31,
-                                    "lineHeight": 43,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 31,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 43,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -4997,33 +4571,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#475A6D",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Choose how to receive messages and reminders.
                             </Text>
@@ -5214,65 +4776,41 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Comune di Ipazia
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#0E0F13",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     Summer camp registration is now open
                                   </Text>
@@ -5337,37 +4875,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -5430,33 +4956,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Include the sender and subject of the message in the push notification
                               </Text>
@@ -5470,37 +4984,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityRole="link"
                                 allowFontScaling={false}
-                                color="blue"
-                                defaultColor="blue"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontSize="small"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                    "textDecorationLine": "underline",
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
                                     {
-                                      "fontSize": 14,
-                                      "lineHeight": 24,
                                       "textDecorationLine": "underline",
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 18,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -5564,37 +5065,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   <Text
                                     accessible={false}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="no-hide-descendants"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -5657,33 +5146,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
                               </Text>
@@ -5730,33 +5207,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
@@ -5897,33 +5362,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 <View>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
@@ -6040,36 +5493,26 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "700",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Continue
                               </Text>
@@ -6096,7 +5539,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -6149,24 +5592,29 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />
@@ -6542,33 +5990,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                           >
                             <Text
                               allowFontScaling={false}
-                              color="black"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="largeTitle"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 31,
-                                  "lineHeight": 43,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
-                                  {
-                                    "fontSize": 31,
-                                    "lineHeight": 43,
-                                  },
+                                  {},
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 31,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 43,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Customize push notifications
                             </Text>
@@ -6581,33 +6017,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "color": "#475A6D",
+                                    "color": "#555C70",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Choose how to receive messages and reminders.
                             </Text>
@@ -6798,65 +6222,41 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 >
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     You have a notice due soon
                                   </Text>
                                   <Text
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Bold"
                                     dynamicTypeRamp="footnote"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 14,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#0E0F13",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 21,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     Log in to pay the notice issued by ACI
                                   </Text>
@@ -6921,37 +6321,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <Text
                                     accessible={true}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Show a preview
                                   </Text>
@@ -7160,33 +6548,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Include the sender and subject of the message in the push notification
                               </Text>
@@ -7200,37 +6576,24 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               <Text
                                 accessibilityRole="link"
                                 allowFontScaling={false}
-                                color="blue"
-                                defaultColor="blue"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontSize="small"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 24,
-                                    "textDecorationLine": "underline",
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 onPress={[Function]}
                                 style={
                                   [
                                     {
-                                      "fontSize": 14,
-                                      "lineHeight": 24,
                                       "textDecorationLine": "underline",
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 18,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 More info
                               </Text>
@@ -7294,37 +6657,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   <Text
                                     accessible={true}
                                     allowFontScaling={false}
-                                    color="black"
-                                    defaultColor="black"
-                                    defaultWeight="Semibold"
                                     dynamicTypeRamp="headline"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      }
-                                    }
                                     importantForAccessibility="yes"
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
-                                        {
-                                          "flex": 1,
-                                        },
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        },
+                                        {},
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
+                                          "lineHeight": 25,
+                                        },
+                                        {
+                                          "flex": 1,
                                         },
                                       ]
                                     }
-                                    weight="Semibold"
                                   >
                                     Allow reminders
                                   </Text>
@@ -7533,33 +6884,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               />
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="blue"
-                                defaultWeight="Bold"
                                 dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
+                                      "lineHeight": 21,
                                     },
                                   ]
                                 }
-                                weight="Regular"
                               >
                                 Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
                               </Text>
@@ -7606,33 +6945,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   You can change this choice anytime in Profile &gt; Privacy Policy and Terms of Service
                                 </Text>
@@ -7773,33 +7100,21 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 <View>
                                   <Text
                                     allowFontScaling={false}
-                                    color="bluegrey"
-                                    defaultColor="bluegrey"
-                                    defaultWeight="Regular"
                                     dynamicTypeRamp="body"
-                                    font="TitilliumSansPro"
-                                    fontStyle={
-                                      {
-                                        "fontSize": 16,
-                                        "lineHeight": 24,
-                                      }
-                                    }
                                     maxFontSizeMultiplier={1.25}
                                     style={
                                       [
+                                        {},
                                         {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        },
-                                        {
-                                          "color": "#475A6D",
+                                          "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
-                                    weight="Regular"
                                   >
                                     If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
                                   </Text>
@@ -8109,7 +7424,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -8162,24 +7477,29 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />

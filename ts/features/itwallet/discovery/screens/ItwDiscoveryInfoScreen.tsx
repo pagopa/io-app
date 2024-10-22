@@ -17,10 +17,11 @@ import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
-  trackOpenItwTos,
   trackItWalletActivationStart,
-  trackItWalletIntroScreen
+  trackItWalletIntroScreen,
+  trackOpenItwTos
 } from "../../analytics";
+import { itwPrivacyUrl, itwTosUrl } from "../../../../config";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -66,7 +67,10 @@ const ItwDiscoveryInfoScreen = () => {
           styles={{ body: { fontSize: 14 } }}
           onLinkOpen={trackOpenItwTos}
         >
-          {I18n.t("features.itWallet.discovery.tos")}
+          {I18n.t("features.itWallet.discovery.tos", {
+            privacyUrl: itwPrivacyUrl,
+            tosUrl: itwTosUrl
+          })}
         </ItwMarkdown>
       </ContentWrapper>
       <FooterActions

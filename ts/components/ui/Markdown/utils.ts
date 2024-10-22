@@ -1,10 +1,10 @@
-import { FontWeight, IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, IOFontWeightNumeric } from "@pagopa/io-app-design-system";
 import { Platform } from "react-native";
 import * as RNFS from "react-native-fs";
 
 const textColor = IOColors.bluegrey;
 const fontSizeBase = 16;
-const textLinkWeight = "600" as FontWeight;
+const textLinkWeight = "600" as IOFontWeightNumeric;
 const textMessageDetailLinkColor = IOColors.blue;
 const toastColor = IOColors.aquaUltraLight;
 const brandPrimary = IOColors.blue;

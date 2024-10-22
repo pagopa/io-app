@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import {
+  ButtonLink,
   ContentWrapper,
-  LabelLink,
+  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -38,7 +39,8 @@ const CiePinWizard = () => {
           )}
         />
         <VSpacer size={24} />
-        <LabelLink
+        <Label
+          asLink
           onPress={() => {
             openWebUrl(CIE_PIN_LINK, () => {
               error(I18n.t("global.jserror.title"));
@@ -46,7 +48,7 @@ const CiePinWizard = () => {
           }}
         >
           {I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.link")}
-        </LabelLink>
+        </Label>
       </>
     ),
     snapPoint: [350],
@@ -62,50 +64,41 @@ const CiePinWizard = () => {
     };
   });
 
-  const getActions = (): IOScrollViewActions => {
-    const primaryLabel = I18n.t(
-      "authentication.wizards.cie_pin_wizard.actions.primary.label"
-    );
-    const secondaryLabel = I18n.t(
-      "authentication.wizards.cie_pin_wizard.actions.secondary.label"
-    );
-    return {
-      type: "TwoButtons",
-      primary: {
-        label: primaryLabel,
-        accessibilityLabel: primaryLabel,
-        onPress: navigateToCiePinInsertion
-      },
-      secondary: {
-        label: secondaryLabel,
-        accessibilityLabel: secondaryLabel,
-        onPress: () => {
-          navigate(ROUTES.AUTHENTICATION, {
-            screen: ROUTES.AUTHENTICATION_SPID_WIZARD
-          });
-        }
+  const screenActions = (): IOScrollViewActions => ({
+    type: "TwoButtons",
+    primary: {
+      label: I18n.t(
+        "authentication.wizards.cie_pin_wizard.actions.primary.label"
+      ),
+      onPress: navigateToCiePinInsertion
+    },
+    secondary: {
+      label: I18n.t(
+        "authentication.wizards.cie_pin_wizard.actions.secondary.label"
+      ),
+      onPress: () => {
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_SPID_WIZARD
+        });
       }
-    };
-  };
+    }
+  });
 
   return (
     <IOScrollViewWithLargeHeader
       title={{ label, accessibilityLabel: label }}
       description={I18n.t("authentication.wizards.cie_pin_wizard.description")}
-      actions={getActions()}
+      actions={screenActions()}
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink
-          ref={buttonRef}
-          role="button"
-          accessibilityRole="button"
-          onPress={present}
-        >
-          {I18n.t(
+        <ButtonLink
+          label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}
-        </LabelLink>
+          ref={buttonRef}
+          onPress={present}
+        />
       </ContentWrapper>
       {bottomSheet}
     </IOScrollViewWithLargeHeader>

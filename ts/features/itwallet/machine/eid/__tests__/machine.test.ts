@@ -20,6 +20,7 @@ const T_WIA: string = "abcdefg";
 
 describe("itwEidIssuanceMachine", () => {
   const navigateToTosScreen = jest.fn();
+  const navigateToIpzsPrivacyScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
   const navigateToIdpSelectionScreen = jest.fn();
   const navigateToEidPreviewScreen = jest.fn();
@@ -54,6 +55,7 @@ describe("itwEidIssuanceMachine", () => {
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
       navigateToTosScreen,
+      navigateToIpzsPrivacyScreen,
       navigateToIdentificationModeScreen,
       navigateToIdpSelectionScreen,
       navigateToEidPreviewScreen,
@@ -167,10 +169,16 @@ describe("itwEidIssuanceMachine", () => {
 
     // Wallet instance creation and attestation obtainment success
 
+    // Navigate to ipzs privacy screen
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    // Accept IPZS privacy
+    actor.send({ type: "accept-ipzs-privacy" });
+    // Navigate to identification mode selection
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "ModeSelection"
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     /**
      * Choose SPID as identification mode
@@ -551,12 +559,16 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({ type: "accept-tos" });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "ModeSelection"
-    });
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
     expect(createWalletInstance).toHaveBeenCalledTimes(0);
     expect(getWalletAttestation).toHaveBeenCalledTimes(0);
+
+    // Accept IPZS privacy
+    actor.send({ type: "accept-ipzs-privacy" });
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "ModeSelection"
+    });
   });
 
   it("Should allow the user to add a new credential once eID issuance is complete", () => {
