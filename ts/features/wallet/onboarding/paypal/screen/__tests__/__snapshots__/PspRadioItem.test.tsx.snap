@@ -12,34 +12,22 @@ exports[`PspRadioItem match snapshot 1`] = `
 >
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
           "fontWeight": "600",
+          "lineHeight": 25,
         },
       ]
     }
     testID="pspNameTestID"
-    weight="Semibold"
   >
     PayTipper
   </Text>
@@ -281,33 +269,21 @@ exports[`PspRadioItem match snapshot 1`] = `
               >
                 <Text
                   allowFontScaling={false}
-                  color="bluegrey"
-                  defaultColor="bluegrey"
-                  defaultWeight="Regular"
                   dynamicTypeRamp="body"
-                  font="TitilliumSansPro"
-                  fontStyle={
-                    {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    }
-                  }
                   maxFontSizeMultiplier={1.25}
                   style={
                     [
+                      {},
                       {
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      },
-                      {
-                        "color": "#475A6D",
+                        "color": "#555C70",
                         "fontFamily": "Titillium Sans Pro",
+                        "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "400",
+                        "lineHeight": 24,
                       },
                     ]
                   }
-                  weight="Regular"
                 >
                   It's a Payment Service Provider (PSP) which can process your transactions via PayPal.
                 </Text>
@@ -397,64 +373,39 @@ exports[`PspRadioItem match snapshot 1`] = `
               >
                 <Text
                   allowFontScaling={false}
-                  color="bluegrey"
-                  defaultColor="bluegrey"
-                  defaultWeight="Regular"
                   dynamicTypeRamp="body"
-                  font="TitilliumSansPro"
-                  fontStyle={
-                    {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    }
-                  }
                   maxFontSizeMultiplier={1.25}
                   style={
                     [
+                      {},
                       {
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      },
-                      {
-                        "color": "#475A6D",
+                        "color": "#555C70",
                         "fontFamily": "Titillium Sans Pro",
+                        "fontSize": 16,
                         "fontStyle": "normal",
                         "fontWeight": "400",
+                        "lineHeight": 24,
                       },
                     ]
                   }
-                  weight="Regular"
                 >
                   When you pay a notice, this PSP can apply a maximum fee of 
                   <Text
                     allowFontScaling={false}
-                    color="grey-700"
-                    defaultColor="black"
-                    defaultWeight="Bold"
-                    dynamicTypeRamp="footnote"
-                    font="TitilliumSansPro"
-                    fontStyle={
-                      {
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      }
-                    }
                     maxFontSizeMultiplier={1.25}
                     style={
                       [
-                        {
-                          "fontSize": 16,
-                          "lineHeight": 24,
-                        },
+                        {},
                         {
                           "color": "#555C70",
                           "fontFamily": "Titillium Sans Pro",
+                          "fontSize": 16,
                           "fontStyle": "normal",
-                          "fontWeight": "700",
+                          "fontWeight": "600",
+                          "lineHeight": 24,
                         },
                       ]
                     }
-                    weight="Bold"
                   >
                     € 1.00
                   </Text>
@@ -547,61 +498,29 @@ exports[`PspRadioItem match snapshot 1`] = `
                   }
                 }
               >
-                <View>
-                  <Text
-                    accessibilityRole="button"
-                    accessibilityState={
+                <Text
+                  accessibilityRole="link"
+                  allowFontScaling={false}
+                  maxFontSizeMultiplier={1.25}
+                  onPress={[Function]}
+                  style={
+                    [
                       {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": undefined,
-                        "expanded": undefined,
-                        "selected": undefined,
-                      }
-                    }
-                    accessible={true}
-                    allowFontScaling={false}
-                    color="blue"
-                    defaultColor="blue"
-                    defaultWeight="Semibold"
-                    dynamicTypeRamp="footnote"
-                    focusable={true}
-                    font="TitilliumSansPro"
-                    fontStyle={
-                      {
-                        "fontSize": 16,
-                        "lineHeight": 24,
                         "textDecorationLine": "underline",
-                      }
-                    }
-                    maxFontSizeMultiplier={1.25}
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      [
-                        {
-                          "fontSize": 16,
-                          "lineHeight": 24,
-                          "textDecorationLine": "underline",
-                        },
-                        {
-                          "color": "#0073E6",
-                          "fontFamily": "Titillium Sans Pro",
-                          "fontStyle": "normal",
-                          "fontWeight": "600",
-                        },
-                      ]
-                    }
-                    weight="Semibold"
-                  >
-                    PayTipper’s Terms and Conditions and Privacy Policy apply
-                  </Text>
-                </View>
+                      },
+                      {
+                        "color": "#0B3EE3",
+                        "fontFamily": "Titillium Sans Pro",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": 24,
+                      },
+                    ]
+                  }
+                >
+                  PayTipper’s Terms and Conditions and Privacy Policy apply
+                </Text>
               </View>
             </View>
             <View

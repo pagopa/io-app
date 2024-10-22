@@ -136,40 +136,24 @@ exports[`StatusContent should match the snapshot 1`] = `
   </View>
   <Text
     allowFontScaling={false}
-    color="grey-700"
-    defaultColor="black"
-    defaultWeight="Bold"
-    dynamicTypeRamp="footnote"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 16,
-        "lineHeight": 24,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
-        [
-          {
-            "flex": 1,
-            "marginLeft": 16,
-          },
-          {},
-        ],
-        {
-          "fontSize": 16,
-          "lineHeight": 24,
-        },
+        {},
         {
           "color": "#555C70",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
+          "lineHeight": 24,
+        },
+        {
+          "flex": 1,
+          "marginLeft": 16,
         },
       ]
     }
-    weight="Regular"
   />
 </View>
 `;
