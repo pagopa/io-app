@@ -136,7 +136,6 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     () =>
       isError ? (
         <BannerErrorState
-          color="neutral"
           label={I18n.t("features.payments.methods.error.banner.label")}
           icon="warningFilled"
           actionText={I18n.t(

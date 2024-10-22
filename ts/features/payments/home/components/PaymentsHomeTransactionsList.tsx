@@ -148,10 +148,11 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <BannerErrorState
           testID="PaymentsHomeTransactionsListTestID-error"
-          color="neutral"
           label="Il caricamento delle ricevute è fallito."
           icon="warningFilled"
-          actionText="Prova di nuovo"
+          actionText={I18n.t(
+            "features.payments.transactions.error.banner.retryButton"
+          )}
           onPress={handleOnRetry}
         />
       );
