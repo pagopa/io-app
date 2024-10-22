@@ -31,7 +31,6 @@ import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantL
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
   const [isPullRefresh, setIsPullRefresh] = React.useState(false);
   const potCategories = useIOSelector(cgnCategoriesListSelector);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -54,7 +53,6 @@ export const CgnMerchantCategoriesListScreen = () => {
   });
 
   const loadCategories = () => {
-    setIsRefreshing(true);
     dispatch(cgnCategories.request());
   };
 
@@ -78,7 +76,6 @@ export const CgnMerchantCategoriesListScreen = () => {
 
   React.useEffect(() => {
     if (pot.isSome(potCategories) && !pot.isLoading(potCategories)) {
-      setIsRefreshing(false);
       setIsPullRefresh(false);
     }
   }, [potCategories]);
@@ -134,7 +131,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       {bottomSheet}
       <FlatList
         ListEmptyComponent={() => <CgnMerchantListSkeleton hasIcons />}
-        data={isRefreshing ? [] : categoriesToArray}
+        data={pot.isNone(potCategories) ? [] : categoriesToArray}
         style={[
           IOStyles.horizontalContentPadding,
           IOStyles.flex,
