@@ -836,67 +836,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Due date 01/01/2024
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Uno due tre
                                       </Text>
@@ -913,34 +889,22 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       <Text
                                         accessibilityLabel="1.99 €"
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 25,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         1.99 €
                                       </Text>
@@ -1097,67 +1061,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Notice code
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0123  4567  8912  3456  20
                                       </Text>
@@ -1191,29 +1131,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          accessibilityLabel="Revoked"
-                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
-                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1374,67 +1311,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Notice code
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0123  4567  8912  3456  30
                                       </Text>
@@ -1468,29 +1381,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          accessibilityLabel="Expired"
-                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
-                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#555C70",
                                               },
                                             ]
                                           }
@@ -1651,67 +1561,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Notice code
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0123  4567  8912  3456  40
                                       </Text>
@@ -1745,29 +1631,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          accessibilityLabel="Ongoing"
-                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
-                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#215C76",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#215C76",
                                               },
                                             ]
                                           }
@@ -1928,67 +1811,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Notice code
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0123  4567  8912  3456  50
                                       </Text>
@@ -2022,29 +1881,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          accessibilityLabel="Paid"
-                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
-                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#224021",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#224021",
                                               },
                                             ]
                                           }
@@ -2205,67 +2061,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Notice code
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0123  4567  8912  3456  60
                                       </Text>
@@ -2299,29 +2131,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          accessibilityLabel="Error"
-                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
-                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#5D1313",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#5D1313",
                                               },
                                             ]
                                           }
@@ -2482,67 +2311,43 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         Notice code
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blueIO-500"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 16,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         0123  4567  8912  3456  70
                                       </Text>
@@ -2576,29 +2381,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          accessibilityLabel="Error"
-                                          accessibilityRole="text"
                                           allowFontScaling={false}
                                           ellipsizeMode="tail"
-                                          importantForAccessibility="yes"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={1}
                                           style={
                                             [
+                                              {},
+                                              {
+                                                "color": "#5D1313",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 12,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 16,
+                                              },
                                               {
                                                 "alignSelf": "center",
                                                 "flexShrink": 1,
-                                                "fontSize": 12,
-                                                "lineHeight": 16,
+                                                "letterSpacing": 0.5,
                                                 "textTransform": "uppercase",
-                                              },
-                                              {
-                                                "fontFamily": "Titillium Sans Pro",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                              {
-                                                "color": "#5D1313",
                                               },
                                             ]
                                           }
