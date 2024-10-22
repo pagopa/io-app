@@ -18,6 +18,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 // import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
 
 const CurrentTestToSVersion = 2.0;
 
@@ -25,6 +26,7 @@ const CurrentTestToSVersion = 2.0;
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
+  mockAccessibilityInfo(false);
 });
 
 afterAll(() => {

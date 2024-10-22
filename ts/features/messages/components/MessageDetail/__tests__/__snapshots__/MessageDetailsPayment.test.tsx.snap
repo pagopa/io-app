@@ -794,34 +794,22 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 pagoPA notices
                               </Text>
