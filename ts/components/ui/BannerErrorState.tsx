@@ -18,14 +18,14 @@ import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
-  View,
-  ViewStyle
+  View
 } from "react-native";
 import Animated, {
   Extrapolation,
   FadeIn,
   FadeOut,
   interpolate,
+  SharedValue,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -42,14 +42,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: IOBannerRadius,
     borderCurve: "continuous",
-    padding: IOBannerBigSpacing
+    padding: IOBannerBigSpacing,
+    backgroundColor: IOColors["grey-50"]
   }
-});
-
-const dynamicContainerStyles = (
-  color: BaseBannerErrorStateProps["color"]
-): ViewStyle => ({
-  backgroundColor: IOColors[mapBackgroundColor[color]]
 });
 
 /* Component Types */
@@ -57,7 +52,6 @@ const dynamicContainerStyles = (
 type BaseBannerErrorStateProps = WithTestID<{
   icon?: IOIcons;
   label: string;
-  color: "neutral" | "turquoise";
   viewRef?: React.RefObject<View>;
   // A11y related props
   accessibilityLabel?: string;
@@ -79,27 +73,9 @@ type BannerErrorStateActionProps =
 export type BannerErrorStateProps = BaseBannerErrorStateProps &
   BannerErrorStateActionProps;
 
-// COMPONENT CONFIGURATION
-
-/* Used to generate automatically the colour variants
-in the Design System screen */
-export const bannerBackgroundColors: Array<BannerErrorStateProps["color"]> = [
-  "neutral",
-  "turquoise"
-];
-
-const mapBackgroundColor: Record<
-  NonNullable<BannerErrorStateProps["color"]>,
-  IOColors
-> = {
-  neutral: "grey-50",
-  turquoise: "turquoise-50"
-};
-
 export const BannerErrorState = ({
   viewRef,
   icon,
-  color,
   label,
   actionText,
   onPress,
@@ -107,7 +83,7 @@ export const BannerErrorState = ({
   accessibilityLabel,
   testID
 }: BannerErrorStateProps) => {
-  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+  const isPressed: SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.magnifiedButton?.pressedState;
@@ -119,8 +95,6 @@ export const BannerErrorState = ({
 
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
-    // Link color states to the pressed states
-
     // Scale down button slightly when pressed
     const scale = interpolate(
       progressPressed.value,
@@ -192,13 +166,7 @@ export const BannerErrorState = ({
       onPressOut={onPressOut}
       accessible={false}
     >
-      <Animated.View
-        style={[
-          styles.container,
-          dynamicContainerStyles(color),
-          pressedAnimationStyle
-        ]}
-      >
+      <Animated.View style={[styles.container, pressedAnimationStyle]}>
         {renderMainBlock()}
       </Animated.View>
     </Pressable>
@@ -208,7 +176,7 @@ export const BannerErrorState = ({
     <View
       ref={viewRef}
       testID={testID}
-      style={[styles.container, dynamicContainerStyles(color)]}
+      style={styles.container}
       // A11y related props
       accessible={false}
       accessibilityHint={accessibilityHint}
