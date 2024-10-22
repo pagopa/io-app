@@ -2,7 +2,7 @@ import {
   Avatar,
   H3,
   H6,
-  LabelSmallAlt,
+  LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
@@ -43,16 +43,16 @@ export const IdPayCard = (props: IdPayCardProps) => (
           <Avatar size="small" logoUri={props.avatarSource} />
         </View>
         <VSpacer size={16} />
-        <LabelSmallAlt color="black">Disponibile</LabelSmallAlt>
+        <LabelSmall color="black">Disponibile</LabelSmall>
         <H3 color="blueItalia-500">
           {formatNumberCentsToAmount(props.amount, true, "right")}
         </H3>
       </View>
-      <LabelSmallAlt color="blueItalia-850">
+      <LabelSmall color="blueItalia-850">
         {I18n.t("bonusCard.validUntil", {
           endDate: format(props.expireDate, "MM/YY")
         })}
-      </LabelSmallAlt>
+      </LabelSmall>
     </View>
   </View>
 );
