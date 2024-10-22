@@ -59,39 +59,10 @@ describe("WalletHomeScreen", () => {
     expect(queryByTestId("walletAddCardButtonTestID")).toBeNull();
   });
 
-  it("should correctly render empty screen with redirect banner", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent(
-      {},
-      {
-        shouldShowPaymentsRedirectBanner: true
-      }
-    );
-
-    jest.runOnlyPendingTimers();
-
-    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
-    expect(queryByTestId("walletEmptyScreenContentTestID")).not.toBeNull();
-    expect(queryByTestId("walletCardsContainerTestID")).toBeNull();
-    expect(queryByTestId("walletAddCardButtonTestID")).toBeNull();
-  });
-
   it("should correctly render card list screen", () => {
     const {
       component: { queryByTestId }
     } = renderComponent(T_CARDS);
-
-    expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
-    expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
-    expect(queryByTestId("walletCardsContainerTestID")).not.toBeNull();
-    expect(queryByTestId("walletAddCardButtonTestID")).not.toBeNull();
-  });
-
-  it("should correctly render card list screen with redirect banner", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent(T_CARDS, { shouldShowPaymentsRedirectBanner: true });
 
     expect(queryByTestId("walletPaymentsRedirectBannerTestID")).toBeNull();
     expect(queryByTestId("walletEmptyScreenContentTestID")).toBeNull();
@@ -103,13 +74,11 @@ describe("WalletHomeScreen", () => {
 const renderComponent = (
   cards: WalletCardsState,
   options: {
-    shouldShowPaymentsRedirectBanner?: boolean;
     isLoading?: boolean;
   } = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const { shouldShowPaymentsRedirectBanner = false, isLoading = false } =
-    options;
+  const { isLoading = false } = options;
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
@@ -117,9 +86,7 @@ const renderComponent = (
       features: {
         wallet: {
           cards,
-          preferences: {
-            shouldShowPaymentsRedirectBanner
-          },
+          preferences: {},
           placeholders: {
             isLoading
           }
