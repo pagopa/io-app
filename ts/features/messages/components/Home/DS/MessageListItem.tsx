@@ -1,21 +1,21 @@
-import React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
-import Svg, { Circle } from "react-native-svg";
 import {
   AnimatedMessageCheckbox,
   Avatar,
   Body,
-  Caption,
   H6,
   HSpacer,
   IOColors,
   IOStyles,
   IOVisualCostants,
   Label,
+  LabelMini,
   LabelSmall,
   Tag,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { ImageURISource, StyleSheet, View } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { DoubleAvatar } from "./DoubleAvatar";
@@ -137,7 +137,6 @@ export const MessageListItem = ({
             {organizationName}
           </H6>
           <LabelSmall
-            fontSize="regular"
             color="grey-700"
             weight="Regular"
             style={{ marginLeft: 8 }}
@@ -147,15 +146,9 @@ export const MessageListItem = ({
         </View>
         <View style={styles.serviceNameAndMessageTitleContainer}>
           <Body numberOfLines={2} style={IOStyles.flex}>
-            <Label fontSize="regular" weight="Semibold">
-              {serviceName}
-            </Label>
-            <Caption weight="Regular" color="grey-700">
-              {" • "}
-            </Caption>
-            <Label fontSize="regular" weight="Regular">
-              {messageTitle}
-            </Label>
+            <Label weight="Semibold">{serviceName}</Label>
+            <LabelMini color="grey-700">{" • "}</LabelMini>
+            <Label weight="Regular">{messageTitle}</Label>
           </Body>
           {!isRead && (
             <View style={styles.messageReadContainer}>
