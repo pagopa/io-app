@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
+    missing_saml_response:
+      title: Non è stato possibile accedere
+      subtitle: Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto.
     generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.

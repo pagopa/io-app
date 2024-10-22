@@ -13,6 +13,7 @@ export const IOS_OPERATION_CANCELED_MESSAGE =
   "Operazione_annullata_dall'utente";
 export const IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida";
 export const CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL";
+export const MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS";
 
 type Props = {
   errorCode?: string;
@@ -111,6 +112,14 @@ const AuthErrorComponent = ({
         pictogram: "umbrellaNew",
         title: I18n.t("authentication.auth_errors.generic.title"),
         subtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
+        ...footerWithCloseAndRetryButtons
+      },
+      [MISSING_SAML_RESPONSE]: {
+        pictogram: "accessDenied",
+        title: I18n.t("authentication.auth_errors.missing_saml_response.title"),
+        subtitle: I18n.t(
+          "authentication.auth_errors.missing_saml_response.subtitle"
+        ),
         ...footerWithCloseAndRetryButtons
       },
       generic: {
