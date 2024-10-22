@@ -22,7 +22,7 @@ type SpidProps = {
 
 type CieIdProps = {
   authMethod: "CIE_ID";
-  onRetry: () => void;
+  onRetry?: () => void;
   params: CieIdLoginProps;
 };
 
@@ -62,7 +62,7 @@ const AuthErrorScreen = () => {
 
   const onRetry = useCallback(() => {
     if (authMethod === "SPID" || authMethod === "CIE_ID") {
-      route.params.onRetry();
+      route.params.onRetry?.();
     }
     navigation.navigate(ROUTES.AUTHENTICATION, getNavigationParams());
   }, [authMethod, navigation, route.params, getNavigationParams]);

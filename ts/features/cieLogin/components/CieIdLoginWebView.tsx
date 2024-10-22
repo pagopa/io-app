@@ -72,11 +72,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     });
   }, [navigation]);
 
-  const {
-    shouldBlockUrlNavigationWhileCheckingLollipop,
-    webviewSource,
-    retryLollipopLogin
-  } = useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
+  const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
+    useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
 
   const handleLoginFailure = useCallback(
     (code?: string) => {
@@ -87,18 +84,20 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           idp: "cie"
         })
       );
+      // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
+      // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
+      // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
       navigation.replace(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTH_ERROR_SCREEN,
         params: {
           errorCode: code,
           authMethod: "CIE_ID",
           authLevel: "L2",
-          onRetry: retryLollipopLogin,
           params: { spidLevel, isUat }
         }
       });
     },
-    [dispatch, navigation, retryLollipopLogin, spidLevel, isUat]
+    [dispatch, navigation, spidLevel, isUat]
   );
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
