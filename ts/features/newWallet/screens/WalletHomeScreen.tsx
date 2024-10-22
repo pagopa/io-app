@@ -8,7 +8,7 @@ import {
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
-import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
@@ -19,7 +19,6 @@ import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedire
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 import {
-  trackAllCredentialProfileAndSuperProperties,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
@@ -29,10 +28,8 @@ import { IOScrollView } from "../../../components/ui/IOScrollView";
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
-  const store = useIOStore();
   useFocusEffect(() => {
     trackOpenWalletScreen();
-    void trackAllCredentialProfileAndSuperProperties(store.getState());
   });
 
   const dispatch = useIODispatch();
