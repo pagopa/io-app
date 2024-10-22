@@ -596,36 +596,32 @@ export const trackItwIdRequestUnexpected = ({
 
 // #region PROFILE PROPERTIES
 
-export const trackCredentialDeleteProperties = async (
+export const trackCredentialDeleteProperties = (
   credential: MixPanelCredential,
   state: GlobalState
 ) => {
-  await updateMixpanelProfileProperties(state, {
+  void updateMixpanelProfileProperties(state, {
     property: credential,
     value: "not_available"
   });
-  await updateMixpanelSuperProperties(state, {
+  void updateMixpanelSuperProperties(state, {
     property: credential,
     value: "not_available"
   });
 };
 
-export const trackAllCredentialProfileAndSuperProperties = async (
-  state: GlobalState
+export const trackAddCredentialProfileAndSuperProperties = (
+  state: GlobalState,
+  credential: MixPanelCredential
 ) => {
-  const promises = mixPanelCredentials.map(async credential => {
-    await Promise.all([
-      updateMixpanelProfileProperties(state, {
-        property: credential,
-        value: "valid"
-      }),
-      updateMixpanelSuperProperties(state, {
-        property: credential,
-        value: "valid"
-      })
-    ]);
+  void updateMixpanelProfileProperties(state, {
+    property: credential,
+    value: "valid"
   });
-  await Promise.all(promises);
+  void updateMixpanelSuperProperties(state, {
+    property: credential,
+    value: "valid"
+  });
 };
 
 // #endregion PROFILE PROPERTIES
