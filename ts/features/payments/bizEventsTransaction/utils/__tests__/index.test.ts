@@ -63,7 +63,13 @@ describe("getPayerInfoLabel", () => {
   it("should return only the taxCode if name is not provided", () => {
     const payer = { taxCode: "123456789" };
     const result = getPayerInfoLabel(payer);
-    expect(result).toBe("(123456789)");
+    expect(result).toBe("123456789");
+  });
+
+  it("should return only the taxCode if name is empty string", () => {
+    const payer = { taxCode: "123456789", name: "" };
+    const result = getPayerInfoLabel(payer);
+    expect(result).toBe("123456789");
   });
 
   it("should return name and taxCode formatted correctly", () => {
