@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  H3,
-  H6,
-  LabelSmall,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Avatar, H3, H6, Label, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
@@ -43,16 +37,16 @@ export const IdPayCard = (props: IdPayCardProps) => (
           <Avatar size="small" logoUri={props.avatarSource} />
         </View>
         <VSpacer size={16} />
-        <LabelSmall color="black">Disponibile</LabelSmall>
+        <Label color="black">Disponibile</Label>
         <H3 color="blueItalia-500">
           {formatNumberCentsToAmount(props.amount, true, "right")}
         </H3>
       </View>
-      <LabelSmall color="blueItalia-850">
+      <Label color="blueItalia-850">
         {I18n.t("bonusCard.validUntil", {
           endDate: format(props.expireDate, "MM/YY")
         })}
-      </LabelSmall>
+      </Label>
     </View>
   </View>
 );
