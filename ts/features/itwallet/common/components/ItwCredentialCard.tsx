@@ -134,8 +134,7 @@ const styles = StyleSheet.create({
   },
   label: {
     flex: 1,
-    ...makeFontStyleObject("Semibold", false, "TitilliumSansPro"),
-    fontSize: 16
+    ...makeFontStyleObject(16, "TitilliumSansPro", 20, "Semibold")
   },
   header: {
     display: "flex",

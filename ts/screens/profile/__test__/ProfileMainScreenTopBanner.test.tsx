@@ -8,6 +8,7 @@ import * as settingsNavigate from "../../../features/pushNotifications/utils";
 import ROUTES from "../../../navigation/routes";
 import TypedI18n from "../../../i18n";
 import { setShowProfileBanner } from "../../../features/profileSettings/store/actions";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
 
 jest.spyOn(settingsNavigate, "openSystemNotificationSettingsScreen");
 const mockNavigate = jest.fn();
@@ -29,6 +30,7 @@ describe("ProfileMainScreenTopBanner", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot for all possible results of profileBannerToShowSelector", () => {
     const testCases = [
