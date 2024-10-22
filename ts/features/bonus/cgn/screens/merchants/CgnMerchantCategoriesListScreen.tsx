@@ -26,13 +26,14 @@ import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
-  const [isFirstRender, setIsFirstRender] = React.useState<boolean>(true);
   const dispatch = useIODispatch();
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const [isPullRefresh, setIsPullRefresh] = React.useState(false);
   const potCategories = useIOSelector(cgnCategoriesListSelector);
-
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const navigation =
@@ -53,8 +54,15 @@ export const CgnMerchantCategoriesListScreen = () => {
   });
 
   const loadCategories = () => {
+    setIsRefreshing(true);
     dispatch(cgnCategories.request());
   };
+
+  const onPullRefresh = () => {
+    setIsPullRefresh(true);
+    dispatch(cgnCategories.request());
+  };
+
   React.useEffect(loadCategories, [dispatch]);
 
   const isError = React.useMemo(
@@ -66,8 +74,14 @@ export const CgnMerchantCategoriesListScreen = () => {
     if (isError) {
       IOToast.error(I18n.t("global.genericError"));
     }
-    setIsFirstRender(false);
   }, [isError]);
+
+  React.useEffect(() => {
+    if (pot.isSome(potCategories) && !pot.isLoading(potCategories)) {
+      setIsRefreshing(false);
+      setIsPullRefresh(false);
+    }
+  }, [potCategories]);
 
   const renderCategoryElement = (
     category: ProductCategoryWithNewDiscountsCount,
@@ -119,7 +133,8 @@ export const CgnMerchantCategoriesListScreen = () => {
     <>
       {bottomSheet}
       <FlatList
-        data={categoriesToArray}
+        ListEmptyComponent={() => <CgnMerchantListSkeleton hasIcons />}
+        data={isRefreshing ? [] : categoriesToArray}
         style={[
           IOStyles.horizontalContentPadding,
           IOStyles.flex,
@@ -129,8 +144,8 @@ export const CgnMerchantCategoriesListScreen = () => {
         renderItem={({ item, index }) => renderCategoryElement(item, index)}
         refreshControl={
           <RefreshControl
-            refreshing={isFirstRender && pot.isLoading(potCategories)}
-            onRefresh={loadCategories}
+            refreshing={isPullRefresh}
+            onRefresh={onPullRefresh}
           />
         }
         ItemSeparatorComponent={() => <Divider />}
