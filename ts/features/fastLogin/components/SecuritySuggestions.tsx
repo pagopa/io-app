@@ -26,19 +26,23 @@ const SecuritySuggestions = () => {
       <FeatureInfo
         iconName="logout"
         body={I18n.t("authentication.security_suggestions.io_logout")}
-        actionLabel={I18n.t(
-          "authentication.security_suggestions.navigate_to_the_site"
-        )}
-        actionOnPress={() => openWebUrl("https://ioapp.it/")}
+        action={{
+          label: I18n.t(
+            "authentication.security_suggestions.navigate_to_the_site"
+          ),
+          onPress: () => openWebUrl("https://ioapp.it/")
+        }}
       />
       <VSpacer size={24} />
       <FeatureInfo
         iconName="locked"
         body={I18n.t("authentication.security_suggestions.io_lock_access")}
-        actionLabel={I18n.t(
-          "authentication.security_suggestions.navigate_to_the_site"
-        )}
-        actionOnPress={() => openWebUrl("https://ioapp.it/")}
+        action={{
+          label: I18n.t(
+            "authentication.security_suggestions.navigate_to_the_site"
+          ),
+          onPress: () => openWebUrl("https://ioapp.it/")
+        }}
       />
       <VSpacer size={24} />
       <FeatureInfo

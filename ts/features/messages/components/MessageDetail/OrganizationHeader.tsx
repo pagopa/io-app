@@ -5,7 +5,8 @@ import {
   IOSpacingScale,
   IOStyles,
   LabelSmall,
-  LabelSmallAlt
+  LabelSmallAlt,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -45,6 +46,7 @@ export const OrganizationHeader = ({
   organizationName,
   serviceName
 }: OrganizationHeaderProps) => {
+  const theme = useIOTheme();
   const navigation = useIONavigation();
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
@@ -63,7 +65,11 @@ export const OrganizationHeader = ({
     <View style={styles.item}>
       <View style={IOStyles.flex}>
         <LabelSmallAlt color="grey-700">{organizationName}</LabelSmallAlt>
-        <LabelSmall color="blueIO-500" onPress={navigateToServiceDetails}>
+        <LabelSmall
+          color={theme["interactiveElem-default"]}
+          onPress={navigateToServiceDetails}
+          weight="Bold"
+        >
           {serviceName}
         </LabelSmall>
       </View>
