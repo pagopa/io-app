@@ -241,7 +241,7 @@
     "@babel/preset-typescript": "^7.23.3",
     "@babel/runtime": "^7.20.0",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
-    "@pagopa/openapi-codegen-ts": "^13.2.0",
+    "@pagopa/openapi-codegen-ts": "^14.0.0",
     "@react-native-community/eslint-config": "^3.2.0",
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.12",
