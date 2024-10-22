@@ -348,7 +348,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
