@@ -2,6 +2,7 @@ import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
+import { IOScrollView } from "../../../components/ui/IOScrollView";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -15,7 +16,6 @@ import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
-import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
 import {
@@ -23,7 +23,6 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { IOScrollView } from "../../../components/ui/IOScrollView";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
@@ -60,7 +59,6 @@ const WalletHomeScreen = ({ route }: Props) => {
   return (
     <WalletScrollView>
       <WalletCategoryFilterTabs />
-      <WalletPaymentsRedirectBanner />
       <WalletCardsContainer />
     </WalletScrollView>
   );
