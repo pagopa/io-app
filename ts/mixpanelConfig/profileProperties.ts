@@ -4,10 +4,10 @@ import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
+  getNotificationPermissionType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType,
-  getNotificationPermissionType
+  ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
 import { idpSelector } from "../store/reducers/authentication";
 import { tosVersionSelector } from "../store/reducers/profile";
@@ -25,12 +25,12 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import {
-  MixpanelOptInTrackingType,
-  Property,
-  PropertyToUpdate,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
+  MixpanelOptInTrackingType,
   notificationConfigurationHandler,
+  Property,
+  PropertyToUpdate,
   serviceConfigHandler
 } from "./mixpanelPropertyUtils";
 
@@ -121,12 +121,12 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const credentialsState = itwCredentialsSelector(state);
-  return credentialsState.eid ? "L2" : "not_active";
+  return O.isSome(credentialsState.eid) ? "L2" : "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);
-  return credentialsState.eid ? "valid" : "not_available";
+  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
 };
 const pgStatusHandler = (state: GlobalState): ItwPg => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
