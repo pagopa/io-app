@@ -2,7 +2,6 @@ import {
   Banner,
   IOVisualCostants,
   ListItemHeader,
-  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -24,15 +23,8 @@ import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
-import { paymentsBackoffRetrySelector } from "../../common/store/selectors";
-import {
-  clearPaymentsBackoffRetry,
-  increasePaymentsBackoffRetry
-} from "../../common/store/actions";
-import {
-  canRetry,
-  getTimeRemainingText
-} from "../../common/utils/backoffRetry";
+import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
+import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselSkeleton
@@ -49,7 +41,6 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
 
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const toast = useIOToast();
 
   const shouldShowAddMethodsBanner = useIOSelector(
     isAddMethodsBannerVisibleSelector
@@ -57,8 +48,8 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
-  const paymentsUserMethodsBackoff = useIOSelector(
-    paymentsBackoffRetrySelector(PAYMENTS_HOME_USER_METHODS_BACKOFF)
+  const { canRetryRequest } = usePaymentsBackoffRetry(
+    PAYMENTS_HOME_USER_METHODS_BACKOFF
   );
   const isError = React.useMemo(
     () => pot.isError(paymentMethodsPot) && !pot.isSome(paymentMethodsPot),
@@ -108,22 +99,10 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   };
 
   const handleOnRetry = React.useCallback(() => {
-    if (
-      paymentsUserMethodsBackoff?.allowedRetryTimestamp &&
-      !canRetry(paymentsUserMethodsBackoff?.allowedRetryTimestamp)
-    ) {
-      toast.error(
-        I18n.t("features.payments.backoff.retryCountDown", {
-          time: getTimeRemainingText(
-            paymentsUserMethodsBackoff?.allowedRetryTimestamp
-          )
-        })
-      );
-      return;
+    if (canRetryRequest()) {
+      dispatch(getPaymentsWalletUserMethods.request());
     }
-    dispatch(increasePaymentsBackoffRetry(PAYMENTS_HOME_USER_METHODS_BACKOFF));
-    dispatch(getPaymentsWalletUserMethods.request());
-  }, [dispatch, paymentsUserMethodsBackoff, toast]);
+  }, [dispatch, canRetryRequest]);
 
   const userMethods = paymentMethods.map(
     (method: WalletInfo): PaymentCardSmallProps => ({

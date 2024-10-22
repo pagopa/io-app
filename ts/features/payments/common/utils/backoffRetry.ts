@@ -40,5 +40,7 @@ export const getTimeRemainingText = (targetDate: number | Date): string => {
       });
 };
 
-export const canRetry = (allowRetryTimestamp?: number): boolean =>
+export const isBackoffRetryTimeElapsed = (
+  allowRetryTimestamp?: number
+): boolean =>
   allowRetryTimestamp === undefined || allowRetryTimestamp < Date.now();
