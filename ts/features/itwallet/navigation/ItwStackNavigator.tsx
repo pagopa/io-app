@@ -33,6 +33,7 @@ import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
+import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -73,6 +74,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
         component={ItwDiscoveryInfoScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
+        component={ItwIpzsPrivacyScreen}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen

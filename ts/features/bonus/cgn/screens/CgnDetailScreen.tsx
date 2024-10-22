@@ -37,6 +37,7 @@ import { profileSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { capitalizeTextName } from "../../../../utils/strings";
 import { openWebUrl } from "../../../../utils/url";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
 import { ID_CGN_TYPE } from "../../common/utils";
@@ -65,7 +66,6 @@ import {
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
-import { capitalize } from "../../../../utils/strings";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -198,9 +198,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           }}
         >
           {pot.isSome(currentProfile)
-            ? `${capitalize(currentProfile.value.name)} ${capitalize(
-                currentProfile.value.family_name
-              )}`
+            ? `${capitalizeTextName(
+                currentProfile.value.name
+              )} ${capitalizeTextName(currentProfile.value.family_name)}`
             : ""}
         </H4>
       }
