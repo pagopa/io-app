@@ -1,4 +1,7 @@
-import { canRetry, getTimeRemainingText } from "../backoffRetry";
+import {
+  isBackoffRetryTimeElapsed,
+  getTimeRemainingText
+} from "../backoffRetry";
 
 describe("getTimeRemainingText", () => {
   it("should return an empty string if the target date is in the past", () => {
@@ -27,18 +30,18 @@ describe("getTimeRemainingText", () => {
   });
 });
 
-describe("canRetry", () => {
+describe("isBackoffRetryTimeElapsed", () => {
   it("should return true if allowRetryTimestamp is undefined", () => {
-    expect(canRetry()).toBe(true);
+    expect(isBackoffRetryTimeElapsed()).toBe(true);
   });
 
   it("should return true if allowRetryTimestamp is in the past", () => {
     const pastTimestamp = Date.now() - 10000; // 10 seconds ago
-    expect(canRetry(pastTimestamp)).toBe(true);
+    expect(isBackoffRetryTimeElapsed(pastTimestamp)).toBe(true);
   });
 
   it("should return false if allowRetryTimestamp is in the future", () => {
     const futureTimestamp = Date.now() + 10000; // 10 seconds in the future
-    expect(canRetry(futureTimestamp)).toBe(false);
+    expect(isBackoffRetryTimeElapsed(futureTimestamp)).toBe(false);
   });
 });
