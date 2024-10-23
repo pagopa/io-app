@@ -1,44 +1,36 @@
-import { createSelector, createStructuredSelector, Selector } from "reselect";
-import { LandingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus";
+import { createSelector, createStructuredSelector } from "reselect";
+import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
+import { renderabilitySelectorsFromBannerMap } from "../utils/bannerRenderableSelectors";
 import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 import { LandingScreenBannerId } from "./reducer";
 
-const localBannerVisibilitySelector = (state: GlobalState) =>
+export const localBannerVisibilitySelector = (state: GlobalState) =>
   state.features.landingBanners;
 
 type StructuredSelectorOutput = {
   [key in LandingScreenBannerId]: boolean;
 };
 
-// 1) extract renderability selectors from component map
-const getRenderableSelectorsById = () => {
-  const arrayOfObjects = Object.keys(landingScreenBannerMap).map(key => ({
-    [key]:
-      landingScreenBannerMap[key as LandingScreenBannerId].isRenderableSelector
-  }));
-
-  const reduced: {
-    [key in LandingScreenBannerId]: Selector<GlobalState, boolean>;
-  } = Object.assign({}, ...arrayOfObjects);
-  return reduced;
-};
-
-// 2) unify them so that we have a single selector,
+//    unify them so that we have a single selector,
 //    which returns a map like { bannerId: renderable(T/F) }
 const unifiedRenderabilitySelectors = createStructuredSelector<
   GlobalState,
   StructuredSelectorOutput
->(getRenderableSelectorsById());
+>(renderabilitySelectorsFromBannerMap(landingScreenBannerMap));
 
-// 3) add it as a dependency to the main selector, in order to avoid unnecessary reruns
-export const LandingScreenBannerToRenderSelector = createSelector(
+//  add that as a dependency to the main selector, in order to avoid unnecessary reruns
+export const landingScreenBannerToRenderSelector = createSelector(
   [
-    LandingScreenBannerOrderSelector,
+    landingScreenBannerOrderSelector,
     localBannerVisibilitySelector,
     unifiedRenderabilitySelectors
   ],
-  (backendBanners, localVisibility, renderabilityDataById) => {
+  (
+    backendBanners,
+    localVisibility,
+    renderabilityDataById
+  ): LandingScreenBannerId | undefined => {
     const availableBanners = backendBanners.filter(
       (id): id is LandingScreenBannerId =>
         localVisibility[id as LandingScreenBannerId] === true &&

@@ -1,19 +1,10 @@
 import * as React from "react";
 import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
-import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
-import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import { LandingScreenBannerId } from "../store/reducer";
+import { isItwDiscoveryBannerRenderableSelector } from "./bannerRenderableSelectors";
 
-// ---------------------------- UTILS --------------------------------------------
-const discoveryBannerRenderableSelector = (state: GlobalState) =>
-  isItwTrialActiveSelector(state) ||
-  !itwLifecycleIsValidSelector(state) ||
-  isItwEnabledSelector(state);
-
-// ---------------------------- COMPONENT MAP ----------------------------------------------
 type ComponentWithCloseHandler = (
   closeHandler: () => void
 ) => React.ReactElement;
@@ -22,14 +13,15 @@ type ComponentAndLogic = {
   isRenderableSelector: (state: GlobalState) => boolean;
 };
 
-export const landingScreenBannerMap: {
+export type BannerMapById = {
   [key in LandingScreenBannerId]: ComponentAndLogic;
-} = {
+};
+export const landingScreenBannerMap: BannerMapById = {
   ITW_DISCOVERY: {
     component: closeHandler => (
       <ItwDiscoveryBanner closable handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: discoveryBannerRenderableSelector
+    isRenderableSelector: isItwDiscoveryBannerRenderableSelector
   },
   SETTINGS_DISCOVERY: {
     component: closeHandler => (

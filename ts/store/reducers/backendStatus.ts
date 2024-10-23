@@ -205,7 +205,7 @@ export const fimsDomainSelector = createSelector(
 );
 
 const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
-export const LandingScreenBannerOrderSelector = (state: GlobalState) =>
+export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,
     backendStatusSelector,
