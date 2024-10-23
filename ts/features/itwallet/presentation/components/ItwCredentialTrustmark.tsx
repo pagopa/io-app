@@ -22,7 +22,7 @@ import {
   useSVG,
   vec
 } from "@shopify/react-native-skia";
-import React, { useState } from "react";
+import { default as React, useState } from "react";
 import {
   ColorValue,
   Image,
@@ -48,6 +48,10 @@ import I18n from "../../../../i18n";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import {
+  CREDENTIALS_MAP,
+  trackWalletCredentialShowTrustmark
+} from "../../analytics";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import {
   generateTrustmarkUrl,
@@ -281,10 +285,17 @@ export const ItwCredentialTrustmark = ({
     return null;
   }
 
+  const onPressWithTrackEvent = () => {
+    trackWalletCredentialShowTrustmark(
+      CREDENTIALS_MAP[credential.credentialType]
+    );
+    trustmarkBottomSheet.present();
+  };
+
   return (
     <>
       <Pressable
-        onPress={trustmarkBottomSheet.present}
+        onPress={onPressWithTrackEvent}
         testID={testID}
         accessible={true}
         accessibilityLabel={I18n.t(

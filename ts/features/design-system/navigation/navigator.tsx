@@ -33,6 +33,8 @@ import { DSColors } from "../core/DSColors";
 import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
+import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
+import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
@@ -544,6 +546,25 @@ export const DesignSystemNavigator = () => {
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_NOT_FIXED.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.route}
+          component={DSFooterActionsInline}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.route
+          }
+          component={DSFooterActionsInlineNotFixed}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.title
           }}
         />
 

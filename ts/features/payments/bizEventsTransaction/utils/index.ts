@@ -1,6 +1,6 @@
 import { SectionListData } from "react-native";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
-import { InfoTransactionView } from "../../../../../definitions/pagopa/biz-events/InfoTransactionView";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -9,27 +9,23 @@ export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
  * - The year is shown only if it's different from the current year
  */
 export const groupTransactionsByMonth = (
-  transactions: ReadonlyArray<TransactionListItem>
-): Array<SectionListData<TransactionListItem>> => {
+  transactions: ReadonlyArray<NoticeListItem>
+): Array<SectionListData<NoticeListItem>> => {
   const groups = transactions.reduce((acc, element) => {
-    if (element.transactionDate !== undefined) {
+    if (element.noticeDate !== undefined) {
       const isCurrentYear =
-        new Date().getFullYear() ===
-        new Date(element.transactionDate).getFullYear();
-      const month = new Date(element.transactionDate).toLocaleString(
-        "default",
-        {
-          month: "long",
-          year: isCurrentYear ? undefined : "numeric"
-        }
-      );
+        new Date().getFullYear() === new Date(element.noticeDate).getFullYear();
+      const month = new Date(element.noticeDate).toLocaleString("default", {
+        month: "long",
+        year: isCurrentYear ? undefined : "numeric"
+      });
       return {
         ...acc,
         [month]: [...(acc[month] || []), element]
       };
     }
     return acc;
-  }, {} as { [month: string]: Array<TransactionListItem> });
+  }, {} as { [month: string]: Array<NoticeListItem> });
 
   return Object.keys(groups).map(month => ({
     title: month,
@@ -63,18 +59,15 @@ export const byteArrayToBase64 = (byteArray: Uint8Array): string => {
 /**
  * Function that returns the payer info label formatted as "name\n(taxCode)"
  */
-export const getPayerInfoLabel = (
-  payer: InfoTransactionView["payer"]
-): string => {
+export const getPayerInfoLabel = (payer: InfoNotice["payer"]): string => {
   if (!payer) {
     return "";
   }
 
   const name = payer.name ? payer.name.trim() : "";
-  const taxCode = payer.taxCode ? `(${payer.taxCode.trim()})` : "";
+  const taxCode = payer.taxCode ? payer.taxCode.trim() : "";
 
-  const payerInfo =
-    name && taxCode ? `${name}\n${taxCode}` : `${name}${taxCode}`;
+  const payerInfo = name ? (taxCode ? `${name}\n(${taxCode})` : name) : taxCode;
 
   return payerInfo.trim();
 };
@@ -83,7 +76,7 @@ export const getPayerInfoLabel = (
  * Function that calculates the total amount of a transaction by summing the amount and the fee
  */
 export const calculateTotalAmount = (
-  transactionInfo?: InfoTransactionView
+  transactionInfo?: InfoNotice
 ): string | undefined => {
   if (!transactionInfo || !transactionInfo.amount) {
     return undefined;

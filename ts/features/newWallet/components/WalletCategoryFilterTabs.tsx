@@ -13,6 +13,7 @@ import { selectWalletCategoryFilter } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { itwIsWalletEmptySelector } from "../../itwallet/credentials/store/selectors";
+import { trackWalletCategoryFilter } from "../../itwallet/analytics";
 
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
@@ -30,11 +31,12 @@ const WalletCategoryFilterTabs = () => {
     : 0;
 
   const handleFilterSelected = (index: number) => {
-    dispatch(
-      walletSetCategoryFilter(
-        index === 0 ? undefined : walletCardCategoryFilters[index - 1]
-      )
-    );
+    const categoryByIndex =
+      index === 0 ? undefined : walletCardCategoryFilters[index - 1];
+    dispatch(walletSetCategoryFilter(categoryByIndex));
+    if (categoryByIndex) {
+      trackWalletCategoryFilter(categoryByIndex);
+    }
   };
 
   return (

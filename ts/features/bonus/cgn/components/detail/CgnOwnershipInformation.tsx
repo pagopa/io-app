@@ -1,14 +1,14 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
 import {
   Divider,
   ListItemHeader,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as React from "react";
 import I18n from "../../../../../i18n";
-import { profileSelector } from "../../../../../store/reducers/profile";
 import { useIOSelector } from "../../../../../store/hooks";
-import { capitalize } from "../../../../../utils/strings";
+import { profileSelector } from "../../../../../store/reducers/profile";
+import { capitalizeTextName } from "../../../../../utils/strings";
 
 /**
  * Renders the CGN ownership block for detail screen, including Owner's Fiscal Code (The current user logged in)
@@ -23,12 +23,12 @@ const CgnOwnershipInformation = (): React.ReactElement => {
           <ListItemHeader label={I18n.t("bonus.cgn.detail.ownership")} />
           <ListItemInfo
             label="Nome"
-            value={capitalize(currentProfile.value.name)}
+            value={capitalizeTextName(currentProfile.value.name)}
           />
           <Divider />
           <ListItemInfo
             label="Cognome"
-            value={capitalize(currentProfile.value.family_name)}
+            value={capitalizeTextName(currentProfile.value.family_name)}
           />
           <Divider />
           <ListItemInfo

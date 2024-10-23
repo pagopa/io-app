@@ -97,7 +97,7 @@ import {
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { trackKeychainGetFailure } from "../utils/analytics";
+import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { watchFimsSaga } from "../features/fims/common/saga";
@@ -116,10 +116,6 @@ import { cancellAllLocalNotifications } from "../features/pushNotifications/util
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import {
-  clearKeychainError,
-  keychainError
-} from "./../store/storages/keychain";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -253,6 +249,10 @@ export function* initializeApplicationSaga(
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
+
+  // workaround to send keychainError
+  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
+  yield* call(trackKeychainFailures);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<typeof authenticationSaga> =
@@ -446,7 +446,6 @@ export function* initializeApplicationSaga(
   yield* fork(
     watchCheckSessionSaga,
     backendClient.getSession,
-    backendClient.getSupportToken,
     formatRequestedTokenString()
   );
   // Start watching for requests of abort the onboarding
@@ -508,11 +507,6 @@ export function* initializeApplicationSaga(
   }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
-
-  // workaround to send keychainError for Pixel devices
-  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-  yield* call(trackKeychainGetFailure, keychainError);
-  yield* call(clearKeychainError);
 
   // track if the Android device has StrongBox
   yield* call(handleIsKeyStrongboxBacked, keyInfo.keyTag);

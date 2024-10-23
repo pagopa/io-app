@@ -1,7 +1,7 @@
 import {
   Avatar,
   Body,
-  ButtonText,
+  ButtonLink,
   ForceScrollDownView,
   H2,
   H6,
@@ -28,14 +28,14 @@ import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { logoForService } from "../../../services/home/utils";
-import {
-  computeAndTrackDataShare,
-  computeAndTrackDataShareAccepted
-} from "../../common/utils";
 import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsErrorTagSelector } from "../store/selectors";
 import { ConsentData } from "../types";
+import {
+  computeAndTrackDataShare,
+  computeAndTrackDataShareAccepted
+} from "../../common/analytics";
 import { FimsClaimsList } from "./FimsClaims";
 import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
@@ -131,13 +131,10 @@ export const FimsFlowSuccessBody = ({
         <Subtitle />
 
         <VSpacer size={24} />
-        <ButtonText
-          weight="Bold"
-          color="blueIO-500"
+        <ButtonLink
+          label={I18n.t("global.why")}
           onPress={BottomSheet.present}
-        >
-          {I18n.t("global.why")}
-        </ButtonText>
+        />
         <VSpacer size={24} />
         <ListItemHeader label="Dati richiesti" iconName="security" />
         <FimsClaimsList claims={consents.user_metadata} />

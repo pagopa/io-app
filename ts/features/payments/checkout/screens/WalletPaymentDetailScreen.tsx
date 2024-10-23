@@ -62,6 +62,8 @@ import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
+import { WalletPaymentStepEnum } from "../types";
+import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -148,6 +150,8 @@ const WalletPaymentDetailContent = ({
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       saved_payment_method:
         paymentAnalyticsData?.savedPaymentMethods?.length || 0,
       service_name: paymentAnalyticsData?.serviceName,
@@ -173,6 +177,7 @@ const WalletPaymentDetailContent = ({
       data_entry: paymentAnalyticsData?.startOrigin,
       attempt: paymentAnalyticsData?.attempt,
       organization_name: payment.paName,
+      organization_fiscal_code: payment.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       saved_payment_method:
         paymentAnalyticsData?.savedPaymentMethods?.length || 0,
@@ -184,6 +189,11 @@ const WalletPaymentDetailContent = ({
       paymentsGetPaymentUserMethodsAction.request({
         onResponse: wallets => {
           if (!wallets || wallets?.length > 0) {
+            dispatch(
+              walletPaymentSetCurrentStep(
+                WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+              )
+            );
             navigation.navigate(
               PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
               {
@@ -272,6 +282,7 @@ const WalletPaymentDetailContent = ({
         analytics.trackPaymentSummaryAmountInfo({
           amount,
           organization_name: payment.paName,
+          organization_fiscal_code: payment.paFiscalCode,
           service_name: description
         });
       }
@@ -283,6 +294,7 @@ const WalletPaymentDetailContent = ({
     analytics.trackPaymentSummaryNoticeCopy({
       code: text,
       organization_name: payment.paName,
+      organization_fiscal_code: payment.paFiscalCode,
       service_name: description,
       expiration_date: dueDate
     });
