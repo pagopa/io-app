@@ -1371,10 +1371,10 @@
     "@expo/config" "3.3.22"
     metro-react-native-babel-transformer "^0.58.0"
 
-"@gorhom/bottom-sheet@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-5.0.2.tgz#28675943f24fa9787ba58bcf592028af171cdb41"
-  integrity sha512-bctrT0PDeVUdUG4xm/d9A7ikHFgQ9wchhU0oIE1vIBncFri501GTs/8Bf16ryyKHo3Q0220Dnj5CKm3Ed6ejEg==
+"@gorhom/bottom-sheet@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-5.0.4.tgz#dd7e82c01eccd4cba6c09bd7700d857dd95b47c5"
+  integrity sha512-DTKFE+KwcS4Du5hbzTzh3r9hdfEfYmChcRi6hSeiDPGiCMq8GQ7VD5VE1WaFRrEbcc0+Seu1ZEjsf+JMcFM4vg==
   dependencies:
     "@gorhom/portal" "1.0.14"
     invariant "^2.2.4"

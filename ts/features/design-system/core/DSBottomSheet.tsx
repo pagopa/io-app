@@ -42,7 +42,6 @@ export const DSBottomSheet = () => {
         label={"Dismiss bottom sheet"}
         onPress={handlePressDismiss}
       />
-      <VSpacer size={16} />
     </ContentWrapper>
   );
 

@@ -1,11 +1,12 @@
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetFooter,
+  BottomSheetFooterProps,
   BottomSheetModal,
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import {
   IOBottomSheetHeaderRadius,
   IOSpacingScale,
@@ -56,7 +57,6 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
 }: Props) => (
   <BottomSheetScrollView
     style={{
-      flex: 1,
       paddingHorizontal: IOVisualCostants.appMarginDefault
     }}
     testID={testID}
@@ -183,15 +183,17 @@ export const useIOBottomSheetModal = ({
     return () => screenReaderChangedSubscription.remove();
   }, []);
 
-  const footerComponent = footer ? (
-    <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
-  ) : null;
-
   const bottomSheet = (
     <BottomSheetModal
       style={styles.bottomSheet}
-      footerComponent={(_: BottomSheetFooterProps) => footerComponent}
-      enableDynamicSizing={false}
+      footerComponent={(props: BottomSheetFooterProps) =>
+        footer ? (
+          <BottomSheetFooter {...props} bottomInset={insets.bottom}>
+            {footer}
+          </BottomSheetFooter>
+        ) : null
+      }
+      enableDynamicSizing={snapPoint ? false : true}
       snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
       handleComponent={_ => bottomSheetProps.config.handleComponent}
@@ -207,7 +209,9 @@ export const useIOBottomSheetModal = ({
             {bottomSheetProps.config.handleComponent}
             {bottomSheetProps.content}
           </View>
-          {footerComponent}
+          {footer && (
+            <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
+          )}
         </Modal>
       ) : (
         bottomSheetProps.content

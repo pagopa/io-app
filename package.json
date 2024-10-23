@@ -89,7 +89,7 @@
     "generate:pagopa-walletv3-api": "rimraf definitions/pagopa/walletv3 && mkdir -p definitions/pagopa/walletv3 && gen-api-models --api-spec $npm_package_pagopa_api_walletv3 --out-dir ./definitions/pagopa/walletv3 --no-strict --response-decoders --request-types --client",
     "generate:pagopa-ecommerce-api": "rimraf definitions/pagopa/ecommerce && mkdir -p definitions/pagopa/ecommerce && gen-api-models --api-spec $npm_package_pagopa_api_ecommerce --out-dir ./definitions/pagopa/ecommerce --no-strict --response-decoders --request-types --client",
     "generate:pagopa-biz-events-api": "rimraf definitions/pagopa/biz-events && mkdir -p definitions/pagopa/biz-events && gen-api-models --api-spec $npm_package_pagopa_api_biz_events --out-dir ./definitions/pagopa/biz-events --no-strict --response-decoders --request-types --client",
-    "generate:pagopa-platform-api": "rimraf definitions/pagopa/platform && mkdir -p definitions/pagopa/platform && gen-api-models --api-spec $npm_package_pagopa_api_platform --out-dir ./definitions/pagopa/platform --no-strict --response-decoders --request-types --client",
+  "generate:pagopa-platform-api": "rimraf definitions/pagopa/platform && mkdir -p definitions/pagopa/platform && gen-api-models --api-spec $npm_package_pagopa_api_platform --out-dir ./definitions/pagopa/platform --no-strict --response-decoders --request-types --client",
     "generate:fims": "rimraf definitions/fims && mkdir -p definitions/fims && gen-api-models --api-spec $npm_package_fims_swagger --out-dir ./definitions/fims --no-strict --response-decoders --request-types --client",
     "generate:payments": "npm-run-all generate:pagopa-walletv3-api generate:pagopa-ecommerce-api generate:pagopa-biz-events-api generate:pagopa-platform-api",
     "generate": "npm-run-all generate:*",
@@ -107,7 +107,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
-    "@gorhom/bottom-sheet": "^5.0.2",
+    "@gorhom/bottom-sheet": "^5.0.4",
     "@pagopa/io-app-design-system": "2.0.2",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cieid": "^0.3.5",
