@@ -34,6 +34,7 @@ import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
 import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
+import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
@@ -48,6 +49,7 @@ import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithL
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
+import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
@@ -77,7 +79,6 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
-import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -404,6 +405,17 @@ export const DesignSystemNavigator = () => {
             headerShown: false,
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.route
+          }
+          component={DSIridescentTrustmark}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.title
           }}
         />
 
