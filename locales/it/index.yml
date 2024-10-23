@@ -3367,8 +3367,8 @@ features:
         toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
-        primaryAction: Ho capito
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.
+        primaryAction: Ripeti l'accesso
         secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
