@@ -91,7 +91,7 @@
     },
     "driving_privileges_details": {
       "value_type": "string",
-      "value": "[{\"driving_privilege\":\"AM\",\"issue_date\":\"1935-01-23\",\"expiry_date\":\"2035-02-16\",\"restrictions_conditions\":\"\"},{\"driving_privilege\":\"B\",\"issue_date\":\"1935-01-23\",\"expiry_date\":\"2035-02-16\",\"restrictions_conditions\":\"\"}]",
+      "value": "[{\"driving_privilege\":\"AM\",\"issue_date\":\"1935-01-23\",\"expiry_date\":\"2035-02-16\",\"restrictions_conditions\":\"\"},{\"driving_privilege\":\"B\",\"issue_date\":\"1935-01-23\",\"expiry_date\":\"2035-02-16\",\"restrictions_conditions\":\"78\"}]",
       "name": {
         "it-IT": "Dettagli patente",
         "en-US": "Driving privilege details"

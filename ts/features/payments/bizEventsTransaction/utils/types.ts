@@ -7,8 +7,18 @@ import * as t from "io-ts";
  */
 export const BizEventsHeaders = t.type({
   map: t.type({
-    "x-continuation-token": t.string
+    "x-continuation-token": t.string,
+    "content-disposition": t.string
+  })
+});
+
+export const BizEventsDownloadReceiptHeaders = t.type({
+  map: t.type({
+    "content-disposition": t.string
   })
 });
 
 export type BizEventsHeaders = t.TypeOf<typeof BizEventsHeaders>;
+export type BizEventsDownloadReceiptHeaders = t.TypeOf<
+  typeof BizEventsDownloadReceiptHeaders
+>;

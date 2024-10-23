@@ -9,7 +9,7 @@ import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
-import { ItwReleaserName } from "../../common/components/ItwReleaserName";
+import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
 import {
   getCredentialStatus,
   parseClaims,
@@ -80,8 +80,8 @@ export const ItwPresentationClaimsSection = ({
           </React.Fragment>
         );
       })}
-      <Divider />
-      <ItwReleaserName credential={credential} isPreview={false} />
+      {claims.length > 0 && <Divider />}
+      <ItwIssuanceMetadata credential={credential} isPreview={false} />
     </View>
   );
 };

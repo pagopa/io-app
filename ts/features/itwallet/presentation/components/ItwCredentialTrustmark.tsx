@@ -1,13 +1,14 @@
 import React from "react";
-import { Pressable, StyleSheet, View, Image } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
-  WithTestID,
-  Caption,
-  VStack,
   Body,
+  Caption,
   FeatureInfo,
-  VSpacer
+  H6,
+  VSpacer,
+  VStack,
+  WithTestID
 } from "@pagopa/io-app-design-system";
 import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
@@ -15,10 +16,17 @@ import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/ho
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { generateTrustmarkUrl } from "../../common/utils/itwCredentialUtils";
+import {
+  generateTrustmarkUrl,
+  getCredentialNameFromType
+} from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
+import {
+  CREDENTIALS_MAP,
+  trackWalletCredentialShowTrustmark
+} from "../../analytics";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -59,10 +67,17 @@ export const ItwCredentialTrustmark = ({
     return null;
   }
 
+  const onPressWithTrackEvent = () => {
+    trackWalletCredentialShowTrustmark(
+      CREDENTIALS_MAP[credential.credentialType]
+    );
+    trustmarkBottomSheet.present();
+  };
+
   return (
     <>
       <Pressable
-        onPress={trustmarkBottomSheet.present}
+        onPress={onPressWithTrackEvent}
         testID={testID}
         accessible={true}
         accessibilityLabel={I18n.t(
@@ -111,9 +126,12 @@ export const QrCodeBottomSheetContent = ({
         size={170}
         value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
       />
-      <Body>
-        {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
-      </Body>
+      <VStack space={8}>
+        <H6>{getCredentialNameFromType(credential.credentialType)}</H6>
+        <Body>
+          {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
+        </Body>
+      </VStack>
       <FeatureInfo
         iconName="security"
         body={I18n.t("features.itWallet.presentation.trustmark.certifiedLabel")}

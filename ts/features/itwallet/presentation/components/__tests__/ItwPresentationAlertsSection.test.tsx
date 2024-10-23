@@ -1,5 +1,5 @@
-import MockDate from "mockdate";
 import { format } from "date-fns";
+import MockDate from "mockdate";
 import * as React from "react";
 import { createStore } from "redux";
 import I18n from "../../../../../i18n";
@@ -11,6 +11,7 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwPresentationAlertsSection } from "../ItwPresentationAlertsSection";
@@ -74,9 +75,16 @@ describe("ItwPresentationAlertsSection", () => {
 
 const renderComponent = (credentialType: CredentialType, expireDate: Date) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <ItwPresentationAlertsSection
           credential={{
             ...ItwStoredCredentialsMocks.dc,

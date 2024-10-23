@@ -13,7 +13,7 @@ import {
   CredentialIssuanceFailureTypeEnum
 } from "../../machine/credential/failure";
 import {
-  selectCredential,
+  selectCredentialTypeOption,
   selectFailureOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
@@ -21,7 +21,10 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   CREDENTIALS_MAP,
+  trackAddCredentialFailure,
   trackAddCredentialTimeout,
+  trackCredentialNotEntitledFailure,
+  trackItWalletDeferredIssuing,
   trackWalletCreationFailed
 } from "../../analytics";
 import ROUTES from "../../../../navigation/routes";
@@ -54,13 +57,14 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
  */
 const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const storedCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
+  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
 
   const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
     trackWalletCreationFailed({
-      reason: failure.type,
+      reason: failure.reason,
       cta_category: "custom_2",
       cta_id
     });
@@ -68,7 +72,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const retryIssuance = (cta_id: string) => {
     machineRef.send({ type: "retry" });
     trackWalletCreationFailed({
-      reason: failure.type,
+      reason: failure.reason,
       cta_category: "custom_1",
       cta_id
     });
@@ -129,6 +133,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
           )
       }
     },
+    // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
     ASYNC_ISSUANCE: {
       title: I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
       subtitle: I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
@@ -143,14 +148,38 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   useEffect(() => {
-    if (storedCredential) {
-      trackAddCredentialTimeout({
+    if (O.isNone(credentialType)) {
+      return;
+    }
+
+    if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
+      trackItWalletDeferredIssuing(CREDENTIALS_MAP[credentialType.value]);
+      return;
+    }
+
+    if (failure.type === CredentialIssuanceFailureTypeEnum.NOT_ENTITLED) {
+      trackCredentialNotEntitledFailure({
         reason: failure.reason,
         type: failure.type,
-        credential: CREDENTIALS_MAP[storedCredential.credentialType]
+        credential: CREDENTIALS_MAP[credentialType.value]
       });
+      return;
     }
-  }, [failure, storedCredential]);
+
+    if (failure.type === CredentialIssuanceFailureTypeEnum.GENERIC) {
+      trackAddCredentialFailure({
+        reason: failure.reason,
+        type: failure.type,
+        credential: CREDENTIALS_MAP[credentialType.value]
+      });
+      return;
+    }
+    trackAddCredentialTimeout({
+      reason: failure.reason,
+      type: failure.type,
+      credential: CREDENTIALS_MAP[credentialType.value]
+    });
+  }, [credentialType, failure]);
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;

@@ -2,6 +2,7 @@ import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import {
   IOStackNavigationRouteProps,
@@ -9,7 +10,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { getHumanReadableParsedCredential } from "../../common/utils/debug";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -26,6 +26,11 @@ import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialDetail,
+  trackWalletCredentialShowFAC_SIMILE
+} from "../../analytics";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -46,11 +51,22 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   useDebugInfo({
     parsedCredential: pipe(
       credentialOption,
-      O.map(credential =>
-        getHumanReadableParsedCredential(credential.parsedCredential)
-      ),
+      O.map(credential => credential.parsedCredential),
       O.toUndefined
     )
+  });
+
+  useFocusEffect(() => {
+    if (O.isNone(credentialOption)) {
+      return;
+    }
+    const credential = credentialOption.value;
+
+    trackCredentialDetail({
+      credential: CREDENTIALS_MAP[credential.credentialType],
+      credential_status:
+        credential.storedStatusAttestation?.credentialStatus || "not_valid"
+    });
   });
 
   if (O.isNone(credentialOption)) {
@@ -90,19 +106,25 @@ const getCtaProps = (
 ): CredentialCtaProps | undefined => {
   const { parsedCredential } = credential;
 
+  const onPress = () => {
+    if (CREDENTIALS_MAP[credential.credentialType] === "ITW_TS_V2") {
+      trackWalletCredentialShowFAC_SIMILE();
+    }
+
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+      params: {
+        attachmentClaim: parsedCredential[WellKnownClaim.content]
+      }
+    });
+  };
+
   // If the "content" claim exists, return a CTA to view and download it.
   if (parsedCredential[WellKnownClaim.content]) {
     return {
       label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
       icon: "docPaymentTitle",
-      onPress: () => {
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-          params: {
-            attachmentClaim: parsedCredential[WellKnownClaim.content]
-          }
-        });
-      }
+      onPress
     };
   }
 

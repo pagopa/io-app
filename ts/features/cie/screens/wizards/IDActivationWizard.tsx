@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ContentWrapper,
   H6,
@@ -6,10 +5,10 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../../utils/url";
 
 const REQUEST_CIE_URL = "https://www.cartaidentita.interno.gov.it/richiedi/";
@@ -20,20 +19,6 @@ const IDActivationWizard = () => {
   const { popToTop } = useIONavigation();
   const { error } = useIOToast();
   const label = I18n.t("authentication.wizards.id_activation_wizard.title");
-
-  const getActions = (): IOScrollViewActions => {
-    const primaryLabel = I18n.t(
-      "authentication.wizards.id_activation_wizard.actions.primary.label"
-    );
-    return {
-      type: "SingleButton",
-      primary: {
-        label: primaryLabel,
-        accessibilityLabel: primaryLabel,
-        onPress: popToTop
-      }
-    };
-  };
 
   const handleOpenLink = (url: string) => () => {
     openWebUrl(url, () => {
@@ -50,7 +35,15 @@ const IDActivationWizard = () => {
       description={I18n.t(
         "authentication.wizards.id_activation_wizard.description"
       )}
-      actions={getActions()}
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t(
+            "authentication.wizards.id_activation_wizard.actions.primary.label"
+          ),
+          onPress: popToTop
+        }
+      }}
     >
       <ContentWrapper>
         <VSpacer size={12} />

@@ -2,7 +2,6 @@ import {
   IOBadgeHSpacing,
   IOBadgeRadius,
   IOBadgeVSpacing,
-  IOVisualCostants,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -53,10 +52,9 @@ const ItwDigitalVersionBadge = ({
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"
-          maxFontSizeMultiplier={IOVisualCostants.maxFontSizeMultiplier}
+          allowFontScaling={false}
           style={[
             styles.label,
-            styles.labelFont,
             {
               color: foreground
             }
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
   wrapper: {
     position: "absolute",
     bottom: 16,
-    right: 0
+    right: 2
   },
   badge: {
     flexDirection: "row",
@@ -91,14 +89,10 @@ const styles = StyleSheet.create({
     paddingVertical: IOBadgeVSpacing
   },
   label: {
-    fontSize: 12,
-    lineHeight: 16,
     alignSelf: "center",
     textTransform: "uppercase",
-    flexShrink: 1
-  },
-  labelFont: {
-    ...makeFontStyleObject("Regular", false, "ReadexPro")
+    flexShrink: 1,
+    ...makeFontStyleObject(12, "ReadexPro", 16, "Regular")
   }
 });
 

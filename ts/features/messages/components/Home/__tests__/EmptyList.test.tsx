@@ -17,6 +17,7 @@ import {
 import { UIMessage } from "../../../types";
 import { reloadAllMessages } from "../../../store/actions";
 import { pageSize } from "../../../../../config";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -28,6 +29,7 @@ describe("EmptyList", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot, INBOX   category, pot.none", () => {
     const component = renderComponent("INBOX", pot.none);

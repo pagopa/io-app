@@ -97,10 +97,8 @@ const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
   }
 };
 
-const transparentBorderColor = "transparent";
-
 const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
-  valid: transparentBorderColor,
+  valid: IOColors.white,
   expired: IOColors["error-600"],
   expiring: IOColors["warning-700"],
   pending: IOColors["info-700"]
@@ -132,14 +130,11 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     borderRadius: 8,
-    borderWidth: 1,
-    borderLeftWidth: 9,
-    borderColor: transparentBorderColor
+    borderWidth: 2
   },
   label: {
     flex: 1,
-    ...makeFontStyleObject("Semibold", false, "TitilliumSansPro"),
-    fontSize: 16
+    ...makeFontStyleObject(16, "TitilliumSansPro", 20, "Semibold")
   },
   header: {
     display: "flex",

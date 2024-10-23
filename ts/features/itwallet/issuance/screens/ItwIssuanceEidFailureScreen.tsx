@@ -15,21 +15,17 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import {
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
-  CREDENTIALS_MAP,
   KoState,
-  trackAddCredentialTimeout,
   trackIdNotMatch,
+  trackItwIdRequestFailure,
+  trackItwIdRequestUnexpected,
   trackItwUnsupportedDevice,
   trackWalletCreationFailed
 } from "../../analytics";
-import { selectCredential } from "../../machine/credential/selectors";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -37,8 +33,6 @@ export const ItwIssuanceEidFailureScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
-  const storedCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -78,7 +72,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () =>
             closeIssuance({
-              reason: failure.type,
+              reason: failure.reason,
               cta_category: "custom_1",
               cta_id: I18n.t(
                 "features.itWallet.issuance.genericError.primaryAction"
@@ -91,7 +85,7 @@ export const ItwIssuanceEidFailureScreen = () => {
           ),
           onPress: () =>
             closeIssuance({
-              reason: failure.type,
+              reason: failure.reason,
               cta_category: "custom_2",
               cta_id: I18n.t(
                 "features.itWallet.issuance.genericError.secondaryAction"
@@ -108,12 +102,6 @@ export const ItwIssuanceEidFailureScreen = () => {
             "features.itWallet.unsupportedDevice.error.primaryAction"
           ),
           onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
-            "features.itWallet.unsupportedDevice.error.secondaryAction"
-          ),
-          onPress: () => undefined
         }
       },
       [IssuanceFailureType.NOT_MATCHING_IDENTITY]: {
@@ -126,15 +114,24 @@ export const ItwIssuanceEidFailureScreen = () => {
         pictogram: "accessDenied",
         action: {
           label: I18n.t(
-            "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
-          ),
-          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
           ),
-          onPress: () => undefined
+          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+        }
+      },
+      [IssuanceFailureType.WALLET_REVOCATION_GENERIC]: {
+        title: I18n.t("features.itWallet.walletRevocation.failureScreen.title"),
+        subtitle: I18n.t(
+          "features.itWallet.walletRevocation.failureScreen.subtitle"
+        ),
+        pictogram: "umbrellaNew",
+        action: {
+          label: I18n.t("global.buttons.retry"),
+          onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+        },
+        secondaryAction: {
+          label: I18n.t("global.buttons.close"),
+          onPress: () => machineRef.send({ type: "close" })
         }
       }
     };
@@ -147,16 +144,22 @@ export const ItwIssuanceEidFailureScreen = () => {
         trackIdNotMatch(identification.mode);
       }
       if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
-        trackItwUnsupportedDevice();
+        trackItwUnsupportedDevice(failure);
       }
       if (
         failure.type === IssuanceFailureType.ISSUER_GENERIC &&
-        storedCredential
+        identification
       ) {
-        trackAddCredentialTimeout({
+        trackItwIdRequestFailure({
+          ITW_ID_method: identification.mode,
           reason: failure.reason,
-          type: failure.type,
-          credential: CREDENTIALS_MAP[storedCredential.credentialType]
+          type: failure.type
+        });
+      }
+      if (failure.type === IssuanceFailureType.GENERIC) {
+        trackItwIdRequestUnexpected({
+          reason: failure.reason,
+          type: failure.type
         });
       }
     }, [failure]);

@@ -54,13 +54,25 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
     },
-    WIZARD_SCREEN: {
-      route: "WIZARD_SCREEN",
-      title: "Wizard Screen"
+    IOSCROLLVIEW: {
+      route: "IOSCROLLVIEW",
+      title: "IOScrollView"
     },
-    LIST_ITEM_SCREEN: {
-      route: "LIST_ITEM_SCREEN",
-      title: "List Item Screen"
+    IOSCROLLVIEW_WO_ACTIONS: {
+      route: "IOSCROLLVIEW_WO_ACTIONS",
+      title: "IOScrollView w/o Actions"
+    },
+    IOSCROLLVIEW_LARGEHEADER: {
+      route: "IOSCROLLVIEW_LARGEHEADER",
+      title: "IOScrollView w/ Large header"
+    },
+    IOSCROLLVIEW_CENTRED_CONTENT: {
+      route: "IOSCROLLVIEW_CENTRED_CONTENT",
+      title: "IOScrollView w/ Centred content"
+    },
+    IOSCROLLVIEW_WITH_LIST_ITEMS: {
+      route: "IOSCROLLVIEW_WITH_LIST_ITEMS",
+      title: "IOScrollView w/ List items"
     },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
@@ -89,18 +101,6 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_SCREEN_END_MARGIN",
       title: "Screen End margin"
     },
-    IOSCROLLVIEW: {
-      route: "IOSCROLLVIEW",
-      title: "IOScrollView"
-    },
-    IOSCROLLVIEW_WO_ACTIONS: {
-      route: "IOSCROLLVIEW_WO_ACTIONS",
-      title: "IOScrollView w/o Actions"
-    },
-    IOSCROLLVIEW_LARGEHEADER: {
-      route: "IOSCROLLVIEW_LARGEHEADER",
-      title: "IOScrollView w/ Large header"
-    },
     FOOTER_ACTIONS: {
       route: "DESIGN_SYSTEM_FOOTER_ACTIONS",
       title: "Footer Actions"
@@ -112,6 +112,14 @@ const DESIGN_SYSTEM_ROUTES = {
     FOOTER_ACTIONS_NOT_FIXED: {
       route: "DS_FOOTER_ACTIONS_NOT_FIXED",
       title: "Footer Actions (not fixed)"
+    },
+    FOOTER_ACTIONS_INLINE: {
+      route: "DS_FOOTER_ACTIONS_INLINE",
+      title: "Footer Actions Inline"
+    },
+    FOOTER_ACTIONS_INLINE_NOT_FIXED: {
+      route: "DS_FOOTER_ACTIONS_INLINE_NOT_FIXED",
+      title: "Footer Actions Inline (not fixed)"
     }
   },
   EXPERIMENTAL_LAB: {
@@ -122,6 +130,10 @@ const DESIGN_SYSTEM_ROUTES = {
     DYNAMIC_CARD_ROTATION: {
       route: "DYNAMIC_CARD_ROTATION",
       title: "Dynamic card based on device rotation"
+    },
+    ANIMATED_PICTOGRAMS: {
+      route: "DS_ANIMATED_PICTOGRAMS",
+      title: "Animated pictograms"
     }
   },
   LEGACY: {

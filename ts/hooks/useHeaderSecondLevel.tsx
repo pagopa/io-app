@@ -1,4 +1,7 @@
-import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import {
+  HeaderActionProps,
+  HeaderSecondLevel
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
@@ -9,6 +12,7 @@ import {
 import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
+import { useStatusAlertProps } from "./useStatusAlertProps";
 
 type SpecificHookProps = {
   canGoBack?: boolean;
@@ -48,8 +52,8 @@ type NoAdditionalActions = {
 type WithAdditionalActions =
   | NoAdditionalActions
   | {
-      secondAction: ActionProp;
-      thirdAction?: ActionProp;
+      secondAction: HeaderActionProps;
+      thirdAction?: HeaderActionProps;
     };
 
 type PropsWithSupport = SpecificHookProps &
@@ -102,6 +106,7 @@ export const useHeaderSecondLevel = ({
   enableDiscreteTransition,
   animatedRef
 }: HeaderSecondLevelHookProps) => {
+  const alertProps = useStatusAlertProps();
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
     contextualHelpMarkdown,
@@ -127,6 +132,7 @@ export const useHeaderSecondLevel = ({
     const enableDiscreteTransitionProps =
       enableDiscreteTransition && animatedRef
         ? {
+            ignoreSafeAreaMargin: !!alertProps,
             enableDiscreteTransition,
             animatedRef
           }
@@ -141,6 +147,7 @@ export const useHeaderSecondLevel = ({
   }, [
     enableDiscreteTransition,
     animatedRef,
+    alertProps,
     scrollValues,
     variant,
     backgroundColor
@@ -153,7 +160,7 @@ export const useHeaderSecondLevel = ({
       };
     }
 
-    const helpAction: ActionProp = {
+    const helpAction: HeaderActionProps = {
       icon: "help",
       onPress: startSupportRequest,
       accessibilityLabel: I18n.t(

@@ -1,7 +1,7 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -9,24 +9,24 @@ import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletBannerTap,
   trackItWalletBannerClosure,
   trackITWalletBannerVisualized
 } from "../../analytics";
-import { itwTrialId } from "../../../../config";
 
 type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
   fallbackComponent?: ReactElement;
+  closable?: boolean;
 };
 
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
-  fallbackComponent
+  fallbackComponent,
+  closable = true
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
   const navigation = useIONavigation();
@@ -48,14 +48,14 @@ export const ItwDiscoveryBanner = ({
 
   const trackBannerProperties = React.useMemo(
     () => ({
-      banner_id: itwTrialId,
+      banner_id: "itwDiscoveryBannerTestID",
       banner_page: route.name,
       banner_landing: "ITW_INTRO"
     }),
     [route.name]
   );
 
-  useOnFirstRender(() => {
+  useFocusEffect(() => {
     if (!shouldBeHidden) {
       trackITWalletBannerVisualized(trackBannerProperties);
     }
@@ -79,6 +79,7 @@ export const ItwDiscoveryBanner = ({
     trackItWalletBannerClosure(trackBannerProperties);
     setVisible(false);
   };
+  // trailID
 
   return (
     <View style={!ignoreMargins && styles.margins}>
@@ -95,7 +96,7 @@ export const ItwDiscoveryBanner = ({
         pictogramName="itWallet"
         color="turquoise"
         size="big"
-        onClose={handleOnClose}
+        onClose={closable ? handleOnClose : undefined}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />
