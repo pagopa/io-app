@@ -6,6 +6,11 @@ import I18n from "../../../../i18n";
 export const PAYMENTS_BACKOFF_SECONDS_DELAYS = [1, 10, 60, 180];
 
 /**
+ * Constant to define the default value of 1 second in milliseconds
+ */
+export const SECONDS_TO_MILLISECONDS = 1000;
+
+/**
  * This function returns the time remaining between the current date and the target date.
  * @returns A string with the time remaining in seconds or minutes.
  */
@@ -22,7 +27,7 @@ export const getTimeRemainingText = (targetDate: number | Date): string => {
     return "";
   }
 
-  const secondsRemaining = Math.ceil(timeDifference / 1000);
+  const secondsRemaining = Math.ceil(timeDifference / SECONDS_TO_MILLISECONDS);
 
   if (secondsRemaining < 60) {
     return secondsRemaining === 1

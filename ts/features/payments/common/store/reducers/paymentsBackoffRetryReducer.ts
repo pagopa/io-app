@@ -4,7 +4,10 @@ import {
   clearPaymentsBackoffRetry,
   increasePaymentsBackoffRetry
 } from "../actions";
-import { PAYMENTS_BACKOFF_SECONDS_DELAYS } from "../../utils/backoffRetry";
+import {
+  PAYMENTS_BACKOFF_SECONDS_DELAYS,
+  SECONDS_TO_MILLISECONDS
+} from "../../utils/backoffRetry";
 import { PaymentsBackoffRetryValue } from "../../utils/types";
 
 export type PaymentsBackoffRetryState = {
@@ -19,16 +22,17 @@ const reducer = (
 ): PaymentsBackoffRetryState => {
   switch (action.type) {
     case getType(increasePaymentsBackoffRetry):
-      const retryCount =
-        state[action.payload]?.retryCount === undefined
-          ? 0
-          : (state[action.payload]?.retryCount || 0) + 1;
+      const currentRetryCount = state[action.payload]?.retryCount ?? 0;
+      const retryCount = currentRetryCount + 1;
+      const allowedRetryTimestamp =
+        Date.now() +
+        PAYMENTS_BACKOFF_SECONDS_DELAYS[retryCount] * SECONDS_TO_MILLISECONDS;
+
       return {
         ...state,
         [action.payload]: {
           retryCount,
-          allowedRetryTimestamp:
-            Date.now() + PAYMENTS_BACKOFF_SECONDS_DELAYS[retryCount] * 1000
+          allowedRetryTimestamp
         }
       };
     case getType(clearPaymentsBackoffRetry):
