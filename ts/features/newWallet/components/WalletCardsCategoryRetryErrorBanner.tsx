@@ -46,8 +46,8 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
     }
   };
 
-  if (isPaymentMethodsError || isCgnError || isIdPayError) {
-    return (
+  return (
+    (isPaymentMethodsError || isCgnError || isIdPayError) && (
       <BannerErrorState
         icon="warningFilled"
         label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
@@ -56,7 +56,6 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
         )}
         onPress={handleOnRetry}
       />
-    );
-  }
-  return undefined;
+    )
+  );
 };

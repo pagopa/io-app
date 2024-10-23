@@ -40,12 +40,12 @@ export const WalletCardsCategoryContainer = ({
   testID
 }: WalletCardsCategoryContainerProps) => {
   // Show the footer with the banner (if possible) to retry only if the category is of any domain of B&P (cgn, bonus or payment)
-  const ListFooter = cards.find(card => card.category !== "itw") ? (
+  const ListFooter = cards.find(card => card.category !== "itw") && (
     <>
       <VSpacer size={16} />
       <WalletCardsCategoryRetryErrorBanner />
     </>
-  ) : undefined;
+  );
 
   return (
     <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
@@ -54,9 +54,7 @@ export const WalletCardsCategoryContainer = ({
       <Animated.FlatList
         scrollEnabled={false}
         data={cards}
-        ItemSeparatorComponent={() =>
-          !isStacked ? <VSpacer size={16} /> : null
-        }
+        ItemSeparatorComponent={() => !isStacked && <VSpacer size={16} />}
         renderItem={({ index, item }) =>
           renderWalletCardFn(item, isStacked && index < cards.length - 1)
         }
