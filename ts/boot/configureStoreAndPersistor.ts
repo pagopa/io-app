@@ -377,9 +377,7 @@ const migrations: MigrationManifest = {
     merge(state, {
       features: {
         wallet: {
-          preferences: {
-            shouldShowPaymentsRedirectBanner: true
-          }
+          preferences: {}
         }
       }
     }),
