@@ -21,7 +21,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { requestMediaPermission } from "../../../utils/permission";
 import {
   BarcodeAnalyticsFlow,
@@ -273,7 +273,7 @@ const useIOBarcodeFileReader = ({
     </View>
   );
 
-  const filePickerModal = useIOBottomSheetAutoresizableModal({
+  const filePickerModal = useIOBottomSheetModal({
     component: filePickerModalComponent,
     title: "",
     onDismiss: () => setFilePickerVisible(false)

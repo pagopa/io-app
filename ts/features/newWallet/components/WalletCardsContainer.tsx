@@ -21,7 +21,7 @@ import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { WalletCardCategoryFilter } from "../types";
 import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
@@ -31,8 +31,6 @@ import {
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
-
-const EID_INFO_BOTTOM_PADDING = 128;
 
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
@@ -90,14 +88,11 @@ const ItwCardsContainer = ({
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const navigation = useIONavigation();
 
-  const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
-    {
-      title: <ItwEidInfoBottomSheetTitle />,
-      // Navigation does not seem to work when the bottom sheet's component is not inline
-      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
-    },
-    EID_INFO_BOTTOM_PADDING
-  );
+  const eidInfoBottomSheet = useIOBottomSheetModal({
+    title: <ItwEidInfoBottomSheetTitle />,
+    // Navigation does not seem to work when the bottom sheet's component is not inline
+    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
+  });
 
   useFocusEffect(
     React.useCallback(

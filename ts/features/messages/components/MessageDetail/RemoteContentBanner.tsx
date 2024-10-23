@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { trackRemoteContentInfo } from "../../analytics";
 import {
   BodyProps,
@@ -49,19 +49,16 @@ export const RemoteContentBanner = () => {
     []
   );
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
-    {
-      component: (
-        <ComposedBodyFromArray
-          body={bodyPropsArray}
-          key={"Otopiteco"}
-          textAlign="left"
-        />
-      ),
-      title: I18n.t("messageDetails.bottomSheet.title")
-    },
-    100
-  );
+  const { present, bottomSheet } = useIOBottomSheetModal({
+    component: (
+      <ComposedBodyFromArray
+        body={bodyPropsArray}
+        key={"Otopiteco"}
+        textAlign="left"
+      />
+    ),
+    title: I18n.t("messageDetails.bottomSheet.title")
+  });
 
   return (
     <>

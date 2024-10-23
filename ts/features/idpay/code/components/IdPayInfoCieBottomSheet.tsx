@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { FeatureInfo, H4, VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
-  useIOBottomSheetAutoresizableModal
+  useIOBottomSheetModal
 } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
 import useContentWithFF from "../../../../screens/profile/useContentWithFF";
@@ -34,7 +34,7 @@ const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
     </View>
   );
 
-  const modal = useIOBottomSheetAutoresizableModal({
+  const modal = useIOBottomSheetModal({
     component: getModalContent(),
     title: <H4>{I18n.t("idpay.initiative.cie.bottomSheet.title")}</H4>
   });

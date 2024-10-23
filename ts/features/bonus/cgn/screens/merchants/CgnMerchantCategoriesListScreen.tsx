@@ -20,7 +20,7 @@ import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
@@ -40,8 +40,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
     >();
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
-    fullScreen: true,
+  const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t("bonus.cgn.merchantsList.categoriesList.bottomSheet.title"),
     component: (
       <View style={{ paddingBottom: insets.bottom }}>

@@ -13,8 +13,8 @@ import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
 import {
-  IOBottomSheetModal,
-  useIOBottomSheetAutoresizableModal
+  useIOBottomSheetModal,
+  IOBottomSheetModal
 } from "../../utils/hooks/bottomSheet";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import { H1 } from "../core/typography/H1";
@@ -47,7 +47,7 @@ export const useWalletHomeHeaderBottomSheet = (): IOBottomSheetModal => {
     }
   ];
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("global.buttons.add"),
     component: (
       <FlatList

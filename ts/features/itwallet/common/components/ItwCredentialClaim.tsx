@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import React, { useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import {
@@ -278,7 +278,7 @@ const DrivingPrivilegesClaimItem = ({
     claim.issue_date,
     I18n.t("global.dateFormats.shortFormat")
   );
-  const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
+  const privilegeBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
       { category: claim.driving_privilege }

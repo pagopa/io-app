@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
-  useIOBottomSheetAutoresizableModal
+  useIOBottomSheetModal
 } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -13,7 +13,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
  * containing detailed information about where the user can find the legacy transaction recepit.
  */
 const usePaymentsLegacyAttachmentBottomSheet = (): IOBottomSheetModal =>
-  useIOBottomSheetAutoresizableModal({
+  useIOBottomSheetModal({
     title: I18n.t("features.payments.transactions.legacy.bottomSheet.title"),
     component: (
       <View>

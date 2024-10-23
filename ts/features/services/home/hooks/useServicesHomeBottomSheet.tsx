@@ -9,7 +9,7 @@ import {
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 type NavigationListItem = {
   value: string;
@@ -61,7 +61,7 @@ export const useServicesHomeBottomSheet = () => {
     }
   ];
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: "",
     component: (
       <FlatList

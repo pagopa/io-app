@@ -19,7 +19,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
@@ -52,40 +52,34 @@ export const PDNDPrerequisitesScreen = () => {
   const continueOnPress = () => machine.send({ type: "next" });
   const goBackOnPress = () => machine.send({ type: "back" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(
-        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
-      ),
-      component: (
-        <LegacyMarkdown>
-          {I18n.t(
-            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-            {
-              provider: authority
-            }
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+    title: I18n.t(
+      "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
+    ),
+    component: (
+      <LegacyMarkdown>
+        {I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.body", {
+          provider: authority
+        })}
+      </LegacyMarkdown>
+    ),
+    footer: (
+      <ContentWrapper>
+        <VSpacer size={16} />
+        <ButtonSolid
+          fullWidth
+          label={I18n.t(
+            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
           )}
-        </LegacyMarkdown>
-      ),
-      footer: (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <ButtonSolid
-            fullWidth
-            label={I18n.t(
-              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            )}
-            accessibilityLabel={I18n.t(
-              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            )}
-            onPress={() => dismiss()}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
-      )
-    },
-    162
-  );
+          accessibilityLabel={I18n.t(
+            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+          )}
+          onPress={() => dismiss()}
+        />
+        <VSpacer size={16} />
+      </ContentWrapper>
+    )
+  });
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
 

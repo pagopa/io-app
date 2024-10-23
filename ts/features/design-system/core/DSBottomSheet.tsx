@@ -12,7 +12,6 @@ import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { Body } from "../../../components/core/typography/Body";
 import {
-  useIOBottomSheetAutoresizableModal,
   useIOBottomSheetModal,
   useLegacyIOBottomSheetModal
 } from "../../../utils/hooks/bottomSheet";
@@ -93,7 +92,7 @@ export const DSBottomSheet = () => {
     present: presentAutoresizableBottomSheet,
     bottomSheet: autoResizableBottomSheet,
     dismiss: dismissAutoresizableBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
+  } = useIOBottomSheetModal({
     title: "Autoresizable Bottom Sheet",
     component: <BottomSheetLongContentBody />
   });
@@ -103,14 +102,11 @@ export const DSBottomSheet = () => {
     present: presentAutoresizableBottomSheetWithFooter,
     bottomSheet: autoResizableBottomSheetWithFooter,
     dismiss: dismissAutoresizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: "Autoresizable Bottom Sheet",
-      component: <BottomSheetLongContentBody />,
-      footer: defaultFooter
-    },
-    150
-  );
+  } = useIOBottomSheetModal({
+    title: "Autoresizable Bottom Sheet",
+    component: <BottomSheetLongContentBody />,
+    footer: defaultFooter
+  });
 
   // Static bottom sheet hook
   const {
@@ -140,32 +136,25 @@ export const DSBottomSheet = () => {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
     dismiss: dismissVeryLongAutoresizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: "Autoresizable Bottom Sheet",
-      component: <BottomSheetVeryLongContentBody />,
-      footer: defaultFooter
-    },
-    80
-  );
+  } = useIOBottomSheetModal({
+    title: "Autoresizable Bottom Sheet",
+    component: <BottomSheetVeryLongContentBody />,
+    footer: defaultFooter
+  });
 
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooterFullScreen,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooterFullScreen,
     dismiss: dismissVeryLongAutoresizableBottomSheetWithFooterFullScreen
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: "Autoresizable Bottom Sheet, Full Screen",
-      component: (
-        <SafeAreaView>
-          <BottomSheetVeryLongContentBody />
-        </SafeAreaView>
-      ),
-      footer: defaultFooter,
-      fullScreen: true
-    },
-    80
-  );
+  } = useIOBottomSheetModal({
+    title: "Autoresizable Bottom Sheet, Full Screen",
+    component: (
+      <SafeAreaView>
+        <BottomSheetVeryLongContentBody />
+      </SafeAreaView>
+    ),
+    footer: defaultFooter
+  });
 
   const {
     present: presentLegacyBottomSheet,

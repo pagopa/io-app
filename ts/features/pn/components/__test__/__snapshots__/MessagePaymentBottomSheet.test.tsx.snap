@@ -340,6 +340,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -359,12 +360,26 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>
@@ -720,6 +735,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -739,7 +755,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2463,6 +2478,20 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                 </View>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>

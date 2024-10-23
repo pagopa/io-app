@@ -340,6 +340,7 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -359,7 +360,6 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -368,6 +368,20 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                             <View>
                               Mock Preconditions Content
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>

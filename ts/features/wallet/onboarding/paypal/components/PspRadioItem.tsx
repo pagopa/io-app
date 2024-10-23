@@ -13,7 +13,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { H4 } from "../../../../../components/core/typography/H4";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/hooks/useImageResize";
 import { IOPayPalPsp } from "../types";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
@@ -59,40 +59,34 @@ export const PspRadioItem = (
     psp.logoUrl
   );
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(
-        "wallet.onboarding.paypal.selectPsp.infoBottomSheet.title",
-        {
-          pspName: psp.name
-        }
-      ),
-      component: (
-        <PspInfoBottomSheetContent
-          pspFee={psp.fee}
-          pspName={psp.name}
-          pspPrivacyUrl={psp.privacyUrl}
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+    title: I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
+      pspName: psp.name
+    }),
+    component: (
+      <PspInfoBottomSheetContent
+        pspFee={psp.fee}
+        pspName={psp.name}
+        pspPrivacyUrl={psp.privacyUrl}
+      />
+    ),
+    footer: (
+      <ContentWrapper>
+        <ButtonSolid
+          testID="continueButtonId"
+          onPress={() => dismiss()}
+          label={I18n.t(
+            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+          )}
+          accessibilityLabel={I18n.t(
+            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+          )}
+          fullWidth={true}
         />
-      ),
-      footer: (
-        <ContentWrapper>
-          <ButtonSolid
-            testID="continueButtonId"
-            onPress={() => dismiss()}
-            label={I18n.t(
-              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
-            )}
-            accessibilityLabel={I18n.t(
-              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
-            )}
-            fullWidth={true}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
-      )
-    },
-    130
-  );
+        <VSpacer size={16} />
+      </ContentWrapper>
+    )
+  });
 
   return (
     <View style={styles.radioItemBody} testID={props.testID}>

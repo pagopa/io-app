@@ -506,6 +506,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -525,7 +526,6 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2285,6 +2285,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>
@@ -2807,6 +2821,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -2826,7 +2841,6 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -4586,6 +4600,20 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
                           </View>
                         </RCTScrollView>
                       </Modal>
@@ -5108,6 +5136,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -5127,12 +5156,26 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>
@@ -5654,6 +5697,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         handleComponent={[Function]}
                         hardwareAccelerated={false}
                         importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
                         onDismiss={[Function]}
                         snapPoints={
                           [
@@ -5673,12 +5717,26 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         <RCTScrollView
                           style={
                             {
-                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View />
+                          <View>
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
+                                }
+                              }
+                            />
+                          </View>
                         </RCTScrollView>
                       </Modal>
                     </View>

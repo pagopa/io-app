@@ -10,7 +10,7 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import { H4 } from "../../core/typography/H4";
@@ -116,13 +116,10 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
     extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
-    {
-      component: bottomSheetBody,
-      title: bottomSheetTitle
-    },
-    32
-  );
+  const { present, bottomSheet } = useIOBottomSheetModal({
+    component: bottomSheetBody,
+    title: bottomSheetTitle
+  });
 
   return (
     <>
