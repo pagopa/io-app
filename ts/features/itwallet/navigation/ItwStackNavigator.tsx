@@ -172,6 +172,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
         component={ItwPresentationCredentialDetailScreen}
+        options={{ headerMode: "float" }}
       />
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
