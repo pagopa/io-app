@@ -63,13 +63,19 @@ import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskStopPolling,
+  zendeskSupportCancel,
   zendeskSupportCompleted,
   zendeskSupportFailure
 } from "../store/actions";
 import {
+  getZendeskTokenStatusSelector,
   zendeskSelectedCategorySelector,
-  zendeskSelectedSubcategorySelector
+  zendeskSelectedSubcategorySelector,
+  ZendeskTokenStatusEnum
 } from "../store/reducers";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 
 /**
  * Transform an array of string into a Zendesk
@@ -131,6 +137,7 @@ const ZendeskAskPermissions = () => {
   // TODO: beware while doing this task IOPID-2055 because
   // now the zendeskToken could be undefined also if you are logged in!
   const zendeskToken = useIOSelector(zendeskTokenSelector);
+  const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
 
   useEffect(() => {
     const zendeskConfig = getZendeskConfig(zendeskToken);
@@ -245,6 +252,18 @@ const ZendeskAskPermissions = () => {
     }
   ];
 
+  const showHeader =
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST ||
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR
+      ? false
+      : true;
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: showHeader,
+    headerShown: showHeader
+  });
+
   // It should never happens since it is selected in the previous screen
   if (zendeskSelectedCategory === undefined) {
     dispatch(zendeskSupportFailure("The category has not been selected"));
@@ -349,6 +368,26 @@ const ZendeskAskPermissions = () => {
       icon={item?.icon}
     />
   );
+
+  if (getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST) {
+    return <LoadingSpinnerOverlay isLoading />;
+  }
+
+  if (getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR) {
+    return (
+      <OperationResultScreenContent
+        isHeaderVisible={true}
+        pictogram="umbrellaNew"
+        title={I18n.t("support.errorGetZendeskToken.title")}
+        subtitle={I18n.t("support.errorGetZendeskToken.subtitle")}
+        action={{
+          label: I18n.t("global.buttons.close"),
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          onPress: () => dispatch(zendeskSupportCancel())
+        }}
+      />
+    );
+  }
 
   return (
     <IOScrollViewWithLargeHeader

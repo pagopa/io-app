@@ -1,5 +1,5 @@
 import { CommonActions } from "@react-navigation/native";
-import { call } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../navigation/NavigationService";
 import {
@@ -9,6 +9,7 @@ import {
 } from "../../../../sagas/workUnit";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import {
+  getZendeskToken,
   zendeskSupportBack,
   zendeskSupportCancel,
   zendeskSupportCompleted,
@@ -19,16 +20,22 @@ import {
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>
 ) {
+  const needToNavigateInAskPermissionScreen =
+    zendeskStart.payload.assistanceForPayment ||
+    zendeskStart.payload.assistanceForCard ||
+    zendeskStart.payload.assistanceForFci;
+
+  if (needToNavigateInAskPermissionScreen) {
+    yield* put(getZendeskToken.request());
+  }
+
   return yield* call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
-          screen:
-            zendeskStart.payload.assistanceForPayment ||
-            zendeskStart.payload.assistanceForCard ||
-            zendeskStart.payload.assistanceForFci
-              ? ZENDESK_ROUTES.ASK_PERMISSIONS
-              : ZENDESK_ROUTES.HELP_CENTER,
+          screen: needToNavigateInAskPermissionScreen
+            ? ZENDESK_ROUTES.ASK_PERMISSIONS
+            : ZENDESK_ROUTES.HELP_CENTER,
           params: zendeskStart.payload
         })
       );
