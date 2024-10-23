@@ -12,6 +12,7 @@ import { PaymentMethodManagementTypeEnum } from "../../../../../../../definition
 
 describe("Test handleWalletPaymentGetAllMethods saga", () => {
   const T_SESSION_TOKEN = "ABCD";
+  const MOCK_AMOUNT = 6005;
 
   it(`should put ${getType(
     paymentsGetPaymentMethodsAction.success
@@ -39,7 +40,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
     testSaga(
       handleWalletPaymentGetAllMethods,
       mockGetAllPaymentMethods,
-      paymentsGetPaymentMethodsAction.request()
+      paymentsGetPaymentMethodsAction.request({ amount: MOCK_AMOUNT })
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -59,7 +60,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
     testSaga(
       handleWalletPaymentGetAllMethods,
       mockGetAllPaymentMethods,
-      paymentsGetPaymentMethodsAction.request()
+      paymentsGetPaymentMethodsAction.request({ amount: MOCK_AMOUNT })
     )
       .next()
       .next(T_SESSION_TOKEN)
@@ -81,7 +82,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
     testSaga(
       handleWalletPaymentGetAllMethods,
       mockGetAllPaymentMethods,
-      paymentsGetPaymentMethodsAction.request()
+      paymentsGetPaymentMethodsAction.request({ amount: MOCK_AMOUNT })
     )
       .next()
       .next(T_SESSION_TOKEN)
