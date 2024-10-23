@@ -72,8 +72,12 @@ const WalletPaymentPickMethodScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(paymentsGetPaymentMethodsAction.request());
-    }, [dispatch])
+      dispatch(
+        paymentsGetPaymentMethodsAction.request({
+          amount: pot.toUndefined(pot.map(paymentDetailsPot, el => el.amount))
+        })
+      );
+    }, [dispatch, paymentDetailsPot])
   );
 
   useOnFirstRender(() => {

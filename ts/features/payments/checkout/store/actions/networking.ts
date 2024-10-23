@@ -22,11 +22,15 @@ export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_FAILURE"
 )<RptId, PaymentRequestsGetResponse, NetworkError | WalletPaymentFailure>();
 
+export type PaymentMethodsRequest = {
+  amount?: number;
+};
+
 export const paymentsGetPaymentMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_METHODS_REQUEST",
   "PAYMENTS_GET_PAYMENT_METHODS_SUCCESS",
   "PAYMENTS_GET_PAYMENT_METHODS_FAILURE"
-)<undefined, PaymentMethodsResponse, NetworkError>();
+)<PaymentMethodsRequest, PaymentMethodsResponse, NetworkError>();
 
 type PaymentGetPaymentUserMethodsPayload = {
   onResponse?: (wallets: ReadonlyArray<WalletInfo> | undefined) => void;
