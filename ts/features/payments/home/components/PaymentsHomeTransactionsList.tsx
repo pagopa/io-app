@@ -7,7 +7,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import * as analytics from "../analytics";
 import { default as I18n } from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -67,8 +67,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }, [dispatch, latestTransactionsPot]);
 
   const handleNavigateToTransactionDetails = React.useCallback(
-    (transaction: NoticeListItem) => {
-      if (transaction.eventId === undefined) {
+    ({ eventId, isPayer }: NoticeListItem) => {
+      if (eventId === undefined) {
         return;
       }
       navigation.navigate(
@@ -77,8 +77,8 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
           screen:
             PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
           params: {
-            transactionId: transaction.eventId,
-            isPayer: transaction.isPayer
+            transactionId: eventId,
+            isPayer
           }
         }
       );
@@ -158,7 +158,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   }
 
   return (
-    <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+    <Animated.View
+      style={IOStyles.flex}
+      layout={LinearTransition.duration(200)}
+    >
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}
