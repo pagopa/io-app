@@ -1,11 +1,12 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import {
   RefreshThirdPartyApiCallOptions,
+  ThirdPartyTokenError,
   withThirdPartyRefreshApiCall
 } from "../../../fastLogin/saga/utils";
 import { PagoPaClient } from "../../common/api/client";
@@ -43,6 +44,15 @@ export function* getOrFetchPagoPaPlatformSessionToken(action: ActionType<any>) {
 
   // If the session token is not present, dispatch a new request action
   yield* put(paymentsGetPagoPaPlatformSessionTokenAction.request());
+
+  const { success } = yield* race({
+    success: take(paymentsGetPagoPaPlatformSessionTokenAction.success),
+    failure: take(paymentsGetPagoPaPlatformSessionTokenAction.failure)
+  });
+
+  if (!success) {
+    throw new Error("Failed to retrieve the PagoPA session token");
+  }
 
   return undefined;
 }
@@ -89,10 +99,12 @@ export function* handlePaymentsSessionToken(
       );
     }
   } catch (e) {
-    yield* put(
-      paymentsGetPagoPaPlatformSessionTokenAction.failure({
-        ...getNetworkError(e)
-      })
-    );
+    if (!(e instanceof ThirdPartyTokenError)) {
+      yield* put(
+        paymentsGetPagoPaPlatformSessionTokenAction.failure({
+          ...getNetworkError(e)
+        })
+      );
+    }
   }
 }

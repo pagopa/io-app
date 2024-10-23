@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import {
   IOColors,
   IOStyles,
-  LabelLink,
+  Label,
   ListItemCheckbox
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
@@ -49,19 +49,19 @@ const SignatureFieldItem = (props: Props) => {
         accessibilityLabel={props.title}
       />
       <View style={[IOStyles.row, styles.details]}>
-        <LabelLink
+        <Label
+          asLink
           accessibilityLabel={I18n.t(
             "features.fci.signatureFields.showOnDocument"
           )}
-          accessibilityRole="link"
           accessibilityHint={I18n.t(
             "features.fci.signatureFields.accessibility.fieldDetailHint"
           )}
-          testID="SignatureFieldItemDetailTestID"
           onPress={props.onPressDetail}
+          testID="SignatureFieldItemDetailTestID"
         >
           {I18n.t("features.fci.signatureFields.showOnDocument")}
-        </LabelLink>
+        </Label>
       </View>
     </View>
   );
