@@ -12,9 +12,9 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -100,7 +100,10 @@ type ContentViewProps = {
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
 
-  useFocusEffect(() => trackWalletDataShare(CREDENTIALS_MAP[credentialType]));
+  useEffect(() => {
+    trackWalletDataShare(CREDENTIALS_MAP[credentialType]);
+  }, [credentialType]);
+
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
