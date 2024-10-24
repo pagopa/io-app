@@ -14,10 +14,7 @@ export type IOFontWeight = (typeof weights)[number];
 const weightValues = ["300", "400", "600", "700"] as const;
 export type FontWeightValue = (typeof weightValues)[number];
 
-const fontKeys: ReadonlyArray<IOFontFamily> = [
-  "TitilliumSansPro",
-  "RobotoMono"
-];
+const fontKeys: ReadonlyArray<IOFontFamily> = ["TitilliumSansPro"];
 
 /**
  * Choose the font name based on the platform
@@ -30,10 +27,6 @@ const fonts = {
   ReadexPro: Platform.select({
     android: "ReadexPro",
     ios: "Readex Pro"
-  }),
-  RobotoMono: Platform.select({
-    android: "RobotoMono",
-    ios: "Roboto Mono"
   }),
   DMMono: Platform.select({
     android: "DMMono",

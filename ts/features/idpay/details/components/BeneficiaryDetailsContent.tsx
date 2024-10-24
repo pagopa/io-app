@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Label, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -17,8 +17,6 @@ import {
   RewardValueDTO,
   RewardValueTypeEnum
 } from "../../../../../definitions/idpay/RewardValueDTO";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {
@@ -275,16 +273,16 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       />
       <VSpacer size={24} />
       <View style={styles.linkRow}>
-        <Link onPress={handlePrivacyLinkPress}>
+        <Label asLink onPress={handlePrivacyLinkPress}>
           {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-        </Link>
+        </Label>
       </View>
       <View style={styles.linkRow}>
-        <Link onPress={handleUnsubscribePress} color="red">
+        <Label asLink onPress={handleUnsubscribePress}>
           {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
             initiativeName
           })}
-        </Link>
+        </Label>
       </View>
       <VSpacer size={48} />
     </>

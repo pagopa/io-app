@@ -1,16 +1,14 @@
-import { View } from "react-native";
-import React, { ComponentProps, memo, useCallback } from "react";
 import {
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   HSpacer,
   IOSpacer,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "./core/typography/ComposedBodyFromArray";
+import React, { ComponentProps, memo, useCallback } from "react";
+import { View } from "react-native";
 
 const BULLET_ITEM = "\u2022";
 

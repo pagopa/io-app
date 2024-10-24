@@ -1,8 +1,7 @@
 import { View } from "react-native";
 import * as React from "react";
 import { SliderComponent } from "@react-native-community/slider";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { H5 } from "../../../../../../components/core/typography/H5";
+import { H6, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";
 
 type Props = {
@@ -18,14 +17,14 @@ const MIN_VALUE = 1;
 export const DistanceSlider = (props: Props) => (
   <>
     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
+      <H6 color={"bluegrey"}>
         {I18n.t("bonus.cgn.merchantsList.filter.sliderLabel")}
-      </H5>
-      <H5 weight={"Regular"} color={"grey"}>
+      </H6>
+      <H6 color={"grey"}>
         {`${props.value} ${I18n.t(
           "bonus.cgn.merchantsList.filter.sliderUnit"
         )}`}
-      </H5>
+      </H6>
     </View>
     <SliderComponent
       style={{ width: "100%" }}

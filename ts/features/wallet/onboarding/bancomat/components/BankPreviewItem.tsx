@@ -1,5 +1,6 @@
 import {
   Icon,
+  LabelSmall,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -8,7 +9,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import I18n from "../../../../../i18n";
 import { useImageResize } from "../hooks/useImageResize";
 

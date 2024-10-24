@@ -1,6 +1,7 @@
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useMemo } from "react";
+import { BodyProps } from "@pagopa/io-app-design-system";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -15,7 +16,6 @@ import {
   trackEmailDuplicateEditingConfirm
 } from "../../analytics/emailAnalytics";
 
-import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 

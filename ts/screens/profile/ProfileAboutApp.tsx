@@ -1,17 +1,15 @@
 import {
   Banner,
+  BodyProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H4,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React, { createRef, useCallback, useMemo } from "react";
 import { View } from "react-native";
-import I18n from "../../i18n";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../../components/core/typography/ComposedBodyFromArray";
+import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 
 const ProfileAboutApp = () => {

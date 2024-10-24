@@ -1,10 +1,6 @@
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H2, H6, Label, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
-import { Body } from "../../../../../components/core/typography/Body";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { Link } from "../../../../../components/core/typography/Link";
 import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
 
 type Props = {
@@ -55,7 +51,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
 
   return (
     <>
-      <H1>{locales.title}</H1>
+      <H2>{locales.title}</H2>
       {props.showCircuitLogo && (
         <>
           <VSpacer size={24} />
@@ -65,37 +61,37 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
 
       <VSpacer size={24} />
       <Body>
-        <H4 weight={"Regular"} color={"bluegreyDark"}>
-          {locales.text1}
-        </H4>
+        <H6 color={"bluegreyDark"}>{locales.text1}</H6>
 
         {props.methodType === "cobadge" && props.bankName ? (
-          <H4 color={"bluegreyDark"}>{props.bankName}</H4>
+          <H6 color={"bluegreyDark"}>{props.bankName}</H6>
         ) : (
-          <Link
+          <Label
+            asLink
             onPress={
               props.methodType === "cobadge"
-                ? props.openParticipatingBanksModal
+                ? () => props.openParticipatingBanksModal?.()
                 : props.openTosModal
             }
           >
             {locales.text2}
-          </Link>
+          </Label>
         )}
       </Body>
 
       <VSpacer size={24} />
       <Body accessibilityRole="link">
-        <H4 weight={"Regular"} color={"bluegreyDark"}>
-          {locales.text3}
-        </H4>
-        <Link
+        <H6 color={"bluegreyDark"}>{locales.text3}</H6>
+        <Label
+          asLink
           onPress={
-            props.methodType === "cobadge" ? props.openTosModal : props.onSearch
+            props.methodType === "cobadge"
+              ? props.openTosModal
+              : () => props.onSearch?.()
           }
         >
           {locales.text4}
-        </Link>
+        </Label>
       </Body>
     </>
   );

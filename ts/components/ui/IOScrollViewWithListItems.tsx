@@ -1,5 +1,7 @@
 import {
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   Divider,
   H2,
   ListItemHeader,
@@ -8,10 +10,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 import { IOScrollView, IOScrollViewActions } from "./IOScrollView";
 
 export type IOScrollViewWithListItems = {

@@ -51,7 +51,7 @@ exports[`StatusContent should match the snapshot 1`] = `
             "borderWidth": 0,
           },
           {
-            "color": "#17324D",
+            "color": "#555C70",
           },
           {
             "flex": 0,
@@ -60,7 +60,7 @@ exports[`StatusContent should match the snapshot 1`] = `
           },
         ]
       }
-      tintColor="#17324D"
+      tintColor="#555C70"
       vbHeight={24}
       vbWidth={24}
       width={24}
@@ -135,36 +135,25 @@ exports[`StatusContent should match the snapshot 1`] = `
     </RNSVGSvgView>
   </View>
   <Text
-    color="bluegreyDark"
-    defaultColor="blue"
-    defaultWeight="Bold"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 16,
-      }
-    }
+    allowFontScaling={false}
+    maxFontSizeMultiplier={1.25}
     style={
       [
-        [
-          {
-            "flex": 1,
-            "marginLeft": 16,
-          },
-          {},
-        ],
+        {},
         {
-          "fontSize": 16,
-        },
-        {
-          "color": "#17324D",
+          "color": "#555C70",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
+          "lineHeight": 24,
+        },
+        {
+          "flex": 1,
+          "marginLeft": 16,
         },
       ]
     }
-    weight="Regular"
   />
 </View>
 `;

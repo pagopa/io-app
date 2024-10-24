@@ -1,12 +1,10 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H4, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
-import { Body } from "../../../../components/core/typography/Body";
-import { H2 } from "../../../../components/core/typography/H2";
 
 type Props = {
   initiative: O.Option<InitiativeDataDTO>;
@@ -27,7 +25,7 @@ const OnboardingServiceHeader = (props: Props) => {
       ({ organizationName, initiativeName, logoURL }) => (
         <View style={styles.header}>
           <View>
-            <H2>{initiativeName}</H2>
+            <H4>{initiativeName}</H4>
             <Body>{organizationName}</Body>
           </View>
           <Image

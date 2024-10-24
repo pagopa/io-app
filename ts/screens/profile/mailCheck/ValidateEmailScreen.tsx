@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback } from "react";
 import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
+import { BodyProps } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
@@ -16,7 +17,6 @@ import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profil
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import { BodyProps } from "../../../components/core/typography/ComposedBodyFromArray";
 
 export type EmailNotVerifiedScreenParamList = {
   email: string;

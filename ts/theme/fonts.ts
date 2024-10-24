@@ -12,10 +12,6 @@ const fonts = {
   TitilliumSansPro: Platform.select({
     android: "TitilliumSansPro",
     ios: "Titillium Sans Pro"
-  }),
-  RobotoMono: Platform.select({
-    android: "RobotoMono",
-    ios: "Roboto Mono"
   })
 };
 

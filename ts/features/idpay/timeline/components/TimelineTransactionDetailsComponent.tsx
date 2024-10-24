@@ -2,15 +2,19 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  Body,
+  H6,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   TransactionDetailDTO,
   OperationTypeEnum as TransactionTypeEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { Body } from "../../../../components/core/typography/Body";
-import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
@@ -94,9 +98,9 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
       </View>
       <ItemSeparatorComponent noPadded={true} />
       <VSpacer size={24} />
-      <H4>
+      <H6>
         {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
-      </H4>
+      </H6>
       <VSpacer size={4} />
       <View style={styles.detailRow}>
         <Body>

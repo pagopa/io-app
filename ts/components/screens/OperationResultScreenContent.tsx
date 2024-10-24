@@ -1,9 +1,11 @@
 import {
   Body,
+  BodyProps,
   ButtonLink,
   ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
+  ComposedBodyFromArray,
   H3,
   IOPictograms,
   IOStyles,
@@ -21,10 +23,6 @@ import React, {
 import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;

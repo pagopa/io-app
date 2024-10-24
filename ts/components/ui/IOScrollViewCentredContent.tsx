@@ -1,6 +1,8 @@
 import {
   Body,
+  BodyProps,
   ButtonLink,
+  ComposedBodyFromArray,
   H3,
   IOPictograms,
   Pictogram,
@@ -9,10 +11,6 @@ import {
 import * as React from "react";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 import { IOScrollView, IOScrollViewActions } from "./IOScrollView";
 
 export type IOScrollViewCentredContent = {

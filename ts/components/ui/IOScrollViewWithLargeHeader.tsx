@@ -1,5 +1,7 @@
 import {
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H2,
   HeaderSecondLevel,
@@ -19,10 +21,6 @@ import {
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {

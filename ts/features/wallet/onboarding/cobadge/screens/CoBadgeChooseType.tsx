@@ -11,15 +11,13 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
   FooterWithButtons,
+  H2,
+  H6,
   Icon,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { H3 } from "../../../../../components/core/typography/H3";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
@@ -70,19 +68,13 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View>
-          <H3 color={"bluegreyDark"} weight={"Semibold"}>
-            {cardPathItem.item.title}
-          </H3>
+          <H6 color={"bluegreyDark"}>{cardPathItem.item.title}</H6>
         </View>
         <Icon name="chevronRightListItem" color="blue" size={24} />
       </View>
-      <H5
-        color={"bluegrey"}
-        weight={"Regular"}
-        style={styles.descriptionPadding}
-      >
+      <H6 color={"bluegrey"} style={styles.descriptionPadding}>
         {cardPathItem.item.description}
-      </H5>
+      </H6>
     </View>
   </PressableListItemBase>
 );
@@ -135,11 +127,9 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex} testID="coBadgeChooseType">
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>
+          <H2>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H2>
           <VSpacer size={16} />
-          <H4 weight={"Regular"} color={"bluegreyDark"}>
-            {I18n.t("wallet.onboarding.coBadge.chooseType.description")}
-          </H4>
+          <H6>{I18n.t("wallet.onboarding.coBadge.chooseType.description")}</H6>
           <VSpacer size={16} />
           <FlatList
             removeClippedSubviews={false}

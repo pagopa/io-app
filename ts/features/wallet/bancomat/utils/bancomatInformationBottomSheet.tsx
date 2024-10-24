@@ -1,9 +1,8 @@
 import * as React from "react";
 import { View } from "react-native";
-import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import { ButtonOutline, H6, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
-import { H4 } from "../../../../components/core/typography/H4";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 /**
@@ -16,9 +15,9 @@ export default (onAdd?: () => void) => {
     <View>
       <InternationalCircuitIconsBar />
       <VSpacer size={16} />
-      <H4 weight={"Regular"} color={"bluegreyDark"}>
+      <H6 color={"bluegreyDark"}>
         {I18n.t("wallet.bancomat.details.debit.body")}
-      </H4>
+      </H6>
       <VSpacer size={16} />
       <ButtonOutline
         fullWidth

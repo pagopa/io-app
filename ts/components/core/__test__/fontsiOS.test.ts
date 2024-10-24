@@ -36,16 +36,4 @@ describe("makeFontStyleObject behaviour on iOS", () => {
       })
     );
   });
-  it("RobotoMono, all weight", () => {
-    italics.map(isItalic =>
-      fontWeightsMocks.map(fw => {
-        const font = makeFontStyleObject(fw, isItalic, "RobotoMono");
-        expect(font.fontFamily).toBe(`Roboto Mono`);
-        expect(font.fontStyle).toBe(
-          isItalic ? FontStyle.italic : FontStyle.normal
-        );
-        expect(font.fontWeight).toBe(fontWeights[fw]);
-      })
-    );
-  });
 });

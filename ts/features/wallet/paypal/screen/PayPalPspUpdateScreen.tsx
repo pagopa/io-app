@@ -1,6 +1,10 @@
 import {
+  Body,
   FooterWithButtons,
+  H2,
+  H6,
   Icon,
+  Label,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -17,10 +21,6 @@ import {
 } from "react-native";
 import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H4 } from "../../../../components/core/typography/H4";
-import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -67,19 +67,13 @@ const PspListHeader = (props: {
   rightColumnTitle: string;
 }) => {
   const color = "bluegrey";
-  const weight = "Regular";
+
   return (
     <View style={{ flexDirection: "row" }}>
-      <H4 color={color} weight={weight}>
-        {props.leftColumnTitle}
-      </H4>
-      <H4
-        color={color}
-        weight={weight}
-        style={styles.radioListHeaderRightColumn}
-      >
+      <H6 color={color}>{props.leftColumnTitle}</H6>
+      <H6 color={color} style={styles.radioListHeaderRightColumn}>
         {props.rightColumnTitle}
-      </H4>
+      </H6>
     </View>
   );
 };
@@ -112,13 +106,9 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
           imgDimensions,
           O.fold(
             () => (
-              <H4
-                weight={"Semibold"}
-                color={"bluegreyDark"}
-                testID={"pspNameTestID"}
-              >
+              <H6 color={"bluegreyDark"} testID={"pspNameTestID"}>
                 {psp.name}
-              </H4>
+              </H6>
             ),
             imgDim => (
               <Image
@@ -136,7 +126,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
         )}
       </View>
       <View style={IOStyles.row}>
-        <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
+        <Label color={"black"}>{formatNumberCentsToAmount(psp.fee)}</Label>
         <View style={{ justifyContent: "center" }}>
           <Icon name="chevronRightListItem" size={24} color="blue" />
         </View>
@@ -182,7 +172,7 @@ const PayPalPspUpdateScreen: React.FunctionComponent = () => {
           <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               <VSpacer size={8} />
-              <H1>{locales.title}</H1>
+              <H2>{locales.title}</H2>
               <VSpacer size={8} />
               <ScrollView>
                 <Body>{locales.body}</Body>

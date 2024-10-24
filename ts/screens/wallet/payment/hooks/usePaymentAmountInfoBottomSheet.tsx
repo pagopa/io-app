@@ -1,10 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
+import { Body, FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
+/**
+ * @deprecated Marked as to be deleted
+ */
 export const usePaymentAmountInfoBottomSheet = () => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
     {

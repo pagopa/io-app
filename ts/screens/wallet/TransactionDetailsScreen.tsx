@@ -1,4 +1,11 @@
-import { ButtonOutline, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonOutline,
+  H4,
+  IOColors,
+  Label,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -14,9 +21,6 @@ import {
 import { connect } from "react-redux";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { Body } from "../../components/core/typography/Body";
-import { H2 } from "../../components/core/typography/H2";
-import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -224,7 +228,8 @@ class TransactionDetailsScreen extends React.Component<
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-          <Link
+          <Label
+            asLink
             onPress={this.handleOnFullReasonPress}
             accessible
             accessibilityRole={"button"}
@@ -235,7 +240,7 @@ class TransactionDetailsScreen extends React.Component<
             }`}
           >
             {I18n.t("wallet.transactionFullReason")}
-          </Link>
+          </Label>
           {this.state.showFullReason && (
             <Body
               selectable={true}
@@ -280,13 +285,11 @@ class TransactionDetailsScreen extends React.Component<
           {/** Total amount (amount + fee) */}
           <View style={IOStyles.rowSpaceBetween}>
             <View style={[IOStyles.flex, IOStyles.selfCenter]}>
-              <H2 weight="Bold" color="bluegreyDark">
+              <H4 color="bluegreyDark">
                 {I18n.t("wallet.firstTransactionSummary.total")}
-              </H2>
+              </H4>
             </View>
-            <H2 weight="Bold" color="bluegreyDark">
-              {data.totalAmount}
-            </H2>
+            <H4 color="bluegreyDark">{data.totalAmount}</H4>
           </View>
 
           {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (

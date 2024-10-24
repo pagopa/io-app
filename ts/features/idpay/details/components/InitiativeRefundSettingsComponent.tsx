@@ -1,4 +1,5 @@
 import {
+  H6,
   ListItemNav,
   ListItemNavAlert,
   VSpacer
@@ -12,7 +13,6 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
-import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -171,11 +171,11 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
 
   return (
     <View testID={"IDPayDetailsSettingsTestID"}>
-      <H3>
+      <H6>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
         )}
-      </H3>
+      </H6>
       <VSpacer size={8} />
       {instrumentsSettingsButton}
       {ibanSettingsButton}

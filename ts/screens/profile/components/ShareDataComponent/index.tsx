@@ -1,7 +1,5 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, Label, VSpacer } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
-import { Body } from "../../../../components/core/typography/Body";
-import { Link } from "../../../../components/core/typography/Link";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
@@ -43,11 +41,11 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <Link onPress={handleOnPress} testID="additionalInformation">
+        <Label asLink onPress={handleOnPress} testID="additionalInformation">
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}
-        </Link>
+        </Label>
       </Body>
     </>
   );

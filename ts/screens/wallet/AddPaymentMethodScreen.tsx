@@ -1,4 +1,4 @@
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useRoute } from "@react-navigation/native";
@@ -10,7 +10,6 @@ import { PaymentRequestsGetResponse } from "../../../definitions/backend/Payment
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
 import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
 import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
-import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -176,7 +175,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
             />
             <View style={IOStyles.horizontalContentPadding}>
               <VSpacer size={24} />
-              <H1>{I18n.t("wallet.payWith.title")}</H1>
+              <H2>{I18n.t("wallet.payWith.title")}</H2>
               <VSpacer size={16} />
               {/* since we're paying show only those method can pay with pagoPA */}
               <PaymentMethodsList
