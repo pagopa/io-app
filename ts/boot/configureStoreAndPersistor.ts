@@ -10,7 +10,6 @@ import {
   Reducer,
   Store
 } from "redux";
-import createDebugger from "redux-flipper";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -528,13 +527,7 @@ function configureStoreAndPersistor(): {
     analytics.actionTracking // generic tracker for selected redux actions
   ];
 
-  const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
-    ? [createDebugger()]
-    : [];
-
-  const middlewares = applyMiddleware(
-    ...[...baseMiddlewares, ...devMiddleware]
-  );
+  const middlewares = applyMiddleware(...[...baseMiddlewares]);
   // add Reactotron enhancer if the app is running in dev mode
 
   const enhancer: StoreEnhancer =
