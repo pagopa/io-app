@@ -67,9 +67,15 @@ import {
   zendeskSupportFailure
 } from "../store/actions";
 import {
+  getZendeskTokenStatusSelector,
   zendeskSelectedCategorySelector,
-  zendeskSelectedSubcategorySelector
+  zendeskSelectedSubcategorySelector,
+  ZendeskTokenStatusEnum
 } from "../store/reducers";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import ZENDESK_ROUTES from "../navigation/routes";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 /**
  * Transform an array of string into a Zendesk
@@ -103,6 +109,7 @@ const ZendeskAskPermissions = () => {
     route.params;
 
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const dispatchZendeskUiDismissed = useCallback(
     () => dispatch(zendeskStopPolling()),
@@ -128,23 +135,29 @@ const ZendeskAskPermissions = () => {
   const zendeskSelectedSubcategory = useIOSelector(
     zendeskSelectedSubcategorySelector
   );
-  // TODO: beware while doing this task IOPID-2055 because
-  // now the zendeskToken could be undefined also if you are logged in!
+  // the zendeskToken could be undefined also if you are logged-in
+  // because the retrieval of the zendeskToken is in progress
   const zendeskToken = useIOSelector(zendeskTokenSelector);
+  const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
 
   useEffect(() => {
-    const zendeskConfig = getZendeskConfig(zendeskToken);
-    initSupportAssistance(zendeskConfig);
+    // This check is added because there may be a getSession running
+    // that retrieves the zendeskToken and consequently the zendeskToken
+    // may be undefined even though the user is logged in
+    if (getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST) {
+      const zendeskConfig = getZendeskConfig(zendeskToken);
+      initSupportAssistance(zendeskConfig);
 
-    // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
-    // The AnonymousConfig is used for the anonymous user.
-    // Since the zendesk session token and the profile are provided by two different endpoint
-    // we sequentially check both:
-    // - if the zendeskToken is present the user will be authenticated via jwt
-    // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = getZendeskIdentity(zendeskToken);
-    setUserIdentity(zendeskIdentity);
-  }, [dispatch, zendeskToken]);
+      // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
+      // The AnonymousConfig is used for the anonymous user.
+      // Since the zendesk session token and the profile are provided by two different endpoint
+      // we sequentially check both:
+      // - if the zendeskToken is present the user will be authenticated via jwt
+      // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
+      const zendeskIdentity = getZendeskIdentity(zendeskToken);
+      setUserIdentity(zendeskIdentity);
+    }
+  }, [dispatch, getZendeskTokenStatus, zendeskToken]);
 
   const currentVersion = getAppVersion();
 
@@ -244,6 +257,16 @@ const ZendeskAskPermissions = () => {
       testID: "navigationData"
     }
   ];
+
+  const showHeader =
+    getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST &&
+    getZendeskTokenStatus !== ZendeskTokenStatusEnum.ERROR;
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: showHeader,
+    headerShown: showHeader
+  });
 
   // It should never happens since it is selected in the previous screen
   if (zendeskSelectedCategory === undefined) {
@@ -349,6 +372,23 @@ const ZendeskAskPermissions = () => {
       icon={item?.icon}
     />
   );
+
+  if (
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+    isUserLoggedIn
+  ) {
+    return <LoadingSpinnerOverlay isLoading />;
+  }
+
+  if (
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR &&
+    isUserLoggedIn
+  ) {
+    navigation.navigate(ZENDESK_ROUTES.MAIN, {
+      screen: ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN
+    });
+    return undefined;
+  }
 
   return (
     <IOScrollViewWithLargeHeader
