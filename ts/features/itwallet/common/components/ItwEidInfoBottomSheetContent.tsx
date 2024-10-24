@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import {
   Alert,
@@ -21,7 +21,11 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import { trackWalletStartDeactivation } from "../../analytics";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialDetail,
+  trackWalletStartDeactivation
+} from "../../analytics";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 
 export const ItwEidInfoBottomSheetTitle = () => (
@@ -51,6 +55,14 @@ const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });
     };
+
+    useEffect(() => {
+      // Passing valid hardcoded since the credential should always be valid when visiting this bottomsheet
+      trackCredentialDetail({
+        credential: CREDENTIALS_MAP[credential.credentialType],
+        credential_status: "valid"
+      });
+    }, [credential.credentialType]);
 
     return (
       <VStack space={24}>
