@@ -26,7 +26,7 @@
   "pagopa_api_biz_events": "https://raw.githubusercontent.com/pagopa/pagopa-biz-events-service/0.1.57/openapi/openapi_io_patch_lap.json",
   "pagopa_api_platform": "https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl",
   "trial_system": "https://raw.githubusercontent.com/pagopa/io-backend/v14.3.0-RELEASE/api_trial_system.yaml",
-  "fims_sso": "https://raw.githubusercontent.com/pagopa/io-fims/refs/heads/main/apps/op-app/openapi.yaml",
+  "fims_sso": "https://raw.githubusercontent.com/pagopa/io-fims/a93f1a1abf5230f103d9f489b139902b87288061/apps/op-app/openapi.yaml",
   "fims_history": "assets/FimsSwager.yml",
   "private": true,
   "scripts": {
