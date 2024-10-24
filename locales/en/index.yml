@@ -3301,7 +3301,7 @@ features:
         action: Scopri di più
     identification:
       mode:
-        title: Verfica la tua identità
+        title: Verifica la tua identità
         description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
