@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
 import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
 import ROUTES from "../../../../../navigation/routes";
