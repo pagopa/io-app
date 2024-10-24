@@ -5,6 +5,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
 import { TranslationKeys } from "../../../../../locales/locales";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import ROUTES from "../../../../navigation/routes";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -18,7 +19,7 @@ const SPID_ACTION_LABEL: TranslationKeys =
 const CieIdErrorScreen = () => {
   const { navigateToIdpSelection, navigateToCiePinInsertion, isCieSupported } =
     useNavigateToLoginMethod();
-  const { popToTop } = useIONavigation();
+  const { replace } = useIONavigation();
 
   useAvoidHardwareBackButton();
 
@@ -29,6 +30,9 @@ const CieIdErrorScreen = () => {
   const secondaryActionLabel = I18n.t(
     "authentication.cie_id.error_screen.secondary_action_label"
   );
+  const navigateToLandingScreen = () => {
+    replace(ROUTES.AUTHENTICATION, { screen: ROUTES.AUTHENTICATION_LANDING });
+  };
 
   return (
     <OperationResultScreenContent
@@ -47,7 +51,7 @@ const CieIdErrorScreen = () => {
         testID: "cie-id-error-secondary-action",
         label: secondaryActionLabel,
         accessibilityLabel: secondaryActionLabel,
-        onPress: popToTop
+        onPress: navigateToLandingScreen
       }}
     />
   );

@@ -86,7 +86,7 @@ const useNavigateToLoginMethod = () => {
       dispatch(idpSelected(IdpCIE));
       // TODO: track event cieID selected https://pagopa.atlassian.net/browse/IOPID-2079
 
-      if (isCieIdAvailable(isCieUatEnabled)) {
+      if (isCieIdAvailable(isCieUatEnabled) || cieFlowForDevServerEnabled) {
         const params = {
           spidLevel,
           isUat: isCieUatEnabled
