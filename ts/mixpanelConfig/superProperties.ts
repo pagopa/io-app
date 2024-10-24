@@ -1,4 +1,5 @@
 import { Appearance, ColorSchemeName } from "react-native";
+import * as O from "fp-ts/Option";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { getAppVersion } from "../utils/appVersion";
 import {
@@ -7,10 +8,10 @@ import {
 } from "../utils/device";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
+  getNotificationPermissionType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType,
-  getNotificationPermissionType
+  ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
 
 import { GlobalState } from "../store/reducers/types";
@@ -30,10 +31,10 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import {
-  Property,
-  PropertyToUpdate,
   loginSessionConfigHandler,
   notificationConfigurationHandler,
+  Property,
+  PropertyToUpdate,
   serviceConfigHandler
 } from "./mixpanelPropertyUtils";
 
@@ -113,12 +114,12 @@ const forceUpdate = <T extends keyof SuperProperties>(
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const credentialsState = itwCredentialsSelector(state);
-  return credentialsState.eid ? "L2" : "not_active";
+  return O.isSome(credentialsState.eid) ? "L2" : "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);
-  return credentialsState.eid ? "valid" : "not_available";
+  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
 };
 const pgStatusHandler = (state: GlobalState): ItwPg => {
   const credentialsByType = itwCredentialsByTypeSelector(state);

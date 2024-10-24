@@ -6,13 +6,15 @@ import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import {
+  CREDENTIALS_MAP,
+  trackAddCredentialProfileAndSuperProperties,
+  trackSaveCredentialSuccess
+} from "../../analytics";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -39,26 +41,8 @@ export default (
     });
   },
 
-  navigateToWallet: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
+  navigateToWallet: () => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-    if (context.credentialType) {
-      const credential = CREDENTIALS_MAP[context.credentialType];
-      trackSaveCredentialSuccess(credential);
-      void updateMixpanelProfileProperties(store.getState(), {
-        property: credential,
-        value: "valid"
-      });
-      void updateMixpanelSuperProperties(store.getState(), {
-        property: credential,
-        value: "valid"
-      });
-    }
     navigation.reset({
       index: 1,
       routes: [
@@ -112,6 +96,20 @@ export default (
       navigation.replace(...event.navigateTo);
     } else {
       navigation.popToTop();
+    }
+  },
+
+  trackAddCredential: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    if (context.credentialType) {
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackSaveCredentialSuccess(credential);
+      trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
     }
   },
 
