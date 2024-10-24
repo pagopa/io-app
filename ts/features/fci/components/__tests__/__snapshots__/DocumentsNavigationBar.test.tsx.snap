@@ -166,7 +166,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           "fontSize": 18,
           "fontStyle": "normal",
           "fontWeight": "600",
-          "lineHeight": 25,
+          "lineHeight": 24,
         },
       ]
     }
@@ -318,7 +318,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           "fontSize": 18,
           "fontStyle": "normal",
           "fontWeight": "600",
-          "lineHeight": 25,
+          "lineHeight": 24,
         },
         {
           "paddingHorizontal": 24,
