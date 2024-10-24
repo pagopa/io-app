@@ -43,13 +43,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export type BottomSheetModalProps = {
-  content: React.ReactNode;
-  config: {
-    handleComponent: React.ReactElement;
-  };
-};
-
 export type IOBottomSheetModal = {
   present: () => void;
   dismiss: () => void;
@@ -195,87 +188,4 @@ export const useIOBottomSheetModal = ({
     </BottomSheetModal>
   );
   return { present, dismiss: dismissAll, bottomSheet };
-};
-
-// const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
-// const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 72;
-
-/**
- * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
- * @param bottomSheetOptions
- * @see {BottomSheetOptions}
- * @param bottomPadding the bottom padding of the bottom sheet, default is 24
- */
-// export const useIOBottomSheetAutoresizableModal = (
-//   {
-//     component,
-//     title,
-//     footer,
-//     onDismiss,
-//     fullScreen
-//   }: Omit<BottomSheetOptions, "snapPoint">,
-//   // FIXME: currently the auto-resize logic measures the height of the content without
-//   // including the footer, so we need to manually add its height as bottom padding.
-//   // We should find a way to make the autoresizable bottom sheet work with the footer!
-//   bottomPadding: number = DEFAULT_BOTTOM_PADDING
-// ) => {
-//   const [snapPoint, setSnapPoint] = React.useState<number>(
-//     DEFAULT_AUTORESIZABLE_SNAP_POINT
-//   );
-//   const insets = useSafeAreaInsets();
-
-//   const handleContentOnLayout = React.useCallback(
-//     (event: LayoutChangeEvent) => {
-//       const { height } = event.nativeEvent.layout;
-//       const snapPointWithPadding = insets.bottom + bottomPadding + height;
-
-//       setSnapPoint(
-//         fullScreen
-//           ? snapPointWithPadding
-//           : Math.min(screenHeight - insets.top, snapPointWithPadding)
-//       );
-//     },
-//     [insets, fullScreen, bottomPadding]
-//   );
-
-//   const contentComponent = (
-//     <View onLayout={handleContentOnLayout}>{component}</View>
-//   );
-
-//   return useIOBottomSheetModal({
-//     component: contentComponent,
-//     title,
-//     snapPoint: [snapPoint],
-//     footer,
-//     onDismiss
-//   });
-// };
-
-/**
- * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
- * @param component
- * @param title
- * @param snapPoint
- * @param footer
- * @param onDismiss callback to be called when the bottom sheet is dismissed
- * @deprecated
- * use `useIOBottomSheetModal` instead
- * TODO remove once all the occurencies of `useLegacyIOBottomSheetModal` will be replaced by `useIOBottomSheetModal`
- */
-export const useLegacyIOBottomSheetModal = (
-  component: React.ReactNode,
-  title: string | React.ReactNode,
-  snapPoint: number,
-  footer?: React.ReactElement,
-  onDismiss?: () => void
-): IOBottomSheetModal => {
-  const insets = useSafeAreaInsets();
-
-  return useIOBottomSheetModal({
-    component,
-    title,
-    snapPoint: [snapPoint + insets.top],
-    footer,
-    onDismiss
-  });
 };

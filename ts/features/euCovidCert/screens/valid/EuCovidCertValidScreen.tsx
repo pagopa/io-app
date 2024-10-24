@@ -24,7 +24,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import themeVariables from "../../../../theme/variables";
-import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { EUCovidContext } from "../../components/EUCovidContext";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
@@ -166,32 +166,36 @@ const Footer = (props: FooterProps): React.ReactElement => {
     present: presentBottomSheet,
     bottomSheet,
     dismiss
-  } = useLegacyIOBottomSheetModal(
-    <View>
-      {addBottomSheetItem({
-        title: I18n.t(
-          "features.euCovidCertificate.save.bottomSheet.saveAsImage.title"
-        ),
-        subTitle: I18n.t(
-          "features.euCovidCertificate.save.bottomSheet.saveAsImage.subTitle"
-        ),
-        onPress: () => {
-          props.onSave();
-          dismiss();
-        }
-      })}
-    </View>,
-    <View style={IOStyles.flex}>
-      <H3 color={"bluegreyDark"} weight={"Semibold"}>
-        {I18n.t("features.euCovidCertificate.save.bottomSheet.title")}
-      </H3>
-      <H5 color={"bluegrey"} weight={"Regular"}>
-        {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
-      </H5>
-      <VSpacer size={32} />
-    </View>,
-    320
-  );
+  } = useIOBottomSheetModal({
+    component: (
+      <View>
+        {addBottomSheetItem({
+          title: I18n.t(
+            "features.euCovidCertificate.save.bottomSheet.saveAsImage.title"
+          ),
+          subTitle: I18n.t(
+            "features.euCovidCertificate.save.bottomSheet.saveAsImage.subTitle"
+          ),
+          onPress: () => {
+            props.onSave();
+            dismiss();
+          }
+        })}
+      </View>
+    ),
+    title: (
+      <View style={IOStyles.flex}>
+        <H3 color={"bluegreyDark"} weight={"Semibold"}>
+          {I18n.t("features.euCovidCertificate.save.bottomSheet.title")}
+        </H3>
+        <H5 color={"bluegrey"} weight={"Regular"}>
+          {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
+        </H5>
+        <VSpacer size={32} />
+      </View>
+    ),
+    snapPoint: [320]
+  });
 
   const saveButton: BlockButtonProps = {
     type: "Solid",
