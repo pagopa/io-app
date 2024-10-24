@@ -40,7 +40,10 @@ const LoadingSpinnerOverlay = ({
 
   return (
     <Overlay
-      backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
+      backgroundColor={hexToRgba(
+        IOColors[theme["appBackground-primary"]],
+        loadingOpacity
+      )}
       foreground={
         isLoading && (
           <BoxedRefreshIndicator

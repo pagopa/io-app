@@ -17,16 +17,14 @@ describe("BoxedRefreshIndicator", () => {
   it("Should match all-properties snapshot", () => {
     const action = <Text>This is the action</Text>;
     const caption = <Text>This is the caption</Text>;
-    const white = true;
-    const component = renderComponent(action, caption, white);
+    const component = renderComponent(action, caption);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
 
 const renderComponent = (
   action?: React.ReactNode,
-  caption?: React.ReactNode,
-  white?: boolean
+  caption?: React.ReactNode
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const dsState = appReducer(
@@ -37,7 +35,7 @@ const renderComponent = (
   const store: ReturnType<typeof mockStore> = mockStore(dsState);
   return render(
     <Provider store={store}>
-      <BoxedRefreshIndicator action={action} caption={caption} white={white} />
+      <BoxedRefreshIndicator action={action} caption={caption} />
     </Provider>
   );
 };

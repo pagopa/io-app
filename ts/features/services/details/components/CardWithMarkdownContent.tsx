@@ -1,15 +1,14 @@
-import React, { memo } from "react";
+import React, { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: IOColors.white,
     borderRadius: 8,
+    borderCurve: "continuous",
     borderWidth: 1,
-    borderColor: IOColors["grey-100"],
     padding: 24
   }
 });
@@ -24,18 +23,36 @@ const CSS_STYLE = `
   }
 `;
 
+const CardWrapper = ({ children }: { children: ReactNode }) => {
+  const theme = useIOTheme();
+
+  return (
+    <View
+      style={[
+        styles.card,
+        {
+          backgroundColor: IOColors[theme["appBackground-primary"]],
+          borderColor: IOColors[theme["cardBorder-default"]]
+        }
+      ]}
+    >
+      {children}
+    </View>
+  );
+};
+
 const CardWithMarkdownContent = memo(
   ({ content }: CardWithMarkdownContentProps) => (
-    <View style={styles.card}>
+    <CardWrapper>
       <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>
-    </View>
+    </CardWrapper>
   )
 );
 
 const CardWithMarkdownContentSkeleton = () => (
-  <View style={styles.card}>
+  <CardWrapper>
     <LoadingSkeleton />
-  </View>
+  </CardWrapper>
 );
 
 export { CardWithMarkdownContent, CardWithMarkdownContentSkeleton };
