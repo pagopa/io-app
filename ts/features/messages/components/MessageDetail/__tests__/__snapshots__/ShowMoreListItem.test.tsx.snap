@@ -520,6 +520,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -1077,6 +1078,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -1692,6 +1694,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -2494,6 +2497,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -3364,6 +3368,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -4361,6 +4366,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -5494,6 +5500,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -7507,6 +7514,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,

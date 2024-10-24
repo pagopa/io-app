@@ -358,6 +358,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
@@ -753,6 +754,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,

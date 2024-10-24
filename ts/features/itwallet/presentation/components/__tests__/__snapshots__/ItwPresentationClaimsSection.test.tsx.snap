@@ -1711,6 +1711,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -3605,6 +3606,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -3991,6 +3993,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
                                 "paddingHorizontal": 24,

@@ -743,6 +743,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         visible={true}
       >
         <RCTScrollView
+          overScrollMode="never"
           style={
             {
               "paddingHorizontal": 24,

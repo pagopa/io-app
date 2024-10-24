@@ -905,6 +905,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -2232,6 +2233,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -3559,6 +3561,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -4886,6 +4889,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -6213,6 +6217,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -7540,6 +7545,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -8867,6 +8873,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -10194,6 +10201,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -11521,6 +11529,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -12848,6 +12857,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -14175,6 +14185,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -15502,6 +15513,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -16829,6 +16841,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -18156,6 +18169,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -19483,6 +19497,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -20810,6 +20825,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -22137,6 +22153,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -23464,6 +23481,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,

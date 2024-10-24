@@ -1444,6 +1444,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -1657,6 +1658,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,

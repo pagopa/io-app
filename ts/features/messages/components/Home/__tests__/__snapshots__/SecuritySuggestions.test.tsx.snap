@@ -353,6 +353,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,

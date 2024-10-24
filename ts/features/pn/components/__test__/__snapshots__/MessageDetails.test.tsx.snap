@@ -893,6 +893,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -1106,6 +1107,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,

@@ -1017,6 +1017,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -2470,6 +2471,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -3924,6 +3926,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -5378,6 +5381,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,
@@ -7124,6 +7128,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               visible={true}
                             >
                               <RCTScrollView
+                                overScrollMode="never"
                                 style={
                                   {
                                     "paddingHorizontal": 24,

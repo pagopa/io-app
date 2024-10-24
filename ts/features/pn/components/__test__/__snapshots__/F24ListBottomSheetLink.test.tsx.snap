@@ -459,6 +459,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -3189,6 +3190,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
                                 "paddingHorizontal": 24,
@@ -3686,6 +3688,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                           visible={true}
                         >
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
                                 "paddingHorizontal": 24,

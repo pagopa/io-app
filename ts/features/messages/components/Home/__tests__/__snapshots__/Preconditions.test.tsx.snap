@@ -358,6 +358,7 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
                         visible={true}
                       >
                         <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
                               "paddingHorizontal": 24,
