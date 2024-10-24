@@ -135,12 +135,15 @@ const ZendeskAskPermissions = () => {
   const zendeskSelectedSubcategory = useIOSelector(
     zendeskSelectedSubcategorySelector
   );
-  // TODO: beware while doing this task IOPID-2055 because
-  // now the zendeskToken could be undefined also if you are logged in!
+  // the zendeskToken could be undefined also if you are logged-in
+  // because the retrieval of the zendeskToken is in progress
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
 
   useEffect(() => {
+    // This check is added because there may be a getSession running
+    // that retrieves the zendeskToken and consequently the zendeskToken
+    // may be undefined even though the user is logged in
     if (getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST) {
       const zendeskConfig = getZendeskConfig(zendeskToken);
       initSupportAssistance(zendeskConfig);
@@ -384,7 +387,7 @@ const ZendeskAskPermissions = () => {
     navigation.navigate(ZENDESK_ROUTES.MAIN, {
       screen: ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN
     });
-    return;
+    return undefined;
   }
 
   return (
