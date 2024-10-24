@@ -2,10 +2,6 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { WalletCard, walletCardCategories } from "../../types";
 
-export const isWalletPaymentsRedirectBannerVisibleSelector = (
-  state: GlobalState
-) => state.features.wallet.preferences.shouldShowPaymentsRedirectBanner;
-
 const selectWalletFeature = (state: GlobalState) => state.features.wallet;
 
 export const selectWalletPlaceholders = createSelector(

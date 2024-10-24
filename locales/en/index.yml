@@ -3127,6 +3127,11 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+      otherMethods:
+        error:
+          banner:
+            label: Non siamo riusciti a caricare alcuni elementi della lista.
+            cta: Prova di nuovo
     cards:
       categories:
         all: All
@@ -3147,6 +3152,12 @@ features:
         welfare: Iniziative welfare
         payments: Metodi di pagamento
   payments:
+    backoff:
+      second: "1 second"
+      seconds: "{{seconds}} seconds"
+      minute: "1 minute"
+      minutes: "{{minutes}} minutes"
+      retryCountDown: "You can try again in {{time}}"
     title: Payments
     cta: Paga un avviso
     remoteAlert:
@@ -3159,6 +3170,10 @@ features:
         action: Aggiungi un metodo
       status:
         expired: Scaduta
+      error:
+        banner:
+          label: The loading of the payment methods failed.
+          retryButton: Retry
     transactions:
       showLegacyTransactions: Mostra precedenti
       legacy:
@@ -3190,6 +3205,10 @@ features:
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
+      error:
+        banner:
+          label: "The loading of the receipts failed."
+          retryButton: "Retry"
     details:
       payPal:
         banner:
