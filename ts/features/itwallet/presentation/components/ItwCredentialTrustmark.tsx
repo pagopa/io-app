@@ -13,7 +13,7 @@ import {
 import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
@@ -55,7 +55,7 @@ export const ItwCredentialTrustmark = ({
   testID,
   credential
 }: ItwCredentialTrustmarkProps) => {
-  const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
+  const trustmarkBottomSheet = useIOBottomSheetModal({
     title: I18n.t("features.itWallet.presentation.trustmark.title"),
     component: <QrCodeBottomSheetContent credential={credential} />
   });

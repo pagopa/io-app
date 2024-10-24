@@ -25,7 +25,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch } from "../../../../../store/hooks";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { PspRadioItem } from "../components/PspRadioItem";
 import PAYPAL_ROUTES from "../navigation/routes";
 import {
@@ -101,7 +101,7 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useIOBottomSheetAutoresizableModal({
+    useIOBottomSheetModal({
       title: locales.whatIsPspTitle,
       component: (
         <View>

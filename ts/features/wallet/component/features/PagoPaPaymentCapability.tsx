@@ -9,7 +9,7 @@ import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
 import PaymentStatusSwitch from "./PaymentStatusSwitch";
@@ -54,25 +54,20 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
     openWebUrl(acceptedPaymentMethodsFaqUrl);
   const paymentSupported = isPaymentSupported(props.paymentMethod);
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
-    {
-      component: (
-        <View>
-          <LegacyMarkdown>
-            {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetBody")}
-          </LegacyMarkdown>
-          <ButtonLink
-            onPress={onOpenLearnMoreAboutInAppPayments}
-            label={I18n.t(
-              "wallet.methods.card.pagoPaCapability.bottomSheetCTA"
-            )}
-          />
-        </View>
-      ),
-      title: I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle")
-    },
-    48
-  );
+  const { present, bottomSheet } = useIOBottomSheetModal({
+    component: (
+      <View>
+        <LegacyMarkdown>
+          {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetBody")}
+        </LegacyMarkdown>
+        <ButtonLink
+          onPress={onOpenLearnMoreAboutInAppPayments}
+          label={I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetCTA")}
+        />
+      </View>
+    ),
+    title: I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle")
+  });
 
   return (
     <>

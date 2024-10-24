@@ -2,9 +2,7 @@ import * as React from "react";
 import { VSpacer, FooterWithButtons } from "@pagopa/io-app-design-system";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-
-const SNAP_POINT_VALUE = 250;
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 const ManualConfigConfirm = (): React.ReactElement => (
   <>
@@ -20,41 +18,35 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(
-        "services.optIn.preferences.manualConfig.bottomSheet.title"
-      ),
-      component: <ManualConfigConfirm />,
-      fullScreen: true,
-      footer: (
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          primary={{
-            type: "Outline",
-            buttonProps: {
-              label: I18n.t("global.buttons.cancel"),
-              onPress: () => dismiss(),
-              accessibilityLabel: I18n.t("global.buttons.cancel")
+  } = useIOBottomSheetModal({
+    title: I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
+    component: <ManualConfigConfirm />,
+    footer: (
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            onPress: () => dismiss(),
+            accessibilityLabel: I18n.t("global.buttons.cancel")
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            color: "danger",
+            label: I18n.t("global.buttons.confirm"),
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            onPress: () => {
+              onConfirm();
+              dismiss();
             }
-          }}
-          secondary={{
-            type: "Solid",
-            buttonProps: {
-              color: "danger",
-              label: I18n.t("global.buttons.confirm"),
-              accessibilityLabel: I18n.t("global.buttons.confirm"),
-              onPress: () => {
-                onConfirm();
-                dismiss();
-              }
-            }
-          }}
-        />
-      )
-    },
-    SNAP_POINT_VALUE
-  );
+          }
+        }}
+      />
+    )
+  });
 
   return { present, manualConfigBottomSheet, dismiss };
 };
