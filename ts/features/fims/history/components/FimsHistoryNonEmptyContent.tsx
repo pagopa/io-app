@@ -1,7 +1,7 @@
 import { Divider, IOStyles } from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
 import * as React from "react";
-import { ConsentsResponseDTO } from "../../../../../definitions/fims/ConsentsResponseDTO";
+import { ConsentsResponseDTO } from "../../../../../definitions/fims_history/ConsentsResponseDTO";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useFooterActionsMeasurements } from "../../../../hooks/useFooterActionsMeasurements";

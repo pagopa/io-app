@@ -1,7 +1,7 @@
 import { Divider, H6, Icon, IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { FimsClaimType } from "../types";
+import { Claim } from "../../../../../definitions/fims_sso/Claim";
 
 export const FimsClaimsList = ({ claims }: ClaimsListProps) => (
   <View style={styles.grantsList}>
@@ -21,7 +21,7 @@ const ClaimListItem = ({ label }: ClaimsListItemProps) => (
   </View>
 );
 type ClaimsListProps = {
-  claims: ReadonlyArray<FimsClaimType>;
+  claims: ReadonlyArray<Claim>;
 };
 type ClaimsListItemProps = { label?: string };
 

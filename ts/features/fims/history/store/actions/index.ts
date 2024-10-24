@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
+import { ConsentsResponseDTO } from "../../../../../../definitions/fims_history/ConsentsResponseDTO";
 import { FimsExportSuccessStates } from "../reducer";
 
 export type FimsHistoryGetPayloadType = {

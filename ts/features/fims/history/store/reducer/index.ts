@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
+import { ConsentsResponseDTO } from "../../../../../../definitions/fims_history/ConsentsResponseDTO";
 import {
   remoteError,
   remoteLoading,
