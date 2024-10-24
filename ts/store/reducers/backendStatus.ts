@@ -1,4 +1,4 @@
-/**
+/*
  * Implements the reducers for BackendServicesState.
  */
 
@@ -9,12 +9,14 @@ import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
+import { identity } from "io-ts";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { Sections } from "../../../definitions/content/Sections";
+import { StatusMessage } from "../../../definitions/content/StatusMessage";
 import { Banner } from "../../../definitions/content/Banner";
 import {
   cdcEnabled,
@@ -27,11 +29,10 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-import { StatusMessage } from "../../../definitions/content/StatusMessage";
-import { isIdPayTestEnabledSelector } from "./persistedPreferences";
-import { GlobalState } from "./types";
 import { isPropertyWithMinAppVersionEnabled } from "./featureFlagWithMinAppVersionStatus";
 import { currentRouteSelector } from "./navigation";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
+import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -202,6 +203,16 @@ export const fimsDomainSelector = createSelector(
       O.toUndefined
     )
 );
+
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
+export const landingScreenBannerOrderSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    backendStatusSelector,
+    O.chainNullableK(bs => bs.config.landing_banners),
+    O.chainNullableK(bs => bs.priority_order),
+    O.fold(() => emptyArray, identity)
+  );
 
 /**
  * Return the remote config about the Premium Messages opt-in/out
