@@ -63,7 +63,6 @@ import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskStopPolling,
-  zendeskSupportCancel,
   zendeskSupportCompleted,
   zendeskSupportFailure
 } from "../store/actions";
@@ -73,9 +72,10 @@ import {
   zendeskSelectedSubcategorySelector,
   ZendeskTokenStatusEnum
 } from "../store/reducers";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import ZENDESK_ROUTES from "../navigation/routes";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 /**
  * Transform an array of string into a Zendesk
@@ -109,6 +109,7 @@ const ZendeskAskPermissions = () => {
     route.params;
 
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const dispatchZendeskUiDismissed = useCallback(
     () => dispatch(zendeskStopPolling()),
@@ -140,18 +141,20 @@ const ZendeskAskPermissions = () => {
   const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
 
   useEffect(() => {
-    const zendeskConfig = getZendeskConfig(zendeskToken);
-    initSupportAssistance(zendeskConfig);
+    if (getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST) {
+      const zendeskConfig = getZendeskConfig(zendeskToken);
+      initSupportAssistance(zendeskConfig);
 
-    // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
-    // The AnonymousConfig is used for the anonymous user.
-    // Since the zendesk session token and the profile are provided by two different endpoint
-    // we sequentially check both:
-    // - if the zendeskToken is present the user will be authenticated via jwt
-    // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = getZendeskIdentity(zendeskToken);
-    setUserIdentity(zendeskIdentity);
-  }, [dispatch, zendeskToken]);
+      // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
+      // The AnonymousConfig is used for the anonymous user.
+      // Since the zendesk session token and the profile are provided by two different endpoint
+      // we sequentially check both:
+      // - if the zendeskToken is present the user will be authenticated via jwt
+      // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
+      const zendeskIdentity = getZendeskIdentity(zendeskToken);
+      setUserIdentity(zendeskIdentity);
+    }
+  }, [dispatch, getZendeskTokenStatus, zendeskToken]);
 
   const currentVersion = getAppVersion();
 
@@ -378,19 +381,10 @@ const ZendeskAskPermissions = () => {
     getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR &&
     isUserLoggedIn
   ) {
-    return (
-      <OperationResultScreenContent
-        isHeaderVisible={true}
-        pictogram="umbrellaNew"
-        title={I18n.t("support.errorGetZendeskToken.title")}
-        subtitle={I18n.t("support.errorGetZendeskToken.subtitle")}
-        action={{
-          label: I18n.t("global.buttons.close"),
-          accessibilityLabel: I18n.t("global.buttons.close"),
-          onPress: () => dispatch(zendeskSupportCancel())
-        }}
-      />
-    );
+    navigation.navigate(ZENDESK_ROUTES.MAIN, {
+      screen: ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN
+    });
+    return;
   }
 
   return (
