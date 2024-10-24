@@ -44,6 +44,13 @@ export const ItwIssuanceEidFailureScreen = () => {
     }
   };
 
+  const retryIssuance = (errorConfig?: KoState) => {
+    machineRef.send({ type: "retry" });
+    if (errorConfig) {
+      trackWalletCreationFailed(errorConfig);
+    }
+  };
+
   const ContentView = ({ failure }: { failure: IssuanceFailure }) => {
     useDebugInfo({
       failure
@@ -65,7 +72,7 @@ export const ItwIssuanceEidFailureScreen = () => {
       [IssuanceFailureType.ISSUER_GENERIC]: {
         title: I18n.t("features.itWallet.issuance.genericError.title"),
         subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-        pictogram: "workInProgress",
+        pictogram: "umbrellaNew",
         action: {
           label: I18n.t(
             "features.itWallet.issuance.genericError.primaryAction"
@@ -73,22 +80,9 @@ export const ItwIssuanceEidFailureScreen = () => {
           onPress: () =>
             closeIssuance({
               reason: failure.reason,
-              cta_category: "custom_1",
-              cta_id: I18n.t(
-                "features.itWallet.issuance.genericError.primaryAction"
-              )
-            }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
-            "features.itWallet.issuance.genericError.secondaryAction"
-          ),
-          onPress: () =>
-            closeIssuance({
-              reason: failure.reason,
               cta_category: "custom_2",
               cta_id: I18n.t(
-                "features.itWallet.issuance.genericError.secondaryAction"
+                "features.itWallet.issuance.genericError.primaryAction"
               )
             }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
         }
@@ -113,6 +107,12 @@ export const ItwIssuanceEidFailureScreen = () => {
         ),
         pictogram: "accessDenied",
         action: {
+          label: I18n.t(
+            "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
+          ),
+          onPress: () => retryIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+        },
+        secondaryAction: {
           label: I18n.t(
             "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
           ),
