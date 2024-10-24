@@ -7,7 +7,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import {
   isPaymentsFeedbackBannerEnabledSelector,
   paymentsFeedbackBannerConfigSelector
-} from "../../../../store/reducers/backendStatus";
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { getFullLocale } from "../../../../utils/locale";
 
 const WalletPaymentFeebackBanner = () => {

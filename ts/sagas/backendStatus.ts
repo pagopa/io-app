@@ -7,7 +7,7 @@ import { call, fork, put, select } from "typed-redux-saga/macro";
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { contentRepoUrl } from "../config";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import { backendServicesStatusSelector } from "../store/reducers/backendStatus";
+import { backendInfoSelector } from "../store/reducers/backendStatus/backendInfo";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
@@ -49,8 +49,9 @@ export function* backendStatusWatcherLoop(
       backendStatusSaga,
       getStatus
     );
-    const currentState: ReturnType<typeof backendServicesStatusSelector> =
-      yield* select(backendServicesStatusSelector);
+    const currentState: ReturnType<typeof backendInfoSelector> = yield* select(
+      backendInfoSelector
+    );
 
     // if we have no information increase rate
     if (response === false) {

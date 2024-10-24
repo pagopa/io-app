@@ -6,7 +6,6 @@ import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
@@ -51,29 +50,25 @@ describe("BPayWalletPreview component", () => {
       trialSystem: {
         [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
       } as TrialSystemState,
-      backendStatus: {
-        status: O.some({
-          config: {
-            assistanceTool: { tool: ToolEnum.none },
-            cgn: { enabled: true },
-            newPaymentSection: {
-              enabled: false,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            fims: { enabled: true },
-            itw: {
-              enabled: true,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            }
-          } as Config
-        } as BackendStatus)
-      },
+      remoteConfig: O.some({
+        assistanceTool: { tool: ToolEnum.none },
+        cgn: { enabled: true },
+        newPaymentSection: {
+          enabled: false,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        },
+        fims: { enabled: true },
+        itw: {
+          enabled: true,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        }
+      } as Config),
       features: {
         itWallet: {
           lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED

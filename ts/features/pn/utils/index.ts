@@ -54,10 +54,8 @@ export const extractPNOptInMessageInfoIfAvailable = (
     O.fromNullable,
     O.chain(serviceId =>
       pipe(
-        state.backendStatus.status,
-        O.map(
-          backendStatus => backendStatus.config.pn.optInServiceId === serviceId
-        )
+        state.remoteConfig,
+        O.map(c => c.pn.optInServiceId === serviceId)
       )
     ),
     O.filter(identity),

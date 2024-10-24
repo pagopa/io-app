@@ -5,7 +5,7 @@ import { TranslationKeys } from "../../../../locales/locales";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import {

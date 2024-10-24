@@ -28,7 +28,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import DeveloperModeSection from "./DeveloperModeSection";

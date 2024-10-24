@@ -3,7 +3,7 @@ import * as React from "react";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPaymentMethodExpired } from "../../common/utils";
 import PaymentMethodInitiatives from "./WalletDetailsPaymentMethodInitiatives";
 import PaymentMethodSettings from "./WalletDetailsPaymentMethodSettings";

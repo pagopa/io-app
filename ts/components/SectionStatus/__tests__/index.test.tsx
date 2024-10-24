@@ -5,14 +5,13 @@ import configureMockStore from "redux-mock-store";
 import { IOColors } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
 import {
   LevelEnum,
   SectionStatus
 } from "../../../../definitions/content/SectionStatus";
 import I18n, { setLocale } from "../../../i18n";
-import { SectionStatusKey } from "../../../store/reducers/backendStatus";
+import { SectionStatusKey } from "../../../store/reducers/backendStatus/sectionStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";
@@ -22,6 +21,7 @@ import { TrialSystemState } from "../../../features/trialSystem/store/reducers";
 import { PersistedFeaturesState } from "../../../features/common/store/reducers";
 import { ItwLifecycleState } from "../../../features/itwallet/lifecycle/store/reducers";
 import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
 
 jest.mock("../../../utils/url");
 
@@ -40,41 +40,38 @@ const sectionStatus: SectionStatus = {
 
 const mockSectionStatusState = (
   sectionKey: SectionStatusKey,
-  sectionStatus: SectionStatus
-) => ({
-  backendStatus: {
-    status: O.some({
-      sections: { [sectionKey]: sectionStatus },
-      config: {
-        assistanceTool: { tool: ToolEnum.none },
-        cgn: { enabled: true },
-        newPaymentSection: {
-          enabled: false,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        fims: { enabled: true },
-        itw: {
-          enabled: true,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
+  status: SectionStatus
+) =>
+  ({
+    sectionStatus: O.some({ [sectionKey]: status }),
+    remoteConfig: O.some({
+      assistanceTool: { tool: ToolEnum.none },
+      cgn: { enabled: true },
+      newPaymentSection: {
+        enabled: false,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
         }
-      } as Config
-    } as BackendStatus)
-  },
-  features: {
-    itWallet: {
-      lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
-    } as ItWalletState
-  } as PersistedFeaturesState,
-  trialSystem: {
-    [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
-  } as TrialSystemState
-});
+      },
+      fims: { enabled: true },
+      itw: {
+        enabled: true,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
+        }
+      }
+    } as Config),
+    features: {
+      itWallet: {
+        lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+      } as ItWalletState
+    } as PersistedFeaturesState,
+    trialSystem: {
+      [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
+    } as TrialSystemState
+  } as unknown as GlobalState);
 
 const mockStore = configureMockStore();
 
@@ -186,9 +183,8 @@ describe("Section Status Component should return null", () => {
     const component = getComponent(
       "messages",
       mockStore({
-        backendStatus: {
-          status: O.none
-        },
+        remoteConfig: O.none,
+        sectionStatus: O.none,
         trialSystem: {
           [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
         } as TrialSystemState,

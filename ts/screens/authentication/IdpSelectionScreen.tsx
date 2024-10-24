@@ -17,7 +17,7 @@ import { idpsRemoteValueSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog

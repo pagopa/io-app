@@ -2,7 +2,7 @@ import { PathConfigMap } from "@react-navigation/native";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import { itwLifecycleIsValidSelector } from "../lifecycle/store/selectors";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "./routes";
 

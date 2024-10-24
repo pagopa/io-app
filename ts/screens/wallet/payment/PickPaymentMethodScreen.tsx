@@ -46,7 +46,7 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
-} from "../../../store/reducers/backendStatus";
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
