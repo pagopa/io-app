@@ -1,5 +1,5 @@
 import { CommonActions } from "@react-navigation/native";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../navigation/NavigationService";
 import {
@@ -16,16 +16,18 @@ import {
   zendeskSupportFailure,
   zendeskSupportStart
 } from "../../store/actions";
+import { isLoggedIn } from "../../../../store/reducers/authentication";
 
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>
 ) {
+  const isLoggedinUser = yield* select(s => isLoggedIn(s.authentication));
   const needToNavigateInAskPermissionScreen =
     zendeskStart.payload.assistanceForPayment ||
     zendeskStart.payload.assistanceForCard ||
     zendeskStart.payload.assistanceForFci;
 
-  if (needToNavigateInAskPermissionScreen) {
+  if (needToNavigateInAskPermissionScreen && isLoggedinUser) {
     yield* put(getZendeskToken.request());
   }
 

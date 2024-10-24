@@ -253,10 +253,8 @@ const ZendeskAskPermissions = () => {
   ];
 
   const showHeader =
-    getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST ||
-    getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR
-      ? false
-      : true;
+    getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST &&
+    getZendeskTokenStatus !== ZendeskTokenStatusEnum.ERROR;
 
   useHeaderSecondLevel({
     title: "",
@@ -369,11 +367,17 @@ const ZendeskAskPermissions = () => {
     />
   );
 
-  if (getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST) {
+  if (
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+    isUserLoggedIn
+  ) {
     return <LoadingSpinnerOverlay isLoading />;
   }
 
-  if (getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR) {
+  if (
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR &&
+    isUserLoggedIn
+  ) {
     return (
       <OperationResultScreenContent
         isHeaderVisible={true}
