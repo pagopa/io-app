@@ -49,6 +49,8 @@ export function* cgnGetInformationSaga(
         ])
       );
       yield* put(cgnDetails.success(cgnInfo));
+    } else if (cgnInformationResult.right.status === 404) {
+      yield* put(cgnDetails.cancel());
     } else {
       yield* put(
         cgnDetails.failure({
