@@ -92,6 +92,7 @@ export const useIOBottomSheetModal = ({
       style={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
+      overScrollMode={"never"}
     >
       {component}
       {footer ? (
