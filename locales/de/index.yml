@@ -2574,6 +2574,14 @@ features:
         shareButton: "Speichern oder teilen"
         error: "Die Quittung konnte nicht abgerufen werden."
         download: "Quittung erhalten"
+        hideFromList: Von der Liste verstecken
+        delete:
+          successful: "Die Quittung wurde ausgeblendet"
+          failed: "Es ist ein Fehler aufgetreten, bitte versuche es erneut"
+        hideBanner: 
+          title: "Möchtest du diese Quittung aus deiner Liste ausblenden?"
+          content: "Dieser Vorgang ist unwiderruflich. Die Quittung wird nicht mehr in deiner Quittungsliste angezeigt."    
+          accept: "Ausblenden"
       details:
         totalFeeUnknown: "Der Gesamtbetrag enthält keine Provisionskosten: du findest diese in dem Dokument, das du von {{pspName}} erhalten hast."
         totalFeeUnknownPsp: "Die Gesamtsumme enthält keine Provisionskosten: du findest diese in dem Dokument, das du vom Zahlungsdienstleister (PSP) erhalten hast."
