@@ -270,3 +270,8 @@ export const itwTosUrl: string = pipe(
   t.string.decode,
   E.getOrElse(() => "https://io.italia.it/tos-sperimentazione")
 );
+export const itwDocumentsOnIOUrl: string = pipe(
+  Config.ITW_DOCUMENTS_ON_IO_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/documenti-su-io")
+);
