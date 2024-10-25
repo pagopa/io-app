@@ -14,14 +14,18 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const canItwBeActivated = isItwTrialActive && !isItwValid && isItwEnabled;
+
+  const isUserAllowedToItw = isItwEnabled && isItwTrialActive;
+  const canItwBeActivated = isUserAllowedToItw && !isItwValid;
 
   return {
     [ITW_ROUTES.MAIN]: {
       path: "itw",
       screens: {
-        [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
-          "credential/issuance",
+        ...(isUserAllowedToItw && {
+          [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
+            "credential/issuance"
+        }),
         ...(canItwBeActivated && {
           [ITW_ROUTES.DISCOVERY.INFO]: "discovery/info"
         })
