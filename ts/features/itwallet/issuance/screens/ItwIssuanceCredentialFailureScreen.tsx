@@ -144,6 +144,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
         ),
         onPress: closeAsyncIssuance
       }
+    },
+    // Dynamic errors extracted from the entity configuration
+    INVALID_STATUS: {
+      title: "",
+      subtitle: "",
+      pictogram: "accessDenied"
     }
   };
 
