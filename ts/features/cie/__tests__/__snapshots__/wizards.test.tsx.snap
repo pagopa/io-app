@@ -90,7 +90,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
+          If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
         </Text>
       </View>
       <View
