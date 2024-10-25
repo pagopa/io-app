@@ -77,7 +77,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginFailure = useCallback(
     (code?: string) => {
-      // TODO: Check missing SAML response (error message)
+      // TODO: Check missing SAML response (error message) https://pagopa.atlassian.net/browse/IOPID-2406
       dispatch(
         loginFailure({
           error: new Error(`login failure with code ${code || "n/a"}`),

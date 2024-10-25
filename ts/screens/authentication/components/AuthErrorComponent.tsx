@@ -9,11 +9,12 @@ import UnlockAccessComponent, {
 } from "../UnlockAccessComponent";
 
 // https://pagopa.atlassian.net/wiki/spaces/IAEI/pages/1305084137/Analisi+della+gestione+degli+errori+CieID+L2+e+L3#iOS
-export const IOS_OPERATION_CANCELED_MESSAGE =
-  "Operazione_annullata_dall'utente";
-export const IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida";
-export const CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL";
-export const MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS";
+enum CIE_ID_ERROR {
+  IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
+  IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
+  CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
+  MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS"
+}
 
 type Props = {
   errorCode?: string;
@@ -96,25 +97,25 @@ const AuthErrorComponent = ({
         subtitle: I18n.t("authentication.auth_errors.error_1001.subtitle"),
         ...footerWithCloseButton
       },
-      [CIEID_OPERATION_CANCEL]: {
+      [CIE_ID_ERROR.CIEID_OPERATION_CANCEL]: {
         pictogram: "accessDenied",
         title: I18n.t("authentication.auth_errors.error_25.title"),
         subtitle: I18n.t("authentication.auth_errors.error_25.subtitle"),
         ...footerWithCloseAndRetryButtons
       },
-      [IOS_OPERATION_CANCELED_MESSAGE]: {
+      [CIE_ID_ERROR.IOS_OPERATION_CANCELED_MESSAGE]: {
         pictogram: "accessDenied",
         title: I18n.t("authentication.auth_errors.error_25.title"),
         subtitle: I18n.t("authentication.auth_errors.error_25.subtitle"),
         ...footerWithCloseAndRetryButtons
       },
-      [IOS_INVALID_OPERATION_MESSAGE]: {
+      [CIE_ID_ERROR.IOS_INVALID_OPERATION_MESSAGE]: {
         pictogram: "umbrellaNew",
         title: I18n.t("authentication.auth_errors.generic.title"),
         subtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
         ...footerWithCloseAndRetryButtons
       },
-      [MISSING_SAML_RESPONSE]: {
+      [CIE_ID_ERROR.MISSING_SAML_RESPONSE]: {
         pictogram: "accessDenied",
         title: I18n.t("authentication.auth_errors.missing_saml_response.title"),
         subtitle: I18n.t(
