@@ -28,17 +28,8 @@ class MainActivity : ReactActivity() {
     override fun createReactActivityDelegate(): ReactActivityDelegate =
         DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
 
+  // https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     override fun onCreate(savedInstanceState: Bundle?) {
-        SplashScreen.show(this, R.style.SplashScreenTheme);
-        // This is needed for react-native-screens to solve the issue described here:
-        // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704633
-        super.onCreate(null);
-    }   
-
-    // see
-    // https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this, R.style.SplashScreenTheme);
         // This is needed for react-native-screens to solve the issue described here:
         // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704633

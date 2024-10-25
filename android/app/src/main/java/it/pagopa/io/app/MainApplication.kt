@@ -10,18 +10,20 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
+import it.ipzs.cieidsdk.native_bridge.CiePackage
+import com.reactnativecommunity.art.ARTPackage;
 
 class MainApplication : Application(), ReactApplication {
  
   override val reactNativeHost: ReactNativeHost =
       object : DefaultReactNativeHost(this) {
         override fun getPackages(): List<ReactPackage> =
-            PackageList(this).packages.apply {
-              // Packages that cannot be autolinked yet can be added manually here, for example:
-              // add(MyReactNativePackage())
-              packages.add(new CiePackage());
-              packages.add(new ARTPackage());
-            }
+          PackageList(this).packages.apply {
+            // Packages that cannot be autolinked yet can be added manually here, for example:
+            // add(MyReactNativePackage())
+            add(CiePackage())
+            add(ARTPackage())
+          }
  
         override fun getJSMainModuleName(): String = "index"
  
