@@ -1,4 +1,8 @@
-import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  IOStyles,
+  ListItemHeader,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -31,6 +35,7 @@ import {
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -43,11 +48,15 @@ const WalletCardsContainer = () => {
 
   if (isLoading && cards.length === 0) {
     return (
-      <WalletCardSkeleton
-        testID="walletCardSkeletonTestID"
-        cardProps={{}}
-        isStacked={false}
-      />
+      <>
+        <WalletCardSkeleton
+          testID="walletCardSkeletonTestID"
+          cardProps={{}}
+          isStacked={false}
+        />
+        <VSpacer size={16} />
+        <WalletCardsCategoryRetryErrorBanner />
+      </>
     );
   }
 
