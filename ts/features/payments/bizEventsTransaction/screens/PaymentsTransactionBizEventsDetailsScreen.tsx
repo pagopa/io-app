@@ -3,14 +3,22 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
+import PaymentsBizEventsHideReceiptButton from "../components/PaymentsBizEventsHideReceiptButton";
 import { PaymentsBizEventsTransactionHeadingSection } from "../components/PaymentsBizEventsTransactionHeadingSection";
 import WalletTransactionInfoSection from "../components/PaymentsBizEventsTransactionInfoSection";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
+import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import {
   getPaymentsBizEventsReceiptAction,
   getPaymentsBizEventsTransactionDetailsAction
@@ -19,13 +27,6 @@ import {
   walletTransactionBizEventsDetailsPotSelector,
   walletTransactionsBizEventsReceiptPotSelector
 } from "../store/selectors";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
-import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -176,6 +177,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
           transaction={transactionDetails}
           loading={isLoading}
         />
+        <PaymentsBizEventsHideReceiptButton transactionId={transactionId} />
       </View>
     </IOScrollViewWithLargeHeader>
   );
