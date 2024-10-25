@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import React = require("react");
 import CieIdWizard from "../screens/wizards/CieIdWizard";
 import CiePinWizard from "../screens/wizards/CiePinWizard";
 import SpidWizard from "../screens/wizards/SpidWizard";

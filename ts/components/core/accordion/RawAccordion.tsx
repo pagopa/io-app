@@ -70,8 +70,8 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
     : getDegree(isOpen);
 
   useEffect(() => {
-    if (isAndroid) {
-      UIManager.setLayoutAnimationEnabledExperimental(shouldAnimate);
+    if (isAndroid && UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }, [shouldAnimate]);
 

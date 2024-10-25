@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    inset: 0,
     top: 0,
     bottom: 0,
     left: 0,

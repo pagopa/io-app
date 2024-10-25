@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
-    justifySelf: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around"
