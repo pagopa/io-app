@@ -11,7 +11,6 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
 import it.ipzs.cieidsdk.native_bridge.CiePackage
-import com.reactnativecommunity.art.ARTPackage;
 
 class MainApplication : Application(), ReactApplication {
  
@@ -22,7 +21,6 @@ class MainApplication : Application(), ReactApplication {
             // Packages that cannot be autolinked yet can be added manually here, for example:
             // add(MyReactNativePackage())
             add(CiePackage())
-            add(ARTPackage())
           }
  
         override fun getJSMainModuleName(): String = "index"

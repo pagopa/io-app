@@ -3437,20 +3437,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/art@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@react-native-community/art@npm:1.2.0"
-  dependencies:
-    art: ^0.10.3
-    invariant: ^2.2.4
-    prop-types: ^15.7.2
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 7f671d68961bd1bbb81bd4b10819fc398e23df70779ea8d3fb5dc8d0c2a20923b31bbf23f111aa91e29f67cc42fd1420e5f918595506d211f12219224303b324
-  languageName: node
-  linkType: hard
-
 "@react-native-community/cli-clean@npm:14.1.0":
   version: 14.1.0
   resolution: "@react-native-community/cli-clean@npm:14.1.0"
@@ -3648,7 +3634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/netinfo@npm:^11.3.1":
+"@react-native-community/netinfo@npm:11.4.1":
   version: 11.4.1
   resolution: "@react-native-community/netinfo@npm:11.4.1"
   peerDependencies:
@@ -6144,13 +6130,6 @@ __metadata:
   version: 2.0.1
   resolution: "arrify@npm:2.0.1"
   checksum: 067c4c1afd182806a82e4c1cb8acee16ab8b5284fbca1ce29408e6e91281c36bb5b612f6ddfbd40a0f7a7e0c75bf2696eb94c027f6e328d6e9c52465c98e4209
-  languageName: node
-  linkType: hard
-
-"art@npm:^0.10.3":
-  version: 0.10.3
-  resolution: "art@npm:0.10.3"
-  checksum: 45f539031a908b2901c3af7841a23ff5c183b1f17106b3d3dda393ef3bae46734209a1c1193057fa5746adf061636f44d65c8a1b6cc56ff82da52c81e6875ddd
   languageName: node
   linkType: hard
 
@@ -13293,9 +13272,8 @@ __metadata:
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-camera-roll/camera-roll": 7.8.3
     "@react-native-clipboard/clipboard": ^1.14.0
-    "@react-native-community/art": ^1.2.0
     "@react-native-community/eslint-config": ^3.2.0
-    "@react-native-community/netinfo": ^11.3.1
+    "@react-native-community/netinfo": 11.4.1
     "@react-native-community/push-notification-ios": ^1.8.0
     "@react-native-community/slider": ^3.0.3
     "@react-native-cookies/cookies": ^6.2.1
