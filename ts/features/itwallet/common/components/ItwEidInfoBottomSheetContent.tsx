@@ -23,11 +23,13 @@ import { trackWalletStartDeactivation } from "../../analytics";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
+type ItwEidInfoBottomSheetTitleProps = {
+  isExpired: boolean;
+};
+
 export const ItwEidInfoBottomSheetTitle = ({
   isExpired
-}: {
-  isExpired: boolean;
-}) => (
+}: ItwEidInfoBottomSheetTitleProps) => (
   <HStack space={8} style={IOStyles.alignCenter}>
     <Icon name="legalValue" color={isExpired ? "grey-300" : "blueIO-500"} />
     <H4>
@@ -40,11 +42,13 @@ export const ItwEidInfoBottomSheetTitle = ({
   </HStack>
 );
 
-type Props = {
+type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
 };
 
-const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
+const ItwEidInfoBottomSheetContent = ({
+  navigation
+}: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
