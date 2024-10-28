@@ -1452,7 +1452,7 @@ PODS:
     - React-Core
   - react-native-notifications-utils (0.3.0):
     - React-Core
-  - react-native-pager-view (6.2.3):
+  - react-native-pager-view (6.4.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2020,11 +2020,11 @@ PODS:
   - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.7.0)
   - SwiftCBOR (0.4.7)
-  - VisionCamera (4.3.1):
-    - VisionCamera/Core (= 4.3.1)
-    - VisionCamera/React (= 4.3.1)
-  - VisionCamera/Core (4.3.1)
-  - VisionCamera/React (4.3.1):
+  - VisionCamera (4.5.3):
+    - VisionCamera/Core (= 4.5.3)
+    - VisionCamera/React (= 4.5.3)
+  - VisionCamera/Core (4.5.3)
+  - VisionCamera/React (4.5.3):
     - React-Core
   - Yoga (0.0.0)
   - ZendeskAnswerBotProvidersSDK (6.0.0):
@@ -2151,7 +2151,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - "ReactNativeART (from `../node_modules/@react-native-community/art/ReactNativeART.podspec`)"
+  - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
@@ -2389,7 +2389,7 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeART:
-    :podspec: "../node_modules/@react-native-community/art/ReactNativeART.podspec"
+    :path: "../node_modules/@react-native-community/art"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
   RNCalendarEvents:
@@ -2496,7 +2496,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-netinfo: f0a9899081c185db1de5bb2fdc1c88c202a059ac
   react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
-  react-native-pager-view: a2b959c9781ff0ac049d971516af8521b61ccd51
+  react-native-pager-view: c476f76d54f946df5147645e902d3d7173688187
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
@@ -2556,7 +2556,7 @@ SPEC CHECKSUMS:
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
-  VisionCamera: 58d2120e6e23c155b25f4702b7912dc2b1e5e8c2
+  VisionCamera: cb84d0d8485b3e67c91b62931d3aa88f49747c92
   Yoga: aa3df615739504eebb91925fc9c58b4922ea9a08
   ZendeskAnswerBotProvidersSDK: 2f3d0e38acdbd4507862b4e4a7b28d3764072854
   ZendeskAnswerBotSDK: de9759a504d4a262c453784e9c6d9d6907ad2222
@@ -2571,6 +2571,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 30f4da0eda396411abab0f6befca440495432070
+PODFILE CHECKSUM: 80686cfc2be2bcdc2b273e1709b13d531f5ebcfb
 
 COCOAPODS: 1.14.3

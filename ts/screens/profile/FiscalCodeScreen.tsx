@@ -7,7 +7,7 @@ import {
   H3,
   LabelSmall
 } from "@pagopa/io-app-design-system";
-import Barcode from "react-native-barcode-builder";
+import Barcode from "@adrianso/react-native-barcode-builder";
 import { useFocusEffect } from "@react-navigation/native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -100,6 +100,11 @@ const FiscalCodeScreen = () => {
               value={fiscalCode}
               width={1.3}
               height={80}
+              style={{
+                alignItems: "center",
+                padding: 10,
+                backgroundColor: IOColors.white
+              }}
               lineColor={IOColors.black}
             />
             <H3 testID="fiscal-code">{fiscalCode}</H3>

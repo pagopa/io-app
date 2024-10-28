@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import Barcode from "react-native-barcode-builder";
+import Barcode from "@adrianso/react-native-barcode-builder";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
@@ -43,7 +43,11 @@ const ItwPresentationFiscalCode = () => {
         width={barCodeWidth}
         height={50}
         format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
-        background={IOColors[theme["appBackground-primary"]]}
+        style={{
+          alignItems: "center",
+          padding: 10,
+          backgroundColor: IOColors[theme["appBackground-primary"]]
+        }}
         lineColor={IOColors[theme["textBody-default"]]}
       />
     </View>

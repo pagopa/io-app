@@ -16,7 +16,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import Barcode from "react-native-barcode-builder";
+import Barcode from "@adrianso/react-native-barcode-builder";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
@@ -154,7 +154,15 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
             </LabelSmall>
           </View>
           <VSpacer size={4} />
-          <Barcode format="CODE128" value={trx} />
+          <Barcode
+            format="CODE128"
+            value={trx}
+            style={{
+              alignItems: "center",
+              padding: 10,
+              backgroundColor: IOColors.white
+            }}
+          />
           <H3 style={{ alignSelf: "center" }}>{trx}</H3>
           <VSpacer size={32} />
           <IdPayBarcodeExpireProgressBar
