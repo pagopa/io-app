@@ -150,7 +150,16 @@ const CgnMerchantsListByCategory = () => {
       triggerOffset: titleHeight
     },
     transparent: true,
-    supportRequest: true
+    supportRequest: true,
+    secondAction: {
+      icon: "search",
+      onPress() {
+        navigate("CGN_MERCHANTS_SEARCH");
+      },
+      accessibilityLabel: I18n.t(
+        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+      )
+    }
   });
 
   const renderItem = React.useMemo(
