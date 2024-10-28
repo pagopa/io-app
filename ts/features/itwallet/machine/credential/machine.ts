@@ -30,9 +30,7 @@ export const itwCredentialIssuanceMachine = setup({
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
     closeIssuance: notImplemented,
-    setFailure: assign(({ event, context }) => ({
-      failure: mapEventToFailure(event, context)
-    })),
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented,
     onInit: notImplemented
   },

@@ -1,6 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
+import { Errors } from "@pagopa/io-react-native-wallet";
+import { sequenceS } from "fp-ts/lib/Apply";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -10,11 +12,13 @@ import I18n from "../../../../i18n";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType,
-  CredentialIssuanceFailureTypeEnum
+  CredentialIssuanceFailureTypeEnum,
+  isCredentialInvalidStatusError
 } from "../../machine/credential/failure";
 import {
   selectCredentialTypeOption,
-  selectFailureOption
+  selectFailureOption,
+  selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
@@ -29,6 +33,7 @@ import {
 } from "../../analytics";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -45,7 +50,7 @@ export const ItwIssuanceCredentialFailureScreen = () => {
           failure={{ type: CredentialIssuanceFailureTypeEnum.GENERIC }}
         />
       ),
-      type => <ContentView failure={type} />
+      failure => <ContentView failure={failure} />
     )
   );
 };
@@ -60,6 +65,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+
+  const invalidStatusMessage = useCredentialInvalidStatusMessage(failure);
 
   const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
@@ -113,26 +120,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           )
       }
     },
-    NOT_ENTITLED: {
-      title: I18n.t(
-        "features.itWallet.issuance.notEntitledCredentialError.title"
-      ),
-      subtitle: I18n.t(
-        "features.itWallet.issuance.notEntitledCredentialError.body"
-      ),
-      pictogram: "accessDenied",
-      action: {
-        label: I18n.t(
-          "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-        ),
-        onPress: () =>
-          closeIssuance(
-            I18n.t(
-              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-            )
-          )
-      }
-    },
     // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
     ASYNC_ISSUANCE: {
       title: I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
@@ -147,9 +134,24 @@ const ContentView = ({ failure }: ContentViewProps) => {
     },
     // Dynamic errors extracted from the entity configuration
     INVALID_STATUS: {
-      title: "",
-      subtitle: "",
-      pictogram: "accessDenied"
+      title:
+        invalidStatusMessage?.title ??
+        I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
+      subtitle:
+        invalidStatusMessage?.description ??
+        I18n.t("features.itWallet.issuance.notEntitledCredentialError.body"),
+      pictogram: "accessDenied",
+      action: {
+        label: I18n.t(
+          "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+        ),
+        onPress: () =>
+          closeIssuance(
+            I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            )
+          )
+      }
     }
   };
 
@@ -163,14 +165,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
       return;
     }
 
-    if (failure.type === CredentialIssuanceFailureTypeEnum.NOT_ENTITLED) {
+    /* if (failure.type === CredentialIssuanceFailureTypeEnum.NOT_ENTITLED) {
       trackCredentialNotEntitledFailure({
         reason: failure.reason,
         type: failure.type,
         credential: CREDENTIALS_MAP[credentialType.value]
       });
       return;
-    }
+    } */
 
     if (failure.type === CredentialIssuanceFailureTypeEnum.GENERIC) {
       trackAddCredentialFailure({
@@ -189,4 +191,34 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const resultScreenProps = resultScreensMap[failure.type];
   return <OperationResultScreenContent {...resultScreenProps} />;
+};
+
+/**
+ * Hook used to safely extract the localized message from an invalid status error.
+ * This message is dynamic and must be extracted from the EC.
+ */
+const useCredentialInvalidStatusMessage = (
+  failure: CredentialIssuanceFailure
+) => {
+  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
+  const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
+    selectIssuerConfigurationOption
+  );
+
+  return pipe(
+    sequenceS(O.Monad)({
+      failure: pipe(failure, O.fromPredicate(isCredentialInvalidStatusError)),
+      credentialType,
+      issuerConf
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    O.map(({ failure, ...rest }) =>
+      Errors.extractErrorMessageFromIssuerConf(failure.reason.errorCode, rest)
+    ),
+    O.chain(message => pipe(message, O.fromNullable)),
+    O.map(message => message[getClaimsFullLocale()]),
+    O.toUndefined
+  );
 };

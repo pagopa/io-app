@@ -3,11 +3,9 @@ import * as t from "io-ts";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { assert } from "../../../../utils/assert";
 import { CredentialIssuanceEvents } from "./events";
-import { Context } from "./context";
 
 export enum CredentialIssuanceFailureTypeEnum {
   GENERIC = "GENERIC",
-  NOT_ENTITLED = "NOT_ENTITLED",
   ASYNC_ISSUANCE = "ASYNC_ISSUANCE",
   INVALID_STATUS = "INVALID_STATUS"
 }
@@ -39,6 +37,13 @@ export type CredentialIssuanceFailure = t.TypeOf<
   typeof CredentialIssuanceFailure
 >;
 
+export const isCredentialInvalidStatusError = (
+  error: CredentialIssuanceFailure
+): error is {
+  type: CredentialIssuanceFailureTypeEnum.INVALID_STATUS;
+  reason: Errors.CredentialInvalidStatusError;
+} => error.type === CredentialIssuanceFailureTypeEnum.INVALID_STATUS;
+
 /**
  * Maps an event dispatched by the credential issuance machine to a failure object.
  * If the event is not an error event, a generic failure is returned.
@@ -47,24 +52,16 @@ export type CredentialIssuanceFailure = t.TypeOf<
  * @returns a failure object which can be used to fill the failure screen with the appropriate content
  */
 export const mapEventToFailure = (
-  event: CredentialIssuanceEvents,
-  context: Context
+  event: CredentialIssuanceEvents
 ): CredentialIssuanceFailure => {
   try {
     assert("error" in event && event.error, "Not an error event");
     const error = event.error;
 
     if (error instanceof Errors.CredentialInvalidStatusError) {
-      assert(
-        context.credentialType && context.issuerConf,
-        "credentialType and issuerConf must not be null"
-      );
       return {
         type: CredentialIssuanceFailureTypeEnum.INVALID_STATUS,
-        reason: Errors.extractErrorMessageFromIssuerConf(error.errorCode, {
-          credentialType: context.credentialType,
-          issuerConf: context.issuerConf
-        })
+        reason: error
       };
     }
 
