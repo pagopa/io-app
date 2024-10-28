@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
-      description: If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+      description: If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
       actions:
         primary:
           label: Yes, log in with CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
+    missing_saml_response:
+      title: It was not possible to access
+      subtitle: It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes.
     generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
