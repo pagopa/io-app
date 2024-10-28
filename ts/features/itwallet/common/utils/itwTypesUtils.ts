@@ -49,7 +49,10 @@ export type StoredStatusAttestation =
       statusAttestation: string;
       parsedStatusAttestation: ParsedStatusAttestation;
     }
-  | { credentialStatus: "invalid" | "unknown" };
+  | {
+      credentialStatus: "invalid" | "unknown";
+      errorCode?: string; // TODO: use credentialStatus for this?
+    };
 
 /**
  * Type for a stored credential.

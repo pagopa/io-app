@@ -3244,9 +3244,12 @@ features:
       inactive: Non attivo
     card:
       status:
-        expired: Non valida
+        expired: Scaduta
         expiring: In scadenza
         pending: In lavorazione
+        invalid: Non valida
+        verificationExpiring: Verifica
+        verificationExpired: Verifica
       digital: Versione digitale
     generic:
       error:
