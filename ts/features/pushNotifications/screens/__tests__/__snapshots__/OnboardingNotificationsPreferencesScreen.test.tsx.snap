@@ -63,6 +63,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1514,6 +1515,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2966,6 +2968,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4418,6 +4421,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5870,6 +5874,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

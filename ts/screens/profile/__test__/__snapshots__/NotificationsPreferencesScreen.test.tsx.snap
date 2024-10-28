@@ -63,6 +63,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1388,6 +1389,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2713,6 +2715,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4038,6 +4041,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5363,6 +5367,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6688,6 +6693,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -8013,6 +8019,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -9338,6 +9345,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -10663,6 +10671,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -11988,6 +11997,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -13313,6 +13323,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -14638,6 +14649,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -15963,6 +15975,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -17288,6 +17301,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -18613,6 +18627,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -19938,6 +19953,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -21263,6 +21279,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -22588,6 +22605,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

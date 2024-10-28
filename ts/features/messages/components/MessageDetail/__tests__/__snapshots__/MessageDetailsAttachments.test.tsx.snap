@@ -204,6 +204,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -671,6 +672,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1138,6 +1140,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1481,6 +1484,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1824,6 +1828,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2291,6 +2296,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2758,6 +2764,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3101,6 +3108,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3444,6 +3452,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

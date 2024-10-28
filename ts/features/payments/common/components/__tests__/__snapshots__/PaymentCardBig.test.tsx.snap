@@ -204,6 +204,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -676,6 +677,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

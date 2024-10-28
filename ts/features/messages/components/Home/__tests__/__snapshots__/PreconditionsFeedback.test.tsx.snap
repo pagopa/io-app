@@ -204,6 +204,7 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -760,6 +761,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

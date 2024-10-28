@@ -204,6 +204,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2133,6 +2134,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

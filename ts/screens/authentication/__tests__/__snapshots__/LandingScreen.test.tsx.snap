@@ -63,6 +63,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2059,6 +2060,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
