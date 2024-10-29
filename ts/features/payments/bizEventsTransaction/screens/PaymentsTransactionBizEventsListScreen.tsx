@@ -37,6 +37,7 @@ import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import * as analytics from "../analytics";
+import { PaymentsBizEventsFilterTabs } from "../components/PaymentsBizEventsFilterTabs";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -155,6 +156,8 @@ const PaymentsTransactionBizEventsListScreen = () => {
       >
         {I18n.t("features.payments.transactions.title")}
       </H2>
+      <VSpacer size={16} />
+      <PaymentsBizEventsFilterTabs />
     </View>
   );
 
