@@ -1,31 +1,63 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable complexity */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 
+import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import {
-  getPaymentsBizEventsTransactionDetailsAction,
-  getPaymentsLatestBizEventsTransactionsAction,
-  getPaymentsBizEventsTransactionsAction,
   getPaymentsBizEventsReceiptAction,
+  getPaymentsBizEventsTransactionDetailsAction,
+  getPaymentsBizEventsTransactionsAction,
+  getPaymentsLatestBizEventsTransactionsAction,
+  hidePaymentsBizEventsReceiptAction,
   PaymentsTransactionReceiptInfoPayload
 } from "../actions";
-import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+
+type CancelTransactionRecord = NoticeListItem & {
+  index: number;
+  cancelType: string;
+};
 
 export type PaymentsBizEventsTransactionState = {
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
   receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
+  cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
 };
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
   transactions: pot.noneLoading,
   latestTransactions: pot.none,
   details: pot.noneLoading,
-  receiptDocument: pot.none
+  receiptDocument: pot.none,
+  cancelTransactionRecord: pot.none
 };
+
+const filterTransactionsByIdAndGetIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  transactionId: string
+): {
+  filteredTransactions: Array<NoticeListItem>;
+  removedIndex: number;
+} => {
+  const transactionList = pot.getOrElse(transactions, []);
+  const removedIndex = transactionList.findIndex(
+    transaction => transaction.eventId === transactionId
+  );
+  const filteredTransactions = transactionList.filter(
+    transaction => transaction.eventId !== transactionId
+  );
+  return { filteredTransactions, removedIndex };
+};
+
+const getTransactionByIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  index: number
+): NoticeListItem => pot.getOrElse(transactions, [])[index];
 
 const reducer = (
   state: PaymentsBizEventsTransactionState = INITIAL_STATE,
@@ -123,6 +155,66 @@ const reducer = (
         ...state,
         receiptDocument: pot.none
       };
+    case getType(hidePaymentsBizEventsReceiptAction.request):
+      const { filteredTransactions, removedIndex: transactionIndex } =
+        filterTransactionsByIdAndGetIndex(
+          state.transactions,
+          action.payload.transactionId
+        );
+
+      const {
+        filteredTransactions: filteredLatestTransactions,
+        removedIndex: latestTransactionIndex
+      } = filterTransactionsByIdAndGetIndex(
+        state.latestTransactions,
+        action.payload.transactionId
+      );
+
+      return {
+        ...state,
+        cancelTransactionRecord: pot.some({
+          ...(transactionIndex > -1
+            ? getTransactionByIndex(state.transactions, transactionIndex)
+            : getTransactionByIndex(
+                state.latestTransactions,
+                latestTransactionIndex
+              )),
+          index:
+            transactionIndex > -1 ? transactionIndex : latestTransactionIndex,
+          cancelType:
+            transactionIndex > -1 ? "transactions" : "latestTransactions"
+        }),
+        transactions: pot.some(filteredTransactions),
+        latestTransactions: pot.some(filteredLatestTransactions)
+      };
+
+    case getType(hidePaymentsBizEventsReceiptAction.failure): {
+      const restoreValue = pot.getOrElse(state.cancelTransactionRecord, null);
+      if (!restoreValue) {
+        return state;
+      }
+
+      const { cancelType, index, ...restoreItem } = restoreValue;
+      const isLatestTransaction = cancelType === "latestTransactions";
+
+      return {
+        ...state,
+        transactions: !isLatestTransaction
+          ? pot.map(state.transactions, transactions => [
+              ...transactions.slice(0, index),
+              restoreItem,
+              ...transactions.slice(index)
+            ])
+          : state.transactions,
+        latestTransactions: isLatestTransaction
+          ? pot.map(state.latestTransactions, latestTransactions => [
+              ...latestTransactions.slice(0, index),
+              restoreItem,
+              ...latestTransactions.slice(index)
+            ])
+          : state.latestTransactions
+      };
+    }
   }
   return state;
 };

@@ -8,12 +8,7 @@ import { Alert, View } from "react-native";
 import { useDispatch } from "react-redux";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
-import {
-  getPaymentsLatestBizEventsTransactionsAction,
-  hidePaymentsBizEventsReceiptAction
-} from "../store/actions";
-import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
+import { hidePaymentsBizEventsReceiptAction } from "../store/actions";
 
 type Props = {
   transactionId: string;
@@ -24,43 +19,20 @@ const PaymentsBizEventsHideReceiptButton = (props: Props) => {
   const dispatch = useDispatch();
   const navigation = useIONavigation();
 
-  const onSuccess = () => {
-    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
-
-    navigation.navigate(ROUTES.MAIN, {
-      screen: ROUTES.PAYMENTS_HOME
+  const optimisticLoading = () => {
+    IOToast.show(I18n.t("features.payments.transactions.receipt.loading"), {
+      variant: "info"
     });
-
-    IOToast.success(
-      I18n.t("features.payments.transactions.receipt.delete.successful")
-    );
-  };
-
-  const onError = () => {
     navigation.goBack();
-    IOToast.error(
-      I18n.t("features.payments.transactions.receipt.delete.failed")
-    );
   };
 
-  const hideReceipt = () =>
+  const hideReceipt = () => {
+    optimisticLoading();
     dispatch(
       hidePaymentsBizEventsReceiptAction.request({
-        transactionId,
-        onSuccess,
-        onError
+        transactionId
       })
     );
-
-  const navigateToAction = () => {
-    navigation.navigate(
-      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
-      {
-        screen:
-          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LOADING_SCREEN
-      }
-    );
-    hideReceipt();
   };
 
   const handleHideFromList = () => {
@@ -73,7 +45,7 @@ const PaymentsBizEventsHideReceiptButton = (props: Props) => {
             "features.payments.transactions.receipt.hideBanner.accept"
           ),
           style: "destructive",
-          onPress: navigateToAction
+          onPress: hideReceipt
         },
         {
           text: I18n.t("global.buttons.cancel"),
