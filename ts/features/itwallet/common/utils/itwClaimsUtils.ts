@@ -389,11 +389,15 @@ export const getCredentialStatus = (
 
   const expireDays = differenceInCalendarDays(expireDate, Date.now());
 
-  return expireDays > expiringDays
-    ? "valid"
-    : expireDays > 0
-    ? "expiring"
-    : "expired";
+  if (expireDays > expiringDays) {
+    return "valid";
+  }
+
+  if (expireDays > 0) {
+    return "expiring";
+  }
+
+  return "expired";
 };
 
 const FISCAL_CODE_REGEX =
