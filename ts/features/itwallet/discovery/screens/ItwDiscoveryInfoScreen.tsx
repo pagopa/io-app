@@ -1,5 +1,6 @@
 import {
   ContentWrapper,
+  FooterActions,
   ForceScrollDownView,
   H1,
   VSpacer
@@ -8,7 +9,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
-import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
