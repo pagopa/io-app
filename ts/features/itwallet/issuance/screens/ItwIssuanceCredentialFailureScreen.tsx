@@ -225,8 +225,7 @@ const useCredentialInvalidStatusMessage = (
     O.map(({ failure, ...rest }) =>
       Errors.extractErrorMessageFromIssuerConf(failure.reason.errorCode, rest)
     ),
-    O.chain(message => pipe(message, O.fromNullable)),
-    O.map(message => message[getClaimsFullLocale()]),
+    O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined
   );
 };
