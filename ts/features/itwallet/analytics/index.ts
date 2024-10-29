@@ -582,6 +582,17 @@ export const trackCredentialNotEntitledFailure = ({
   );
 };
 
+export const trackCredentialInvalidStatusFailure = ({
+  credential,
+  reason,
+  type
+}: AddCredentialFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_INVALID_STATUS,
+    buildEventProperties("KO", "error", { credential, reason, type })
+  );
+};
+
 export const trackItwIdRequestUnexpected = ({
   reason,
   type

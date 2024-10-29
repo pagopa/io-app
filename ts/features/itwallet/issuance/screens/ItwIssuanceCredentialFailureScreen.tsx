@@ -27,6 +27,7 @@ import {
   CREDENTIALS_MAP,
   trackAddCredentialFailure,
   trackAddCredentialTimeout,
+  trackCredentialInvalidStatusFailure,
   trackCredentialNotEntitledFailure,
   trackItWalletDeferredIssuing,
   trackWalletCreationFailed
@@ -165,14 +166,21 @@ const ContentView = ({ failure }: ContentViewProps) => {
       return;
     }
 
-    /* if (failure.type === CredentialIssuanceFailureTypeEnum.NOT_ENTITLED) {
-      trackCredentialNotEntitledFailure({
-        reason: failure.reason,
+    if (failure.type === CredentialIssuanceFailureTypeEnum.INVALID_STATUS) {
+      const error = failure.reason as Errors.CredentialInvalidStatusError;
+
+      const trackingFunction =
+        error.errorCode === "credential_not_found"
+          ? trackCredentialNotEntitledFailure
+          : trackCredentialInvalidStatusFailure;
+
+      trackingFunction({
+        reason: error.errorCode,
         type: failure.type,
         credential: CREDENTIALS_MAP[credentialType.value]
       });
       return;
-    } */
+    }
 
     if (failure.type === CredentialIssuanceFailureTypeEnum.GENERIC) {
       trackAddCredentialFailure({
