@@ -3198,6 +3198,7 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        loading: "We are hiding your receipt..."
         title: pagoPA Receipt
         shareButton: Save or share
         error: Unable to retrieve the receipt.

@@ -2570,6 +2570,7 @@ features:
         failure: "FEHLGESCHLAGEN"
         success: ""
       receipt:
+        loading: "Die Quittung wird geladen..."
         title: "pagoPA-Quittung"
         shareButton: "Speichern oder teilen"
         error: "Die Quittung konnte nicht abgerufen werden."

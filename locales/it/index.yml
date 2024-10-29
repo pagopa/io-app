@@ -3198,6 +3198,7 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        loading: Stiamo nascondendo la ricevuta...
         title: Ricevuta pagoPA
         shareButton: Salva o condividi
         error: Non è stato possibile recuperare la ricevuta.
