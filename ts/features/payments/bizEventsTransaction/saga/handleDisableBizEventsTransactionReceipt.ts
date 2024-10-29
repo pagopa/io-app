@@ -1,11 +1,14 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import I18n from "../../../../i18n";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { TransactionClient } from "../../common/api/client";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import { hidePaymentsBizEventsReceiptAction } from "../store/actions";
+
 /**
  * Handle the remote call to hide the transaction receipt
  * @param action
@@ -24,7 +27,9 @@ export function* handleDisableBizEventsTransactionReceipt(
       "Authorization"
     );
     if (E.isLeft(getTransactionReceiptResult)) {
-      action.payload.onError?.();
+      IOToast.error(
+        I18n.t("features.payments.transactions.receipt.delete.failed")
+      );
       yield* put(
         hidePaymentsBizEventsReceiptAction.failure({
           ...getGenericError(
@@ -41,10 +46,14 @@ export function* handleDisableBizEventsTransactionReceipt(
           getTransactionReceiptResult.right.value
         )
       );
-      action.payload.onSuccess?.();
+      IOToast.success(
+        I18n.t("features.payments.transactions.receipt.delete.successful")
+      );
     } else if (getTransactionReceiptResult.right.status !== 401) {
       // The 401 status is handled by the withPaymentsSessionToken
-      action.payload.onError?.();
+      IOToast.error(
+        I18n.t("features.payments.transactions.receipt.delete.failed")
+      );
       yield* put(
         hidePaymentsBizEventsReceiptAction.failure({
           ...getGenericError(
@@ -56,7 +65,9 @@ export function* handleDisableBizEventsTransactionReceipt(
       );
     }
   } catch (e) {
-    action.payload.onError?.();
+    IOToast.error(
+      I18n.t("features.payments.transactions.receipt.delete.failed")
+    );
     yield* put(
       hidePaymentsBizEventsReceiptAction.failure({
         ...getNetworkError(e)

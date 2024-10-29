@@ -79,8 +79,6 @@ export const getPaymentsBizEventsReceiptAction = createAsyncAction(
 
 type PaymentsTransactionReceiptDeletePayload = {
   transactionId: string;
-  onSuccess: () => void;
-  onError: () => void;
 };
 
 export const hidePaymentsBizEventsReceiptAction = createAsyncAction(
