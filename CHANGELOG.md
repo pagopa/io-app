@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.74.0-rc.0](https://github.com/pagopa/io-app/compare/2.73.0-rc.3...2.74.0-rc.0) (2024-10-25)
+
+
+### Bug Fixes
+
+* [[IOPID-2423](https://pagopa.atlassian.net/browse/IOPID-2423)] Add logic to get the zendesk token in payments and others flow ([#6325](https://github.com/pagopa/io-app/issues/6325)) ([e32db63](https://github.com/pagopa/io-app/commit/e32db63da6c6a45636e49ae6e70341f554135490))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1716](https://pagopa.atlassian.net/browse/SIW-1716)] Add action to ITWallet upcoming banner ([#6333](https://github.com/pagopa/io-app/issues/6333)) ([c5dc6d6](https://github.com/pagopa/io-app/commit/c5dc6d6cc89375a7b4d826b5ec123ab3661482c4))
+* **IT Wallet:** [[SIW-1784](https://pagopa.atlassian.net/browse/SIW-1784)] Typo in identification mode selection screen ([#6331](https://github.com/pagopa/io-app/issues/6331)) ([8a398f0](https://github.com/pagopa/io-app/commit/8a398f005651a478827a551041e3516ae4d61482))
+
 ## [2.73.0-rc.3](https://github.com/pagopa/io-app/compare/2.73.0-rc.2...2.73.0-rc.3) (2024-10-18)
 
 
