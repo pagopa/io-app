@@ -557,36 +557,24 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>
@@ -1166,36 +1154,24 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>
@@ -1775,36 +1751,24 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>
@@ -2381,36 +2345,24 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>

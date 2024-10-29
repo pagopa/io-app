@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
-      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      description: Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
       actions:
         primary:
           label: Sì, entra con CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
+    missing_saml_response:
+      title: Non è stato possibile accedere
+      subtitle: Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto.
     generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
@@ -2673,7 +2676,7 @@ bonus:
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
-    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
+    departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
     merchantsList:
       news: novità
       online: Online
@@ -2717,7 +2720,7 @@ bonus:
         description: Descrizione
         contactInfo: Contatti e informazioni
       cta:
-        website: Vai al sito del partner
+        website: Visita il sito del partner
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e tempo libero
@@ -3127,6 +3130,11 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+      otherMethods:
+        error:
+          banner:
+            label: Non siamo riusciti a caricare alcuni elementi della lista.
+            cta: Prova di nuovo
     cards:
       categories:
         all: Tutti
@@ -3147,6 +3155,12 @@ features:
         welfare: Iniziative welfare
         payments: Metodi di pagamento
   payments:
+    backoff:
+      second: "1 secondo"
+      seconds: "{{seconds}} secondi"
+      minute: "1 minuto"
+      minutes: "{{minutes}} minuti"
+      retryCountDown: "Puoi riprovare tra {{time}}."
     title: Pagamenti
     cta: Paga un avviso
     remoteAlert:
@@ -3159,6 +3173,10 @@ features:
         action: Aggiungi un metodo
       status:
         expired: Scaduta
+      error:
+        banner:
+          label: Il caricamento dei metodi è fallito.
+          retryButton: Prova di nuovo
     transactions:
       showLegacyTransactions: Mostra precedenti
       legacy:
@@ -3190,6 +3208,10 @@ features:
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
+      error:
+        banner:
+          label: "Il caricamento delle ricevute è fallito."
+          retryButton: "Prova di nuovo"
     details:
       payPal:
         banner:

@@ -3,14 +3,22 @@ import { Divider, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 
-export function CgnMerchantListSkeleton() {
+type Props = {
+  hasIcons?: boolean;
+};
+
+export function CgnMerchantListSkeleton(props: Props) {
+  const { hasIcons = false } = props;
+
   return (
-    <View>
+    <View testID="CgnMerchantListSkeleton">
       {new Array(6).fill(null).map((_, index) => (
-        <View key={index}>
+        <View key={index} testID={`CgnMerchantListSkeleton-Item-${index}`}>
           <View
             style={{
-              paddingHorizontal: IOVisualCostants.appMarginDefault
+              paddingHorizontal: hasIcons
+                ? 0
+                : IOVisualCostants.appMarginDefault
             }}
           >
             <Placeholder.Box
@@ -21,6 +29,7 @@ export function CgnMerchantListSkeleton() {
               style={{
                 marginVertical: 13
               }}
+              testID={`CgnMerchantListSkeleton-Placeholder-${index}`}
             />
           </View>
           <Divider />

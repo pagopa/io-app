@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
-      description: If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+      description: If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
       actions:
         primary:
           label: Yes, log in with CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
+    missing_saml_response:
+      title: It was not possible to access
+      subtitle: It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes.
     generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
@@ -2673,7 +2676,7 @@ bonus:
     accessibility:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
-    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
+    departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
     merchantsList:
       news: new
       online: Online
@@ -2717,7 +2720,7 @@ bonus:
         description: Description
         contactInfo: Addresses
       cta:
-        website: Go to partner's website
+        website: Visit the partner's website
       categories:
         counting: and other {{count}}
         cultureAndEntertainment: Culture and entertainment
@@ -3127,6 +3130,11 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+      otherMethods:
+        error:
+          banner:
+            label: Non siamo riusciti a caricare alcuni elementi della lista.
+            cta: Prova di nuovo
     cards:
       categories:
         all: All
@@ -3147,6 +3155,12 @@ features:
         welfare: Iniziative welfare
         payments: Metodi di pagamento
   payments:
+    backoff:
+      second: "1 second"
+      seconds: "{{seconds}} seconds"
+      minute: "1 minute"
+      minutes: "{{minutes}} minutes"
+      retryCountDown: "You can try again in {{time}}"
     title: Payments
     cta: Paga un avviso
     remoteAlert:
@@ -3159,6 +3173,10 @@ features:
         action: Aggiungi un metodo
       status:
         expired: Scaduta
+      error:
+        banner:
+          label: The loading of the payment methods failed.
+          retryButton: Retry
     transactions:
       showLegacyTransactions: Mostra precedenti
       legacy:
@@ -3190,6 +3208,10 @@ features:
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
+      error:
+        banner:
+          label: "The loading of the receipts failed."
+          retryButton: "Retry"
     details:
       payPal:
         banner:

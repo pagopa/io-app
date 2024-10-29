@@ -12,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
+import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
@@ -37,21 +38,32 @@ export const WalletCardsCategoryContainer = ({
   header,
   topElement,
   testID
-}: WalletCardsCategoryContainerProps) => (
-  <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
-    {header && <ListItemHeader {...header} />}
-    {React.isValidElement(topElement) && React.cloneElement(topElement)}
-    <Animated.FlatList
-      scrollEnabled={false}
-      data={cards}
-      ItemSeparatorComponent={() => (!isStacked ? <VSpacer size={16} /> : null)}
-      renderItem={({ index, item }) =>
-        renderWalletCardFn(item, isStacked && index < cards.length - 1)
-      }
-      itemLayoutAnimation={itemLayoutAnimation}
-      entering={FadeInDown.duration(150)}
-      exiting={FadeOutDown.duration(150)}
-    />
-    <VSpacer size={24} />
-  </Animated.View>
-);
+}: WalletCardsCategoryContainerProps) => {
+  // Show the footer with the banner (if possible) to retry only if the category is of any domain of B&P (cgn, bonus or payment)
+  const ListFooter = cards.find(card => card.category !== "itw") && (
+    <>
+      <VSpacer size={16} />
+      <WalletCardsCategoryRetryErrorBanner />
+    </>
+  );
+
+  return (
+    <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
+      {header && <ListItemHeader {...header} />}
+      {React.isValidElement(topElement) && React.cloneElement(topElement)}
+      <Animated.FlatList
+        scrollEnabled={false}
+        data={cards}
+        ItemSeparatorComponent={() => !isStacked && <VSpacer size={16} />}
+        renderItem={({ index, item }) =>
+          renderWalletCardFn(item, isStacked && index < cards.length - 1)
+        }
+        ListFooterComponent={ListFooter}
+        itemLayoutAnimation={itemLayoutAnimation}
+        entering={FadeInDown.duration(150)}
+        exiting={FadeOutDown.duration(150)}
+      />
+      <VSpacer size={24} />
+    </Animated.View>
+  );
+};

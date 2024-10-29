@@ -7,6 +7,7 @@ import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessageId } from "../../../types";
 import * as payments from "../../../store/reducers/payments";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 const dueDate = new Date(2024, 2, 21, 18, 44, 31);
 
@@ -14,6 +15,7 @@ describe("MessageDetailsReminder", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot when the reminder is hidden", () => {
     jest
