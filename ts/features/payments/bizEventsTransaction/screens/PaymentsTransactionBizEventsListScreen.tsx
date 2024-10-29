@@ -119,6 +119,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
     dispatch(
       getPaymentsBizEventsTransactionsAction.request({
         firstLoad: true,
+        noticeCategory,
         onSuccess: handleOnSuccess
       })
     );
@@ -126,6 +127,13 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   const handleCategorySelected = (category: PaymentBizEventsCategoryFilter) => {
     setNoticeCategory(category);
+    dispatch(
+      getPaymentsBizEventsTransactionsAction.request({
+        firstLoad: true,
+        noticeCategory: category,
+        onSuccess: handleOnSuccess
+      })
+    );
   };
 
   useOnFirstRender(
@@ -209,6 +217,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
     }
     dispatch(
       getPaymentsBizEventsTransactionsAction.request({
+        noticeCategory,
         continuationToken,
         onSuccess: handleOnSuccess
       })

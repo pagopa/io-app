@@ -2,11 +2,11 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { PaymentBizEventsCategoryFilter } from "../../types";
 
 export type PaymentsGetBizEventsTransactionPayload = {
   firstLoad?: boolean;
-  isDebtor?: boolean;
-  isPayer?: boolean;
+  noticeCategory?: PaymentBizEventsCategoryFilter;
   size?: number;
   continuationToken?: string;
   onSuccess?: (continuationToken?: string) => void;
