@@ -76,7 +76,7 @@ export function CgnMerchantSearchScreen() {
   useEffect(() => {
     if (isSearchActive) {
       dispatch(
-        cgnSearchMerchants.request({ name: searchTextDebouncedTrimmed })
+        cgnSearchMerchants.request({ token: searchTextDebouncedTrimmed })
       );
     }
   }, [dispatch, isSearchActive, searchTextDebouncedTrimmed]);
