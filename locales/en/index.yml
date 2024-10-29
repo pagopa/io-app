@@ -3414,6 +3414,7 @@ features:
         secondaryAction: Scopri di più
     presentation:
       alerts:
+        statusAction: Cosa posso fare?
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
           action: Scopri di più
@@ -3425,6 +3426,8 @@ features:
           action: Aggiorna il documento
         expiring:
           content: Mancano {{days}} giorni alla scadenza del documento.
+        verificationExpiring:
+          content: Verifica la versione digitale del tuo documento entro il {{date}}.
       bottomSheets:
         mdl:
           title: "Patente: contesti di verifica"

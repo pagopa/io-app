@@ -13,7 +13,6 @@ import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorC
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
@@ -31,6 +30,8 @@ import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE
 } from "../../analytics";
+import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
+import { ItwPresentationCredentialInvalidStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -89,7 +90,10 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         <ContentWrapper>
           <VStack space={16}>
             <ItwPresentationAdditionalInfoSection credential={credential} />
-            <ItwPresentationAlertsSection credential={credential} />
+            <ItwPresentationCredentialInvalidStatusAlert
+              credential={credential}
+            />
+            <ItwPresentationCredentialInfoAlert credential={credential} />
             <ItwCredentialTrustmark credential={credential} />
             <ItwPresentationClaimsSection credential={credential} />
           </VStack>

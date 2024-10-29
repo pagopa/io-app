@@ -4,11 +4,11 @@ import { pipe } from "fp-ts/lib/function";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import {
-  StoredCredential,
-  StoredStatusAttestation
-} from "../../../common/utils/itwTypesUtils";
-import { getFiscalCodeFromCredential } from "../../../common/utils/itwClaimsUtils";
+  getCredentialStatus,
+  getFiscalCodeFromCredential
+} from "../../../common/utils/itwClaimsUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
@@ -65,29 +65,32 @@ export const itwIsWalletEmptySelector = createSelector(
   ({ credentials }) => credentials.length === 0
 );
 
-type InvalidStatusAttestation = Required<
-  Extract<StoredStatusAttestation, { credentialStatus: "invalid" | "unknown" }>
->;
-
 /**
- * Extract the error message corresponding to the invalid status attestation error, if present.
+ * Get the credential status and the error message corresponding to the status attestation error, if present.
  * The message is dynamic and extracted from the issuer configuration.
  */
-export const itwCredentialInvalidStatusMessageSelector = (type: string) =>
-  createSelector(itwCredentialByTypeSelector(type), credentialOption =>
-    pipe(
-      credentialOption,
-      O.filter(
-        ({ storedStatusAttestation }) =>
-          storedStatusAttestation?.credentialStatus === "invalid" &&
-          !!storedStatusAttestation.errorCode
-      ),
-      O.map(({ issuerConf, storedStatusAttestation, credentialType }) =>
-        Errors.extractErrorMessageFromIssuerConf(
-          (storedStatusAttestation as InvalidStatusAttestation).errorCode,
-          { issuerConf, credentialType }
-        )
-      ),
-      O.toUndefined
-    )
-  );
+export const itwCredentialStatusSelector = (type: string) =>
+  createSelector(itwCredentialByTypeSelector(type), credentialOption => {
+    // This should never happen
+    if (O.isNone(credentialOption)) {
+      return { status: undefined, message: undefined };
+    }
+
+    const { storedStatusAttestation, issuerConf, credentialType } =
+      credentialOption.value;
+
+    const errorCode =
+      storedStatusAttestation?.credentialStatus === "invalid"
+        ? storedStatusAttestation.errorCode
+        : undefined;
+
+    return {
+      status: getCredentialStatus(credentialOption.value),
+      message: errorCode
+        ? Errors.extractErrorMessageFromIssuerConf(errorCode, {
+            issuerConf,
+            credentialType
+          })
+        : undefined
+    };
+  });
