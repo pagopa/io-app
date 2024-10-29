@@ -10,9 +10,46 @@ import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
+  cgnSearchMerchants,
   cgnSelectedMerchant
 } from "../../../store/actions/merchants";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+
+export function* cgnSearchMerchantsSaga(
+  searchMerchants: ReturnType<typeof BackendCgnMerchants>["searchMerchants"],
+  cgnSearchMerchantRequest: ReturnType<typeof cgnSearchMerchants.request>
+) {
+  try {
+    const searchMerchantsRequest = searchMerchants({
+      body: cgnSearchMerchantRequest.payload
+    });
+    const searchMerchantsResult = (yield* call(
+      withRefreshApiCall,
+      searchMerchantsRequest,
+      cgnSearchMerchantRequest
+    )) as unknown as SagaCallReturnType<typeof searchMerchants>;
+
+    if (E.isLeft(searchMerchantsResult)) {
+      yield* put(
+        cgnSearchMerchants.failure(
+          getGenericError(new Error(readableReport(searchMerchantsResult.left)))
+        )
+      );
+      return;
+    }
+
+    if (searchMerchantsResult.right.status === 200) {
+      yield* put(
+        cgnSearchMerchants.success(searchMerchantsResult.right.value.items)
+      );
+      return;
+    }
+
+    throw new Error(`Response in status ${searchMerchantsResult.right.status}`);
+  } catch (e) {
+    yield* put(cgnSearchMerchants.failure(getNetworkError(e)));
+  }
+}
 
 export function* cgnOnlineMerchantsSaga(
   getOnlineMerchants: ReturnType<

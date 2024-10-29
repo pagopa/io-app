@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
+  cgnSearchMerchants,
   cgnSelectedMerchant,
   resetMerchantDiscountCode,
   selectMerchantDiscount,
@@ -22,8 +23,10 @@ import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/Onl
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
 
 export type CgnMerchantsState = {
+  searchMerchants: RemoteValue<SearchResult["items"], NetworkError>;
   onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;
   offlineMerchants: RemoteValue<OfflineMerchants["items"], NetworkError>;
   selectedMerchant: RemoteValue<Merchant, NetworkError>;
@@ -32,6 +35,7 @@ export type CgnMerchantsState = {
 };
 
 const INITIAL_STATE: CgnMerchantsState = {
+  searchMerchants: remoteUndefined,
   onlineMerchants: remoteUndefined,
   offlineMerchants: remoteUndefined,
   selectedMerchant: remoteUndefined,
@@ -44,6 +48,23 @@ const reducer = (
   action: Action
 ): CgnMerchantsState => {
   switch (action.type) {
+    // Search Merchants
+    case getType(cgnSearchMerchants.request):
+      return {
+        ...state,
+        searchMerchants: remoteLoading
+      };
+    case getType(cgnSearchMerchants.success):
+      return {
+        ...state,
+        searchMerchants: remoteReady(action.payload)
+      };
+    case getType(cgnSearchMerchants.failure):
+      return {
+        ...state,
+        searchMerchants: remoteError(action.payload)
+      };
+
     // Offline Merchants
     case getType(cgnOfflineMerchants.request):
       return {
@@ -120,6 +141,11 @@ export default reducer;
 
 export const cgnMerchantsSelector = (state: GlobalState) =>
   state.bonus.cgn.merchants;
+
+export const cgnSearchMerchantsSelector = createSelector(
+  cgnMerchantsSelector,
+  merchantsState => merchantsState.searchMerchants
+);
 
 export const cgnOnlineMerchantsSelector = createSelector(
   cgnMerchantsSelector,

@@ -13,12 +13,23 @@ import {
   getOnlineMerchantsDefaultDecoder,
   GetOnlineMerchantsT,
   getPublishedProductCategoriesDefaultDecoder,
-  GetPublishedProductCategoriesT
+  GetPublishedProductCategoriesT,
+  searchDefaultDecoder,
+  SearchT
 } from "../../../../../definitions/cgn/merchants/requestTypes";
 import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 const BASE_URL = "/api/v1/cgn/operator-search";
+
+const searchMerchants: SearchT = {
+  method: "post",
+  url: () => `${BASE_URL}/search`,
+  query: _ => ({}),
+  body: ({ body }) => JSON.stringify(body),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: searchDefaultDecoder()
+};
 
 const getOnlineMerchants: GetOnlineMerchantsT = {
   method: "post",
@@ -80,6 +91,9 @@ export function BackendCgnMerchants(
   const withToken = withBearerToken(token);
 
   return {
+    searchMerchants: withToken(
+      createFetchRequestForApi(searchMerchants, options)
+    ),
     getOnlineMerchants: withToken(
       createFetchRequestForApi(getOnlineMerchants, options)
     ),

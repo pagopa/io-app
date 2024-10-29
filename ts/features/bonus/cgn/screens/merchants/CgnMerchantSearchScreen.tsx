@@ -28,7 +28,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import I18n from "../../../../../i18n";
 import {
   IOStackNavigationProp,
@@ -38,6 +37,11 @@ import { EmptyList } from "../../../../messages/components/Search/EmptyList";
 import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import CGN_ROUTES from "../../navigation/routes";
 import { CgnDetailsParamsList } from "../../navigation/params";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnSearchMerchantsSelector } from "../../store/reducers/merchants";
+import { getValue } from "../../../../../common/model/RemoteValue";
+import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
+import { cgnSearchMerchants } from "../../store/actions/merchants";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
@@ -46,14 +50,15 @@ const SEARCH_DELAY: number = 300;
 export function CgnMerchantSearchScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const searchInputRef = useRef<SearchInputRef>(null);
   const [searchText, setSearchText] = useState<string>("");
-  const debouncedSearchText = useDebouncedValue({
+  const searchTextDebouncedTrimmed = useDebouncedValue({
     initial: "",
     value: searchText,
     delay: SEARCH_DELAY
-  });
+  }).trim();
 
   const containerStyle: ViewStyle = useMemo(
     () => ({
@@ -64,20 +69,26 @@ export function CgnMerchantSearchScreen() {
     [insets.top]
   );
 
-  const merchants = useSimpleQuery({
-    isActive: debouncedSearchText.trim().length >= MIN_SEARCH_TEXT_LENGTH,
-    params: debouncedSearchText.trim(),
-    fetcher: searchMerchants
-  });
+  const merchantsRemoteValue = useIOSelector(cgnSearchMerchantsSelector);
+  const isSearchActive =
+    searchTextDebouncedTrimmed.length >= MIN_SEARCH_TEXT_LENGTH;
+  const merchants = isSearchActive ? getValue(merchantsRemoteValue) : undefined;
+  useEffect(() => {
+    if (isSearchActive) {
+      dispatch(
+        cgnSearchMerchants.request({ name: searchTextDebouncedTrimmed })
+      );
+    }
+  }, [dispatch, isSearchActive, searchTextDebouncedTrimmed]);
 
   const renderItemCallback = useCallback(
-    (itemInfo: ListRenderItemInfo<Merchant>) => (
+    (itemInfo: ListRenderItemInfo<SearchItem>) => (
       <MerchantSearchResultListItem
         item={itemInfo.item}
-        searchText={debouncedSearchText}
+        searchText={searchTextDebouncedTrimmed}
       />
     ),
-    [debouncedSearchText]
+    [searchTextDebouncedTrimmed]
   );
 
   const renderListEmptyComponent = useCallback(() => {
@@ -125,7 +136,7 @@ export function CgnMerchantSearchScreen() {
       </View>
       <FlatList
         ItemSeparatorComponent={() => <Divider />}
-        data={merchants.data?.length !== 0 ? merchants.data : undefined}
+        data={merchants?.length !== 0 ? merchants : undefined}
         keyExtractor={item => item.id}
         renderItem={renderItemCallback}
         ListEmptyComponent={renderListEmptyComponent}
@@ -143,7 +154,7 @@ function MerchantSearchResultListItem({
   item,
   searchText
 }: {
-  item: Merchant;
+  item: SearchItem;
   searchText: string;
 }) {
   const { navigate } =
@@ -162,9 +173,13 @@ function MerchantSearchResultListItem({
         value={
           <View style={IOStyles.rowSpaceBetween}>
             <View style={{ flexGrow: 1, flexShrink: 1 }}>
-              <H6>{highlightText(item.name, searchText)}</H6>
+              <H6>{highlightText({ text: item.name, searchText })}</H6>
               <Body numberOfLines={2} ellipsizeMode="tail">
-                {highlightText(item.description, searchText)}
+                {highlightText({
+                  text: item.description,
+                  searchText,
+                  esimatedTextLengthToDisplay: item.newDiscounts ? 60 : 100
+                })}
               </Body>
             </View>
             {item.newDiscounts && (
@@ -183,8 +198,20 @@ function MerchantSearchResultListItem({
   );
 }
 
-function highlightText(text: string, searchText: string) {
-  const chunks = highlightSearchText(text, searchText);
+function highlightText({
+  searchText,
+  text,
+  esimatedTextLengthToDisplay
+}: {
+  text: string;
+  searchText: string;
+  esimatedTextLengthToDisplay?: number;
+}) {
+  const chunks = highlightSearchText({
+    text,
+    searchText,
+    esimatedTextLengthToDisplay
+  });
   return chunks.map((chunk, index) => (
     <Text
       key={index}
@@ -201,17 +228,40 @@ function highlightText(text: string, searchText: string) {
 
 type HighlightChunk = { highlighted: boolean; text: string };
 
-/** Highlights search results client side that were made with ILIKE sql operator server side */
-function highlightSearchText(
-  text: string,
-  searchText: string
-): Array<HighlightChunk> {
+/**
+ * Highlights search results client side that were made with ILIKE sql operator server side.
+ * Tries to center the first match in the available space if esimatedTextLengthToDisplay provided
+ */
+function highlightSearchText({
+  text,
+  searchText,
+  esimatedTextLengthToDisplay
+}: {
+  text: string;
+  searchText: string;
+  esimatedTextLengthToDisplay?: number;
+}): Array<HighlightChunk> {
   const textLowerCase = text.toLowerCase();
   const searchTextLowerCase = searchText.toLowerCase();
-  const matchMap = new Array(text.length).fill(false);
+  const firstOccurrence = textLowerCase.indexOf(searchTextLowerCase);
+  const relevantText =
+    esimatedTextLengthToDisplay === undefined || firstOccurrence === -1
+      ? text
+      : "..." +
+        text.slice(
+          firstOccurrence -
+            Math.trunc(
+              esimatedTextLengthToDisplay * 0.5 - searchText.length * 0.5
+            )
+        );
+  const relevantTextLowerCase = relevantText.toLowerCase();
+  const matchMap = new Array(relevantText.length).fill(false);
   // eslint-disable-next-line functional/no-let
-  for (let textIndex = 0; textIndex < text.length; ) {
-    const matchStart = textLowerCase.indexOf(searchTextLowerCase, textIndex);
+  for (let textIndex = 0; textIndex < relevantText.length; ) {
+    const matchStart = relevantTextLowerCase.indexOf(
+      searchTextLowerCase,
+      textIndex
+    );
     if (matchStart === -1) {
       break;
     }
@@ -230,8 +280,8 @@ function highlightSearchText(
   // eslint-disable-next-line functional/no-let
   let currentChunk: HighlightChunk = { highlighted: false, text: "" };
   // eslint-disable-next-line functional/no-let
-  for (let index = 0; index < text.length; index++) {
-    const char = text[index];
+  for (let index = 0; index < relevantText.length; index++) {
+    const char = relevantText[index];
     const isHighlighted = matchMap[index];
     if (currentChunk.highlighted === isHighlighted) {
       // eslint-disable-next-line functional/immutable-data
@@ -245,89 +295,4 @@ function highlightSearchText(
   // eslint-disable-next-line functional/immutable-data
   chunks.push(currentChunk);
   return chunks;
-}
-
-// TODO redux-saga when new API defintion is up; ingore for code review
-
-type Merchant = {
-  id: string & INonEmptyStringTag;
-  name: string;
-  description: string;
-  newDiscounts: boolean;
-};
-
-// this is a simplified version of useQuery from react-query or useSWR
-// eslint-disable-next-line sonarjs/cognitive-complexity
-function useSimpleQuery<Params, Data>({
-  isActive,
-  params,
-  fetcher
-}: {
-  params: Params;
-  fetcher(params: Params): Promise<Data>;
-  isActive: boolean;
-}): { data: undefined | Data; isLoading: boolean } {
-  const nextIdRef = useRef(1);
-  const [state, setState] = useState<
-    | { type: "idle" }
-    | { type: "loading"; requestId: number }
-    | { type: "loaded"; data: Data }
-    | { type: "error"; error: unknown }
-  >({ type: "idle" });
-  useEffect(() => {
-    if (isActive) {
-      // eslint-disable-next-line functional/immutable-data
-      const requestId = nextIdRef.current++;
-      setState({ type: "loading", requestId });
-      fetcher(params).then(
-        data => {
-          setState(prevState => {
-            if (
-              prevState.type === "loading" &&
-              prevState.requestId === requestId
-            ) {
-              return { type: "loaded", data };
-            } else {
-              return prevState;
-            }
-          });
-        },
-        error => {
-          setState(prevState => {
-            if (
-              prevState.type === "loading" &&
-              prevState.requestId === requestId
-            ) {
-              return { type: "error", error };
-            } else {
-              return prevState;
-            }
-          });
-        }
-      );
-    } else {
-      setState({ type: "idle" });
-    }
-  }, [fetcher, isActive, params]);
-  return {
-    isLoading: state.type === "loading",
-    data: state.type === "loaded" ? state.data : undefined
-  };
-}
-
-async function searchMerchants(searchText: string): Promise<Array<Merchant>> {
-  const all = new Array(100).fill(null).map(
-    (_, index): Merchant => ({
-      id: String(index) as string & INonEmptyStringTag,
-      name: `Merchant ${index}`,
-      description: `Description ${index} lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua`,
-      newDiscounts: Boolean(index % 2)
-    })
-  );
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  return all.filter(
-    merchant =>
-      merchant.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      merchant.description.toLowerCase().includes(searchText.toLowerCase())
-  );
 }

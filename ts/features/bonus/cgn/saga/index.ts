@@ -17,6 +17,7 @@ import {
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
+  cgnSearchMerchants,
   cgnSelectedMerchant
 } from "../store/actions/merchants";
 import { BackendCgnMerchants } from "../api/backendCgnMerchants";
@@ -37,7 +38,8 @@ import { eycaActivationSaga } from "./orchestration/eyca/eycaActivationSaga";
 import {
   cgnMerchantDetail,
   cgnOfflineMerchantsSaga,
-  cgnOnlineMerchantsSaga
+  cgnOnlineMerchantsSaga,
+  cgnSearchMerchantsSaga
 } from "./networking/merchants/cgnMerchantsSaga";
 import { cgnBucketConsuption } from "./networking/bucket";
 import { cgnUnsubscriptionHandler } from "./networking/unsubscribe";
@@ -108,6 +110,13 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnCategories.request),
     cgnCategoriesSaga,
     backendCgnMerchants.getPublishedCategories
+  );
+
+  // CGN Search Merchants
+  yield* takeLatest(
+    getType(cgnSearchMerchants.request),
+    cgnSearchMerchantsSaga,
+    backendCgnMerchants.searchMerchants
   );
 
   // CGN Offline Merchants
