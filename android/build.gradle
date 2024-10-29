@@ -7,7 +7,7 @@ buildscript {
         compileSdkVersion = 34
         targetSdkVersion = 34
         ndkVersion = "26.1.10909125"
-        kotlinVersion = "1.7.0"
+        kotlinVersion = "1.9.24"
         firebaseMessagingVersion = "23.2.1"
     }
     repositories {
@@ -19,7 +19,7 @@ buildscript {
         classpath 'com.facebook.react:react-native-gradle-plugin'
         classpath 'com.google.gms:google-services:4.3.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin"
     }
 }
 
