@@ -6,49 +6,48 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-// import I18n from "../../../i18n";
-// import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  PaymentBizEventsCategoryFilter,
+  paymentsBizEventsCategoryFilters
+} from "../types";
+import I18n from "../../../../i18n";
 
-const PaymentsBizEventsFilterTabs = () => {
-  // const dispatch = useIODispatch();
+type PaymentsBizEventsFilterTabsProps = {
+  selectedCategory: PaymentBizEventsCategoryFilter;
+  onCategorySelected?: (category: PaymentBizEventsCategoryFilter) => void;
+};
 
-  // const selectedCategory = useIOSelector(selectWalletCategoryFilter);
-
-  // const selectedIndex = selectedCategory
-  //   ? walletCardCategoryFilters.indexOf(selectedCategory) + 1
-  //   : 0;
+const PaymentsBizEventsFilterTabs = ({
+  selectedCategory,
+  onCategorySelected
+}: PaymentsBizEventsFilterTabsProps) => {
+  const selectedIndexOfCategory =
+    paymentsBizEventsCategoryFilters.indexOf(selectedCategory);
 
   const handleFilterSelected = (index: number) => {
-    // const categoryByIndex =
-    //   index === 0 ? undefined : walletCardCategoryFilters[index - 1];
-    // dispatch(walletSetCategoryFilter(categoryByIndex));
-    // if (categoryByIndex) {
-    //   trackWalletCategoryFilter(categoryByIndex);
-    // }
+    const categoryByIndex = paymentsBizEventsCategoryFilters[index];
+    onCategorySelected?.(categoryByIndex);
   };
 
   return (
-    <View style={styles.container} testID="CategoryTabsContainerTestID">
+    <View style={styles.container}>
       <TabNavigation
         tabAlignment="start"
         onItemPress={handleFilterSelected}
-        selectedIndex={0}
+        selectedIndex={selectedIndexOfCategory}
       >
-        <TabItem
-          key={`category_tab_all`}
-          label={"Tutte"}
-          accessibilityLabel={"Tutte"}
-        />
-        <TabItem
-          key={`category_tab_payer`}
-          label="Pagate da me"
-          accessibilityLabel="Pagate da me"
-        />
-        <TabItem
-          key={`category_tab_debtor`}
-          label="Intestate a me"
-          accessibilityLabel="Intestate a me"
-        />
+        {paymentsBizEventsCategoryFilters.map(category => (
+          <TabItem
+            testID={`CategoryTabTestID-${category}`}
+            key={category}
+            label={I18n.t(
+              `features.payments.transactions.filters.tabs.${category}`
+            )}
+            accessibilityLabel={I18n.t(
+              `features.payments.transactions.filters.tabs.${category}`
+            )}
+          />
+        ))}
       </TabNavigation>
       <VSpacer size={16} />
     </View>

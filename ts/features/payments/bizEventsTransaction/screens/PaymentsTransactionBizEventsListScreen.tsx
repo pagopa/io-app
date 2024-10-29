@@ -38,6 +38,7 @@ import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import * as analytics from "../analytics";
 import { PaymentsBizEventsFilterTabs } from "../components/PaymentsBizEventsFilterTabs";
+import { PaymentBizEventsCategoryFilter } from "../types";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -58,6 +59,8 @@ const PaymentsTransactionBizEventsListScreen = () => {
   const [continuationToken, setContinuationToken] = React.useState<
     string | undefined
   >();
+  const [noticeCategory, setNoticeCategory] =
+    React.useState<PaymentBizEventsCategoryFilter>("all");
   const [groupedTransactions, setGroupedTransactions] =
     React.useState<ReadonlyArray<SectionListData<NoticeListItem>>>();
   const insets = useSafeAreaInsets();
@@ -121,6 +124,10 @@ const PaymentsTransactionBizEventsListScreen = () => {
     );
   };
 
+  const handleCategorySelected = (category: PaymentBizEventsCategoryFilter) => {
+    setNoticeCategory(category);
+  };
+
   useOnFirstRender(
     React.useCallback(() => {
       analytics.trackPaymentsReceiptListing();
@@ -157,7 +164,10 @@ const PaymentsTransactionBizEventsListScreen = () => {
         {I18n.t("features.payments.transactions.title")}
       </H2>
       <VSpacer size={16} />
-      <PaymentsBizEventsFilterTabs />
+      <PaymentsBizEventsFilterTabs
+        selectedCategory={noticeCategory}
+        onCategorySelected={handleCategorySelected}
+      />
     </View>
   );
 

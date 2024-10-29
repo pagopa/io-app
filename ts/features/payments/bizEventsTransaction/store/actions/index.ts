@@ -5,6 +5,8 @@ import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-e
 
 export type PaymentsGetBizEventsTransactionPayload = {
   firstLoad?: boolean;
+  isDebtor?: boolean;
+  isPayer?: boolean;
   size?: number;
   continuationToken?: string;
   onSuccess?: (continuationToken?: string) => void;
