@@ -1,4 +1,4 @@
 import { GlobalState } from "../../../../../store/reducers/types";
 
-export const loginSuccededSelector = (state: GlobalState) =>
-  state.features.loginFeatures.loginInfo.loginSucceded;
+export const userFromSuccessLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.loginInfo.userFromSuccessLogin;

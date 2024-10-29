@@ -3,17 +3,17 @@ import { Action } from "../../../../../store/actions/types";
 import { loginSuccess } from "../../../../../store/actions/authentication";
 
 export type LoginInfoState = {
-  loginSucceded: boolean;
+  userFromSuccessLogin: boolean;
 };
 
 export const loginInfoReducer = (
-  state: LoginInfoState = { loginSucceded: false },
+  state: LoginInfoState = { userFromSuccessLogin: false },
   action: Action
 ): LoginInfoState => {
   switch (action.type) {
     case getType(loginSuccess):
       return {
-        loginSucceded: true
+        userFromSuccessLogin: true
       };
 
     default:
