@@ -1,9 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import {
+  StoredCredential,
+  StoredStatusAttestation
+} from "../../../common/utils/itwTypesUtils";
 import { getFiscalCodeFromCredential } from "../../../common/utils/itwClaimsUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
@@ -60,3 +64,30 @@ export const itwIsWalletEmptySelector = createSelector(
   itwCredentialsSelector,
   ({ credentials }) => credentials.length === 0
 );
+
+type InvalidStatusAttestation = Required<
+  Extract<StoredStatusAttestation, { credentialStatus: "invalid" | "unknown" }>
+>;
+
+/**
+ * Extract the error message corresponding to the invalid status attestation error, if present.
+ * The message is dynamic and extracted from the issuer configuration.
+ */
+export const itwCredentialInvalidStatusMessageSelector = (type: string) =>
+  createSelector(itwCredentialByTypeSelector(type), credentialOption =>
+    pipe(
+      credentialOption,
+      O.filter(
+        ({ storedStatusAttestation }) =>
+          storedStatusAttestation?.credentialStatus === "invalid" &&
+          !!storedStatusAttestation.errorCode
+      ),
+      O.map(({ issuerConf, storedStatusAttestation, credentialType }) =>
+        Errors.extractErrorMessageFromIssuerConf(
+          (storedStatusAttestation as InvalidStatusAttestation).errorCode,
+          { issuerConf, credentialType }
+        )
+      ),
+      O.toUndefined
+    )
+  );
