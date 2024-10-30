@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useState } from "react";
+import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
@@ -15,6 +17,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
@@ -27,13 +30,48 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_ISSUANCE_CREDENTIAL_ASYNC_FLOW_CONTINUATION"
 >;
 
+const routeParams = t.type({
+  credentialType: t.literal("MDL") // Only MDL supports the async issuance flow
+});
+
+const getCredentialType = (params: unknown) =>
+  pipe(
+    params,
+    routeParams.decode,
+    O.fromEither,
+    O.map(x => x.credentialType)
+  );
+
 /**
  * Landing screen to resume the async issuance flow from a deep link.
+ * We can not assume the route params will be of the expected shape,
+ * so we guard against invalid values in this screen.
  */
 export const ItwIssuanceCredentialAsyncContinuationScreen = ({
   route
 }: ScreenProps) => {
-  const { credentialType } = route.params;
+  const credentialType = getCredentialType(route.params);
+  const navigation = useIONavigation();
+
+  return pipe(
+    credentialType,
+    O.fold(
+      () => (
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("genericError")}
+          action={{
+            label: I18n.t("global.buttons.close"),
+            onPress: () => navigation.popToTop()
+          }}
+        />
+      ),
+      value => <InnerComponent credentialType={value} />
+    )
+  );
+};
+
+const InnerComponent = ({ credentialType }: { credentialType: string }) => {
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
@@ -47,14 +85,16 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
     O.getOrElse(() => false)
   );
 
-  useEffect(() => {
-    if (isCredentialValid) {
-      trackItwHasAlreadyCredential({
-        credential: CREDENTIALS_MAP[credentialType],
-        credential_status: "valid"
-      });
-    }
-  }, [credentialType, isCredentialValid]);
+  useFocusEffect(
+    useCallback(() => {
+      if (isCredentialValid) {
+        trackItwHasAlreadyCredential({
+          credential: CREDENTIALS_MAP[credentialType],
+          credential_status: "valid"
+        });
+      }
+    }, [credentialType, isCredentialValid])
+  );
 
   if (!isWalletValid) {
     const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
@@ -120,16 +160,22 @@ const WrappedItwIssuanceCredentialTrustIssuerScreen = ({
   credentialType: string;
 }) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const [isMachineReady, setIsMachineReady] = useState(false);
 
-  // Transition the credential machine to the correct state
-  // when the credential selection screen is bypassed.
+  // Transition the credential machine to the correct state when the credential selection screen is bypassed.
+  // During this transition we should not render ItwIssuanceCredentialTrustIssuerScreen to avoid the generic error screen.
   useOnFirstRender(() => {
     machineRef.send({
       type: "select-credential",
       credentialType,
       skipNavigation: true
     });
+    setIsMachineReady(true);
   });
 
-  return <ItwIssuanceCredentialTrustIssuerScreen />;
+  return isMachineReady ? (
+    <ItwIssuanceCredentialTrustIssuerScreen />
+  ) : (
+    <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+  );
 };
