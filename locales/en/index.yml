@@ -3455,7 +3455,8 @@ features:
         fiscalCode: Fiscal code
         status:
           valid: Valid
-          expired: Not valid
+          invalid: Not valid
+          expired: Expired
           expiring: Expiring
         actions:
           removeFromWallet: "Remove from Wallet"

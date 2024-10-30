@@ -3455,7 +3455,8 @@ features:
         fiscalCode: Il tuo Codice Fiscale
         status:
           valid: Valida
-          expired: Non valida
+          invalid: Non valida
+          expired: Scaduta
           expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"

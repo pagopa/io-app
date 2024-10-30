@@ -119,29 +119,27 @@ const DateClaimItem = ({
   );
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (!status || status === "pending") {
-      return;
+    const ns = "features.itWallet.presentation.credentialDetails.status";
+    switch (status) {
+      case "valid":
+      case "expiring":
+        return {
+          type: "badge",
+          componentProps: { variant: "success", text: I18n.t(`${ns}.valid`) }
+        };
+      case "expired":
+        return {
+          type: "badge",
+          componentProps: { variant: "error", text: I18n.t(`${ns}.expired`) }
+        };
+      case "invalid":
+        return {
+          type: "badge",
+          componentProps: { variant: "error", text: I18n.t(`${ns}.invalid`) }
+        };
+      default:
+        return undefined;
     }
-
-    const credentialStatusProps = {
-      expired: {
-        badge: "error",
-        text: "features.itWallet.presentation.credentialDetails.status.expired"
-      },
-      expiring: {
-        badge: "warning",
-        text: "features.itWallet.presentation.credentialDetails.status.expiring"
-      },
-      valid: {
-        badge: "success",
-        text: "features.itWallet.presentation.credentialDetails.status.valid"
-      }
-    } as const;
-    const { badge, text } = credentialStatusProps[status];
-    return {
-      type: "badge",
-      componentProps: { variant: badge, text: I18n.t(text) }
-    };
   }, [status]);
 
   return (
