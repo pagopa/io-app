@@ -62,14 +62,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
       cta_id
     });
   };
-  const retryIssuance = (cta_id: string) => {
-    machineRef.send({ type: "retry" });
-    trackWalletCreationFailed({
-      reason: failure.reason,
-      cta_category: "custom_1",
-      cta_id
-    });
-  };
   const closeAsyncIssuance = () => {
     machineRef.send({
       type: "close",
@@ -88,21 +80,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
     GENERIC: {
       title: I18n.t("features.itWallet.issuance.genericError.title"),
       subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-      pictogram: "workInProgress",
+      pictogram: "umbrellaNew",
       action: {
         label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
         onPress: () =>
-          retryIssuance(
-            I18n.t("features.itWallet.issuance.genericError.primaryAction")
-          )
-      },
-      secondaryAction: {
-        label: I18n.t(
-          "features.itWallet.issuance.genericError.secondaryAction"
-        ),
-        onPress: () =>
           closeIssuance(
-            I18n.t("features.itWallet.issuance.genericError.secondaryAction")
+            I18n.t("features.itWallet.issuance.genericError.primaryAction")
           )
       }
     },
