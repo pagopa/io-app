@@ -374,17 +374,74 @@ export const getCredentialExpireStatus = (
     : "expired";
 };
 
+type GetCredentialStatusOptions = {
+  /**
+   * Number of days before expiration required to mark a credential as "EXPIRING".
+   */
+  expiringDays?: number;
+  /**
+   * Check the expiration using the JWT `exp` claim, not the credential itself.
+   */
+  checkJwtExpiration?: boolean;
+};
+
 /**
  * Get the overall status of the credential, taking into account
  * the status attestation if present and the credential's own expiration date.
  */
 export const getCredentialStatus = (
-  credential: StoredCredential
+  credential: StoredCredential,
+  options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus | undefined => {
-  if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
+  const { checkJwtExpiration, expiringDays = 14 } = options;
+  const {
+    jwt,
+    parsedCredential,
+    storedStatusAttestation: statusAttestation
+  } = credential;
+
+  const now = Date.now();
+
+  const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
+
+  // Not all credentials have an expiration date
+  const documentExpireDays = pipe(
+    getCredentialExpireDate(parsedCredential),
+    O.fromNullable,
+    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
+    O.getOrElse(() => NaN)
+  );
+
+  const isIssuerAttestedExpired =
+    statusAttestation?.credentialStatus === "invalid" &&
+    statusAttestation.errorCode === "credential_expired";
+
+  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
     return "expired";
   }
-  return getCredentialExpireStatus(credential.parsedCredential);
+
+  // Invalid must prevail over non-expired statuses
+  if (statusAttestation?.credentialStatus === "invalid") {
+    return "invalid";
+  }
+
+  if (jwtExpireDays <= 0) {
+    return "verificationExpired";
+  }
+
+  const isSameDayExpiring =
+    documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
+
+  // When both credentials are expiring the digital one wins unless they expire the same day
+  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
+    return "verificationExpiring";
+  }
+
+  if (documentExpireDays <= expiringDays) {
+    return "expiring";
+  }
+
+  return "valid";
 };
 
 const FISCAL_CODE_REGEX =
