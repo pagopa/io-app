@@ -4,8 +4,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  StartCieAuthFlowActorParams,
-  type RequestEidActorParams
+  type RequestEidActorParams,
+  StartCieAuthFlowActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -441,6 +441,9 @@ export const itwEidIssuanceMachine = setup({
       on: {
         close: {
           actions: ["closeIssuance"]
+        },
+        retry: {
+          target: "UserIdentification"
         },
         reset: {
           target: "Idle"
