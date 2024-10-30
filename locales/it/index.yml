@@ -4164,16 +4164,21 @@ FIMS:
     subtitle: "Attendi qualche secondo"
   consentsScreen:
     errorStates:
+      authentication:
+        body: "Il servizio web dell'ente non è al momento disponibile"
+        title: "Non è stato possibile accedere al servizio"
+      general:
+        body: "C'è stato un problema nel recupero dei dati: stiamo lavorando per risolverlo al più presto"
+        title: "C'è un problema temporaneo, riprova più tardi"
       missingInAppBrowser:
-        title: "Aggiorna il tuo browser per procedere"
         body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
-      tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
+        title: "Aggiorna il tuo browser per procedere"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "
     requiredData: "Dati richiesti"
     privacy1: "Per maggiori informazioni, leggi "
-    privacyCta: "l’Informativa sulla Privacy "
+    privacyCta: "l'Informativa sulla Privacy "
     bottomSheet:
       title: "Accedi a servizi di terze parti tramite IO"
       body: "Per consentirti di accedere al servizio esterno senza autenticarti nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente che lo eroga."

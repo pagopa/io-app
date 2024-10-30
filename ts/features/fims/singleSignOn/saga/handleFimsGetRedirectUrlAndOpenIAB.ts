@@ -53,7 +53,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "missing FIMS domain",
         debugMessage
       })
     );
@@ -68,7 +67,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "unable to accept grants: invalid URL",
         debugMessage
       })
     );
@@ -97,7 +95,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "could not get RelyingParty redirect URL",
         debugMessage
       })
     );
@@ -134,7 +131,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "IAB url call failed or without a valid redirect",
         debugMessage
       })
     );
@@ -237,8 +233,6 @@ function* postToRelyingPartyWithImplicitCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "Could notprocess redirection page, Implicit code flow",
         debugMessage
       })
     );
@@ -262,8 +256,6 @@ function* postToRelyingPartyWithImplicitCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "could not sign request with LolliPoP, Implicit code flow",
         debugMessage
       })
     );
@@ -301,8 +293,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "Could not find valid Location header, Authorization code flow",
         debugMessage
       })
     );
@@ -319,7 +309,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "could not extract data from RelyingParty URL",
         debugMessage
       })
     );
@@ -339,8 +328,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "could not sign request with LolliPoP, Authorization code flow",
         debugMessage
       })
     );
