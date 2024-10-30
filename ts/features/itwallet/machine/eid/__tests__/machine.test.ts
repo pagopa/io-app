@@ -51,6 +51,9 @@ describe("itwEidIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const isOperationAborted = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
+  const resetWalletInstance = jest.fn();
+  const trackWalletInstanceCreation = jest.fn();
+  const trackWalletInstanceRevocation = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -74,6 +77,9 @@ describe("itwEidIssuanceMachine", () => {
       setWalletInstanceToValid,
       handleSessionExpired,
       abortIdentification,
+      resetWalletInstance,
+      trackWalletInstanceCreation,
+      trackWalletInstanceRevocation,
       onInit: assign(onInit)
     },
     actors: {

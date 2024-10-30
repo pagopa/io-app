@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import {
   ButtonSolid,
@@ -13,13 +13,21 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsEidStatusSelector
+} from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import { trackWalletStartDeactivation } from "../../analytics";
+import {
+  CREDENTIALS_MAP,
+  ID_STATUS_MAP,
+  trackCredentialDetail,
+  trackWalletStartDeactivation
+} from "../../analytics";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -50,6 +58,7 @@ const ItwEidInfoBottomSheetContent = ({
   navigation
 }: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const claims = parseClaims(credential.parsedCredential, {
@@ -62,6 +71,15 @@ const ItwEidInfoBottomSheetContent = ({
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });
     };
+
+    useEffect(() => {
+      if (eidStatus) {
+        trackCredentialDetail({
+          credential: CREDENTIALS_MAP[credential.credentialType],
+          credential_status: ID_STATUS_MAP[eidStatus]
+        });
+      }
+    }, [credential.credentialType]);
 
     return (
       <VStack space={24}>
