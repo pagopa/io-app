@@ -28,14 +28,20 @@ export type ItwCredentialCard = {
   isPreview?: boolean;
 };
 
+const validStatuses: Array<ItwCredentialStatus> = [
+  "valid",
+  "expiring",
+  "verificationExpiring"
+];
+
 export const ItwCredentialCard = ({
   status = "valid",
   credentialType,
   isPreview = false
 }: ItwCredentialCard) => {
-  const isValid = status === "valid";
+  const isValid = validStatuses.includes(status);
   const theme = getThemeColorByCredentialType(credentialType);
-  const labelColor = isValid ? theme.textColor : IOColors["grey-700"];
+  const labelOpacity = isValid ? 1 : 0.5;
 
   const cardBackgroundSource =
     credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
@@ -52,13 +58,21 @@ export const ItwCredentialCard = ({
         </View>
         <View style={styles.header}>
           <HStack space={16}>
-            <Text style={[styles.label, { color: labelColor }]}>
+            <Text
+              style={[
+                styles.label,
+                { color: theme.textColor, opacity: labelOpacity }
+              ]}
+            >
               {getCredentialNameFromType(credentialType, "").toUpperCase()}
             </Text>
             {statusTagProps && <Tag {...statusTagProps} />}
           </HStack>
         </View>
-        <ItwDigitalVersionBadge credentialType={credentialType} />
+        <ItwDigitalVersionBadge
+          credentialType={credentialType}
+          isFaded={!isValid}
+        />
         <View
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
@@ -81,10 +95,6 @@ const credentialCardBackgrounds: {
   [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
-  ],
-  [CredentialType.PID]: [
-    require("../../../../../img/features/itWallet/cards/eid.png"),
-    require("../../../../../img/features/itWallet/cards/eid_off.png")
   ]
 };
 
