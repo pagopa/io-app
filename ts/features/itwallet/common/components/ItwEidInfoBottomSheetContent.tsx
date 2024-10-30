@@ -13,7 +13,10 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsEidStatusSelector
+} from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
@@ -21,6 +24,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import {
   CREDENTIALS_MAP,
+  ID_STATUS_MAP,
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
@@ -54,6 +58,7 @@ const ItwEidInfoBottomSheetContent = ({
   navigation
 }: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const claims = parseClaims(credential.parsedCredential, {
@@ -68,11 +73,12 @@ const ItwEidInfoBottomSheetContent = ({
     };
 
     useEffect(() => {
-      // Passing valid hardcoded since the credential should always be valid when visiting this bottomsheet
-      trackCredentialDetail({
-        credential: CREDENTIALS_MAP[credential.credentialType],
-        credential_status: "valid"
-      });
+      if (eidStatus) {
+        trackCredentialDetail({
+          credential: CREDENTIALS_MAP[credential.credentialType],
+          credential_status: ID_STATUS_MAP[eidStatus]
+        });
+      }
     }, [credential.credentialType]);
 
     return (

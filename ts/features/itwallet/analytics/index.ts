@@ -5,6 +5,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
+import { ItwCredentialStatus } from "../common/components/ItwCredentialCard";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -108,6 +109,23 @@ export type ItwId = "not_available" | "valid" | "not_valid";
 export type ItwPg = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwTs = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
+
+/**
+ * This map is used to map the eid credential status to the MixPanel eid credential status
+ * valid: valid
+ * pending: not_valid
+ * expired: not_valid
+ * expiring: expiring
+ */
+export const ID_STATUS_MAP: Record<
+  ItwCredentialStatus,
+  "valid" | "not_valid" | "expiring"
+> = {
+  valid: "valid",
+  pending: "not_valid",
+  expired: "not_valid",
+  expiring: "expiring"
+};
 
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (credential: MixPanelCredential) => {
@@ -395,7 +413,6 @@ export function trackWalletCredentialShowIssuer(
   );
 }
 
-// TODO: To be added on the data origin tooltip
 export function trackWalletCredentialShowAuthSource(
   credential: MixPanelCredential
 ) {
@@ -443,6 +460,7 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
+// TODO: Track credential renewal flow when implemented
 export function trackWalletCredentialRenewStart(
   credential: MixPanelCredential
 ) {
