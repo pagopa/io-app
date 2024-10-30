@@ -115,19 +115,19 @@ export const ItwCredentialTrustmark = ({
   const { isExperimental: enableIridescence } = useIOExperimentalDesign();
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const initialQx = useSharedValue(0);
-  const { qx } = rotationSensor.sensor.value;
+  const currentRoll = useSharedValue(0);
+  const { roll: initialRoll } = rotationSensor.sensor.value;
 
   useAnimatedReaction(
     () => rotationSensor.sensor.value,
-    s => (initialQx.value = s.qx),
+    s => (currentRoll.value = s.roll),
     []
   );
 
   /* Not all devices are in an initial flat position on a surface
     (e.g. a table) then we use a relative rotation value,
     not an absolute one  */
-  const relativeQx = useDerivedValue(() => qx - initialQx.value);
+  const relativeRoll = useDerivedValue(() => initialRoll - currentRoll.value);
 
   /* Get button size to set the basic boundaries */
   const [buttonSize, setButtonSize] = useState<ButtonSize>();
@@ -147,8 +147,8 @@ export const ItwCredentialTrustmark = ({
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(
-      relativeQx.value,
-      [-quaternionRange, quaternionRange],
+      relativeRoll.value,
+      [quaternionRange, -quaternionRange],
       [maxTranslateX, -maxTranslateX],
       Extrapolation.CLAMP
     );
@@ -159,8 +159,8 @@ export const ItwCredentialTrustmark = ({
   const skiaGradientRainbowTranslateY = useDerivedValue(() => [
     {
       translateY: interpolate(
-        relativeQx.value,
-        [quaternionRange, -quaternionRange],
+        relativeRoll.value,
+        [-quaternionRange, quaternionRange],
         [-TRUSTMARK_GRADIENT_HEIGHT + TRUSTMARK_STAMP_SIZE, 0],
         Extrapolation.CLAMP
       )
