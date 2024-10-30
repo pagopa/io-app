@@ -3210,13 +3210,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-crypto@github:pagopa/io-react-native-crypto#upgrade-rn-to-0.75":
+"@pagopa/io-react-native-crypto@npm:^0.3.0":
   version: 0.3.0
-  resolution: "@pagopa/io-react-native-crypto@https://github.com/pagopa/io-react-native-crypto.git#commit=077ccb9e6f7955cb59769c703e8af63a970ef875"
+  resolution: "@pagopa/io-react-native-crypto@npm:0.3.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 5fcfb65939f0545722b647be735a19779d933539f4f3edaeac4de0057d923dfe01f16f2c537cdc8eee3e15d225da688b2bf5da958f6093acd56b729f01b66495
+  checksum: 36b7f854e6e6de07b10846db251dee8badac647918888634b2fd1a1215ac968d970d24d40e0d360902d2b4de6cb0cfda983937e5b41b39d97b37908b54a1862c
   languageName: node
   linkType: hard
 
@@ -3242,16 +3242,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-jwt@github:pagopa/io-react-native-jwt#upgrade-rn-to-075":
+"@pagopa/io-react-native-jwt@npm:^1.2.0":
   version: 1.2.0
-  resolution: "@pagopa/io-react-native-jwt@https://github.com/pagopa/io-react-native-jwt.git#commit=57605843ef2e65cd5a6bed06226571df4769d185"
+  resolution: "@pagopa/io-react-native-jwt@npm:1.2.0"
   dependencies:
     abab: ^2.0.6
     zod: ^3.22.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 21d4f4f49e55d2bec4c404cb752ee0eb519b87401cbfaa68fd7c3f047bc6b78d1936ca59cf91e2585b8732f396fd3576b0331f9b45e85cd82eb70fa0bb67dd80
+  checksum: 080487b01beeeb55eb72dde229107ac297ecbf2316f7a8a5b66c6ed2bfb8e63b6fe227b00ca1778561db1b8635f72310cf2d2ba5e0b2276ae41090e60a3ad8dd
   languageName: node
   linkType: hard
 
@@ -13266,10 +13266,10 @@ __metadata:
     "@pagopa/io-app-design-system": 2.0.2
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
-    "@pagopa/io-react-native-crypto": "github:pagopa/io-react-native-crypto#upgrade-rn-to-0.75"
+    "@pagopa/io-react-native-crypto": ^0.3.0
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.0
-    "@pagopa/io-react-native-jwt": "github:pagopa/io-react-native-jwt#upgrade-rn-to-075"
+    "@pagopa/io-react-native-jwt": ^1.2.0
     "@pagopa/io-react-native-login-utils": 1.0.6
     "@pagopa/io-react-native-wallet": ^0.21.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
