@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
-      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      description: Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
       actions:
         primary:
           label: Sì, entra con CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
+    missing_saml_response:
+      title: Non è stato possibile accedere
+      subtitle: Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto.
     generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
@@ -3127,6 +3130,11 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+      otherMethods:
+        error:
+          banner:
+            label: Non siamo riusciti a caricare alcuni elementi della lista.
+            cta: Prova di nuovo
     cards:
       categories:
         all: Tutti
@@ -3293,7 +3301,7 @@ features:
         action: Scopri di più
     identification:
       mode:
-        title: Verfica la tua identità
+        title: Verifica la tua identità
         description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
