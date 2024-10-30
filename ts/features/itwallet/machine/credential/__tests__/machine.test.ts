@@ -121,7 +121,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
 
-  const trackAddCredential = jest.fn();
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
       navigateToCredentialPreviewScreen,
@@ -132,7 +131,6 @@ describe("itwCredentialIssuanceMachine", () => {
       storeCredential,
       closeIssuance,
       handleSessionExpired,
-      trackAddCredential,
       onInit: assign(onInit)
     },
     actors: {

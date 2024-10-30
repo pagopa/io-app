@@ -81,6 +81,11 @@ export default (
   >) => {
     assert(context.credential, "credential is undefined");
     store.dispatch(itwCredentialsStore([context.credential]));
+    if (context.credentialType) {
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackSaveCredentialSuccess(credential);
+      trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
+    }
   },
 
   closeIssuance: ({
@@ -96,20 +101,6 @@ export default (
       navigation.replace(...event.navigateTo);
     } else {
       navigation.popToTop();
-    }
-  },
-
-  trackAddCredential: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    if (context.credentialType) {
-      const credential = CREDENTIALS_MAP[context.credentialType];
-      trackSaveCredentialSuccess(credential);
-      trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
     }
   },
 

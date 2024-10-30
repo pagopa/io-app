@@ -32,8 +32,7 @@ export const itwCredentialIssuanceMachine = setup({
     closeIssuance: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented,
-    onInit: notImplemented,
-    trackAddCredential: notImplemented
+    onInit: notImplemented
   },
   actors: {
     getWalletAttestation:
@@ -222,7 +221,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
+          actions: ["storeCredential", "navigateToWallet"]
         },
         close: {
           actions: ["closeIssuance"]
