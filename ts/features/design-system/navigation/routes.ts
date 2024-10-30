@@ -127,6 +127,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_DYNAMIC_BACKGROUND",
       title: "Dynamic header background"
     },
+    DYNAMIC_CARD_ROTATION: {
+      route: "DYNAMIC_CARD_ROTATION",
+      title: "Dynamic card based on device rotation"
+    },
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
