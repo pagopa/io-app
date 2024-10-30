@@ -20,6 +20,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import Placeholder from "rn-placeholder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
@@ -192,18 +193,36 @@ const PaymentsTransactionBizEventsListScreen = () => {
 
   const renderLoadingFooter = () => (
     <>
-      {isLoading &&
-        Array.from({ length: 5 }).map((_, index) => (
-          <ListItemTransaction
-            isLoading={true}
-            key={index}
-            transactionStatus="success"
-            transactionAmount=""
-            title=""
-            subtitle=""
-          />
-        ))}
-      {!isLoading && !continuationToken && <ShowLegacyTransactionsButton />}
+      {isLoading && (
+        <>
+          {!continuationToken && (
+            <>
+              <VSpacer size={16} />
+              <Placeholder.Box
+                animate="fade"
+                radius={8}
+                width={62}
+                height={16}
+              />
+              <VSpacer size={16} />
+            </>
+          )}
+
+          {Array.from({ length: 5 }).map((_, index) => (
+            <ListItemTransaction
+              isLoading={true}
+              key={index}
+              transactionStatus="success"
+              transactionAmount=""
+              title=""
+              subtitle=""
+            />
+          ))}
+        </>
+      )}
+      {!isLoading && !continuationToken && noticeCategory === "all" && (
+        <ShowLegacyTransactionsButton />
+      )}
     </>
   );
 
