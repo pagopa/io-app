@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import * as t from "io-ts";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
@@ -84,14 +85,16 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
     O.getOrElse(() => false)
   );
 
-  useEffect(() => {
-    if (isCredentialValid) {
-      trackItwHasAlreadyCredential({
-        credential: CREDENTIALS_MAP[credentialType],
-        credential_status: "valid"
-      });
-    }
-  }, [credentialType, isCredentialValid]);
+  useFocusEffect(
+    useCallback(() => {
+      if (isCredentialValid) {
+        trackItwHasAlreadyCredential({
+          credential: CREDENTIALS_MAP[credentialType],
+          credential_status: "valid"
+        });
+      }
+    }, [credentialType, isCredentialValid])
+  );
 
   if (!isWalletValid) {
     const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;

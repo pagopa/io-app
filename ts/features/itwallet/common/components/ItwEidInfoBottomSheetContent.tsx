@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import {
-  Alert,
   ButtonSolid,
   Divider,
   H4,
@@ -14,31 +13,52 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsEidStatusSelector
+} from "../../credentials/store/selectors";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { format } from "../../../../utils/dates";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import { trackWalletStartDeactivation } from "../../analytics";
+import {
+  CREDENTIALS_MAP,
+  ID_STATUS_MAP,
+  trackCredentialDetail,
+  trackWalletStartDeactivation
+} from "../../analytics";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
+import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
-export const ItwEidInfoBottomSheetTitle = () => (
+type ItwEidInfoBottomSheetTitleProps = {
+  isExpired: boolean;
+};
+
+export const ItwEidInfoBottomSheetTitle = ({
+  isExpired
+}: ItwEidInfoBottomSheetTitleProps) => (
   <HStack space={8} style={IOStyles.alignCenter}>
-    <Icon name="legalValue" color="blueIO-500" />
+    <Icon name="legalValue" color={isExpired ? "grey-300" : "blueIO-500"} />
     <H4>
-      {I18n.t("features.itWallet.presentation.bottomSheets.eidInfo.title")}
+      {I18n.t(
+        isExpired
+          ? "features.itWallet.presentation.bottomSheets.eidInfo.titleExpired"
+          : "features.itWallet.presentation.bottomSheets.eidInfo.title"
+      )}
     </H4>
   </HStack>
 );
 
-type Props = {
+type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
 };
 
-const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
+const ItwEidInfoBottomSheetContent = ({
+  navigation
+}: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const Content = ({ credential }: { credential: StoredCredential }) => {
     const claims = parseClaims(credential.parsedCredential, {
@@ -51,6 +71,15 @@ const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
         screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN
       });
     };
+
+    useEffect(() => {
+      if (eidStatus) {
+        trackCredentialDetail({
+          credential: CREDENTIALS_MAP[credential.credentialType],
+          credential_status: ID_STATUS_MAP[eidStatus]
+        });
+      }
+    }, [credential.credentialType]);
 
     return (
       <VStack space={24}>
@@ -67,15 +96,7 @@ const ItwEidInfoBottomSheetContent = ({ navigation }: Props) => {
             </React.Fragment>
           ))}
         </View>
-        {credential.jwt.issuedAt && (
-          <Alert
-            variant="success"
-            content={I18n.t(
-              "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
-              { issuanceDate: format(credential.jwt.issuedAt, "DD-MM-YYYY") }
-            )}
-          />
-        )}
+        <ItwEidLifecycleAlert />
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
