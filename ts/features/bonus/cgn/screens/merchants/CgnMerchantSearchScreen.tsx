@@ -28,6 +28,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "../../../../../i18n";
 import {
   IOStackNavigationProp,
@@ -76,7 +77,9 @@ export function CgnMerchantSearchScreen() {
   useEffect(() => {
     if (isSearchActive) {
       dispatch(
-        cgnSearchMerchants.request({ token: searchTextDebouncedTrimmed })
+        cgnSearchMerchants.request({
+          token: searchTextDebouncedTrimmed as NonEmptyString
+        })
       );
     }
   }, [dispatch, isSearchActive, searchTextDebouncedTrimmed]);
@@ -96,7 +99,9 @@ export function CgnMerchantSearchScreen() {
       return (
         <EmptyList
           pictogram="searchLens"
-          title={I18n.t("bonus.cgn.merchantSearch.emptyList")}
+          title={I18n.t("bonus.cgn.merchantSearch.emptyList", {
+            merchantCount: 100 // TODO
+          })}
         />
       );
     }
