@@ -447,6 +447,9 @@ export const itwEidIssuanceMachine = setup({
         close: {
           actions: ["closeIssuance"]
         },
+        retry: {
+          target: "UserIdentification"
+        },
         reset: {
           target: "Idle"
         },
