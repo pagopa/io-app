@@ -10,44 +10,81 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { format } from "../../../../utils/dates";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { type CredentialType } from "../../common/utils/itwMocksUtils";
 
 type Props = {
   credential: StoredCredential;
 };
 
 /**
- * This component renders an alert with the invalid status message
- * extracted from the entity configuration. The content of this alert
- * is dynamic and not defined in `io-app`.
+ * This component renders an alert related to the credential status (expiring or invalid).
+ * It contains messages that are statically defined in the app's locale or
+ * dynamically extracted from the issuer configuration.
  */
-const ItwPresentationCredentialInvalidStatusAlert = ({ credential }: Props) => {
+const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const { status, message } = useIOSelector(
     itwCredentialStatusSelector(credential.credentialType)
   );
 
-  // #region Digital credential
   if (status === "verificationExpiring") {
-    return (
-      <Alert
-        testID="itwExpiringBannerTestID"
-        variant="warning"
-        content={I18n.t(
-          "features.itWallet.presentation.alerts.verificationExpiring.content",
-          { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
-        )}
-      />
-    );
+    return <VerificationExpiringAlert credential={credential} />;
   }
 
-  if (status === "verificationExpired") {
-    return null;
-  }
-  // #endregion Digital credential
-
-  // #region Physical document
   if (status === "expiring") {
-    const expireDays = getCredentialExpireDays(credential.parsedCredential);
-    return (
+    return <DocumentExpiringAlert credential={credential} />;
+  }
+
+  if (message) {
+    return <IssuerDynamicErrorAlert message={message} />;
+  }
+
+  return null;
+};
+
+const VerificationExpiringAlert = ({ credential }: Props) => {
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+
+  const beginCredentialIssuance = () => {
+    machineRef.send({
+      type: "select-credential",
+      credentialType: credential.credentialType,
+      skipNavigation: false
+    });
+  };
+
+  return (
+    <Alert
+      testID="itwExpiringBannerTestID"
+      variant="warning"
+      content={I18n.t(
+        "features.itWallet.presentation.alerts.verificationExpiring.content",
+        { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
+      )}
+      action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
+      onPress={beginCredentialIssuance}
+    />
+  );
+};
+
+const DocumentExpiringAlert = ({ credential }: Props) => {
+  const expireDays = getCredentialExpireDays(credential.parsedCredential);
+
+  const bottomSheetNs = `features.itWallet.presentation.bottomSheets.${
+    credential.credentialType as Exclude<CredentialType, CredentialType.PID>
+  }.expiring` as const;
+
+  const bottomSheet = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t(`${bottomSheetNs}.title`),
+      component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+    },
+    128
+  );
+
+  return (
+    <>
       <Alert
         testID="itwExpiringBannerTestID"
         variant="warning"
@@ -55,23 +92,19 @@ const ItwPresentationCredentialInvalidStatusAlert = ({ credential }: Props) => {
           "features.itWallet.presentation.alerts.expiring.content",
           { days: expireDays }
         )}
+        action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
+        onPress={() => bottomSheet.present()}
       />
-    );
-  }
-
-  if (message) {
-    return <LocalizedErrorAlert message={message} />;
-  }
-  // #endregion Physical document
-
-  return null;
+      {bottomSheet.bottomSheet}
+    </>
+  );
 };
 
-type LocalizedErrorAlertProps = {
+type IssuerDynamicErrorAlertProps = {
   message: Record<string, { title: string; description: string }>;
 };
 
-const LocalizedErrorAlert = ({ message }: LocalizedErrorAlertProps) => {
+const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = message[getClaimsFullLocale()];
   const bottomSheet = useIOBottomSheetAutoresizableModal(
     {
@@ -94,6 +127,6 @@ const LocalizedErrorAlert = ({ message }: LocalizedErrorAlertProps) => {
   );
 };
 
-const Memoized = memo(ItwPresentationCredentialInvalidStatusAlert);
+const Memoized = memo(ItwPresentationCredentialStatusAlert);
 
-export { Memoized as ItwPresentationCredentialInvalidStatusAlert };
+export { Memoized as ItwPresentationCredentialStatusAlert };

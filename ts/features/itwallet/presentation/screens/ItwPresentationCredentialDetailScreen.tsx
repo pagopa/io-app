@@ -31,7 +31,7 @@ import {
   trackWalletCredentialShowFAC_SIMILE
 } from "../../analytics";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
-import { ItwPresentationCredentialInvalidStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
+import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -90,9 +90,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         <ContentWrapper>
           <VStack space={16}>
             <ItwPresentationAdditionalInfoSection credential={credential} />
-            <ItwPresentationCredentialInvalidStatusAlert
-              credential={credential}
-            />
+            <ItwPresentationCredentialStatusAlert credential={credential} />
             <ItwPresentationCredentialInfoAlert credential={credential} />
             <ItwCredentialTrustmark credential={credential} />
             <ItwPresentationClaimsSection credential={credential} />
