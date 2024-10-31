@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
+import { Linking } from "react-native";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -104,6 +105,13 @@ export const ItwIssuanceEidFailureScreen = () => {
                 "features.itWallet.unsupportedDevice.error.primaryAction"
               )
             }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+        },
+        secondaryAction: {
+          label: I18n.t(
+            "features.itWallet.unsupportedDevice.error.secondaryAction"
+          ),
+          onPress: () =>
+            Linking.openURL("https://io.italia.it/documenti-su-io/faq/#n1_12")
         }
       },
       [IssuanceFailureType.NOT_MATCHING_IDENTITY]: {

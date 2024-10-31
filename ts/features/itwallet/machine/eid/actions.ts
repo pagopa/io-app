@@ -17,7 +17,11 @@ import {
 import { ItwLifecycleState } from "../../lifecycle/store/reducers";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
-import { trackItwDeactivated } from "../../analytics";
+import {
+  trackItwDeactivated,
+  trackSaveCredentialSuccess,
+  updateITWStatusAndIDProperties
+} from "../../analytics";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Context } from "./context";
@@ -185,6 +189,11 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     toast.success(I18n.t("features.itWallet.issuance.eidResult.success.toast"));
+  },
+
+  trackWalletInstanceCreation: () => {
+    trackSaveCredentialSuccess("ITW_ID_V2");
+    updateITWStatusAndIDProperties(store.getState());
   },
 
   trackWalletInstanceRevocation: () => {
