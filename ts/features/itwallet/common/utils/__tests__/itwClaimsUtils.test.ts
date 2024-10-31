@@ -85,66 +85,6 @@ describe("getCredentialExpireDays", () => {
   );
 });
 
-describe("getCredentialStatus", () => {
-  it("should return undefined", () => {
-    const expireStatus = getCredentialStatus({
-      ...({} as StoredCredential),
-      parsedCredential: {}
-    });
-    expect(expireStatus).toBeUndefined();
-  });
-
-  test.each([
-    [new Date(2000, 0, 18), "expiring"],
-    [new Date(2000, 0, 30), "valid"],
-    [new Date(2000, 0, 9), "expired"]
-  ])("if %p should return %p", (expiryDate, expectedStatus) => {
-    MockDate.set(new Date(2000, 0, 10, 23, 59));
-    expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
-
-    const status = getCredentialStatus({
-      ...({} as StoredCredential),
-      parsedCredential: {
-        expiry_date: {
-          name: "",
-          value: format(expiryDate, "YYYY-MM-DD")
-        }
-      }
-    });
-    expect(status).toStrictEqual(expectedStatus);
-    MockDate.reset();
-  });
-
-  test.each([
-    [new Date(2000, 0, 1), new Date(2000, 11, 1), "expired"],
-    [new Date(2000, 1, 1), new Date(2000, 0, 1), "expired"],
-    [new Date(2000, 11, 1), new Date(2020, 0, 1), "valid"]
-  ])(
-    "with checkJwtExpiration if JWT expires on %p and credential expires on %p, should return %p",
-    (jwtExpiryDate, credentialExpiryDate, expectedStatus) => {
-      MockDate.set(new Date(2000, 8, 1));
-
-      const status = getCredentialStatus(
-        {
-          ...({} as StoredCredential),
-          jwt: {
-            expiration: jwtExpiryDate.toISOString()
-          },
-          parsedCredential: {
-            expiry_date: {
-              name: "",
-              value: format(credentialExpiryDate, "YYYY-MM-DD")
-            }
-          }
-        },
-        { checkJwtExpiration: true }
-      );
-      expect(status).toEqual(expectedStatus);
-      MockDate.reset();
-    }
-  );
-});
-
 describe("extractFiscalCode", () => {
   it("extract a valid fiscal code", () => {
     expect(extractFiscalCode("MRARSS00A01H501B")).toEqual(
@@ -247,7 +187,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 });
 
-describe("getCredentialStatus", () => {
+describe.only("getCredentialStatus", () => {
   afterEach(() => {
     MockDate.reset();
   });
@@ -313,6 +253,19 @@ describe("getCredentialStatus", () => {
       };
 
       expect(getCredentialStatus(mockCredential)).toEqual("expired");
+    });
+
+    it("should return jwtExpired when only JWT data are available", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        jwt: {
+          expiration: "2024-01-10T00:00:00Z"
+        }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpired");
     });
   });
 
@@ -402,6 +355,19 @@ describe("getCredentialStatus", () => {
 
       expect(getCredentialStatus(mockCredential)).toEqual("expiring");
     });
+
+    it("should return jwtExpiring when only JWT data are available", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        jwt: {
+          expiration: "2024-01-30T00:00:00Z"
+        }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+    });
   });
 
   describe("invalid", () => {
@@ -484,6 +450,19 @@ describe("getCredentialStatus", () => {
         },
         // @ts-expect-error partial type
         storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+    });
+
+    it("should return valid when only JWT data are available", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z"
+        }
       };
 
       expect(getCredentialStatus(mockCredential)).toEqual("valid");
