@@ -4,7 +4,6 @@ import {
   H2,
   IOStyles,
   ListItemHeader,
-  ListItemTransaction,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -17,12 +16,9 @@ import {
   View
 } from "react-native";
 import Animated, {
-  FadeIn,
-  FadeOut,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
-import Placeholder from "rn-placeholder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
@@ -42,6 +38,8 @@ import * as analytics from "../analytics";
 import { PaymentsBizEventsFilterTabs } from "../components/PaymentsBizEventsFilterTabs";
 import { PaymentBizEventsCategoryFilter } from "../types";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { PaymentsBizEventsFadeInOutAnimationView } from "../components/PaymentsBizEventsFadeInOutAnimationView";
+import { PaymentsBizEventsTransactionLoadingList } from "../components/PaymentsBizEventsTransactionLoadingList";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -112,6 +110,19 @@ const PaymentsTransactionBizEventsListScreen = () => {
     setTitleHeight(height);
   };
 
+  const fetchNextPage = () => {
+    if (!continuationToken || isLoading) {
+      return;
+    }
+    dispatch(
+      getPaymentsBizEventsTransactionsAction.request({
+        noticeCategory,
+        continuationToken,
+        onSuccess: handleOnSuccess
+      })
+    );
+  };
+
   const handleOnSuccess = (paginationToken?: string) => {
     setContinuationToken(paginationToken);
     setIsRefreshing(false);
@@ -151,12 +162,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
     }, [dispatch])
   );
 
-  React.useEffect(() => {
-    if (pot.isSome(transactionsPot)) {
-      setGroupedTransactions(groupTransactionsByMonth(transactionsPot.value));
-    }
-  }, [transactionsPot]);
-
   useHeaderSecondLevel({
     title: I18n.t("features.payments.transactions.title"),
     supportRequest: true,
@@ -165,6 +170,12 @@ const PaymentsTransactionBizEventsListScreen = () => {
       triggerOffset: titleHeight
     }
   });
+
+  React.useEffect(() => {
+    if (pot.isSome(transactionsPot)) {
+      setGroupedTransactions(groupTransactionsByMonth(transactionsPot.value));
+    }
+  }, [transactionsPot]);
 
   const SectionListHeaderTitle = (
     <View onLayout={getTitleHeight}>
@@ -196,32 +207,9 @@ const PaymentsTransactionBizEventsListScreen = () => {
   const renderLoadingFooter = () => (
     <>
       {isLoading && (
-        <>
-          {!continuationToken && (
-            <>
-              <VSpacer size={16} />
-              <Placeholder.Box
-                animate="fade"
-                radius={8}
-                width={62}
-                height={16}
-              />
-              <VSpacer size={16} />
-            </>
-          )}
-
-          {Array.from({ length: 5 }).map((_, index) => (
-            <TransactionFadeInOutAnimationView key={index}>
-              <ListItemTransaction
-                isLoading={true}
-                transactionStatus="success"
-                transactionAmount=""
-                title=""
-                subtitle=""
-              />
-            </TransactionFadeInOutAnimationView>
-          ))}
-        </>
+        <PaymentsBizEventsTransactionLoadingList
+          showSectionTitleSkeleton={!continuationToken}
+        />
       )}
       {!isLoading && !continuationToken && noticeCategory === "all" && (
         <ShowLegacyTransactionsButton />
@@ -230,28 +218,15 @@ const PaymentsTransactionBizEventsListScreen = () => {
   );
 
   const EmptyStateList = isEmpty ? (
-    <TransactionFadeInOutAnimationView>
+    <PaymentsBizEventsFadeInOutAnimationView>
       <OperationResultScreenContent
         isHeaderVisible
         title={I18n.t("features.payments.transactions.list.empty.title")}
         subtitle={I18n.t("features.payments.transactions.list.empty.subtitle")}
         pictogram="emptyArchive"
       />
-    </TransactionFadeInOutAnimationView>
+    </PaymentsBizEventsFadeInOutAnimationView>
   ) : undefined;
-
-  const fetchNextPage = () => {
-    if (!continuationToken || isLoading) {
-      return;
-    }
-    dispatch(
-      getPaymentsBizEventsTransactionsAction.request({
-        noticeCategory,
-        continuationToken,
-        onSuccess: handleOnSuccess
-      })
-    );
-  };
 
   return (
     <AnimatedSectionList
@@ -282,28 +257,15 @@ const PaymentsTransactionBizEventsListScreen = () => {
       ListFooterComponent={renderLoadingFooter}
       keyExtractor={item => `transaction_${item.eventId}`}
       renderItem={({ item }) => (
-        <TransactionFadeInOutAnimationView>
+        <PaymentsBizEventsFadeInOutAnimationView>
           <PaymentsBizEventsListItemTransaction
             onPress={() => handleNavigateToTransactionDetails(item)}
             transaction={item}
           />
-        </TransactionFadeInOutAnimationView>
+        </PaymentsBizEventsFadeInOutAnimationView>
       )}
     />
   );
 };
-
-const TransactionFadeInOutAnimationView = React.memo(
-  ({ children }: { children: React.ReactNode }) => (
-    <Animated.View
-      style={IOStyles.flex}
-      exiting={FadeOut.duration(200)}
-      entering={FadeIn.duration(200)}
-    >
-      {children}
-    </Animated.View>
-  ),
-  () => true
-);
 
 export { PaymentsTransactionBizEventsListScreen };
