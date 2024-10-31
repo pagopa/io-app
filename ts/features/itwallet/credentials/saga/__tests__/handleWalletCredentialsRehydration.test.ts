@@ -5,7 +5,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { ItwLifecycleStatus } from "../../../lifecycle/store/reducers";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
@@ -29,7 +29,10 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
+            integrityServiceReady: true
+          },
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
             eid: O.some(mockedEid),
@@ -59,7 +62,10 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
+            integrityServiceReady: true
+          },
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
             eid: O.some(mockedEid),
@@ -112,7 +118,10 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
+            integrityServiceReady: false
+          },
           issuance: { integrityKeyTag: O.none },
           credentials: {
             eid: O.none,

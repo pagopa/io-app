@@ -1,8 +1,12 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwLifecycleStateUpdated, itwLifecycleStoresReset } from "../actions";
+import {
+  itwLifecycleIntegrityServiceReady,
+  itwLifecycleStateUpdated,
+  itwLifecycleStoresReset
+} from "../actions";
 
-export enum ItwLifecycleState {
+export enum ItwLifecycleStatus {
   /**
    * The wallet instance is not active and there is no associated integrity key tag.
    * The user cannot get any credential.
@@ -24,8 +28,15 @@ export enum ItwLifecycleState {
   "ITW_LIFECYCLE_DEACTIVATED"
 }
 
-export const itwLifecycleInitialState: ItwLifecycleState =
-  ItwLifecycleState.ITW_LIFECYCLE_INSTALLED;
+export interface ItwLifecycleState {
+  status: ItwLifecycleStatus;
+  integrityServiceReady: boolean;
+}
+
+export const itwLifecycleInitialState: ItwLifecycleState = {
+  status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
+  integrityServiceReady: false
+};
 
 /**
  * This reducer handles the wallet lifecycle state.
@@ -38,7 +49,9 @@ const reducer = (
     case getType(itwLifecycleStateUpdated):
       return action.payload;
     case getType(itwLifecycleStoresReset):
-      return ItwLifecycleState.ITW_LIFECYCLE_INSTALLED;
+      return { ...state, status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED };
+    case getType(itwLifecycleIntegrityServiceReady):
+      return { ...state, integrityServiceReady: action.payload };
     default:
       return state;
   }

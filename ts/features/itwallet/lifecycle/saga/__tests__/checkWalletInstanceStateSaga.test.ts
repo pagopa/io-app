@@ -8,7 +8,7 @@ import {
   checkWalletInstanceStateSaga,
   getAttestationOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
-import { ItwLifecycleState } from "../../store/reducers";
+import { ItwLifecycleStatus } from "../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
@@ -27,7 +27,10 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
+            integrityServiceReady: true
+          },
           issuance: { integrityKeyTag: O.none },
           credentials: { eid: O.none, credentials: [] }
         }
@@ -45,7 +48,10 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL,
+            integrityServiceReady: false
+          },
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
@@ -75,7 +81,10 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL,
+            integrityServiceReady: true
+          },
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
@@ -107,7 +116,10 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
+            integrityServiceReady: true
+          },
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
@@ -137,7 +149,10 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+          lifecycle: {
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
+            integrityServiceReady: true
+          },
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },

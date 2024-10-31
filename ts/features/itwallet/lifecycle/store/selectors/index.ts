@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ItwLifecycleState } from "../reducers";
+import { ItwLifecycleStatus } from "../reducers";
 
 export const itwLifecycleSelector = (state: GlobalState) =>
   state.features.itWallet.lifecycle;
@@ -10,8 +10,8 @@ export const itwLifecycleSelector = (state: GlobalState) =>
  * the integrity key tag should not exist.
  */
 export const itwLifecycleIsInstalledSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle ===
-    ItwLifecycleState.ITW_LIFECYCLE_INSTALLED &&
+  state.features.itWallet.lifecycle.status ===
+    ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED &&
   O.isNone(state.features.itWallet.issuance.integrityKeyTag);
 
 /**
@@ -19,8 +19,8 @@ export const itwLifecycleIsInstalledSelector = (state: GlobalState) =>
  * the integrity key tag must exist.
  */
 export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle ===
-    ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL &&
+  state.features.itWallet.lifecycle.status ===
+    ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL &&
   O.isSome(state.features.itWallet.issuance.integrityKeyTag);
 
 /**
@@ -28,7 +28,8 @@ export const itwLifecycleIsOperationalSelector = (state: GlobalState) =>
  * the integrity key tag and the eID must exist.
  */
 export const itwLifecycleIsValidSelector = (state: GlobalState) =>
-  state.features.itWallet.lifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID &&
+  state.features.itWallet.lifecycle.status ===
+    ItwLifecycleStatus.ITW_LIFECYCLE_VALID &&
   O.isSome(state.features.itWallet.issuance.integrityKeyTag) &&
   O.isSome(state.features.itWallet.credentials.eid);
 
