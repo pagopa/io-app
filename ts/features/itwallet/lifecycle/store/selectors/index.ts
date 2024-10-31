@@ -39,3 +39,9 @@ export const itwLifecycleIsValidSelector = (state: GlobalState) =>
 export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
   itwLifecycleIsOperationalSelector(state) ||
   itwLifecycleIsValidSelector(state);
+
+/**
+ * Selector that returns the integrityServiceReady flag.
+ */
+export const itwLifecycleIntegrityServiceReadySelector = (state: GlobalState) =>
+  state.features.itWallet.lifecycle.integrityServiceReady;

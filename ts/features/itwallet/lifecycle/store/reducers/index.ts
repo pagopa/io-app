@@ -30,7 +30,7 @@ export enum ItwLifecycleStatus {
 
 export interface ItwLifecycleState {
   status: ItwLifecycleStatus;
-  integrityServiceReady: boolean;
+  integrityServiceReady?: boolean;
 }
 
 export const itwLifecycleInitialState: ItwLifecycleState = {
