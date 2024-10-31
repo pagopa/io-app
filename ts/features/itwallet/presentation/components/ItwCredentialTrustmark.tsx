@@ -144,7 +144,8 @@ export const QrCodeBottomSheetContent = ({
 const styles = StyleSheet.create({
   container: {
     borderRadius: 12,
-    overflow: "hidden"
+    overflow: "hidden",
+    marginVertical: 8
   },
   gradientView: {
     height: TRUSTMARK_HEIGHT,
