@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { Errors } from "@pagopa/io-react-native-wallet";
@@ -45,14 +45,7 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.fold(
-      () => (
-        <ContentView
-          failure={{ type: CredentialIssuanceFailureTypeEnum.GENERIC }}
-        />
-      ),
-      failure => <ContentView failure={failure} />
-    )
+    O.fold(constNull, failure => <ContentView failure={failure} />)
   );
 };
 
