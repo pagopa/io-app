@@ -94,3 +94,13 @@ export const itwCredentialStatusSelector = (type: string) =>
         : undefined
     };
   });
+
+export const itwCredentialsEidStatusSelector = createSelector(
+  itwCredentialsEidSelector,
+  eidOption =>
+    pipe(
+      eidOption,
+      O.map(eid => getCredentialStatus(eid)),
+      O.getOrElseW(() => undefined)
+    )
+);
