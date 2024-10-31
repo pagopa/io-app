@@ -102,7 +102,7 @@ const ItwCardsContainer = ({
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  const isEidExpired = eidStatus === "expired";
+  const isEidExpired = eidStatus === "jwtExpired";
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
@@ -158,7 +158,7 @@ const ItwCardsContainer = ({
           <>
             <ItwWalletReadyBanner />
             <ItwEidLifecycleAlert
-              lifecycleStatus={["expiring", "expired"]}
+              lifecycleStatus={["jwtExpiring", "jwtExpired"]}
               verticalSpacing={true}
             />
           </>

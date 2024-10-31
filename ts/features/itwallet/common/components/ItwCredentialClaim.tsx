@@ -27,7 +27,7 @@ import {
   isExpirationDateClaim,
   getSafeText
 } from "../utils/itwClaimsUtils";
-import { ItwCredentialStatus } from "./ItwCredentialCard";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 
 const HIDDEN_CLAIM = "******";
 

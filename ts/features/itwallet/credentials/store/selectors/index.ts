@@ -4,7 +4,10 @@ import { pipe } from "fp-ts/lib/function";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import {
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils";
 import {
   getCredentialStatus,
   getFiscalCodeFromCredential
@@ -100,7 +103,8 @@ export const itwCredentialsEidStatusSelector = createSelector(
   eidOption =>
     pipe(
       eidOption,
-      O.map(eid => getCredentialStatus(eid)),
-      O.getOrElseW(() => undefined)
+      // eID does not have status attestation nor expiry date, so it safe to assume its status is based on the JWT only
+      O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
+      O.toUndefined
     )
 );

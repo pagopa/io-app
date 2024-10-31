@@ -4,8 +4,10 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { ItwCredentialStatus } from "../../common/components/ItwCredentialCard";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  ItwCredentialStatus,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 
 type Props = {
   credential: StoredCredential;

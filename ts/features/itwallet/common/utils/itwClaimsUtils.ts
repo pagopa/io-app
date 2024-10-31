@@ -12,10 +12,13 @@ import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import {
+  ParsedCredential,
+  StoredCredential,
+  ItwCredentialStatus
+} from "./itwTypesUtils";
 
 /**
  *
@@ -48,7 +51,11 @@ export enum WellKnownClaim {
   /**
    * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
-  content = "content"
+  content = "content",
+  /**
+   * Claim that contains the fiscal code, used for checks based on the user's identity.
+   */
+  tax_id_code = "tax_id_code"
 }
 
 /**
@@ -355,10 +362,6 @@ type GetCredentialStatusOptions = {
    * Number of days before expiration required to mark a credential as "EXPIRING".
    */
   expiringDays?: number;
-  /**
-   * Check the expiration using the JWT `exp` claim, not the credential itself.
-   */
-  checkJwtExpiration?: boolean;
 };
 
 /**
@@ -373,7 +376,7 @@ export const getCredentialStatus = (
   credential: StoredCredential,
   options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus => {
-  const { checkJwtExpiration, expiringDays = 14 } = options;
+  const { expiringDays = 14 } = options;
   const {
     jwt,
     parsedCredential,
@@ -435,15 +438,13 @@ const FISCAL_CODE_REGEX =
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-const EID_FISCAL_CODE_KEY = "tax_id_code";
-
 export const getFiscalCodeFromCredential = (
   credential: StoredCredential | undefined
 ) =>
   pipe(
     credential?.parsedCredential,
     O.fromNullable,
-    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
+    O.chain(x => O.fromNullable(x[WellKnownClaim.tax_id_code]?.value)),
     O.map(t.string.decode),
     O.chain(O.fromEither),
     O.chain(extractFiscalCode),

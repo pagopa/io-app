@@ -11,16 +11,8 @@ import I18n from "../../../../i18n";
 import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
-
-export type ItwCredentialStatus =
-  | "valid"
-  | "invalid"
-  | "expiring"
-  | "expired"
-  // Digital credential status
-  | "jwtExpiring"
-  | "jwtExpired";
 
 export type ItwCredentialCard = {
   credentialType: string;

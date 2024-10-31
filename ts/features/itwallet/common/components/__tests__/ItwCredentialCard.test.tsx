@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { ItwCredentialCard, ItwCredentialStatus } from "../ItwCredentialCard";
+import { ItwCredentialCard } from "../ItwCredentialCard";
+import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 
 describe("ItwCredentialCard", () => {
   it.each([
