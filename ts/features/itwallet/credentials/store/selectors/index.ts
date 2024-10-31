@@ -71,9 +71,15 @@ export const itwIsWalletEmptySelector = createSelector(
 /**
  * Get the credential status and the error message corresponding to the status attestation error, if present.
  * The message is dynamic and extracted from the issuer configuration.
+ *
+ * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
  */
-export const itwCredentialStatusSelector = (type: string) =>
-  createSelector(itwCredentialByTypeSelector(type), credentialOption => {
+export const itwCredentialStatusSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  (_: GlobalState, type: string) => type,
+  (credentials, type) => {
+    const credentialOption = credentials[type] || O.none;
+
     // This should never happen
     if (O.isNone(credentialOption)) {
       return { status: undefined, message: undefined };
@@ -96,7 +102,8 @@ export const itwCredentialStatusSelector = (type: string) =>
           })
         : undefined
     };
-  });
+  }
+);
 
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,

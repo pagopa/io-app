@@ -365,8 +365,9 @@ type GetCredentialStatusOptions = {
 };
 
 /**
- * Get the overall status of the credential, taking into account
- * the status attestation if present and the credential's own expiration date.
+ * Get the overall status of the credential, taking into account the status attestation,
+ * the physical document's expiration date and the JWT's expiration date.
+ * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
  *
  * @param credential the stored credential
  * @param options see {@link GetCredentialStatusOptions}
@@ -382,7 +383,6 @@ export const getCredentialStatus = (
     parsedCredential,
     storedStatusAttestation: statusAttestation
   } = credential;
-
   const now = Date.now();
 
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);

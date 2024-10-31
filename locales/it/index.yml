@@ -3478,6 +3478,10 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto!
+        verificationExpired:
+          title: Verifica la versione digitale del documento
+          content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
+          primaryAction: Inizia
       ctas:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi

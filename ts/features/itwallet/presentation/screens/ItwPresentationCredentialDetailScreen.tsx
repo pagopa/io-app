@@ -10,7 +10,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialByTypeSelector,
+  itwCredentialStatusSelector
+} from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
@@ -32,6 +35,7 @@ import {
 } from "../../analytics";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
 import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
+import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -47,6 +51,9 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
+  );
+  const { status } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credentialType)
   );
 
   useDebugInfo({
@@ -77,6 +84,12 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   }
 
   const credential = credentialOption.value;
+
+  if (status === "jwtExpired") {
+    return (
+      <ItwPresentationCredentialVerificationExpired credential={credential} />
+    );
+  }
 
   const ctaProps = getCtaProps(credential, navigation);
 

@@ -24,8 +24,8 @@ type Props = {
  * dynamically extracted from the issuer configuration.
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
-  const { status, message } = useIOSelector(
-    itwCredentialStatusSelector(credential.credentialType)
+  const { status, message } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
   );
 
   if (status === "jwtExpiring") {

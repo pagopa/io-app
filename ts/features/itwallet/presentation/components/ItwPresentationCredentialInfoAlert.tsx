@@ -24,7 +24,10 @@ const validStates: Array<ItwCredentialStatus | undefined> = [
  */
 const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
   const { credentialType } = credential;
-  const { status } = useIOSelector(itwCredentialStatusSelector(credentialType));
+
+  const { status } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
+  );
 
   if (!validStates.includes(status)) {
     return null;
