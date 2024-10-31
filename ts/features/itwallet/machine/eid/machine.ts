@@ -4,8 +4,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  StartCieAuthFlowActorParams,
-  type RequestEidActorParams
+  type RequestEidActorParams,
+  StartCieAuthFlowActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -49,6 +49,7 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
+    trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented
@@ -412,7 +413,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "setWalletInstanceToValid"],
+              actions: [
+                "storeEidCredential",
+                "setWalletInstanceToValid",
+                "trackWalletInstanceCreation"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
@@ -441,6 +446,9 @@ export const itwEidIssuanceMachine = setup({
       on: {
         close: {
           actions: ["closeIssuance"]
+        },
+        retry: {
+          target: "UserIdentification"
         },
         reset: {
           target: "Idle"
