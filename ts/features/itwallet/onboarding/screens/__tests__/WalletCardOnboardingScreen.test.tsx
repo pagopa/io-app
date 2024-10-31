@@ -18,7 +18,10 @@ import { BackendStatusState } from "../../../../../store/reducers/backendStatus"
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import {
+  ItwLifecycleState,
+  ItwLifecycleStatus
+} from "../../../lifecycle/store/reducers";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -56,8 +59,18 @@ describe("WalletCardOnboardingScreen", () => {
   test.each([
     { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
-    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
-    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
+    {
+      itwLifecycle: {
+        status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
+        integrityServiceReady: true
+      }
+    },
+    {
+      itwLifecycle: {
+        status: ItwLifecycleStatus.ITW_LIFECYCLE_DEACTIVATED,
+        integrityServiceReady: false
+      }
+    }
   ] as ReadonlyArray<RenderOptions>)(
     "should not render the IT Wallet modules if %p",
     options => {
@@ -71,7 +84,10 @@ const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
   itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
+  itwLifecycle = {
+    status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
+    integrityServiceReady: false
+  }
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -81,10 +97,11 @@ const renderComponent = ({
       features: {
         itWallet: {
           lifecycle: itwLifecycle,
-          ...(itwLifecycle === ItwLifecycleState.ITW_LIFECYCLE_VALID && {
-            credentials: { eid: O.some({}) },
-            issuance: { integrityKeyTag: O.some("key-tag") }
-          })
+          ...(itwLifecycle.status === ItwLifecycleStatus.ITW_LIFECYCLE_VALID &&
+            !itwLifecycle.integrityServiceReady && {
+              credentials: { eid: O.some({}) },
+              issuance: { integrityKeyTag: O.some("key-tag") }
+            })
         }
       },
       trialSystem: {
