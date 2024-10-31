@@ -11,4 +11,13 @@ export const BizEventsHeaders = t.type({
   })
 });
 
+export const BizEventsDownloadReceiptHeaders = t.type({
+  map: t.type({
+    "content-disposition": t.string
+  })
+});
+
 export type BizEventsHeaders = t.TypeOf<typeof BizEventsHeaders>;
+export type BizEventsDownloadReceiptHeaders = t.TypeOf<
+  typeof BizEventsDownloadReceiptHeaders
+>;

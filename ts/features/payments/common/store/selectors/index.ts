@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { paymentsWalletUserMethodsFromPotSelector } from "../../../wallet/store/selectors";
 import { PaymentsTrackingConfiguration } from "../../analytics";
+import { PaymentsBackoffRetry } from "../../types/PaymentsBackoffRetry";
 
 export const selectPaymentsCheckoutState = (state: GlobalState) =>
   state.features.payments.pagoPaPlatform;
@@ -31,3 +32,9 @@ export const getPaymentsAnalyticsConfiguration = (
     savedPaymentMethods
   };
 };
+
+export const selectPaymentsBackoffRetryState = (state: GlobalState) =>
+  state.features.payments.paymentsBackoffRetry;
+
+export const paymentsBackoffRetrySelector = (id: PaymentsBackoffRetry) =>
+  createSelector(selectPaymentsBackoffRetryState, state => state[id]);

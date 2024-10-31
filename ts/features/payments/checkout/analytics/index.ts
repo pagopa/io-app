@@ -14,6 +14,7 @@ export type PaymentAnalyticsProps = {
   data_entry: string;
   first_time_opening: string;
   organization_name: string;
+  organization_fiscal_code: string;
   service_name: string;
   saved_payment_method: number;
   amount: string;
@@ -63,6 +64,10 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
     case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
       return "PAYMENT_REVERSAL_ERROR";
+    case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
+      return "PAYMENT_WEBVIEW_USER_CANCELLATION";
+    case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+      return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
     default:
       return outcome;
   }

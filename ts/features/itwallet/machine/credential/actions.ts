@@ -1,21 +1,26 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assertEvent } from "xstate";
+import { ActionArgs, assertEvent, assign } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { CREDENTIALS_MAP, trackSaveCredentialSuccess } from "../../analytics";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import {
+  CREDENTIALS_MAP,
+  trackAddCredentialProfileAndSuperProperties,
+  trackSaveCredentialSuccess
+} from "../../analytics";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
 export default (
   navigation: ReturnType<typeof useIONavigation>,
-  dispatch: ReturnType<typeof useIODispatch>,
+  store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
   navigateToTrustIssuerScreen: () => {
@@ -36,17 +41,8 @@ export default (
     });
   },
 
-  navigateToWallet: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
+  navigateToWallet: () => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-    if (context.credentialType) {
-      trackSaveCredentialSuccess(CREDENTIALS_MAP[context.credentialType]);
-    }
     navigation.reset({
       index: 1,
       routes: [
@@ -71,7 +67,7 @@ export default (
       context.walletInstanceAttestation,
       "walletInstanceAttestation is undefined"
     );
-    dispatch(
+    store.dispatch(
       itwWalletInstanceAttestationStore(context.walletInstanceAttestation)
     );
   },
@@ -84,7 +80,7 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-    dispatch(itwCredentialsStore([context.credential]));
+    store.dispatch(itwCredentialsStore([context.credential]));
   },
 
   closeIssuance: ({
@@ -103,6 +99,32 @@ export default (
     }
   },
 
+  trackAddCredential: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    if (context.credentialType) {
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackSaveCredentialSuccess(credential);
+      trackAddCredentialProfileAndSuperProperties(store.getState(), credential);
+    }
+  },
+
   handleSessionExpired: () =>
-    dispatch(checkCurrentSession.success({ isSessionValid: false }))
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
+
+  onInit: assign<
+    Context,
+    CredentialIssuanceEvents,
+    unknown,
+    CredentialIssuanceEvents,
+    any
+  >(() => ({
+    walletInstanceAttestation: itwWalletInstanceAttestationSelector(
+      store.getState()
+    )
+  }))
 });

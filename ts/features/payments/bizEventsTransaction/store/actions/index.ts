@@ -1,17 +1,19 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
-import { TransactionDetailResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
-import { TransactionListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionListWrapResponse";
+import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
+import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { PaymentBizEventsCategoryFilter } from "../../types";
 
 export type PaymentsGetBizEventsTransactionPayload = {
   firstLoad?: boolean;
+  noticeCategory?: PaymentBizEventsCategoryFilter;
   size?: number;
   continuationToken?: string;
   onSuccess?: (continuationToken?: string) => void;
 };
 
 export type PaymentsGetBizEventsTransactionSuccessPayload = {
-  data: TransactionListWrapResponse;
+  data: NoticeListWrapResponse["notices"];
   appendElements?: boolean;
 };
 
@@ -32,7 +34,7 @@ export const getPaymentsLatestBizEventsTransactionsAction = createAsyncAction(
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_SUCCESS",
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_FAILURE",
   "PAYMENTS_LATEST_TRANSACTIONS_LIST_CANCEL"
-)<void, TransactionListWrapResponse, NetworkError, void>();
+)<void, NoticeListWrapResponse["notices"], NetworkError, void>();
 
 export type PaymentsTransactionDetailsPayload = {
   transactionId: string;
@@ -46,7 +48,7 @@ export const getPaymentsBizEventsTransactionDetailsAction = createAsyncAction(
   "PAYMENTS_BIZ_EVENTS_TRANSACTION_DETAILS_CANCEL"
 )<
   PaymentsTransactionDetailsPayload,
-  TransactionDetailResponse,
+  NoticeDetailResponse,
   NetworkError,
   void
 >();
@@ -57,6 +59,11 @@ export type PaymentsTransactionReceiptPayload = {
   onError?: () => void;
 };
 
+export type PaymentsTransactionReceiptInfoPayload = {
+  base64File: string;
+  filename?: string;
+};
+
 /**
  * asycn action to download biz-events transaction preview pdf
  */
@@ -65,7 +72,12 @@ export const getPaymentsBizEventsReceiptAction = createAsyncAction(
   "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_SUCCESS",
   "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_FAILURE",
   "PAYMENTS_BIZ_EVENTS_DOWNLOAD_PDF_CANCEL"
-)<PaymentsTransactionReceiptPayload, string, NetworkError, void>();
+)<
+  PaymentsTransactionReceiptPayload,
+  PaymentsTransactionReceiptInfoPayload,
+  NetworkError,
+  void
+>();
 
 export type PaymentsTransactionBizEventsActions =
   | ActionType<typeof getPaymentsBizEventsTransactionsAction>

@@ -13,7 +13,7 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  LabelLink,
+  Label,
   VSpacer,
   buttonSolidHeight
 } from "@pagopa/io-app-design-system";
@@ -33,7 +33,7 @@ import customVariables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import TosBonusComponent from "./TosBonusComponent";
 
@@ -50,7 +50,7 @@ type SecondaryAction = { type: "back"; text: string };
 
 type Props = OwnProps &
   Pick<
-    ComponentProps<typeof RNavScreenWithLargeHeader>,
+    ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
@@ -62,6 +62,10 @@ body {
 
 h4 {
   font-size: ${customVariables.fontSize2}px;
+}
+
+img {
+  width: 100%;
 }
 `;
 
@@ -89,13 +93,14 @@ const getTosFooter = (
                 <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
-                <LabelLink
+                <Label
+                  asLink
                   weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
                   {I18n.t("bonus.tos.title")}
-                </LabelLink>
+                </Label>
               </>
             ),
             // if tos and regulation url is defined

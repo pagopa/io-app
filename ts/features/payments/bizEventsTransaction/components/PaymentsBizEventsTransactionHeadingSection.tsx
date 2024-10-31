@@ -6,16 +6,16 @@ import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import I18n from "../../../../i18n";
-import { TransactionDetailResponse } from "../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
 import { Psp } from "../../../../types/pagopa";
 import { calculateTotalAmount, formatAmountText } from "../utils";
 import { PaymentsTransactionBizEventsStackNavigation } from "../navigation/navigator";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
+import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { PaymentsBizEventsTransactionCartList } from "./PaymentsBizEventsTransactionCartList";
 import { PaymentsBizEventsTransactionTotalAmount } from "./PaymentsBizEventsTransactionTotalAmount";
 
 type Props = {
-  transaction?: TransactionDetailResponse;
+  transaction?: NoticeDetailResponse;
   psp?: Psp;
   isLoading: boolean;
 };
@@ -27,7 +27,7 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
   const navigation =
     useNavigation<PaymentsTransactionBizEventsStackNavigation>();
 
-  const transactionInfo = transaction?.infoTransaction;
+  const transactionInfo = transaction?.infoNotice;
 
   const handlePressTransactionDetails = (cartItem: CartItem) => {
     if (transaction) {
@@ -57,7 +57,7 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
       return (
         <Body>
           {I18n.t("transaction.details.totalFee")}{" "}
-          <Body weight="Medium">{formattedFee}</Body>{" "}
+          <Body weight="Semibold">{formattedFee}</Body>{" "}
           {pspName
             ? // we want to make sure no empty string is passed either
               I18n.t("transaction.details.totalFeePsp", {
@@ -82,7 +82,6 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
 
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
-      <VSpacer size={16} />
       <PaymentsBizEventsTransactionCartList
         carts={transaction?.carts}
         loading={isLoading}

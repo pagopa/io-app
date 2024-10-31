@@ -112,12 +112,24 @@ const DESIGN_SYSTEM_ROUTES = {
     FOOTER_ACTIONS_NOT_FIXED: {
       route: "DS_FOOTER_ACTIONS_NOT_FIXED",
       title: "Footer Actions (not fixed)"
+    },
+    FOOTER_ACTIONS_INLINE: {
+      route: "DS_FOOTER_ACTIONS_INLINE",
+      title: "Footer Actions Inline"
+    },
+    FOOTER_ACTIONS_INLINE_NOT_FIXED: {
+      route: "DS_FOOTER_ACTIONS_INLINE_NOT_FIXED",
+      title: "Footer Actions Inline (not fixed)"
     }
   },
   EXPERIMENTAL_LAB: {
     DYNAMIC_BACKGROUND: {
       route: "DS_DYNAMIC_BACKGROUND",
       title: "Dynamic header background"
+    },
+    IRIDESCENT_TRUSTMARK: {
+      route: "DS_IRIDESCENT_TRUSTMARK",
+      title: "Iridescent trustmark"
     },
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",

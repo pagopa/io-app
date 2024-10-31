@@ -3,6 +3,7 @@ import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
+  assign,
   createActor,
   fromPromise,
   StateFrom,
@@ -23,7 +24,6 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
-  OnInitActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "../actors";
@@ -111,8 +111,8 @@ describe("itwCredentialIssuanceMachine", () => {
   const storeCredential = jest.fn();
   const closeIssuance = jest.fn();
   const handleSessionExpired = jest.fn();
-
   const onInit = jest.fn();
+
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
@@ -121,6 +121,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
 
+  const trackAddCredential = jest.fn();
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
       navigateToCredentialPreviewScreen,
@@ -130,10 +131,11 @@ describe("itwCredentialIssuanceMachine", () => {
       storeWalletInstanceAttestation,
       storeCredential,
       closeIssuance,
-      handleSessionExpired
+      handleSessionExpired,
+      trackAddCredential,
+      onInit: assign(onInit)
     },
     actors: {
-      onInit: fromPromise<OnInitActorOutput>(onInit),
       getWalletAttestation:
         fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
@@ -156,7 +158,7 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   beforeEach(() => {
-    onInit.mockImplementation(() => Promise.resolve({} as OnInitActorOutput));
+    onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
   });
 
@@ -303,11 +305,9 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should skip WIA obtainment if still valid", async () => {
-    onInit.mockImplementation(() =>
-      Promise.resolve({
-        walletInstanceAttestation: T_WIA
-      })
-    );
+    onInit.mockImplementation(() => ({
+      walletInstanceAttestation: T_WIA
+    }));
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
     getWalletAttestation.mockImplementation(() => Promise.resolve(T_WIA));
     requestCredential.mockImplementation(() =>
@@ -455,11 +455,9 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should go to failure if credential request fails", async () => {
-    onInit.mockImplementation(() =>
-      Promise.resolve({
-        walletInstanceAttestation: T_WIA
-      })
-    );
+    onInit.mockImplementation(() => ({
+      walletInstanceAttestation: T_WIA
+    }));
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     const actor = createActor(mockedMachine);

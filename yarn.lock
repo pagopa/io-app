@@ -2046,10 +2046,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.46.1":
-  version "1.46.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.46.1.tgz#2d1fae033b46b2a78eeb8659fb44dc299903ade8"
-  integrity sha512-xef0yTpZzJiOzviFdUkvL3eKRnEIqCI6DFTNJdyWo1168dgLbKoKQ4t7JaoOo3HW+ecyQcU9LQJSG8Tp4C8CtQ==
+"@pagopa/io-app-design-system@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-2.0.2.tgz#63c745dfcb8ed14b560bf9c52c8541f4b91ffef0"
+  integrity sha512-xK8yi9W+F10JOegQNkGTxAfemHoG1wf7uZh00tv7twulDaro88eEqyqj/v1EXzseGznLm69peC+nPlAhVnNEbg==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -2074,6 +2074,11 @@
     "@pagopa/ts-commons" "^10.5.0"
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
+
+"@pagopa/io-react-native-cieid@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-cieid/-/io-react-native-cieid-0.3.5.tgz#88eeb846c0fb9b460b002c3585acb5868546b28f"
+  integrity sha512-MK64BfBLnQTOiIwhjvAui4wZph6RoonxPVeIakW61SfAJ+V6SczAoqfDD6MfUtUntIC7dUpCzI3zUxB93tCq4Q==
 
 "@pagopa/io-react-native-crypto@^0.3.0":
   version "0.3.0"
@@ -2105,11 +2110,12 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
   integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
-"@pagopa/io-react-native-wallet@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.19.0.tgz#3b056d46d9e7b74868cb23ed1d77ae20ff93e848"
-  integrity sha512-dxBrQlzOnxNxY5rR4dKboFcVBjQnH8MaXPgyhCQxBSDxOqyQ5hF8waf0ooYLlQhe1kMS2M9ZRnVWKUMUmHIrgQ==
+"@pagopa/io-react-native-wallet@^0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.22.0.tgz#98e77fe4550e196fffb0e5cd8a442da07763e78a"
+  integrity sha512-1+eWQj3vBHUK5iuEkE7aAI60Ksns6unD2TXnKsP8uo7fZOBCP3QfepLPDvopxWib/ScL1EpaIs2H2ORbs7NZ3Q==
   dependencies:
+    js-base64 "^3.7.7"
     js-sha256 "^0.9.0"
     parse-url "^9.2.0"
     react-native-url-polyfill "^2.0.0"
@@ -10063,6 +10069,11 @@ js-base64@^3.2.4:
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.4.tgz#af95b20f23efc8034afd2d1cc5b9d0adf7419037"
   integrity sha512-wpM/wi20Tl+3ifTyi0RdDckS4YTD4Lf953mBRrpG8547T7hInHNPEj8+ck4gB8VDcGyeAWFK++Wb/fU1BeavKQ==
+
+js-base64@^3.7.7:
+  version "3.7.7"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.7.tgz#e51b84bf78fbf5702b9541e2cb7bfcb893b43e79"
+  integrity sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==
 
 js-sha256@^0.9.0:
   version "0.9.0"

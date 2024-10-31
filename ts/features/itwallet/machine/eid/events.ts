@@ -15,6 +15,10 @@ export type AcceptTos = {
   type: "accept-tos";
 };
 
+export type AcceptIpzsPrivacy = {
+  type: "accept-ipzs-privacy";
+};
+
 export type AddToWallet = {
   type: "add-to-wallet";
 };
@@ -68,10 +72,21 @@ export type Abort = {
   type: "abort";
 };
 
+export type RevokeWalletInstance = {
+  type: "revoke-wallet-instance";
+};
+
+export type Error = {
+  type: "error";
+  // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
+  scope: "ipzs-privacy";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
   | AcceptTos
+  | AcceptIpzsPrivacy
   | SelectIdentificationMode
   | SelectSpidIdp
   | CiePinEntered
@@ -84,4 +99,6 @@ export type EidIssuanceEvents =
   | Close
   | NfcEnabled
   | Abort
-  | ErrorActorEvent;
+  | RevokeWalletInstance
+  | ErrorActorEvent
+  | Error;
