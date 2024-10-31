@@ -54,6 +54,7 @@ done
 
 yarn run gen-api-models --api-spec "https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml" --out-dir ./definitions/backend
 yarn run gen-api-models --api-spec "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml" --out-dir ./definitions/session_manager
+yarn run gen-api-models --api-spec "https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/consumed/api-piattaforma-notifiche.yaml" --out-dir ./definitions/pn
 
 cp mock-google-services.json ./android/app/google-services.json
 
