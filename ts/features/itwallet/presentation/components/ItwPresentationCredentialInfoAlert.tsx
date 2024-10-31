@@ -14,7 +14,7 @@ type Props = {
 const validStates: Array<ItwCredentialStatus | undefined> = [
   "valid",
   "expiring",
-  "verificationExpiring"
+  "jwtExpiring"
 ];
 
 /**

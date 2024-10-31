@@ -392,7 +392,7 @@ type GetCredentialStatusOptions = {
 export const getCredentialStatus = (
   credential: StoredCredential,
   options: GetCredentialStatusOptions = {}
-): ItwCredentialStatus | undefined => {
+): ItwCredentialStatus => {
   const { checkJwtExpiration, expiringDays = 14 } = options;
   const {
     jwt,
@@ -426,7 +426,7 @@ export const getCredentialStatus = (
   }
 
   if (jwtExpireDays <= 0) {
-    return "verificationExpired";
+    return "jwtExpired";
   }
 
   const isSameDayExpiring =
@@ -434,7 +434,7 @@ export const getCredentialStatus = (
 
   // When both credentials are expiring the digital one wins unless they expire the same day
   if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
-    return "verificationExpiring";
+    return "jwtExpiring";
   }
 
   if (documentExpireDays <= expiringDays) {

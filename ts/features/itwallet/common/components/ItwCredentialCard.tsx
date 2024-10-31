@@ -19,8 +19,8 @@ export type ItwCredentialStatus =
   | "expiring"
   | "expired"
   // Digital credential status
-  | "verificationExpiring"
-  | "verificationExpired";
+  | "jwtExpiring"
+  | "jwtExpired";
 
 export type ItwCredentialCard = {
   credentialType: string;
@@ -31,7 +31,7 @@ export type ItwCredentialCard = {
 const validStatuses: Array<ItwCredentialStatus> = [
   "valid",
   "expiring",
-  "verificationExpiring"
+  "jwtExpiring"
 ];
 
 export const ItwCredentialCard = ({
@@ -107,7 +107,7 @@ const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.expired")
   },
-  verificationExpired: {
+  jwtExpired: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.verificationExpired")
   },
@@ -115,7 +115,7 @@ const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
     variant: "warning",
     text: I18n.t("features.itWallet.card.status.expiring")
   },
-  verificationExpiring: {
+  jwtExpiring: {
     variant: "warning",
     text: I18n.t("features.itWallet.card.status.verificationExpiring")
   }
@@ -125,9 +125,9 @@ const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
   valid: IOColors.white,
   invalid: IOColors["error-600"],
   expired: IOColors["error-600"],
-  verificationExpired: IOColors["error-600"],
   expiring: IOColors["warning-700"],
-  verificationExpiring: IOColors["warning-700"]
+  jwtExpired: IOColors["error-600"],
+  jwtExpiring: IOColors["warning-700"]
 };
 
 const styles = StyleSheet.create({

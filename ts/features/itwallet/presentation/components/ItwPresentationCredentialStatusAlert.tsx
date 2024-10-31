@@ -28,7 +28,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(credential.credentialType)
   );
 
-  if (status === "verificationExpiring") {
+  if (status === "jwtExpiring") {
     return <VerificationExpiringAlert credential={credential} />;
   }
 

@@ -257,9 +257,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual(
-        "verificationExpired"
-      );
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpired");
     });
 
     // Physical document wins
@@ -324,9 +322,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual(
-        "verificationExpiring"
-      );
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
     });
 
     // Digital document wins
@@ -348,9 +344,7 @@ describe("getCredentialStatus", () => {
         storedStatusAttestation: { credentialStatus: "valid" }
       };
 
-      expect(getCredentialStatus(mockCredential)).toEqual(
-        "verificationExpiring"
-      );
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
     });
 
     // Physical document wins
