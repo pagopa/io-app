@@ -13,6 +13,7 @@ import { format } from "../../../../utils/dates";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { type CredentialType } from "../../common/utils/itwMocksUtils";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 
 type Props = {
   credential: StoredCredential;
@@ -38,6 +39,19 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
 
   if (message) {
     return <IssuerDynamicErrorAlert message={message} />;
+  }
+
+  // Fallback when the issuer does not provide a message for an expired credential
+  if (status === "expired") {
+    return (
+      <Alert
+        testID="itwExpiredBannerTestID"
+        variant="error"
+        content={I18n.t(
+          "features.itWallet.presentation.alerts.expired.content"
+        )}
+      />
+    );
   }
 
   return null;
