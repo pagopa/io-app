@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import {
@@ -39,14 +39,7 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.fold(
-      () => (
-        <ContentView
-          failure={{ type: CredentialIssuanceFailureTypeEnum.GENERIC }}
-        />
-      ),
-      type => <ContentView failure={type} />
-    )
+    O.fold(constNull, failure => <ContentView failure={failure} />)
   );
 };
 
