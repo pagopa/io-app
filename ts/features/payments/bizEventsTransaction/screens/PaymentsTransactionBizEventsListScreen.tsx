@@ -17,6 +17,8 @@ import {
   View
 } from "react-native";
 import Animated, {
+  FadeIn,
+  FadeOut,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
@@ -29,7 +31,6 @@ import { walletTransactionBizEventsListPotSelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
 import { PaymentsBizEventsListItemTransaction } from "../components/PaymentsBizEventsListItemTransaction";
-import { PaymentsHomeEmptyScreenContent } from "../../home/components/PaymentsHomeEmptyScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { groupTransactionsByMonth } from "../utils";
@@ -40,6 +41,7 @@ import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/Not
 import * as analytics from "../analytics";
 import { PaymentsBizEventsFilterTabs } from "../components/PaymentsBizEventsFilterTabs";
 import { PaymentBizEventsCategoryFilter } from "../types";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -209,14 +211,15 @@ const PaymentsTransactionBizEventsListScreen = () => {
           )}
 
           {Array.from({ length: 5 }).map((_, index) => (
-            <ListItemTransaction
-              isLoading={true}
-              key={index}
-              transactionStatus="success"
-              transactionAmount=""
-              title=""
-              subtitle=""
-            />
+            <TransactionFadeInOutAnimationView key={index}>
+              <ListItemTransaction
+                isLoading={true}
+                transactionStatus="success"
+                transactionAmount=""
+                title=""
+                subtitle=""
+              />
+            </TransactionFadeInOutAnimationView>
           ))}
         </>
       )}
@@ -226,9 +229,16 @@ const PaymentsTransactionBizEventsListScreen = () => {
     </>
   );
 
-  if (isEmpty) {
-    return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
-  }
+  const EmptyStateList = isEmpty ? (
+    <TransactionFadeInOutAnimationView>
+      <OperationResultScreenContent
+        isHeaderVisible
+        title={I18n.t("features.payments.transactions.list.empty.title")}
+        subtitle={I18n.t("features.payments.transactions.list.empty.subtitle")}
+        pictogram="emptyArchive"
+      />
+    </TransactionFadeInOutAnimationView>
+  ) : undefined;
 
   const fetchNextPage = () => {
     if (!continuationToken || isLoading) {
@@ -250,6 +260,7 @@ const PaymentsTransactionBizEventsListScreen = () => {
       scrollIndicatorInsets={{ right: 0 }}
       contentContainerStyle={{
         ...IOStyles.horizontalContentPadding,
+        minHeight: isEmpty ? "100%" : undefined,
         paddingBottom: insets.bottom + 24
       }}
       onEndReached={fetchNextPage}
@@ -267,16 +278,32 @@ const PaymentsTransactionBizEventsListScreen = () => {
       renderSectionHeader={({ section }) => (
         <ListItemHeader label={section.title} />
       )}
+      ListEmptyComponent={EmptyStateList}
       ListFooterComponent={renderLoadingFooter}
       keyExtractor={item => `transaction_${item.eventId}`}
       renderItem={({ item }) => (
-        <PaymentsBizEventsListItemTransaction
-          onPress={() => handleNavigateToTransactionDetails(item)}
-          transaction={item}
-        />
+        <TransactionFadeInOutAnimationView>
+          <PaymentsBizEventsListItemTransaction
+            onPress={() => handleNavigateToTransactionDetails(item)}
+            transaction={item}
+          />
+        </TransactionFadeInOutAnimationView>
       )}
     />
   );
 };
+
+const TransactionFadeInOutAnimationView = React.memo(
+  ({ children }: { children: React.ReactNode }) => (
+    <Animated.View
+      style={IOStyles.flex}
+      exiting={FadeOut.duration(200)}
+      entering={FadeIn.duration(200)}
+    >
+      {children}
+    </Animated.View>
+  ),
+  () => true
+);
 
 export { PaymentsTransactionBizEventsListScreen };

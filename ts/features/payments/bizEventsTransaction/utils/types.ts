@@ -7,8 +7,7 @@ import * as t from "io-ts";
  */
 export const BizEventsHeaders = t.type({
   map: t.type({
-    "x-continuation-token": t.string,
-    "content-disposition": t.string
+    "x-continuation-token": t.string
   })
 });
 
