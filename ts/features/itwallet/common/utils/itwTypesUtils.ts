@@ -51,7 +51,8 @@ export type StoredStatusAttestation =
     }
   | {
       credentialStatus: "invalid" | "unknown";
-      errorCode?: string; // TODO: use credentialStatus for this?
+      // Error code that might contain more details on the invalid status, provided by the issuer
+      errorCode?: string;
     };
 
 /**
