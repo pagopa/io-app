@@ -1,6 +1,8 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SectionListData } from "react-native";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { NetworkError } from "../../../../utils/errors";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -96,3 +98,36 @@ export const calculateTotalAmount = (
 
   return total.toFixed(2);
 };
+
+export const filterTransactionsByIdAndGetIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  transactionId: string
+): {
+  filteredTransactions: Array<NoticeListItem>;
+  removedIndex: number;
+} => {
+  const transactionList = pot.getOrElse(transactions, []);
+  const removedIndex = transactionList.findIndex(
+    transaction => transaction.eventId === transactionId
+  );
+  const filteredTransactions = transactionList.filter(
+    transaction => transaction.eventId !== transactionId
+  );
+  return { filteredTransactions, removedIndex };
+};
+
+export const getTransactionByIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  index: number
+): NoticeListItem => pot.getOrElse(transactions, [])[index];
+
+export const restoreTransactionAtIndex = (
+  transactionPot: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  restoreItem: NoticeListItem,
+  index: number
+) =>
+  pot.map(transactionPot, transactions => [
+    ...transactions.slice(0, index),
+    restoreItem,
+    ...transactions.slice(index)
+  ]);
