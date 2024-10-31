@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.75.0-rc.0](https://github.com/pagopa/io-app/compare/2.73.0-rc.3...2.75.0-rc.0) (2024-10-30)
+
+
+### Features
+
+* [[IOBP-834](https://pagopa.atlassian.net/browse/IOBP-834)] Add pull to refresh into transactions list screen ([#6213](https://github.com/pagopa/io-app/issues/6213)) ([36d29c8](https://github.com/pagopa/io-app/commit/36d29c8a26d9b9d31b43a99b9cf77e7aaa8e7c4d))
+* [[IOBP-930](https://pagopa.atlassian.net/browse/IOBP-930)]  Remove payments redirect banner from wallet ([#6316](https://github.com/pagopa/io-app/issues/6316)) ([ffdc0ea](https://github.com/pagopa/io-app/commit/ffdc0ea8a6f6a7bf9ce703384d1fd652b80965ef))
+* [[IOPID-2296](https://pagopa.atlassian.net/browse/IOPID-2296)] Add state to track successful login event ([#6298](https://github.com/pagopa/io-app/issues/6298)) ([be5b90b](https://github.com/pagopa/io-app/commit/be5b90b58c36c5bac6fd7027a5e0832013161233))
+* [[IOPID-2322](https://pagopa.atlassian.net/browse/IOPID-2322)] - CieID Error handling ([#6306](https://github.com/pagopa/io-app/issues/6306)) ([a587d86](https://github.com/pagopa/io-app/commit/a587d8672239a810b04d4a008966b478cf8d6b93))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1733](https://pagopa.atlassian.net/browse/SIW-1733)] Disable wallet activation from async credential link when the user is not enabled ([#6276](https://github.com/pagopa/io-app/issues/6276)) ([83be5c4](https://github.com/pagopa/io-app/commit/83be5c4385bedf273c84bf2f2755cb38b06d9540))
+* [[IOBP-900](https://pagopa.atlassian.net/browse/IOBP-900)] Remove parenthesis from tax code in payment screen  ([#6317](https://github.com/pagopa/io-app/issues/6317)) ([8295349](https://github.com/pagopa/io-app/commit/82953499ecfd5b958a19c526ca8f96b684237b32))
+* [[IOBP-901](https://pagopa.atlassian.net/browse/IOBP-901)] Missing header in payment methods ([#6318](https://github.com/pagopa/io-app/issues/6318)) ([dfbe4aa](https://github.com/pagopa/io-app/commit/dfbe4aa8b1e246a992b85613f8f64ad2342cb5e6))
+* [[IOPID-2423](https://pagopa.atlassian.net/browse/IOPID-2423)] Add logic to get the zendesk token in payments and others flow ([#6325](https://github.com/pagopa/io-app/issues/6325)) ([0462d63](https://github.com/pagopa/io-app/commit/0462d6397dd6bf4e1675ee2a6798dcb62b3c7a6c))
+* [[PE-688](https://pagopa.atlassian.net/browse/PE-688)] CGN activation images ([#6329](https://github.com/pagopa/io-app/issues/6329)) ([fc6c754](https://github.com/pagopa/io-app/commit/fc6c754c4d82af3cda3667aee9834216238eddae))
+* [[PE-725](https://pagopa.atlassian.net/browse/PE-725)] CGN merchant categories list details transition header ([#6313](https://github.com/pagopa/io-app/issues/6313)) ([91fbb09](https://github.com/pagopa/io-app/commit/91fbb098409328d8b5ca700dc9fc5c96b0fe6244))
+* [[PE-726](https://pagopa.atlassian.net/browse/PE-726)] CGN camelize department title ([#6307](https://github.com/pagopa/io-app/issues/6307)) ([a18acf6](https://github.com/pagopa/io-app/commit/a18acf63240f64680766b182a5f7a5d99c02e7aa))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1770](https://pagopa.atlassian.net/browse/SIW-1770)] Improve IPZS privacy screen ([#6341](https://github.com/pagopa/io-app/issues/6341)) ([a5a6d55](https://github.com/pagopa/io-app/commit/a5a6d551abddebd9ee0b1ea5a4bf759e9bb310fa))
+* **release:** 2.74.0-rc.0 ([0365bef](https://github.com/pagopa/io-app/commit/0365bef8d5030d20e764be79b2ed9bc2c29db62f))
+* [[IOPID-2359](https://pagopa.atlassian.net/browse/IOPID-2359)] Delete sessionRefresh FF reference ([#6339](https://github.com/pagopa/io-app/issues/6339)) ([22e6c0c](https://github.com/pagopa/io-app/commit/22e6c0cb8b46094273b882f6e51b66945b311698))
+* **Cross:** [[IOAPPX-362](https://pagopa.atlassian.net/browse/IOAPPX-362),[IOAPPX-364](https://pagopa.atlassian.net/browse/IOAPPX-364)] Replace `TypographyFactory` with `IOText` + Add support for `Bold Text` a11y setting ([#6076](https://github.com/pagopa/io-app/issues/6076)) ([caf8138](https://github.com/pagopa/io-app/commit/caf8138c9fa5ae3b6fecdcf9afda4b65382d5b00))
+* **Cross:** [[IOAPPX-394](https://pagopa.atlassian.net/browse/IOAPPX-394)] Replace `GradientScrollView` with `IOScrollView` in the Wallet home screen ([#6279](https://github.com/pagopa/io-app/issues/6279)) ([5bbd6b6](https://github.com/pagopa/io-app/commit/5bbd6b62b07098fbe670d1c731a5d8dadadcfd60))
+* **IT Wallet:** [[SIW-1716](https://pagopa.atlassian.net/browse/SIW-1716)] Add action to ITWallet upcoming banner ([#6333](https://github.com/pagopa/io-app/issues/6333)) ([0a3861c](https://github.com/pagopa/io-app/commit/0a3861c3a33f85e5633bba23bfe39a51a42ddb3b))
+* **IT Wallet:** [[SIW-1784](https://pagopa.atlassian.net/browse/SIW-1784)] Typo in identification mode selection screen ([#6331](https://github.com/pagopa/io-app/issues/6331)) ([abed7df](https://github.com/pagopa/io-app/commit/abed7df82042d98f3572542ffbf1287a5b166771))
+* [[IOBP-753](https://pagopa.atlassian.net/browse/IOBP-753)] Add error backoff retry handling into payments domain ([#6314](https://github.com/pagopa/io-app/issues/6314)) ([150b84f](https://github.com/pagopa/io-app/commit/150b84fa120cbe9c2c6006a991a3d5b762dca570))
+* [[IOBP-925](https://pagopa.atlassian.net/browse/IOBP-925)] Add amount parameter when requesting list of all payment methods ([#6322](https://github.com/pagopa/io-app/issues/6322)) ([dbfd945](https://github.com/pagopa/io-app/commit/dbfd945a76fb0329aa1d85f3ccb653e95b852078))
+* [[IOBP-933](https://pagopa.atlassian.net/browse/IOBP-933)] Add exponential backoff retry into wallet section screen ([#6320](https://github.com/pagopa/io-app/issues/6320)) ([4eb0f41](https://github.com/pagopa/io-app/commit/4eb0f413ca920f0d3fed070f568d322295819617))
+* [[PE-678](https://pagopa.atlassian.net/browse/PE-678)] CGN partner detail change go to website from button to list item ([#6300](https://github.com/pagopa/io-app/issues/6300)) ([8fce513](https://github.com/pagopa/io-app/commit/8fce513f63e58b5dc58ada323be04bfd1c654252))
+
+## [2.74.0-rc.0](https://github.com/pagopa/io-app/compare/2.73.0-rc.3...2.74.0-rc.0) (2024-10-25)
+
+
+### Bug Fixes
+
+* [[IOPID-2423](https://pagopa.atlassian.net/browse/IOPID-2423)] Add logic to get the zendesk token in payments and others flow ([#6325](https://github.com/pagopa/io-app/issues/6325)) ([e32db63](https://github.com/pagopa/io-app/commit/e32db63da6c6a45636e49ae6e70341f554135490))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1716](https://pagopa.atlassian.net/browse/SIW-1716)] Add action to ITWallet upcoming banner ([#6333](https://github.com/pagopa/io-app/issues/6333)) ([c5dc6d6](https://github.com/pagopa/io-app/commit/c5dc6d6cc89375a7b4d826b5ec123ab3661482c4))
+* **IT Wallet:** [[SIW-1784](https://pagopa.atlassian.net/browse/SIW-1784)] Typo in identification mode selection screen ([#6331](https://github.com/pagopa/io-app/issues/6331)) ([8a398f0](https://github.com/pagopa/io-app/commit/8a398f005651a478827a551041e3516ae4d61482))
+
 ## [2.73.0-rc.3](https://github.com/pagopa/io-app/compare/2.73.0-rc.2...2.73.0-rc.3) (2024-10-18)
 
 
