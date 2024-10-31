@@ -126,7 +126,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
 
   useHeaderSecondLevel({
     title:
-      transactionDetails?.carts?.[0].payee?.name ||
+      transactionDetails?.carts?.[0].payee?.name ??
       I18n.t("transaction.details.title"),
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
