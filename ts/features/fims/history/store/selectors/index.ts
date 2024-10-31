@@ -30,7 +30,7 @@ export const fimsIsHistoryEnabledSelector = (state: GlobalState) =>
   pipe(
     state,
     remoteConfigSelector,
-    O.map(c => c.fims.historyEnabled !== false),
+    O.map(remoteConfig => remoteConfig.fims.historyEnabled !== false),
     O.getOrElse(() => false)
   );
 
