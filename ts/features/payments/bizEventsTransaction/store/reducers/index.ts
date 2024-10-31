@@ -15,10 +15,15 @@ import {
   hidePaymentsBizEventsReceiptAction,
   PaymentsTransactionReceiptInfoPayload
 } from "../actions";
+import {
+  filterTransactionsByIdAndGetIndex,
+  getTransactionByIndex,
+  restoreTransactionAtIndex
+} from "../../utils";
 
 type CancelTransactionRecord = NoticeListItem & {
   index: number;
-  cancelType: string;
+  cancelType: "transactions" | "latestTransactions";
 };
 
 export type PaymentsBizEventsTransactionState = {
@@ -36,28 +41,6 @@ const INITIAL_STATE: PaymentsBizEventsTransactionState = {
   receiptDocument: pot.none,
   cancelTransactionRecord: pot.none
 };
-
-const filterTransactionsByIdAndGetIndex = (
-  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
-  transactionId: string
-): {
-  filteredTransactions: Array<NoticeListItem>;
-  removedIndex: number;
-} => {
-  const transactionList = pot.getOrElse(transactions, []);
-  const removedIndex = transactionList.findIndex(
-    transaction => transaction.eventId === transactionId
-  );
-  const filteredTransactions = transactionList.filter(
-    transaction => transaction.eventId !== transactionId
-  );
-  return { filteredTransactions, removedIndex };
-};
-
-const getTransactionByIndex = (
-  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
-  index: number
-): NoticeListItem => pot.getOrElse(transactions, [])[index];
 
 const reducer = (
   state: PaymentsBizEventsTransactionState = INITIAL_STATE,
@@ -155,7 +138,7 @@ const reducer = (
         ...state,
         receiptDocument: pot.none
       };
-    case getType(hidePaymentsBizEventsReceiptAction.request):
+    case getType(hidePaymentsBizEventsReceiptAction.request): {
       const { filteredTransactions, removedIndex: transactionIndex } =
         filterTransactionsByIdAndGetIndex(
           state.transactions,
@@ -187,7 +170,7 @@ const reducer = (
         transactions: pot.some(filteredTransactions),
         latestTransactions: pot.some(filteredLatestTransactions)
       };
-
+    }
     case getType(hidePaymentsBizEventsReceiptAction.failure): {
       const restoreValue = pot.getOrElse(state.cancelTransactionRecord, null);
       if (!restoreValue) {
@@ -195,24 +178,21 @@ const reducer = (
       }
 
       const { cancelType, index, ...restoreItem } = restoreValue;
-      const isLatestTransaction = cancelType === "latestTransactions";
 
       return {
         ...state,
-        transactions: !isLatestTransaction
-          ? pot.map(state.transactions, transactions => [
-              ...transactions.slice(0, index),
-              restoreItem,
-              ...transactions.slice(index)
-            ])
-          : state.transactions,
-        latestTransactions: isLatestTransaction
-          ? pot.map(state.latestTransactions, latestTransactions => [
-              ...latestTransactions.slice(0, index),
-              restoreItem,
-              ...latestTransactions.slice(index)
-            ])
-          : state.latestTransactions
+        transactions:
+          cancelType !== "latestTransactions"
+            ? restoreTransactionAtIndex(state.transactions, restoreItem, index)
+            : state.transactions,
+        latestTransactions:
+          cancelType === "latestTransactions"
+            ? restoreTransactionAtIndex(
+                state.latestTransactions,
+                restoreItem,
+                index
+              )
+            : state.latestTransactions
       };
     }
   }
