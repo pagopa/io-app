@@ -66,6 +66,8 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_REVERSAL_ERROR";
     case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
       return "PAYMENT_WEBVIEW_USER_CANCELLATION";
+    case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+      return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
     default:
       return outcome;
   }
