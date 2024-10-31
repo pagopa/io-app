@@ -55,7 +55,7 @@ export const extractPNOptInMessageInfoIfAvailable = (
     O.chain(serviceId =>
       pipe(
         state.remoteConfig,
-        O.map(c => c.pn.optInServiceId === serviceId)
+        O.map(remoteConfig => remoteConfig.pn.optInServiceId === serviceId)
       )
     ),
     O.filter(identity),
