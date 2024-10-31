@@ -186,7 +186,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 });
 
-describe.only("getCredentialStatus", () => {
+describe("getCredentialStatus", () => {
   afterEach(() => {
     MockDate.reset();
   });
