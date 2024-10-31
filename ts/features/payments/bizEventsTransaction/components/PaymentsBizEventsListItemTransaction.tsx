@@ -16,7 +16,7 @@ type Props = {
 
 const PaymentsBizEventsListItemTransaction = React.memo(
   ({ transaction, onPress }: Props) => {
-    const recipient = transaction.payeeName || "";
+    const recipient = transaction.payeeName ?? "";
 
     const amountText = pipe(
       transaction.amount,
