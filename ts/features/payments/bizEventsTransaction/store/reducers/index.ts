@@ -73,9 +73,12 @@ const reducer = (
       };
     // GET TRANSACTIONS LIST
     case getType(getPaymentsBizEventsTransactionsAction.request):
+      const transactions = action.payload.firstLoad
+        ? pot.noneLoading
+        : pot.toLoading(state.transactions);
       return {
         ...state,
-        transactions: pot.toLoading(state.transactions)
+        transactions
       };
     case getType(getPaymentsBizEventsTransactionsAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);

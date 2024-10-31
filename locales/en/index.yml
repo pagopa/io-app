@@ -3221,6 +3221,15 @@ features:
         banner:
           label: "The loading of the receipts failed."
           retryButton: "Retry"
+      filters:
+        tabs:
+          all: Tutte
+          payer: Pagate da me
+          debtor: Intestate a me
+      list:
+        empty:
+          title: Nessuna ricevuta trovata
+          subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
     details:
       payPal:
         banner:
