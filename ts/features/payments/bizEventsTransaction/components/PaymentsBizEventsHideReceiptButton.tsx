@@ -19,7 +19,7 @@ const PaymentsBizEventsHideReceiptButton = (props: Props) => {
   const dispatch = useDispatch();
   const navigation = useIONavigation();
 
-  const optimisticLoading = () => {
+  const showOptimisticLoading = () => {
     IOToast.show(I18n.t("features.payments.transactions.receipt.loading"), {
       variant: "info"
     });
@@ -27,7 +27,7 @@ const PaymentsBizEventsHideReceiptButton = (props: Props) => {
   };
 
   const hideReceipt = () => {
-    optimisticLoading();
+    showOptimisticLoading();
     dispatch(
       hidePaymentsBizEventsReceiptAction.request({
         transactionId
