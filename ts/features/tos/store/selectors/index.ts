@@ -16,7 +16,7 @@ export const tosConfigSelector = createSelector(
   remoteConfig =>
     pipe(
       remoteConfig,
-      O.chainNullableK(c => c.tos),
+      O.chainNullableK(config => config.tos),
       O.fold(
         () => DEFAULT_TOS_CONFIG,
         v => v
