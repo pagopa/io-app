@@ -123,6 +123,7 @@ const DateClaimItem = ({
     switch (status) {
       case "valid":
       case "expiring":
+      case "jwtExpiring":
         return {
           type: "badge",
           componentProps: { variant: "success", text: I18n.t(`${ns}.valid`) }
