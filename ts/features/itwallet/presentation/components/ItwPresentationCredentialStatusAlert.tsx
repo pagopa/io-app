@@ -13,7 +13,6 @@ import { format } from "../../../../utils/dates";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { type CredentialType } from "../../common/utils/itwMocksUtils";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 
 type Props = {
   credential: StoredCredential;
