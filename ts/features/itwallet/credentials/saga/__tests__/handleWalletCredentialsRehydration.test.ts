@@ -30,8 +30,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
-            integrityServiceReady: true
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
           },
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
@@ -63,8 +62,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
-            integrityServiceReady: true
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
           },
           issuance: { integrityKeyTag: O.some("key-tag") },
           credentials: {
@@ -119,8 +117,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
-            integrityServiceReady: false
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED
           },
           issuance: { integrityKeyTag: O.none },
           credentials: {

@@ -1,11 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { itwLifecycleStateUpdated } from "../../actions";
+import {
+  itwLifecycleIntegrityServiceReady,
+  itwLifecycleStateUpdated
+} from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { ItwLifecycleState } from "..";
+import { ItwLifecycleStatus } from "..";
 
 const curriedAppReducer =
   (action: Action) => (state: GlobalState | undefined) =>
@@ -17,12 +20,14 @@ describe("ITW lifecycle reducer", () => {
       undefined,
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(
-        itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
+        itwLifecycleStateUpdated({
+          status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
+        })
       )
     );
 
-    expect(targetSate.features.itWallet.lifecycle).toEqual(
-      ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL
+    expect(targetSate.features.itWallet.lifecycle.status).toEqual(
+      ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
     );
   });
 
@@ -33,8 +38,19 @@ describe("ITW lifecycle reducer", () => {
       curriedAppReducer(itwLifecycleStoresReset())
     );
 
-    expect(targetSate.features.itWallet.lifecycle).toEqual(
-      ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
+    expect(targetSate.features.itWallet.lifecycle.status).toEqual(
+      ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED
     );
+  });
+
+  it("should update the integrityServiceReady flag", () => {
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(itwLifecycleIntegrityServiceReady(true))
+    );
+
+    expect(
+      targetSate.features.itWallet.lifecycle.integrityServiceReady
+    ).toEqual(true);
   });
 });

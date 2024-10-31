@@ -61,14 +61,12 @@ describe("WalletCardOnboardingScreen", () => {
     { isItwEnabled: false },
     {
       itwLifecycle: {
-        status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
-        integrityServiceReady: true
+        status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED
       }
     },
     {
       itwLifecycle: {
-        status: ItwLifecycleStatus.ITW_LIFECYCLE_DEACTIVATED,
-        integrityServiceReady: false
+        status: ItwLifecycleStatus.ITW_LIFECYCLE_DEACTIVATED
       }
     }
   ] as ReadonlyArray<RenderOptions>)(
@@ -97,11 +95,11 @@ const renderComponent = ({
       features: {
         itWallet: {
           lifecycle: itwLifecycle,
-          ...(itwLifecycle.status === ItwLifecycleStatus.ITW_LIFECYCLE_VALID &&
-            !itwLifecycle.integrityServiceReady && {
-              credentials: { eid: O.some({}) },
-              issuance: { integrityKeyTag: O.some("key-tag") }
-            })
+          ...(itwLifecycle.status ===
+            ItwLifecycleStatus.ITW_LIFECYCLE_VALID && {
+            credentials: { eid: O.some({}) },
+            issuance: { integrityKeyTag: O.some("key-tag") }
+          })
         }
       },
       trialSystem: {

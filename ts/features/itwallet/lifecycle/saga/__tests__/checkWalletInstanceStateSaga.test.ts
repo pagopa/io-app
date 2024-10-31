@@ -28,8 +28,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
-            integrityServiceReady: true
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED
           },
           issuance: { integrityKeyTag: O.none },
           credentials: { eid: O.none, credentials: [] }
@@ -49,8 +48,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL,
-            integrityServiceReady: false
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
           },
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
@@ -82,8 +80,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL,
-            integrityServiceReady: true
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
           },
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
@@ -117,8 +114,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
-            integrityServiceReady: true
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
           },
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
@@ -150,8 +146,7 @@ describe("checkWalletInstanceStateSaga", () => {
       features: {
         itWallet: {
           lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID,
-            integrityServiceReady: true
+            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
           },
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
