@@ -5,7 +5,6 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import PaymentsLoaderScreen from "../../common/components/PaymentsLoaderScreen";
 import WalletTransactionCartItemDetailsScreen from "../screens/PaymentsTransactionBizEventsCartItemDetailsScreen";
 import { PaymentsTransactionBizEventsDetailsScreen } from "../screens/PaymentsTransactionBizEventsDetailsScreen";
 import { PaymentsTransactionBizEventsListScreen } from "../screens/PaymentsTransactionBizEventsListScreen";
@@ -49,13 +48,6 @@ export const PaymentsTransactionBizEventsNavigator = () => (
       }
       component={PaymentsTransactionBizEventsPreviewScreen}
       options={{ gestureEnabled: isGestureEnabled }}
-    />
-    <Stack.Screen
-      name={
-        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LOADING_SCREEN
-      }
-      options={{ gestureEnabled: isGestureEnabled, headerShown: false }}
-      component={PaymentsLoaderScreen}
     />
   </Stack.Navigator>
 );
