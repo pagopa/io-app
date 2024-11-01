@@ -1,9 +1,10 @@
 import React from "react";
 import { Banner, IOSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Linking } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { trialStatusSelector } from "../../../trialSystem/store/reducers";
-import { itwTrialId } from "../../../../config";
+import { itwDocumentsOnIOUrl, itwTrialId } from "../../../../config";
 import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 
 type ItwUpcomingWalletBannerProps = {
@@ -30,6 +31,10 @@ export const ItwUpcomingWalletBanner = ({
         content={I18n.t(
           "features.itWallet.discovery.upcomingWalletBanner.content"
         )}
+        action={I18n.t(
+          "features.itWallet.discovery.upcomingWalletBanner.action"
+        )}
+        onPress={() => Linking.openURL(itwDocumentsOnIOUrl)}
       />
       {bottomSpacing && <VSpacer size={bottomSpacing} />}
     </>

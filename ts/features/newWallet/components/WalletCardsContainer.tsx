@@ -1,4 +1,8 @@
-import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  IOStyles,
+  ListItemHeader,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -21,8 +25,10 @@ import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
+import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { WalletCardCategoryFilter } from "../types";
 import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -31,6 +37,7 @@ import {
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -43,11 +50,15 @@ const WalletCardsContainer = () => {
 
   if (isLoading && cards.length === 0) {
     return (
-      <WalletCardSkeleton
-        testID="walletCardSkeletonTestID"
-        cardProps={{}}
-        isStacked={false}
-      />
+      <>
+        <WalletCardSkeleton
+          testID="walletCardSkeletonTestID"
+          cardProps={{}}
+          isStacked={false}
+        />
+        <VSpacer size={16} />
+        <WalletCardsCategoryRetryErrorBanner />
+      </>
     );
   }
 
@@ -84,15 +95,18 @@ const WalletCardsContainer = () => {
 const ItwCardsContainer = ({
   isStacked
 }: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
+  const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const navigation = useIONavigation();
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const isEidExpired = eidStatus === "expired";
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
-      title: <ItwEidInfoBottomSheetTitle />,
+      title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
       // Navigation does not seem to work when the bottom sheet's component is not inline
       component: <ItwEidInfoBottomSheetContent navigation={navigation} />
     },
@@ -117,7 +131,7 @@ const ItwCardsContainer = ({
     }
     return {
       iconName: "legalValue",
-      iconColor: "blueIO-500",
+      iconColor: isEidExpired ? "grey-300" : "blueIO-500",
       label: I18n.t("features.wallet.cards.categories.itw"),
       endElement: {
         type: "buttonLink",
@@ -140,7 +154,15 @@ const ItwCardsContainer = ({
         cards={cards}
         isStacked={isStacked}
         header={getHeader()}
-        topElement={<ItwWalletReadyBanner />}
+        topElement={
+          <>
+            <ItwWalletReadyBanner />
+            <ItwEidLifecycleAlert
+              lifecycleStatus={["expiring", "expired"]}
+              verticalSpacing={true}
+            />
+          </>
+        }
       />
       {isItwValid && eidInfoBottomSheet.bottomSheet}
     </>
