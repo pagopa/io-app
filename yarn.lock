@@ -2110,11 +2110,12 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
   integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
-"@pagopa/io-react-native-wallet@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.21.0.tgz#6ef096bf6864c9ebbc165a13eac7c3f8987b06a4"
-  integrity sha512-2k0gCbm7Qv0gllfp69V7AEFEPK3QlWqzRj99GsLVCdkLdb4zFtuQp+Ifxkp2IPPUyPYsZ0fqF67V4QFapzYJQQ==
+"@pagopa/io-react-native-wallet@^0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.22.0.tgz#98e77fe4550e196fffb0e5cd8a442da07763e78a"
+  integrity sha512-1+eWQj3vBHUK5iuEkE7aAI60Ksns6unD2TXnKsP8uo7fZOBCP3QfepLPDvopxWib/ScL1EpaIs2H2ORbs7NZ3Q==
   dependencies:
+    js-base64 "^3.7.7"
     js-sha256 "^0.9.0"
     parse-url "^9.2.0"
     react-native-url-polyfill "^2.0.0"
@@ -10081,6 +10082,11 @@ js-base64@^3.2.4:
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.4.tgz#af95b20f23efc8034afd2d1cc5b9d0adf7419037"
   integrity sha512-wpM/wi20Tl+3ifTyi0RdDckS4YTD4Lf953mBRrpG8547T7hInHNPEj8+ck4gB8VDcGyeAWFK++Wb/fU1BeavKQ==
+
+js-base64@^3.7.7:
+  version "3.7.7"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.7.tgz#e51b84bf78fbf5702b9541e2cb7bfcb893b43e79"
+  integrity sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==
 
 js-sha256@^0.9.0:
   version "0.9.0"

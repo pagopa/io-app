@@ -350,41 +350,54 @@ export const getCredentialExpireDays = (
   return differenceInCalendarDays(expireDate, Date.now());
 };
 
-/**
- * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
- * Use {@link getCredentialStatus} to also check the status attestation.
- * @param credential the parsed credential claims
- * @param expiringDays the number of days required to mark a credential as "EXPIRING"
- * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
- */
-export const getCredentialExpireStatus = (
-  credential: ParsedCredential,
-  expiringDays: number = 14
-): ItwCredentialStatus | undefined => {
-  const expireDays = getCredentialExpireDays(credential);
-
-  if (expireDays === undefined) {
-    return undefined;
-  }
-
-  return expireDays > expiringDays
-    ? "valid"
-    : expireDays > 0
-    ? "expiring"
-    : "expired";
+type GetCredentialStatusOptions = {
+  /**
+   * Number of days before expiration required to mark a credential as "EXPIRING".
+   */
+  expiringDays?: number;
+  /**
+   * Check the expiration using the JWT `exp` claim, not the credential itself.
+   */
+  checkJwtExpiration?: boolean;
 };
 
 /**
  * Get the overall status of the credential, taking into account
  * the status attestation if present and the credential's own expiration date.
+ *
+ * @param credential the stored credential
+ * @param options see {@link GetCredentialStatusOptions}
+ * @returns ItwCredentialStatus
  */
 export const getCredentialStatus = (
-  credential: StoredCredential
+  credential: StoredCredential,
+  options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus | undefined => {
   if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
     return "expired";
   }
-  return getCredentialExpireStatus(credential.parsedCredential);
+
+  const { checkJwtExpiration, expiringDays = 14 } = options;
+
+  const expireDate = checkJwtExpiration
+    ? credential.jwt.expiration
+    : getCredentialExpireDate(credential.parsedCredential);
+
+  if (expireDate === undefined) {
+    return undefined;
+  }
+
+  const expireDays = differenceInCalendarDays(expireDate, Date.now());
+
+  if (expireDays > expiringDays) {
+    return "valid";
+  }
+
+  if (expireDays > 0) {
+    return "expiring";
+  }
+
+  return "expired";
 };
 
 const FISCAL_CODE_REGEX =
