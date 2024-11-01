@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
@@ -22,7 +23,7 @@ export type PaymentsBizEventsTransactionState = {
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
   transactions: pot.noneLoading,
-  latestTransactions: pot.noneLoading,
+  latestTransactions: pot.none,
   details: pot.noneLoading,
   receiptDocument: pot.none
 };
@@ -58,9 +59,12 @@ const reducer = (
       };
     // GET TRANSACTIONS LIST
     case getType(getPaymentsBizEventsTransactionsAction.request):
+      const transactions = action.payload.firstLoad
+        ? pot.noneLoading
+        : pot.toLoading(state.transactions);
       return {
         ...state,
-        transactions: pot.toLoading(state.transactions)
+        transactions
       };
     case getType(getPaymentsBizEventsTransactionsAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);

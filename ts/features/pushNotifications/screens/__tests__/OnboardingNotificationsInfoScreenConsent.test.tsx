@@ -11,6 +11,7 @@ import * as notification from "../../utils";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import * as analytics from "../../analytics";
 import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -35,6 +36,7 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
 
   it("Click on the button continue check that the NOTIFICATIONS_INFO_SCREEN_CONSENT action is triggered", () => {
