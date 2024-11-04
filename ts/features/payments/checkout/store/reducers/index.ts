@@ -35,6 +35,10 @@ import {
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
 import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
+import {
+  FaultCodeCategoryEnum,
+  ValidationFaultPaymentGenericErrorAfterUserCancellationProblemJson
+} from "../../types/ValidationFaultPaymentGenericErrorAfterUserCancellationProblemJson";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -242,10 +246,23 @@ const reducer = (
         transaction: pot.none
       };
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
-    case getType(paymentsDeleteTransactionAction.failure):
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
+      };
+    case getType(paymentsDeleteTransactionAction.failure):
+      return {
+        ...state,
+        transaction: pot.toError(
+          state.transaction,
+          action.payload.kind === "generic"
+            ? {
+                faultCodeCategory:
+                  FaultCodeCategoryEnum.PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION,
+                faultCodeDetail: ""
+              }
+            : action.payload
+        )
       };
 
     // Authorization url
