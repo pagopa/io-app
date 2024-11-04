@@ -204,7 +204,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -787,7 +786,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1471,7 +1469,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneLoading 1`] 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1817,7 +1814,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneUpdating 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2163,7 +2159,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2746,7 +2741,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, non-empty 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -3092,7 +3086,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -3675,7 +3668,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, non-e
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4021,7 +4013,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4604,7 +4595,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, non
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4950,7 +4940,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5533,7 +5522,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, no
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5879,7 +5867,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -6462,7 +6449,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7146,7 +7132,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneLoading 1`] 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7492,7 +7477,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneUpdating 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7838,7 +7822,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -8421,7 +8404,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, non-empty 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -8767,7 +8749,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9350,7 +9331,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, non-e
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9696,7 +9676,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -10279,7 +10258,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, non
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -10625,7 +10603,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -11208,7 +11185,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, no
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

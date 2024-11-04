@@ -204,7 +204,6 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -550,7 +549,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2798,7 +2796,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5046,7 +5043,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5392,7 +5388,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7099,7 +7094,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -8806,7 +8800,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -10633,7 +10626,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -12460,7 +12452,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -13163,7 +13154,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -13866,7 +13856,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -14212,7 +14201,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

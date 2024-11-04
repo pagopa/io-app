@@ -204,7 +204,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

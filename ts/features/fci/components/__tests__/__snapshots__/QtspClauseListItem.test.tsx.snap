@@ -204,7 +204,6 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

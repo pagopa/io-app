@@ -204,7 +204,6 @@ exports[`MessageDetailsReminder should match snapshot when the due date is missi
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -550,7 +549,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is hidde
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -896,7 +894,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is loadi
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1278,7 +1275,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1825,7 +1821,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

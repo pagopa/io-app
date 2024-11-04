@@ -204,7 +204,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -558,7 +557,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -912,7 +910,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1266,7 +1263,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1620,7 +1616,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1974,7 +1969,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

@@ -204,7 +204,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -558,7 +557,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -904,7 +902,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1463,7 +1460,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2081,7 +2077,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2670,7 +2665,6 @@ exports[`PreconditionsContent should match snapshot when content category is und
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

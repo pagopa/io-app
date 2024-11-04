@@ -204,7 +204,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -827,7 +826,6 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1173,7 +1171,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1796,7 +1793,6 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

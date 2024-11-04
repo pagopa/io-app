@@ -204,7 +204,6 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -550,7 +549,6 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

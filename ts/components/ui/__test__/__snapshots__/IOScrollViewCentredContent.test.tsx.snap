@@ -204,7 +204,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1132,7 +1131,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2285,7 +2283,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -3327,7 +3324,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4149,7 +4145,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5196,7 +5191,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -6132,7 +6126,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7037,7 +7030,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -8167,7 +8159,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9186,7 +9177,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9985,7 +9975,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -11009,7 +10998,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

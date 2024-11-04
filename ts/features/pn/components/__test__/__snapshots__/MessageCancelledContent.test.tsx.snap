@@ -204,7 +204,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -683,7 +682,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1162,7 +1160,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1641,7 +1638,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2120,7 +2116,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -2599,7 +2594,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -3078,7 +3072,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -3557,7 +3550,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4036,7 +4028,6 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4515,7 +4506,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -4861,7 +4851,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5207,7 +5196,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5553,7 +5541,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -5899,7 +5886,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -6245,7 +6231,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -6591,7 +6576,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -6937,7 +6921,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7283,7 +7266,6 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7629,7 +7611,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -7975,7 +7956,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -8321,7 +8301,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -8667,7 +8646,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9013,7 +8991,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9359,7 +9336,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -9705,7 +9681,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -10051,7 +10026,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -10397,7 +10371,6 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

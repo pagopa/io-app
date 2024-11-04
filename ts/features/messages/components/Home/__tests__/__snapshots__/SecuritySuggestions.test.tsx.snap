@@ -204,7 +204,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

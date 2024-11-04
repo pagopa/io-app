@@ -204,7 +204,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1099,7 +1098,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1736,7 +1734,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >

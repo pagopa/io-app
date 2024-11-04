@@ -204,7 +204,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -843,7 +842,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1408,7 +1406,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
@@ -1938,7 +1935,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               "position": "absolute",
               "right": 0,
               "top": 0,
-              "zIndex": undefined,
             }
           }
         >
