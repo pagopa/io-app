@@ -21,7 +21,9 @@ export function* handleGetBizEventsTransactions(
       action,
       {
         size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
-        "x-continuation-token": action.payload.continuationToken
+        "x-continuation-token": action.payload.continuationToken,
+        is_debtor: action.payload.noticeCategory === "debtor" || undefined,
+        is_payer: action.payload.noticeCategory === "payer" || undefined
       },
       "Authorization"
     );
