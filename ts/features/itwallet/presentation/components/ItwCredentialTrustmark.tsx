@@ -372,7 +372,8 @@ const styles = StyleSheet.create({
     height: TRUSTMARK_HEIGHT,
     borderCurve: "continuous",
     borderRadius: buttonBorderRadius,
-    overflow: "hidden"
+    overflow: "hidden",
+    marginVertical: 8
   },
   gradientView: {
     ...StyleSheet.absoluteFillObject
