@@ -16,7 +16,7 @@ import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
-import { FaultCodeCategoryEnum } from "../../types/ValidationFaultPaymentGenericErrorAfterUserCancellationProblemJson";
+import { FaultCodeCategoryEnum } from "../../types/PaymentGenericErrorAfterUserCancellationProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   paymentsCalculatePaymentFeesAction,
