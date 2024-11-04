@@ -8,12 +8,54 @@ import {
 } from "../../../../../../utils/errors";
 import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import {
+  cgnMerchantsCount,
   cgnOfflineMerchants,
   cgnOnlineMerchants,
   cgnSearchMerchants,
   cgnSelectedMerchant
 } from "../../../store/actions/merchants";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+
+export function* cgnGetMerchantsCountSaga(
+  getMerchantsCount: ReturnType<
+    typeof BackendCgnMerchants
+  >["getMerchantsCount"],
+  cgnGetMerchantCountRequest: ReturnType<typeof cgnMerchantsCount.request>
+) {
+  try {
+    const getMerchantsCountRequest = getMerchantsCount({
+      body: cgnGetMerchantCountRequest.payload
+    });
+    const getMerchantsCountResult = (yield* call(
+      withRefreshApiCall,
+      getMerchantsCountRequest
+    )) as unknown as SagaCallReturnType<typeof getMerchantsCount>;
+
+    if (E.isLeft(getMerchantsCountResult)) {
+      yield* put(
+        cgnMerchantsCount.failure(
+          getGenericError(
+            new Error(readableReport(getMerchantsCountResult.left))
+          )
+        )
+      );
+      return;
+    }
+
+    if (getMerchantsCountResult.right.status === 200) {
+      yield* put(
+        cgnMerchantsCount.success(getMerchantsCountResult.right.value)
+      );
+      return;
+    }
+
+    throw new Error(
+      `Response in status ${getMerchantsCountResult.right.status}`
+    );
+  } catch (e) {
+    yield* put(cgnSearchMerchants.failure(getNetworkError(e)));
+  }
+}
 
 export function* cgnSearchMerchantsSaga(
   searchMerchants: ReturnType<typeof BackendCgnMerchants>["searchMerchants"],

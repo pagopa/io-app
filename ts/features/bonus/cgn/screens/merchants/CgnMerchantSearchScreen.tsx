@@ -39,10 +39,16 @@ import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import CGN_ROUTES from "../../navigation/routes";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { cgnSearchMerchantsSelector } from "../../store/reducers/merchants";
+import {
+  cgnMerchantsCountSelector,
+  cgnSearchMerchantsSelector
+} from "../../store/reducers/merchants";
 import { getValue } from "../../../../../common/model/RemoteValue";
 import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
-import { cgnSearchMerchants } from "../../store/actions/merchants";
+import {
+  cgnMerchantsCount,
+  cgnSearchMerchants
+} from "../../store/actions/merchants";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
@@ -94,20 +100,26 @@ export function CgnMerchantSearchScreen() {
     [searchTextDebouncedTrimmed]
   );
 
+  const merchantsCountRemoteValue = useIOSelector(cgnMerchantsCountSelector);
+  useEffect(() => {
+    dispatch(cgnMerchantsCount.request());
+  }, [dispatch]);
+  const merchantsCount = getValue(merchantsCountRemoteValue);
+
   const renderListEmptyComponent = useCallback(() => {
     if (searchText.trim().length < MIN_SEARCH_TEXT_LENGTH) {
       return (
         <EmptyList
           pictogram="searchLens"
           title={I18n.t("bonus.cgn.merchantSearch.emptyList", {
-            merchantCount: 100 // TODO
+            merchantCount: merchantsCount
           })}
         />
       );
     }
 
     return null;
-  }, [searchText]);
+  }, [merchantsCount, searchText]);
 
   const handleCancel = useCallback(() => {
     navigation.goBack();

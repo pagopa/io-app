@@ -4,6 +4,8 @@ import {
   createFetchRequestForApi
 } from "@pagopa/ts-commons/lib/requests";
 import {
+  countDefaultDecoder,
+  CountT,
   getDiscountBucketCodeDefaultDecoder,
   GetDiscountBucketCodeT,
   getMerchantDefaultDecoder,
@@ -21,6 +23,14 @@ import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 const BASE_URL = "/api/v1/cgn/operator-search";
+
+const getMerchantsCount: CountT = {
+  method: "get",
+  url: () => `${BASE_URL}/count`,
+  query: _ => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: countDefaultDecoder()
+};
 
 const searchMerchants: SearchT = {
   method: "post",
@@ -91,6 +101,9 @@ export function BackendCgnMerchants(
   const withToken = withBearerToken(token);
 
   return {
+    getMerchantsCount: withToken(
+      createFetchRequestForApi(getMerchantsCount, options)
+    ),
     searchMerchants: withToken(
       createFetchRequestForApi(searchMerchants, options)
     ),

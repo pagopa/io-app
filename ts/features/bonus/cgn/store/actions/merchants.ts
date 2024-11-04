@@ -12,6 +12,16 @@ import { SearchRequest } from "../../../../../../definitions/cgn/merchants/Searc
 import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
 import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { CountResult } from "../../../../../../definitions/cgn/merchants/CountResult";
+
+/**
+ * count merchants conventioned with CGN
+ */
+export const cgnMerchantsCount = createAsyncAction(
+  "CGN_MERCHANTS_COUNT_REQUEST",
+  "CGN_MERCHANTS_COUNT_SUCCESS",
+  "CGN_MERCHANTS_COUNT_FAILURE"
+)<void, CountResult, NetworkError>();
 
 /**
  * search merchants conventioned with CGN
@@ -59,6 +69,7 @@ export const resetMerchantDiscountCode = createStandardAction(
 )<void>();
 
 export type CgnMerchantsAction =
+  | ActionType<typeof cgnMerchantsCount>
   | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnOfflineMerchants>
   | ActionType<typeof cgnOnlineMerchants>
