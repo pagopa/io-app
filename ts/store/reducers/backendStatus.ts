@@ -9,7 +9,6 @@ import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { identity } from "io-ts";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
@@ -211,7 +210,7 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     backendStatusSelector,
     O.chainNullableK(bs => bs.config.landing_banners),
     O.chainNullableK(bs => bs.priority_order),
-    O.fold(() => emptyArray, identity)
+    O.getOrElse(() => emptyArray)
   );
 
 /**

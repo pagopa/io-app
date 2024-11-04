@@ -55,7 +55,7 @@ import {
 import {
   landingScreenBannersReducer,
   LandingScreenBannerState
-} from "../../../LandingScreenMultiBanner/store/reducer";
+} from "../../../landingScreenMultiBanner/store/reducer";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;

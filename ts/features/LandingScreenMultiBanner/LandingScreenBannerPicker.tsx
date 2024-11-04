@@ -22,6 +22,6 @@ export const LandingScreenBannerPicker = () => {
   if (bannerToRender === undefined) {
     return <></>;
   }
-
-  return landingScreenBannerMap[bannerToRender].component(closeHandler);
+  const entry = landingScreenBannerMap[bannerToRender];
+  return entry?.component(closeHandler);
 };

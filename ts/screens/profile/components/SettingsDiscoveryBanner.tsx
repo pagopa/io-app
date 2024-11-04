@@ -8,6 +8,9 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { hasUserAcknowledgedSettingsBannerSelector } from "../../../features/profileSettings/store/selectors";
 import { setHasUserAcknowledgedSettingsBanner } from "../../../features/profileSettings/store/actions";
 
+// the two components are divided in order to
+// use the `standalone` version in flows where its visibility logic it not handled,
+// and the base version in flows where it instead is handled externally
 export const SettingsDiscoveryBannerStandalone = () => {
   const dispatch = useIODispatch();
   const hasUserAcknowledgedSettingsBanner = useIOSelector(

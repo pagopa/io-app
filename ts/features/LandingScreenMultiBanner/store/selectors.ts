@@ -1,9 +1,11 @@
 import { createSelector, createStructuredSelector } from "reselect";
 import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderabilitySelectorsFromBannerMap } from "../utils/bannerRenderableSelectors";
-import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
-import { LandingScreenBannerId } from "./reducer";
+import { renderabilitySelectorsFromBannerMap } from "../utils";
+import {
+  LandingScreenBannerId,
+  landingScreenBannerMap
+} from "../utils/landingScreenBannerMap";
 
 export const localBannerVisibilitySelector = (state: GlobalState) =>
   state.features.landingBanners;
@@ -28,13 +30,13 @@ export const landingScreenBannerToRenderSelector = createSelector(
   ],
   (
     backendBanners,
-    localVisibility,
-    renderabilityDataById
+    isReduxEnabledById,
+    isRenderableById
   ): LandingScreenBannerId | undefined => {
     const availableBanners = backendBanners.filter(
       (id): id is LandingScreenBannerId =>
-        localVisibility[id as LandingScreenBannerId] === true &&
-        renderabilityDataById[id as LandingScreenBannerId] === true
+        isReduxEnabledById[id as LandingScreenBannerId] === true &&
+        isRenderableById[id as LandingScreenBannerId] === true
     );
     return availableBanners[0]; // id || undefined
   }

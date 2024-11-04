@@ -10,12 +10,8 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { LandingScreenBannerPicker } from "../../LandingScreenBannerPicker";
 import { updateLandingScreenBannerVisibility } from "../../store/actions";
-import { LandingScreenBannerId } from "../../store/reducer";
 import * as SELECTORS from "../../store/selectors";
-
-const MyComponent = ({ callback }: { callback: () => void }) => (
-  <Button title="TEST" testID="button-test" onPress={callback} />
-);
+import { LandingScreenBannerId } from "../landingScreenBannerMap";
 
 jest.mock("../landingScreenBannerMap", () => ({
   get landingScreenBannerMap() {
@@ -41,8 +37,15 @@ jest.mock("../landingScreenBannerMap", () => ({
     };
   }
 }));
-const bannerId = "TESTING" as unknown as LandingScreenBannerId;
+jest.mock("../../store/reducer.ts", () => ({
+  landingScreenBannersReducer: (state: object) => ({ ...state })
+}));
 
+const MyComponent = ({ callback }: { callback: () => void }) => (
+  <Button title="TEST" testID="button-test" onPress={callback} />
+);
+
+const bannerId = "TESTING" as LandingScreenBannerId;
 describe("LandingBannerPicker", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -55,7 +58,7 @@ describe("LandingBannerPicker", () => {
     jest.spyOn(useIO, "useIODispatch").mockImplementation(() => jest.fn());
 
     const component = renderComponent();
-
+    expect(component).toBeDefined();
     expect(component.toJSON()).toMatchSnapshot("withBanner");
   });
 
@@ -65,6 +68,7 @@ describe("LandingBannerPicker", () => {
       .mockImplementation(_ => undefined);
 
     const component = renderComponent();
+    expect(component).toBeDefined();
 
     expect(component.toJSON()).toMatchSnapshot("noBanner");
   });
@@ -76,6 +80,8 @@ describe("LandingBannerPicker", () => {
     jest.spyOn(useIO, "useIODispatch").mockImplementation(() => testDispatch);
 
     const component = renderComponent();
+    expect(component).toBeDefined();
+
     const button = await component.findByTestId("button-test");
     fireEvent.press(button);
 
@@ -85,9 +91,9 @@ describe("LandingBannerPicker", () => {
   });
 });
 
-function renderComponent(
-  component: React.ReactElement | null = <LandingScreenBannerPicker />
-) {
+const renderComponent = (
+  component: React.ReactElement = <LandingScreenBannerPicker />
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => component,
@@ -95,4 +101,4 @@ function renderComponent(
     {},
     createStore(appReducer, globalState as any)
   );
-}
+};

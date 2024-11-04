@@ -11,7 +11,7 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { LandingScreenBannerPicker } from "../../../LandingScreenMultiBanner/LandingScreenBannerPicker";
+import { LandingScreenBannerPicker } from "../../../landingScreenMultiBanner/LandingScreenBannerPicker";
 import { trackPullToRefresh } from "../../analytics";
 import {
   messageListForCategorySelector,

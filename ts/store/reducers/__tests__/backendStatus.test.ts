@@ -6,7 +6,8 @@ import {
   BackendStatusState,
   barcodesScannerConfigSelector,
   isPnAppVersionSupportedSelector,
-  isPremiumMessagesOptInOutEnabledSelector
+  isPremiumMessagesOptInOutEnabledSelector,
+  landingScreenBannerOrderSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
 import * as appVersion from "../../../utils/appVersion";
@@ -208,4 +209,64 @@ describe("isPnAppVersionSupportedSelector", () => {
     const isSupported = isPnAppVersionSupportedSelector(state);
     expect(isSupported).toBe(true);
   });
+});
+
+describe("landingScreenBannerOrderSelector", () => {
+  const getMock = (priority_order: any) =>
+    ({
+      backendStatus: {
+        status: O.some({
+          config: {
+            landing_banners: {
+              priority_order
+            }
+          }
+        })
+      }
+    } as GlobalState);
+
+  const some_priorityOrder = ["id1", "id2", "id3"];
+  const customNoneStore = {
+    backendStatus: {
+      status: O.none
+    }
+  } as GlobalState;
+  const undefinedLandingBannersStore = {
+    backendStatus: {
+      status: O.some({
+        config: {}
+      })
+    }
+  } as GlobalState;
+  const testCases = [
+    {
+      selectorInput: getMock(some_priorityOrder),
+      expected: some_priorityOrder
+    },
+    {
+      selectorInput: getMock(undefined),
+      expected: []
+    },
+    {
+      selectorInput: getMock([]),
+      expected: []
+    },
+    {
+      selectorInput: customNoneStore,
+      expected: []
+    },
+    {
+      selectorInput: undefinedLandingBannersStore,
+      expected: []
+    }
+  ];
+
+  for (const testCase of testCases) {
+    it(`should return [${testCase.expected}] for ${JSON.stringify(
+      testCase.selectorInput.backendStatus.status
+    )}`, () => {
+      const output = landingScreenBannerOrderSelector(testCase.selectorInput);
+      expect(output).toStrictEqual(testCase.expected);
+    });
+  }
 });

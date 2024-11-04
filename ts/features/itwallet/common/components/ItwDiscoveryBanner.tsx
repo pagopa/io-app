@@ -5,16 +5,14 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import {
   trackItWalletBannerClosure,
   trackItWalletBannerTap,
   trackITWalletBannerVisualized
 } from "../../analytics";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { isItwDiscoveryBannerRenderableSelector } from "../store/index/selectors";
 
 // the two components are divided in order to
 // use the `standalone` version in flows where its visibility logic it not handled,
@@ -37,18 +35,16 @@ export const ItwDiscoveryBannerStandalone = (
 ) => {
   const [isVisible, setVisible] = React.useState(true);
 
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const isBannerRenderable = useIOSelector(
+    isItwDiscoveryBannerRenderableSelector
+  );
 
-  const isItwTrialActive = useIOSelector(isItwTrialActiveSelector);
   const shouldBeHidden = React.useMemo(
     () =>
       // Banner should be hidden if:
       !isVisible || // The user closed it by pressing the `x` button
-      !isItwTrialActive || // The user is not part of the trial
-      isItwValid || // The user already activated the wallet
-      !isItwEnabled, // The IT Wallet features is not enabled
-    [isVisible, isItwTrialActive, isItwValid, isItwEnabled]
+      !isBannerRenderable, // the various validity checks fail
+    [isBannerRenderable, isVisible]
   );
   // end logic
   if (shouldBeHidden) {
@@ -70,6 +66,7 @@ type WrapperlessBannerProps = {
   closable?: boolean;
   handleOnClose?: () => void;
 };
+
 /**
  * to use in case the banner's visibility has to be handled externally
  * (see MultiBanner feature for the landing screen)
@@ -107,7 +104,6 @@ export const ItwDiscoveryBanner = ({
     trackItWalletBannerClosure(trackBannerProperties);
     handleOnClose?.();
   };
-  // trailID
 
   return (
     <View style={!ignoreMargins && styles.margins}>

@@ -2,8 +2,7 @@ import * as React from "react";
 import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
-import { LandingScreenBannerId } from "../store/reducer";
-import { isItwDiscoveryBannerRenderableSelector } from "./bannerRenderableSelectors";
+import { isItwDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/index/selectors";
 
 type ComponentWithCloseHandler = (
   closeHandler: () => void
@@ -16,6 +15,14 @@ type ComponentAndLogic = {
 export type BannerMapById = {
   [key in LandingScreenBannerId]: ComponentAndLogic;
 };
+export type LandingScreenBannerId =
+  keyof typeof LANDING_SCREEN_BANNERS_ENABLED_MAP;
+
+export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
+  ITW_DISCOVERY: true,
+  SETTINGS_DISCOVERY: true
+} as const;
+
 export const landingScreenBannerMap: BannerMapById = {
   ITW_DISCOVERY: {
     component: closeHandler => (
