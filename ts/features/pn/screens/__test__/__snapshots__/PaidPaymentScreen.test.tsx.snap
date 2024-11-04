@@ -63,6 +63,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -77,6 +78,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -139,6 +141,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -728,6 +731,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -907,6 +911,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

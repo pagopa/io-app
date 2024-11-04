@@ -118,6 +118,7 @@ exports[`PspRadioItem match snapshot 1`] = `
         width={24}
       >
         <RNSVGGroup
+          color="#0073E6"
           fill={
             {
               "payload": 4278190080,
@@ -242,6 +243,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0073E6"
                     fill={
                       {
                         "payload": 4278190080,
@@ -358,6 +360,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0073E6"
                     fill={
                       {
                         "payload": 4278190080,
@@ -499,6 +502,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0073E6"
                     fill={
                       {
                         "payload": 4278190080,

@@ -66,6 +66,7 @@ exports[`StatusContent should match the snapshot 1`] = `
       width={24}
     >
       <RNSVGGroup
+        color="#17324D"
         fill={
           {
             "payload": 4278190080,

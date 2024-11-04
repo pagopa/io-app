@@ -32,7 +32,7 @@ jest.mock("react-native-reanimated", () => {
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
   // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
-  Reanimated.default.addWhitelistedUIProps = () => { };
+  Reanimated.default.addWhitelistedUIProps = () => {};
 
   return {
     ...Reanimated,
@@ -111,7 +111,7 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     ...turboModuleRegistry,
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
-      const modulesToMock = ["RNDocumentPicker"];
+      const modulesToMock = ["RNDocumentPicker", "RNHapticFeedback"];
       if (modulesToMock.includes(name)) {
         return null;
       }

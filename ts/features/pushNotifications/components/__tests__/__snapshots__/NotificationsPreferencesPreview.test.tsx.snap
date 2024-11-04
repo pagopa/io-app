@@ -204,6 +204,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -415,6 +418,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#2351E6"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -769,6 +773,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -783,6 +788,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -845,6 +851,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -980,6 +987,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#2351E6"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1334,6 +1342,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1348,6 +1357,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1410,6 +1420,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1545,6 +1556,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#2351E6"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1899,6 +1911,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1913,6 +1926,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1975,6 +1989,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2110,6 +2125,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#2351E6"
                               fill={
                                 {
                                   "payload": 4278190080,

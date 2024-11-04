@@ -63,6 +63,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -77,6 +78,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -139,6 +141,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1323,6 +1326,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                   width={20}
                                 >
                                   <RNSVGGroup
+                                    color="#FFFFFF"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1549,6 +1553,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                   width={20}
                                 >
                                   <RNSVGGroup
+                                    color="#FFFFFF"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1941,6 +1946,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2059,6 +2065,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2073,6 +2080,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2135,6 +2143,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3319,6 +3328,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                   width={20}
                                 >
                                   <RNSVGGroup
+                                    color="#FFFFFF"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3545,6 +3555,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                   width={20}
                                 >
                                   <RNSVGGroup
+                                    color="#FFFFFF"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3937,6 +3948,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

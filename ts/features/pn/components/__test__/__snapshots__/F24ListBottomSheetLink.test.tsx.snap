@@ -204,6 +204,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -668,6 +671,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -892,6 +896,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1116,6 +1121,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1340,6 +1346,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1564,6 +1571,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1788,6 +1796,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2012,6 +2021,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2236,6 +2246,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2460,6 +2471,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2684,6 +2696,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2934,6 +2947,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2948,6 +2962,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3010,6 +3025,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3430,6 +3446,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3444,6 +3461,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3506,6 +3524,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3894,6 +3913,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,

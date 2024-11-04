@@ -63,6 +63,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -77,6 +78,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -139,6 +141,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -343,6 +346,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#2351E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1396,6 +1400,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1514,6 +1519,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1528,6 +1534,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1590,6 +1597,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1794,6 +1802,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#2351E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2848,6 +2857,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2966,6 +2976,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2980,6 +2991,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3042,6 +3054,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3246,6 +3259,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#2351E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4300,6 +4314,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4418,6 +4433,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4432,6 +4448,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4494,6 +4511,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4698,6 +4716,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#2351E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5752,6 +5771,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5870,6 +5890,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5884,6 +5905,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5946,6 +5968,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6150,6 +6173,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#2351E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7643,6 +7667,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

@@ -204,6 +204,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={23}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -401,6 +404,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -679,6 +683,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -693,6 +698,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -755,6 +761,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={24}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -876,6 +883,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1154,6 +1162,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1168,6 +1177,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1230,6 +1240,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={22}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1351,6 +1362,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1629,6 +1641,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1643,6 +1656,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1705,6 +1719,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={26}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1826,6 +1841,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2104,6 +2120,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2118,6 +2135,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2180,6 +2198,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={27}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2301,6 +2320,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -2579,6 +2599,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2593,6 +2614,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2655,6 +2677,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={25}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2776,6 +2799,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -3054,6 +3078,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3068,6 +3093,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3130,6 +3156,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={20}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3251,6 +3278,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -3529,6 +3557,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3543,6 +3572,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3605,6 +3635,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={21}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3726,6 +3757,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -4004,6 +4036,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4018,6 +4051,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4080,6 +4114,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={19}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4201,6 +4236,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -4479,6 +4515,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4493,6 +4530,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4555,6 +4593,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={14}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4822,6 +4861,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4836,6 +4876,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4898,6 +4939,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={15}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5165,6 +5207,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5179,6 +5222,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5241,6 +5285,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={13}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5508,6 +5553,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5522,6 +5568,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5584,6 +5631,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={17}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5851,6 +5899,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5865,6 +5914,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5927,6 +5977,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={18}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6194,6 +6245,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6208,6 +6260,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6270,6 +6323,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={16}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6537,6 +6591,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6551,6 +6606,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6613,6 +6669,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={11}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6880,6 +6937,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6894,6 +6952,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6956,6 +7015,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7223,6 +7283,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -7237,6 +7298,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7299,6 +7361,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7566,6 +7629,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -7580,6 +7644,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7642,6 +7707,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7909,6 +7975,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -7923,6 +7990,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7985,6 +8053,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8252,6 +8321,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -8266,6 +8336,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8328,6 +8399,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8595,6 +8667,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -8609,6 +8682,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8671,6 +8745,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8938,6 +9013,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -8952,6 +9028,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9014,6 +9091,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9281,6 +9359,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -9295,6 +9374,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9357,6 +9437,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9624,6 +9705,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -9638,6 +9720,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9700,6 +9783,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9967,6 +10051,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -9981,6 +10066,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10043,6 +10129,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -10310,6 +10397,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -10324,6 +10412,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10386,6 +10475,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

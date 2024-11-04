@@ -204,6 +204,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -798,6 +801,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         width={16}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -925,6 +929,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         width={16}
                                       >
                                         <RNSVGGroup
+                                          color="#555C70"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1172,6 +1177,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1186,6 +1192,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1248,6 +1255,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1821,6 +1829,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         width={16}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1948,6 +1957,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         width={16}
                                       >
                                         <RNSVGGroup
+                                          color="#555C70"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2195,6 +2205,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2209,6 +2220,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2271,6 +2283,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2567,6 +2580,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2910,6 +2924,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         width={16}
                                       >
                                         <RNSVGGroup
+                                          color="#427940"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -3194,6 +3209,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3208,6 +3224,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3270,6 +3287,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3566,6 +3584,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -3964,6 +3983,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         width={16}
                                       >
                                         <RNSVGGroup
+                                          color="#427940"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -4248,6 +4268,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4262,6 +4283,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4324,6 +4346,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4620,6 +4643,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -5118,6 +5142,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5132,6 +5157,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5194,6 +5220,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5490,6 +5517,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -6043,6 +6071,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6057,6 +6086,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6119,6 +6149,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6792,6 +6823,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6806,6 +6838,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6868,6 +6901,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

@@ -15,7 +15,6 @@ exports[`Overlay Should match all-properties snapshot 1`] = `
         {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",

@@ -63,6 +63,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -77,6 +78,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -139,6 +141,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -231,7 +234,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                 0,
                               ]
                             }
-                            style={{}}
                           >
                             <View>
                               <View
@@ -1117,6 +1119,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1298,6 +1301,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

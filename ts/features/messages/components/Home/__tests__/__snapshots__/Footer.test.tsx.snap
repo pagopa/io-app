@@ -204,6 +204,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -547,6 +550,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -561,6 +565,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -623,6 +628,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

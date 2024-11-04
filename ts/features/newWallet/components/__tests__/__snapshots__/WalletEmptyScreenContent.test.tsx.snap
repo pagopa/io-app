@@ -204,6 +204,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -651,6 +654,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                 width={20}
                               >
                                 <RNSVGGroup
+                                  color="#FFFFFF"
                                   fill={
                                     {
                                       "payload": 4278190080,

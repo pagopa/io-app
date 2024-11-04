@@ -204,6 +204,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -424,6 +427,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -543,6 +547,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -692,6 +697,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -844,6 +850,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,

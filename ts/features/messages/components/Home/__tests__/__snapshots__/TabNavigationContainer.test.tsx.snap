@@ -204,6 +204,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -481,6 +484,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     width={16}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -663,6 +667,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     width={16}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -938,6 +943,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -952,6 +958,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1014,6 +1021,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1215,6 +1223,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     width={16}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1410,6 +1419,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     width={16}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
