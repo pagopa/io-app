@@ -9,12 +9,14 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
+import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
+import { FaultCodeCategoryEnum } from "../../types/ValidationFaultPaymentGenericErrorAfterUserCancellationProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   paymentsCalculatePaymentFeesAction,
@@ -34,11 +36,6 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
-import {
-  FaultCodeCategoryEnum,
-  ValidationFaultPaymentGenericErrorAfterUserCancellationProblemJson
-} from "../../types/ValidationFaultPaymentGenericErrorAfterUserCancellationProblemJson";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
