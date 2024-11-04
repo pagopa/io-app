@@ -66,15 +66,17 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_REVERSAL_ERROR";
     case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
       return "PAYMENT_WEBVIEW_USER_CANCELLATION";
+    case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+      return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
     default:
       return outcome;
   }
 };
 
 export const getPaymentAnalyticsEventFromRequestFailure = (
-  falure: WalletPaymentFailure
+  failure: WalletPaymentFailure
 ) => {
-  switch (falure.faultCodeCategory) {
+  switch (failure.faultCodeCategory) {
     case "PAYMENT_UNAVAILABLE":
       return "PAYMENT_TECHNICAL_ERROR";
     case "PAYMENT_DATA_ERROR":
@@ -91,6 +93,8 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
       return "PAYMENT_ALREADY_PAID_ERROR";
     case "PAYMENT_UNKNOWN":
       return "PAYMENT_NOT_FOUND_ERROR";
+    case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
+      return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
     default:
       return "PAYMENT_GENERIC_ERROR";
   }
