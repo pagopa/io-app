@@ -35,7 +35,7 @@ export interface ItwLifecycleState {
 
 export const itwLifecycleInitialState: ItwLifecycleState = {
   status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED,
-  integrityServiceReady: false
+  integrityServiceReady: undefined
 };
 
 /**
