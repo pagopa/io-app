@@ -127,6 +127,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_DYNAMIC_BACKGROUND",
       title: "Dynamic header background"
     },
+    IRIDESCENT_TRUSTMARK: {
+      route: "DS_IRIDESCENT_TRUSTMARK",
+      title: "Iridescent trustmark"
+    },
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
