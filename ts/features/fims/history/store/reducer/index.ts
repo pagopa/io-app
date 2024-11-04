@@ -23,7 +23,7 @@ export type FimsHistoryState = {
   consentsList: pot.Pot<ConsentsResponseDTO, string>;
 };
 
-const INITIAL_STATE: FimsHistoryState = {
+export const INITIAL_STATE: FimsHistoryState = {
   historyExportState: remoteUndefined,
   consentsList: pot.none
 };
