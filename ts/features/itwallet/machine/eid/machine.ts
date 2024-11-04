@@ -153,12 +153,18 @@ export const itwEidIssuanceMachine = setup({
             "trackWalletInstanceRevocation"
           ]
         },
-        onError: {
-          actions: assign(
-            setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
-          ),
-          target: "#itwEidIssuanceMachine.Failure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(
+              setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
+            ),
+            target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
       }
     },
     WalletInstanceAttestationObtainment: {
