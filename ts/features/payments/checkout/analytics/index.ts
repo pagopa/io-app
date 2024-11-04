@@ -74,9 +74,9 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
 };
 
 export const getPaymentAnalyticsEventFromRequestFailure = (
-  falure: WalletPaymentFailure
+  failure: WalletPaymentFailure
 ) => {
-  switch (falure.faultCodeCategory) {
+  switch (failure.faultCodeCategory) {
     case "PAYMENT_UNAVAILABLE":
       return "PAYMENT_TECHNICAL_ERROR";
     case "PAYMENT_DATA_ERROR":
