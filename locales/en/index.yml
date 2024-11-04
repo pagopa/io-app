@@ -281,8 +281,8 @@ inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
-settings: 
-  informativeBanner: 
+settings:
+  informativeBanner:
     content: Looking for your profile? We have moved it, it is now in the top right corner!
     action: Go to Settings
 profile:
@@ -3430,10 +3430,10 @@ features:
       alerts:
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
-          action: Scopri di più
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
-          action: "Scopri di più"
+        edc:
+          content: "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3521,7 +3521,7 @@ support:
   panicMode:
     title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
-  errorGetZendeskToken: 
+  errorGetZendeskToken:
     title: Sorry, we're unable to open a service request at the moment.
     subtitle: Try again later
   askPermissions:
