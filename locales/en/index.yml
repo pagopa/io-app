@@ -281,8 +281,8 @@ inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
-settings: 
-  informativeBanner: 
+settings:
+  informativeBanner:
     content: Looking for your profile? We have moved it, it is now in the top right corner!
     action: Go to Settings
 profile:
@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
-      description: If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+      description: If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
       actions:
         primary:
           label: Yes, log in with CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Sorry, you don't meet the minimum age requirement
       subtitle: You must be at least 18 years old
+    missing_saml_response:
+      title: It was not possible to access
+      subtitle: It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes.
     generic:
       title: Sorry, access was not available.
       subtitle: A problem occurred while logging in. Please try again in a few minutes.
@@ -3209,6 +3212,15 @@ features:
         banner:
           label: "The loading of the receipts failed."
           retryButton: "Retry"
+      filters:
+        tabs:
+          all: Tutte
+          payer: Pagate da me
+          debtor: Intestate a me
+      list:
+        empty:
+          title: Nessuna ricevuta trovata
+          subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
     details:
       payPal:
         banner:
@@ -3298,7 +3310,7 @@ features:
         action: Scopri di più
     identification:
       mode:
-        title: Verfica la tua identità
+        title: Verifica la tua identità
         description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
@@ -3324,7 +3336,7 @@ features:
         secondaryAction: Continua
       notMatchingIdentityScreen:
         title: "Tutti i documenti saranno rimossi da IO"
-        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
+        subtitle: "Se accedi con una nuova identità, le versioni digitali dei documenti che hai aggiunto al Portafoglio saranno rimosse e Documenti su IO disattivata."
         action: "Continua con la nuova identità"
       loading:
         cieId:
@@ -3373,14 +3385,13 @@ features:
       notMatchingIdentityError:
         title: Identità non riconosciuta
         body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
-        primaryAction: Ho capito
+        primaryAction: Ripeti l'accesso
         secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
-        body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
-        primaryAction: Riprova
-        secondaryAction: Chiudi
-      notEntitledCredentialError: 
+        body: "L’ente che emette le versioni digitali dei documenti sta riscontrando dei problemi ed è già al lavoro per risolverli: riprova più tardi."
+        primaryAction: Chiudi
+      notEntitledCredentialError:
         title: Non è possibile aggiungere il documento
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
@@ -3410,10 +3421,10 @@ features:
       alerts:
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
-          action: Scopri di più
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
-          action: "Scopri di più"
+        edc:
+          content: "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3428,11 +3439,14 @@ features:
           content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
+          titleExpired: "Documenti su IO:\nverifica la tua identità"
           contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
           contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
           triggerLabel: Cos'è?
           alert:
-            valid: L'ultima verifica è del {{issuanceDate}}.
+            valid: L'ultima verifica è del {{date}}.
+            expiring: Verifica la tua identità entro il {{date}}.
+            expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
       credentialDetails:
         flipCardFront: "Show back"
         flipCardBack: "Show front"
@@ -3498,7 +3512,7 @@ support:
   panicMode:
     title: "We cannot help you at the moment"
     body: "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
-  errorGetZendeskToken: 
+  errorGetZendeskToken:
     title: Sorry, we're unable to open a service request at the moment.
     subtitle: Try again later
   askPermissions:

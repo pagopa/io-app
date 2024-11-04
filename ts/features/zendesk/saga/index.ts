@@ -1,11 +1,5 @@
 // watch for all actions regarding Zendesk
-import {
-  takeLatest,
-  select,
-  call,
-  put,
-  takeEvery
-} from "typed-redux-saga/macro";
+import { takeLatest, select, call, put } from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -117,7 +111,7 @@ function* getZendeskTokenSaga(
     const response = (yield* call(
       withRefreshApiCall,
       getSession({ fields }),
-      getZendeskToken.failure("401") // if the error is 401 the error screen is not show thanks this parameter
+      getZendeskToken.request()
     )) as SagaCallReturnType<typeof getSession>;
 
     if (E.isLeft(response)) {
@@ -147,5 +141,5 @@ function* getZendeskTokenSaga(
 export function* watchGetZendeskTokenSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ) {
-  yield* takeEvery(getZendeskToken.request, getZendeskTokenSaga, getSession);
+  yield* takeLatest(getZendeskToken.request, getZendeskTokenSaga, getSession);
 }
