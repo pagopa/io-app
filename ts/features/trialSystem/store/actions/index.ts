@@ -5,10 +5,11 @@ import {
 } from "typesafe-actions";
 import { TrialId } from "../../../../../definitions/trial_system/TrialId";
 import { Subscription } from "../../../../../definitions/trial_system/Subscription";
+import { TrialSystemError } from "../../utils/error";
 
 type ErrorPayload = {
   trialId: TrialId;
-  error: Error;
+  error: TrialSystemError;
 };
 
 export const trialSystemActivationStatusUpsert = createAsyncAction(

@@ -37,7 +37,7 @@ export function* updateCredentialStatusAttestationSaga(
       ...credential,
       storedStatusAttestation: {
         credentialStatus:
-          error instanceof Errors.StatusAttestationInvalid
+          error instanceof Errors.CredentialInvalidStatusError
             ? "invalid" // The credential was revoked
             : "unknown" // We do not have enough information on the status, the error was unexpected
       }
