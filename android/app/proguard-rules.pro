@@ -97,9 +97,6 @@
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
 
-#Instabug
--dontwarn com.instabug.**
-
 # React-native Keychain
 -keep class com.facebook.crypto.** {
    *;
