@@ -93,6 +93,8 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
       return "PAYMENT_ALREADY_PAID_ERROR";
     case "PAYMENT_UNKNOWN":
       return "PAYMENT_NOT_FOUND_ERROR";
+    case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
+      return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
     default:
       return "PAYMENT_GENERIC_ERROR";
   }
