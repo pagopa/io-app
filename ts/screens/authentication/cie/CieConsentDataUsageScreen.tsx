@@ -49,7 +49,9 @@ const CieConsentDataUsageScreen = () => {
   const dispatch = useIODispatch();
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
-  const [errorCode, setErrorCode] = useState<string | undefined>();
+  const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
+    string | undefined
+  >();
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
   const loginSuccessDispatch = useCallback(
@@ -106,11 +108,11 @@ const CieConsentDataUsageScreen = () => {
   );
 
   const handleLoginFailure = useCallback(
-    (errorCode?: string) => {
+    (code?: string, message?: string) => {
       setHasError(true);
-      setErrorCode(errorCode);
+      setErrorCodeOrMessage(code);
       loginFailureDispatch(
-        new Error(`login CIE failure with code ${errorCode || "n/a"}`)
+        new Error(`login CIE failure with code ${code || message || "n/a"}`)
       );
     },
     [loginFailureDispatch]
@@ -130,19 +132,23 @@ const CieConsentDataUsageScreen = () => {
   );
 
   useEffect(() => {
-    if (hasError && errorCode === "22") {
+    if (hasError && errorCodeOrMessage === "22") {
       trackLoginCieDataSharingError();
     }
-  }, [errorCode, hasError]);
+  }, [errorCodeOrMessage, hasError]);
 
   useEffect(() => {
     if (hasError) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTH_ERROR_SCREEN,
-        params: { errorCode, authMethod: "CIE", authLevel: "L2" }
+        params: {
+          errorCodeOrMessage,
+          authMethod: "CIE",
+          authLevel: "L2"
+        }
       });
     }
-  }, [errorCode, hasError, navigation]);
+  }, [errorCodeOrMessage, hasError, navigation]);
 
   if (isLoginSuccess) {
     return <LoaderComponent />;

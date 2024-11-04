@@ -18,6 +18,7 @@ type LoginSuccess = {
 type LoginFailure = {
   success: false;
   errorCode?: string;
+  errorMessage?: string;
 };
 
 type LoginResult = LoginSuccess | LoginFailure;
@@ -64,10 +65,14 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   // LOGIN_FAILURE
   if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
     const errorCode = urlParse.query.errorCode;
+    const errorMessage = urlParse.query.errorMessage;
     trackLoginSpidError(errorCode);
     return {
       success: false,
-      errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode
+      errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode,
+      errorMessage: isStringNullyOrEmpty(errorMessage)
+        ? undefined
+        : errorMessage
     };
   }
   // Url is not LOGIN related
@@ -84,7 +89,7 @@ export const getIdpLoginUri = (idpId: string, level: number) =>
  */
 export const onLoginUriChanged =
   (
-    onFailure: (errorCode: string | undefined) => void,
+    onFailure: (errorCode?: string, errorMessage?: string) => void,
     onSuccess: (_: SessionToken) => void
   ) =>
   (navState: WebViewNavigation): boolean => {
@@ -98,7 +103,7 @@ export const onLoginUriChanged =
           return true;
         } else {
           // In case of login failure
-          onFailure(loginResult.errorCode);
+          onFailure(loginResult.errorCode, loginResult.errorMessage);
         }
       }
     }

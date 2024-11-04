@@ -76,11 +76,13 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
 
   const handleLoginFailure = useCallback(
-    (code?: string) => {
+    (code?: string, message?: string) => {
       // TODO: Check missing SAML response (error message) https://pagopa.atlassian.net/browse/IOPID-2406
       dispatch(
         loginFailure({
-          error: new Error(`login failure with code ${code || "n/a"}`),
+          error: new Error(
+            `login failure with code ${code || message || "n/a"}`
+          ),
           idp: "cie"
         })
       );
@@ -90,7 +92,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       navigation.replace(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTH_ERROR_SCREEN,
         params: {
-          errorCode: code,
+          errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
           authLevel: "L2",
           params: { spidLevel, isUat }
