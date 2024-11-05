@@ -17,7 +17,7 @@ import {
 import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
 import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
-import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
+import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { Timeline, TimelineItemProps } from "./Timeline";
 
 const topBottomSheetMargin = 122;

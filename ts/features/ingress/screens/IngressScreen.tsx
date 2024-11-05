@@ -15,7 +15,7 @@ import { trackIngressScreen } from "../../../screens/profile/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus";
+import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { setIsBlockingScreen } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";

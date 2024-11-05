@@ -11,7 +11,7 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "../../utils";
-import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { computeAndTrackPaymentStart } from "./detailsUtils";
 
