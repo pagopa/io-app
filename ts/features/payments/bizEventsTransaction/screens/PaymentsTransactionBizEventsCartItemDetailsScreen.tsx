@@ -1,20 +1,22 @@
-import * as React from "react";
-import { ScrollView } from "react-native";
 import {
   Divider,
   H6,
   IOStyles,
-  ListItemInfo
+  ListItemInfo,
+  ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
-import I18n from "../../../../i18n";
+import * as React from "react";
+import { ScrollView } from "react-native";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
-import { formatAmountText } from "../utils";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import * as analytics from "../analytics";
+import I18n from "../../../../i18n";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../analytics";
+import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
+import { formatAmountText } from "../utils";
 
 export type PaymentsTransactionBizEventsCartItemDetailsScreenParams = {
   cartItem: CartItem;
@@ -67,7 +69,7 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
           </>
         )}
         {cartItem.debtor &&
-          (cartItem.debtor.name || cartItem.debtor.taxCode) && (
+          (cartItem.debtor.name ?? cartItem.debtor.taxCode) && (
             <>
               <ListItemInfo
                 label={I18n.t("transaction.details.operation.debtor")}
@@ -78,18 +80,28 @@ const PaymentsTransactionBizEventsCartItemDetailsScreen = () => {
           )}
         {cartItem.refNumberValue && (
           <>
-            <ListItemInfo
+            <ListItemInfoCopy
+              onPress={() =>
+                clipboardSetStringWithFeedback(cartItem.refNumberValue)
+              }
               label={I18n.t("transaction.details.operation.noticeCode")}
+              accessibilityLabel={I18n.t(
+                "transaction.details.operation.noticeCode"
+              )}
               value={cartItem.refNumberValue}
             />
             <Divider />
           </>
         )}
         {cartItem.payee && (
-          <ListItemInfo
-            numberOfLines={4}
+          <ListItemInfoCopy
+            onPress={() =>
+              clipboardSetStringWithFeedback(cartItem.payee?.taxCode ?? "")
+            }
             label={I18n.t("transaction.details.operation.taxCode")}
-            value={cartItem.payee.taxCode}
+            accessibilityLabel={I18n.t("transaction.details.operation.taxCode")}
+            value={cartItem.payee?.taxCode}
+            numberOfLines={4}
           />
         )}
       </ScrollView>

@@ -1,7 +1,7 @@
 import { AlertEdgeToEdgeProps } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { useIOSelector } from "../store/hooks";
-import { statusMessageByRouteSelector } from "../store/reducers/backendStatus";
+import { statusMessageByRouteSelector } from "../store/reducers/backendStatus/statusMessages";
 import { getFullLocale } from "../utils/locale";
 import { LevelEnum } from "../../definitions/content/StatusMessage";
 
