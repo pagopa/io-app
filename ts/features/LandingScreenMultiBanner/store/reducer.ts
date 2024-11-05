@@ -19,10 +19,13 @@ export const landingScreenBannersReducer = (
 ) => {
   switch (action.type) {
     case getType(updateLandingScreenBannerVisibility):
-      return {
-        ...state,
-        [action.payload.id]: action.payload.enabled
-      };
+      if (state[action.payload.id] !== undefined) {
+        // this is to avoid possible invalid ids to be written in store
+        return {
+          ...state,
+          [action.payload.id]: action.payload.enabled
+        };
+      }
   }
   return state;
 };

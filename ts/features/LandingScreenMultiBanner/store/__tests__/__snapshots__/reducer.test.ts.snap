@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`landingScreenBannersReducer should match snapshot 1`] = `
+exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 1`] = `
 {
   "ITW_DISCOVERY": true,
   "SETTINGS_DISCOVERY": true,
 }
 `;
-

@@ -1,9 +1,10 @@
+import * as Reselect from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { LandingScreenBannerState } from "../reducer";
-import {
-  landingScreenBannerToRenderSelector,
-  localBannerVisibilitySelector
-} from "../selectors";
+import * as SELECTORS from "../selectors";
+
+// eslint-disable-next-line functional/immutable-data
+process.env.NODE_ENV = "test";
 
 const mockState = {
   features: {
@@ -13,6 +14,56 @@ const mockState = {
     }
   }
 } as GlobalState;
+
+const testLandingMap = {
+  item1: {
+    isRenderableSelector: () => true
+  },
+
+  item2: {
+    isRenderableSelector: () => false
+  }
+};
+jest.mock("../../utils/landingScreenBannerMap", () => ({
+  get landingScreenBannerMap() {
+    return testLandingMap;
+  }
+}));
+
+describe("unifiedRenderabilitySelectors", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
+  type UnifiedRenderabilityRes = { [key: string]: boolean };
+  type UnifiedRenderability = ReturnType<
+    typeof Reselect.createStructuredSelector<
+      GlobalState,
+      UnifiedRenderabilityRes
+    >
+  >;
+
+  type TestImportType = typeof SELECTORS & {
+    unifiedRenderability: UnifiedRenderability;
+  };
+
+  it("should correctly be exported when env='test'", () => {
+    const unifiedRenderabilitySelectors = (SELECTORS as TestImportType)
+      .unifiedRenderability;
+    expect(unifiedRenderabilitySelectors).toBeDefined();
+  });
+  it("should correctly use the landingScreenBannerMap to evaluate to a [bannerMapKey]:boolean result", () => {
+    const unifiedRenderabilitySelectors = (SELECTORS as TestImportType)
+      .unifiedRenderability;
+    expect(
+      unifiedRenderabilitySelectors(undefined as unknown as GlobalState)
+    ).toEqual({
+      item1: true,
+      item2: false
+    });
+  });
+});
 
 describe("LandingScreenBannerToRenderSelector", () => {
   const testCases = [
@@ -186,7 +237,8 @@ describe("LandingScreenBannerToRenderSelector", () => {
 
   testCases.forEach(item => {
     it(item.title, () => {
-      const resultFunc = landingScreenBannerToRenderSelector.resultFunc;
+      const resultFunc =
+        SELECTORS.landingScreenBannerToRenderSelector.resultFunc;
       const result = resultFunc(
         item.backendStatus,
         item.reduxVisibility as LandingScreenBannerState,
@@ -199,7 +251,7 @@ describe("LandingScreenBannerToRenderSelector", () => {
 
 describe("localBannerVisiblitySelector", () => {
   it("should return the local visibility", () => {
-    const result = localBannerVisibilitySelector(mockState);
+    const result = SELECTORS.localBannerVisibilitySelector(mockState);
     expect(result).toEqual(mockState.features.landingBanners);
   });
 });

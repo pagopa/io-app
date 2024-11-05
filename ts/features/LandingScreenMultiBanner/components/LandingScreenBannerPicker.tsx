@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { landingScreenBannerToRenderSelector } from "./store/selectors";
-import { landingScreenBannerMap } from "./utils/landingScreenBannerMap";
-import { updateLandingScreenBannerVisibility } from "./store/actions";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { landingScreenBannerToRenderSelector } from "../store/selectors";
+import { updateLandingScreenBannerVisibility } from "../store/actions";
+import { landingScreenBannerMap } from "../utils/landingScreenBannerMap";
 
 export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();

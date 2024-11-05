@@ -8,10 +8,10 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { LandingScreenBannerPicker } from "../../LandingScreenBannerPicker";
 import { updateLandingScreenBannerVisibility } from "../../store/actions";
 import * as SELECTORS from "../../store/selectors";
 import { LandingScreenBannerId } from "../landingScreenBannerMap";
+import { LandingScreenBannerPicker } from "../../components/LandingScreenBannerPicker";
 
 jest.mock("../landingScreenBannerMap", () => ({
   get landingScreenBannerMap() {
@@ -91,12 +91,10 @@ describe("LandingBannerPicker", () => {
   });
 });
 
-const renderComponent = (
-  component: React.ReactElement = <LandingScreenBannerPicker />
-) => {
+const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => component,
+    () => <LandingScreenBannerPicker />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     createStore(appReducer, globalState as any)

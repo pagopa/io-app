@@ -6,9 +6,9 @@ import { BannerMapById } from "./landingScreenBannerMap";
  * and indexes them by ID
  * ----
  * @param bannerMap
- * a {[bannerID]:{ isRenderableSelector: Selector, foo:bar } } map
+ * a `{[bannerID]:{ isRenderableSelector: Selector, foo:bar } }` map
  * @returns
- * a {[bannerID]: isRenderableSelector } map
+ * a `{[bannerID]: isRenderableSelector }` map
  */
 export const renderabilitySelectorsFromBannerMap = (bannerMap: BannerMapById) =>
   mapValues(bannerMap, ({ isRenderableSelector }) => isRenderableSelector);

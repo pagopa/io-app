@@ -29,15 +29,20 @@ export const landingScreenBannerToRenderSelector = createSelector(
     unifiedRenderabilitySelectors
   ],
   (
-    backendBanners,
-    isReduxEnabledById,
+    backendBannerOrder,
+    isLocalEnabledById,
     isRenderableById
   ): LandingScreenBannerId | undefined => {
-    const availableBanners = backendBanners.filter(
+    const availableBanners = backendBannerOrder.filter(
       (id): id is LandingScreenBannerId =>
-        isReduxEnabledById[id as LandingScreenBannerId] === true &&
+        isLocalEnabledById[id as LandingScreenBannerId] === true &&
         isRenderableById[id as LandingScreenBannerId] === true
     );
     return availableBanners[0]; // id || undefined
   }
 );
+
+if (process.env.NODE_ENV === "test") {
+  // eslint-disable-next-line functional/immutable-data
+  module.exports.unifiedRenderability = unifiedRenderabilitySelectors;
+}
