@@ -3215,7 +3215,7 @@ features:
       filters:
         tabs:
           all: Tutte
-          payer: Pagate da me
+          payer: Paid in app
           debtor: Intestate a me
       list:
         empty:
