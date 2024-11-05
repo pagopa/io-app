@@ -1,8 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import reducer, { INITIAL_STATE } from "..";
-import { remoteLoading } from "../../../../../../common/model/RemoteValue";
+import reducer, { FimsExportSuccessStates, INITIAL_STATE } from "..";
+import {
+  isError,
+  isReady,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../../../common/model/RemoteValue";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { fimsHistoryGet } from "../../actions";
+import { fimsHistoryExport, fimsHistoryGet } from "../../actions";
 import { ConsentsResponseDTO } from "../../../../../../../definitions/fims/ConsentsResponseDTO";
 import { Consent } from "../../../../../../../definitions/fims/Consent";
 
@@ -165,3 +173,174 @@ describe("fimsHistoryReducer, receiving fimsHistoryGet.success", () => {
     });
   });
 });
+
+describe("fimsHistoryReducer, receiving fimsHistoryGet.failure", () => {
+  const consentsData = {
+    items: [
+      {
+        id: "01JBXRH74QWKN21SA1Q8KQZG97",
+        service_id: "01JBXRHCYN6HDM2FNYBG40EPYF",
+        timestamp: new Date()
+      }
+    ],
+    continuationToken: "01JBXRGCN4RJRE0TCGR2Z86DZP"
+  };
+  [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(consentsData),
+    pot.noneError("An error"),
+    pot.some(consentsData),
+    pot.someLoading(consentsData),
+    pot.someUpdating(consentsData, consentsData),
+    pot.someError(consentsData, "An error")
+  ].forEach(consentsDataPot => {
+    it(`Given a '${
+      consentsDataPot.kind
+    }' initial state, it should keep same value for 'historyExportState', have an error pot for 'consentsList'${
+      pot.isSome(consentsDataPot) ? " and keep its inner value" : ""
+    }`, () => {
+      const initialState = {
+        consentsList: consentsDataPot,
+        historyExportState: remoteLoading
+      };
+      const errorReason = "This is the error reason";
+      const fimsHistoryGetFailure = fimsHistoryGet.failure(errorReason);
+
+      const historyState = reducer(initialState, fimsHistoryGetFailure);
+
+      expect(historyState.historyExportState).toEqual(remoteLoading);
+      const stateConsentsList = historyState.consentsList;
+      expect(pot.isError(stateConsentsList)).toBe(true);
+
+      if (!pot.isError(stateConsentsList)) {
+        throw Error(
+          "Test is failing: historyState.consentsList should be pot.error"
+        );
+      }
+
+      expect(stateConsentsList.error).toBe(errorReason);
+
+      if (pot.isSome(consentsDataPot)) {
+        expect(pot.isSome(stateConsentsList)).toBe(true);
+        if (!pot.isSome(stateConsentsList)) {
+          throw Error(
+            "Test is failing: historyState.consentsList should be pot.someError"
+          );
+        }
+        expect(stateConsentsList.value).toBe(consentsData);
+      }
+    });
+  });
+});
+
+const generateInitialConsentsList = () =>
+  pot.someError(
+    {
+      items: [
+        {
+          id: "01JBXSV418Y8BC511JMBSS33GM",
+          service_id: "01JBXSV79PBB4DGJ5V84RQX4H9",
+          timestamp: new Date()
+        }
+      ],
+      continuationToken: "01JBXSTE8J0WG7CAFMK6KKDS6C"
+    },
+    "There was an error"
+  );
+
+const generateHistoryExportInitialStatuses = (): ReadonlyArray<
+  RemoteValue<FimsExportSuccessStates, null>
+> => [
+  remoteUndefined,
+  remoteLoading,
+  remoteReady("SUCCESS"),
+  remoteReady("ALREADY_EXPORTING"),
+  remoteError(null)
+];
+
+describe("fimsHistoryReducer, receiving fimsHistoryExport.request", () =>
+  generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
+    it(`Given initial 'historyExportState' of type '${
+      historyExportInitialState.kind
+    } ${
+      isReady(historyExportInitialState) ? historyExportInitialState.value : ""
+    }', it should set 'historyExportState' to 'remoteLoading' and preserve the value in 'consentsList'`, () => {
+      const initialState = {
+        consentsList: generateInitialConsentsList(),
+        historyExportState: historyExportInitialState
+      };
+      const fimsHistoryExportRequest = fimsHistoryExport.request();
+
+      const historyState = reducer(initialState, fimsHistoryExportRequest);
+
+      expect(historyState.consentsList).toEqual(initialState.consentsList);
+      expect(historyState.historyExportState).toBe(remoteLoading);
+    });
+  }));
+
+describe("fimsHistoryReducer, receiving fimsHistoryExport.success", () =>
+  generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
+    const initialState = {
+      consentsList: generateInitialConsentsList(),
+      historyExportState: historyExportInitialState
+    };
+    (
+      ["SUCCESS", "ALREADY_EXPORTING"] as ReadonlyArray<FimsExportSuccessStates>
+    ).forEach(exportState =>
+      it(`Given initial 'historyExportState' of type '${
+        historyExportInitialState.kind
+      } ${
+        isReady(historyExportInitialState)
+          ? historyExportInitialState.value
+          : ""
+      }', it should set 'historyExportState' to 'remoteReady', matching the action's '${exportState}' value and preserve the value in 'consentsList'`, () => {
+        const fimsHistoryExportSuccess = fimsHistoryExport.success(exportState);
+
+        const historyState = reducer(initialState, fimsHistoryExportSuccess);
+
+        expect(historyState.consentsList).toEqual(initialState.consentsList);
+
+        const historyExportState = historyState.historyExportState;
+        expect(isReady(historyExportState)).toBe(true);
+
+        if (!isReady(historyExportState)) {
+          throw Error(
+            "Test failure: 'historyState.historyExportState' should be 'remoteReady'"
+          );
+        }
+
+        expect(historyExportState.value).toBe(exportState);
+      })
+    );
+  }));
+
+describe("fimsHistoryReducer, receiving fimsHistoryExport.failure", () =>
+  generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
+    const initialState = {
+      consentsList: generateInitialConsentsList(),
+      historyExportState: historyExportInitialState
+    };
+    it(`Given initial 'historyExportState' of type '${
+      historyExportInitialState.kind
+    } ${
+      isReady(historyExportInitialState) ? historyExportInitialState.value : ""
+    }', it should set 'historyExportState' to 'remoteError' with a 'null' value and preserve the value in 'consentsList'`, () => {
+      const fimsHistoryExportFailure = fimsHistoryExport.failure();
+
+      const historyState = reducer(initialState, fimsHistoryExportFailure);
+
+      expect(historyState.consentsList).toEqual(initialState.consentsList);
+
+      const historyExportState = historyState.historyExportState;
+      expect(isError(historyExportState)).toBe(true);
+
+      if (!isError(historyExportState)) {
+        throw Error(
+          "Test failure: 'historyState.historyExportState' should be 'remoteError'"
+        );
+      }
+
+      expect(historyExportState.error).toBeNull();
+    });
+  }));
