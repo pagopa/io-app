@@ -241,8 +241,8 @@ export function* initializeApplicationSaga(
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
-  const backendStatus = yield* select(remoteConfigSelector);
-  if (O.isNone(backendStatus)) {
+  const remoteConfig = yield* select(remoteConfigSelector);
+  if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
   }
 

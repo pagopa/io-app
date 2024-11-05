@@ -12,7 +12,7 @@ import I18n from "../../i18n";
 import { backendInfoMessageSelector } from "../../store/reducers/backendStatus/backendInfo";
 import { getFullLocale } from "../../utils/locale";
 const SystemOffModal = () => {
-  const backendInfoMessage = useSelector(backendInfoMessageSelector);
+  const backendInfoMessage = useSelector(backendInfoMessageSelector, _.isEqual);
   const locale = getFullLocale();
 
   const subtitle = React.useMemo(() => {
