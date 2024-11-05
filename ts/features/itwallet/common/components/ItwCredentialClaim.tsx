@@ -54,17 +54,19 @@ const PlaceOfBirthClaimItem = ({
  * @param label - the label of the claim
  * @param claim - the claim value
  */
-const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => (
-  <ListItemInfo
-    label={label}
-    value={I18n.t(
-      `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
-    )}
-    accessibilityLabel={I18n.t(
-      `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
-    )}
-  />
-);
+const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => {
+  const value = I18n.t(
+    `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+  );
+
+  return (
+    <ListItemInfo
+      label={label}
+      value={value}
+      accessibilityLabel={`${label}: ${value}`}
+    />
+  );
+};
 
 /**
  * Component which renders a generic text type claim.
@@ -109,6 +111,8 @@ const DateClaimItem = ({
   claim: Date;
   status?: ItwCredentialStatus;
 }) => {
+  // Remove the timezone offset to display the date in its original format
+
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
@@ -224,7 +228,7 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
         accessibilityIgnoresInvertColors
       />
     }
-    accessibilityLabel={`${label} ${claim}`}
+    accessibilityLabel={`${label}`}
   />
 );
 
@@ -267,11 +271,11 @@ const DrivingPrivilegesClaimItem = ({
   detailsButtonVisible?: boolean;
 }) => {
   const localExpiryDate = localeDateFormat(
-    new Date(claim.expiry_date),
+    claim.expiry_date,
     I18n.t("global.dateFormats.shortFormat")
   );
   const localIssueDate = localeDateFormat(
-    new Date(claim.issue_date),
+    claim.issue_date,
     I18n.t("global.dateFormats.shortFormat")
   );
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({

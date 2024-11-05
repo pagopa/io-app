@@ -1,4 +1,5 @@
 import { calculateTotalAmount, formatAmountText, getPayerInfoLabel } from "..";
+import { InfoNotice } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
 
 describe("formatAmountText", () => {
   it('should format "1000.00" as "1.000,00 €"', () => {
@@ -54,7 +55,7 @@ describe("getPayerInfoLabel", () => {
   });
 
   it("should return only the name if taxCode is not provided", () => {
-    const payer = { name: "John Doe" };
+    const payer = { name: "John Doe" } as InfoNotice["payer"];
     const result = getPayerInfoLabel(payer);
     expect(result).toBe("John Doe");
   });
@@ -62,7 +63,13 @@ describe("getPayerInfoLabel", () => {
   it("should return only the taxCode if name is not provided", () => {
     const payer = { taxCode: "123456789" };
     const result = getPayerInfoLabel(payer);
-    expect(result).toBe("(123456789)");
+    expect(result).toBe("123456789");
+  });
+
+  it("should return only the taxCode if name is empty string", () => {
+    const payer = { taxCode: "123456789", name: "" };
+    const result = getPayerInfoLabel(payer);
+    expect(result).toBe("123456789");
   });
 
   it("should return name and taxCode formatted correctly", () => {
@@ -72,7 +79,7 @@ describe("getPayerInfoLabel", () => {
   });
 
   it("should return an empty string if both name and taxCode are not provided", () => {
-    const payer = {};
+    const payer = {} as InfoNotice["payer"];
     const result = getPayerInfoLabel(payer);
     expect(result).toBe("");
   });
@@ -91,67 +98,70 @@ describe("calculateTotalAmount", () => {
   });
 
   it("should return undefined if amount is not provided", () => {
-    const transactionInfo = { fee: "2.50" };
+    const transactionInfo = { fee: "2.50" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBeUndefined();
   });
 
   it("should return amount without fee if fee is not provided", () => {
-    const transactionInfo = { amount: "10.00" };
+    const transactionInfo = { amount: "10.00" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("10.00");
   });
 
   it("should return the correct total amount for valid input with dot as decimal separator", () => {
-    const transactionInfo = { amount: "10.00", fee: "2.50" };
+    const transactionInfo = { amount: "10.00", fee: "2.50" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("12.50");
   });
 
   it("should return the correct total amount for valid input with comma as decimal separator", () => {
-    const transactionInfo = { amount: "10,00", fee: "2,50" };
+    const transactionInfo = { amount: "10,00", fee: "2,50" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("12.50");
   });
 
   it("should handle large numbers correctly", () => {
-    const transactionInfo = { amount: "1000000.50", fee: "2000000.25" };
+    const transactionInfo = {
+      amount: "1000000.50",
+      fee: "2000000.25"
+    } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("3000000.75");
   });
 
   it("should handle negative values correctly", () => {
-    const transactionInfo = { amount: "-10.00", fee: "2.50" };
+    const transactionInfo = { amount: "-10.00", fee: "2.50" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("-7.50");
   });
 
   it("should return undefined for non-numeric values", () => {
-    const transactionInfo = { amount: "abc", fee: "2.50" };
+    const transactionInfo = { amount: "abc", fee: "2.50" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBeUndefined();
   });
 
   it("should return undefined for NaN results", () => {
-    const transactionInfo = { amount: "NaN", fee: "2.50" };
+    const transactionInfo = { amount: "NaN", fee: "2.50" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBeUndefined();
   });
 
   it("should return undefined if amount and fee are empty strings", () => {
-    const transactionInfo = { amount: "", fee: "" };
+    const transactionInfo = { amount: "", fee: "" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBeUndefined();
   });
 
   it("should handle trailing and leading spaces in input", () => {
-    const transactionInfo = { amount: " 10.00 ", fee: " 2.50 " };
+    const transactionInfo = { amount: " 10.00 ", fee: " 2.50 " } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("12.50");
   });
 
   it("should handle very small numbers", () => {
-    const transactionInfo = { amount: "0.0001", fee: "0.0002" };
+    const transactionInfo = { amount: "0.0001", fee: "0.0002" } as InfoNotice;
     const result = calculateTotalAmount(transactionInfo);
     expect(result).toBe("0.00");
   });

@@ -1,4 +1,7 @@
-import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
+import {
+  HeaderActionProps,
+  HeaderFirstLevel
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useCallback, useMemo } from "react";
@@ -21,6 +24,7 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -76,6 +80,7 @@ type Props = {
  * THIS COMPONENT WILL BE REMOVED ONCE REACT NAVIGATION WILL BE UPGRADED TO V6
  */
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
+  const alertProps = useStatusAlertProps(currentRouteName);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
@@ -148,7 +153,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }
   }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
 
-  const settingsAction: ActionProp = useMemo(
+  const settingsAction: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -157,7 +162,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [navigateToSettingMainScreen]
   );
 
-  const settingsActionInMessageSection: ActionProp = useMemo(
+  const settingsActionInMessageSection: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -166,7 +171,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [navigateToSettingMainScreenFromMessageSection]
   );
 
-  const settingsActionInServicesSection: ActionProp = useMemo(
+  const settingsActionInServicesSection: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -185,7 +190,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [currentRouteName]
   );
   const startSupportRequest = useStartSupportRequest(requestParams);
-  const helpAction: ActionProp = useMemo(
+  const helpAction: HeaderActionProps = useMemo(
     () => ({
       icon: "help",
       accessibilityLabel: I18n.t(
@@ -196,7 +201,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [startSupportRequest]
   );
 
-  const searchMessageAction: ActionProp = useMemo(
+  const searchMessageAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),
@@ -205,7 +210,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [messageSearchCallback]
   );
 
-  const searchInstitutionAction: ActionProp = useMemo(
+  const searchInstitutionAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),
@@ -215,9 +220,13 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   );
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
+    const commonProp = {
+      ignoreSafeAreaMargin: !!alertProps
+    };
     switch (currentRouteName) {
       case SERVICES_ROUTES.SERVICES_HOME:
         return {
+          ...commonProp,
           title: I18n.t("services.title"),
           type: "threeActions",
           firstAction: helpAction,
@@ -228,6 +237,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       // and isSettingsVisibleAndHideProfileSelector FF will be deleted
       case ROUTES.PROFILE_MAIN:
         return {
+          ...commonProp,
           title: I18n.t("profile.main.title"),
           type: "singleAction",
           firstAction: helpAction
@@ -246,6 +256,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
       case ROUTES.PAYMENTS_HOME:
         return {
+          ...commonProp,
           title: I18n.t("features.payments.title"),
           firstAction: helpAction,
           ...(isSettingsVisibleAndHideProfile
@@ -258,6 +269,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
+          ...commonProp,
           skipHeaderAutofocus: true,
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
@@ -274,14 +286,15 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
     }
   }, [
+    alertProps,
     currentRouteName,
     helpAction,
+    settingsActionInServicesSection,
+    searchInstitutionAction,
     isSettingsVisibleAndHideProfile,
     settingsAction,
-    searchMessageAction,
-    searchInstitutionAction,
     settingsActionInMessageSection,
-    settingsActionInServicesSection
+    searchMessageAction
   ]);
 
   return (

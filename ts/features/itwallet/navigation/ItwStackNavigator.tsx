@@ -22,6 +22,7 @@ import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidF
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen";
+import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen";
 import {
   ItWalletIssuanceMachineProvider,
   ItwCredentialIssuanceMachineContext,
@@ -31,6 +32,8 @@ import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnbo
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
+import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
+import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -71,6 +74,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
         component={ItwDiscoveryInfoScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
+        component={ItwIpzsPrivacyScreen}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
@@ -156,6 +163,11 @@ const InnerNavigator = () => {
          * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
          */
       />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={ItwIssuanceCredentialAsyncContinuationScreen}
+        options={hiddenHeader}
+      />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
@@ -171,6 +183,12 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         component={ItwIdentityNotMatchingScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+
+      <Stack.Screen
+        name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
+        component={ItwLifecycleWalletRevocationScreen}
         options={{ headerShown: false, gestureEnabled: false }}
       />
     </Stack.Navigator>

@@ -10,7 +10,12 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
+import {
+  NavigatorScreenParams,
+  Route,
+  useFocusEffect,
+  useRoute
+} from "@react-navigation/native";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -27,17 +32,30 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
   body: "authentication.opt_in.contextualHelpContent"
 };
 
-export type ChosenIdentifier = {
-  identifier: "SPID" | "CIE";
-};
+export type ChosenIdentifier =
+  | {
+      identifier: "SPID" | "CIE";
+    }
+  | {
+      identifier: "CIE_ID";
+      params: CieIdLoginProps;
+    };
 
 export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
+
+const authScreensMap = {
+  CIE: ROUTES.CIE_PIN_SCREEN,
+  SPID: ROUTES.AUTHENTICATION_IDP_SELECTION,
+  CIE_ID: ROUTES.AUTHENTICATION_CIE_ID_LOGIN
+};
 
 const OptInScreen = () => {
   useHeaderSecondLevel({
@@ -52,8 +70,8 @@ const OptInScreen = () => {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
   } = useSecuritySuggestionsBottomSheet();
-  const { identifier } =
-    useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>().params;
+  const { params } =
+    useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>();
   const navigation = useIONavigation();
   const store = useIOStore();
 
@@ -63,18 +81,25 @@ const OptInScreen = () => {
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
+  const getNavigationParams =
+    (): NavigatorScreenParams<AuthenticationParamsList> => {
+      if (params.identifier === "CIE_ID") {
+        return {
+          screen: authScreensMap[params.identifier],
+          params: params.params
+        };
+      }
+
+      return { screen: authScreensMap[params.identifier] };
+    };
+
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
       void trackLoginSessionOptIn365(store.getState());
     } else {
       void trackLoginSessionOptIn30(store.getState());
     }
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen:
-        identifier === "CIE"
-          ? ROUTES.CIE_PIN_SCREEN
-          : ROUTES.AUTHENTICATION_IDP_SELECTION
-    });
+    navigation.navigate(ROUTES.AUTHENTICATION, getNavigationParams());
     dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
 
@@ -136,10 +161,12 @@ const OptInScreen = () => {
         <FeatureInfo
           pictogramName="notification"
           body={I18n.t("authentication.opt_in.notification")}
-          actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-          actionOnPress={() => {
-            trackLoginSessionOptInInfo();
-            return presentSecuritySuggestionBottomSheet();
+          action={{
+            label: I18n.t("authentication.opt_in.security_suggests"),
+            onPress: () => {
+              trackLoginSessionOptInInfo();
+              return presentSecuritySuggestionBottomSheet();
+            }
           }}
         />
       </ContentWrapper>

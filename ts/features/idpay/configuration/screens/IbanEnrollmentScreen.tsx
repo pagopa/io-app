@@ -4,8 +4,7 @@ import {
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
@@ -16,47 +15,66 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
-import { ConfigurationMode } from "../xstate/context";
-import { useConfigurationMachineService } from "../xstate/provider";
+import {
+  isLoadingSelector,
+  isUpsertingSelector
+} from "../../common/machine/selectors";
+import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   ibanListSelector,
-  isLoadingSelector,
-  isUpsertingIbanSelector,
   selectEnrolledIban,
   selectIsIbanOnlyMode
-} from "../xstate/selectors";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
-import { useIOSelector } from "../../../../store/hooks";
+} from "../machine/selectors";
+import { IdPayConfigurationParamsList } from "../navigation/params";
+import { ConfigurationMode } from "../types";
 
-type IbanEnrollmentScreenRouteParams = {
+export type IdPayIbanEnrollmentScreenParams = {
   initiativeId?: string;
 };
 
-type IbanEnrollmentScreenRouteProps = RouteProp<
-  IDPayConfigurationParamsList,
-  "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
+type RouteProps = RouteProp<
+  IdPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_IBAN_ENROLLMENT"
 >;
 
-const IbanEnrollmentScreen = () => {
-  const route = useRoute<IbanEnrollmentScreenRouteProps>();
-  const { initiativeId } = route.params;
+export const IbanEnrollmentScreen = () => {
+  const { params } = useRoute<RouteProps>();
+  const { initiativeId } = params;
+  const machine = IdPayConfigurationMachineContext.useActorRef();
 
-  const configurationMachine = useConfigurationMachineService();
+  const isLoading =
+    IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
+  const ibanList =
+    IdPayConfigurationMachineContext.useSelector(ibanListSelector);
+  const isIbanOnly =
+    IdPayConfigurationMachineContext.useSelector(selectIsIbanOnlyMode);
+  const isUpsertingIban =
+    IdPayConfigurationMachineContext.useSelector(isUpsertingSelector);
+  const enrolledIban =
+    IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
 
-  const isLoading = useSelector(configurationMachine, isLoadingSelector);
-  const ibanList = useSelector(configurationMachine, ibanListSelector);
-  const isIbanOnly = useSelector(configurationMachine, selectIsIbanOnlyMode);
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
   );
 
-  const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (initiativeId !== undefined) {
+        machine.send({
+          type: "start-configuration",
+          initiativeId,
+          mode: ConfigurationMode.IBAN
+        });
+      }
+    }, [machine, initiativeId])
+  );
 
   React.useEffect(() => {
     if (enrolledIban) {
@@ -64,39 +82,30 @@ const IbanEnrollmentScreen = () => {
     }
   }, [enrolledIban]);
 
-  const isUpsertingIban = useSelector(
-    configurationMachine,
-    isUpsertingIbanSelector
-  );
-
   const handleSelectIban = React.useCallback(
     (iban: IbanDTO) => {
       setSelectedIban(iban);
 
       if (isIbanOnly) {
-        configurationMachine.send({ type: "ENROLL_IBAN", iban });
+        machine.send({ type: "enroll-iban", iban });
       }
     },
-    [isIbanOnly, configurationMachine]
+    [isIbanOnly, machine]
   );
 
   const handleBackPress = () => {
-    configurationMachine.send({ type: "BACK" });
+    machine.send({ type: "back" });
   };
 
   const handleContinuePress = () => {
     if (selectedIban !== undefined) {
-      configurationMachine.send({ type: "ENROLL_IBAN", iban: selectedIban });
+      machine.send({ type: "enroll-iban", iban: selectedIban });
     }
   };
 
   const handleAddNewIbanPress = () => {
-    configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
+    machine.send({ type: "new-iban-onboarding" });
   };
-
-  useNavigationSwipeBackListener(() => {
-    configurationMachine.send({ type: "BACK", skipNavigation: true });
-  });
 
   const renderFooter = () => {
     if (isIbanOnly) {
@@ -141,20 +150,6 @@ const IbanEnrollmentScreen = () => {
       />
     );
   };
-
-  /**
-   * If when navigating to this screen we have an initiativeId, we set the configuration machine to
-   * show only the IBAN related screens and not the whole configuration flow.
-   */
-  React.useEffect(() => {
-    if (initiativeId) {
-      configurationMachine.send({
-        type: "START_CONFIGURATION",
-        initiativeId,
-        mode: ConfigurationMode.IBAN
-      });
-    }
-  }, [configurationMachine, initiativeId]);
 
   const renderIbanList = () =>
     ibanList.map(iban => {
@@ -225,7 +220,3 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-
-export type { IbanEnrollmentScreenRouteParams };
-
-export default IbanEnrollmentScreen;

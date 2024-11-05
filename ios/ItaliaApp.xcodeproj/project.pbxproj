@@ -92,7 +92,6 @@
 		5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-RegularItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf"; sourceTree = "<group>"; };
 		59BCC34321A36ABA56F255E3 /* libPods-ItaliaApp-ItaliaAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp-ItaliaAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-LightItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-LightItalic.ttf"; sourceTree = "<group>"; };
-		6C4A0A2AB90C8575993DF1E1 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		6D0115BDF703AEBFD8B86A12 /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6F8C6AF94C801CE01EC3D81A /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
 		722056DF161D843DD91D88A7 /* Pods-ItaliaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -263,7 +262,6 @@
 			children = (
 				F0625E7B2326822400EDEF90 /* libReact-RCTImage.a */,
 				F0625E792326820B00EDEF90 /* libReact-RCTImage.a */,
-				6C4A0A2AB90C8575993DF1E1 /* Instabug.framework */,
 				A88AAE92C2AA92D33DB25F0C /* libPods-ItaliaApp.a */,
 				59BCC34321A36ABA56F255E3 /* libPods-ItaliaApp-ItaliaAppTests.a */,
 			);
@@ -504,6 +502,8 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/Sentry/Sentry.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/LottiePrivacyInfo.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/lottie-react-native/Lottie_React_Native_Privacy.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -511,6 +511,8 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sentry.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LottiePrivacyInfo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Lottie_React_Native_Privacy.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -574,6 +576,8 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/Sentry/Sentry.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/LottiePrivacyInfo.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/lottie-react-native/Lottie_React_Native_Privacy.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -581,6 +585,8 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sentry.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LottiePrivacyInfo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Lottie_React_Native_Privacy.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -767,14 +773,10 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"../node_modules/instabug-reactnative/ios",
-				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ItaliaApp/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -808,14 +810,10 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"../node_modules/instabug-reactnative/ios",
-				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ItaliaApp/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";

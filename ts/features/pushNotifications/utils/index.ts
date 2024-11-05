@@ -4,13 +4,11 @@ import * as E from "fp-ts/lib/Either";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { v4 as uuid } from "uuid";
-import { Platform, PermissionsAndroid } from "react-native";
+import { PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
+import NotificationsUtils from "react-native-notifications-utils";
 import { isIos } from "../../../utils/platform";
-
-// DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-const UUID_VERSION_PREFIX = "001";
 
 export enum AuthorizationStatus {
   NotDetermined = 0,
@@ -19,46 +17,26 @@ export enum AuthorizationStatus {
   Provisional = 3
 }
 
-const isAndroid7NougatAPI24OrMore = (Platform.Version as number) >= 24;
-const successfulBooleanTaskEither = () => TE.fromEither(E.right(true));
-
 const checkPermissionAndroid = () =>
-  pipe(
-    isAndroid7NougatAPI24OrMore,
-    B.fold(successfulBooleanTaskEither, () =>
-      TE.tryCatch(
-        () =>
-          PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-          ),
-        E.toError
-      )
-    )
+  new Promise<boolean>(resolve =>
+    PushNotification.checkPermissions(data => {
+      // On Android, only 'alert' has a value
+      resolve(!!data.alert);
+    })
   );
 
 const checkPermissioniOS = () =>
-  pipe(
-    () =>
-      new Promise<boolean>((resolve, _) => {
-        PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
-          resolve(
-            authorizationStatus === AuthorizationStatus.Authorized ||
-              authorizationStatus === AuthorizationStatus.Provisional
-          );
-        });
-      }),
-    TE.fromTask
+  new Promise<boolean>(resolve =>
+    PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
+      resolve(
+        authorizationStatus !== AuthorizationStatus.NotDetermined &&
+          authorizationStatus !== AuthorizationStatus.StatusDenied
+      );
+    })
   );
 
 export const checkNotificationPermissions = () =>
-  pipe(
-    isIos,
-    B.fold(
-      () => checkPermissionAndroid(),
-      () => checkPermissioniOS()
-    ),
-    TE.getOrElse(() => T.of(false))
-  )();
+  isIos ? checkPermissioniOS() : checkPermissionAndroid();
 
 const requestPermissioniOS = () =>
   pipe(
@@ -79,21 +57,16 @@ const requestPermissioniOS = () =>
 
 const requestPermissionAndroid = () =>
   pipe(
-    isAndroid7NougatAPI24OrMore,
-    B.fold(successfulBooleanTaskEither, () =>
-      pipe(
-        TE.tryCatch(
-          () =>
-            PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-            ),
-          E.toError
+    TE.tryCatch(
+      () =>
+        PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
         ),
-        TE.map(
-          permissionStatus =>
-            permissionStatus === PermissionsAndroid.RESULTS.GRANTED
-        )
-      )
+      E.toError
+    ),
+    TE.map(
+      permissionStatus =>
+        permissionStatus === PermissionsAndroid.RESULTS.GRANTED
     )
   );
 
@@ -121,14 +94,14 @@ export const cancellAllLocalNotifications = () =>
   PushNotification.cancelAllLocalNotifications();
 
 /**
- * Generates a new random installation ID with the following format:
- *
- * <VERSION_PREFIX><UUID>
- *
- * Where:
- *   VERSION_PREFIX is \d{3}
- *   UUID is [a-z0-9]{32}
+ * This is a legacy code that was used to generate a unique Id
+ * from client side. It is still used because the backend API
+ * requires it as part of the URL's path but it is later not
+ * used in any way.
+ * When the backend API spec will remove it, it can also be
+ * unlinked and deleted here
  */
-export function generateInstallationId(): string {
-  return `${UUID_VERSION_PREFIX}${uuid().replace(/-/g, "")}`;
-}
+export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
+
+export const openSystemNotificationSettingsScreen = () =>
+  NotificationsUtils.openSettings();

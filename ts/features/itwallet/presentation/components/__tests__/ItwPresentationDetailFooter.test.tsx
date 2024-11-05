@@ -8,6 +8,7 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwPresentationDetailsFooter } from "../ItwPresentationDetailsFooter";
@@ -35,9 +36,16 @@ describe("ItwPresentationAlertsSection", () => {
 
 const renderComponent = (credentialType: CredentialType) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <ItwPresentationDetailsFooter
           credential={{
             ...ItwStoredCredentialsMocks.dc,

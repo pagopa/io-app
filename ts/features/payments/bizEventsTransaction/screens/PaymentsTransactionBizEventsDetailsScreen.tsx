@@ -1,12 +1,12 @@
 import { IOColors, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { PaymentsBizEventsTransactionHeadingSection } from "../components/PaymentsBizEventsTransactionHeadingSection";
 import WalletTransactionInfoSection from "../components/PaymentsBizEventsTransactionInfoSection";
@@ -21,11 +21,17 @@ import {
 } from "../store/selectors";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
+  isPayer?: boolean;
 };
 
 export type PaymentsTransactionBizEventsDetailsScreenProps = RouteProp<
@@ -55,7 +61,8 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<PaymentsTransactionBizEventsDetailsScreenProps>();
-  const { transactionId } = route.params;
+  const { transactionId, isPayer } = route.params;
+  const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(
     walletTransactionBizEventsDetailsPotSelector
   );
@@ -68,21 +75,27 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const isLoadingReceipt = pot.isLoading(transactionReceiptPot);
   const isError = pot.isError(transactionDetailsPot);
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useOnFirstRender(() => {
-    dispatch(
-      getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
-    );
+    fetchTransactionDetails();
   });
 
-  // eslint-disable-next-line sonarjs/no-identical-functions
-  const handleOnRetry = () => {
+  const fetchTransactionDetails = () => {
     dispatch(
-      getPaymentsBizEventsTransactionDetailsAction.request({ transactionId })
+      getPaymentsBizEventsTransactionDetailsAction.request({
+        transactionId,
+        isPayer
+      })
     );
   };
 
   const handleOnDownloadPdfReceiptError = () => {
+    analytics.trackPaymentsDownloadReceiptError({
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+      user: paymentAnalyticsData?.receiptUser
+    });
     toast.error(I18n.t("features.payments.transactions.receipt.error"));
   };
 
@@ -97,6 +110,11 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   };
 
   const handleDownloadPdfReceipt = () => {
+    analytics.trackPaymentsDownloadReceiptAction({
+      organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
+      user: paymentAnalyticsData?.receiptUser
+    });
     dispatch(
       getPaymentsBizEventsReceiptAction.request({
         transactionId,
@@ -106,6 +124,16 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     );
   };
 
+  useHeaderSecondLevel({
+    title:
+      transactionDetails?.carts?.[0].payee?.name ??
+      I18n.t("transaction.details.title"),
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef,
+    faqCategories: ["wallet_transaction" as FAQsCategoriesType],
+    supportRequest: true
+  });
+
   if (isError) {
     return (
       <OperationResultScreenContent
@@ -114,7 +142,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
         action={{
           label: I18n.t("global.buttons.retry"),
           accessibilityLabel: I18n.t("global.buttons.retry"),
-          onPress: handleOnRetry
+          onPress: fetchTransactionDetails
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.back"),
@@ -126,22 +154,24 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   }
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("transaction.details.title")
-      }}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t("features.payments.transactions.receipt.download"),
-          onPress: handleDownloadPdfReceipt,
-          loading: isLoadingReceipt,
-          disabled: isLoadingReceipt
-        }
-      }}
-      contextualHelp={emptyContextualHelp}
-      faqCategories={["wallet_transaction"]}
-      headerActionsProp={{ showHelp: true }}
+    <IOScrollView
+      includeContentMargins={false}
+      animatedRef={animatedScrollViewRef}
+      actions={
+        transactionDetails?.infoNotice?.origin !== OriginEnum.PM
+          ? {
+              type: "SingleButton",
+              primary: {
+                label: I18n.t(
+                  "features.payments.transactions.receipt.download"
+                ),
+                onPress: handleDownloadPdfReceipt,
+                loading: isLoadingReceipt,
+                disabled: isLoadingReceipt
+              }
+            }
+          : undefined
+      }
     >
       <FocusAwareStatusBar barStyle={"dark-content"} />
       <View style={styles.wrapper}>
@@ -156,7 +186,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
           loading={isLoading}
         />
       </View>
-    </IOScrollViewWithLargeHeader>
+    </IOScrollView>
   );
 };
 

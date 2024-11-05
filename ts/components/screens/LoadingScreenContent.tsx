@@ -7,11 +7,11 @@ import {
   ContentWrapper,
   H3,
   IOStyles,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { WithTestID } from "../../types/WithTestID";
 
 const styles = StyleSheet.create({
@@ -37,9 +37,10 @@ type LoadingScreenContentProps = WithTestID<{
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
+  const theme = useIOTheme();
   const { contentTitle, children, headerVisible, testID } = props;
 
-  useOnFirstRender(() => {
+  React.useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
     // instead of focusing the first element.
@@ -49,7 +50,7 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
       // and the focus is moved to another element.
       AccessibilityInfo.announceForAccessibility(contentTitle);
     }
-  });
+  }, [contentTitle]);
 
   return (
     <SafeAreaView
@@ -67,7 +68,11 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
             <LoadingIndicator />
           </View>
           <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
-          <H3 style={styles.contentTitle} accessibilityLabel={contentTitle}>
+          <H3
+            color={theme["textHeading-secondary"]}
+            style={styles.contentTitle}
+            accessibilityLabel={contentTitle}
+          >
             {contentTitle}
           </H3>
         </View>

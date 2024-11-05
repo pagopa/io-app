@@ -1,5 +1,5 @@
-import MockDate from "mockdate";
 import { format } from "date-fns";
+import MockDate from "mockdate";
 import * as React from "react";
 import { createStore } from "redux";
 import I18n from "../../../../../i18n";
@@ -11,6 +11,7 @@ import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwPresentationAlertsSection } from "../ItwPresentationAlertsSection";
@@ -69,14 +70,49 @@ describe("ItwPresentationAlertsSection", () => {
     expect(queryByTestId("itwExpiredBannerTestID")).toBeNull();
     expect(queryByTestId("itwExpiringBannerTestID")).toBeNull();
     expect(queryByTestId("itwMdlBannerTestID")).not.toBeNull();
+    expect(queryByTestId("itwEhcBannerTestID")).toBeNull();
+    expect(queryByTestId("itwEdcBannerTestID")).toBeNull();
+  });
+
+  it("should render EHC alert", () => {
+    const { queryByTestId } = renderComponent(
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      new Date(2000, 2, 20)
+    );
+
+    expect(queryByTestId("itwExpiredBannerTestID")).toBeNull();
+    expect(queryByTestId("itwExpiringBannerTestID")).toBeNull();
+    expect(queryByTestId("itwMdlBannerTestID")).toBeNull();
+    expect(queryByTestId("itwEhcBannerTestID")).not.toBeNull();
+    expect(queryByTestId("itwEdcBannerTestID")).toBeNull();
+  });
+
+  it("should render EDC alert", () => {
+    const { queryByTestId } = renderComponent(
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      new Date(2000, 2, 20)
+    );
+
+    expect(queryByTestId("itwExpiredBannerTestID")).toBeNull();
+    expect(queryByTestId("itwExpiringBannerTestID")).toBeNull();
+    expect(queryByTestId("itwMdlBannerTestID")).toBeNull();
+    expect(queryByTestId("itwEhcBannerTestID")).toBeNull();
+    expect(queryByTestId("itwEdcBannerTestID")).not.toBeNull();
   });
 });
 
 const renderComponent = (credentialType: CredentialType, expireDate: Date) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <ItwPresentationAlertsSection
           credential={{
             ...ItwStoredCredentialsMocks.dc,

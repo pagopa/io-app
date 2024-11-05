@@ -9,7 +9,7 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H2 } from "../../../../components/core/typography/H2";
 
 type Props = {
-  initiative?: InitiativeDataDTO;
+  initiative: O.Option<InitiativeDataDTO>;
 };
 
 const OnboardingServiceHeader = (props: Props) => {
@@ -17,7 +17,6 @@ const OnboardingServiceHeader = (props: Props) => {
 
   return pipe(
     initiative,
-    O.fromNullable,
     O.map(initiative => ({
       organizationName: initiative.organizationName,
       initiativeName: initiative.initiativeName,

@@ -16,6 +16,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
 import { Action } from "../../../../../store/actions/types";
 import { LegacyTransactionsActions } from "../../../transaction/store/actions/legacyTransactionsActions";
+import { PaymentsBackoffRetry } from "../../types/PaymentsBackoffRetry";
 
 export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
   "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
@@ -35,11 +36,21 @@ export const clearPaymentsPendingActions = createStandardAction(
   "CLEAR_PAYMENTS_PENDING_ACTIONS"
 )<void>();
 
+export const increasePaymentsBackoffRetry = createStandardAction(
+  "INCREASE_PAYMENTS_BACKOFF_RETRY"
+)<PaymentsBackoffRetry>();
+
+export const clearPaymentsBackoffRetry = createStandardAction(
+  "CLEAR_PAYMENTS_BACKOFF_RETRY"
+)<PaymentsBackoffRetry>();
+
 export type PaymentsActions =
   | ActionType<typeof paymentsResetPagoPaPlatformSessionTokenAction>
   | ActionType<typeof paymentsGetPagoPaPlatformSessionTokenAction>
   | ActionType<typeof savePaymentsPendingAction>
   | ActionType<typeof clearPaymentsPendingActions>
+  | ActionType<typeof increasePaymentsBackoffRetry>
+  | ActionType<typeof clearPaymentsBackoffRetry>
   | PaymentsOnboardingActions
   | PaymentsMethodDetailsActions
   | PaymentsCheckoutActions

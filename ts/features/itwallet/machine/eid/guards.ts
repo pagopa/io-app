@@ -1,14 +1,16 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { pipe } from "fp-ts/lib/function";
-import * as t from "io-ts";
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as J from "fp-ts/lib/Json";
-import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { ItwSessionExpiredError } from "../../api/client";
-import { EidIssuanceEvents } from "./events";
+import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
+import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
 import { Context } from "./context";
+import { EidIssuanceEvents } from "./events";
 
 const NativeAuthSessionClosed = t.type({
   error: t.literal("NativeAuthSessionClosed")
@@ -60,5 +62,12 @@ export const createEidIssuanceGuardsImplementation = (
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
   isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
-    "error" in event && event.error instanceof Errors.OperationAbortedError
+    "error" in event && event.error instanceof Errors.OperationAbortedError,
+
+  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
+    pipe(
+      O.fromNullable(context.walletInstanceAttestation),
+      O.map(isWalletInstanceAttestationValid),
+      O.getOrElse(() => false)
+    )
 });

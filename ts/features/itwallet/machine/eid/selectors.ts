@@ -1,4 +1,4 @@
-import { StateFrom } from "xstate5";
+import { StateFrom } from "xstate";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwTags } from "../tags";
@@ -38,6 +38,3 @@ export const selectIsLoading = (snapshot: MachineSnapshot) =>
 export const selectIsCieIdEidRequest = (snapshot: MachineSnapshot) =>
   snapshot.context.identification?.mode === "cieId" &&
   snapshot.matches({ Issuance: "RequestingEid" });
-
-export const selectIsDisplayingPreview = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Issuance: "DisplayingPreview" });

@@ -24,7 +24,7 @@ import {
 } from "../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
+import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
@@ -43,6 +43,7 @@ import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
+import { FCI_ROUTES } from "../../fci/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -144,6 +145,14 @@ const BarcodeScanScreen = () => {
       case "IDPAY":
         openDeepLink(barcode.authUrl);
         break;
+      case "FCI":
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.ROUTER,
+          params: {
+            signatureRequestId: barcode.signatureRequestId
+          }
+        });
+        break;
     }
   };
 
@@ -165,8 +174,8 @@ const BarcodeScanScreen = () => {
 
   const handleIdPayPaymentCodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    navigation.navigate(IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
     });
   };
 

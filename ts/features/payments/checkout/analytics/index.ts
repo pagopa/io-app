@@ -1,13 +1,12 @@
 import { mixpanelTrack, mixpanel } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { PaymentsTrackingConfiguration } from "../../common/analytics";
 import {
   PaymentAnalyticsEditingType,
   PaymentAnalyticsPhase,
   PaymentAnalyticsPreselectedPspFlag,
   PaymentAnalyticsSelectedMethodFlag,
   PaymentAnalyticsSelectedPspFlag
-} from "../types/PaymentAnalytics";
+} from "../../common/types/PaymentAnalytics";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
@@ -15,6 +14,7 @@ export type PaymentAnalyticsProps = {
   data_entry: string;
   first_time_opening: string;
   organization_name: string;
+  organization_fiscal_code: string;
   service_name: string;
   saved_payment_method: number;
   amount: string;
@@ -62,15 +62,21 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_NO_METHOD_SAVED_ERROR";
     case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
       return "PAYMENT_UNKNOWN_OUTCOME_ERROR";
+    case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
+      return "PAYMENT_REVERSAL_ERROR";
+    case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
+      return "PAYMENT_WEBVIEW_USER_CANCELLATION";
+    case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+      return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
     default:
       return outcome;
   }
 };
 
 export const getPaymentAnalyticsEventFromRequestFailure = (
-  falure: WalletPaymentFailure
+  failure: WalletPaymentFailure
 ) => {
-  switch (falure.faultCodeCategory) {
+  switch (failure.faultCodeCategory) {
     case "PAYMENT_UNAVAILABLE":
       return "PAYMENT_TECHNICAL_ERROR";
     case "PAYMENT_DATA_ERROR":
@@ -87,6 +93,8 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
       return "PAYMENT_ALREADY_PAID_ERROR";
     case "PAYMENT_UNKNOWN":
       return "PAYMENT_NOT_FOUND_ERROR";
+    case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
+      return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
     default:
       return "PAYMENT_GENERIC_ERROR";
   }
@@ -254,9 +262,7 @@ export const trackPaymentConversion = (
 export const trackPaymentOutcomeSuccess = (
   props: Partial<PaymentAnalyticsProps>
 ) => {
-  mixpanel
-    ?.getPeople()
-    .increment("paymentsCompleted" as keyof PaymentsTrackingConfiguration, 1);
+  mixpanel?.getPeople().increment("PAYMENT_COMPLETED", 1);
   void mixpanelTrack(
     "PAYMENT_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {

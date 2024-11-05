@@ -1,21 +1,19 @@
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
-import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletClientStatus";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { WalletPaymentStepEnum } from "../types";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import {
   PaymentAnalyticsPhase,
   PaymentAnalyticsSelectedPspFlag
-} from "../types/PaymentAnalytics";
+} from "../../common/types/PaymentAnalytics";
 
 export const WALLET_PAYMENT_FEEDBACK_URL =
   "https://io.italia.it/diccilatua/ces-pagamento";
+
+export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
+  "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
 
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
   [
@@ -25,24 +23,6 @@ export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
     PaymentMethodManagementTypeEnum.REDIRECT
   ].includes(method.methodManagement) &&
   method.status === PaymentMethodStatusEnum.ENABLED;
-
-export const getLatestUsedWallet = (
-  wallets: ReadonlyArray<WalletInfo>
-): O.Option<WalletInfo> =>
-  pipe(
-    wallets,
-    RA.filter(
-      wallet => wallet.clients.IO.status === WalletClientStatusEnum.ENABLED
-    ),
-    RA.reduce<WalletInfo, WalletInfo | undefined>(undefined, (acc, curr) =>
-      acc?.clients.IO?.lastUsage &&
-      curr.clients.IO?.lastUsage &&
-      acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
-        ? acc
-        : curr
-    ),
-    O.fromNullable
-  );
 
 export const WalletPaymentStepScreenNames = {
   [WalletPaymentStepEnum.PICK_PAYMENT_METHOD]: "PICK_PAYMENT_METHOD",
@@ -72,12 +52,19 @@ export const getPaymentPhaseFromStep = (
 ): PaymentAnalyticsPhase => {
   switch (step) {
     case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
-      return "verifica";
+      return "attiva";
     case WalletPaymentStepEnum.PICK_PSP:
       return "attiva";
     case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
       return "pagamento";
     default:
-      return "pagamento";
+      return "verifica";
   }
+};
+
+export const trimAndLimitValue = (value: string, maxLength: number): string => {
+  const trimmedValue = value.replace(/\s/g, "");
+  return trimmedValue.length > maxLength
+    ? trimmedValue.substring(0, maxLength)
+    : trimmedValue;
 };

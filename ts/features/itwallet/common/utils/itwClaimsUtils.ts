@@ -8,10 +8,12 @@ import { differenceInCalendarDays, isValid } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { ItwCredentialStatus } from "../components/ItwCredentialCard";
+import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
@@ -164,8 +166,28 @@ const FISCAL_CODE_WITH_PREFIX =
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
  * This is needed because a generic date decoder would accept invalid dates like numbers,
  * thus decoding properly and returning a wrong claim item to be displayed.
+ * It also removes the timezone from the date given that the date must be displayed regardless of the timezone of the device.
  */
-export const DateClaim = patternDateFromString(DATE_FORMAT_REGEX, "DateClaim");
+export const DateWithoutTimezoneClaim = new t.Type<Date, string, unknown>(
+  "DateWithoutTimezone",
+  (input: unknown): input is Date => input instanceof Date,
+  (input, context) =>
+    pipe(
+      patternDateFromString(DATE_FORMAT_REGEX, "DateClaim").validate(
+        input,
+        context
+      ),
+      E.fold(
+        () => t.failure(input, context, "Date is not in the correct format"),
+        str => {
+          const date = new Date(str);
+          return t.success(removeTimezoneFromDate(date));
+        }
+      )
+    ),
+  (date: Date) =>
+    `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`
+);
 
 /**
  * io-ts decoder for the evidence claim field of the credential.
@@ -198,8 +220,8 @@ export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
  */
 const DrivingPrivilegeClaim = t.type({
   driving_privilege: t.string,
-  issue_date: t.string,
-  expiry_date: t.string,
+  issue_date: DateWithoutTimezoneClaim,
+  expiry_date: DateWithoutTimezoneClaim,
   restrictions_conditions: t.union([t.string, t.null])
 });
 
@@ -267,7 +289,7 @@ export const ClaimValue = t.union([
   // Parse an object representing the claim evidence
   EvidenceClaim,
   // Otherwise parse a date
-  DateClaim,
+  DateWithoutTimezoneClaim,
   // Otherwise parse an image
   ImageClaim,
   // Otherwise parse a PDF
@@ -328,41 +350,54 @@ export const getCredentialExpireDays = (
   return differenceInCalendarDays(expireDate, Date.now());
 };
 
-/**
- * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
- * Use {@link getCredentialStatus} to also check the status attestation.
- * @param credential the parsed credential claims
- * @param expiringDays the number of days required to mark a credential as "EXPIRING"
- * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
- */
-export const getCredentialExpireStatus = (
-  credential: ParsedCredential,
-  expiringDays: number = 14
-): ItwCredentialStatus | undefined => {
-  const expireDays = getCredentialExpireDays(credential);
-
-  if (expireDays === undefined) {
-    return undefined;
-  }
-
-  return expireDays > expiringDays
-    ? "valid"
-    : expireDays > 0
-    ? "expiring"
-    : "expired";
+type GetCredentialStatusOptions = {
+  /**
+   * Number of days before expiration required to mark a credential as "EXPIRING".
+   */
+  expiringDays?: number;
+  /**
+   * Check the expiration using the JWT `exp` claim, not the credential itself.
+   */
+  checkJwtExpiration?: boolean;
 };
 
 /**
  * Get the overall status of the credential, taking into account
  * the status attestation if present and the credential's own expiration date.
+ *
+ * @param credential the stored credential
+ * @param options see {@link GetCredentialStatusOptions}
+ * @returns ItwCredentialStatus
  */
 export const getCredentialStatus = (
-  credential: StoredCredential
+  credential: StoredCredential,
+  options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus | undefined => {
   if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
     return "expired";
   }
-  return getCredentialExpireStatus(credential.parsedCredential);
+
+  const { checkJwtExpiration, expiringDays = 14 } = options;
+
+  const expireDate = checkJwtExpiration
+    ? credential.jwt.expiration
+    : getCredentialExpireDate(credential.parsedCredential);
+
+  if (expireDate === undefined) {
+    return undefined;
+  }
+
+  const expireDays = differenceInCalendarDays(expireDate, Date.now());
+
+  if (expireDays > expiringDays) {
+    return "valid";
+  }
+
+  if (expireDays > 0) {
+    return "expiring";
+  }
+
+  return "expired";
 };
 
 const FISCAL_CODE_REGEX =

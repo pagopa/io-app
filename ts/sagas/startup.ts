@@ -51,8 +51,8 @@ import { handleClearAllAttachments } from "../features/messages/saga/handleClear
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
-  watchZendeskGetSessionSaga,
-  watchZendeskSupportSaga
+  watchGetZendeskTokenSaga,
+  watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
@@ -97,7 +97,7 @@ import {
   startupTransientErrorInitialState
 } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { trackKeychainGetFailure } from "../utils/analytics";
+import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
@@ -107,18 +107,15 @@ import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/sag
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
-import {
-  handlePendingMessageStateIfAllowedSaga,
-  updateInstallationSaga
-} from "../features/pushNotifications/sagas/notifications";
-import { checkNotificationsPreferencesSaga } from "../features/pushNotifications/sagas/checkNotificationsPreferencesSaga";
+import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
+import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
+import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
+import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
+import { formatRequestedTokenString } from "../features/zendesk/utils";
+import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
-import {
-  clearKeychainError,
-  keychainError
-} from "./../store/storages/keychain";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -168,6 +165,10 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
+  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
@@ -196,12 +197,11 @@ export function* initializeApplicationSaga(
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
-  if (zendeskEnabled) {
-    yield* fork(watchZendeskSupportSaga);
-  }
-
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
+
+  // Retrieve and listen for notification permissions status changes
+  yield* fork(notificationPermissionsListener);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -230,10 +230,12 @@ export function* initializeApplicationSaga(
   // This saga must retrieve the publicKey by its own,
   // since it must make sure to have the latest in-memory value
   // (as an example, during the authentication saga the key may have been regenerated multiple times)
+  // #LOLLIPOP_CHECK_BLOCK1_START
   const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
   if (unsupportedDevice) {
     return;
   }
+  // #LOLLIPOP_CHECK_BLOCK1_END
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
@@ -246,6 +248,10 @@ export function* initializeApplicationSaga(
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
+
+  // workaround to send keychainError
+  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
+  yield* call(trackKeychainFailures);
 
   // Unless we have a valid session token already, login until we have one.
   const sessionToken: SagaCallReturnType<typeof authenticationSaga> =
@@ -275,9 +281,18 @@ export function* initializeApplicationSaga(
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
 
+  if (zendeskEnabled) {
+    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+  }
+
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
-    yield* call(checkSession, backendClient.getSession);
+    yield* call(
+      checkSession,
+      backendClient.getSession,
+      formatRequestedTokenString()
+    );
+
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
@@ -366,6 +381,7 @@ export function* initializeApplicationSaga(
 
   const publicKey = yield* select(lollipopPublicKeySelector);
 
+  // #LOLLIPOP_CHECK_BLOCK2_START
   const isAssertionRefValid = yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
@@ -374,6 +390,7 @@ export function* initializeApplicationSaga(
   if (!isAssertionRefValid) {
     return;
   }
+  // #LOLLIPOP_CHECK_BLOCK2_END
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
@@ -428,10 +445,12 @@ export function* initializeApplicationSaga(
   yield* fork(
     watchCheckSessionSaga,
     backendClient.getSession,
-    backendClient.getSupportToken
+    formatRequestedTokenString()
   );
-
   // Start watching for requests of abort the onboarding
+
+  yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
+
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
@@ -488,11 +507,6 @@ export function* initializeApplicationSaga(
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  // workaround to send keychainError for Pixel devices
-  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-  yield* call(trackKeychainGetFailure, keychainError);
-  yield* call(clearKeychainError);
-
   // track if the Android device has StrongBox
   yield* call(handleIsKeyStrongboxBacked, keyInfo.keyTag);
 
@@ -507,8 +521,9 @@ export function* initializeApplicationSaga(
 
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
-  // check if the user must set preferences for push notifications (e.g. reminders)
-  yield* call(checkNotificationsPreferencesSaga, userProfile);
+  // Check for both profile notifications permissions (anonymous
+  // content && reminder) and system notifications permissions.
+  yield* call(profileAndSystemNotificationsPermissions, userProfile);
 
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
   yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
@@ -521,9 +536,14 @@ export function* initializeApplicationSaga(
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  // Fork the saga that uploads the push notification token to the backend.
+  // At this moment, the push notification token may not be available yet but
+  // the saga handles it internally. Make sure to fork it and not call it using
+  // a blocking call, since the saga will just hang, waiting for the token
+  yield* fork(
+    pushNotificationTokenUpload,
+    backendClient.createOrUpdateInstallation
+  );
 
   // This saga is called before the startup status is set to authenticated to avoid flashing
   // the home screen when the user is taken to the alert screen in case of identities that don't match.
@@ -536,10 +556,6 @@ export function* initializeApplicationSaga(
 
   // Start wathing new wallet sagas
   yield* fork(watchNewWalletSaga);
-
-  if (zendeskEnabled) {
-    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
-  }
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
@@ -664,7 +680,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  yield* call(handlePendingMessageStateIfAllowedSaga, true);
+  yield* call(handlePendingMessageStateIfAllowed, true);
 
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));

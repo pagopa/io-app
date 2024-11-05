@@ -5,14 +5,15 @@ import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMeth
 
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
-const mockPopToTop = jest.fn();
+const mockNavigateToCieIdScreen = jest.fn();
+const mockReplace = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
-      popToTop: mockPopToTop
+      replace: mockReplace
     })
   };
 });
@@ -23,6 +24,7 @@ describe("CieIdErrorScreen where device supports NFC", () => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
       navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
       navigateToIdpSelection: mockNavigateToIdpSelection,
+      navigateToCieIdLoginScreen: mockNavigateToCieIdScreen,
       isCieSupported: true
     }));
   });
@@ -37,9 +39,10 @@ describe("CieIdErrorScreen where device supports NFC", () => {
 
     expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockPopToTop).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
+    expect(mockReplace).not.toHaveBeenCalled();
   });
-  it("Should properly call pop-to-top", testPopToTop);
+  it("Should properly call replace", testReplace);
 });
 describe("CieIdErrorScreen where device doesn't support NFC", () => {
   afterEach(jest.clearAllMocks);
@@ -47,6 +50,7 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
       navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
       navigateToIdpSelection: mockNavigateToIdpSelection,
+      navigateToCieIdLoginScreen: mockNavigateToCieIdScreen,
       isCieSupported: false
     }));
   });
@@ -61,9 +65,10 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
 
     expect(mockNavigateToIdpSelection).toHaveBeenCalled();
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockPopToTop).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
+    expect(mockReplace).not.toHaveBeenCalled();
   });
-  it("Should properly call pop-to-top", testPopToTop);
+  it("Should properly call pop-to-top", testReplace);
 });
 
 function testIsDefined() {
@@ -78,7 +83,7 @@ function testMatchSnapshot() {
   expect(component).toMatchSnapshot();
 }
 
-function testPopToTop() {
+function testReplace() {
   const { getByTestId } = render(<CieIdErrorScreen />);
   const primaryAction = getByTestId("cie-id-error-secondary-action");
 
@@ -86,5 +91,6 @@ function testPopToTop() {
 
   expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
   expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-  expect(mockPopToTop).toHaveBeenCalled();
+  expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
+  expect(mockReplace).toHaveBeenCalled();
 }

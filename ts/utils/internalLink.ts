@@ -4,10 +4,9 @@
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { fciEnabled, uaDonationsEnabled } from "../config";
+import { fciEnabled } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
@@ -48,10 +47,6 @@ const cgnRoutesToNavigationLink: Record<string, string> = {
   [CGN_ROUTES.DETAILS.DETAILS]: "/cgn-details/detail"
 };
 
-const uaDonationsRoutesToNavigationLink: Record<string, string> = {
-  [UADONATION_ROUTES.WEBVIEW]: "/uadonations-webview"
-};
-
 const fciRoutesToNavigationLink: Record<string, string> = {
   [FCI_ROUTES.MAIN]: "/fci/main"
 };
@@ -60,7 +55,6 @@ const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
-  ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
   ...(fciEnabled ? fciRoutesToNavigationLink : {})
 };
 

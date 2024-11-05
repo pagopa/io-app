@@ -9,12 +9,14 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
+import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
+import { FaultCodeCategoryEnum } from "../../types/PaymentGenericErrorAfterUserCancellationProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   paymentsCalculatePaymentFeesAction,
@@ -24,6 +26,7 @@ import {
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
+  paymentsGetRecentPaymentMethodUsedAction,
   paymentsStartPaymentAuthorizationAction
 } from "../actions/networking";
 import {
@@ -43,6 +46,7 @@ export type PaymentsCheckoutState = {
     NetworkError | WalletPaymentFailure
   >;
   userWallets: pot.Pot<Wallets, NetworkError>;
+  recentUsedPaymentMethod: pot.Pot<UserLastPaymentMethodResponse, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
   selectedWallet: O.Option<WalletInfo>;
@@ -54,9 +58,10 @@ export type PaymentsCheckoutState = {
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
-  currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+  currentStep: WalletPaymentStepEnum.NONE,
   paymentDetails: pot.none,
   userWallets: pot.none,
+  recentUsedPaymentMethod: pot.none,
   allPaymentMethods: pot.none,
   pspList: pot.none,
   selectedWallet: O.none,
@@ -89,6 +94,9 @@ const reducer = (
       return {
         ...state,
         rptId: action.payload,
+        recentUsedPaymentMethod: pot.none,
+        selectedPaymentMethod: O.none,
+        selectedWallet: O.none,
         paymentDetails: pot.toLoading(state.paymentDetails)
       };
     case getType(paymentsGetPaymentDetailsAction.success):
@@ -134,6 +142,26 @@ const reducer = (
       return {
         ...state,
         allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload)
+      };
+
+    // Recent payment method
+    case getType(paymentsGetRecentPaymentMethodUsedAction.request):
+      return {
+        ...state,
+        recentUsedPaymentMethod: pot.toLoading(state.recentUsedPaymentMethod)
+      };
+    case getType(paymentsGetRecentPaymentMethodUsedAction.success):
+      return {
+        ...state,
+        recentUsedPaymentMethod: pot.some(action.payload)
+      };
+    case getType(paymentsGetRecentPaymentMethodUsedAction.failure):
+      return {
+        ...state,
+        recentUsedPaymentMethod: pot.toError(
+          state.recentUsedPaymentMethod,
+          action.payload
+        )
       };
 
     case getType(selectPaymentMethodAction):
@@ -215,10 +243,23 @@ const reducer = (
         transaction: pot.none
       };
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
-    case getType(paymentsDeleteTransactionAction.failure):
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
+      };
+    case getType(paymentsDeleteTransactionAction.failure):
+      return {
+        ...state,
+        transaction: pot.toError(
+          state.transaction,
+          action.payload.kind === "generic"
+            ? {
+                faultCodeCategory:
+                  FaultCodeCategoryEnum.PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION,
+                faultCodeDetail: ""
+              }
+            : action.payload
+        )
       };
 
     // Authorization url

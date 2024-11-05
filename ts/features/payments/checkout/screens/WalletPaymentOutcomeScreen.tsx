@@ -34,11 +34,16 @@ import {
 } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
-import { paymentCompletedSuccess } from "../store/actions/orchestration";
+import {
+  paymentCompletedSuccess,
+  walletPaymentSetCurrentStep
+} from "../store/actions/orchestration";
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
+import { WalletPaymentStepEnum } from "../types";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -68,6 +73,8 @@ const WalletPaymentOutcomeScreen = () => {
   const supportModal = usePaymentFailureSupportModal({
     outcome
   });
+
+  const reversedPaymentModal = usePaymentReversedInfoBottomSheet();
 
   const shouldShowHeader = [
     WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE
@@ -112,6 +119,8 @@ const WalletPaymentOutcomeScreen = () => {
     analytics.trackPaymentErrorHelp({
       error: outcome,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -135,6 +144,10 @@ const WalletPaymentOutcomeScreen = () => {
     }
 
     navigation.pop();
+  };
+
+  const handleShowMoreOnReversedPayment = () => {
+    reversedPaymentModal.present();
   };
 
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
@@ -166,6 +179,8 @@ const WalletPaymentOutcomeScreen = () => {
       onPress: () => {
         analytics.trackPaymentNoSavedMethodExit({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
           service_name: paymentAnalyticsData?.serviceName,
           first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
@@ -187,10 +202,15 @@ const WalletPaymentOutcomeScreen = () => {
       onPress: () => {
         analytics.trackPaymentNoSavedMethodContinue({
           organization_name: paymentAnalyticsData?.verifiedData?.paName,
+          organization_fiscal_code:
+            paymentAnalyticsData?.verifiedData?.paFiscalCode,
           service_name: paymentAnalyticsData?.serviceName,
           first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
           expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
         });
+        dispatch(
+          walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
+        );
         navigation.replace(
           PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
           {
@@ -199,6 +219,14 @@ const WalletPaymentOutcomeScreen = () => {
         );
       }
     };
+
+  const paymentReversedAction: OperationResultScreenContentProps["action"] = {
+    label: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"),
+    accessibilityLabel: I18n.t(
+      "wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"
+    ),
+    onPress: handleShowMoreOnReversedPayment
+  };
 
   useOnFirstRender(() => {
     const kind =
@@ -220,11 +248,14 @@ const WalletPaymentOutcomeScreen = () => {
       analytics.trackPaymentOutcomeSuccess({
         attempt: paymentOngoingHistory?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
         payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-        saved_payment_method: paymentAnalyticsData?.savedPaymentMethods?.length,
+        saved_payment_method:
+          paymentAnalyticsData?.savedPaymentMethods?.length || 0,
         selected_psp_flag: paymentAnalyticsData?.selectedPspFlag,
         data_entry: paymentAnalyticsData?.startOrigin
       });
@@ -234,6 +265,8 @@ const WalletPaymentOutcomeScreen = () => {
       data_entry: paymentAnalyticsData?.startOrigin,
       first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       attempt: paymentOngoingHistory?.attempt,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
@@ -370,6 +403,35 @@ const WalletPaymentOutcomeScreen = () => {
           secondaryAction: onboardPaymentMethodCloseAction,
           isHeaderVisible: true
         };
+      case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
+        return {
+          pictogram: "attention",
+          title: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.title"),
+          subtitle: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.subtitle"),
+          action: paymentReversedAction,
+          secondaryAction: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t("wallet.payment.outcome.PAYPAL_REMOVED_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle"
+          ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
+        return {
+          pictogram: "lostConnection",
+          title: I18n.t(
+            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.subtitle"
+          ),
+          action: closeFailureAction,
+          isHeaderVisible: true
+        };
     }
   };
 
@@ -381,6 +443,7 @@ const WalletPaymentOutcomeScreen = () => {
         {requiresFeedback && <WalletPaymentFeebackBanner />}
       </OperationResultScreenContent>
       {supportModal.bottomSheet}
+      {reversedPaymentModal.bottomSheet}
     </>
   );
 };

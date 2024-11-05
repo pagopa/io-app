@@ -6,7 +6,7 @@ import {
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
-  getCredentialExpireStatus,
+  getCredentialStatus,
   getFiscalCodeFromCredential,
   ImageClaim
 } from "../itwClaimsUtils";
@@ -85,9 +85,12 @@ describe("getCredentialExpireDays", () => {
   );
 });
 
-describe("getCredentialExpireStatus", () => {
+describe("getCredentialStatus", () => {
   it("should return undefined", () => {
-    const expireStatus = getCredentialExpireStatus({});
+    const expireStatus = getCredentialStatus({
+      ...({} as StoredCredential),
+      parsedCredential: {}
+    });
     expect(expireStatus).toBeUndefined();
   });
 
@@ -99,15 +102,47 @@ describe("getCredentialExpireStatus", () => {
     MockDate.set(new Date(2000, 0, 10, 23, 59));
     expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
 
-    const status = getCredentialExpireStatus({
-      expiry_date: {
-        name: "",
-        value: format(expiryDate, "YYYY-MM-DD")
+    const status = getCredentialStatus({
+      ...({} as StoredCredential),
+      parsedCredential: {
+        expiry_date: {
+          name: "",
+          value: format(expiryDate, "YYYY-MM-DD")
+        }
       }
     });
     expect(status).toStrictEqual(expectedStatus);
     MockDate.reset();
   });
+
+  test.each([
+    [new Date(2000, 0, 1), new Date(2000, 11, 1), "expired"],
+    [new Date(2000, 1, 1), new Date(2000, 0, 1), "expired"],
+    [new Date(2000, 11, 1), new Date(2020, 0, 1), "valid"]
+  ])(
+    "with checkJwtExpiration if JWT expires on %p and credential expires on %p, should return %p",
+    (jwtExpiryDate, credentialExpiryDate, expectedStatus) => {
+      MockDate.set(new Date(2000, 8, 1));
+
+      const status = getCredentialStatus(
+        {
+          ...({} as StoredCredential),
+          jwt: {
+            expiration: jwtExpiryDate.toISOString()
+          },
+          parsedCredential: {
+            expiry_date: {
+              name: "",
+              value: format(credentialExpiryDate, "YYYY-MM-DD")
+            }
+          }
+        },
+        { checkJwtExpiration: true }
+      );
+      expect(status).toEqual(expectedStatus);
+      MockDate.reset();
+    }
+  );
 });
 
 describe("extractFiscalCode", () => {

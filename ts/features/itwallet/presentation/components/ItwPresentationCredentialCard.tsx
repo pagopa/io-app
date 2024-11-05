@@ -3,7 +3,7 @@ import {
   IOSpacingScale,
   VStack
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   Directions,
@@ -18,12 +18,14 @@ import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 
 /**
  * Credentials that should display a skeumorphic card
  */
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
-  CredentialType.DRIVING_LICENSE
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD
 ];
 
 type Props = {
@@ -36,6 +38,11 @@ type Props = {
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
+
+  const handleOnPress = useCallback(() => {
+    trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
+    setIsFlipped(_ => !_);
+  }, [credential.credentialType]);
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType
@@ -61,9 +68,11 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         <View style={styles.flipButton}>
           <ButtonLink
             label={I18n.t(
-              "features.itWallet.presentation.credentialDetails.flipCard"
+              `features.itWallet.presentation.credentialDetails.${
+                isFlipped ? "flipCardBack" : "flipCardFront"
+              }`
             )}
-            onPress={() => setIsFlipped(_ => !_)}
+            onPress={handleOnPress}
             icon="switchCard"
             iconPosition="end"
           />

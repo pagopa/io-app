@@ -16,6 +16,11 @@ import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
+import { StatusMessages } from "./components/StatusMessages";
+
+export const routingInstrumentation = Sentry.reactNavigationIntegration({
+  enableTimeToInitialDisplay: true
+});
 
 const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
   // console.log(JSON.stringify(event));
@@ -37,7 +42,14 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
+  integrations: integrations => [
+    ...integrations,
+    Sentry.reactNativeTracingIntegration({ routingInstrumentation })
+  ],
   enabled: !isDevEnv,
+  // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
+  maxValueLength: 3000,
+  tracesSampleRate: 0.3,
   sampleRate: 0.3
 });
 
@@ -49,7 +61,7 @@ export type AppDispatch = typeof store.dispatch;
  * Main component of the application
  * @constructor
  */
-export const App = (): JSX.Element => (
+const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
@@ -59,7 +71,11 @@ export const App = (): JSX.Element => (
               <PersistGate loading={undefined} persistor={persistor}>
                 <BottomSheetModalProvider>
                   <LightModalProvider>
-                    <RootContainer />
+                    <StatusMessages>
+                      <RootContainer
+                        routingInstumentation={routingInstrumentation}
+                      />
+                    </StatusMessages>
                   </LightModalProvider>
                 </BottomSheetModalProvider>
               </PersistGate>
@@ -70,3 +86,9 @@ export const App = (): JSX.Element => (
     </SafeAreaProvider>
   </GestureHandlerRootView>
 );
+
+/**
+ * We wrap the main app component with the sentry utility function to handle
+ * the Performance monitoring
+ */
+export default Sentry.wrap(App);

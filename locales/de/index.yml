@@ -155,6 +155,7 @@ global:
   markdown:
     decodeError: "Die Nachricht kann nicht entschlüsselt werden"
   buttons:
+    consent: "Zulassen"
     deny: "Verweigern"
     share: "Teilen"
     delete: "Löschen"
@@ -253,6 +254,10 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
+    messageLegacy: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz deines Profils löschen."
+    message: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz in den Einstellungen löschen."
+    cta_1_legacy: "Geh zum Profil"
+    cta_1: "Geh zu den Einstellungen"
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
@@ -264,13 +269,21 @@ inbox:
   enableButton: "Posteingang aktivieren"
   disableButton: "Posteingang deaktivieren"
   enableCallToActionDescription: "Aktiviere den Posteingang, um Mitteilungen anzusehen"
+settings: 
+  informativeBanner: 
+    content: "Suchst du dein Profil? Wir haben es verschoben, es befindet sich jetzt in der oberen rechten Ecke!"
+    action: "Geh zu den Einstellungen"
 profile:
   fiscalCode:
     accessibility:
+      fiscalCodeHint: "Bild des Strichcodes deiner Steuernummer"
       unavailable: "Nicht verfügbar"
     title: "Deine persönlichen Dokumente"
     fiscalCode: "Steuernummer"
+    description: "Verwende den Strichcode, um deine Steuernummer mitzuteilen, wenn du dazu aufgefordert wirst."
     facSimile: "Faksimile"
+    copyCode: "Steuernummer kopieren"
+    codeCopied: "Steuernummer kopiert"
   sections:
     spid: "SPID PROFIL"
   unknown: "Unbekannt"
@@ -278,6 +291,7 @@ profile:
     menulabel: "IO beenden"
     alertTitle: "Möchtest du wirklich beenden?"
     alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
+    loading: "IO wird beendet"
     exit: "Beenden"
   errors:
     load: "Fehler beim Laden des Profils"
@@ -288,6 +302,7 @@ profile:
     forgetCurrentSession: "Aktuelle Sitzung löschen"
     clearAsyncStorage: "Inhalt von AsyncStorage löschen"
     dumpAsyncStorage: "AsyncStorage-Inhalt herunterladen"
+    sentryTestEvent: "Teile Fehler"
     contextualHelpTitle: "Was du in deinem Profil machen kannst"
     developerModeOn: "Entwicklermodus aktiviert"
     cache:
@@ -306,20 +321,67 @@ profile:
     privacy:
       title: "Datenschutz und Nutzungsbedingungen"
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
+      subtitle: "Hier findest du Informationen über deine Rechte und Pflichten sowie über die Verarbeitung personenbezogener Daten."
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
+        title: "Dein Profil löschen"
+        description: "Dein Profil und deine persönlichen Daten löschen"
         error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
+          activeBonusTitle: "Dein Profil löschen"
+          activeBonusDescription: "Es scheint, dass du einigen Initiativen auf IO beigetreten bist. Wenn du dein Profil löschst, werden die Initiativen, denen du beigetreten bist, nicht beendet.\n\nUm sie zu verwalten, geh zum Abschnitt „Konto“, andernfalls wähle „Löschen“."
+          oldRequest: "Du hast bereits beantragt, dass dein Profil gelöscht wird"
+          oldRequestSubtitle: "Wir bearbeiten deine Anfrage.\n\nWenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, drücke bitte auf „Löschung abbrechen“."
           cta:
+            manageBonus: "Geh zum Konto"
+            continue: "Profil löschen"
             return: "Zurück"
+            cancel: "Löschung abbrechen"
+        info:
+          title: "Dein Profil löschen"
+          description: "Du kannst jederzeit von deinem Recht Gebrauch machen, dein IO-Profil zu löschen."
+          banner: "Dein Profil wird innerhalb von 30 Tagen nach deinem Antrag endgültig gelöscht."
+          body:
+            p1: "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen."
+            p2:
+              firstPart: "Alle Boni oder Rabatte, die du über die IO-App erhalten hast, "
+              lastPart: "sind nicht mehr verfügbar."
+            p3: "Du kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest."
+          cta: "Mit der Löschung fortfahren"
         details:
+          title: "Warum möchtest du dein Profil bei IO löschen?"
+          body: "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und klicke auf „Profil löschen“."
+          question: "Was ist der Grund dafür?"
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
           answer_3: "Ich habe die App nie benutzt"
           answer_4: "Keiner der oben genannten Punkte"
+          labelOpenAnswer: "Schreib deinen Grund"
+          cta: "Dein Profil löschen"
+        success:
+          title: "Wir haben deine Anfrage erhalten"
+          body: "Dein Profil wird innerhalb von 30 Tagen gelöscht. Du kannst jederzeit wieder zu IO zurückkehren, indem du dich mit SPID oder CIE anmeldest."
+          cta: "Schließen"
       exportData:
+        cta: "Eine Kopie der Daten anfordern"
         title: "Zugriff auf deine Daten"
+        subtitle: "Du kannst die wichtigsten Daten deines IO-Profils jederzeit herunterladen."
         description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
+        detail:
+          bulletList:
+            title: "Deine Daten sind:"
+            item1: "deine Steuernummer;"
+            item2: "die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;"
+            item3: "den Text der Mitteilungen, die du erhalten hast;"
+            item4: "deine Benachrichtigungseinstellungen."
+          paragraph1: "Die Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht."
+          paragraph2:
+            part1: "Du erhältst eine "
+            part2: "Mitteilung in IO "
+            part3: "mit einem Link und einem 15 Tage lang gültigen Passwort."
+          paragraph3:
+            part1: "Weitere Informationen findest du in der"
+            link: "IO-Datenschutzrichtlinie."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
@@ -339,29 +401,62 @@ profile:
           title: "Freigabe von Nutzungsdaten"
           description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
         screen:
+          title: "Deine Daten auf IO"
+          description: "Wenn du deine Daten weitergibst, hilfst du uns, dein IO-Erlebnis zu verbessern und dir gezielte Unterstützung zu bieten."
+          why:
+            description:
+              one: "Wir verwenden "
+              two: "nur die Daten, die notwendig sind, "
+              three: "um das Funktionieren der App zu überwachen und die angebotenen Dienste zu verbessern."
+            cta: "Warum wir Daten erfassen"
+          security:
+            description:
+              one: "Wir ergreifen Sicherheitsmaßnahmen "
+              two: "zum Schutz "
+              three: "deiner Daten."
+            cta: "Wie wir die Daten schützen"
+          gdpr:
+            description:
+              one: "Wir arbeiten nur mit Lieferanten zusammen, die Daten "
+              two: "transparent und sicher verarbeiten."
+            cta: "Wer sind die Lieferanten?"
+          additionalInformation:
+            description: "Für weitere Informationen lies bitte die "
+            cta: "Datenschutzerklärung und die Nutzungsbedingungen"
+          profileSettings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Datenschutz und Nutzungsbedingungen ändern"
           cta:
             shareData: "Daten freigeben"
+            dontShareData: "Daten nicht freigeben"
+            dontShare: "Jetzt nicht"
           confirmToast: "Einstellungen aktualisiert!"
+        alert:
+          title: "Du hast entschieden, deine Daten \nnicht weiterzugeben"
+          body: "Wenn du dies bestätigst, können wir dir nicht gezielt helfen, da uns möglicherweise die notwendigen Daten zur Lösung des Problems fehlen."
+        whyBottomSheet:
+          title: "Warum wir Daten erfassen"
+          body: "Wir sammeln keine Daten für Marketingzwecke. \n\nWir verwenden Tools, die es uns ermöglichen, Daten darüber aufzuzeichnen, wie du die App nutzt, um **dir einen besseren Service zu bieten** und **dich bei Bedarf zu unterstützen**."        
         securityBottomSheet:
           title: "Was ist eine Pseudonymisierung?"
           body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
     appInfo:
       title: "Über IO"
       description: "Erfahren mehr über die IO-App"
+      subtitle: "Hier findest du weitere Einzelheiten über die IO-App und erfahre mehr über ihre Einsatzmöglichkeiten."
+      paragraphTitle: "Was ist IO?"
+      paragraphBody1: "IO, die App für öffentliche Dienste, "
+      paragraphBody2: "bietet dir einen einzigen Kanal für die einfache Interaktion mit lokalen und nationalen Behörden (Gemeinden, Regionen, Zentralbehörden) direkt von deinem Gerät aus. Dank IO treten die einzelnen Verwaltungen rechtzeitig und individuell mit dir in Kontakt und ermöglichen dir, Verfahren im Zusammenhang mit einer bestimmten Dienstleistung - wie Bescheide, Zahlungen, Fristen und Benachrichtigungen - einfach und sicher zu verwalten."
+      bannerBody: "Möchtest du mehr erfahren?"
+      bannerButton: "Geh zur IO-Website"
     developersSectionHeader: "Entwickler"
     testEnvironmentSectionHeader: "Testumgebung"
-    pagoPaEnvironment:
-      pagoPaEnv: "pagoPA Testumgebung"
-      pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
-      alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
-      alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und deine gespeicherten Zahlungsmethoden nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmethoden nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
-      alertMessage: "Die App muss neu gestartet werden, damit die Änderungen wirksam werden."
-    pnEnvironment:
-      pnEnv: "PN-Testumgebung"
     appVersion: "Version"
     backendVersion: "Backend-Version"
     debugMode: "Debug-Modus"
     designSystem: "Design System"
+    banner:
+      title: "Möchtest du deine Steuernummer anzeigen?"
+      action: "Geh zum Abschnitt „Deine Daten“."
+      close: "Schließe das Banner und zeige es nicht mehr an."
   data:
     title: "Deine Daten"
     subtitle: "Hier findest du deine anagrafischen Daten und Kontaktdaten, die von IO verwendet werden"
@@ -369,6 +464,7 @@ profile:
       email: "E-Mail-Adresse"
       need_validate: "Noch zu bestätigen"
       nameSurname: "Vor- und Nachname"
+      fiscalCode: "Steuernummer"
   security:
     title: "Sicherheit"
     subtitle: "Verwalte die Authentifizierungsmethoden in der App"
@@ -378,10 +474,21 @@ profile:
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
+    subtitle: "Mit diesen Einstellungen kannst du dein IO-Erlebnis individuell gestalten."
+    genericToastTitle: "Einstellungen aktualisiert!"
     contextualHelpTitle: "Deine Einstellungen"
     list:
       wip: "In Bearbeitung"
       digitalDomicile: "Digitales Domizil"
+      service_contact:
+        title: "Dienste verwalten"
+        subtitle: "Wähle, wer dich kontaktieren kann"
+      send_email_messages:
+        title: "Weiterleitung von Mitteilungen per E-Mail"
+        subtitle: "Vorschau der Mitteilung erhalten"
+      language:
+        title: "Sprache"
+        subtitle: "Wähle die Sprache"
       preferred_calendar:
         title: "Bevorzugter Kalender"
       preferred_language:
@@ -390,7 +497,12 @@ profile:
         alert:
           title: "Möchtest du die Sprache ändern in"
           subtitle: "Du musst die App neu starten, um die Änderung zu übernehmen"
+        toast:
+          success:
+            title: "Sprache geändert"
         not_selected: "Nicht ausgewählt"
+        banner:
+          button: "Mehr erfahren"
       notifications:
         title: "Push-Benachrichtigungen"
         subtitle: "Vorschau und Erinnerung zulassen"
@@ -463,6 +575,17 @@ authentication:
       os_problem: "Ein Betriebssystem mit Android 6.0 oder iOS 13 oder höher ist erforderlich."
       nfc_alert: "Dein Gerät verfügt nicht über NFC."
       os_alert: "Das Betriebssystem des Geräts ist nicht auf dem neuesten Stand."
+    cie_bottom_sheet:
+      title: "Wie willst du dich anmelden?"
+      module_cie_pin:
+        title: "Anmeldung mit CIE + PIN"
+        subtitle: "Benutze die elektronische Identitätskarte und die PIN"
+      module_cie_id:
+        title: "Anmeldung mit CieID"
+        subtitle: "Benutze die App CieID"
+      help_banner:
+        title: "Nicht sicher, was du wählen solltest?"
+        action: "Wir helfen dir"
     contentTitleCie: "Du hast keinen SPID oder CIE?"
     spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
     request_cie: "CIE anfordern"
@@ -485,23 +608,127 @@ authentication:
     card5-title: "Willkommen in IO!"
     card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
     card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
+    expiredCardTitle: "CIE-Verifizierung fehlgeschlagen"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
+    expiredCardContent: "Die verwendete Karte ist möglicherweise abgelaufen oder nicht mehr gültig. Versuche dich mit SPID bei der App anzumelden."
     expiredCardHelp: "Wie erneuert man seine elektronische Identitätskarte?"
+  wizards:
+    cie_id_wizard:
+      title: "Hast du die CieID-App?"
+      description: "Wenn du die CieID-App auf deinem Gerät hast, melde dich bei IO an, indem du die Anmeldedaten der App eingibst. Du kannst auch dein Gesicht oder deinen Fingerabdruck oder den Code, den du für die CieID-App eingerichtet hast, verwenden."
+      actions:
+        primary:
+          label: "Ja, mit CieID anmelden"
+        secondary:
+          label: "Ich habe CieID nicht"
+      link: "Was ist CieID?"
+    cie_pin_wizard:
+      title: "Hast du deine elektronische Identitätskarte und deine PIN?"
+      description: "Wenn du deine elektronischen Identitätskarte zur Hand hast, kannst du dich bei IO anmelden, indem du die PIN der Karte eingibst und sie in die Nähe des Geräts hältst, damit die Daten gelesen werden können."
+      actions:
+        primary:
+          label: "Ja, mit CIE + PIN anmelden"
+        secondary:
+          label: "Ich habe keine CIE und PIN"
+      bottom_sheet:
+        title: "Wo kann ich die PIN der CIE finden?"
+        link: "Hast du deine PIN vergessen?"
+        cta:
+          label: "Wo kann ich die PIN der CIE finden?"
+    spid_wizard:
+      title: "Hast du SPID?"
+      description: "Wenn du einen SPID hast, kannst du dich bei IO anmelden, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters."
+      actions:
+        primary:
+          label: "Ja, mit SPID anmelden"
+        secondary:
+          label: "Ich habe keinen SPID"
+    id_activation_wizard:
+      title: "Aktiviere deine digitale Identität!"
+      description: "Du musst einen aktiven SPID oder eine CIE (elektronische Identitätskarte) haben, um IO nutzen zu können."
+      list_items:
+        title: "Wie aktivieren?"
+        request_cie:
+          label: "Deine CIE beantragen"
+        activate_cie:
+          title: "CIE-Zugangsdaten aktivieren"
+        activate_spid:
+          title: "SPID aktivieren"
+      actions:
+        primary:
+          label: "Schließen"
+  auth_errors:
+    error_19:
+      title: "Du hast zu viele Anmeldeversuche gemacht"
+      subtitle: "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben. Bitte überprüfe deine Anmeldedaten und versuche es in ein paar Minuten noch einmal, oder wende dich an deinen SPID-Identitätsanbieter, um deine Anmeldedaten zu ändern."
+    error_20:
+      title: "Es war nicht möglich dich anzumelden"
+      subtitle: "Aus Sicherheitsgründen musst du eine Identität mit einer höheren Sicherheitsstufe verwenden. Weitere Informationen erhältst du von deinem SPID-Identitätsanbieter."
+    error_21:
+      title: "Es ist zu viel Zeit vergangen"
+      subtitle: "Es ist zu viel Zeit vergangen, seit du mit dem Anmelden begonnen hast: Fang noch einmal von vorne an."
+    error_22:
+      title: "Du hast der Übermittlung von Daten nicht zugestimmt"
+      subtitle: "Um Zugang zu erhalten, ist es erforderlich, der Übermittlung bestimmter Daten zuzustimmen."
+    error_23:
+      title: "Identität gesperrt oder widerrufen"
+      subtitle: "Deine SPID-Identität wurde gesperrt oder widerrufen. Für weitere Informationen wende dich bitte an deinen SPID-Identitätsanbieter."
+    error_25:
+      title: "Du hast den Vorgang abgebrochen"
+      subtitle: "Um einzusteigen, versuche es einfach noch einmal, wann immer du willst."
+    error_1001:
+      title: "Du hast das erforderliche Mindestalter nicht erreicht"
+      subtitle: "Um dich anzumelden, musst du mindestens 18 Jahre alt sein."
+    generic:
+      title: "Es war nicht möglich dich anzumelden"
+      subtitle: "Beim Anmelden ist ein Problem aufgetreten. Bitte versuche es in ein paar Minuten erneut."
+  cie_id:
+    error_screen:
+      title: "Du kannst dich nicht mit CieID anmelden?"
+      cie_pin_supported:
+        description: "Wenn du deine elektronische Identitätskarte zur Hand hast, verwende sie für den Zugang zu IO.\n\nGib die CIE-PIN ein und halte sie in die Nähe des Geräts, damit die Daten gelesen werden können."
+        primary_action_label: "Mit CIE + PIN anmelden"
+      cie_pin_not_supported:
+        description: "Wenn du einen SPID hast, melde dich bei IO an, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters."
+        primary_action_label: "Mit SPID anmelden"
+      secondary_action_label: "Schließen"
   cie:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
     noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
     nfc:
+      apduNotSupported: "Das Betriebssystem unterstützt das Lesen der elektronischen Identitätskarte nicht. Versuche, SPID zu verwenden, um dich in der App anzumelden."
       retry: "Erneut versuchen"
       noNfcConnectionTitle: "Hast du die Karte berührt?"
+      title: "Aktiviere NFC um fortzufahren"
+      subtitle: "Um IO das Lesen deiner CIE zu erlauben, aktiviere NFC in den Einstellungen deines Geräts."
+      listItemTitle: "Wie geht's:"
+      action: "Öffne Einstellungen"
+      listItemLabel1: "Schritt 1"
+      listItemValue1: "Rufe die Einstellungen deines Geräts auf"
+      listItemLabel2: "Schritt 2"
+      listItemValue2: "Suche nach “NFC”"
+      listItemLabel3: "Schritt 3"
+      listItemValue3: "Aktiviere NFC"
+      activeNfcAlert: "Aktiviere NFC, damit IO deine CIE lesen kann!"
+      activeNFCAlertButton: "Aktiviere NFC"
     pin:
       accessibility:
         placeholderLabel: "PIN der elektronischen Identitätskarte"
         label: "Eingabefeld für die PIN der elektronischen Identitätskarte"
         hint: "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein."
+        deleteLabel: "Du hast {{number}} gelöscht"
       pinCardTitle: "Gib die PIN deiner Identitätskarte ein"
       pinCardHeader: "Anmeldung mit CIE"
       pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."
+      incorrectCiePinTitle1: "Die PIN ist nicht korrekt"
+      incorrectCiePinTitle2: "Du hast 2 mal eine falsche PIN eingegeben"
+      lockedCiePinTitle: "Du hast zu oft eine falsche PIN eingegeben"
+      incorrectCiePinContent1: "Du hast noch 2 Versuche übrig, überprüfe und versuche es erneut."
+      incorrectCiePinContent2: "Nach dem dritten falschen Versuch wird die PIN gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben."
+      incorrectCiePinSecondaryActionLabel2: "Hast du deine PIN vergessen?"
+      lockedCiePinContent: "Die PIN deiner CIE wurde gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben."
+      lockedSecondaryActionLabel: "Hast du deinen PUK vergessen?"
       alert: "Möchtest du wirklich zurückgehen?"
       subtitleHelp: "Die PIN ist ein 8-stelliger Code."
       subtitleCTA: "Wo finde ich ihn?"
@@ -511,22 +738,36 @@ authentication:
     pinTempLocked:
       title: "Karte vorübergehend gesperrt"
     card:
-      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      title: "Halte die CIE auf die Rückseite des Geräts"
+      titleiOS: "Halte die CIE oben auf das Gerät"
+      layCardMessageHeader: "Wenn die Karte nicht gelesen wird, halte sie an eine andere Stelle und warte ein paar Sekunden, bis du eine Vibration spürst."
+      layCardMessageHeaderiOS: "Wenn die Karte nicht gelesen wird, halte sie an eine andere Stelle und warte einige Sekunden."
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      cieCardValid: "Lesen abgeschlossen!"
+      readerCardTitle: "Halte sie einige Sekunden lang still."
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
-        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
+        readingInstructions: "Halte deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
         readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
+        readingSuccess: "Lesen abgeschlossen!"
         invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
         tagLost: "Du hast die Karte zu früh entfernt."
+        cardLocked: "Die PIN der CIE ist gesperrt"
+        wrongPin1AttemptLeft: "Du hast zweimal eine falsche PIN eingegeben"
+        wrongPin2AttemptLeft: "Die PIN ist nicht korrekt"
         genericError: "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
       error:
+        readerCardLostTitle: "Du hast die Karte zu früh entfernt"
+        onTagLost: "Halte die Karte wieder auf die Rückseite des Geräts."
         tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
         generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
         unknownCardTitle: "Unbekannte Karte"
         unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein."
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
+        genericErrorTitle: "Wir konnten die Daten nicht von der Karte abrufen"
+        genericErrorSubtitle: "Wenn das Problem mehrmals auftritt, warte ein paar Minuten und versuche es erneut."
   spid: "SPID"
   spid_information_request:
     headerTitle: "Du hast keinen SPID?"
@@ -684,6 +925,7 @@ onboarding:
   tos:
     headerTitle: "IO einrichten"
     accept: "Akzeptieren"
+    error: "Wir konnten die Datenschutzrichtlinie und die Allgemeinen Geschäftsbedingungen nicht abrufen"
     alert:
       title: "Achtung"
       message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
@@ -692,24 +934,70 @@ onboarding:
     contextualHelpTitle: "Wie lautet dein Entsperrcode?"
   pin:
     headerTitle: "IO einrichten"
+    title: "Entsprerrcode erstellen"
+    subTitle: "Dies ist der 6-stellige Code für den Zugriff auf IO und die Autorisierung bestimmter Vorgänge in der App."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     errors:
+      invalid:
+        title: "Zu einfach!"
+        description: "Wähle einen Code, der schwer zu erraten ist und weder eine einzelne, sich wiederholende Zahl (z. B. 000000) noch eine Liste von geordneten Zahlen (z. B. 123456 oder 654321) enthält."
+        cta: "Erstelle einen anderen Code"
       match: "Der Code stimmt nicht überein"
+    policy:
+      title: "Wie wähle ich den Code aus?"
+      description: "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren."
+      bulletListTitle: "Wähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:"
+      firstItem: "eine sich wiederholende Zahl (z.B. 000000)"
+      secondItem: "eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
+    success:
+      message: "Du hast den Code geändert!"
+  pinConfirmation:
+    title: "Bestätige den Entsperrcode"
+    errors:
+      match:
+        title: "Der eingegebene Code ist anders als der erste"
+        cta: "Erneut versuchen"
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
+  exitAlert:
+    title: "Möchtest du dich von IO abmelden?"
+    description: "Du musst dich erneut mit SPID oder CIE anmelden um die App zu benutzen."
   biometric:
     headerTitle: "IO einrichten"
     available:
       title: "Biometrische Erkennung aktiveren"
+      settings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Sicherheit ändern"
       body:
+        text: "Du kannst dein Gesicht oder deinen Fingerabdruck anstelle des Entsperrcodes verwenden. Damit kannst du schneller und sicherer auf die App zugreifen und Transaktionen und Zahlungen autorisieren."
         infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
         biometricType: "mit deinem Gesicht oder Fingerabdruck"
         infoEnd: "auf schnellere und sicherere Weise."
         enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
+        notEnrolled:
+          text: "Dazu musst du die biometrische Erkennung zuerst in den Systemeinstellungen deines Geräts konfigurieren."
+          label: "Wie geht's?"
+          step1:
+            label: "Schritt 1"
+            value: "Rufe die Einstellungen deines Geräts auf"
+          step2:
+            label: "Schritt 2"
+            value: "Konfiguriere dein Gesicht oder deinen Fingerabdruck"
+          step3:
+            label: "Schritt 3"
+            value: "Aktiviere sie in IO unter {{pageName}} > Sicherheit"
     unavailable:
       title: "Schütze dein Gerät"
+      subtitle: "IO sendet dir Mitteilungen, die dich persönlich betreffen. Stelle sicher, dass nur du auf die App zugreifen kannst, indem du einen Code oder ein Zeichen zum Entsperren des Geräts festlegst."
+      body:
+        label: "Wie geht's?"
+        step1:
+          label: "Schritt 1"
+          value: "Rufe die Einstellungen deines Geräts auf"
+        step2:
+          label: "Schritt 2"
+          value: "Erstelle einen Code oder Zeiche zum Entsperren des Geräts"
   shareData:
     title: "IO einrichten"
   thankYouPage:
@@ -1768,6 +2056,7 @@ services:
         title: "Einstellungen gespeichert!"
         body: "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen."
         cta: "Verfügbare Dienste anzeigen"
+      banner: "Du kannst deine Wahl jederzeit unter {{pageName}} > Einstellungen ändern"
       oldUsersBadge: "Aktuelle Einstellungen"
       choiceLabel: "Deine Wahl:"
       unavailable: "Nicht ausgewählt"
@@ -1793,9 +2082,45 @@ services:
           body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
   title: "Dienste"
   contextualHelpTitle: "Was du in deinen Diensten machen kannst"
+  new: "Neu"
   home:
+    bottomSheet:
+      content:
+        servicesPreferences:
+          value: "Wer kann dir schreiben?"
+          description: "Wähle, wer dich kontaktieren kann"
+        settings:
+          value: "Alle Einstellungen"
+          description: "Verwalte deine Daten und Nutzungseinstellungen"
+    featured:
+      services:
+        title: "Im Vordergrund"
+      institutions:
+        title: "Hervorgehobene Körperschaften"
     institutions:
       title: "National"
+    searchLink: "Suche nach allen verfügbaren lokalen Diensten"
+  institution:
+    failure:
+      title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
+      subtitle: "Dienste werden geladen"
+      back: "Zurück"
+      retry: "Erneut versuchen"
+    header:
+      subtitlePlural: "{{count}} Dienste verfügbar"
+      subtitleSingular: "{{count}} Dienst verfügbar"
+  search:
+    input:
+      placeholder: "Suche nach einer Körperschaft"
+      placeholderShort: "Körperschaft suchen"
+      cancel: "Abbrechen"
+      clear: "Löschen"
+    emptyState:
+      invalidQuery:
+        title: "Gib den Namen einer Körperschaft ein, \nnational oder lokal."
+      noResults:
+        title: "Kein Dienst gefunden"
+        subtitle: "Gib den Namen einer bestehenden nationalen oder lokalen Körperschaft ein."
   details:
     failure:
       title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
@@ -1957,24 +2282,11 @@ bonus:
           byDistance: "Nach der Nähe zu deinem Standort"
           byName: "Alphabetisch geordnet"
     merchantDetail:
-      bucket:
-        alert:
-          cta: "Verstanden!"
-        error:
-          noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
         deals: Opportunità
         description: "Beschreibung"
-        services: "Dienste"
         contactInfo: "Adressen"
-        hours: "Öffnungszeiten"
-        validity: "Gültigkeit"
-        discountCode: "Rabattcode"
-        conditions: "Bedingungen"
       cta:
-        label: "Besuche die Website des Anbieters"
-        landingPage: "Die Ermäßigung nutzen"
-        discountUrl: "Nutze die Ermäßigung"
         website: Vai al sito del partner
       categories:
         counting: "und weitere {{count}}"
@@ -2214,8 +2526,9 @@ features:
         all: "Alle"
         bonus: "Initiativen für das Gemeinwohl"
         cgn: "Nationale Jugendkarte"
-        itw: Documenti
+        itw: "Dokumente"
         payment: "Zahlungsmethoden"
+        other: "Mehr"
     onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
       options:
@@ -2225,6 +2538,8 @@ features:
   payments:
     title: "Zahlungen"
     cta: "Aufforderung bezahlen"
+    remoteAlert:
+      cta: "Mehr erfahren"
     methods:
       title: "Zahlungsmethoden"
       button: "Hinzufügen"
@@ -2234,6 +2549,18 @@ features:
       status:
         expired: "Abgelaufen"
     transactions:
+      showLegacyTransactions: "Vorherige anzeigen"
+      legacy:
+        empty:
+          title: "Keine Quittung gefunden"
+          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
+        banner:
+          content: "Wir generieren Quittungen im PDF-Format: Wenn du Duplikate in dieser Liste findest, ignoriere diese bitte!"
+          action: "Mehr erfahren"
+        title: "Vorherige Transaktionen"
+        bottomSheet:
+          title: "Wo finde ich die Zahlungsquittung?"
+      multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
       empty:
@@ -2242,6 +2569,26 @@ features:
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
+      receipt:
+        title: "pagoPA-Quittung"
+        shareButton: "Speichern oder teilen"
+        error: "Die Quittung konnte nicht abgerufen werden."
+        download: "Quittung erhalten"
+      details:
+        totalFeeUnknown: "Der Gesamtbetrag enthält keine Provisionskosten: du findest diese in dem Dokument, das du von {{pspName}} erhalten hast."
+        totalFeeUnknownPsp: "Die Gesamtsumme enthält keine Provisionskosten: du findest diese in dem Dokument, das du vom Zahlungsdienstleister (PSP) erhalten hast."
+    details:
+      payPal:
+        banner:
+          title: "Möchtest du in 3 Raten zahlen?"
+          content: "Verwende nicht diese Methode. Wähle bei der Bezahlung „PayPal (auch in 3 Raten)“."
+      pspAlert:
+        description: "Für diese Methode ist die Expresszahlung mit dem Anbieter {{pspBusinessName}} aktiv."
+        action: "Was bedeutet das?"
+        title: "Was bedeutet das?"
+        explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über „PayPal-Expresszahlung“ abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
+    errors:
+      transactionCreationError: "Es gibt ein Problem mit den Bezahlsystemen."
 support:
   ticketList:
     noTicket:
@@ -2367,6 +2714,8 @@ bonusCard:
   removed: "Entfernt"
 transaction:
   details:
+    error:
+      title: "Wir konnten die Quittung nicht abrufen"
     title: "Details zur Transaktion"
     totalAmount: "Insgesamt"
     totalFee: "Der Gesamtbetrag umfasst "
@@ -2377,12 +2726,21 @@ transaction:
       pspName: "Zahlungsdienstleister (PSP)"
       dateAndHour: "Datum und Uhrzeit"
       transactionId: "Transaktions-ID"
+      paymentMethod: "Zahlungsmethode"
+      authCode: "Autorisierungscode"
+      rrn: "RRN"
+      executedBy: "Ausgeführt von"
+      headedTo: "Zahlungsmethode, ausgestellt auf"
+      alert:
+        content: "Wende dich an den Gläubiger, wenn du die Quittung benötigst."
     operation:
       amount: "Betrag"
       creditor: "Gläubiger"
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
+      noticeCode: "Kodex der Zahlungsaufforderung"
+      taxCode: "Steuernummer Körperschaft"
 permissionRequest:
   gallery:
     title: "Erlaube IO den Zugriff auf deine Fotos"

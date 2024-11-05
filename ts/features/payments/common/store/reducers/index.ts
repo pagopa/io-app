@@ -25,6 +25,9 @@ import paymentsBizEventsTransactionReducer, {
 import paymentsPagoPaPlatformReducer, {
   PaymentsPagoPaPlatformState
 } from "./pagoPaPlatformReducer";
+import paymentsBackoffRetryReducer, {
+  PaymentsBackoffRetryState
+} from "./paymentsBackoffRetryReducer";
 
 export type PaymentsState = {
   onboarding: PaymentsOnboardingState;
@@ -36,6 +39,7 @@ export type PaymentsState = {
   wallet: PaymentsWalletState;
   bizEventsTransaction: PaymentsBizEventsTransactionState;
   pagoPaPlatform: PaymentsPagoPaPlatformState;
+  paymentsBackoffRetry: PaymentsBackoffRetryState;
 };
 
 const paymentsReducer = combineReducers({
@@ -47,7 +51,8 @@ const paymentsReducer = combineReducers({
   home: homeReducer,
   wallet: paymentsWalletReducer,
   bizEventsTransaction: paymentsBizEventsTransactionReducer,
-  pagoPaPlatform: paymentsPagoPaPlatformReducer
+  pagoPaPlatform: paymentsPagoPaPlatformReducer,
+  paymentsBackoffRetry: paymentsBackoffRetryReducer
 });
 
 export default paymentsReducer;
