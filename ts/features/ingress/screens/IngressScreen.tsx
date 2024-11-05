@@ -25,6 +25,7 @@ import {
   trackIngressTimeout
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
+import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -107,6 +108,7 @@ export const IngressScreen = () => {
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
+        animatedPictogramSource={waiting}
       />
     </>
   );
