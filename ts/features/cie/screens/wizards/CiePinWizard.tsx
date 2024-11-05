@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import {
   ButtonLink,
   ContentWrapper,
-  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -39,16 +38,16 @@ const CiePinWizard = () => {
           )}
         />
         <VSpacer size={24} />
-        <Label
-          asLink
+        <ButtonLink
+          label={I18n.t(
+            "authentication.wizards.cie_pin_wizard.bottom_sheet.link"
+          )}
           onPress={() => {
             openWebUrl(CIE_PIN_LINK, () => {
               error(I18n.t("global.jserror.title"));
             });
           }}
-        >
-          {I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.link")}
-        </Label>
+        />
       </>
     ),
     snapPoint: [350],

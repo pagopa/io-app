@@ -1,6 +1,6 @@
 import {
+  ButtonLink,
   ContentWrapper,
-  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -54,16 +54,14 @@ const CieIdWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <Label
-          asLink
+        <ButtonLink
           onPress={() => {
             openWebUrl(CIE_ID_LINK, () => {
               error(I18n.t("global.jserror.title"));
             });
           }}
-        >
-          {I18n.t("authentication.wizards.cie_id_wizard.link")}
-        </Label>
+          label={I18n.t("authentication.wizards.cie_id_wizard.link")}
+        />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
