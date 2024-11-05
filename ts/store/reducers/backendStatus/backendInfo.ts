@@ -40,7 +40,11 @@ export const backendInfoReducer = (
   return state;
 };
 
-export const backendInfoSelector = (state: GlobalState) => state.backendInfo;
+export const deadsCounterSelector = (state: GlobalState) =>
+  state.backendInfo.deadsCounter;
+
+export const areSystemsDeadSelector = (state: GlobalState) =>
+  state.backendInfo.deadsCounter;
 
 // true if we have data and it says backend is off
 export const isBackendServicesStatusOffSelector = (state: GlobalState) =>
