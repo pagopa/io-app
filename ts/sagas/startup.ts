@@ -79,10 +79,10 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
-  backendStatusSelector,
+  remoteConfigSelector,
   isPnEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
-} from "../store/reducers/backendStatus";
+} from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
   isIdPayTestEnabledSelector,
@@ -241,8 +241,8 @@ export function* initializeApplicationSaga(
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
-  const backendStatus = yield* select(backendStatusSelector);
-  if (O.isNone(backendStatus)) {
+  const remoteConfig = yield* select(remoteConfigSelector);
+  if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
   }
 
