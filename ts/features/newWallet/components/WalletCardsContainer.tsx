@@ -9,7 +9,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";

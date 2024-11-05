@@ -46,7 +46,7 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
-import { preferredPspsByOriginSelector } from "../../store/reducers/backendStatus";
+import { preferredPspsByOriginSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { paymentStartOriginSelector } from "../../store/reducers/wallet/payment";
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
