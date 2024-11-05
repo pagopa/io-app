@@ -1,7 +1,6 @@
 import {
   ButtonLink,
   Divider,
-  H2,
   IOStyles,
   ListItemHeader,
   VSpacer
@@ -35,11 +34,11 @@ import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import * as analytics from "../analytics";
-import { PaymentsBizEventsFilterTabs } from "../components/PaymentsBizEventsFilterTabs";
 import { PaymentBizEventsCategoryFilter } from "../types";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { PaymentsBizEventsFadeInOutAnimationView } from "../components/PaymentsBizEventsFadeInOutAnimationView";
 import { PaymentsBizEventsTransactionLoadingList } from "../components/PaymentsBizEventsTransactionLoadingList";
+import { PaymentBizEventsSectionListHeader } from "../components/PaymentBizEventsSectionListHeader";
 
 export type PaymentsTransactionBizEventsListScreenProps = RouteProp<
   PaymentsTransactionBizEventsParamsList,
@@ -180,25 +179,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
     }
   }, [transactionsPot]);
 
-  const SectionListHeaderTitle = React.useMemo(
-    () => (
-      <View onLayout={getTitleHeight}>
-        <H2
-          accessibilityLabel={I18n.t("features.payments.transactions.title")}
-          accessibilityRole="header"
-        >
-          {I18n.t("features.payments.transactions.title")}
-        </H2>
-        <VSpacer size={16} />
-        <PaymentsBizEventsFilterTabs
-          selectedCategory={noticeCategory}
-          onCategorySelected={handleCategorySelected}
-        />
-      </View>
-    ),
-    [noticeCategory, handleCategorySelected]
-  );
-
   const ShowLegacyTransactionsButton = () => (
     <View style={{ marginTop: 12 }}>
       <VSpacer size={16} />
@@ -246,7 +226,13 @@ const PaymentsTransactionBizEventsListScreen = () => {
       }}
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.25}
-      ListHeaderComponent={SectionListHeaderTitle}
+      ListHeaderComponent={
+        <PaymentBizEventsSectionListHeader
+          onLayout={getTitleHeight}
+          selectedCategory={noticeCategory}
+          onCategorySelected={handleCategorySelected}
+        />
+      }
       onScroll={scrollHandler}
       stickySectionHeadersEnabled={false}
       sections={
