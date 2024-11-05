@@ -139,16 +139,19 @@ const PaymentsTransactionBizEventsListScreen = () => {
     );
   };
 
-  const handleCategorySelected = (category: PaymentBizEventsCategoryFilter) => {
-    setNoticeCategory(category);
-    dispatch(
-      getPaymentsBizEventsTransactionsAction.request({
-        firstLoad: true,
-        noticeCategory: category,
-        onSuccess: handleOnSuccess
-      })
-    );
-  };
+  const handleCategorySelected = React.useCallback(
+    (category: PaymentBizEventsCategoryFilter) => {
+      setNoticeCategory(category);
+      dispatch(
+        getPaymentsBizEventsTransactionsAction.request({
+          firstLoad: true,
+          noticeCategory: category,
+          onSuccess: handleOnSuccess
+        })
+      );
+    },
+    [setNoticeCategory, dispatch]
+  );
 
   useOnFirstRender(
     React.useCallback(() => {
@@ -177,20 +180,23 @@ const PaymentsTransactionBizEventsListScreen = () => {
     }
   }, [transactionsPot]);
 
-  const SectionListHeaderTitle = (
-    <View onLayout={getTitleHeight}>
-      <H2
-        accessibilityLabel={I18n.t("features.payments.transactions.title")}
-        accessibilityRole="header"
-      >
-        {I18n.t("features.payments.transactions.title")}
-      </H2>
-      <VSpacer size={16} />
-      <PaymentsBizEventsFilterTabs
-        selectedCategory={noticeCategory}
-        onCategorySelected={handleCategorySelected}
-      />
-    </View>
+  const SectionListHeaderTitle = React.useMemo(
+    () => (
+      <View onLayout={getTitleHeight}>
+        <H2
+          accessibilityLabel={I18n.t("features.payments.transactions.title")}
+          accessibilityRole="header"
+        >
+          {I18n.t("features.payments.transactions.title")}
+        </H2>
+        <VSpacer size={16} />
+        <PaymentsBizEventsFilterTabs
+          selectedCategory={noticeCategory}
+          onCategorySelected={handleCategorySelected}
+        />
+      </View>
+    ),
+    [noticeCategory, handleCategorySelected]
   );
 
   const ShowLegacyTransactionsButton = () => (
