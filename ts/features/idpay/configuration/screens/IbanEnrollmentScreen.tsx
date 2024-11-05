@@ -17,7 +17,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
