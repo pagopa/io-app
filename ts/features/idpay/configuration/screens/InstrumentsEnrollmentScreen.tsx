@@ -15,7 +15,6 @@ import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -33,6 +32,7 @@ import { IdPayConfigurationParamsList } from "../navigation/params";
 import { ConfigurationMode } from "../types";
 import { InitiativeFailureType } from "../types/failure";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 
 export type IdPayInstrumentsEnrollmentScreenParams = {
   initiativeId?: string;
@@ -100,9 +100,8 @@ export const InstrumentsEnrollmentScreen = () => {
   const handleContinueButton = () => machine.send({ type: "next" });
 
   const handleAddPaymentMethodButton = () =>
-    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
-      params: { inPayment: O.none }
+    navigation.replace(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });
 
   const handleEnrollConfirm = () => {
