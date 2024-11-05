@@ -89,6 +89,18 @@ describe("getPayerInfoLabel", () => {
     const result = getPayerInfoLabel(payer);
     expect(result).toBe("John Doe\n(123456789)");
   });
+
+  it("should return only the name if taxCode is empty string", () => {
+    const payer = { name: "John Doe", taxCode: "" };
+    const result = getPayerInfoLabel(payer);
+    expect(result).toBe("John Doe");
+  });
+
+  it("should return capitalize string", () => {
+    const payer = { name: "john doe", taxCode: "123456789" };
+    const result = getPayerInfoLabel(payer);
+    expect(result).toBe("John Doe\n(123456789)");
+  });
 });
 
 describe("calculateTotalAmount", () => {
