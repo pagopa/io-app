@@ -27,6 +27,8 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
   const isMdl = credential.credentialType === CredentialType.DRIVING_LICENSE;
   const isEhc =
     credential.credentialType === CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD;
+  const isEdc =
+    credential.credentialType === CredentialType.EUROPEAN_DISABILITY_CARD;
 
   const expireStatus = getCredentialStatus(credential);
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
@@ -72,6 +74,13 @@ export const ItwPresentationAlertsSection = ({ credential }: Props) => {
         <Alert
           testID="itwEhcBannerTestID"
           content={I18n.t("features.itWallet.presentation.alerts.ehc.content")}
+          variant="info"
+        />
+      )}
+      {isEdc && (
+        <Alert
+          testID="itwEdcBannerTestID"
+          content={I18n.t("features.itWallet.presentation.alerts.edc.content")}
           variant="info"
         />
       )}

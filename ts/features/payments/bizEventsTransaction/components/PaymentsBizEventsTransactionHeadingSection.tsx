@@ -1,11 +1,5 @@
 import _ from "lodash";
-import {
-  Body,
-  H2,
-  IOStyles,
-  useIOTheme,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
@@ -32,8 +26,6 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
 }: Props) => {
   const navigation =
     useNavigation<PaymentsTransactionBizEventsStackNavigation>();
-
-  const theme = useIOTheme();
 
   const transactionInfo = transaction?.infoNotice;
 
@@ -90,14 +82,6 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
 
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
-      <H2
-        color={theme["textHeading-default"]}
-        accessibilityLabel={I18n.t("transaction.details.title")}
-        accessibilityRole="header"
-      >
-        {I18n.t("transaction.details.title")}
-      </H2>
-      <VSpacer size={16} />
       <PaymentsBizEventsTransactionCartList
         carts={transaction?.carts}
         loading={isLoading}

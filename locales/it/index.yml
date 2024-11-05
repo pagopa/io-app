@@ -281,8 +281,8 @@ inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
-settings: 
-  informativeBanner: 
+settings:
+  informativeBanner:
     content: Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!
     action: Vai alle Impostazioni
 profile:
@@ -3212,6 +3212,15 @@ features:
         banner:
           label: "Il caricamento delle ricevute è fallito."
           retryButton: "Prova di nuovo"
+      filters:
+        tabs:
+          all: Tutte
+          payer: Pagate da me
+          debtor: Intestate a me
+      list:
+        empty:
+          title: Nessuna ricevuta trovata
+          subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
     details:
       payPal:
         banner:
@@ -3412,10 +3421,10 @@ features:
       alerts:
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
-          action: Scopri di più
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
-          action: "Scopri di più"
+        edc:
+          content: "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3503,7 +3512,7 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
-  errorGetZendeskToken: 
+  errorGetZendeskToken:
     title: Al momento non riusciamo ad aprire una richiesta di assistenza
     subtitle: Riprova più tardi
   askPermissions:
