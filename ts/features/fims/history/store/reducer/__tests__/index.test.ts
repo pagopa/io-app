@@ -1,8 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import reducer, { FimsExportSuccessStates, INITIAL_STATE } from "..";
+import reducer, {
+  FimsExportSuccessStates,
+  FimsHistoryState,
+  INITIAL_STATE
+} from "..";
 import {
   isError,
   isReady,
+  isUndefined,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -10,7 +15,12 @@ import {
   RemoteValue
 } from "../../../../../../common/model/RemoteValue";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { fimsHistoryExport, fimsHistoryGet } from "../../actions";
+import {
+  fimsHistoryExport,
+  fimsHistoryGet,
+  resetFimsHistoryExportState,
+  resetFimsHistoryState
+} from "../../actions";
 import { ConsentsResponseDTO } from "../../../../../../../definitions/fims/ConsentsResponseDTO";
 import { Consent } from "../../../../../../../definitions/fims/Consent";
 
@@ -27,7 +37,7 @@ describe("fimsHistoryReducer", () => {
   });
 });
 
-describe("fimsHistoryReducer, receiving fimsHistoryGet.request", () => {
+describe("fimsHistoryReducer, receiving 'fimsHistoryGet.request'", () => {
   const consentsResponse = {} as ConsentsResponseDTO;
   [
     pot.none,
@@ -69,7 +79,7 @@ describe("fimsHistoryReducer, receiving fimsHistoryGet.request", () => {
   );
 });
 
-describe("fimsHistoryReducer, receiving fimsHistoryGet.success", () => {
+describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
   [
     [],
     [
@@ -174,7 +184,7 @@ describe("fimsHistoryReducer, receiving fimsHistoryGet.success", () => {
   });
 });
 
-describe("fimsHistoryReducer, receiving fimsHistoryGet.failure", () => {
+describe("fimsHistoryReducer, receiving 'fimsHistoryGet.failure'", () => {
   const consentsData = {
     items: [
       {
@@ -259,7 +269,7 @@ const generateHistoryExportInitialStatuses = (): ReadonlyArray<
   remoteError(null)
 ];
 
-describe("fimsHistoryReducer, receiving fimsHistoryExport.request", () =>
+describe("fimsHistoryReducer, receiving 'fimsHistoryExport.request'", () =>
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     it(`Given initial 'historyExportState' of type '${
       historyExportInitialState.kind
@@ -279,7 +289,7 @@ describe("fimsHistoryReducer, receiving fimsHistoryExport.request", () =>
     });
   }));
 
-describe("fimsHistoryReducer, receiving fimsHistoryExport.success", () =>
+describe("fimsHistoryReducer, receiving 'fimsHistoryExport.success'", () =>
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     const initialState = {
       consentsList: generateInitialConsentsList(),
@@ -315,7 +325,7 @@ describe("fimsHistoryReducer, receiving fimsHistoryExport.success", () =>
     );
   }));
 
-describe("fimsHistoryReducer, receiving fimsHistoryExport.failure", () =>
+describe("fimsHistoryReducer, receiving 'fimsHistoryExport.failure'", () =>
   generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
     const initialState = {
       consentsList: generateInitialConsentsList(),
@@ -344,3 +354,64 @@ describe("fimsHistoryReducer, receiving fimsHistoryExport.failure", () =>
       expect(historyExportState.error).toBeNull();
     });
   }));
+
+describe("fimsHistoryReducer, receiving 'resetFimsHistoryExportState'", () =>
+  generateHistoryExportInitialStatuses().forEach(historyExportInitialState => {
+    const initialState = {
+      consentsList: generateInitialConsentsList(),
+      historyExportState: historyExportInitialState
+    };
+    it(`Given initial 'historyExportState' of type '${
+      historyExportInitialState.kind
+    } ${
+      isReady(historyExportInitialState) ? historyExportInitialState.value : ""
+    }', it should set it to 'remoteUndefined' after receing 'resetFimsHistoryExportState' but keep the value of 'consentsList'`, () => {
+      const resetFimsHistoryExportStateAction = resetFimsHistoryExportState();
+
+      const historyState = reducer(
+        initialState,
+        resetFimsHistoryExportStateAction
+      );
+
+      expect(isUndefined(historyState.historyExportState)).toBe(true);
+      expect(historyState.consentsList).toEqual(initialState.consentsList);
+    });
+  }));
+
+describe("fimsHistoryReducer, receiving 'resetFimsHistoryState'", () => {
+  const consentsData = {
+    items: [
+      {
+        id: "01JBXYESDQ28QQBNM4XF9BNYCV",
+        service_id: "01JBXYEX8Q1HNKJ0VJ73ZPW0XK",
+        timestamp: new Date()
+      }
+    ],
+    continuationToken: "01JBXYEJ6Z844VNB6306A400V7"
+  };
+  [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(consentsData),
+    pot.noneError("An error"),
+    pot.some(consentsData),
+    pot.someLoading(consentsData),
+    pot.someUpdating(consentsData, consentsData),
+    pot.someError(consentsData, "An error")
+  ].forEach(consentsList => {
+    const initialState: FimsHistoryState = {
+      consentsList,
+      historyExportState: remoteReady("SUCCESS")
+    };
+    it(`Given initial 'consentsList' of type '${consentsList.kind}, it should set it to 'pot.none' after receing 'resetFimsHistoryState' but keep the value of 'historyExportState'`, () => {
+      const resetFimsHistoryStateAction = resetFimsHistoryState();
+
+      const historyState = reducer(initialState, resetFimsHistoryStateAction);
+
+      expect(historyState.consentsList.kind).toBe("PotNone");
+      expect(historyState.historyExportState).toEqual(
+        initialState.historyExportState
+      );
+    });
+  });
+});

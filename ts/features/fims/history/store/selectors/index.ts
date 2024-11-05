@@ -4,6 +4,7 @@ import { constUndefined, pipe } from "fp-ts/lib/function";
 import { backendStatusSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { potFoldWithDefault } from "../../../../../utils/pot";
+import { isLoading } from "../../../../../common/model/RemoteValue";
 
 export const fimsHistoryPotSelector = (state: GlobalState) =>
   state.features.fims.history.consentsList;
@@ -38,4 +39,4 @@ export const fimsHistoryExportStateSelector = (state: GlobalState) =>
   state.features.fims.history.historyExportState;
 
 export const isFimsHistoryExportingSelector = (state: GlobalState) =>
-  state.features.fims.history.historyExportState.kind === "loading";
+  isLoading(state.features.fims.history.historyExportState);
