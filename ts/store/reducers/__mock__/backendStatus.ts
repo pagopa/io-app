@@ -1,10 +1,7 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { BackendStatusState } from "../backendStatus";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -308,12 +305,6 @@ export const baseRawBackendStatus: BackendStatus = {
   }
 };
 
-export const baseBackendState: BackendStatusState = {
-  status: O.some(baseRawBackendStatus),
-  areSystemsDead: false,
-  deadsCounter: 0
-};
-
 export const baseBackendConfig: Config = {
   premiumMessages: {
     opt_in_out_enabled: false
@@ -401,17 +392,3 @@ export const baseBackendConfig: Config = {
     }
   }
 };
-
-export const withBpdRankingConfig = (
-  baseState: BackendStatusState,
-  newConfig: Config
-): BackendStatusState => ({
-  ...baseState,
-  status: pipe(
-    baseState.status,
-    O.map(s => ({
-      ...s,
-      config: { ...newConfig }
-    }))
-  )
-});
