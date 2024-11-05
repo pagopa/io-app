@@ -17,7 +17,7 @@ import { FAQsCategoriesType } from "../../../utils/faq";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import useContentWithFF from "../../profile/useContentWithFF";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,
