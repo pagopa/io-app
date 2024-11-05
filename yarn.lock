@@ -2097,7 +2097,7 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-integrity/-/io-react-native-integrity-0.3.0.tgz#ec0808f308f0dc7b163febdbfa528819b1730c2d"
   integrity sha512-K9omm939IhhuKBopdtDsDLeh6k9XZPgf03WlHnuiFtxo2rdfAUlWj8Fq9njpyT0ovmwDfP12PtRYSDFzkYH5Lg==
 
-"@pagopa/io-react-native-jwt@^1.2.0":
+"@pagopa/io-react-native-jwt@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-jwt/-/io-react-native-jwt-1.3.0.tgz#751ca160131dc00a18ec6ca916dfd7cb481fb440"
   integrity sha512-n5GSV4HNnRvWBpZo927bWLZNanW779ndjzFJhPNeDOTTrgZR/oeKqCnfK1udy52wPFlJD15sYSOfEbm+9zIpEw==
