@@ -58,7 +58,7 @@ export const PaymentsCheckoutNavigator = () => (
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME}
       component={WalletPaymentOutcomeScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
+        gestureEnabled: false,
         headerShown: false
       }}
     />
