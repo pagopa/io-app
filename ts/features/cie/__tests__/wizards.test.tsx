@@ -14,6 +14,7 @@ import ROUTES from "../../../navigation/routes";
 const anyFunction = expect.any(Function);
 const mockNavigateToCieIdLoginScreen = jest.fn();
 const mockNavigateToCiePinInsertion = jest.fn();
+const mockNavigateToIdpSelection = jest.fn();
 const mockNavigate = jest.fn();
 const SPID_LEVEL = "SpidL2";
 
@@ -42,7 +43,8 @@ jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
   __esModule: true,
   default: () => ({
     navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen,
-    navigateToCiePinInsertion: mockNavigateToCiePinInsertion
+    navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
+    navigateToIdpSelection: mockNavigateToIdpSelection
   })
 }));
 
@@ -145,6 +147,29 @@ describe(SpidWizard, () => {
     const component = render(<SpidWizard />);
 
     expect(component).toMatchSnapshot();
+  });
+  it("Should call navigateToIdpSelection", () => {
+    const { getByTestId } = render(<SpidWizard />);
+
+    const navigateToIdpSelection = getByTestId(
+      "spid-wizard-navigate-to-idp-selection"
+    );
+    fireEvent.press(navigateToIdpSelection);
+
+    expect(mockNavigateToIdpSelection).toHaveBeenCalledTimes(1);
+  });
+  it("Should navigate to IDActivationWizard screen", () => {
+    const { getByTestId } = render(<SpidWizard />);
+
+    const navigateToIdActivationWizard = getByTestId(
+      "spid-wizard-navigate-to-id-activation-wizard"
+    );
+    fireEvent.press(navigateToIdActivationWizard);
+
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_ID_ACTIVATION_WIZARD
+    });
   });
 });
 

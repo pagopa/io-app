@@ -2706,6 +2706,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={{}}
+        testID="spid-wizard-navigate-to-idp-selection"
       >
         <View
           style={
@@ -2843,6 +2844,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="spid-wizard-navigate-to-id-activation-wizard"
         >
           <View
             style={
