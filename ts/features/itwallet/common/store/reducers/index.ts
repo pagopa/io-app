@@ -17,6 +17,7 @@ import lifecycleReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
+import preferencesReducer, { ItwPreferencesState } from "./preferences";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
@@ -24,6 +25,7 @@ export type ItWalletState = {
   lifecycle: ItwLifecycleState;
   credentials: ItwCredentialsState & PersistPartial;
   walletInstance: ItwWalletInstanceState & PersistPartial;
+  preferences: ItwPreferencesState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -35,13 +37,16 @@ const itwReducer = combineReducers({
   issuance: issuanceReducer,
   lifecycle: lifecycleReducer,
   credentials: itwCredentialsReducer,
-  walletInstance: wiaReducer
+  walletInstance: wiaReducer,
+  preferences: preferencesReducer
 });
 
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
-  whitelist: ["issuance", "lifecycle"] satisfies Array<keyof ItWalletState>,
+  whitelist: ["issuance", "lifecycle", "preferences"] satisfies Array<
+    keyof ItWalletState
+  >,
   version: CURRENT_REDUX_ITW_STORE_VERSION
 };
 

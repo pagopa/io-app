@@ -1,26 +1,32 @@
 import { Banner } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import React from "react";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { itwCloseFeedbackBanner } from "../store/actions/preferences";
+import { itwIsFeedbackBannerVisibleSelector } from "../store/reducers/preferences";
 
-const ItwWalletFeebdackBanner = () => {
+const ItwFeebdackBanner = () => {
+  const dispatch = useIODispatch();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
+  const shouldBeVisible = useIOSelector(itwIsFeedbackBannerVisibleSelector);
 
-  if (!isItwValid || isWalletEmpty) {
+  if (!isItwValid || isWalletEmpty || !shouldBeVisible) {
     // We should display this banner only if the wallet is active and there is at least 1 credential
     return null;
   }
 
   const handleOnPress = () => {
     openWebUrl("https://pagopa.qualtrics.com/jfe/form/SV_40ije50GQj63CJ0");
+    dispatch(itwCloseFeedbackBanner({ withFeedback: true }));
   };
 
-  const handleOnClose = constNull;
+  const handleOnClose = () => {
+    dispatch(itwCloseFeedbackBanner({}));
+  };
 
   return (
     <Banner
@@ -40,6 +46,6 @@ const ItwWalletFeebdackBanner = () => {
   );
 };
 
-const MemoizedItwWalletFeebdackBanner = React.memo(ItwWalletFeebdackBanner);
+const MemoizedItwFeebdackBanner = React.memo(ItwFeebdackBanner);
 
-export { MemoizedItwWalletFeebdackBanner as ItwWalletFeebdackBanner };
+export { MemoizedItwFeebdackBanner as ItwFeebdackBanner };

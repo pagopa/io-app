@@ -18,8 +18,8 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
+import { ItwFeebdackBanner } from "../../itwallet/common/components/ItwFeebdackBanner";
 import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
-import { ItwWalletFeebdackBanner } from "../../itwallet/common/components/ItwWalletFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
@@ -149,7 +149,7 @@ const ItwCardsContainer = () => {
             />
           </>
         }
-        bottomElement={<ItwWalletFeebdackBanner />}
+        bottomElement={<ItwFeebdackBanner />}
       />
       {isItwValid && eidInfoBottomSheet.bottomSheet}
     </>
