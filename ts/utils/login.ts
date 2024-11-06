@@ -51,7 +51,10 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
 const LOGIN_SUCCESS_PAGE = "profile.html";
 const LOGIN_FAILURE_PAGE = "error.html";
 
-export const extractLoginResult = (url: string): LoginResult | undefined => {
+export const extractLoginResult = (
+  url: string,
+  idp: "SPID" | "CIEID" | "CIE" = "SPID"
+): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);
 
   // LOGIN_SUCCESS
@@ -66,7 +69,9 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
     const errorCode = urlParse.query.errorCode;
     const errorMessage = urlParse.query.errorMessage;
-    trackLoginSpidError(errorCode);
+    if (idp === "SPID") {
+      trackLoginSpidError(errorCode);
+    }
     return {
       success: false,
       errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode,
@@ -90,12 +95,13 @@ export const getIdpLoginUri = (idpId: string, level: number) =>
 export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
-    onSuccess: (_: SessionToken) => void
+    onSuccess: (_: SessionToken) => void,
+    idp: "SPID" | "CIEID" | "CIE" = "SPID"
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {
       // If the url is not related to login this will be `null`
-      const loginResult = extractLoginResult(navState.url);
+      const loginResult = extractLoginResult(navState.url, idp);
       if (loginResult) {
         if (loginResult.success) {
           // In case of successful login

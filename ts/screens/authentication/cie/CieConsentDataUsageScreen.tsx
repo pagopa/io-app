@@ -122,7 +122,8 @@ const CieConsentDataUsageScreen = () => {
     (event: WebViewNavigation): boolean => {
       const isLoginUrlWithToken = onLoginUriChanged(
         handleLoginFailure,
-        handleLoginSuccess
+        handleLoginSuccess,
+        "CIE"
       )(event);
       // URL can be loaded if it's not the login URL containing the session token - this avoids
       // making a (useless) GET request with the session in the URL
