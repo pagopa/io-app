@@ -1,9 +1,16 @@
-import { render } from "@testing-library/react-native";
-import React = require("react");
+import { fireEvent, render } from "@testing-library/react-native";
+import React from "react";
 import CieIdWizard from "../screens/wizards/CieIdWizard";
 import CiePinWizard from "../screens/wizards/CiePinWizard";
 import SpidWizard from "../screens/wizards/SpidWizard";
-import IDActivationWizard from "../screens/wizards/IDActivationWizard";
+import IDActivationWizard, {
+  ACTIVATE_CIE_URL,
+  ACTIVATE_SPID_URL,
+  REQUEST_CIE_URL
+} from "../screens/wizards/IDActivationWizard";
+import * as urlUtils from "../../../utils/url";
+
+const anyFunction = expect.any(Function);
 
 jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({
@@ -22,6 +29,10 @@ jest.mock("react-redux", () => ({
 }));
 jest.mock("react-native-safe-area-context", () => ({
   useSafeAreaInsets: jest.fn
+}));
+
+jest.mock("../../../utils/url", () => ({
+  openWebUrl: jest.fn()
 }));
 
 describe(CieIdWizard, () => {
@@ -61,5 +72,41 @@ describe(IDActivationWizard, () => {
     const component = render(<IDActivationWizard />);
 
     expect(component).toMatchSnapshot();
+  });
+  it("Should open request Cie url", () => {
+    const { getByTestId } = render(<IDActivationWizard />);
+    const requestCie = getByTestId("id-activation-request-cie");
+
+    fireEvent.press(requestCie);
+
+    expect(urlUtils.openWebUrl).toHaveBeenCalledTimes(1);
+    expect(urlUtils.openWebUrl).toHaveBeenCalledWith(
+      REQUEST_CIE_URL,
+      anyFunction
+    );
+  });
+  it("Should open activate Cie url", () => {
+    const { getByTestId } = render(<IDActivationWizard />);
+    const activateCie = getByTestId("id-activation-activate-cie");
+
+    fireEvent.press(activateCie);
+
+    expect(urlUtils.openWebUrl).toHaveBeenCalledTimes(1);
+    expect(urlUtils.openWebUrl).toHaveBeenCalledWith(
+      ACTIVATE_CIE_URL,
+      anyFunction
+    );
+  });
+  it("Should open activate Spid url", () => {
+    const { getByTestId } = render(<IDActivationWizard />);
+    const activateCie = getByTestId("id-activation-activate-spid");
+
+    fireEvent.press(activateCie);
+
+    expect(urlUtils.openWebUrl).toHaveBeenCalledTimes(1);
+    expect(urlUtils.openWebUrl).toHaveBeenCalledWith(
+      ACTIVATE_SPID_URL,
+      anyFunction
+    );
   });
 });

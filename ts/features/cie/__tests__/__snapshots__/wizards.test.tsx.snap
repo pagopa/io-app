@@ -1705,6 +1705,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           onTouchEnd={[Function]}
+          testID="id-activation-request-cie"
         >
           <View
             accessibilityElementsHidden={true}
@@ -1871,6 +1872,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           onTouchEnd={[Function]}
+          testID="id-activation-activate-cie"
         >
           <View
             accessibilityElementsHidden={true}
@@ -2079,6 +2081,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           onTouchEnd={[Function]}
+          testID="id-activation-activate-spid"
         >
           <View
             accessibilityElementsHidden={true}
