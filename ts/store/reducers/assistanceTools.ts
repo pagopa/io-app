@@ -8,7 +8,7 @@ import {
   assistanceToolRemoteConfig,
   canShowHelp
 } from "../../utils/supportAssistance";
-import { assistanceToolConfigSelector } from "./backendStatus";
+import { assistanceToolConfigSelector } from "./backendStatus/remoteConfig";
 
 export type AssistanceToolsState = {
   zendesk: ZendeskState;
