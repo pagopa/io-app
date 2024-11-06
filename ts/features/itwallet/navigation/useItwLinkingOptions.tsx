@@ -17,6 +17,7 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
 
   const isUserAllowedToItw = isItwEnabled && isItwTrialActive;
   const canItwBeActivated = isUserAllowedToItw && !isItwValid;
+  const itwAlreadyActive = isUserAllowedToItw && isItwValid;
 
   return {
     [ITW_ROUTES.MAIN]: {
@@ -28,6 +29,9 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
         }),
         ...(canItwBeActivated && {
           [ITW_ROUTES.DISCOVERY.INFO]: "discovery/info"
+        }),
+        ...(itwAlreadyActive && {
+          [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: "discovery/info"
         })
       }
     }

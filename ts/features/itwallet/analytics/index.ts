@@ -621,6 +621,13 @@ export const trackItwIdRequestUnexpected = ({
   );
 };
 
+export const trackItwAlreadyActivated = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
+    buildEventProperties("KO", "error")
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
