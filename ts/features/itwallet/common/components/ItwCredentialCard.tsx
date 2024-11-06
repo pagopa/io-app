@@ -11,9 +11,8 @@ import I18n from "../../../../i18n";
 import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
-
-export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
 export type ItwCredentialCard = {
   credentialType: string;
@@ -21,14 +20,20 @@ export type ItwCredentialCard = {
   isPreview?: boolean;
 };
 
+const validStatuses: Array<ItwCredentialStatus> = [
+  "valid",
+  "expiring",
+  "jwtExpiring"
+];
+
 export const ItwCredentialCard = ({
   status = "valid",
   credentialType,
   isPreview = false
 }: ItwCredentialCard) => {
-  const isValid = status === "valid";
+  const isValid = validStatuses.includes(status);
   const theme = getThemeColorByCredentialType(credentialType);
-  const labelColor = isValid ? theme.textColor : IOColors["grey-700"];
+  const labelOpacity = isValid ? 1 : 0.5;
 
   const cardBackgroundSource =
     credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
@@ -45,13 +50,21 @@ export const ItwCredentialCard = ({
         </View>
         <View style={styles.header}>
           <HStack space={16}>
-            <Text style={[styles.label, { color: labelColor }]}>
+            <Text
+              style={[
+                styles.label,
+                { color: theme.textColor, opacity: labelOpacity }
+              ]}
+            >
               {getCredentialNameFromType(credentialType, "").toUpperCase()}
             </Text>
             {statusTagProps && <Tag {...statusTagProps} />}
           </HStack>
         </View>
-        <ItwDigitalVersionBadge credentialType={credentialType} />
+        <ItwDigitalVersionBadge
+          credentialType={credentialType}
+          isFaded={!isValid}
+        />
         <View
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
@@ -74,34 +87,39 @@ const credentialCardBackgrounds: {
   [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
-  ],
-  [CredentialType.PID]: [
-    require("../../../../../img/features/itWallet/cards/eid.png"),
-    require("../../../../../img/features/itWallet/cards/eid_off.png")
   ]
 };
 
 const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+  invalid: {
+    variant: "error",
+    text: I18n.t("features.itWallet.card.status.invalid")
+  },
   expired: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.expired")
+  },
+  jwtExpired: {
+    variant: "error",
+    text: I18n.t("features.itWallet.card.status.verificationExpired")
   },
   expiring: {
     variant: "warning",
     text: I18n.t("features.itWallet.card.status.expiring")
   },
-  pending: {
-    variant: "customIcon",
-    text: I18n.t("features.itWallet.card.status.pending"),
-    customIconProps: { iconColor: "info-700", iconName: "infoFilled" }
+  jwtExpiring: {
+    variant: "warning",
+    text: I18n.t("features.itWallet.card.status.verificationExpiring")
   }
 };
 
 const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
   valid: IOColors.white,
+  invalid: IOColors["error-600"],
   expired: IOColors["error-600"],
   expiring: IOColors["warning-700"],
-  pending: IOColors["info-700"]
+  jwtExpired: IOColors["error-600"],
+  jwtExpiring: IOColors["warning-700"]
 };
 
 const styles = StyleSheet.create({
