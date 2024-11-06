@@ -1,16 +1,16 @@
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
-import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
+import { remoteConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
 export const isCieLoginUatEnabledSelector = (state: GlobalState) =>
   state.features.loginFeatures.cieLogin.useUat;
 
 const isCieIdMinAppVersionEnabledSelector = createSelector(
-  backendStatusSelector,
-  backendStatus =>
+  remoteConfigSelector,
+  remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
-      backendStatus,
+      remoteConfig,
       mainLocalFlag: true,
       configPropertyName: "cie_id"
     })

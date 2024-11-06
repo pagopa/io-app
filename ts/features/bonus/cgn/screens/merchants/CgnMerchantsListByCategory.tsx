@@ -1,14 +1,3 @@
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useMemo } from "react";
-import {
-  View,
-  LayoutChangeEvent,
-  RefreshControl,
-  Platform
-} from "react-native";
 import {
   Divider,
   H3,
@@ -19,22 +8,39 @@ import {
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { useMemo } from "react";
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  Platform,
+  RefreshControl,
+  View
+} from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
   getValueOrElse,
   isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -47,17 +53,13 @@ import {
 } from "../../store/reducers/merchants";
 import { getCategorySpecs } from "../../utils/filters";
 import { mixAndSortMerchants } from "../../utils/merchants";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
-import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
 }>;
 
 const CgnMerchantsListByCategory = () => {
+  const screenHeight = Dimensions.get("window").height;
   const [titleHeight, setTitleHeight] = React.useState(0);
   const translationY = useSharedValue(0);
 
@@ -72,6 +74,7 @@ const CgnMerchantsListByCategory = () => {
     // eslint-disable-next-line functional/immutable-data
     translationY.value = event.contentOffset.y;
   });
+
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const route =
@@ -239,6 +242,17 @@ const CgnMerchantsListByCategory = () => {
       }}
     />
   );
+
+  const getPaddingBottom = () => {
+    const ELEMENT_HEIGHT = 49;
+    const totalListElementsHeight = ELEMENT_HEIGHT * merchantsAll.length;
+    const usedVerticalSpace =
+      titleHeight + totalListElementsHeight + insets.bottom;
+    const availableVerticalSpace = screenHeight - usedVerticalSpace;
+
+    return availableVerticalSpace < titleHeight ? availableVerticalSpace : 0;
+  };
+
   return (
     <>
       <FocusAwareStatusBar
@@ -246,7 +260,16 @@ const CgnMerchantsListByCategory = () => {
         barStyle={"dark-content"}
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
-        <GenericErrorComponent onRetry={initLoadingLists} />
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
+          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
+          action={{
+            label: I18n.t("global.buttons.retry"),
+            accessibilityLabel: I18n.t("global.buttons.retry"),
+            onPress: initLoadingLists
+          }}
+        />
       ) : (
         <Animated.FlatList
           style={{ flexGrow: 1, backgroundColor: IOColors.white }}
@@ -256,11 +279,11 @@ const CgnMerchantsListByCategory = () => {
           snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: 48,
+            paddingBottom: getPaddingBottom(),
             backgroundColor: IOColors.white
           }}
           refreshControl={refreshControl}
-          data={isListLoading && !isPullRefresh ? [] : merchantsAll}
+          data={merchantsAll}
           keyExtractor={item => item.id}
           ListEmptyComponent={CgnMerchantListSkeleton}
           renderItem={renderItem}
