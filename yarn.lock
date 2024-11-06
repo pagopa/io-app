@@ -3891,16 +3891,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-jwt@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@pagopa/io-react-native-jwt@npm:1.2.0"
+"@pagopa/io-react-native-jwt@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@pagopa/io-react-native-jwt@npm:1.3.0"
   dependencies:
-    abab: ^2.0.6
+    js-base64: ^3.7.7
     zod: ^3.22.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 080487b01beeeb55eb72dde229107ac297ecbf2316f7a8a5b66c6ed2bfb8e63b6fe227b00ca1778561db1b8635f72310cf2d2ba5e0b2276ae41090e60a3ad8dd
+  checksum: 197d7c93bf0ebab4c47c82cb053f6f7884ec133842ae4c70eb76d4ddfc02b4100baa5aae79e0c483e1ad99d7d9fb65fab17677803871b3e090282162424f4513
   languageName: node
   linkType: hard
 
@@ -3914,9 +3914,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^0.22.0":
-  version: 0.22.0
-  resolution: "@pagopa/io-react-native-wallet@npm:0.22.0"
+"@pagopa/io-react-native-wallet@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "@pagopa/io-react-native-wallet@npm:0.23.0"
   dependencies:
     js-base64: ^3.7.7
     js-sha256: ^0.9.0
@@ -3931,7 +3931,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-webview: "*"
-  checksum: ddd4eabf61e6d5fe645a54834f2fdcd4cf57a1205e6d0e61338526205357ef3ca6d3ac6d34d08d038ccbb95cfa048160703d75f09493a7edb16e25cd56f03bd6
+  checksum: 061d2d46ec59dfe620be69b5ff1061a50fa0ad35d5d4703c0c04058cc9409ff7d8c4a3893f0752f6b53c017a23211cd8582393374fe830e98164724f233398d0
   languageName: node
   linkType: hard
 
@@ -6345,7 +6345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abab@npm:^2.0.3, abab@npm:^2.0.5, abab@npm:^2.0.6":
+"abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.6
   resolution: "abab@npm:2.0.6"
   checksum: 6ffc1af4ff315066c62600123990d87551ceb0aafa01e6539da77b0f5987ac7019466780bf480f1787576d4385e3690c81ccc37cfda12819bf510b8ab47e5a3e
@@ -14018,9 +14018,9 @@ __metadata:
     "@pagopa/io-react-native-crypto": ^0.3.0
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.0
-    "@pagopa/io-react-native-jwt": ^1.2.0
+    "@pagopa/io-react-native-jwt": ^1.3.0
     "@pagopa/io-react-native-login-utils": 1.0.6
-    "@pagopa/io-react-native-wallet": ^0.22.0
+    "@pagopa/io-react-native-wallet": ^0.23.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^13.2.0
     "@pagopa/react-native-cie": ^1.3.0

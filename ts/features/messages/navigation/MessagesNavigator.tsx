@@ -8,7 +8,7 @@ import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
