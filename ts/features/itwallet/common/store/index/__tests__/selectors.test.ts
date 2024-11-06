@@ -1,12 +1,15 @@
-import { isItwEnabledSelector } from "../../../../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { isItwTrialActiveSelector } from "../../../../../trialSystem/store/reducers";
 import { itwLifecycleIsValidSelector } from "../../../../lifecycle/store/selectors";
 import { isItwDiscoveryBannerRenderableSelector } from "../selectors";
 
-jest.mock("../../../../../../store/reducers/backendStatus", () => ({
-  isItwEnabledSelector: jest.fn()
-}));
+jest.mock(
+  "../../../../../../store/reducers/backendStatus/remoteConfig",
+  () => ({
+    isItwEnabledSelector: jest.fn()
+  })
+);
 jest.mock("../../../../lifecycle/store/selectors", () => ({
   itwLifecycleIsValidSelector: jest.fn()
 }));

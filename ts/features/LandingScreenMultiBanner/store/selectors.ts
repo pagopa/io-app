@@ -1,11 +1,11 @@
 import { createSelector, createStructuredSelector } from "reselect";
-import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderabilitySelectorsFromBannerMap } from "../utils";
 import {
   LandingScreenBannerId,
   landingScreenBannerMap
 } from "../utils/landingScreenBannerMap";
+import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 export const localBannerVisibilitySelector = (state: GlobalState) =>
   state.features.landingBanners;

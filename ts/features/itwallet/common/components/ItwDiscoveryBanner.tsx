@@ -5,7 +5,6 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender/remoteConfig";
 import {
   trackItWalletBannerClosure,
   trackItWalletBannerTap,
@@ -13,6 +12,7 @@ import {
 } from "../../analytics";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../store/index/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 // the two components are divided in order to
 // use the `standalone` version in flows where its visibility logic it not handled,

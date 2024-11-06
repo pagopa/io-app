@@ -3,14 +3,24 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import {
+  ItwEidInfoBottomSheetContent,
+  ItwEidInfoBottomSheetTitle
+} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
+import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
+import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
+import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
@@ -20,24 +30,14 @@ import {
   selectWalletItwCards,
   selectWalletOtherCards
 } from "../store/selectors";
-import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
-import {
-  ItwEidInfoBottomSheetContent,
-  ItwEidInfoBottomSheetTitle
-} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
-import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { WalletCardCategoryFilter } from "../types";
-import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
-import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
+import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
