@@ -65,7 +65,7 @@ const startPaymentFlowWorkaround = (
 ) => {
   initPaymentStateWorkaround(params, dispatch);
   navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-    screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL,
+    screen: PaymentsCheckoutRoutes.PAYMENT_NOTICE_SUMMARY,
     params: {
       rptId
     }
