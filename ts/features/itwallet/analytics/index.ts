@@ -97,7 +97,7 @@ type TrackITWalletBannerClosureProperties = {
 };
 
 type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "cie_pin" | "cieid";
+  ITW_ID_method: "spid" | "ciePin" | "cieId";
 };
 
 type TrackITWalletSpidIDPSelected = { idp: string };
@@ -467,6 +467,16 @@ export function trackWalletCredentialRenewStart(
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_RENEW_START,
     buildEventProperties("UX", "action", { credential })
+  );
+}
+
+export function trackIssuanceCredentialScrollToBottom(
+  credential: MixPanelCredential,
+  screenRoute: string
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_ISSUANCE_CREDENTIAL_SCROLL,
+    buildEventProperties("UX", "action", { credential, screen: screenRoute })
   );
 }
 
