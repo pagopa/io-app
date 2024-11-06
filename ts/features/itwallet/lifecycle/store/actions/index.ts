@@ -34,18 +34,10 @@ export const itwLifecycleIdentityCheckCompleted = createStandardAction(
 )<void>();
 
 /**
- * Action used to notify that the Integrity Service is ready.
- */
-export const itwLifecycleIntegrityServiceReady = createStandardAction(
-  "ITW_LIFECYCLE_INTEGRITY_SERVICE_READY"
-)<boolean>();
-
-/**
  * Type for the wallet lifecycle related actions.
  */
 export type ItwLifecycleActions =
   | ActionType<typeof itwLifecycleStateUpdated>
   | ActionType<typeof itwLifecycleStoresReset>
   | ActionType<typeof itwLifecycleWalletReset>
-  | ActionType<typeof itwLifecycleIdentityCheckCompleted>
-  | ActionType<typeof itwLifecycleIntegrityServiceReady>;
+  | ActionType<typeof itwLifecycleIdentityCheckCompleted>;

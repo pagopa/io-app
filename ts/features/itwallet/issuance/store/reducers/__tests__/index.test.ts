@@ -6,6 +6,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
+  itwIntegrityServiceReady,
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
 } from "../../actions";
@@ -56,6 +57,22 @@ describe("ITW issuance reducer", () => {
 
     expect(targetSate.features.itWallet.issuance.integrityKeyTag).toEqual(
       O.none
+    );
+    expect(targetSate.features.itWallet.issuance.integrityServiceReady).toEqual(
+      undefined
+    );
+  });
+
+  it("should set the integrity preparation flag", () => {
+    const targetSate = pipe(
+      undefined,
+      curriedAppReducer(applicationChangeState("active")),
+      curriedAppReducer(itwIntegrityServiceReady(true)),
+      curriedAppReducer(itwRemoveIntegrityKeyTag())
+    );
+
+    expect(targetSate.features.itWallet.issuance.integrityServiceReady).toEqual(
+      true
     );
   });
 });

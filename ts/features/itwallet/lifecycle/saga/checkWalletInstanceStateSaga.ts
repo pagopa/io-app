@@ -9,7 +9,7 @@ import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUt
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwIsWalletInstanceAttestationValidSelector } from "../../walletInstance/store/reducers";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
-import { itwLifecycleIntegrityServiceReady } from "../store/actions";
+import { itwIntegrityServiceReady } from "../../issuance/store/actions";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
@@ -53,7 +53,7 @@ export function* checkWalletInstanceStateSaga(): Generator<
     const integrityServiceReadyResult: boolean = yield* call(
       ensureIntegrityServiceIsReady
     );
-    yield* put(itwLifecycleIntegrityServiceReady(integrityServiceReadyResult));
+    yield* put(itwIntegrityServiceReady(integrityServiceReadyResult));
 
     const isItwOperationalOrValid = yield* select(
       itwLifecycleIsOperationalOrValid

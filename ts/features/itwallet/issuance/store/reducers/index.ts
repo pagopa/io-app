@@ -1,11 +1,16 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { itwStoreIntegrityKeyTag, itwRemoveIntegrityKeyTag } from "../actions";
+import {
+  itwIntegrityServiceReady,
+  itwRemoveIntegrityKeyTag,
+  itwStoreIntegrityKeyTag
+} from "../actions";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 
 export type ItwIssuanceState = {
   integrityKeyTag: O.Option<string>;
+  integrityServiceReady?: boolean;
 };
 
 export const itwIssuanceInitialState: ItwIssuanceState = {
@@ -19,12 +24,23 @@ const reducer = (
   switch (action.type) {
     case getType(itwStoreIntegrityKeyTag):
       return {
+        ...state,
         integrityKeyTag: O.some(action.payload)
       };
     case getType(itwRemoveIntegrityKeyTag):
+      return {
+        ...state,
+        integrityKeyTag: O.none
+      };
+    case getType(itwIntegrityServiceReady):
+      return {
+        ...state,
+        integrityServiceReady: action.payload
+      };
     case getType(itwLifecycleStoresReset):
       return {
-        integrityKeyTag: O.none
+        integrityKeyTag: O.none,
+        integrityServiceReady: undefined
       };
   }
   return state;

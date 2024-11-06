@@ -1,14 +1,10 @@
 import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { ItwLifecycleStatus } from "../../reducers";
-import {
-  itwLifecycleIntegrityServiceReady,
-  itwLifecycleStateUpdated
-} from "../../actions";
+import { ItwLifecycleState } from "../../reducers";
+import { itwLifecycleStateUpdated } from "../../actions";
 import { itwStoreIntegrityKeyTag } from "../../../../issuance/store/actions";
 import {
-  itwLifecycleIntegrityServiceReadySelector,
   itwLifecycleIsInstalledSelector,
   itwLifecycleIsOperationalSelector,
   itwLifecycleIsValidSelector
@@ -36,9 +32,7 @@ describe("IT Wallet lifecycle selectors", () => {
       undefined,
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(
-        itwLifecycleStateUpdated({
-          status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
-        })
+        itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
       ),
       curriedAppReducer(
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
@@ -55,9 +49,7 @@ describe("IT Wallet lifecycle selectors", () => {
       undefined,
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(
-        itwLifecycleStateUpdated({
-          status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
-        })
+        itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_VALID)
       ),
       curriedAppReducer(
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
@@ -72,20 +64,5 @@ describe("IT Wallet lifecycle selectors", () => {
     expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(false);
     expect(itwLifecycleIsOperationalSelector(globalState)).toEqual(false);
     expect(itwLifecycleIsValidSelector(globalState)).toEqual(true);
-  });
-
-  it("Correctly defines the integrity service ready flag", () => {
-    const globalState = pipe(
-      undefined,
-      curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwLifecycleIntegrityServiceReady(true))
-    );
-
-    expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(true);
-    expect(itwLifecycleIsOperationalSelector(globalState)).toEqual(false);
-    expect(itwLifecycleIsValidSelector(globalState)).toEqual(false);
-    expect(itwLifecycleIntegrityServiceReadySelector(globalState)).toEqual(
-      true
-    );
   });
 });

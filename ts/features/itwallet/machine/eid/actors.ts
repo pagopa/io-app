@@ -12,9 +12,11 @@ import {
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import {
+  itwIntegrityKeyTagSelector,
+  itwIntegrityServiceReadySelector
+} from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { itwLifecycleIntegrityServiceReadySelector } from "../../lifecycle/store/selectors";
 import { pollForStoreValue } from "../../common/utils/ItwStoreUtils";
 import type { CieAuthContext, IdentificationContext } from "./context";
 
@@ -56,7 +58,7 @@ export const createEidIssuanceActorsImplementation = (
     // Await the integrity preparation before requesting the integrity key tag
     const isIntegrityServiceReady = await pollForStoreValue({
       state: store.getState(),
-      selector: itwLifecycleIntegrityServiceReadySelector,
+      selector: itwIntegrityServiceReadySelector,
       condition: value => value !== undefined
     });
     // If the integrity service preparation is not ready (still undefined) after 10 seconds the user will be prompted with an error,

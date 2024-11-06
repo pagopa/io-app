@@ -2,13 +2,12 @@ import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import {
-  itwLifecycleIntegrityServiceReady,
-  itwLifecycleStateUpdated
+  itwLifecycleStateUpdated,
+  itwLifecycleStoresReset
 } from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { ItwLifecycleStatus } from "..";
+import { ItwLifecycleState } from "..";
 
 const curriedAppReducer =
   (action: Action) => (state: GlobalState | undefined) =>
@@ -20,14 +19,12 @@ describe("ITW lifecycle reducer", () => {
       undefined,
       curriedAppReducer(applicationChangeState("active")),
       curriedAppReducer(
-        itwLifecycleStateUpdated({
-          status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
-        })
+        itwLifecycleStateUpdated(ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL)
       )
     );
 
-    expect(targetSate.features.itWallet.lifecycle.status).toEqual(
-      ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
+    expect(targetSate.features.itWallet.lifecycle).toEqual(
+      ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL
     );
   });
 
@@ -38,19 +35,8 @@ describe("ITW lifecycle reducer", () => {
       curriedAppReducer(itwLifecycleStoresReset())
     );
 
-    expect(targetSate.features.itWallet.lifecycle.status).toEqual(
-      ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED
+    expect(targetSate.features.itWallet.lifecycle).toEqual(
+      ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
     );
-  });
-
-  it("should update the integrityServiceReady flag", () => {
-    const targetSate = pipe(
-      undefined,
-      curriedAppReducer(itwLifecycleIntegrityServiceReady(true))
-    );
-
-    expect(
-      targetSate.features.itWallet.lifecycle.integrityServiceReady
-    ).toEqual(true);
   });
 });
