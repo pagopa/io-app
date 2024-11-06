@@ -3256,9 +3256,12 @@ features:
       inactive: Non attivo
     card:
       status:
-        expired: Non valida
+        expired: Scaduta
         expiring: In scadenza
         pending: In lavorazione
+        invalid: Non valida
+        verificationExpiring: Verifica
+        verificationExpired: Verifica
       digital: Versione digitale
     generic:
       error:
@@ -3419,6 +3422,7 @@ features:
         secondaryAction: Scopri di più
     presentation:
       alerts:
+        statusAction: Cosa posso fare?
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
         ehc:
@@ -3430,13 +3434,9 @@ features:
           action: Aggiorna il documento
         expiring:
           content: Mancano {{days}} giorni alla scadenza del documento.
+        verificationExpiring:
+          content: Verifica la versione digitale del tuo documento entro il {{date}}.
       bottomSheets:
-        mdl:
-          title: "Patente: contesti di verifica"
-          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
-        ehc:
-          title: "Tessera Sanitaria - Tessera europea di assicurazione malattia su IO: contesti d'uso"
-          content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
           titleExpired: "Documenti su IO:\nverifica la tua identità"
@@ -3447,6 +3447,18 @@ features:
             valid: L'ultima verifica è del {{date}}.
             expiring: Verifica la tua identità entro il {{date}}.
             expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+        MDL:
+          expiring:
+            title: "Patente su IO: documento in scadenza"
+            content: "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
+        EuropeanHealthInsuranceCard:
+          expiring:
+            title: "Tessera Sanitaria su IO: documento in scadenza"
+            content: "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata."
+        EuropeanDisabilityCard:
+          expiring:
+            title: "Carta europea della disabilità su IO: documento in scadenza"
+            content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
       credentialDetails:
         flipCardFront: "Mostra retro"
         flipCardBack: "Mostra fronte"
@@ -3460,7 +3472,8 @@ features:
         fiscalCode: Il tuo Codice Fiscale
         status:
           valid: Valida
-          expired: Non valida
+          invalid: Non valida
+          expired: Scaduta
           expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
@@ -3474,6 +3487,10 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto!
+        verificationExpired:
+          title: Verifica la versione digitale del documento
+          content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
+          primaryAction: Inizia
       ctas:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi

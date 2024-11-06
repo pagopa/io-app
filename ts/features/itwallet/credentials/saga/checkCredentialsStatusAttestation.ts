@@ -35,12 +35,10 @@ export function* updateCredentialStatusAttestationSaga(
   } catch (error) {
     return {
       ...credential,
-      storedStatusAttestation: {
-        credentialStatus:
-          error instanceof Errors.CredentialInvalidStatusError
-            ? "invalid" // The credential was revoked
-            : "unknown" // We do not have enough information on the status, the error was unexpected
-      }
+      storedStatusAttestation:
+        error instanceof Errors.CredentialInvalidStatusError
+          ? { credentialStatus: "invalid", errorCode: error.errorCode }
+          : { credentialStatus: "unknown" } // We do not have enough information on the status, the error was unexpected
     };
   }
 }
