@@ -4,7 +4,7 @@ import * as React from "react";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   trackHistoryFailure,
   trackHistoryScreen

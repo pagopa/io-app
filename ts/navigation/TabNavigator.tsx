@@ -17,7 +17,7 @@ import { useIOSelector } from "../store/hooks";
 import {
   isNewPaymentSectionEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
-} from "../store/reducers/backendStatus";
+} from "../store/reducers/backendStatus/remoteConfig";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";

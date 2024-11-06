@@ -41,7 +41,6 @@ import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
 } from "./authentication";
-import backendStatusReducer from "./backendStatus";
 import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
 import contentReducer, {
@@ -71,6 +70,10 @@ import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
+import remoteConfigReducer from "./backendStatus/remoteConfig";
+import statusMessagesReducer from "./backendStatus/statusMessages";
+import sectionStatusReducer from "./backendStatus/sectionStatus";
+import { backendInfoReducer } from "./backendStatus/backendInfo";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -125,7 +128,10 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   navigation: navigationReducer,
   backoffError: backoffErrorReducer,
   versionInfo: versionInfoReducer,
-  backendStatus: backendStatusReducer,
+  remoteConfig: remoteConfigReducer,
+  statusMessages: statusMessagesReducer,
+  sectionStatus: sectionStatusReducer,
+  backendInfo: backendInfoReducer,
   preferences: preferencesReducer,
   search: searchReducer,
   cie: cieReducer,
@@ -198,7 +204,10 @@ export function createRootReducer(
               _persist: state.authentication._persist
             },
             // backend status must be kept
-            backendStatus: state.backendStatus,
+            backendInfo: state.backendInfo,
+            remoteConfig: state.remoteConfig,
+            statusMessages: state.statusMessages,
+            sectionStatus: state.sectionStatus,
             // keep servicesMetadata from content section
             content: {
               ...contentInitialContentState,

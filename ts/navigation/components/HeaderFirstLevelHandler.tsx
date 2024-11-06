@@ -17,7 +17,7 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import * as analytics from "../../features/services/common/analytics";
 import {
   isArchivingInProcessingModeSelector,

@@ -14,7 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
+import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,

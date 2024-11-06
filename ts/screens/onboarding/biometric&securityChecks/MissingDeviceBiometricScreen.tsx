@@ -5,7 +5,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
 import { FAQsCategoriesType } from "../../../utils/faq";
