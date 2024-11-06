@@ -26,7 +26,9 @@ const PaymentsBizEventsFilterTabs = ({
 
   const handleFilterSelected = (index: number) => {
     const categoryByIndex = paymentsBizEventsCategoryFilters[index];
-    onCategorySelected?.(categoryByIndex);
+    if (categoryByIndex !== selectedCategory) {
+      onCategorySelected?.(categoryByIndex);
+    }
   };
 
   return (

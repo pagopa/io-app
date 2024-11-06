@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender/remoteConfig";
 import {
   trackItWalletBannerClosure,
   trackItWalletBannerTap,
