@@ -65,11 +65,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
       <VStack space={8}>
         <GestureDetector gesture={flipGesture}>
           <CardContainer backgroundColor={backgroundColor}>
-            <ItwSkeumorphicCard
-              credential={credential}
-              isFlipped={isFlipped}
-              status={credentialStatus}
-            />
+            <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
           </CardContainer>
         </GestureDetector>
         <View style={styles.flipButton}>

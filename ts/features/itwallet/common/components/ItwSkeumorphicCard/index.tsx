@@ -10,6 +10,8 @@ import {
   tagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
@@ -45,15 +47,17 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
-  status?: ItwCredentialStatus;
   isFlipped?: boolean;
 };
 
 const ItwSkeumorphicCard = ({
   credential,
-  status = "valid",
   isFlipped = false
 }: ItwSkeumorphicCardProps) => {
+  const { status = "valid" } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
+  );
+
   const FrontSide = useMemo(
     () => (
       <CardSideBase status={status}>
