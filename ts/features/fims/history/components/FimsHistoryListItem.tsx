@@ -17,7 +17,7 @@ import { Consent } from "../../../../../definitions/fims_history/Consent";
 import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { potFoldWithDefault } from "../../../../utils/pot";
-import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
+import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import { FimsHistorySharedStyles } from "../utils/styles";
 import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 

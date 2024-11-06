@@ -27,6 +27,7 @@ import { OrganizationFiscalCode } from "../../../../../definitions/backend/Organ
 import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -43,6 +44,8 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
+import { formatPaymentNoticeNumber } from "../../common/utils";
+import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -52,18 +55,15 @@ import {
 } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { storeNewPaymentAttemptAction } from "../../history/store/actions";
-import { formatPaymentNoticeNumber } from "../../common/utils";
-import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 
-import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
-import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -71,7 +71,7 @@ type WalletPaymentDetailScreenNavigationParams = {
 
 type WalletPaymentDetailRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
-  "PAYMENT_CHECKOUT_DETAIL"
+  "PAYMENT_NOTICE_SUMMARY"
 >;
 
 const WalletPaymentDetailScreen = () => {
