@@ -16,7 +16,6 @@ import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryE
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
-  isStacked?: boolean;
   header?: ListItemHeader;
   topElement?: JSX.Element;
 }>;
@@ -34,7 +33,6 @@ const itemLayoutAnimation =
  */
 export const WalletCardsCategoryContainer = ({
   cards,
-  isStacked = false,
   header,
   topElement,
   testID
@@ -54,9 +52,8 @@ export const WalletCardsCategoryContainer = ({
       <Animated.FlatList
         scrollEnabled={false}
         data={cards}
-        ItemSeparatorComponent={() => !isStacked && <VSpacer size={16} />}
         renderItem={({ index, item }) =>
-          renderWalletCardFn(item, isStacked && index < cards.length - 1)
+          renderWalletCardFn(item, index < cards.length - 1)
         }
         ListFooterComponent={ListFooter}
         itemLayoutAnimation={itemLayoutAnimation}
