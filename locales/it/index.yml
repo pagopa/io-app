@@ -281,8 +281,8 @@ inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
-settings: 
-  informativeBanner: 
+settings:
+  informativeBanner:
     content: Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!
     action: Vai alle Impostazioni
 profile:
@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
-      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      description: Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
       actions:
         primary:
           label: Sì, entra con CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
+    missing_saml_response:
+      title: Non è stato possibile accedere
+      subtitle: Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto.
     generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
@@ -2717,7 +2720,7 @@ bonus:
         description: Descrizione
         contactInfo: Contatti e informazioni
       cta:
-        website: Vai al sito del partner
+        website: Visita il sito del partner
       categories:
         counting: e altre {{count}}
         cultureAndEntertainment: Cultura e tempo libero
@@ -3127,6 +3130,11 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+      otherMethods:
+        error:
+          banner:
+            label: Non siamo riusciti a caricare alcuni elementi della lista.
+            cta: Prova di nuovo
     cards:
       categories:
         all: Tutti
@@ -3147,6 +3155,12 @@ features:
         welfare: Iniziative welfare
         payments: Metodi di pagamento
   payments:
+    backoff:
+      second: "1 secondo"
+      seconds: "{{seconds}} secondi"
+      minute: "1 minuto"
+      minutes: "{{minutes}} minuti"
+      retryCountDown: "Puoi riprovare tra {{time}}."
     title: Pagamenti
     cta: Paga un avviso
     remoteAlert:
@@ -3159,6 +3173,10 @@ features:
         action: Aggiungi un metodo
       status:
         expired: Scaduta
+      error:
+        banner:
+          label: Il caricamento dei metodi è fallito.
+          retryButton: Prova di nuovo
     transactions:
       showLegacyTransactions: Mostra precedenti
       legacy:
@@ -3190,6 +3208,19 @@ features:
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
+      error:
+        banner:
+          label: "Il caricamento delle ricevute è fallito."
+          retryButton: "Prova di nuovo"
+      filters:
+        tabs:
+          all: Tutte
+          payer: Pagate in app
+          debtor: Intestate a me
+      list:
+        empty:
+          title: Nessuna ricevuta trovata
+          subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
     details:
       payPal:
         banner:
@@ -3279,7 +3310,7 @@ features:
         action: Scopri di più
     identification:
       mode:
-        title: Verfica la tua identità
+        title: Verifica la tua identità
         description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
@@ -3305,7 +3336,7 @@ features:
         secondaryAction: Continua
       notMatchingIdentityScreen:
         title: "Tutti i documenti saranno rimossi da IO"
-        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
+        subtitle: "Se accedi con una nuova identità, le versioni digitali dei documenti che hai aggiunto al Portafoglio saranno rimosse e Documenti su IO disattivata."
         action: "Continua con la nuova identità"
       loading:
         cieId:
@@ -3353,15 +3384,14 @@ features:
         toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
-        primaryAction: Ho capito
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.
+        primaryAction: Ripeti l'accesso
         secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
-        body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
-        primaryAction: Riprova
-        secondaryAction: Chiudi
-      notEntitledCredentialError: 
+        body: "L’ente che emette le versioni digitali dei documenti sta riscontrando dei problemi ed è già al lavoro per risolverli: riprova più tardi."
+        primaryAction: Chiudi
+      notEntitledCredentialError:
         title: Non è possibile aggiungere il documento
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
@@ -3391,10 +3421,10 @@ features:
       alerts:
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
-          action: Scopri di più
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
-          action: "Scopri di più"
+        edc:
+          content: "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
@@ -3409,11 +3439,14 @@ features:
           content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
+          titleExpired: "Documenti su IO:\nverifica la tua identità"
           contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
           contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
           triggerLabel: Cos'è?
           alert:
-            valid: L'ultima verifica è del {{issuanceDate}}.
+            valid: L'ultima verifica è del {{date}}.
+            expiring: Verifica la tua identità entro il {{date}}.
+            expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
       credentialDetails:
         flipCardFront: "Mostra retro"
         flipCardBack: "Mostra fronte"
@@ -3479,7 +3512,7 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
-  errorGetZendeskToken: 
+  errorGetZendeskToken:
     title: Al momento non riusciamo ad aprire una richiesta di assistenza
     subtitle: Riprova più tardi
   askPermissions:

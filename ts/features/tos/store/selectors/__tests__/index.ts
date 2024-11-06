@@ -16,22 +16,17 @@ const status: BackendStatus = {
 };
 
 const customStore = {
-  backendStatus: {
-    status: O.some({
-      ...status,
-      config: {
-        ...status.config,
-        tos: TOS_CONFIG
-      }
-    })
-  }
+  remoteConfig: O.some({
+    ...status.config,
+    tos: TOS_CONFIG
+  })
 } as unknown as GlobalState;
 
 function runTest(store: GlobalState, test: (tosConfig: TosConfig) => void) {
-  const actualStatus = store.backendStatus.status;
+  const actualStatus = store.remoteConfig;
   expect(O.isSome(actualStatus)).toBe(true);
   if (O.isSome(actualStatus)) {
-    const tosConfig = actualStatus.value.config.tos;
+    const tosConfig = actualStatus.value.tos;
     expect(tosConfig).not.toBeUndefined();
     test(tosConfig);
   } else {

@@ -15,7 +15,7 @@ import {
 } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";

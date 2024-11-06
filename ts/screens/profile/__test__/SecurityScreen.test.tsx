@@ -12,6 +12,7 @@ import { identificationRequest } from "../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../config";
 import * as fimsHistorySelectors from "../../../features/fims/history/store/selectors";
 import { FIMS_ROUTES } from "../../../features/fims/common/navigation";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -36,6 +37,7 @@ describe("Test SecurityScreen", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should be not null", () => {
     const { component } = renderComponent();

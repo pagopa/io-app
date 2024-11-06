@@ -16,6 +16,7 @@ import { InitializedProfile } from "../../../../definitions/backend/InitializedP
 import ROUTES from "../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import TosScreen from "../TosScreen";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
 
 const CurrentTestToSVersion = 2.0;
 
@@ -23,6 +24,7 @@ const CurrentTestToSVersion = 2.0;
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
+  mockAccessibilityInfo(false);
 });
 
 afterAll(() => {
@@ -174,40 +176,35 @@ const commonSetup = () => {
   };
   const testState = {
     ...globalState,
-    backendStatus: {
-      ...globalState.backendStatus,
-      status: O.some({
-        config: {
-          assistanceTool: {
-            tool: ToolEnum.zendesk
-          },
-          cgn: {
-            enabled: false
-          },
-          newPaymentSection: {
-            enabled: false,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            }
-          },
-          fims: {
-            enabled: false
-          },
-          tos: {
-            tos_version: 3.2,
-            tos_url: "https://www.example.com"
-          },
-          itw: {
-            enabled: true,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            }
-          }
+    remoteConfig: O.some({
+      assistanceTool: {
+        tool: ToolEnum.zendesk
+      },
+      cgn: {
+        enabled: false
+      },
+      newPaymentSection: {
+        enabled: false,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
         }
-      })
-    },
+      },
+      fims: {
+        enabled: false
+      },
+      tos: {
+        tos_version: 3.2,
+        tos_url: "https://www.example.com"
+      },
+      itw: {
+        enabled: true,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
+        }
+      }
+    }),
     profile: pot.some(testProfile)
   } as GlobalState;
 

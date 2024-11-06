@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { capitalize } from "../../../../utils/strings";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
@@ -90,14 +90,20 @@ const PaymentsMethodDetailsScreen = () => {
 };
 
 const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {
-  if (details?.lastFourDigits !== undefined) {
-    const capitalizedCardCircuit = capitalize(
-      details.brand?.toLowerCase() ?? ""
-    );
-    return `${capitalizedCardCircuit} ••${details.lastFourDigits}`;
+  switch (details?.type) {
+    case "BPAY":
+      return "BANCOMAT Pay";
+    case "PAYPAL":
+      return "PayPal";
+    default:
+      if (details?.lastFourDigits !== undefined) {
+        const capitalizedCardCircuit = capitalize(
+          details.brand?.toLowerCase() ?? ""
+        );
+        return `${capitalizedCardCircuit} ••${details.lastFourDigits}`;
+      }
+      return "";
   }
-
-  return "";
 };
 
 export default PaymentsMethodDetailsScreen;
