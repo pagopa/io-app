@@ -10,10 +10,12 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialByTypeSelector,
+  itwCredentialStatusSelector
+} from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwPresentationAlertsSection } from "../components/ItwPresentationAlertsSection";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
@@ -31,6 +33,9 @@ import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE
 } from "../../analytics";
+import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
+import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
+import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -46,6 +51,9 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
+  );
+  const { status } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credentialType)
   );
 
   useDebugInfo({
@@ -77,6 +85,12 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 
   const credential = credentialOption.value;
 
+  if (status === "jwtExpired") {
+    return (
+      <ItwPresentationCredentialVerificationExpired credential={credential} />
+    );
+  }
+
   const ctaProps = getCtaProps(credential, navigation);
 
   return (
@@ -89,7 +103,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
         <ContentWrapper>
           <VStack space={16}>
             <ItwPresentationAdditionalInfoSection credential={credential} />
-            <ItwPresentationAlertsSection credential={credential} />
+            <ItwPresentationCredentialStatusAlert credential={credential} />
+            <ItwPresentationCredentialInfoAlert credential={credential} />
             <ItwCredentialTrustmark credential={credential} />
             <ItwPresentationClaimsSection credential={credential} />
           </VStack>
