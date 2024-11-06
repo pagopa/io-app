@@ -11,12 +11,12 @@ import { pipe } from "fp-ts/lib/function";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   PaymentInitStateParams,
   initPaymentStateAction
 } from "../store/actions/orchestration";
-import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 
@@ -77,7 +77,7 @@ const usePagoPaPayment = (): UsePagoPaPayment => {
   ) => {
     initPaymentState(params);
     navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL,
+      screen: PaymentsCheckoutRoutes.PAYMENT_NOTICE_SUMMARY,
       params: {
         rptId
       }
