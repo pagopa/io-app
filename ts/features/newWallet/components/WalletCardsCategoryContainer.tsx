@@ -1,10 +1,10 @@
-import { Platform } from "react-native";
 import {
   ListItemHeader,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
   FadeOutDown,
@@ -18,6 +18,7 @@ export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
   header?: ListItemHeader;
   topElement?: JSX.Element;
+  bottomElement?: JSX.Element;
 }>;
 
 // The item layout animation has a bug on Android for a FlatList that doesn't have a fixed height [https://github.com/software-mansion/react-native-reanimated/issues/5728]
@@ -35,6 +36,7 @@ export const WalletCardsCategoryContainer = ({
   cards,
   header,
   topElement,
+  bottomElement,
   testID
 }: WalletCardsCategoryContainerProps) => {
   // Show the footer with the banner (if possible) to retry only if the category is of any domain of B&P (cgn, bonus or payment)
@@ -46,7 +48,11 @@ export const WalletCardsCategoryContainer = ({
   );
 
   return (
-    <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
+    <Animated.View
+      style={styles.container}
+      testID={testID}
+      layout={LinearTransition.duration(200)}
+    >
       {header && <ListItemHeader {...header} />}
       {React.isValidElement(topElement) && React.cloneElement(topElement)}
       <Animated.FlatList
@@ -57,10 +63,23 @@ export const WalletCardsCategoryContainer = ({
         }
         ListFooterComponent={ListFooter}
         itemLayoutAnimation={itemLayoutAnimation}
+        style={styles.cardList}
         entering={FadeInDown.duration(150)}
         exiting={FadeOutDown.duration(150)}
       />
-      <VSpacer size={24} />
+      {React.isValidElement(bottomElement) && React.cloneElement(bottomElement)}
     </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 16,
+    marginBottom: 24
+  },
+  cardList: {
+    marginHorizontal: -8
+  }
+});
