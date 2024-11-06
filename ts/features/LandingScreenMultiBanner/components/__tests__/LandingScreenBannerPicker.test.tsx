@@ -10,10 +10,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { updateLandingScreenBannerVisibility } from "../../store/actions";
 import * as SELECTORS from "../../store/selectors";
-import { LandingScreenBannerId } from "../landingScreenBannerMap";
-import { LandingScreenBannerPicker } from "../../components/LandingScreenBannerPicker";
+import { LandingScreenBannerId } from "../../utils/landingScreenBannerMap";
+import { LandingScreenBannerPicker } from "../LandingScreenBannerPicker";
 
-jest.mock("../landingScreenBannerMap", () => ({
+jest.mock("../../utils/landingScreenBannerMap", () => ({
   get landingScreenBannerMap() {
     return {
       TESTING: {

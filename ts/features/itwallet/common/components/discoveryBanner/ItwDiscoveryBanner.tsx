@@ -1,64 +1,23 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import React, { ReactElement } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackItWalletBannerClosure,
   trackItWalletBannerTap,
   trackITWalletBannerVisualized
-} from "../../analytics";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { isItwDiscoveryBannerRenderableSelector } from "../store/index/selectors";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-
-// the two components are divided in order to
-// use the `standalone` version in flows where its visibility logic it not handled,
-// and the base version in flows where it instead is handled externally
-
-type ItwDiscoveryBannerProps = {
-  withTitle?: boolean;
-  ignoreMargins?: boolean;
-  fallbackComponent?: ReactElement;
-  closable?: boolean;
-};
+} from "../../../analytics";
+import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
  * to use in flows where either
  * - we need a fallback component
  * - we do not want to handle the banner's visibility logic externally
+ *  (see MultiBanner feature for the landing screen)
  */
-export const ItwDiscoveryBannerStandalone = (
-  props: ItwDiscoveryBannerProps
-) => {
-  const [isVisible, setVisible] = React.useState(true);
-
-  const isBannerRenderable = useIOSelector(
-    isItwDiscoveryBannerRenderableSelector
-  );
-
-  const shouldBeHidden = React.useMemo(
-    () =>
-      // Banner should be hidden if:
-      !isVisible || // The user closed it by pressing the `x` button
-      !isBannerRenderable, // the various validity checks fail
-    [isBannerRenderable, isVisible]
-  );
-  // end logic
-  if (shouldBeHidden) {
-    const { fallbackComponent } = props;
-    if (fallbackComponent) {
-      return fallbackComponent;
-    }
-    return null;
-  }
-
-  return (
-    <ItwDiscoveryBanner handleOnClose={() => setVisible(false)} {...props} />
-  );
-};
 
 type WrapperlessBannerProps = {
   withTitle?: boolean;
@@ -67,10 +26,6 @@ type WrapperlessBannerProps = {
   handleOnClose?: () => void;
 };
 
-/**
- * to use in case the banner's visibility has to be handled externally
- * (see MultiBanner feature for the landing screen)
- */
 export const ItwDiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,

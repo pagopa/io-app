@@ -15,10 +15,8 @@ import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/r
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import {
-  ItwDiscoveryBanner,
-  ItwDiscoveryBannerStandalone
-} from "../ItwDiscoveryBanner";
+import { ItwDiscoveryBanner } from "../discoveryBanner/ItwDiscoveryBanner";
+import { ItwDiscoveryBannerStandalone } from "../discoveryBanner/ItwDiscoveryBannerStandalone";
 
 type RenderOptions = {
   isItwTrial?: boolean;

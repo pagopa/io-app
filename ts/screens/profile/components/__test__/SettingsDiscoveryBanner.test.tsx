@@ -5,10 +5,8 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import {
-  SettingsDiscoveryBanner,
-  SettingsDiscoveryBannerStandalone
-} from "../SettingsDiscoveryBanner";
+import { SettingsDiscoveryBanner } from "../discoveryBanner/SettingsDiscoveryBanner";
+import { SettingsDiscoveryBannerStandalone } from "../discoveryBanner/SettingsDiscoveryBannerStandalone";
 
 describe("settingsDiscoveryBannerStandalone", () => {
   it("should match snapshot", () => {

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
+import { SettingsDiscoveryBanner } from "../../../screens/profile/components/discoveryBanner/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/index/selectors";
 
 type ComponentWithCloseHandler = (

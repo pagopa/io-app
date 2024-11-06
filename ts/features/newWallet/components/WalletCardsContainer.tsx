@@ -12,7 +12,7 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
@@ -31,12 +31,12 @@ import {
   selectWalletOtherCards
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
-import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import {
   WalletCardsCategoryContainer,
   WalletCardsCategoryContainerProps
 } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
+import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const EID_INFO_BOTTOM_PADDING = 128;
