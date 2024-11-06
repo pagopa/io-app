@@ -8,7 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import I18n from "../../../i18n";
-import * as backendStatusSelectors from "../../../store/reducers/backendStatus";
+import * as backendStatusSelectors from "../../../store/reducers/backendStatus/remoteConfig";
 
 jest.useFakeTimers();
 
