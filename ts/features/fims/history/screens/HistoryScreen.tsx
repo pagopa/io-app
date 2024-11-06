@@ -64,10 +64,10 @@ export const FimsHistoryScreen = () => {
       ? Date.now() - lastErrorToastDate.current >= 500
       : true;
 
-    if (hasErrorTimeoutExpired && consents?.continuationToken) {
+    if (hasErrorTimeoutExpired && consents?.next) {
       dispatch(
         fimsHistoryGet.request({
-          continuationToken: consents.continuationToken
+          continuationToken: consents.next
         })
       );
     }
@@ -86,7 +86,7 @@ export const FimsHistoryScreen = () => {
   // ---------- SUCCESS
 
   const shouldShowEmptyContent =
-    !isHistoryLoading && (consents?.items ?? []).length === 0;
+    !isHistoryLoading && (consents?.data ?? []).length === 0;
 
   return shouldShowEmptyContent ? (
     <FimsHistoryEmptyContent />

@@ -1,7 +1,7 @@
 import { Divider, IOStyles } from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
 import * as React from "react";
-import { ConsentsResponseDTO } from "../../../../../definitions/fims_history/ConsentsResponseDTO";
+import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useFooterActionsMeasurements } from "../../../../hooks/useFooterActionsMeasurements";
@@ -20,7 +20,7 @@ export const FimsHistoryNonEmptyContent = ({
   consents,
   fetchMore
 }: {
-  consents?: ConsentsResponseDTO;
+  consents?: AccessHistoryPage;
   fetchMore: () => void;
 }) => {
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
@@ -35,18 +35,18 @@ export const FimsHistoryNonEmptyContent = ({
   const LoadingFooter = () =>
     isHistoryLoading && (
       <LoadingFimsHistoryItemsFooter
-        showFirstDivider={(consents?.items.length ?? 0) > 0}
+        showFirstDivider={(consents?.data.length ?? 0) > 0}
       />
     );
   const shouldHideFooter =
-    isHistoryLoading && (consents?.items.length ?? 0) === 0;
+    isHistoryLoading && (consents?.data.length ?? 0) === 0;
 
   return (
     <>
       <FlashList
         estimatedItemSize={117}
         ListHeaderComponent={FimsHistoryHeaderComponent}
-        data={consents?.items}
+        data={consents?.data}
         contentContainerStyle={{
           ...IOStyles.horizontalContentPadding,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight

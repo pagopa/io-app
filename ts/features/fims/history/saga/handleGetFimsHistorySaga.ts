@@ -10,13 +10,14 @@ import { fimsHistoryGet } from "../store/actions";
 import { trackHistoryFailure } from "../../common/analytics";
 
 export function* handleGetFimsHistorySaga(
-  getFimsHistory: FimsHistoryClient["getConsents"],
+  getFimsHistory: FimsHistoryClient["getAccessHistory"],
   bearerToken: string,
   action: ActionType<typeof fimsHistoryGet.request>
 ) {
+  // TODO Accept-Language
   const getHistoryRequest = getFimsHistory({
     Bearer: bearerToken,
-    continuationToken: action.payload.continuationToken
+    page: action.payload.continuationToken
   });
 
   try {
@@ -40,7 +41,7 @@ export function* handleGetFimsHistorySaga(
 }
 
 const extractFimsHistoryResponseAction = (
-  historyResult: SagaCallReturnType<FimsHistoryClient["getConsents"]>
+  historyResult: SagaCallReturnType<FimsHistoryClient["getAccessHistory"]>
 ) =>
   pipe(
     historyResult,
