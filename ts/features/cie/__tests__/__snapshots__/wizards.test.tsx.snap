@@ -160,6 +160,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="cie-id-wizard-open-cie-id-link"
         >
           <View
             style={
@@ -383,6 +384,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={{}}
+        testID="cie-id-wizard-login-with-cie-id"
       >
         <View
           style={
@@ -520,6 +522,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="cie-id-wizard-navigate-to-cie-pin-wizard"
         >
           <View
             style={
