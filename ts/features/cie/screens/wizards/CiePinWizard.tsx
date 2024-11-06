@@ -18,7 +18,7 @@ import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../../utils/url";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
-const CIE_PIN_LINK =
+export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
 
 const CiePinWizard = () => {
@@ -39,6 +39,7 @@ const CiePinWizard = () => {
         />
         <VSpacer size={24} />
         <ButtonLink
+          testID="cie-pin-wizard-open-cie-pin-link"
           label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.link"
           )}
@@ -66,12 +67,14 @@ const CiePinWizard = () => {
   const screenActions = (): IOScrollViewActions => ({
     type: "TwoButtons",
     primary: {
+      testID: "cie-pin-wizard-navigate-to-cie-pin-screen",
       label: I18n.t(
         "authentication.wizards.cie_pin_wizard.actions.primary.label"
       ),
       onPress: navigateToCiePinInsertion
     },
     secondary: {
+      testID: "cie-pin-wizard-navigate-to-spid-wizard",
       label: I18n.t(
         "authentication.wizards.cie_pin_wizard.actions.secondary.label"
       ),
@@ -92,6 +95,7 @@ const CiePinWizard = () => {
       <ContentWrapper>
         <VSpacer size={12} />
         <ButtonLink
+          testID="cie-pin-wizard-open-bottom-sheet"
           label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}

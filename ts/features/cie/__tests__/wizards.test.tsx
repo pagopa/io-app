@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import CieIdWizard, { CIE_ID_LINK } from "../screens/wizards/CieIdWizard";
-import CiePinWizard from "../screens/wizards/CiePinWizard";
+import CiePinWizard, { CIE_PIN_LINK } from "../screens/wizards/CiePinWizard";
 import SpidWizard from "../screens/wizards/SpidWizard";
 import IDActivationWizard, {
   ACTIVATE_CIE_URL,
@@ -13,6 +13,7 @@ import ROUTES from "../../../navigation/routes";
 
 const anyFunction = expect.any(Function);
 const mockNavigateToCieIdLoginScreen = jest.fn();
+const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigate = jest.fn();
 const SPID_LEVEL = "SpidL2";
 
@@ -40,9 +41,14 @@ jest.mock("../../../utils/url", () => ({
 jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
   __esModule: true,
   default: () => ({
-    navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen
+    navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen,
+    navigateToCiePinInsertion: mockNavigateToCiePinInsertion
   })
 }));
+
+jest.mock("@gorhom/bottom-sheet", () =>
+  jest.requireActual("../../../__mocks__/@gorhom/bottom-sheet.ts")
+);
 
 describe(CieIdWizard, () => {
   afterEach(jest.clearAllMocks);
@@ -94,6 +100,41 @@ describe(CiePinWizard, () => {
     const component = render(<CiePinWizard />);
 
     expect(component).toMatchSnapshot();
+  });
+  it("Should call navigateToCiePinInsertion", () => {
+    const { getByTestId } = render(<CiePinWizard />);
+    const navigateToCiePin = getByTestId(
+      "cie-pin-wizard-navigate-to-cie-pin-screen"
+    );
+
+    fireEvent.press(navigateToCiePin);
+
+    expect(mockNavigateToCiePinInsertion).toHaveBeenCalledTimes(1);
+  });
+  it("Should navigate to the Spid wizard screen", () => {
+    const { getByTestId } = render(<CiePinWizard />);
+    const navigateToSpidWizard = getByTestId(
+      "cie-pin-wizard-navigate-to-spid-wizard"
+    );
+
+    fireEvent.press(navigateToSpidWizard);
+
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_SPID_WIZARD
+    });
+  });
+  it("Should open the bottom sheet then open the Cie + Pin link", () => {
+    const { getByTestId } = render(<CiePinWizard />);
+
+    const openBottomSheet = getByTestId("cie-pin-wizard-open-bottom-sheet");
+    fireEvent.press(openBottomSheet);
+
+    const openCiePinLink = getByTestId("cie-pin-wizard-open-cie-pin-link");
+    fireEvent.press(openCiePinLink);
+
+    expect(urlUtils.openWebUrl).toHaveBeenCalledTimes(1);
+    expect(urlUtils.openWebUrl).toHaveBeenCalledWith(CIE_PIN_LINK, anyFunction);
   });
 });
 
