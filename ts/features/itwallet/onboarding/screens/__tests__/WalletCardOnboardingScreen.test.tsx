@@ -56,16 +56,8 @@ describe("WalletCardOnboardingScreen", () => {
   test.each([
     { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
-    {
-      itwLifecycle: {
-        status: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
-      }
-    },
-    {
-      itwLifecycle: {
-        status: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED
-      }
-    }
+    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
+    { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
   ] as ReadonlyArray<RenderOptions>)(
     "should not render the IT Wallet modules if %p",
     options => {
