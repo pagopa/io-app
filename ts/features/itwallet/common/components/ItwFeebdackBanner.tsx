@@ -30,7 +30,7 @@ const ItwFeebdackBanner = () => {
 
   return (
     <Banner
-      testID="itwWalletReadyBannerTestID"
+      testID="itwFeedbackBannerTestID"
       title={"Dicci cosa ne pensi"}
       content={
         "Raccontaci la tua esperienza con la funzionalità Documenti su IO."
