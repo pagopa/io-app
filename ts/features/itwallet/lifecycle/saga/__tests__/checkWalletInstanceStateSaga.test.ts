@@ -8,7 +8,7 @@ import {
   checkWalletInstanceStateSaga,
   getAttestationOrResetWalletInstance
 } from "../checkWalletInstanceStateSaga";
-import { ItwLifecycleStatus } from "../../store/reducers";
+import { ItwLifecycleState } from "../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAttestation } from "../../../common/utils/itwAttestationUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
@@ -16,6 +16,7 @@ import { sessionTokenSelector } from "../../../../../store/reducers/authenticati
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/reducers";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
+import { itwIntegrityServiceReadySelector } from "../../../issuance/store/selectors";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -27,9 +28,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_INSTALLED
-          },
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED,
           issuance: { integrityKeyTag: O.none },
           credentials: { eid: O.none, credentials: [] }
         }
@@ -47,10 +46,9 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
-          },
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: {
+            integrityServiceReady: true,
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
           credentials: { eid: O.none, credentials: [] }
@@ -63,6 +61,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
+        [matchers.select(itwIntegrityServiceReadySelector), true],
         [
           matchers.call.fn(getAttestation),
           "aac6e82a-e27e-4293-9b55-94a9fab22763"
@@ -79,9 +78,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_OPERATIONAL
-          },
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: {
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
@@ -113,9 +110,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
-          },
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },
@@ -145,9 +140,7 @@ describe("checkWalletInstanceStateSaga", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
-          lifecycle: {
-            status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
-          },
+          lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
           issuance: {
             integrityKeyTag: O.some("3396d31e-ac6a-4357-8083-cb5d3cda4d74")
           },

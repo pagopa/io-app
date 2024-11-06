@@ -7,7 +7,7 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { WalletCategoryFilterTabs } from "../WalletCategoryFilterTabs";
-import { ItwLifecycleStatus } from "../../../itwallet/lifecycle/store/reducers";
+import { ItwLifecycleState } from "../../../itwallet/lifecycle/store/reducers";
 
 describe("WalletCategoryFilterTabs", () => {
   it("should not render the component when the wallet is not active", () => {
@@ -59,9 +59,7 @@ const renderComponent = ({
                 ? []
                 : [O.some({ parsedCredential: {} })]
             },
-            lifecycle: {
-              status: ItwLifecycleStatus.ITW_LIFECYCLE_VALID
-            }
+            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
           })
         }
       }
