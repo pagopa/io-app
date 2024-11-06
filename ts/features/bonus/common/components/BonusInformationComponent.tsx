@@ -33,7 +33,7 @@ import customVariables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import TosBonusComponent from "./TosBonusComponent";
 
@@ -50,7 +50,7 @@ type SecondaryAction = { type: "back"; text: string };
 
 type Props = OwnProps &
   Pick<
-    ComponentProps<typeof RNavScreenWithLargeHeader>,
+    ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
@@ -62,6 +62,10 @@ body {
 
 h4 {
   font-size: ${customVariables.fontSize2}px;
+}
+
+img {
+  width: 100%;
 }
 `;
 

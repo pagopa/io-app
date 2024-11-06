@@ -12,10 +12,13 @@ import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import {
+  ParsedCredential,
+  StoredCredential,
+  ItwCredentialStatus
+} from "./itwTypesUtils";
 
 /**
  *
@@ -48,7 +51,11 @@ export enum WellKnownClaim {
   /**
    * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
-  content = "content"
+  content = "content",
+  /**
+   * Claim that contains the fiscal code, used for checks based on the user's identity.
+   */
+  tax_id_code = "tax_id_code"
 }
 
 /**
@@ -350,41 +357,74 @@ export const getCredentialExpireDays = (
   return differenceInCalendarDays(expireDate, Date.now());
 };
 
-/**
- * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
- * Use {@link getCredentialStatus} to also check the status attestation.
- * @param credential the parsed credential claims
- * @param expiringDays the number of days required to mark a credential as "EXPIRING"
- * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
- */
-export const getCredentialExpireStatus = (
-  credential: ParsedCredential,
-  expiringDays: number = 14
-): ItwCredentialStatus | undefined => {
-  const expireDays = getCredentialExpireDays(credential);
-
-  if (expireDays === undefined) {
-    return undefined;
-  }
-
-  return expireDays > expiringDays
-    ? "valid"
-    : expireDays > 0
-    ? "expiring"
-    : "expired";
+type GetCredentialStatusOptions = {
+  /**
+   * Number of days before expiration required to mark a credential as "EXPIRING".
+   */
+  expiringDays?: number;
 };
 
 /**
- * Get the overall status of the credential, taking into account
- * the status attestation if present and the credential's own expiration date.
+ * Get the overall status of the credential, taking into account the status attestation,
+ * the physical document's expiration date and the JWT's expiration date.
+ * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
+ *
+ * @param credential the stored credential
+ * @param options see {@link GetCredentialStatusOptions}
+ * @returns ItwCredentialStatus
  */
 export const getCredentialStatus = (
-  credential: StoredCredential
-): ItwCredentialStatus | undefined => {
-  if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
+  credential: StoredCredential,
+  options: GetCredentialStatusOptions = {}
+): ItwCredentialStatus => {
+  const { expiringDays = 14 } = options;
+  const {
+    jwt,
+    parsedCredential,
+    storedStatusAttestation: statusAttestation
+  } = credential;
+  const now = Date.now();
+
+  const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
+
+  // Not all credentials have an expiration date
+  const documentExpireDays = pipe(
+    getCredentialExpireDate(parsedCredential),
+    O.fromNullable,
+    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
+    O.getOrElse(() => NaN)
+  );
+
+  const isIssuerAttestedExpired =
+    statusAttestation?.credentialStatus === "invalid" &&
+    statusAttestation.errorCode === "credential_expired";
+
+  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
     return "expired";
   }
-  return getCredentialExpireStatus(credential.parsedCredential);
+
+  // Invalid must prevail over non-expired statuses
+  if (statusAttestation?.credentialStatus === "invalid") {
+    return "invalid";
+  }
+
+  if (jwtExpireDays <= 0) {
+    return "jwtExpired";
+  }
+
+  const isSameDayExpiring =
+    documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
+
+  // When both credentials are expiring the digital one wins unless they expire the same day
+  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
+    return "jwtExpiring";
+  }
+
+  if (documentExpireDays <= expiringDays) {
+    return "expiring";
+  }
+
+  return "valid";
 };
 
 const FISCAL_CODE_REGEX =
@@ -398,15 +438,13 @@ const FISCAL_CODE_REGEX =
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-const EID_FISCAL_CODE_KEY = "tax_id_code";
-
 export const getFiscalCodeFromCredential = (
   credential: StoredCredential | undefined
 ) =>
   pipe(
     credential?.parsedCredential,
     O.fromNullable,
-    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
+    O.chain(x => O.fromNullable(x[WellKnownClaim.tax_id_code]?.value)),
     O.map(t.string.decode),
     O.chain(O.fromEither),
     O.chain(extractFiscalCode),

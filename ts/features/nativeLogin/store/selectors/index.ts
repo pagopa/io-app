@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
+import { remoteConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { nativeLoginEnabled } from "../../../../config";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
@@ -9,10 +9,10 @@ import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/f
  * if there is no data, false is the default value -> (NativeLogin disabled)
  */
 export const isNativeLoginEnabledSelector = createSelector(
-  backendStatusSelector,
-  backendStatus =>
+  remoteConfigSelector,
+  remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
-      backendStatus,
+      remoteConfig,
       mainLocalFlag: nativeLoginEnabled,
       configPropertyName: "nativeLogin"
     })

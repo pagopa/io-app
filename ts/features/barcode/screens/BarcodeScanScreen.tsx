@@ -22,7 +22,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
   isIdPayEnabledSelector
-} from "../../../store/reducers/backendStatus";
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
