@@ -3,6 +3,7 @@ import { SettingsDiscoveryBanner } from "../../../screens/profile/components/dis
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
+import { hasUserAcknowledgedSettingsBannerSelector } from "../../profileSettings/store/selectors";
 
 type ComponentWithCloseHandler = (
   closeHandler: () => void
@@ -34,6 +35,6 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <SettingsDiscoveryBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: _state => true
+    isRenderableSelector: hasUserAcknowledgedSettingsBannerSelector
   }
 } as const;
