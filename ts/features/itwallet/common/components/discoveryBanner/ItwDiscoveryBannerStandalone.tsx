@@ -1,13 +1,13 @@
 import React, { ReactElement } from "react";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
-import { ItwDiscoveryBanner } from "./ItwDiscoveryBanner";
+import {
+  ItwDiscoveryBanner,
+  ItwDiscoveryBannerProps
+} from "./ItwDiscoveryBanner";
 
-type ItwDiscoveryBannerProps = {
-  withTitle?: boolean;
-  ignoreMargins?: boolean;
+type Props = Omit<ItwDiscoveryBannerProps, "handleOnClose"> & {
   fallbackComponent?: ReactElement;
-  closable?: boolean;
 };
 
 /**
@@ -16,9 +16,7 @@ type ItwDiscoveryBannerProps = {
  * - we do not want to handle the banner's visibility logic externally
  *   (see MultiBanner feature for the landing screen)
  */
-export const ItwDiscoveryBannerStandalone = (
-  props: ItwDiscoveryBannerProps
-) => {
+export const ItwDiscoveryBannerStandalone = (props: Props) => {
   const [isVisible, setVisible] = React.useState(true);
 
   const isBannerRenderable = useIOSelector(

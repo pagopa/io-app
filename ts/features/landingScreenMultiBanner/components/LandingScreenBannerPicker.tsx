@@ -20,7 +20,7 @@ export const LandingScreenBannerPicker = () => {
   }, [bannerToRender, dispatch]);
 
   if (bannerToRender === undefined) {
-    return <></>;
+    return null;
   }
   const entry = landingScreenBannerMap[bannerToRender];
   return entry?.component(closeHandler);

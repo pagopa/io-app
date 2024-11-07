@@ -17,7 +17,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
  *  (see MultiBanner feature for the landing screen)
  */
 
-type ItwDiscoveryBannerProps = {
+export type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
   closable?: boolean;

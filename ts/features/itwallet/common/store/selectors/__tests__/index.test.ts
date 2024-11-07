@@ -2,7 +2,7 @@ import { isItwEnabledSelector } from "../../../../../../store/reducers/backendSt
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { isItwTrialActiveSelector } from "../../../../../trialSystem/store/reducers";
 import { itwLifecycleIsValidSelector } from "../../../../lifecycle/store/selectors";
-import { isItwDiscoveryBannerRenderableSelector } from "../../selectors";
+import { isItwDiscoveryBannerRenderableSelector } from "..";
 
 jest.mock(
   "../../../../../../store/reducers/backendStatus/remoteConfig",
