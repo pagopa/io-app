@@ -1,12 +1,12 @@
 import * as React from "react";
 import { createStore } from "redux";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { SettingsDiscoveryBanner } from "../discoveryBanner/SettingsDiscoveryBanner";
-import { SettingsDiscoveryBannerStandalone } from "../discoveryBanner/SettingsDiscoveryBannerStandalone";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { SettingsDiscoveryBanner } from "../SettingsDiscoveryBanner";
+import { SettingsDiscoveryBannerStandalone } from "../SettingsDiscoveryBannerStandalone";
 
 describe("settingsDiscoveryBannerStandalone", () => {
   it("should match snapshot", () => {

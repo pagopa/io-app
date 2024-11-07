@@ -65,7 +65,7 @@ describe("unifiedRenderabilitySelectors", () => {
   });
 });
 
-describe("LandingScreenBannerToRenderSelector", () => {
+describe("landingScreenBannerToRenderSelector", () => {
   const testCases = [
     {
       // selector should correctly match the three selector's values

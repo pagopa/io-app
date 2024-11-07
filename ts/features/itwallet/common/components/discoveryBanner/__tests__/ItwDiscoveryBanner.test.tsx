@@ -4,19 +4,19 @@ import _ from "lodash";
 import * as React from "react";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../definitions/content/Config";
-import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
-import { itwTrialId } from "../../../../../config";
-import ROUTES from "../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { ItwDiscoveryBanner } from "../discoveryBanner/ItwDiscoveryBanner";
-import { ItwDiscoveryBannerStandalone } from "../discoveryBanner/ItwDiscoveryBannerStandalone";
+import { ToolEnum } from "../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../definitions/content/Config";
+import { SubscriptionStateEnum } from "../../../../../../../definitions/trial_system/SubscriptionState";
+import { itwTrialId } from "../../../../../../config";
+import ROUTES from "../../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { RemoteConfigState } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ItwLifecycleState } from "../../../../lifecycle/store/reducers";
+import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
+import { ItwDiscoveryBannerStandalone } from "../ItwDiscoveryBannerStandalone";
 
 type RenderOptions = {
   isItwTrial?: boolean;
@@ -24,7 +24,7 @@ type RenderOptions = {
   isItwEnabled?: boolean;
 };
 
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 

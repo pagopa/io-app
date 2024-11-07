@@ -122,7 +122,7 @@ describe("isPnAppVersionSupportedSelector", () => {
   });
 });
 describe("landingScreenBannerOrderSelector", () => {
-  const getMock = (priority_order: any) =>
+  const getMock = (priority_order: Array<string> | undefined) =>
     ({
       remoteConfig: O.some({
         landing_banners: {

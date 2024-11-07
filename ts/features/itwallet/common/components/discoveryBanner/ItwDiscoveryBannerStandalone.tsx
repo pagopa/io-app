@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { useIOSelector } from "../../../../../store/hooks";
-import { isItwDiscoveryBannerRenderableSelector } from "../../store/index/selectors";
+import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { ItwDiscoveryBanner } from "./ItwDiscoveryBanner";
 
 type ItwDiscoveryBannerProps = {
