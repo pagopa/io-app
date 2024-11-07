@@ -12,10 +12,13 @@ import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import {
+  ParsedCredential,
+  StoredCredential,
+  ItwCredentialStatus
+} from "./itwTypesUtils";
 
 /**
  *
@@ -48,7 +51,11 @@ export enum WellKnownClaim {
   /**
    * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
-  content = "content"
+  content = "content",
+  /**
+   * Claim that contains the fiscal code, used for checks based on the user's identity.
+   */
+  tax_id_code = "tax_id_code"
 }
 
 /**
@@ -355,15 +362,12 @@ type GetCredentialStatusOptions = {
    * Number of days before expiration required to mark a credential as "EXPIRING".
    */
   expiringDays?: number;
-  /**
-   * Check the expiration using the JWT `exp` claim, not the credential itself.
-   */
-  checkJwtExpiration?: boolean;
 };
 
 /**
- * Get the overall status of the credential, taking into account
- * the status attestation if present and the credential's own expiration date.
+ * Get the overall status of the credential, taking into account the status attestation,
+ * the physical document's expiration date and the JWT's expiration date.
+ * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
  *
  * @param credential the stored credential
  * @param options see {@link GetCredentialStatusOptions}
@@ -372,32 +376,55 @@ type GetCredentialStatusOptions = {
 export const getCredentialStatus = (
   credential: StoredCredential,
   options: GetCredentialStatusOptions = {}
-): ItwCredentialStatus | undefined => {
-  if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
+): ItwCredentialStatus => {
+  const { expiringDays = 14 } = options;
+  const {
+    jwt,
+    parsedCredential,
+    storedStatusAttestation: statusAttestation
+  } = credential;
+  const now = Date.now();
+
+  const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
+
+  // Not all credentials have an expiration date
+  const documentExpireDays = pipe(
+    getCredentialExpireDate(parsedCredential),
+    O.fromNullable,
+    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
+    O.getOrElse(() => NaN)
+  );
+
+  const isIssuerAttestedExpired =
+    statusAttestation?.credentialStatus === "invalid" &&
+    statusAttestation.errorCode === "credential_expired";
+
+  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
     return "expired";
   }
 
-  const { checkJwtExpiration, expiringDays = 14 } = options;
-
-  const expireDate = checkJwtExpiration
-    ? credential.jwt.expiration
-    : getCredentialExpireDate(credential.parsedCredential);
-
-  if (expireDate === undefined) {
-    return undefined;
+  // Invalid must prevail over non-expired statuses
+  if (statusAttestation?.credentialStatus === "invalid") {
+    return "invalid";
   }
 
-  const expireDays = differenceInCalendarDays(expireDate, Date.now());
-
-  if (expireDays > expiringDays) {
-    return "valid";
+  if (jwtExpireDays <= 0) {
+    return "jwtExpired";
   }
 
-  if (expireDays > 0) {
+  const isSameDayExpiring =
+    documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
+
+  // When both credentials are expiring the digital one wins unless they expire the same day
+  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
+    return "jwtExpiring";
+  }
+
+  if (documentExpireDays <= expiringDays) {
     return "expiring";
   }
 
-  return "expired";
+  return "valid";
 };
 
 const FISCAL_CODE_REGEX =
@@ -411,15 +438,13 @@ const FISCAL_CODE_REGEX =
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-const EID_FISCAL_CODE_KEY = "tax_id_code";
-
 export const getFiscalCodeFromCredential = (
   credential: StoredCredential | undefined
 ) =>
   pipe(
     credential?.parsedCredential,
     O.fromNullable,
-    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
+    O.chain(x => O.fromNullable(x[WellKnownClaim.tax_id_code]?.value)),
     O.map(t.string.decode),
     O.chain(O.fromEither),
     O.chain(extractFiscalCode),

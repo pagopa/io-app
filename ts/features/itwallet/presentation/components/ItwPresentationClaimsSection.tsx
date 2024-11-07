@@ -4,7 +4,7 @@ import {
   IconButton,
   IOStyles
 } from "@pagopa/io-app-design-system";
-import { default as React } from "react";
+import { default as React, useMemo } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
@@ -25,7 +25,11 @@ export const ItwPresentationClaimsSection = ({
   credential
 }: ItwPresentationClaimsSectionProps) => {
   const [valuesHidden, setValuesHidden] = React.useState(false);
-  const credentialStatus = getCredentialStatus(credential);
+
+  const credentialStatus = useMemo(
+    () => getCredentialStatus(credential),
+    [credential]
+  );
 
   const claims = parseClaims(credential.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
