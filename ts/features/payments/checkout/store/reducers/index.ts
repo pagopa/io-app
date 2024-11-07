@@ -14,7 +14,6 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
 import { FaultCodeCategoryEnum } from "../../types/PaymentGenericErrorAfterUserCancellationProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
@@ -36,6 +35,7 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
+import { getSortedPspList } from "../../../common/utils";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -180,9 +180,10 @@ const reducer = (
         ...state,
         pspList: pot.toLoading(state.pspList)
       };
-    case getType(paymentsCalculatePaymentFeesAction.success):
-      const bundles = action.payload.bundles;
-      // We choose the next step based on the PSP list lenght
+    case getType(paymentsCalculatePaymentFeesAction.success): {
+      const bundles = getSortedPspList(action.payload.bundles, "default");
+
+      // We choose the next step based on the PSP list length
       // If only 1 PSP we do not have the need to selected one
       const currentStep =
         bundles.length > 1
@@ -190,12 +191,11 @@ const reducer = (
           : WalletPaymentStepEnum.CONFIRM_TRANSACTION;
 
       // Bundles are stored sorted by default sort rule
-      const sortedBundles = getSortedPspList(bundles, "default");
 
       // Automatically select PSP if only 1 received or with `onUs` property
       const preselectedPsp =
-        sortedBundles.length === 1 || sortedBundles[0]?.onUs
-          ? O.some(sortedBundles[0])
+        bundles.length === 1 || bundles[0]?.onUs
+          ? O.some(bundles[0])
           : state.selectedPsp;
 
       // Use the preselected PSP only if there isn't any already selected PSP
@@ -206,10 +206,11 @@ const reducer = (
 
       return {
         ...state,
-        pspList: pot.some(sortedBundles),
+        pspList: pot.some(bundles),
         currentStep,
         selectedPsp
       };
+    }
     case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
         ...state,

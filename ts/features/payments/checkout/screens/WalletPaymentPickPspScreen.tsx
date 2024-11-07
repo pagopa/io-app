@@ -197,7 +197,9 @@ const WalletPaymentPickPspScreen = () => {
       }
     >
       <SelectPspHeadingContent />
-      {!isLoading && (
+      {isLoading ? (
+        <WalletPspListSkeleton />
+      ) : (
         <RadioGroup<string>
           onPress={handlePspSelection}
           type="radioListItemWithAmount"
@@ -205,7 +207,6 @@ const WalletPaymentPickPspScreen = () => {
           items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
         />
       )}
-      {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
     </GradientScrollView>
   );
