@@ -27,9 +27,9 @@ import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
 import {
-  backendStatusSelector,
-  SectionStatusKey
-} from "../../store/reducers/backendStatus";
+  SectionStatusKey,
+  sectionStatusSelector
+} from "../../store/reducers/backendStatus/sectionStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
 import { IOBadge, IOBadgeOutlineColors } from "../core/IOBadge";
@@ -82,11 +82,11 @@ export const showPaymentMethodIncomingAlert = () =>
  * if it is critical status, it returns also an alert function, undefined otherwise
  * the alert display a title (section.badge) and a message (section.message) with default dismiss button
  * @param paymentMethod
- * @param backendStatus
+ * @param sectionStatus
  */
 const getBadgeStatus = (
   paymentMethod: IPaymentMethod,
-  backendStatus: O.Option<BackendStatus>
+  sectionStatus: O.Option<BackendStatus["sections"]>
 ): null | { badge: React.ReactNode; alert?: () => void } => {
   const itemSection = paymentMethod.section;
 
@@ -101,8 +101,7 @@ const getBadgeStatus = (
     return null;
   }
   return pipe(
-    backendStatus,
-    O.chainNullableK(bs => bs.sections),
+    sectionStatus,
     O.fold(
       () => null,
       sections => {
@@ -138,11 +137,11 @@ const getBadgeStatus = (
 
 const renderListItem = (
   itemInfo: ListRenderItemInfo<IPaymentMethod>,
-  backendStatus: O.Option<BackendStatus>
+  sectionStatus: O.Option<BackendStatus["sections"]>
 ) => {
   switch (itemInfo.item.status) {
     case "implemented": {
-      const badgeStatus = getBadgeStatus(itemInfo.item, backendStatus);
+      const badgeStatus = getBadgeStatus(itemInfo.item, sectionStatus);
       return (
         <Pressable
           accessibilityRole="button"
@@ -217,7 +216,7 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
   </View>
 );
 const mapStateToProps = (state: GlobalState) => ({
-  sectionStatus: backendStatusSelector(state)
+  sectionStatus: sectionStatusSelector(state)
 });
 export default connect(mapStateToProps)(
   withLightModalContext(PaymentMethodsList)

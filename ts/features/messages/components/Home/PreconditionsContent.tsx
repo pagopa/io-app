@@ -13,7 +13,7 @@ import {
   preconditionsContentSelector
 } from "../../store/reducers/messagePrecondition";
 import I18n from "../../../../i18n";
-import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus";
+import { pnMinAppVersionSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 import {
   errorPreconditionStatusAction,

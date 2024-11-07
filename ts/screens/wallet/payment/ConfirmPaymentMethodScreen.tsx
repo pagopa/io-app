@@ -73,7 +73,7 @@ import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/w
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
-} from "../../../store/reducers/backendStatus";
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../store/reducers/types";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";

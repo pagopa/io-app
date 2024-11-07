@@ -46,7 +46,7 @@ import {
   cieAuthenticationError
 } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   isScreenReaderEnabled,

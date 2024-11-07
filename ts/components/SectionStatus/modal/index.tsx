@@ -10,7 +10,7 @@ import {
   messageForSectionSelector,
   SectionStatusKey,
   webUrlForSectionSelector
-} from "../../../store/reducers/backendStatus";
+} from "../../../store/reducers/backendStatus/sectionStatus";
 import { getFullLocale } from "../../../utils/locale";
 import { openWebUrl } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";

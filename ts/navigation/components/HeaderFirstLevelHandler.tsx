@@ -21,7 +21,7 @@ import { useIONavigation } from "../params/AppParamsList";
 import {
   isNewPaymentSectionEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
-} from "../../store/reducers/backendStatus";
+} from "../../store/reducers/backendStatus/remoteConfig";
 import * as analytics from "../../features/services/common/analytics";
 import {
   isArchivingInProcessingModeSelector,
