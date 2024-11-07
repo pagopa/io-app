@@ -123,30 +123,28 @@ export const getSortedPspList = (
   pspList: ReadonlyArray<Bundle>,
   sortType: WalletPaymentPspSortType
 ) => {
+  if (sortType === "default") {
+    return [...pspList];
+  }
   const onUsBundle = pspList.find(psp => psp.onUs);
   const otherBundles = pspList.filter(psp => !psp.onUs);
 
-  const sortedBundles = (() => {
-    switch (sortType) {
-      case "name":
-        return _.orderBy(
-          otherBundles,
-          ["pspBusinessName", "taxPayerFee"],
-          ["asc", "asc"]
-        );
-      case "amount":
-        return _.orderBy(
-          otherBundles,
-          ["taxPayerFee", "pspBusinessName"],
-          ["asc", "asc"]
-        );
-      case "default":
-      default:
-        return otherBundles;
+  const sortedBundles = () => {
+    if (sortType === "name") {
+      return _.orderBy(
+        otherBundles,
+        ["pspBusinessName", "taxPayerFee"],
+        ["asc", "asc"]
+      );
     }
-  })();
+    return _.orderBy(
+      otherBundles,
+      ["taxPayerFee", "pspBusinessName"],
+      ["asc", "asc"]
+    );
+  };
 
-  return onUsBundle ? [onUsBundle, ...sortedBundles] : sortedBundles;
+  return onUsBundle ? [onUsBundle, ...sortedBundles()] : sortedBundles();
 };
 
 export const getPaymentCardPropsFromWalletInfo = (
