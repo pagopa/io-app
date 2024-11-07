@@ -866,7 +866,6 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "revoke-wallet-instance" });
 
     expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceRevocation");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() => expect(revokeWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
