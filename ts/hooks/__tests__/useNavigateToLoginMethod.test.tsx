@@ -1,16 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React, { JSXElementConstructor } from "react";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import React from "react";
 import { View } from "react-native";
 import { ButtonSolid } from "@pagopa/io-app-design-system";
 import * as rnCieId from "@pagopa/io-react-native-cieid";
 import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
-import { appReducer } from "../../store/reducers";
-import { applicationChangeState } from "../../store/actions/application";
 import ROUTES from "../../navigation/routes";
 import * as fastLoginSelector from "../../features/fastLogin/store/selectors";
 import { Identifier } from "../../screens/authentication/OptInScreen";
+import { withStore } from "../../utils/jest/withStore";
 
 const IS_UAT = false;
 const SPID_L2 = "SpidL2";
@@ -160,24 +157,6 @@ const TestComponent = withStore(() => {
     </View>
   );
 });
-
-/**
- * A HOC to provide the redux `Context`
- * @param Component the component to wrap
- * @returns The given `Component` wrapped with the redux `Provider`
- */
-function withStore<P extends Record<string, unknown>>(
-  Component: JSXElementConstructor<P>
-) {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, globalState as any);
-
-  return (props: P) => (
-    <Provider store={store}>
-      <Component {...props} />
-    </Provider>
-  );
-}
 
 function navigateToCieIdNotInstalled() {
   jest.spyOn(rnCieId, "isCieIdAvailable").mockImplementation(() => false);
