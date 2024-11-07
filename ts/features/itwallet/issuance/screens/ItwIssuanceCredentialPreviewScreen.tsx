@@ -4,11 +4,11 @@ import {
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useMemo } from "react";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -18,23 +18,21 @@ import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import {
-  selectCredentialOption,
-  selectCredentialTypeOption,
-  selectIsIssuing
-} from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import {
   CREDENTIALS_MAP,
   trackCredentialPreview,
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../../analytics";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  selectCredentialOption,
+  selectCredentialTypeOption
+} from "../../machine/credential/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
@@ -44,21 +42,9 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialOption
   );
-  const isIssuing =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
-
-  if (isIssuing) {
-    return (
-      <LoadingScreenContent
-        contentTitle={I18n.t(
-          "features.itWallet.issuance.credentialPreview.loading"
-        )}
-      />
-    );
-  }
 
   return pipe(
     sequenceS(O.Monad)({
@@ -66,7 +52,16 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       credential: credentialOption
     }),
     O.fold(
-      () => <ItwGenericErrorContent />,
+      // If there is no credential in the context (None), we can safely assume the issuing phase is still ongoing.
+      // A None credential cannot be stored in the context, as any issuance failure causes the machine to transition
+      // to the Failure state.
+      () => (
+        <LoadingScreenContent
+          contentTitle={I18n.t(
+            "features.itWallet.issuance.credentialPreview.loading"
+          )}
+        />
+      ),
       props => <ContentView {...props} />
     )
   );
