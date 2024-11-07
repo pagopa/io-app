@@ -103,12 +103,6 @@ describe("getSortedPspList", () => {
     { pspBusinessName: "C", taxPayerFee: 3 }
   ] as ReadonlyArray<Bundle>;
 
-  const pspListWithOnUS: ReadonlyArray<Bundle> = [
-    { pspBusinessName: "B", taxPayerFee: 2, onUs: false },
-    { pspBusinessName: "A", taxPayerFee: 1, onUs: false },
-    { pspBusinessName: "C", taxPayerFee: 3, onUs: true }
-  ] as ReadonlyArray<Bundle>;
-
   it("should sort by name", () => {
     const sortedList = getSortedPspList(pspList, "name");
     expect(sortedList[0].pspBusinessName).toBe("A");
@@ -128,20 +122,6 @@ describe("getSortedPspList", () => {
     expect(sortedList[0].pspBusinessName).toBe("B");
     expect(sortedList[1].pspBusinessName).toBe("A");
     expect(sortedList[2].pspBusinessName).toBe("C");
-  });
-
-  it("should sort by name with onUs first", () => {
-    const sortedList = getSortedPspList(pspListWithOnUS, "name");
-    expect(sortedList[0].pspBusinessName).toBe("C");
-    expect(sortedList[1].pspBusinessName).toBe("A");
-    expect(sortedList[2].pspBusinessName).toBe("B");
-  });
-
-  it("should sort by amount with onUs first", () => {
-    const sortedList = getSortedPspList(pspListWithOnUS, "amount");
-    expect(sortedList[0].taxPayerFee).toBe(3);
-    expect(sortedList[1].taxPayerFee).toBe(1);
-    expect(sortedList[2].taxPayerFee).toBe(2);
   });
 });
 
