@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ConsentData } from "../../types";
+import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { FimsErrorStateType } from "../reducers";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
@@ -21,7 +21,7 @@ export const fimsGetConsentsListAction = createAsyncAction(
   "FIMS_GET_CONSENTS_LIST_REQUEST",
   "FIMS_GET_CONSENTS_LIST_SUCCESS",
   "FIMS_GET_CONSENTS_LIST_FAILURE"
-)<FimsGetConsentsListRequestType, ConsentData, FimsErrorStateType>();
+)<FimsGetConsentsListRequestType, Consent, FimsErrorStateType>();
 
 // note: IAB==InAppBrowser
 export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
