@@ -13,9 +13,7 @@ import {
 import { ITW_ROUTES } from "../../../navigation/routes";
 
 /**
- * to use in flows where either
- * - we need a fallback component
- * - we do not want to handle the banner's visibility logic externally
+ * to use in flows where we want to handle the banner's visibility logic externally
  *  (see MultiBanner feature for the landing screen)
  */
 
