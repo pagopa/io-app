@@ -12,7 +12,7 @@ import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
-import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsGetConsentsListAction } from "../store/actions";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";

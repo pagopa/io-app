@@ -86,6 +86,7 @@ const renderComponent = (
                 ? [
                     O.some({
                       credentialType: "MDL",
+                      jwt: { expiration: "2100-01-01T00:00:00Z" },
                       parsedCredential: {
                         expiry_date: { value: "2100-01-01" }
                       }
