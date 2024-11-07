@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
-import { ConsentData } from "../../types";
+import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";
 import {
   fimsCancelOrAbortAction,
@@ -29,7 +29,7 @@ export type FimsErrorStateType = {
 };
 
 export type FimsSSOState = {
-  consentsData: pot.Pot<ConsentData, FimsErrorStateType>;
+  consentsData: pot.Pot<Consent, FimsErrorStateType>;
   ctaText?: string;
   currentFlowState: FimsFlowStateTags;
   relyingPartyServiceId?: ServiceId;
