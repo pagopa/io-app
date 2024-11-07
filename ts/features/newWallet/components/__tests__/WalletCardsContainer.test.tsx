@@ -68,7 +68,7 @@ const T_CARDS: WalletCardsState = {
     key: "4",
     category: "itw",
     type: "itw",
-    credentialType: CredentialType.PID
+    credentialType: CredentialType.DRIVING_LICENSE
   }
 };
 
