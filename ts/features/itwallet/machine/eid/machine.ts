@@ -133,7 +133,8 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
             actions: "setFailure",
@@ -156,7 +157,8 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.Failure"
           },
           {
             actions: assign(
@@ -186,7 +188,8 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
             actions: "setFailure",
@@ -464,11 +467,6 @@ export const itwEidIssuanceMachine = setup({
           target: "WalletInstanceRevocation"
         }
       }
-    },
-    SessionExpired: {
-      entry: ["handleSessionExpired"],
-      // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "TosAcceptance" }
     }
   }
 });

@@ -856,7 +856,6 @@ describe("itwEidIssuanceMachine", () => {
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     // Revoke Wallet Instance
@@ -872,6 +871,6 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(revokeWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
 
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
   });
 });
