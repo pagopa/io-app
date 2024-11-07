@@ -21,8 +21,8 @@ import {
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "../../actions";
-import { ConsentsResponseDTO } from "../../../../../../../definitions/fims/ConsentsResponseDTO";
-import { Consent } from "../../../../../../../definitions/fims/Consent";
+import { ConsentsResponseDTO } from "../../../../../../../definitions/fims_history/ConsentsResponseDTO";
+import { Consent } from "../../../../../../../definitions/fims_history/Consent";
 
 describe("INITIAL_STATE", () => {
   it("Should match snapshot", () => {

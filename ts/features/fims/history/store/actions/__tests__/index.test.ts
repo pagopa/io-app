@@ -4,7 +4,7 @@ import {
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "..";
-import { Consent } from "../../../../../../../definitions/fims/Consent";
+import { Consent } from "../../../../../../../definitions/fims_history/Consent";
 import { FimsExportSuccessStates } from "../../reducer";
 
 describe("fimsHistoryGet.request", () => {
