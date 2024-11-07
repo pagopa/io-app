@@ -19,7 +19,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
  *  (see MultiBanner feature for the landing screen)
  */
 
-type WrapperlessBannerProps = {
+type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
   closable?: boolean;
@@ -31,7 +31,7 @@ export const ItwDiscoveryBanner = ({
   ignoreMargins = false,
   closable,
   handleOnClose
-}: WrapperlessBannerProps) => {
+}: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
 
   const navigation = useIONavigation();
