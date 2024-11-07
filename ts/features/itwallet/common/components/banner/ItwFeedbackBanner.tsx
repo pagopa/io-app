@@ -1,14 +1,14 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import React from "react";
-import I18n from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { openWebUrl } from "../../../../utils/url";
-import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { itwCloseFeedbackBanner } from "../store/actions/preferences";
-import { itwIsFeedbackBannerVisibleSelector } from "../store/reducers/preferences";
+import I18n from "../../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { openWebUrl } from "../../../../../utils/url";
+import { itwIsWalletEmptySelector } from "../../../credentials/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { itwCloseFeedbackBanner } from "../../store/actions/preferences";
+import { itwIsFeedbackBannerVisibleSelector } from "../../store/reducers/preferences";
 
-const ItwFeebdackBanner = () => {
+const ItwFeedbackBanner = () => {
   const dispatch = useIODispatch();
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
@@ -46,6 +46,6 @@ const ItwFeebdackBanner = () => {
   );
 };
 
-const MemoizedItwFeebdackBanner = React.memo(ItwFeebdackBanner);
+const MemoizedItwFeedbackBanner = React.memo(ItwFeedbackBanner);
 
-export { MemoizedItwFeebdackBanner as ItwFeebdackBanner };
+export { MemoizedItwFeedbackBanner as ItwFeebdackBanner };

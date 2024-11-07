@@ -2,17 +2,17 @@ import { setMonth } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../definitions/content/Config";
-import ROUTES from "../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { ItwPreferencesState } from "../../store/reducers/preferences";
-import { ItwFeebdackBanner } from "../ItwFeebdackBanner";
+import { ToolEnum } from "../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../definitions/content/Config";
+import ROUTES from "../../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { RemoteConfigState } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ItwLifecycleState } from "../../../../lifecycle/store/reducers";
+import { ItwPreferencesState } from "../../../store/reducers/preferences";
+import { ItwFeedbackBanner } from "../ItwFeedbackBanner";
 
 type RenderOptions = {
   isItwValid?: boolean;
@@ -107,7 +107,7 @@ const renderComponent = ({
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwFeebdackBanner,
+      ItwFeedbackBanner,
       ROUTES.WALLET_HOME,
       {},
       store
