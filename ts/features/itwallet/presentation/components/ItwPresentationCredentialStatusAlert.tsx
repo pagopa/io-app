@@ -6,7 +6,7 @@ import {
   getClaimsFullLocale,
   getCredentialExpireDays
 } from "../../common/utils/itwClaimsUtils";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { format } from "../../../../utils/dates";
@@ -88,13 +88,10 @@ const DocumentExpiringAlert = ({ credential }: Props) => {
     credential.credentialType as Exclude<CredentialType, CredentialType.PID>
   }.expiring` as const;
 
-  const bottomSheet = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t(`${bottomSheetNs}.title`),
-      component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
-    },
-    128
-  );
+  const bottomSheet = useIOBottomSheetModal({
+    title: I18n.t(`${bottomSheetNs}.title`),
+    component: <IOMarkdown content={I18n.t(`${bottomSheetNs}.content`)} />
+  });
 
   return (
     <>
@@ -119,13 +116,10 @@ type IssuerDynamicErrorAlertProps = {
 
 const IssuerDynamicErrorAlert = ({ message }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = message[getClaimsFullLocale()];
-  const bottomSheet = useIOBottomSheetAutoresizableModal(
-    {
-      title: localizedMessage.title,
-      component: <Body>{localizedMessage.description}</Body>
-    },
-    128
-  );
+  const bottomSheet = useIOBottomSheetModal({
+    title: localizedMessage.title,
+    component: <Body>{localizedMessage.description}</Body>
+  });
 
   return (
     <>
