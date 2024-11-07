@@ -38,7 +38,7 @@ import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
-import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
+import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner-edit/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
