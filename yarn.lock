@@ -2125,10 +2125,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.29.tgz#ada8dab8a9ef15e126275baace2084491148bac8"
   integrity sha512-CskFyF0Sz+EC/ZyJNNMFEX/Avjyn6cKRwE2K+XSTGWDKYLImPraA8YozTljclCdv3DOxk3ZklUsieMG25PfnSw==
 
-"@pagopa/openapi-codegen-ts@^13.2.0":
-  version "13.2.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-13.2.0.tgz#ed55405c979b582dc11a8a9b900adc45b6c7379d"
-  integrity sha512-EKo4CJReQPT8z3a6P35p3eW86VIy9gcLOVrxIj8VR5bWRhVDfFjwAmpth9pIGQ0QXPmGuylbJbWQmWHrbGLnaA==
+"@pagopa/openapi-codegen-ts@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-14.0.0.tgz#06ed67ec4259323820005d8e05ceb4ad8b2acb53"
+  integrity sha512-xnyC3I5gBuR3zeaXVyYP3Tcl2CEpB8NP9vJmEqWUY4tdAfj4HeREQgZ+gKinevZ+4CIlQljPo60IclB8rXHiag==
   dependencies:
     "@pagopa/ts-commons" "^10.15.0"
     fs-extra "^6.0.0"

@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.76.0-rc.1](https://github.com/pagopa/io-app/compare/2.76.0-rc.0...2.76.0-rc.1) (2024-11-06)
+
+
+### Features
+
+* [[IOPLT-724](https://pagopa.atlassian.net/browse/IOPLT-724)] Missing tests for backendInfo and remoteConfig ([#6377](https://github.com/pagopa/io-app/issues/6377)) ([ec8f5cc](https://github.com/pagopa/io-app/commit/ec8f5cc7dbe51aaba6ce0e09485d06c3f65ed4eb))
+* **IT Wallet:** [[SIW-1797](https://pagopa.atlassian.net/browse/SIW-1797),[SIW-1608](https://pagopa.atlassian.net/browse/SIW-1608)] Handle all credential statuses for the physical and digital document ([#6349](https://github.com/pagopa/io-app/issues/6349)) ([37ba2c3](https://github.com/pagopa/io-app/commit/37ba2c38e7ef73e44eab5fd2cce73df187660b9d))
+* [[IOPLT-724](https://pagopa.atlassian.net/browse/IOPLT-724)] Split up the backend status for better handling ([#6296](https://github.com/pagopa/io-app/issues/6296)) ([1b07349](https://github.com/pagopa/io-app/commit/1b07349efe8cfaa8ac873e1910fa1bb84d6b2069))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1723](https://pagopa.atlassian.net/browse/SIW-1723)] Cards and documents not always stacked ([#6309](https://github.com/pagopa/io-app/issues/6309)) ([d3352d8](https://github.com/pagopa/io-app/commit/d3352d8a33f461871de4076d9c93de25278c4562))
+* [[IOBP-950](https://pagopa.atlassian.net/browse/IOBP-950)] Filter tabs behavior into biz events notices list ([#6363](https://github.com/pagopa/io-app/issues/6363)) ([cb1583e](https://github.com/pagopa/io-app/commit/cb1583ed86a22df7a1f145a5106c2bdbf9fa7469))
+* [[IOBP-953](https://pagopa.atlassian.net/browse/IOBP-953)] Capitalize transaction fields ([#6365](https://github.com/pagopa/io-app/issues/6365)) ([0881665](https://github.com/pagopa/io-app/commit/088166596fdd2bf6ba48b3c1c17e75ce2009ad3e))
+
+
+### Chores
+
+* [[IOCOM-1817](https://pagopa.atlassian.net/browse/IOCOM-1817)] Add test for common FIMS hook ([#6291](https://github.com/pagopa/io-app/issues/6291)) ([fd0ff87](https://github.com/pagopa/io-app/commit/fd0ff8709898ef02568469fe512a567f51da128e))
+* **IT Wallet:** [[SIW-1814](https://pagopa.atlassian.net/browse/SIW-1814)] Show invalid, expired, expiring status in skeuomorphic credential ([#6360](https://github.com/pagopa/io-app/issues/6360)) ([0aac5ac](https://github.com/pagopa/io-app/commit/0aac5ac402112f406e58f3b3d0e335dc1facd0ae))
+* [[IOBP-522](https://pagopa.atlassian.net/browse/IOBP-522)] Disable back gesture for outcome screens ([#6370](https://github.com/pagopa/io-app/issues/6370)) ([47b0121](https://github.com/pagopa/io-app/commit/47b0121b41e3c2fcba23eeeb32a02206cbc50d62))
+* [[IOBP-717](https://pagopa.atlassian.net/browse/IOBP-717)] Rename payments checkout summary route ([#6372](https://github.com/pagopa/io-app/issues/6372)) ([ec7cd53](https://github.com/pagopa/io-app/commit/ec7cd536bf72b68431d9c0e058a3e0d5d11b13fc))
+* **IT Wallet:** [[SIW-1819](https://pagopa.atlassian.net/browse/SIW-1819)] Update `io-react-native-jwt` and `io-react-native-wallet` dependencies ([#6368](https://github.com/pagopa/io-app/issues/6368)) ([24a56a6](https://github.com/pagopa/io-app/commit/24a56a667fbb2dca8fc4f43d5f5600fdc1a1c1ec))
+* [[IOBP-757](https://pagopa.atlassian.net/browse/IOBP-757)] Apply info copy component into transaction details screen ([#6362](https://github.com/pagopa/io-app/issues/6362)) ([f620db4](https://github.com/pagopa/io-app/commit/f620db483e2726085672b65e980584754b51df88))
+* [[IOBP-954](https://pagopa.atlassian.net/browse/IOBP-954)] Edit filter notice tab label ([#6364](https://github.com/pagopa/io-app/issues/6364)) ([e567d2d](https://github.com/pagopa/io-app/commit/e567d2d6c9d4e264618477ab5c44ac21ac5f7fdd))
+
 ## [2.76.0-rc.0](https://github.com/pagopa/io-app/compare/2.75.0-rc.0...2.76.0-rc.0) (2024-11-04)
 
 
