@@ -1,4 +1,4 @@
-import * as fimsClient from "../../../../../../definitions/fims/client";
+import * as fimsClient from "../../../../../../definitions/fims_history/client";
 import * as fetchUtils from "../../../../../utils/fetch";
 import { createFimsClient } from "../client";
 
