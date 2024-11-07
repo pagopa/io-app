@@ -10,7 +10,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { updateLandingScreenBannerVisibility } from "../../store/actions";
 import * as SELECTORS from "../../store/selectors";
-import { LandingScreenBannerId } from "../../utils/landingScreenBannerMap";
+import { LandingScreenBannerId } from "../../utils/landingscreenbannermap";
 import { LandingScreenBannerPicker } from "../LandingScreenBannerPicker";
 
 jest.mock("../../utils/landingScreenBannerMap", () => ({

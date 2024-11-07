@@ -31,10 +31,7 @@ import {
   selectWalletOtherCards
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
-import {
-  WalletCardsCategoryContainer,
-  WalletCardsCategoryContainerProps
-} from "./WalletCardsCategoryContainer";
+import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
@@ -46,16 +43,10 @@ const WalletCardsContainer = () => {
   const cards = useIOSelector(selectSortedWalletCards);
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
 
-  const stackCards = cards.length > 4;
-
   if (isLoading && cards.length === 0) {
     return (
       <>
-        <WalletCardSkeleton
-          testID="walletCardSkeletonTestID"
-          cardProps={{}}
-          isStacked={false}
-        />
+        <WalletCardSkeleton testID="walletCardSkeletonTestID" cardProps={{}} />
         <VSpacer size={16} />
         <WalletCardsCategoryRetryErrorBanner />
       </>
@@ -83,18 +74,14 @@ const WalletCardsContainer = () => {
     >
       <View testID="walletCardsContainerTestID">
         <ItwBanners />
-        {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
-        {shouldRender("other") && (
-          <OtherCardsContainer isStacked={stackCards} />
-        )}
+        {shouldRender("itw") && <ItwCardsContainer />}
+        {shouldRender("other") && <OtherCardsContainer />}
       </View>
     </Animated.View>
   );
 };
 
-const ItwCardsContainer = ({
-  isStacked
-}: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
+const ItwCardsContainer = () => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
@@ -102,7 +89,7 @@ const ItwCardsContainer = ({
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  const isEidExpired = eidStatus === "expired";
+  const isEidExpired = eidStatus === "jwtExpired";
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
@@ -152,13 +139,12 @@ const ItwCardsContainer = ({
         key={`cards_category_itw`}
         testID={`walletCardsCategoryTestID_itw`}
         cards={cards}
-        isStacked={isStacked}
         header={getHeader()}
         topElement={
           <>
             <ItwWalletReadyBanner />
             <ItwEidLifecycleAlert
-              lifecycleStatus={["expiring", "expired"]}
+              lifecycleStatus={["jwtExpiring", "jwtExpired"]}
               verticalSpacing={true}
             />
           </>
@@ -169,9 +155,7 @@ const ItwCardsContainer = ({
   );
 };
 
-const OtherCardsContainer = ({
-  isStacked
-}: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
+const OtherCardsContainer = () => {
   const cards = useIOSelector(selectWalletOtherCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
@@ -188,7 +172,6 @@ const OtherCardsContainer = ({
       key={`cards_category_other`}
       testID={`walletCardsCategoryTestID_other`}
       cards={cards}
-      isStacked={isStacked}
       header={
         displayHeader
           ? {
