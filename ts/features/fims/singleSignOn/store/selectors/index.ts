@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isStrictNone } from "../../../../../utils/pot";
 import { getDomainFromUrl } from "../../saga/sagaUtils";
-import { ConsentData } from "../../types";
+import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { foldFimsFlowStateK } from "../../utils";
 import { FIMS_SSO_ERROR_TAGS, FimsErrorStateType } from "../reducers";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
@@ -31,7 +31,7 @@ export const fimsPartialAbortUrl = (state: GlobalState) =>
   pipe(state, fimsConsentsDataSelector, abortUrlFromConsentsPot, O.toUndefined);
 
 export const abortUrlFromConsentsPot = (
-  consentsPot: pot.Pot<ConsentData, FimsErrorStateType>
+  consentsPot: pot.Pot<Consent, FimsErrorStateType>
 ) =>
   pipe(
     consentsPot,
