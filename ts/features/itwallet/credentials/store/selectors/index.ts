@@ -1,9 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import {
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils";
 import {
   getCredentialStatus,
   getFiscalCodeFromCredential
@@ -64,12 +68,50 @@ export const itwIsWalletEmptySelector = createSelector(
   ({ credentials }) => credentials.length === 0
 );
 
+/**
+ * Get the credential status and the error message corresponding to the status attestation error, if present.
+ * The message is dynamic and extracted from the issuer configuration.
+ *
+ * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
+ */
+export const itwCredentialStatusSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  (_: GlobalState, type: string) => type,
+  (credentials, type) => {
+    const credentialOption = credentials[type] || O.none;
+
+    // This should never happen
+    if (O.isNone(credentialOption)) {
+      return { status: undefined, message: undefined };
+    }
+
+    const { storedStatusAttestation, issuerConf, credentialType } =
+      credentialOption.value;
+
+    const errorCode =
+      storedStatusAttestation?.credentialStatus === "invalid"
+        ? storedStatusAttestation.errorCode
+        : undefined;
+
+    return {
+      status: getCredentialStatus(credentialOption.value),
+      message: errorCode
+        ? Errors.extractErrorMessageFromIssuerConf(errorCode, {
+            issuerConf,
+            credentialType
+          })
+        : undefined
+    };
+  }
+);
+
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
   eidOption =>
     pipe(
       eidOption,
-      O.map(eid => getCredentialStatus(eid, { checkJwtExpiration: true })),
-      O.getOrElseW(() => undefined)
+      // eID does not have status attestation nor expiry date, so it safe to assume its status is based on the JWT only
+      O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
+      O.toUndefined
     )
 );
