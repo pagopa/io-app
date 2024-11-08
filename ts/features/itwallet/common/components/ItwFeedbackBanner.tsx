@@ -48,4 +48,4 @@ const ItwFeedbackBanner = () => {
 
 const MemoizedItwFeedbackBanner = React.memo(ItwFeedbackBanner);
 
-export { MemoizedItwFeedbackBanner as ItwFeebdackBanner };
+export { MemoizedItwFeedbackBanner as ItwFeedbackBanner };

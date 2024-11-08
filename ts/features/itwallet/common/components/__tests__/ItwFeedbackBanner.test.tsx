@@ -12,7 +12,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 import { ItwPreferencesState } from "../../store/reducers/preferences";
-import { ItwFeedbackBanner } from "../banner/ItwFeedbackBanner";
+import { ItwFeedbackBanner } from "../ItwFeedbackBanner";
 
 type RenderOptions = {
   isItwValid?: boolean;
