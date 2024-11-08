@@ -3,19 +3,14 @@ import React from "react";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
-import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { itwCloseFeedbackBanner } from "../store/actions/preferences";
-import { itwIsFeedbackBannerVisibleSelector } from "../store/reducers/preferences";
+import { itwShouldRenderFeedbackBanner } from "../store/selectors";
 
 const ItwFeedbackBanner = () => {
   const dispatch = useIODispatch();
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
-  const shouldBeVisible = useIOSelector(itwIsFeedbackBannerVisibleSelector);
+  const shouldRender = useIOSelector(itwShouldRenderFeedbackBanner);
 
-  if (!isItwValid || isWalletEmpty || !shouldBeVisible) {
-    // We should display this banner only if the wallet is active and there is at least 1 credential
+  if (!shouldRender) {
     return null;
   }
 
