@@ -10,7 +10,7 @@ import { ItwFeedbackBanner } from "../ItwFeedbackBanner";
 type JestMock = ReturnType<typeof jest.fn>;
 
 jest.mock("../../store/selectors", () => ({
-  isItwTrialActiveSelector: jest.fn()
+  itwShouldRenderFeedbackBanner: jest.fn()
 }));
 
 describe("ItwFeedbackBanner", () => {
@@ -18,9 +18,14 @@ describe("ItwFeedbackBanner", () => {
     const component = renderComponent();
     expect(component).toMatchSnapshot();
   });
+
+  it("should not render", () => {
+    const { queryByTestId } = renderComponent(false);
+    expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
+  });
 });
 
-const renderComponent = (shouldRender: boolean = true) => {
+const renderComponent = (shouldRender = true) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
