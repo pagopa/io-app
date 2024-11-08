@@ -31,7 +31,7 @@ import { logoForService } from "../../../services/home/utils";
 import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { fimsErrorTagSelector } from "../store/selectors";
-import { ConsentData } from "../types";
+import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import {
   computeAndTrackDataShare,
   computeAndTrackDataShareAccepted
@@ -40,7 +40,7 @@ import { FimsClaimsList } from "./FimsClaims";
 import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
 
-type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
+type FimsSuccessBodyProps = { consents: Consent; onAbort: () => void };
 
 export const FimsFlowSuccessBody = ({
   consents,
