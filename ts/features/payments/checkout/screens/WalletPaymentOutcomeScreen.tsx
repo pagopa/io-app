@@ -434,7 +434,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
         return {
-          pictogram: "stopSecurity",
+          pictogram: "emptyWallet",
           title: I18n.t(
             "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.title"
           ),
@@ -445,7 +445,7 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.CVV_ERROR:
         return {
-          pictogram: "emptyWallet",
+          pictogram: "stopSecurity",
           title: I18n.t("wallet.payment.outcome.CVV_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.CVV_ERROR.subtitle"),
           action: closeFailureAction
