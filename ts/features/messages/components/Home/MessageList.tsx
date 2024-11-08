@@ -1,25 +1,30 @@
+import { Divider, IOColors } from "@pagopa/io-app-design-system";
 import React, { useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
-import { Divider, IOColors } from "@pagopa/io-app-design-system";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
-import { MessageListCategory } from "../../types/messageListCategory";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
+import { LandingScreenBannerPicker } from "../../../landingScreenMultiBanner/components/LandingScreenBannerPicker";
+import { trackPullToRefresh } from "../../analytics";
 import {
   messageListForCategorySelector,
   shouldShowRefreshControllOnListSelector
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
-import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
-import { trackPullToRefresh } from "../../analytics";
-import { SettingsDiscoveryBanner } from "../../../../screens/profile/components/SettingsDiscoveryBanner";
+import { MessageListCategory } from "../../types/messageListCategory";
+import {
+  MessageListItemSkeleton,
+  SkeletonHeight
+} from "./DS/MessageListItemSkeleton";
+import { EmptyList } from "./EmptyList";
+import { Footer } from "./Footer";
 import {
   generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
@@ -28,12 +33,6 @@ import {
   trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
 import { WrappedMessageListItem } from "./WrappedMessageListItem";
-import {
-  SkeletonHeight,
-  MessageListItemSkeleton
-} from "./DS/MessageListItemSkeleton";
-import { EmptyList } from "./EmptyList";
-import { Footer } from "./Footer";
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -122,11 +121,7 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         ListEmptyComponent={<EmptyList category={category} />}
         ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
         ListHeaderComponent={
-          category === "INBOX" ? (
-            <ItwDiscoveryBanner
-              fallbackComponent={<SettingsDiscoveryBanner />}
-            />
-          ) : undefined
+          category === "INBOX" ? <LandingScreenBannerPicker /> : undefined
         }
         getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {
