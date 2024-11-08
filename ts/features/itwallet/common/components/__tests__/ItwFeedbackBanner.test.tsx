@@ -14,6 +14,11 @@ jest.mock("../../store/selectors", () => ({
 }));
 
 describe("ItwFeedbackBanner", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
   it("should match the snapshot", () => {
     const component = renderComponent();
     expect(component).toMatchSnapshot();

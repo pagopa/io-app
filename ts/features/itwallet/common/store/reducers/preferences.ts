@@ -4,7 +4,7 @@ import { Action } from "../../../../../store/actions/types";
 import { itwCloseFeedbackBanner } from "../actions/preferences";
 
 export type ItwPreferencesState = {
-  hideFeedbackBanner?: "always" | { before: Date };
+  hideFeedbackBanner?: "always" | { until: Date };
 };
 
 const INITIAL_STATE: ItwPreferencesState = {};
@@ -18,7 +18,7 @@ const reducer = (
       return {
         hideFeedbackBanner: action.payload.withFeedback
           ? "always"
-          : { before: addMonths(new Date(), 1) }
+          : { until: addMonths(new Date(), 1) }
       };
     }
 
