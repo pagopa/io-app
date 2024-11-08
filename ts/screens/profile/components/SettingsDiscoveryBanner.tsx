@@ -27,8 +27,8 @@ export const SettingsDiscoveryBanner = ({
     });
   };
   const closeHandler = React.useCallback(() => {
-    handleOnClose();
     dispatch(setHasUserAcknowledgedSettingsBanner(true));
+    handleOnClose();
   }, [dispatch, handleOnClose]);
 
   return (
