@@ -7,11 +7,11 @@ import { isStrictNone } from "../../../../../utils/pot";
 import { getDomainFromUrl } from "../../saga/sagaUtils";
 import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { foldFimsFlowStateK } from "../../utils";
-import { FIMS_SSO_ERROR_TAGS, FimsErrorStateType } from "../reducers";
+import { FimsErrorStateType } from "../reducers";
 import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 
 export const fimsConsentsDataSelector = (state: GlobalState) =>
-  state.features.fims.sso.consentsData;
+  state.features.fims.sso.ssoData;
 
 export const fimsRelyingPartyDomainSelector = (state: GlobalState) =>
   pipe(
@@ -40,29 +40,25 @@ export const abortUrlFromConsentsPot = (
     O.map(consents => consents._links.abort.href)
   );
 
-export const fimsErrorTagSelector = (
-  state: GlobalState
-): FIMS_SSO_ERROR_TAGS | undefined => {
-  if (pot.isError(state.features.fims.sso.consentsData)) {
-    const isDebug = isDebugModeEnabledSelector(state);
-    return isDebug
-      ? state.features.fims.sso.consentsData.error.errorTag
-      : "DEBUG";
+export const fimsAuthenticationFailedSelector = (state: GlobalState) =>
+  pot.isError(state.features.fims.sso.ssoData);
+
+export const fimsAuthenticationErrorTagSelector = (state: GlobalState) => {
+  const ssoData = state.features.fims.sso.ssoData;
+  if (pot.isError(ssoData)) {
+    return ssoData.error.errorTag;
   }
   return undefined;
 };
 
-// soon to be deprecated
-export const fimsErrorStateSelector = (state: GlobalState) => {
-  // this selector will be used to map the error message
-  // once we have a clear error mapping
-  if (pot.isError(state.features.fims.sso.consentsData)) {
-    const isDebug = isDebugModeEnabledSelector(state);
-    return isDebug
-      ? state.features.fims.sso.consentsData.error.debugMessage
-      : state.features.fims.sso.consentsData.error.standardMessage;
+export const fimsDebugDataSelector = (state: GlobalState) => {
+  const isDebug = isDebugModeEnabledSelector(state);
+  if (isDebug) {
+    const ssoDataPot = state.features.fims.sso.ssoData;
+    if (pot.isError(ssoDataPot)) {
+      return ssoDataPot.error.debugMessage;
+    }
   }
-
   return undefined;
 };
 
@@ -71,7 +67,7 @@ export const fimsLoadingStateSelector = (state: GlobalState) =>
     state.features.fims.sso.currentFlowState,
     foldFimsFlowStateK(
       consentsState =>
-        pipe(state.features.fims.sso.consentsData, consentsPot =>
+        pipe(state.features.fims.sso.ssoData, consentsPot =>
           pipe(
             pot.isLoading(consentsPot) || isStrictNone(consentsPot),
             B.fold(
