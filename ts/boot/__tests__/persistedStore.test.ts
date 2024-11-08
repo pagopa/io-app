@@ -60,7 +60,4 @@ describe("Check the addition for new fields to the persisted store. If one of th
   it("Freeze 'installation.appVersionHistory' state", () => {
     expect(globalState.installation.appVersionHistory).toMatchSnapshot();
   });
-  it("Freeze 'features.itWallet' state", () => {
-    expect(globalState.features.itWallet).toMatchSnapshot();
-  });
 });
