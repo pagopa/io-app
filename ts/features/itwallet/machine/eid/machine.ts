@@ -158,7 +158,7 @@ export const itwEidIssuanceMachine = setup({
           {
             guard: "isSessionExpired",
             actions: "handleSessionExpired",
-            target: "#itwEidIssuanceMachine.Failure"
+            target: "#itwEidIssuanceMachine.Idle"
           },
           {
             actions: assign(
