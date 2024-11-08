@@ -26,7 +26,8 @@ declare -a apis=(
   # Trial system APIs
   "./definitions/trial_system https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_trial_system.yaml"
   # Fims APIs
-  "./definitions/fims assets/FimsSwager.yml"
+  "./definitions/fims_history assets/FimsSwager.yml"
+  "./definitions/fims_sso https://raw.githubusercontent.com/pagopa/io-fims/a93f1a1abf5230f103d9f489b139902b87288061/apps/op-app/openapi.yaml"
   # CDN APIs
   "./definitions/content https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/definitions.yml"
   # Session Manager APIs

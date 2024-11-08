@@ -3945,9 +3945,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/openapi-codegen-ts@npm:^13.2.0":
-  version: 13.2.0
-  resolution: "@pagopa/openapi-codegen-ts@npm:13.2.0"
+"@pagopa/openapi-codegen-ts@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "@pagopa/openapi-codegen-ts@npm:14.0.0"
   dependencies:
     "@pagopa/ts-commons": ^10.15.0
     fs-extra: ^6.0.0
@@ -3965,7 +3965,7 @@ __metadata:
     bundle-api-spec: dist/commands/bundle-api-spec/cli.js
     gen-api-models: dist/commands/gen-api-models/cli.js
     gen-api-sdk: dist/commands/gen-api-sdk/cli.js
-  checksum: afaf6e6485ffb6ddbe8561fdcd2bc7711a394413dd8d186b5e7fe715833d9fa197b876dbc7e060eca932fd248d489a3b383f81efcab2f72836881cd28eb8a997
+  checksum: ed826620c0ba09583b2d99a10d5637538161d695bec8367a99232d063c6d36aa7695503dc2e16e2034093b483c6499a9b5d094954b47cbebd1287cb9222c69c2
   languageName: node
   linkType: hard
 
@@ -14022,7 +14022,7 @@ __metadata:
     "@pagopa/io-react-native-login-utils": 1.0.6
     "@pagopa/io-react-native-wallet": ^0.23.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
-    "@pagopa/openapi-codegen-ts": ^13.2.0
+    "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.3.0
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
