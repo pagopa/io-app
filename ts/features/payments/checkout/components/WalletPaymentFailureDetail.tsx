@@ -53,12 +53,14 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
 
   const closeAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("global.buttons.close"),
+    testID: "wallet-payment-failure-close-button",
     accessibilityLabel: I18n.t("global.buttons.close"),
     onPress: handleClose
   };
 
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.support.button"),
+    testID: "wallet-payment-failure-support-button",
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
   };
