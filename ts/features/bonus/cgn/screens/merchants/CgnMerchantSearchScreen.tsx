@@ -6,9 +6,12 @@ import {
   IOColors,
   IOSpacingScale,
   IOStyles,
+  IOVisualCostants,
   ListItemNav,
+  Pictogram,
   SearchInput,
-  SearchInputRef
+  SearchInputRef,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import React, {
   useCallback,
@@ -24,7 +27,8 @@ import {
   Platform,
   Text,
   View,
-  ViewStyle
+  ViewStyle,
+  StyleSheet
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -34,7 +38,6 @@ import {
   IOStackNavigationProp,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList";
-import { EmptyList } from "../../../../messages/components/Search/EmptyList";
 import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import CGN_ROUTES from "../../navigation/routes";
 import { CgnDetailsParamsList } from "../../navigation/params";
@@ -108,18 +111,13 @@ export function CgnMerchantSearchScreen() {
 
   const renderListEmptyComponent = useCallback(() => {
     if (searchText.trim().length < MIN_SEARCH_TEXT_LENGTH) {
-      return (
-        <EmptyList
-          pictogram="searchLens"
-          title={I18n.t("bonus.cgn.merchantSearch.emptyList", {
-            merchantCount: merchantsCount
-          })}
-        />
-      );
+      return <EmptyListShortQuery merchantCount={merchantsCount} />;
     }
-
+    if (merchants?.length === 0) {
+      return <EmptyListNoResults />;
+    }
     return null;
-  }, [merchantsCount, searchText]);
+  }, [merchants?.length, merchantsCount, searchText]);
 
   const handleCancel = useCallback(() => {
     navigation.goBack();
@@ -167,6 +165,60 @@ export function CgnMerchantSearchScreen() {
   );
 }
 
+const styles = StyleSheet.create({
+  emptyListContainer: {
+    marginHorizontal: IOVisualCostants.appMarginDefault
+  },
+  emptyListText: {
+    textAlign: "center"
+  },
+  listItemTextContainer: {
+    flexGrow: 1,
+    flexShrink: 1
+  },
+  highlightYes: {
+    backgroundColor: IOColors["turquoise-150"]
+  }
+});
+
+function EmptyListShortQuery({
+  merchantCount
+}: {
+  merchantCount: number | undefined;
+}) {
+  return (
+    <View style={styles.emptyListContainer}>
+      <View style={IOStyles.alignCenter}>
+        <Pictogram name="searchLens" size={120} />
+        <VSpacer size={24} />
+      </View>
+      <H6 style={styles.emptyListText}>
+        {I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.title", {
+          merchantCount
+        })}
+      </H6>
+    </View>
+  );
+}
+
+function EmptyListNoResults() {
+  return (
+    <View style={styles.emptyListContainer}>
+      <View style={IOStyles.alignCenter}>
+        <Pictogram name="umbrellaNew" size={120} />
+        <VSpacer size={24} />
+      </View>
+      <H6 style={styles.emptyListText}>
+        {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.title")}
+      </H6>
+      <VSpacer size={8} />
+      <Body style={styles.emptyListText}>
+        {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.subtitle")}
+      </Body>
+    </View>
+  );
+}
+
 function MerchantSearchResultListItem({
   item,
   searchText
@@ -189,7 +241,7 @@ function MerchantSearchResultListItem({
         }}
         value={
           <View style={IOStyles.rowSpaceBetween}>
-            <View style={{ flexGrow: 1, flexShrink: 1 }}>
+            <View style={styles.listItemTextContainer}>
               <H6>{highlightText({ text: item.name, searchText })}</H6>
               <Body numberOfLines={2} ellipsizeMode="tail">
                 {highlightText({
@@ -232,11 +284,7 @@ function highlightText({
   return chunks.map((chunk, index) => (
     <Text
       key={index}
-      style={{
-        backgroundColor: chunk.highlighted
-          ? IOColors["turquoise-150"]
-          : undefined
-      }}
+      style={chunk.highlighted ? styles.highlightYes : undefined}
     >
       {chunk.text}
     </Text>

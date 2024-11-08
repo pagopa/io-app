@@ -2679,7 +2679,14 @@ bonus:
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
     merchantSearch:
       goToSearchAccessibilityLabel: Vai alla ricerca operatori
-      emptyList: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+      emptyList:
+        shortQuery:
+          title: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+        noResults:
+          title: Non abbiamo trovato nulla
+          subtitle: |- 
+            Prova a cercare con parole diverse.
+            Se non lo trovi, il partner potrebbe non aver aderito o non avere opportunità attive.
       input:
         placeholder: Cerca tra i partner
         cancel: "Annulla"
