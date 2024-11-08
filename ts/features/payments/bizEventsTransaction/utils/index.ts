@@ -100,6 +100,15 @@ export const calculateTotalAmount = (
   return total.toFixed(2);
 };
 
+/**
+ * Filters transactions by a given transaction ID and returns the filtered transactions along with the index of the removed transaction.
+ *
+ * @param transactions - A potential array of NoticeListItem objects wrapped in a Pot, which may contain a NetworkError.
+ * @param transactionId - The ID of the transaction to filter out.
+ * @returns An object containing:
+ *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction with the given ID.
+ *   - `removedIndex`: The index of the removed transaction in the original array, or -1 if the transaction was not found.
+ */
 export const filterTransactionsByIdAndGetIndex = (
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
   transactionId: string

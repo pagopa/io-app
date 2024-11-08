@@ -1,8 +1,4 @@
-import {
-  IOStyles,
-  IOToast,
-  ListItemAction
-} from "@pagopa/io-app-design-system";
+import { IOStyles, ListItemAction } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Alert, View } from "react-native";
 import { useDispatch } from "react-redux";
@@ -19,15 +15,9 @@ const PaymentsBizEventsHideReceiptButton = (props: Props) => {
   const dispatch = useDispatch();
   const navigation = useIONavigation();
 
-  const showOptimisticLoading = () => {
-    IOToast.show(I18n.t("features.payments.transactions.receipt.loading"), {
-      variant: "info"
-    });
-    navigation.goBack();
-  };
-
   const hideReceipt = () => {
-    showOptimisticLoading();
+    navigation.goBack();
+
     dispatch(
       hidePaymentsBizEventsReceiptAction.request({
         transactionId
