@@ -3,6 +3,7 @@ import { SectionListData } from "react-native";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { NetworkError } from "../../../../utils/errors";
+import { capitalizeTextName } from "../../../../utils/strings";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -66,7 +67,7 @@ export const getPayerInfoLabel = (payer: InfoNotice["payer"]): string => {
     return "";
   }
 
-  const name = payer.name ? payer.name.trim() : "";
+  const name = payer.name ? capitalizeTextName(payer.name).trim() : "";
   const taxCode = payer.taxCode ? payer.taxCode.trim() : "";
 
   const payerInfo = name ? (taxCode ? `${name}\n(${taxCode})` : name) : taxCode;

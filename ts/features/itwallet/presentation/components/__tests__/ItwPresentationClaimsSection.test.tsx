@@ -32,7 +32,12 @@ function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwPresentationClaimsSection credential={ItwStoredCredentialsMocks.ts} />
+      <ItwPresentationClaimsSection
+        credential={{
+          ...ItwStoredCredentialsMocks.ts,
+          jwt: { expiration: "2100-01-01T00:00:00Z" }
+        }}
+      />
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},

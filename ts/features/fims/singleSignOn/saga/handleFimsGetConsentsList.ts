@@ -10,9 +10,9 @@ import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
-import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsGetConsentsListAction } from "../store/actions";
-import { ConsentData } from "../types";
+import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 import {
   computeAndTrackAuthenticationError,
@@ -63,8 +63,6 @@ export function* handleFimsGetConsentsList(
 
   yield* call(setCookie, fimsProviderDomain, "/", "_io_fims_token", fimsToken);
 
-  // TODO:: use with future BE lang implementation -- const lang = getLocalePrimaryWithFallback();
-
   const fimsCTAUrlResponse = yield* call(nativeRequest, {
     verb: "get",
     followRedirects: false,
@@ -105,6 +103,7 @@ export function* handleFimsGetConsentsList(
     return;
   }
 
+  // TODO:: use with future BE lang implementation -- const lang = getLocalePrimaryWithFallback();
   const getConsentsResult = yield* call(nativeRequest, {
     verb: "get",
     followRedirects: true,
@@ -156,7 +155,7 @@ const decodeSuccessfulConsentsResponse = (
   pipe(
     getConsentsResult.body,
     E.tryCatchK(JSON.parse, identity),
-    E.map(ConsentData.decode),
+    E.map(Consent.decode),
     E.flatten,
     E.foldW(
       () => {
