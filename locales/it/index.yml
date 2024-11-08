@@ -3314,6 +3314,10 @@ features:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
         action: Scopri di più
+      alreadyActive:
+        title: "Documenti su IO è già attiva"
+        content: "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio."
+        action: "Vai al Portafoglio"
     identification:
       mode:
         title: Verifica la tua identità
