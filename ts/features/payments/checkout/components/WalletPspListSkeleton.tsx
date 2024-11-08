@@ -9,13 +9,13 @@ import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 
 export const WalletPspListSkeleton = () => (
-  <>
+  <View testID="wallet-psp-list-skeleton">
     <PspSkeleton showFeatured />
     <Divider />
     <PspSkeleton />
     <Divider />
     <PspSkeleton />
-  </>
+  </View>
 );
 
 type PspSkeletonProps = {
