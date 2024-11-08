@@ -17,7 +17,7 @@ import {
   shouldShowRefreshControllOnListSelector
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
-import { ItwDiscoveryBanner } from "../../../itwallet/common/components/banner/ItwDiscoveryBanner";
+import { ItwDiscoveryBanner } from "../../../itwallet/common/components/ItwDiscoveryBanner";
 import { trackPullToRefresh } from "../../analytics";
 import { SettingsDiscoveryBanner } from "../../../../screens/profile/components/SettingsDiscoveryBanner";
 import {

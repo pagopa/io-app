@@ -2,15 +2,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../../definitions/content/Config";
-import { SubscriptionStateEnum } from "../../../../../../../definitions/trial_system/SubscriptionState";
-import ROUTES from "../../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { itwTrialId } from "../../../../../../config";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../definitions/content/Config";
+import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { itwTrialId } from "../../../../../config";
 import { ItwUpcomingWalletBanner } from "../ItwUpcomingWalletBanner";
 
 type RenderOptions = {

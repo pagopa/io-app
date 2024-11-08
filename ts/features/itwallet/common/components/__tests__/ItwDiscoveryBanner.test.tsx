@@ -1,52 +1,42 @@
-import { setMonth } from "date-fns";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../../definitions/content/Config";
-import ROUTES from "../../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { RemoteConfigState } from "../../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { ItwLifecycleState } from "../../../../lifecycle/store/reducers";
-import { ItwPreferencesState } from "../../../store/reducers/preferences";
-import { ItwFeedbackBanner } from "../ItwFeedbackBanner";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../definitions/content/Config";
+import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { ItwDiscoveryBanner } from "../banner/ItwDiscoveryBanner";
+import { itwTrialId } from "../../../../../config";
 
 type RenderOptions = {
+  isItwTrial?: boolean;
   isItwValid?: boolean;
-  isWalletEmpty?: boolean;
-  preferences?: ItwPreferencesState;
+  isItwEnabled?: boolean;
 };
 
 jest.mock("../../../../../config", () => ({
   itwEnabled: true
 }));
 
-describe("ItwFeedbackBanner", () => {
+describe("ItwDiscoveryBanner", () => {
   it("should render the banner", () => {
     const {
       component: { queryByTestId }
     } = renderComponent({});
-    expect(queryByTestId("itwFeedbackBannerTestID")).not.toBeNull();
-  });
-
-  it("should render the banner after one month", () => {
-    const {
-      component: { queryByTestId }
-    } = renderComponent({
-      preferences: { hideFeedbackBanner: { before: setMonth(new Date(), 1) } }
-    });
-    expect(queryByTestId("itwFeedbackBannerTestID")).not.toBeNull();
+    expect(queryByTestId("itwDiscoveryBannerTestID")).not.toBeNull();
   });
 
   test.each([
     { isItwTrial: false },
     { isItwEnabled: false },
-    { isItwValid: true },
-    { preferences: { hideFeedbackBanner: "always" } },
-    { preferences: { hideFeedbackBanner: { before: setMonth(new Date(), 1) } } }
+    { isItwValid: true }
   ] as ReadonlyArray<RenderOptions>)(
     "should not render the banner if %p",
     options => {
@@ -59,25 +49,26 @@ describe("ItwFeedbackBanner", () => {
 });
 
 const renderComponent = ({
-  isItwValid = true,
-  isWalletEmpty = false,
-  preferences = {}
+  isItwEnabled = true,
+  isItwTrial = true,
+  isItwValid = false
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
     _.merge(undefined, globalState, {
+      trialSystem: isItwTrial
+        ? {
+            [itwTrialId]: pot.some(SubscriptionStateEnum.ACTIVE)
+          }
+        : {},
       features: {
         itWallet: isItwValid
           ? {
               lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
               issuance: { integrityKeyTag: O.some("key-tag") },
-              credentials: {
-                eid: O.some({}),
-                credentials: isWalletEmpty ? {} : { MDL: {} }
-              },
-              preferences
+              credentials: { eid: O.some({}) }
             }
           : {
               lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
@@ -85,7 +76,7 @@ const renderComponent = ({
       },
       remoteConfig: O.some({
         itw: {
-          enabled: true,
+          enabled: isItwEnabled,
           min_app_version: {
             android: "0.0.0.0",
             ios: "0.0.0.0"
@@ -107,7 +98,7 @@ const renderComponent = ({
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwFeedbackBanner,
+      ItwDiscoveryBanner,
       ROUTES.WALLET_HOME,
       {},
       store

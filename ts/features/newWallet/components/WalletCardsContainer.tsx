@@ -12,15 +12,15 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/banner/ItwDiscoveryBanner";
+import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
 import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
-import { ItwFeebdackBanner } from "../../itwallet/common/components/banner/ItwFeedbackBanner";
-import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/banner/ItwUpcomingWalletBanner";
-import { ItwWalletReadyBanner } from "../../itwallet/common/components/banner/ItwWalletReadyBanner";
+import { ItwFeebdackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
+import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
+import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";

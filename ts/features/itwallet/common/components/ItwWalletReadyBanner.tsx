@@ -1,14 +1,14 @@
 import React from "react";
 import { Banner } from "@pagopa/io-app-design-system";
-import I18n from "../../../../../i18n";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { useIOSelector } from "../../../../../store/hooks";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
-} from "../../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+} from "../../credentials/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 export const ItwWalletReadyBanner = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
