@@ -1,6 +1,6 @@
 import {
-  TransitionPresets,
-  createStackNavigator
+  createStackNavigator,
+  TransitionPresets
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -34,6 +34,7 @@ import { ItwPresentationCredentialAttachmentScreen } from "../presentation/scree
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
+import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -78,6 +79,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
         component={ItwIpzsPrivacyScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
+        component={ItwAlreadyActiveScreen}
+        options={hiddenHeader}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
