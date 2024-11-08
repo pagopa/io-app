@@ -24,7 +24,6 @@ import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
@@ -64,6 +63,7 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { FaultCodeCategoryEnum } from "../types/PaymentVerifyGenericErrorProblemJson";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -99,10 +99,12 @@ const WalletPaymentDetailScreen = () => {
       paymentDetailsPot.error,
       WalletPaymentFailure.decode,
       O.fromEither,
-      // NetworkError is transformed to GENERIC_ERROR only for display purposes
+      // NetworkError or undecoded error is transformed to PAYMENT_VERIFY_GENERIC_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
-        faultCodeDetail: ""
+        faultCodeCategory: FaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR,
+        faultCodeDetail:
+          (paymentDetailsPot.error as WalletPaymentFailure)?.faultCodeDetail ??
+          FaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;

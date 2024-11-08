@@ -133,7 +133,18 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.subtitle"),
           action: closeAction
         };
-
+      case "PAYMENT_VERIFY_GENERIC_ERROR":
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t(
+            "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.subtitle"
+          ),
+          action: closeAction,
+          secondaryAction: contactSupportAction
+        };
       default:
         return genericErrorProps;
     }
