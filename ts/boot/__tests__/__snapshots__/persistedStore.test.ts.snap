@@ -52,6 +52,35 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 }
 `;
 
+exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'features.itWallet' state 1`] = `
+{
+  "credentials": {
+    "credentials": [],
+    "eid": {
+      "_tag": "None",
+    },
+  },
+  "identification": {
+    "isCieSupported": {
+      "kind": "PotNone",
+    },
+    "isNfcEnabled": {
+      "kind": "PotNone",
+    },
+  },
+  "issuance": {
+    "integrityKeyTag": {
+      "_tag": "None",
+    },
+  },
+  "lifecycle": 0,
+  "preferences": {},
+  "walletInstance": {
+    "attestation": undefined,
+  },
+}
+`;
+
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'identification' state 1`] = `
 {
   "fail": undefined,

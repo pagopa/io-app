@@ -455,7 +455,10 @@ const migrations: MigrationManifest = {
         }
       }
     };
-  }
+  },
+  // Added IT Wallet preferences store
+  "38": (state: PersistedState) =>
+    _.set(state, "features.itWallet.preferences", {})
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
