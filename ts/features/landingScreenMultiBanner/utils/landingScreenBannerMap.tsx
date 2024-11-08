@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SettingsDiscoveryBanner } from "../../../screens/profile/components/discoveryBanner/SettingsDiscoveryBanner";
+import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
@@ -35,6 +35,7 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <SettingsDiscoveryBanner handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: hasUserAcknowledgedSettingsBannerSelector
+    isRenderableSelector: (state: GlobalState) =>
+      !hasUserAcknowledgedSettingsBannerSelector(state)
   }
 } as const;

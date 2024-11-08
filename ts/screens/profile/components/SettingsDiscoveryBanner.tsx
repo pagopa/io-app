@@ -1,9 +1,11 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import React, { createRef } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
+import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
+import { useIODispatch } from "../../../store/hooks";
+import { setHasUserAcknowledgedSettingsBanner } from "../../../features/profileSettings/store/actions";
 
 type SettingsDiscoveryBannerProps = {
   handleOnClose: () => void;
@@ -18,11 +20,17 @@ export const SettingsDiscoveryBanner = ({
 }: SettingsDiscoveryBannerProps) => {
   const bannerRef = createRef<View>();
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
   const handleOnPress = () => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.SETTINGS_MAIN
     });
   };
+  const closeHandler = React.useCallback(() => {
+    handleOnClose();
+    dispatch(setHasUserAcknowledgedSettingsBanner(true));
+  }, [dispatch, handleOnClose]);
+
   return (
     <View style={styles.margins}>
       <Banner
@@ -32,7 +40,7 @@ export const SettingsDiscoveryBanner = ({
         pictogramName="settings"
         color="neutral"
         size="big"
-        onClose={handleOnClose}
+        onClose={closeHandler}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
       />
