@@ -5,7 +5,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
-import { ItwCredentialStatus } from "../common/components/ItwCredentialCard";
+import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -122,9 +122,11 @@ export const ID_STATUS_MAP: Record<
   "valid" | "not_valid" | "expiring"
 > = {
   valid: "valid",
-  pending: "not_valid",
+  invalid: "not_valid",
   expired: "not_valid",
-  expiring: "expiring"
+  expiring: "expiring",
+  jwtExpired: "not_valid",
+  jwtExpiring: "expiring"
 };
 
 // #region SCREEN VIEW EVENTS
