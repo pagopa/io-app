@@ -16,7 +16,6 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
   const isUserAllowedToItw = isItwEnabled && isItwTrialActive;
-  const canItwBeActivated = isUserAllowedToItw && !isItwValid;
 
   return {
     [ITW_ROUTES.MAIN]: {
@@ -24,10 +23,10 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
       screens: {
         ...(isUserAllowedToItw && {
           [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
-            "credential/issuance"
-        }),
-        ...(canItwBeActivated && {
-          [ITW_ROUTES.DISCOVERY.INFO]: "discovery/info"
+            "credential/issuance",
+          [isItwValid
+            ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
+            : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info"
         })
       }
     }
