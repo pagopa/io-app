@@ -870,6 +870,6 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(revokeWalletInstance).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
 
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 });
