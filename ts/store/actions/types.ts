@@ -34,6 +34,7 @@ import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
+import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -105,7 +106,8 @@ export type Action =
   | TrialSystemActions
   | ProfileSettingsActions
   | IngressScreenActions
-  | MixpanelFeatureActions;
+  | MixpanelFeatureActions
+  | LandingScreenBannerActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
