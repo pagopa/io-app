@@ -7,8 +7,12 @@ import {
 import React from "react";
 import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
-import I18n from "../../../../i18n";
-import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
+import {
+  borderColorByStatus,
+  getCredentialNameFromType,
+  tagPropsByStatus,
+  validCredentialStatuses
+} from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
@@ -20,18 +24,12 @@ export type ItwCredentialCard = {
   isPreview?: boolean;
 };
 
-const validStatuses: Array<ItwCredentialStatus> = [
-  "valid",
-  "expiring",
-  "jwtExpiring"
-];
-
 export const ItwCredentialCard = ({
   status = "valid",
   credentialType,
   isPreview = false
 }: ItwCredentialCard) => {
-  const isValid = validStatuses.includes(status);
+  const isValid = validCredentialStatuses.includes(status);
   const theme = getThemeColorByCredentialType(credentialType);
   const labelOpacity = isValid ? 1 : 0.5;
 
@@ -88,38 +86,6 @@ const credentialCardBackgrounds: {
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
   ]
-};
-
-const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
-  invalid: {
-    variant: "error",
-    text: I18n.t("features.itWallet.card.status.invalid")
-  },
-  expired: {
-    variant: "error",
-    text: I18n.t("features.itWallet.card.status.expired")
-  },
-  jwtExpired: {
-    variant: "error",
-    text: I18n.t("features.itWallet.card.status.verificationExpired")
-  },
-  expiring: {
-    variant: "warning",
-    text: I18n.t("features.itWallet.card.status.expiring")
-  },
-  jwtExpiring: {
-    variant: "warning",
-    text: I18n.t("features.itWallet.card.status.verificationExpiring")
-  }
-};
-
-const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
-  valid: IOColors.white,
-  invalid: IOColors["error-600"],
-  expired: IOColors["error-600"],
-  expiring: IOColors["warning-700"],
-  jwtExpired: IOColors["error-600"],
-  jwtExpiring: IOColors["warning-700"]
 };
 
 const styles = StyleSheet.create({

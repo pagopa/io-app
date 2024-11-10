@@ -57,7 +57,7 @@ export const assistanceToolConfigSelector = createSelector(
   (remoteConfig): ToolEnum | undefined =>
     pipe(
       remoteConfig,
-      O.map(c => c.assistanceTool.tool),
+      O.map(config => config.assistanceTool.tool),
       O.toUndefined
     )
 );
@@ -71,7 +71,7 @@ export const isPaypalEnabledSelector = createSelector(
   (remoteConfig): boolean =>
     pipe(
       remoteConfig,
-      O.map(c => c.paypal.enabled),
+      O.map(config => config.paypal.enabled),
       O.toUndefined
     ) ?? false
 );
@@ -85,7 +85,7 @@ export const bancomatPayConfigSelector = createSelector(
   (remoteConfig): BancomatPayConfig =>
     pipe(
       remoteConfig,
-      O.map(c => c.bancomatPay),
+      O.map(config => config.bancomatPay),
       O.getOrElseW(() => ({
         display: false,
         onboarding: false,
@@ -103,7 +103,7 @@ export const isCGNEnabledSelector = createSelector(
   (remoteConfig): boolean =>
     pipe(
       remoteConfig,
-      O.map(c => c.cgn.enabled),
+      O.map(config => config.cgn.enabled),
       O.toUndefined
     ) ?? false
 );
@@ -125,7 +125,7 @@ export const fimsDomainSelector = createSelector(
   (remoteConfig): string | undefined =>
     pipe(
       remoteConfig,
-      O.map(c => c.fims.domain),
+      O.map(config => config.fims.domain),
       O.toUndefined
     )
 );
@@ -141,7 +141,7 @@ export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
     (premiumMessagesOptInEnabled &&
       pipe(
         remoteConfig,
-        O.map(c => c.premiumMessages.opt_in_out_enabled),
+        O.map(config => config.premiumMessages.opt_in_out_enabled),
         O.toUndefined
       )) ??
     false
@@ -158,7 +158,7 @@ export const isCdcEnabledSelector = createSelector(
     cdcEnabled &&
     pipe(
       remoteConfig,
-      O.map(c => c.cdc.enabled),
+      O.map(config => config.cdc.enabled),
       O.getOrElse(() => false)
     )
 );
@@ -173,7 +173,7 @@ export const barcodesScannerConfigSelector = createSelector(
   (remoteConfig): BarcodesScannerConfig =>
     pipe(
       remoteConfig,
-      O.map(c => c.barcodesScanner),
+      O.map(config => config.barcodesScanner),
       // If the local feature flag is disabled all the
       // configurations should be set as `false`.
       O.filter(() => scanAdditionalBarcodesEnabled),
@@ -190,7 +190,7 @@ export const barcodesScannerConfigSelector = createSelector(
 export const isPnEnabledSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
-    O.map(c => c.pn.enabled),
+    O.map(config => config.pn.enabled),
     O.getOrElse(() => false)
   );
 
@@ -201,11 +201,11 @@ export const isPnAppVersionSupportedSelector = (state: GlobalState) =>
   pipe(
     state,
     remoteConfigSelector,
-    O.map(c =>
+    O.map(config =>
       isVersionSupported(
         Platform.OS === "ios"
-          ? c.pn.min_app_version.ios
-          : c.pn.min_app_version.android,
+          ? config.pn.min_app_version.ios
+          : config.pn.min_app_version.android,
         getAppVersion()
       )
     ),
@@ -218,10 +218,10 @@ export const isPnAppVersionSupportedSelector = (state: GlobalState) =>
 export const pnMinAppVersionSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
-    O.map(c =>
+    O.map(config =>
       Platform.OS === "ios"
-        ? c.pn.min_app_version.ios
-        : c.pn.min_app_version.android
+        ? config.pn.min_app_version.ios
+        : config.pn.min_app_version.android
     ),
     O.getOrElse(() => "-")
   );
@@ -232,25 +232,25 @@ export const pnMinAppVersionSelector = (state: GlobalState) =>
 export const pnFrontendUrlSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
-    O.map(c => c.pn.frontend_url),
+    O.map(config => config.pn.frontend_url),
     O.getOrElse(() => "")
   );
 
 export const paymentsConfigSelector = createSelector(
   remoteConfigSelector,
-  config =>
+  remoteConfig =>
     pipe(
-      config,
-      O.map(c => c.payments)
+      remoteConfig,
+      O.map(config => config.payments)
     )
 );
 
 export const preferredPspsByOriginSelector = createSelector(
   paymentsConfigSelector,
-  config =>
+  paymentRemoteConfig =>
     pipe(
-      config,
-      O.map(c => c.preferredPspsByOrigin),
+      paymentRemoteConfig,
+      O.map(config => config.preferredPspsByOrigin),
       O.toUndefined
     )
 );
@@ -266,11 +266,11 @@ export const isFciEnabledSelector = createSelector(
     fciEnabled &&
     pipe(
       remoteConfig,
-      O.map(c =>
+      O.map(config =>
         isVersionSupported(
           Platform.OS === "ios"
-            ? c.fci.min_app_version.ios
-            : c.fci.min_app_version.android,
+            ? config.fci.min_app_version.ios
+            : config.fci.min_app_version.android,
           getAppVersion()
         )
       ),
@@ -285,11 +285,11 @@ export const isIdPayEnabledSelector = createSelector(
     isIdPayTestEnabled &&
     pipe(
       remoteConfig,
-      O.map(c =>
+      O.map(config =>
         isVersionSupported(
           Platform.OS === "ios"
-            ? c.idPay.min_app_version.ios
-            : c.idPay.min_app_version.android,
+            ? config.idPay.min_app_version.ios
+            : config.idPay.min_app_version.android,
           getAppVersion()
         )
       ),
@@ -306,11 +306,11 @@ export const isNewPaymentSectionEnabledSelector = createSelector(
   (remoteConfig): boolean =>
     pipe(
       remoteConfig,
-      O.map(c =>
+      O.map(config =>
         isVersionSupported(
           Platform.OS === "ios"
-            ? c.newPaymentSection.min_app_version.ios
-            : c.newPaymentSection.min_app_version.android,
+            ? config.newPaymentSection.min_app_version.ios
+            : config.newPaymentSection.min_app_version.android,
           getAppVersion()
         )
       ),
@@ -346,13 +346,13 @@ export const isItwEnabledSelector = createSelector(
     pipe(
       remoteConfig,
       O.map(
-        c =>
+        config =>
           isVersionSupported(
             Platform.OS === "ios"
-              ? c.itw.min_app_version.ios
-              : c.itw.min_app_version.android,
+              ? config.itw.min_app_version.ios
+              : config.itw.min_app_version.android,
             getAppVersion()
-          ) && c.itw.enabled
+          ) && config.itw.enabled
       ),
       O.getOrElse(() => false)
     )
@@ -367,11 +367,11 @@ export const isPaymentsFeedbackBannerEnabledSelector = createSelector(
   (remoteConfig): boolean =>
     pipe(
       remoteConfig,
-      O.map(c =>
+      O.map(config =>
         isVersionSupported(
           Platform.OS === "ios"
-            ? c.newPaymentSection.feedbackBanner?.min_app_version.ios
-            : c.newPaymentSection.feedbackBanner?.min_app_version.android,
+            ? config.newPaymentSection.feedbackBanner?.min_app_version.ios
+            : config.newPaymentSection.feedbackBanner?.min_app_version.android,
           getAppVersion()
         )
       ),
@@ -387,7 +387,17 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
   (remoteConfig): Banner | undefined =>
     pipe(
       remoteConfig,
-      O.map(c => c.newPaymentSection.feedbackBanner),
+      O.map(config => config.newPaymentSection.feedbackBanner),
       O.toUndefined
     )
 );
+
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
+export const landingScreenBannerOrderSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.landing_banners),
+    O.chainNullableK(banners => banners.priority_order),
+    O.getOrElse(() => emptyArray)
+  );

@@ -12,7 +12,7 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
@@ -32,9 +32,9 @@ import {
   selectWalletOtherCards
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
-import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
+import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const EID_INFO_BOTTOM_PADDING = 128;
@@ -190,7 +190,7 @@ const OtherCardsContainer = () => {
 const ItwBanners = () => (
   <>
     <ItwUpcomingWalletBanner bottomSpacing={24} />
-    <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+    <ItwDiscoveryBannerStandalone ignoreMargins={true} closable={false} />
   </>
 );
 
