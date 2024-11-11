@@ -6,7 +6,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import {
-  itwIntegrityServiceReady,
+  itwIntegritySetServiceIsReady,
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
 } from "../../actions";
@@ -67,8 +67,7 @@ describe("ITW issuance reducer", () => {
     const targetSate = pipe(
       undefined,
       curriedAppReducer(applicationChangeState("active")),
-      curriedAppReducer(itwIntegrityServiceReady(true)),
-      curriedAppReducer(itwRemoveIntegrityKeyTag())
+      curriedAppReducer(itwIntegritySetServiceIsReady(true))
     );
 
     expect(targetSate.features.itWallet.issuance.integrityServiceReady).toEqual(
