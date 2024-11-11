@@ -1,5 +1,5 @@
-import { PaymentsTransactionBizEventsDetailsScreenParams } from "../screens/PaymentsTransactionBizEventsDetailsScreen";
 import { PaymentsTransactionBizEventsCartItemDetailsScreenParams } from "../screens/PaymentsTransactionBizEventsCartItemDetailsScreen";
+import { PaymentsTransactionBizEventsDetailsScreenParams } from "../screens/PaymentsTransactionBizEventsDetailsScreen";
 import { PaymentsTransactionBizEventsRoutes } from "./routes";
 
 export type PaymentsTransactionBizEventsParamsList = {
@@ -8,4 +8,5 @@ export type PaymentsTransactionBizEventsParamsList = {
   [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_CART_ITEM_DETAILS]: PaymentsTransactionBizEventsCartItemDetailsScreenParams;
   [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LIST_SCREEN]: undefined;
   [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_PREVIEW_SCREEN]: undefined;
+  [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LOADING_SCREEN]: undefined;
 };

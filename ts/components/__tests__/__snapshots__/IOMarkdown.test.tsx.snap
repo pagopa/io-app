@@ -12,10 +12,10 @@ exports[`IOMarkdown Should match snapshot 1`] = `
         {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
-          "fontSize": 31,
+          "fontSize": 28,
           "fontStyle": "normal",
           "fontWeight": "600",
-          "lineHeight": 43,
+          "lineHeight": 42,
         },
       ]
     }
@@ -42,7 +42,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           "fontSize": 28,
           "fontStyle": "normal",
           "fontWeight": "600",
-          "lineHeight": 40,
+          "lineHeight": 34,
         },
       ]
     }
