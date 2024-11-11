@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Login with CieID
         subtitle: Use the CieID app
+        badge: Novità
       help_banner:
         title: Not sure what to choose?
         action: We give you a hand
@@ -659,6 +660,9 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+    tour_guide:
+      title: Novità
+      content: Ora puoi usare CieID per entrare su IO!
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
