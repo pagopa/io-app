@@ -391,3 +391,13 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
       O.toUndefined
     )
 );
+
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
+export const landingScreenBannerOrderSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.landing_banners),
+    O.chainNullableK(banners => banners.priority_order),
+    O.getOrElse(() => emptyArray)
+  );
