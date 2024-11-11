@@ -121,7 +121,10 @@ const WalletPaymentDetailScreen = () => {
 
   return (
     <SafeAreaView style={styles.loadingContainer}>
-      <LoadingIndicator size={48} />
+      <LoadingIndicator
+        testID="wallet-payment-detail-loading-indicator"
+        size={48}
+      />
       <VSpacer size={24} />
       <H3 style={{ textAlign: "center" }}>
         {I18n.t("wallet.firstTransactionSummary.loading")}
@@ -277,6 +280,7 @@ const WalletPaymentDetailContent = ({
   const amountEndElement: ComponentProps<typeof ListItemInfo>["endElement"] = {
     type: "iconButton",
     componentProps: {
+      testID: "amount-info-icon",
       icon: "info",
       accessibilityLabel: "info",
       onPress: () => {
@@ -305,6 +309,7 @@ const WalletPaymentDetailContent = ({
   return (
     <GradientScrollView
       primaryActionProps={{
+        testID: "wallet-payment-detail-make-payment-button",
         label: "Vai al pagamento",
         accessibilityLabel: "Vai al pagmento",
         onPress: navigateToMakePaymentScreen,
@@ -313,6 +318,7 @@ const WalletPaymentDetailContent = ({
       }}
     >
       <ListItemInfo
+        testID="wallet-payment-detail-recipient"
         icon={"institution"}
         label={I18n.t("wallet.firstTransactionSummary.recipient")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.recipient")}
@@ -320,6 +326,7 @@ const WalletPaymentDetailContent = ({
       />
       <Divider />
       <ListItemInfo
+        testID="wallet-payment-detail-object"
         icon={"notes"}
         label={I18n.t("wallet.firstTransactionSummary.object")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.object")}
@@ -327,6 +334,7 @@ const WalletPaymentDetailContent = ({
       />
       <Divider />
       <ListItemInfo
+        testID="wallet-payment-detail-amount"
         icon={"psp"}
         label={I18n.t("wallet.firstTransactionSummary.amount")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.amount")}
@@ -348,6 +356,7 @@ const WalletPaymentDetailContent = ({
         </>
       )}
       <ListItemInfoCopy
+        testID="payment-notice-copy-button"
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}
         accessibilityLabel={I18n.t("payment.noticeCode")}
