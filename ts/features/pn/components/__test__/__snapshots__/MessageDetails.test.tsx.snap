@@ -1163,7 +1163,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1350,7 +1350,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1476,7 +1476,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1663,7 +1663,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
