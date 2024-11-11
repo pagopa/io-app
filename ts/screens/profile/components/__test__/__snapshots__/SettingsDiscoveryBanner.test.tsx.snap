@@ -396,6 +396,7 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                             }
                           >
                             <View
+                              accessibilityLabel="Looking for your profile? We have moved it, it is now in the top right corner! Go to Settings"
                               accessibilityRole="button"
                               accessible={true}
                               style={
