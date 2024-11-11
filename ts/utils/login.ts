@@ -23,6 +23,8 @@ type LoginFailure = {
 
 type LoginResult = LoginSuccess | LoginFailure;
 
+export type IdpTypes = "SPID" | "CIE_ID" | "CIE";
+
 export const getEitherLoginResult = (
   result: LoginResult
 ): E.Either<LoginFailure, LoginSuccess> =>
@@ -53,7 +55,7 @@ const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (
   url: string,
-  idp: "SPID" | "CIEID" | "CIE" = "SPID"
+  idp: IdpTypes = "SPID"
 ): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);
 
@@ -96,7 +98,7 @@ export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
     onSuccess: (_: SessionToken) => void,
-    idp: "SPID" | "CIEID" | "CIE" = "SPID"
+    idp: IdpTypes = "SPID"
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {

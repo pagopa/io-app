@@ -315,7 +315,7 @@ export const AuthSessionPage = () => {
                           getEitherLoginResult,
                           E.fold(
                             e =>
-                              handleLoginFailure(e.errorCode || e.errorMessage),
+                              handleLoginFailure(e.errorCode, e.errorMessage),
                             success => handleLoginSuccess(success.token)
                           )
                         )
