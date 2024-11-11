@@ -116,7 +116,8 @@ export const itwCredentialIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "Idle"
           },
           {
             target: "#itwCredentialIssuanceMachine.Failure",
@@ -242,11 +243,6 @@ export const itwCredentialIssuanceMachine = setup({
           target: "#itwCredentialIssuanceMachine.RequestingCredential"
         }
       }
-    },
-    SessionExpired: {
-      entry: ["handleSessionExpired"],
-      // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "Idle" }
     }
   }
 });
