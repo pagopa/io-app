@@ -3891,16 +3891,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-jwt@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@pagopa/io-react-native-jwt@npm:1.3.0"
+"@pagopa/io-react-native-jwt@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/io-react-native-jwt@npm:1.4.0"
   dependencies:
     js-base64: ^3.7.7
     zod: ^3.22.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 197d7c93bf0ebab4c47c82cb053f6f7884ec133842ae4c70eb76d4ddfc02b4100baa5aae79e0c483e1ad99d7d9fb65fab17677803871b3e090282162424f4513
+  checksum: e7fb643515d01752722fd15731d12f8cac5e4c2f457af517451291532bbc7f07a62181bfea4932844e9c50ec1d7a395ac1ad7d7e2e638e6bbe748478a59e3a08
   languageName: node
   linkType: hard
 
@@ -3969,10 +3969,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/react-native-cie@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@pagopa/react-native-cie@npm:1.3.0"
-  checksum: 0d99eabb2f6def02128001d416478d2a4d0daf57037efe847400edfc84ec326e4f9e38179ce10f43b116b54e46cc7fc659a44e51a17fb425203f91f0d37182d2
+"@pagopa/react-native-cie@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/react-native-cie@npm:1.4.0"
+  checksum: 742b53251d0bd5a530ee63dcb7a9e604b7a06fc848f4a5643b3fdc841935c92fa5f8453e3c7cb8006bcab7c27563ff88efb53528a1df0256cf53cb7c57f251b1
   languageName: node
   linkType: hard
 
@@ -14018,12 +14018,12 @@ __metadata:
     "@pagopa/io-react-native-crypto": ^0.3.0
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.0
-    "@pagopa/io-react-native-jwt": ^1.3.0
+    "@pagopa/io-react-native-jwt": ^1.4.0
     "@pagopa/io-react-native-login-utils": 1.0.6
     "@pagopa/io-react-native-wallet": ^0.23.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^14.0.0
-    "@pagopa/react-native-cie": ^1.3.0
+    "@pagopa/react-native-cie": ^1.4.0
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-camera-roll/camera-roll": 7.8.3
