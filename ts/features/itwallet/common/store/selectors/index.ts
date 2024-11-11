@@ -1,4 +1,3 @@
-import { createSelector } from "reselect";
 import { isItwEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isItwTrialActiveSelector } from "../../../../trialSystem/store/reducers";
@@ -27,10 +26,7 @@ export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
  * @param state the application global state
  * @returns true if the banner should be visible, false otherwise
  */
-export const itwShouldRenderFeedbackBanner = createSelector(
-  itwLifecycleIsValidSelector,
-  itwIsWalletEmptySelector,
-  itwIsFeedbackBannerHiddenSelector,
-  (isItwValid, isWalletEmpty, isBannerHidden) =>
-    isItwValid && !isWalletEmpty && !isBannerHidden
-);
+export const itwShouldRenderFeedbackBanner = (state: GlobalState) =>
+  itwLifecycleIsValidSelector(state) &&
+  !itwIsWalletEmptySelector(state) &&
+  !itwIsFeedbackBannerHiddenSelector(state);
