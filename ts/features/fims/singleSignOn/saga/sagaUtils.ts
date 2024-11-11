@@ -63,10 +63,8 @@ export const formatHttpClientResponseForMixPanel = (
   pipe(
     resData,
     foldNativeHttpClientResponse(
-      success =>
-        `${success.type}, ${success.status}, ${success.body}, ${success.headers}`,
-      failure =>
-        `${failure.type}, ${failure.code}, ${failure.message}, ${failure.headers}`
+      success => `${success.type}, ${success.status}, ${success.body}`,
+      failure => `${failure.type}, ${failure.code}, ${failure.message}`
     )
   );
 
