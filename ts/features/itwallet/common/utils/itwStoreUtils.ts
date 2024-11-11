@@ -1,13 +1,12 @@
 import { GlobalState } from "../../../../store/reducers/types";
 
 interface PollForStoreValueOptions<T> {
-  state: GlobalState;
+  getState: () => GlobalState;
   selector: (state: GlobalState) => T;
   condition: (value: T) => boolean;
   interval?: number;
   timeout?: number;
 }
-
 /**
  * Polls the Redux store until the selected value meets the specified condition.
  * @param state The Redux store state.
@@ -18,7 +17,7 @@ interface PollForStoreValueOptions<T> {
  * @returns A promise that resolves with the store value once the condition is met.
  */
 export const pollForStoreValue = <T>({
-  state,
+  getState,
   selector,
   condition,
   interval = 1000,
@@ -27,19 +26,16 @@ export const pollForStoreValue = <T>({
   new Promise((resolve, reject) => {
     const startTime = Date.now();
 
-    const checkCondition = () => {
-      const value = selector(state);
+    const intervalId = setInterval(() => {
+      const currentTime = Date.now();
+      const value = selector(getState());
 
       if (condition(value)) {
+        clearInterval(intervalId);
         resolve(value);
-        return;
-      }
-
-      if (Date.now() - startTime > timeout) {
+      } else if (currentTime - startTime >= timeout) {
+        clearInterval(intervalId);
         reject(new Error("Timeout exceeded while waiting for store value"));
-        return;
       }
-      setTimeout(checkCondition, interval);
-    };
-    checkCondition();
+    }, interval);
   });
