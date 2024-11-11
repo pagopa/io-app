@@ -1,6 +1,6 @@
 import {
   isItwDiscoveryBannerRenderableSelector,
-  itwShouldRenderFeedbackBanner
+  itwShouldRenderFeedbackBannerSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwIsWalletEmptySelector } from "../../../../credentials/store/selectors";
@@ -68,7 +68,7 @@ describe("itwDiscoveryBannerSelector", () => {
   );
 });
 
-describe("itwShouldRenderFeedbackBanner", () => {
+describe("itwShouldRenderFeedbackBannerSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -96,9 +96,9 @@ describe("itwShouldRenderFeedbackBanner", () => {
         itwIsFeedbackBannerHiddenSelector as unknown as JestMock
       ).mockReturnValue(bannerIsHidden);
 
-      expect(itwShouldRenderFeedbackBanner({} as unknown as GlobalState)).toBe(
-        expected
-      );
+      expect(
+        itwShouldRenderFeedbackBannerSelector({} as unknown as GlobalState)
+      ).toBe(expected);
     }
   );
 });

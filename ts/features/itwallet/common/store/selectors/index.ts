@@ -26,7 +26,7 @@ export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
  * @param state the application global state
  * @returns true if the banner should be visible, false otherwise
  */
-export const itwShouldRenderFeedbackBanner = (state: GlobalState) =>
+export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletEmptySelector(state) &&
   !itwIsFeedbackBannerHiddenSelector(state);

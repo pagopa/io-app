@@ -4,11 +4,11 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { itwCloseFeedbackBanner } from "../store/actions/preferences";
-import { itwShouldRenderFeedbackBanner } from "../store/selectors";
+import { itwShouldRenderFeedbackBannerSelector } from "../store/selectors";
 
 const ItwFeedbackBanner = () => {
   const dispatch = useIODispatch();
-  const shouldRender = useIOSelector(itwShouldRenderFeedbackBanner);
+  const shouldRender = useIOSelector(itwShouldRenderFeedbackBannerSelector);
 
   if (!shouldRender) {
     return null;
