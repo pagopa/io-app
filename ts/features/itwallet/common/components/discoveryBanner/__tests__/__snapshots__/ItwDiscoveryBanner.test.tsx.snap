@@ -397,7 +397,6 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Novità: Documenti su IO Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti! Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -1181,7 +1180,6 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Novità: Documenti su IO Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti! Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={

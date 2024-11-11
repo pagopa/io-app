@@ -258,7 +258,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         "fontSize": 28,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 34,
+                                        "lineHeight": 40,
                                       },
                                     ]
                                   }

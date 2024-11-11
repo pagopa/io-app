@@ -1459,7 +1459,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           <View
                             style={
                               {
-                                "alignSelf": "flex-start",
                                 "marginRight": 12,
                               }
                             }
@@ -1528,10 +1527,12 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           <View
                             style={
                               [
-                                false,
-                                false,
+                                {
+                                  "marginTop": -10,
+                                },
                                 {
                                   "flex": 1,
+                                  "marginBottom": -6,
                                 },
                               ]
                             }
@@ -1540,7 +1541,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               accessibilityRole="text"
                               allowFontScaling={false}
                               maxFontSizeMultiplier={1.25}
-                              onTextLayout={[Function]}
                               style={
                                 [
                                   {},
@@ -1964,7 +1964,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -2033,10 +2032,12 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                         <View
                           style={
                             [
-                              false,
-                              false,
+                              {
+                                "marginTop": -10,
+                              },
                               {
                                 "flex": 1,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -2045,7 +2046,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
                             style={
                               [
                                 {},

@@ -379,7 +379,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 34,
+                                    "lineHeight": 40,
                                   },
                                 ]
                               }
