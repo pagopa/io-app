@@ -31,6 +31,12 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import {
+  selectBonusCards,
+  selectWalletCgnCard,
+  selectWalletPaymentMethods
+} from "../features/newWallet/store/selectors";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import {
   loginSessionConfigHandler,
   notificationConfigurationHandler,
   Property,
@@ -54,6 +60,9 @@ type SuperProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
+  SAVED_PAYMENT_METHOD: number;
+  CGN_STATUS: TrackCgnStatus;
+  WELFARE_STATUS: ReadonlyArray<string>;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -77,6 +86,9 @@ export const updateMixpanelSuperProperties = async (
   const ITW_PG_V2 = pgStatusHandler(state);
   const ITW_TS_V2 = tsStatusHandler(state);
   const ITW_CED_V2 = cedStatusHandler(state);
+  const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+  const CGN_STATUS = cgnStatusHandler(state);
+  const WELFARE_STATUS = welfareStatusHandler(state);
 
   const superPropertiesObject: SuperProperties = {
     isScreenReaderEnabled: screenReaderEnabled,
@@ -94,7 +106,10 @@ export const updateMixpanelSuperProperties = async (
     ITW_ID_V2,
     ITW_PG_V2,
     ITW_TS_V2,
-    ITW_CED_V2
+    ITW_CED_V2,
+    SAVED_PAYMENT_METHOD,
+    CGN_STATUS,
+    WELFARE_STATUS
   };
 
   if (forceUpdateFor) {
@@ -134,4 +149,21 @@ const tsStatusHandler = (state: GlobalState): ItwTs => {
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
+};
+
+const paymentMethodsHandler = (state: GlobalState): number => {
+  const walletPaymentMethods = selectWalletPaymentMethods(state);
+  return walletPaymentMethods.length ?? 0;
+};
+
+const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
+  const cgnCard = selectWalletCgnCard(state);
+  return cgnCard.length > 0 ? "active" : "not_active";
+};
+
+const welfareStatusHandler = (state: GlobalState): ReadonlyArray<string> => {
+  const bonusCards = selectBonusCards(state);
+  return bonusCards
+    .filter(card => card.type === "idPay")
+    .map(card => card.name);
 };

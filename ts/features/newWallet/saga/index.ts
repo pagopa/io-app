@@ -24,6 +24,7 @@ import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { GlobalState } from "../../../store/reducers/types";
 import { isIdPayEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { handleWalletPlaceholdersTimeout } from "./handleWalletLoadingPlaceholdersTimeout";
 import { handleWalletLoadingStateSaga } from "./handleWalletLoadingStateSaga";
 
@@ -61,6 +62,7 @@ export function* watchWalletSaga(): SagaIterator {
   const state: GlobalState = yield* select();
 
   void updateMixpanelProfileProperties(state);
+  void updateMixpanelSuperProperties(state);
 }
 
 function* waitForPaymentMethods(): SagaIterator {
