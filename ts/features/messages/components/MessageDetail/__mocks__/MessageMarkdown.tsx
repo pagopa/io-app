@@ -1,6 +1,6 @@
 import React from "react";
-import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 import { View } from "react-native";
+import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 
 type Props = Omit<MarkdownProps, "cssStyle">;
 
