@@ -8,11 +8,11 @@ export const itwRemoveIntegrityKeyTag = createStandardAction(
   "ITW_REMOVE_INTEGRITY_KEY_TAG"
 )<void>();
 
-export const itwIntegrityServiceReady = createStandardAction(
-  "ITW_INTEGRITY_SERVICE_READY"
+export const itwIntegritySetServiceIsReady = createStandardAction(
+  "ITW_INTEGRITY_SET_SERVICE_IS_READY"
 )<boolean>();
 
 export type ItwIssuanceActions =
   | ActionType<typeof itwStoreIntegrityKeyTag>
   | ActionType<typeof itwRemoveIntegrityKeyTag>
-  | ActionType<typeof itwIntegrityServiceReady>;
+  | ActionType<typeof itwIntegritySetServiceIsReady>;

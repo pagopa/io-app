@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
-  itwIntegrityServiceReady,
+  itwIntegritySetServiceIsReady,
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
 } from "../actions";
@@ -32,7 +32,7 @@ const reducer = (
         ...state,
         integrityKeyTag: O.none
       };
-    case getType(itwIntegrityServiceReady):
+    case getType(itwIntegritySetServiceIsReady):
       return {
         ...state,
         integrityServiceReady: action.payload
