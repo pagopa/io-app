@@ -17,7 +17,7 @@ import {
   itwIntegrityServiceReadySelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { pollForStoreValue } from "../../common/utils/ItwStoreUtils";
+import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import type { CieAuthContext, IdentificationContext } from "./context";
 
 export type RequestEidActorParams = {
@@ -57,7 +57,7 @@ export const createEidIssuanceActorsImplementation = (
     store.dispatch(itwLifecycleStoresReset());
     // Await the integrity preparation before requesting the integrity key tag
     const isIntegrityServiceReady = await pollForStoreValue({
-      state: store.getState(),
+      getState: store.getState,
       selector: itwIntegrityServiceReadySelector,
       condition: value => value !== undefined
     });
