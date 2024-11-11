@@ -57,6 +57,8 @@ import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
 const SEARCH_DELAY: number = 300;
+const TEXT_LEGNTH_WITH_BADGE = 60;
+const TEXT_LEGNTH_WITHOUT_BADGE = 100;
 
 export function CgnMerchantSearchScreen() {
   const insets = useSafeAreaInsets();
@@ -248,7 +250,9 @@ function MerchantSearchResultListItem({
                 {highlightText({
                   text: item.description,
                   searchText,
-                  esimatedTextLengthToDisplay: item.newDiscounts ? 60 : 100
+                  esimatedTextLengthToDisplay: item.newDiscounts
+                    ? TEXT_LEGNTH_WITH_BADGE
+                    : TEXT_LEGNTH_WITHOUT_BADGE
                 })}
               </Body>
             </View>
