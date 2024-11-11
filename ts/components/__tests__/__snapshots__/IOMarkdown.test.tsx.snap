@@ -42,7 +42,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           "fontSize": 28,
           "fontStyle": "normal",
           "fontWeight": "600",
-          "lineHeight": 40,
+          "lineHeight": 34,
         },
       ]
     }
