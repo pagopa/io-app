@@ -17,10 +17,10 @@ import {
 import { FimsHistoryHeaderComponent } from "./FimsHistoryHeaderComponent";
 
 export const FimsHistoryNonEmptyContent = ({
-  consents,
+  accesses,
   fetchMore
 }: {
-  consents?: AccessHistoryPage;
+  accesses?: AccessHistoryPage;
   fetchMore: () => void;
 }) => {
   const historyExportState = useIOSelector(fimsHistoryExportStateSelector);
@@ -35,18 +35,18 @@ export const FimsHistoryNonEmptyContent = ({
   const LoadingFooter = () =>
     isHistoryLoading && (
       <LoadingFimsHistoryItemsFooter
-        showFirstDivider={(consents?.data.length ?? 0) > 0}
+        showFirstDivider={(accesses?.data.length ?? 0) > 0}
       />
     );
   const shouldHideFooter =
-    isHistoryLoading && (consents?.data.length ?? 0) === 0;
+    isHistoryLoading && (accesses?.data.length ?? 0) === 0;
 
   return (
     <>
       <FlashList
         estimatedItemSize={117}
         ListHeaderComponent={FimsHistoryHeaderComponent}
-        data={consents?.data}
+        data={accesses?.data}
         contentContainerStyle={{
           ...IOStyles.horizontalContentPadding,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight

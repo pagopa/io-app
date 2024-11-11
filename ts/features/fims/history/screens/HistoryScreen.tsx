@@ -24,7 +24,7 @@ export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
 
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
-  const consents = useIOSelector(fimsHistoryToUndefinedSelector);
+  const accesses = useIOSelector(fimsHistoryToUndefinedSelector);
   const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
   const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
 
@@ -64,14 +64,14 @@ export const FimsHistoryScreen = () => {
       ? Date.now() - lastErrorToastDate.current >= 500
       : true;
 
-    if (hasErrorTimeoutExpired && consents?.next) {
+    if (hasErrorTimeoutExpired && accesses?.next) {
       dispatch(
         fimsHistoryGet.request({
-          continuationToken: consents.next
+          continuationToken: accesses.next
         })
       );
     }
-  }, [consents, dispatch]);
+  }, [accesses, dispatch]);
 
   // ---------- FAILURE CASES
 
@@ -86,13 +86,13 @@ export const FimsHistoryScreen = () => {
   // ---------- SUCCESS
 
   const shouldShowEmptyContent =
-    !isHistoryLoading && (consents?.data ?? []).length === 0;
+    !isHistoryLoading && (accesses?.data ?? []).length === 0;
 
   return shouldShowEmptyContent ? (
     <FimsHistoryEmptyContent />
   ) : (
     <FimsHistoryNonEmptyContent
-      consents={consents}
+      accesses={accesses}
       fetchMore={fetchMoreHistoryItems}
     />
   );
