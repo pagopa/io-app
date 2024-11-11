@@ -35,34 +35,37 @@ jest.mock("../../../../../trialSystem/store/reducers", () => ({
   isItwTrialActiveSelector: jest.fn()
 }));
 
-const mockValues = (
-  itwEnabledMock: boolean,
-  itwLifecycleValidMock: boolean,
-  trialActiveMock: boolean
-) => {
-  (isItwEnabledSelector as unknown as JestMock).mockReturnValue(itwEnabledMock);
-  (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(
-    itwLifecycleValidMock
-  );
-  (isItwTrialActiveSelector as unknown as JestMock).mockReturnValue(
-    trialActiveMock
-  );
-};
-
 describe("itwDiscoveryBannerSelector", () => {
-  for (const itwEnabled of [true, false]) {
-    for (const lifecycleValid of [true, false]) {
-      for (const trialActive of [true, false]) {
-        const expectedResult = !(!trialActive || lifecycleValid || !itwEnabled); // this mimicks the behaviour of the standalone banner's selector
-        it(`should return ${expectedResult} if isItwEnabled is ${itwEnabled}, trialActive is ${trialActive} and lifecycleValid is ${lifecycleValid}`, () => {
-          mockValues(itwEnabled, lifecycleValid, trialActive);
-          expect(
-            isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
-          ).toBe(expectedResult);
-        });
-      }
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it.each`
+    itwEnabled | lifecycleValid | trialActive | expected
+    ${true}    | ${true}        | ${true}     | ${false}
+    ${true}    | ${true}        | ${false}    | ${false}
+    ${true}    | ${false}       | ${true}     | ${true}
+    ${true}    | ${false}       | ${false}    | ${false}
+    ${false}   | ${true}        | ${true}     | ${false}
+    ${false}   | ${true}        | ${false}    | ${false}
+    ${false}   | ${false}       | ${true}     | ${false}
+    ${false}   | ${false}       | ${false}    | ${false}
+  `(
+    "should return $expected when isItwEnabled is $itwEnabled, trialActive is $trialActive, and lifecycleValid is $lifecycleValid",
+    ({ itwEnabled, trialActive, lifecycleValid, expected }) => {
+      (isItwEnabledSelector as unknown as JestMock).mockReturnValue(itwEnabled);
+      (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(
+        lifecycleValid
+      );
+      (isItwTrialActiveSelector as unknown as JestMock).mockReturnValue(
+        trialActive
+      );
+      expect(
+        isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
+      ).toBe(expected);
     }
-  }
+  );
 });
 
 describe("itwShouldRenderFeedbackBanner", () => {
