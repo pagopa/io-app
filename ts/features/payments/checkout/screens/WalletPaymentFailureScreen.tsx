@@ -29,7 +29,7 @@ const WalletPaymentFailureScreen = () => {
     // NetworkError is transformed to GENERIC_ERROR only for display purposes
     O.getOrElse<WalletPaymentFailure>(() => ({
       faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
-      faultCodeDetail: ""
+      faultCodeDetail: (error as WalletPaymentFailure)?.faultCodeDetail ?? ""
     }))
   );
   return <WalletPaymentFailureDetail failure={failure} />;

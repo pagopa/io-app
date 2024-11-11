@@ -8,7 +8,7 @@ import { remoteConfigSelector } from "../../../../store/reducers/backendStatus/r
 
 const DEFAULT_TOS_CONFIG: TosConfig = {
   tos_url: privacyUrl,
-  tos_version: 4.91
+  tos_version: 5.0
 };
 
 export const tosConfigSelector = createSelector(

@@ -19,7 +19,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
@@ -28,19 +27,18 @@ import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { logoForService } from "../../../services/home/utils";
-import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
+import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
-import { fimsErrorTagSelector } from "../store/selectors";
-import { ConsentData } from "../types";
 import {
   computeAndTrackDataShare,
   computeAndTrackDataShareAccepted
 } from "../../common/analytics";
+import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { FimsClaimsList } from "./FimsClaims";
 import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
 
-type FimsSuccessBodyProps = { consents: ConsentData; onAbort: () => void };
+type FimsSuccessBodyProps = { consents: Consent; onAbort: () => void };
 
 export const FimsFlowSuccessBody = ({
   consents,
@@ -53,7 +51,6 @@ export const FimsFlowSuccessBody = ({
   const servicePot = useAutoFetchingServiceByIdPot(serviceId);
   const serviceData = pot.toUndefined(servicePot);
   const privacyUrl = serviceData?.service_metadata?.privacy_url;
-  const errorTag = useSelector(fimsErrorTagSelector);
   const isPrivacyUrlMissing =
     pot.isSome(servicePot) && privacyUrl === undefined;
 
@@ -73,7 +70,7 @@ export const FimsFlowSuccessBody = ({
   // -------- ERROR LOGIC
 
   if (pot.isError(servicePot) || isPrivacyUrlMissing) {
-    return <FimsSSOFullScreenError errorTag={errorTag ?? "GENERIC"} />;
+    return <FimsSSOFullScreenError />;
   }
 
   const serviceLogo = pipe(
