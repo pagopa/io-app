@@ -856,6 +856,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -2307,6 +2308,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -3759,6 +3761,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -5211,6 +5214,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -6955,6 +6959,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [

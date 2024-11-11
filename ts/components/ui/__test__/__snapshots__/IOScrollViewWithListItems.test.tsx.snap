@@ -368,7 +368,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   "fontSize": 28,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 40,
+                                  "lineHeight": 34,
                                 },
                               ]
                             }
@@ -1261,7 +1261,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   "fontSize": 28,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 40,
+                                  "lineHeight": 34,
                                 },
                               ]
                             }
@@ -1896,7 +1896,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   "fontSize": 28,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 40,
+                                  "lineHeight": 34,
                                 },
                               ]
                             }

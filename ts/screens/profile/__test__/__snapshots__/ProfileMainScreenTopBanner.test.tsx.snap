@@ -80,6 +80,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       <View
         style={
           {
+            "alignSelf": "flex-start",
             "marginRight": 12,
           }
         }
@@ -148,12 +149,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       <View
         style={
           [
-            {
-              "marginTop": -10,
-            },
+            false,
+            false,
             {
               "flex": 1,
-              "marginBottom": -6,
             },
           ]
         }
@@ -162,6 +161,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           accessibilityRole="text"
           allowFontScaling={false}
           maxFontSizeMultiplier={1.25}
+          onTextLayout={[Function]}
           style={
             [
               {},
@@ -285,6 +285,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       }
     >
       <View
+        accessibilityLabel="Do you want to display your fiscal code? Go to "Your data" section"
         accessibilityRole="button"
         accessible={true}
         style={
