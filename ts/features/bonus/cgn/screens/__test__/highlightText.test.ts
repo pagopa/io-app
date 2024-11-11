@@ -7,7 +7,7 @@ test("highghlight at start", () => {
   const result = highlightSearchText({
     text,
     searchText: "mulle",
-    esimatedTextLengthToDisplay: 20
+    estimatedTextLengthToDisplay: 20
   });
   expect(result).toEqual([
     { text: "...abba ", highlighted: false },
@@ -23,7 +23,7 @@ test("highghlight at middle", () => {
   const result = highlightSearchText({
     text,
     searchText: "right",
-    esimatedTextLengthToDisplay: 20
+    estimatedTextLengthToDisplay: 20
   });
   expect(result).toEqual([
     { text: "...x left ", highlighted: false },
@@ -39,7 +39,7 @@ test("highghlight at end", () => {
   const result = highlightSearchText({
     text,
     searchText: "luck",
-    esimatedTextLengthToDisplay: 20
+    estimatedTextLengthToDisplay: 20
   });
   expect(result).toEqual([
     {

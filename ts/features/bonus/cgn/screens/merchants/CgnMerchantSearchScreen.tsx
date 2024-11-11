@@ -279,7 +279,7 @@ function highlightText({
   const chunks = highlightSearchText({
     text,
     searchText,
-    esimatedTextLengthToDisplay
+    estimatedTextLengthToDisplay: esimatedTextLengthToDisplay
   });
   return chunks.map((chunk, index) => (
     <Text
@@ -300,17 +300,17 @@ type HighlightChunk = { highlighted: boolean; text: string };
 export function highlightSearchText({
   text,
   searchText,
-  esimatedTextLengthToDisplay
+  estimatedTextLengthToDisplay
 }: {
   text: string;
   searchText: string;
-  esimatedTextLengthToDisplay?: number;
+  estimatedTextLengthToDisplay?: number;
 }): Array<HighlightChunk> {
   const textLowerCase = text.toLowerCase();
   const searchTextLowerCase = searchText.toLowerCase();
   const firstOccurrence = textLowerCase.indexOf(searchTextLowerCase);
   const relevantText =
-    esimatedTextLengthToDisplay === undefined || firstOccurrence === -1
+    estimatedTextLengthToDisplay === undefined || firstOccurrence === -1
       ? text
       : "..." +
         text.slice(
@@ -318,7 +318,7 @@ export function highlightSearchText({
             0,
             firstOccurrence -
               Math.trunc(
-                esimatedTextLengthToDisplay * 0.5 - searchText.length * 0.5
+                estimatedTextLengthToDisplay * 0.5 - searchText.length * 0.5
               )
           )
         );
