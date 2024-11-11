@@ -297,7 +297,7 @@ type HighlightChunk = { highlighted: boolean; text: string };
  * Highlights search results client side that were made with ILIKE sql operator server side.
  * Tries to center the first match in the available space if esimatedTextLengthToDisplay provided
  */
-function highlightSearchText({
+export function highlightSearchText({
   text,
   searchText,
   esimatedTextLengthToDisplay
@@ -314,10 +314,13 @@ function highlightSearchText({
       ? text
       : "..." +
         text.slice(
-          firstOccurrence -
-            Math.trunc(
-              esimatedTextLengthToDisplay * 0.5 - searchText.length * 0.5
-            )
+          Math.max(
+            0,
+            firstOccurrence -
+              Math.trunc(
+                esimatedTextLengthToDisplay * 0.5 - searchText.length * 0.5
+              )
+          )
         );
   const relevantTextLowerCase = relevantText.toLowerCase();
   const matchMap = new Array(relevantText.length).fill(false);
