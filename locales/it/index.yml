@@ -3210,10 +3210,19 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        loading: Stiamo nascondendo la ricevuta...
         title: Ricevuta pagoPA
         shareButton: Salva o condividi
         error: Non è stato possibile recuperare la ricevuta.
         download: Ottieni ricevuta
+        hideFromList: Nascondi dalla lista
+        delete: 
+          successful: La ricevuta è stata nascosta
+          failed: C’è stato un errore, riprova
+        hideBanner: 
+          title: "Vuoi nascondere questa ricevuta dalla tua lista?"
+          content: "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute."
+          accept: "Sì, nascondi"
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
