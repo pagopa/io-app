@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import Animated, {
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
@@ -43,6 +44,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];
   const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
     title: headerTitle,
@@ -54,7 +56,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
-    }
+    },
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -80,6 +84,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
         paddingBottom: 48,
         backgroundColor
       }}
+      ref={animatedScrollViewRef}
     >
       <FocusAwareStatusBar
         backgroundColor={blueHeaderColor}

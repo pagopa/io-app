@@ -13,6 +13,10 @@ import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { WithTestID } from "../../types/WithTestID";
+import {
+  AnimatedPictogram,
+  AnimatedPictogramSource
+} from "../ui/AnimatedPictogramComponent";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,11 +31,18 @@ type LoadingScreenContentProps = WithTestID<{
   contentTitle: string;
   children?: React.ReactNode;
   headerVisible?: boolean;
+  animatedPictogramSource?: AnimatedPictogramSource;
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
   const theme = useIOTheme();
-  const { contentTitle, children, headerVisible, testID } = props;
+  const {
+    contentTitle,
+    children,
+    headerVisible,
+    testID,
+    animatedPictogramSource
+  } = props;
 
   React.useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -64,10 +75,19 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
             accessibilityElementsHidden={true}
             importantForAccessibility={"no-hide-descendants"}
           >
-            <LoadingIndicator />
+            {animatedPictogramSource ? (
+              <AnimatedPictogram source={animatedPictogramSource} />
+            ) : (
+              <LoadingIndicator />
+            )}
           </View>
           <H3
-            style={{ textAlign: "center" }}
+            style={{
+              textAlign: "center",
+              /* Set minHeight to stabilize title height and avoid shifting.
+              See: https://github.com/pagopa/io-app/pull/6369 */
+              minHeight: 70
+            }}
             color={theme["textHeading-secondary"]}
             accessibilityLabel={contentTitle}
           >

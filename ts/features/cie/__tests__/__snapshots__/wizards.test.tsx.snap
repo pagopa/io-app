@@ -90,7 +90,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+          If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
         </Text>
       </View>
       <View

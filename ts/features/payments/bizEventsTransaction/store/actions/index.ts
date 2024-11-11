@@ -2,9 +2,11 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { NoticeListWrapResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeListWrapResponse";
 import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { PaymentBizEventsCategoryFilter } from "../../types";
 
 export type PaymentsGetBizEventsTransactionPayload = {
   firstLoad?: boolean;
+  noticeCategory?: PaymentBizEventsCategoryFilter;
   size?: number;
   continuationToken?: string;
   onSuccess?: (continuationToken?: string) => void;
@@ -77,8 +79,20 @@ export const getPaymentsBizEventsReceiptAction = createAsyncAction(
   void
 >();
 
+type PaymentsTransactionReceiptDeletePayload = {
+  transactionId: string;
+};
+
+export const hidePaymentsBizEventsReceiptAction = createAsyncAction(
+  "PAYMENTS_BIZ_EVENTS_HIDE_REQUEST",
+  "PAYMENTS_BIZ_EVENTS_HIDE_SUCCESS",
+  "PAYMENTS_BIZ_EVENTS_HIDE_FAILURE",
+  "PAYMENTS_BIZ_EVENTS_HIDE_CANCEL"
+)<PaymentsTransactionReceiptDeletePayload, any, NetworkError, void>();
+
 export type PaymentsTransactionBizEventsActions =
   | ActionType<typeof getPaymentsBizEventsTransactionsAction>
   | ActionType<typeof getPaymentsLatestBizEventsTransactionsAction>
   | ActionType<typeof getPaymentsBizEventsTransactionDetailsAction>
-  | ActionType<typeof getPaymentsBizEventsReceiptAction>;
+  | ActionType<typeof getPaymentsBizEventsReceiptAction>
+  | ActionType<typeof hidePaymentsBizEventsReceiptAction>;

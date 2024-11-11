@@ -92,6 +92,11 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
 
   return (
     <View style={[IOStyles.horizontalContentPadding, { backgroundColor }]}>
+      <PaymentsBizEventsTransactionCartList
+        carts={transaction?.carts}
+        loading={isLoading}
+        onPress={handlePressTransactionDetails}
+      />
       <VSpacer size={8} />
       <VStack space={8}>
         <PaymentsBizEventsTransactionCartList

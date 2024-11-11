@@ -281,8 +281,8 @@ inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
-settings: 
-  informativeBanner: 
+settings:
+  informativeBanner:
     content: Cerchi il Profilo? Lo abbiamo spostato, ora è in alto a destra!
     action: Vai alle Impostazioni
 profile:
@@ -662,7 +662,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
-      description: Se hai l’app CieID sul tuo dispositivo, accedi a IO inserendo le credenziali dell’app. Puoi usare anche il tuo volto o l’impronta, oppure il codice che hai impostato per l’app CieID.
+      description: Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
       actions:
         primary:
           label: Sì, entra con CieID
@@ -727,6 +727,9 @@ authentication:
     error_1001:
       title: Non hai l'età minima richiesta
       subtitle: Per accedere, devi avere almeno 18 anni
+    missing_saml_response:
+      title: Non è stato possibile accedere
+      subtitle: Al momento non è possibile accedere con il tuo fornitore d’identità SPID. Riprova tra qualche minuto.
     generic:
       title: Non è stato possibile accedere
       subtitle: Si è verificato un problema durante l’accesso. Riprova tra qualche minuto.
@@ -1894,6 +1897,9 @@ wallet:
         subtitle: "Contatta l’Ente per maggiori informazioni."
       PAYMENT_DUPLICATED:
         title: "Questo avviso è stato già pagato!"
+      PAYMENT_VERIFY_GENERIC_ERROR:
+        title: "Non riusciamo a verificare lo stato di questo avviso"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
         title: "Si è verificato un errore imprevisto"
         subtitle: "Riprova, oppure contatta l’assistenza."
@@ -3198,10 +3204,19 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        loading: Stiamo nascondendo la ricevuta...
         title: Ricevuta pagoPA
         shareButton: Salva o condividi
         error: Non è stato possibile recuperare la ricevuta.
         download: Ottieni ricevuta
+        hideFromList: Nascondi dalla lista
+        delete: 
+          successful: La ricevuta è stata nascosta
+          failed: C’è stato un errore, riprova
+        hideBanner: 
+          title: "Vuoi nascondere questa ricevuta dalla tua lista?"
+          content: "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute."
+          accept: "Sì, nascondi"
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
@@ -3209,6 +3224,15 @@ features:
         banner:
           label: "Il caricamento delle ricevute è fallito."
           retryButton: "Prova di nuovo"
+      filters:
+        tabs:
+          all: Tutte
+          payer: Pagate in app
+          debtor: Intestate a me
+      list:
+        empty:
+          title: Nessuna ricevuta trovata
+          subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
     details:
       payPal:
         banner:
@@ -3244,9 +3268,12 @@ features:
       inactive: Non attivo
     card:
       status:
-        expired: Non valida
+        expired: Scaduta
         expiring: In scadenza
         pending: In lavorazione
+        invalid: Non valida
+        verificationExpiring: Verifica
+        verificationExpired: Verifica
       digital: Versione digitale
     generic:
       error:
@@ -3296,9 +3323,13 @@ features:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
         action: Scopri di più
+      alreadyActive:
+        title: "Documenti su IO è già attiva"
+        content: "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio."
+        action: "Vai al Portafoglio"
     identification:
       mode:
-        title: Verfica la tua identità
+        title: Verifica la tua identità
         description: È un passaggio necessario per garantire la sicurezza dei tuoi dati.
         header: Scegli come identificarti
         method:
@@ -3324,7 +3355,7 @@ features:
         secondaryAction: Continua
       notMatchingIdentityScreen:
         title: "Tutti i documenti saranno rimossi da IO"
-        subtitle: "Se accedi con una nuova identità, i documenti già presenti nel Portafoglio saranno rimossi e Documenti su IO disattivato."
+        subtitle: "Se accedi con una nuova identità, le versioni digitali dei documenti che hai aggiunto al Portafoglio saranno rimosse e Documenti su IO disattivata."
         action: "Continua con la nuova identità"
       loading:
         cieId:
@@ -3372,15 +3403,14 @@ features:
         toast: Fatto!
       notMatchingIdentityError:
         title: Identità non riconosciuta
-        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all'app IO. Verifica le credenziali di accesso e riprova.
-        primaryAction: Ho capito
+        body: Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.
+        primaryAction: Ripeti l'accesso
         secondaryAction: Chiudi
       genericError:
         title: Si è verificato un errore imprevisto
-        body: La tua richiesta verso l'ente che emette il documento non è andata a buon fine.
-        primaryAction: Riprova
-        secondaryAction: Chiudi
-      notEntitledCredentialError: 
+        body: "L’ente che emette le versioni digitali dei documenti sta riscontrando dei problemi ed è già al lavoro per risolverli: riprova più tardi."
+        primaryAction: Chiudi
+      notEntitledCredentialError:
         title: Non è possibile aggiungere il documento
         body: Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.
         primaryAction: Ho capito
@@ -3408,31 +3438,43 @@ features:
         secondaryAction: Scopri di più
     presentation:
       alerts:
+        statusAction: Cosa posso fare?
         mdl:
           content: "Puoi usare la tua Patente su IO solo in Italia per dimostrare di essere abilitato alla guida in caso di controlli delle Forze dell'ordine."
-          action: Scopri di più
         ehc:
           content: "Puoi usare la tua Tessera Sanitaria - Tessera europea di assicurazione malattia su IO per accedere alle prestazioni fornite dal Servizio Sanitario Nazionale."
-          action: "Scopri di più"
+        edc:
+          content: "Puoi usare la tua Carta Europea della Disabilità su IO per accedere ai servizi sul territorio italiano, negli stessi contesti d’uso del tuo documento fisico."
         expired:
           content: Il documento non è più valido. Se sei già in possesso del nuovo documento valido, puoi aggiornare la versione digitale nel Portafoglio
           action: Aggiorna il documento
         expiring:
           content: Mancano {{days}} giorni alla scadenza del documento.
+        verificationExpiring:
+          content: Verifica la versione digitale del tuo documento entro il {{date}}.
       bottomSheets:
-        mdl:
-          title: "Patente: contesti di verifica"
-          content: "###### In quali casi posso usare la versione digitale della mia Patente di guida? \n Puoi usare la versione digitale della tua Patente per dimostrare l’idoneità alla guida durante i controlli stradali solo se **accompagnata da un documento di riconoscimento fisico valido** (es. Carta di Identità). \n \n In questa prima fase della funzionalità infatti, la versione digitale della tua Patente **non ha ancora lo stesso valore legale del documento fisico.**"
-        ehc:
-          title: "Tessera Sanitaria - Tessera europea di assicurazione malattia su IO: contesti d'uso"
-          content: "###### In quali casi posso usare la versione digitale della mia Tessera Sanitaria - Tessera europea di assicurazione malattia? \n Puoi usare la versione digitale della tua Tessera Sanitaria - Tessera europea di assicurazione malattia per prenotare una visita medica o un esame di laboratorio, per ritirare un medicinale in farmacia e ogni volta che devi certificare il tuo Codice Fiscale. \n\n All'estero puoi usarla per usufruire delle prestazioni sanitarie secondo le normative vigenti nei singoli paesi."
         eidInfo:
           title: "Documenti su IO:\nidentità verificata"
+          titleExpired: "Documenti su IO:\nverifica la tua identità"
           contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
           contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
           triggerLabel: Cos'è?
           alert:
-            valid: L'ultima verifica è del {{issuanceDate}}.
+            valid: L'ultima verifica è del {{date}}.
+            expiring: Verifica la tua identità entro il {{date}}.
+            expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+        MDL:
+          expiring:
+            title: "Patente su IO: documento in scadenza"
+            content: "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
+        EuropeanHealthInsuranceCard:
+          expiring:
+            title: "Tessera Sanitaria su IO: documento in scadenza"
+            content: "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata."
+        EuropeanDisabilityCard:
+          expiring:
+            title: "Carta europea della disabilità su IO: documento in scadenza"
+            content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
       credentialDetails:
         flipCardFront: "Mostra retro"
         flipCardBack: "Mostra fronte"
@@ -3446,7 +3488,8 @@ features:
         fiscalCode: Il tuo Codice Fiscale
         status:
           valid: Valida
-          expired: Non valida
+          invalid: Non valida
+          expired: Scaduta
           expiring: In scadenza
         actions:
           removeFromWallet: "Rimuovi dal Portafoglio"
@@ -3460,6 +3503,10 @@ features:
             confirm: Sì, rimuovi
         toast:
           removed: Fatto!
+        verificationExpired:
+          title: Verifica la versione digitale del documento
+          content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
+          primaryAction: Inizia
       ctas:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
@@ -3498,7 +3545,7 @@ support:
   panicMode:
     title: "Purtroppo, in questo momento non riusciamo ad aiutarti"
     body: "Sappiamo che c’è un problema e siamo al lavoro per risolverlo. Se il problema persiste, o se hai bisogno di assistenza su un altro argomento, riprova a scriverci più tardi."
-  errorGetZendeskToken: 
+  errorGetZendeskToken:
     title: Al momento non riusciamo ad aprire una richiesta di assistenza
     subtitle: Riprova più tardi
   askPermissions:
@@ -4161,10 +4208,15 @@ FIMS:
     subtitle: "Attendi qualche secondo"
   consentsScreen:
     errorStates:
+      authentication:
+        body: "Il servizio web dell'ente non è al momento disponibile"
+        title: "Non è stato possibile accedere al servizio"
+      general:
+        body: "C'è stato un problema nel recupero dei dati: stiamo lavorando per risolverlo al più presto"
+        title: "C'è un problema temporaneo, riprova più tardi"
       missingInAppBrowser:
-        title: "Aggiorna il tuo browser per procedere"
         body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
-      tempErrorBody: "C’è un problema temporaneo, riprova più tardi"
+        title: "Aggiorna il tuo browser per procedere"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "

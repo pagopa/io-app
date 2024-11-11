@@ -1,19 +1,29 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { Alert, Linking, Platform, StyleSheet } from "react-native";
+import { Linking, Platform, StyleSheet, View } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { getCieIDLoginUri, SpidLevel } from "../utils";
+import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
 import { useLollipopLoginSource } from "../../lollipop/hooks/useLollipopLoginSource";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { loginSuccess } from "../../../store/actions/authentication";
+import {
+  loginFailure,
+  loginSuccess
+} from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
 import ROUTES from "../../../navigation/routes";
 import { loggedInAuthSelector } from "../../../store/reducers/authentication";
 import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAuthentication";
+import { isDevEnv } from "../../../utils/environment";
+import { onLoginUriChanged } from "../../../utils/login";
+import { apiUrlPrefix } from "../../../config";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -27,9 +37,13 @@ const defaultUserAgent = Platform.select({
   default: undefined
 });
 
-const originSchemasWhiteList = ["https://*", "iologin://*"];
-const IO_LOGIN_CIE_URL_SCHEME = "iologincie:";
-const LOGIN_SUCCESS_PAGE = "profile.html?token=";
+const originSchemasWhiteList = [
+  "https://*",
+  "iologin://*",
+  ...(isDevEnv ? ["http://*"] : [])
+];
+const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
+const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
 const CIE_ID_ERROR = "cieiderror";
 const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
@@ -37,6 +51,12 @@ export type CieIdLoginProps = {
   spidLevel: SpidLevel;
   isUat: boolean;
 };
+
+const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
+  <View style={styles.loader}>
+    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
+  </View>
+);
 
 const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const navigation = useIONavigation();
@@ -47,13 +67,38 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const loginUri = getCieIDLoginUri(spidLevel, isUat);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
+    navigation.replace(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_CIE_ID_ERROR
     });
   }, [navigation]);
 
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
+
+  const handleLoginFailure = useCallback(
+    (code?: string) => {
+      // TODO: Check missing SAML response (error message) https://pagopa.atlassian.net/browse/IOPID-2406
+      dispatch(
+        loginFailure({
+          error: new Error(`login failure with code ${code || "n/a"}`),
+          idp: "cie"
+        })
+      );
+      // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
+      // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
+      // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
+      navigation.replace(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTH_ERROR_SCREEN,
+        params: {
+          errorCode: code,
+          authMethod: "CIE_ID",
+          authLevel: "L2",
+          params: { spidLevel, isUat }
+        }
+      });
+    },
+    [dispatch, navigation, spidLevel, isUat]
+  );
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
@@ -74,11 +119,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
                 // And we extract the error message and show it in an alert
                 const [, errorMessage] =
                   continueUrl.split(CIE_ID_ERROR_MESSAGE);
-                // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-                Alert.alert("Login error ❌", errorMessage);
+                handleLoginFailure(errorMessage);
               } else {
-                // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-                Alert.alert("Login error ❌", "error");
+                handleLoginFailure();
               }
             } else {
               setAuthenticatedUrl(continueUrl);
@@ -89,43 +132,28 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     );
 
     return () => urlListenerSubscription.remove();
-  }, []);
+  }, [handleLoginFailure]);
 
-  const handleOnShouldStartLoadWithRequest = (
-    event: WebViewNavigation
-    // eslint-disable-next-line sonarjs/cognitive-complexity
-  ): boolean => {
-    const url = event.url;
+  const handleLoginSuccess = useCallback(
+    (token: SessionToken) => {
+      dispatch(loginSuccess({ token, idp: "cie" }));
+    },
+    [dispatch]
+  );
 
-    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
-      return false;
-    }
-
-    if (url.indexOf(LOGIN_SUCCESS_PAGE) !== -1) {
-      const [, token] = url.split(LOGIN_SUCCESS_PAGE);
-      if (token) {
-        // show success alert with dismiss button navigatin back
-        dispatch(loginSuccess({ token: token as SessionToken, idp: "cie" }));
-      }
-      return false;
-    }
-
-    if (
-      url.indexOf("livello1") >= 0 || // SpidL1
-      (url.indexOf("livello2") >= 0 && url.indexOf("livello2mobile") === -1) || // SpidL2
-      url.indexOf("nextUrl") >= 0 || // SpidL3 iOS
-      url.indexOf("openApp") >= 0 // SpidL3 Android
-    ) {
+  const handleOpenCieIdApp = useCallback(
+    (url: string) => {
       if (Platform.OS === "ios") {
-        const urlForCieId = `CIEID://${url}&sourceApp=iologincie`;
-        Linking.openURL(urlForCieId).catch(navigateToCieIdAuthenticationError);
+        // TODO: error tracking opening url https://pagopa.atlassian.net/browse/IOPID-2079
+        Linking.openURL(
+          `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
+        ).catch(handleLoginFailure);
       } else {
         openCieIdApp(
           url,
           result => {
             if (result.id === "ERROR") {
-              // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-              navigateToCieIdAuthenticationError();
+              handleLoginFailure(result.code);
             } else {
               setAuthenticatedUrl(result.url);
             }
@@ -133,20 +161,49 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           isUat
         );
       }
+    },
+    [handleLoginFailure, isUat]
+  );
+
+  const handleOnShouldStartLoadWithRequest = (
+    event: WebViewNavigation
+  ): boolean => {
+    const url = event.url;
+
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
       return false;
     }
-    return true;
+
+    if (isAuthenticationUrl(url)) {
+      handleOpenCieIdApp(url);
+
+      return false;
+    }
+
+    const isLoginUrlWithToken = onLoginUriChanged(
+      handleLoginFailure,
+      handleLoginSuccess
+    )(event);
+    // URL can be loaded if it's not the login URL containing the session token - this avoids
+    // making a (useless) GET request with the session in the URL
+    return !isLoginUrlWithToken;
   };
 
-  // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-  if (!webviewSource) {
-    return (
-      <LoadingSpinnerOverlay
-        isLoading
-        onCancel={navigateToCieIdAuthenticationError}
-      />
-    );
-  }
+  const handleLoadingError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
+      // TODO: error tracking  https://pagopa.atlassian.net/browse/IOPID-2079
+      const webViewHttpError = error as WebViewHttpErrorEvent;
+      if (webViewHttpError.nativeEvent.statusCode) {
+        const { statusCode, url } = webViewHttpError.nativeEvent;
+        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+          navigateToCieIdAuthenticationError();
+        }
+      } else {
+        navigateToCieIdAuthenticationError();
+      }
+    },
+    [navigateToCieIdAuthenticationError]
+  );
 
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
@@ -154,15 +211,25 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webView}
-        startInLoadingState={true}
-        userAgent={defaultUserAgent}
-        javaScriptEnabled={true}
-        originWhitelist={originSchemasWhiteList}
-        onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-        source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
-      />
+      {(webviewSource || authenticatedUrl) && (
+        <WebView
+          ref={webView}
+          startInLoadingState={true}
+          userAgent={defaultUserAgent}
+          javaScriptEnabled={true}
+          renderLoading={() => (
+            <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+          )}
+          originWhitelist={originSchemasWhiteList}
+          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+          onHttpError={handleLoadingError}
+          onError={handleLoadingError}
+          source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
+        />
+      )}
+      {!webviewSource && (
+        <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+      )}
     </SafeAreaView>
   );
 };
@@ -172,7 +239,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 16
-  }
+  },
+  loader: { position: "absolute", width: "100%", height: "100%" }
 });
 
 export default CieIdLoginWebView;

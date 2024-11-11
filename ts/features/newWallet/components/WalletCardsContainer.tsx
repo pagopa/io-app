@@ -3,14 +3,24 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
-import { ItwDiscoveryBanner } from "../../itwallet/common/components/ItwDiscoveryBanner";
+import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import {
+  ItwEidInfoBottomSheetContent,
+  ItwEidInfoBottomSheetTitle
+} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
+import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
+import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
+import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
@@ -20,22 +30,11 @@ import {
   selectWalletItwCards,
   selectWalletOtherCards
 } from "../store/selectors";
-import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
-import {
-  ItwEidInfoBottomSheetContent,
-  ItwEidInfoBottomSheetTitle
-} from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { WalletCardCategoryFilter } from "../types";
-import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
-import { WalletCardSkeleton } from "./WalletCardSkeleton";
-import {
-  WalletCardsCategoryContainer,
-  WalletCardsCategoryContainerProps
-} from "./WalletCardsCategoryContainer";
-import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
+import { WalletCardSkeleton } from "./WalletCardSkeleton";
+import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -44,16 +43,10 @@ const WalletCardsContainer = () => {
   const cards = useIOSelector(selectSortedWalletCards);
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
 
-  const stackCards = cards.length > 4;
-
   if (isLoading && cards.length === 0) {
     return (
       <>
-        <WalletCardSkeleton
-          testID="walletCardSkeletonTestID"
-          cardProps={{}}
-          isStacked={false}
-        />
+        <WalletCardSkeleton testID="walletCardSkeletonTestID" cardProps={{}} />
         <VSpacer size={16} />
         <WalletCardsCategoryRetryErrorBanner />
       </>
@@ -81,27 +74,26 @@ const WalletCardsContainer = () => {
     >
       <View testID="walletCardsContainerTestID">
         <ItwBanners />
-        {shouldRender("itw") && <ItwCardsContainer isStacked={stackCards} />}
-        {shouldRender("other") && (
-          <OtherCardsContainer isStacked={stackCards} />
-        )}
+        {shouldRender("itw") && <ItwCardsContainer />}
+        {shouldRender("other") && <OtherCardsContainer />}
       </View>
     </Animated.View>
   );
 };
 
-const ItwCardsContainer = ({
-  isStacked
-}: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
+const ItwCardsContainer = () => {
+  const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const navigation = useIONavigation();
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const isEidExpired = eidStatus === "jwtExpired";
 
   const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
     {
-      title: <ItwEidInfoBottomSheetTitle />,
+      title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
       // Navigation does not seem to work when the bottom sheet's component is not inline
       component: <ItwEidInfoBottomSheetContent navigation={navigation} />
     },
@@ -126,7 +118,7 @@ const ItwCardsContainer = ({
     }
     return {
       iconName: "legalValue",
-      iconColor: "blueIO-500",
+      iconColor: isEidExpired ? "grey-300" : "blueIO-500",
       label: I18n.t("features.wallet.cards.categories.itw"),
       endElement: {
         type: "buttonLink",
@@ -147,18 +139,23 @@ const ItwCardsContainer = ({
         key={`cards_category_itw`}
         testID={`walletCardsCategoryTestID_itw`}
         cards={cards}
-        isStacked={isStacked}
         header={getHeader()}
-        topElement={<ItwWalletReadyBanner />}
+        topElement={
+          <>
+            <ItwWalletReadyBanner />
+            <ItwEidLifecycleAlert
+              lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+              verticalSpacing={true}
+            />
+          </>
+        }
       />
       {isItwValid && eidInfoBottomSheet.bottomSheet}
     </>
   );
 };
 
-const OtherCardsContainer = ({
-  isStacked
-}: Pick<WalletCardsCategoryContainerProps, "isStacked">) => {
+const OtherCardsContainer = () => {
   const cards = useIOSelector(selectWalletOtherCards);
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
@@ -175,7 +172,6 @@ const OtherCardsContainer = ({
       key={`cards_category_other`}
       testID={`walletCardsCategoryTestID_other`}
       cards={cards}
-      isStacked={isStacked}
       header={
         displayHeader
           ? {
@@ -193,7 +189,7 @@ const OtherCardsContainer = ({
 const ItwBanners = () => (
   <>
     <ItwUpcomingWalletBanner bottomSpacing={24} />
-    <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
+    <ItwDiscoveryBannerStandalone ignoreMargins={true} closable={false} />
   </>
 );
 

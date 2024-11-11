@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
-import { H2, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -8,6 +7,7 @@ import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { itwIpzsPrivacyUrl } from "../../../../config";
+import ItwMarkdown from "../../common/components/ItwMarkdown";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +35,7 @@ const ItwIpzsPrivacyScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <View style={IOStyles.horizontalContentPadding}>
+      <ContentWrapper>
         <H2
           accessible={true}
           accessibilityRole="header"
@@ -43,8 +43,11 @@ const ItwIpzsPrivacyScreen = () => {
         >
           {I18n.t("features.itWallet.ipzsPrivacy.title")}
         </H2>
-        <VSpacer size={24} />
-      </View>
+        <VSpacer size={16} />
+        <ItwMarkdown>
+          {I18n.t("features.itWallet.ipzsPrivacy.warning")}
+        </ItwMarkdown>
+      </ContentWrapper>
       <ItwPrivacyWebViewComponent
         source={{
           uri: itwIpzsPrivacyUrl
