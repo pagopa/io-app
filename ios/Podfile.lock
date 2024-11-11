@@ -107,7 +107,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - SwiftCBOR
-  - pagopa-io-react-native-jwt (1.2.0):
+  - pagopa-io-react-native-jwt (1.3.0):
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -616,7 +616,17 @@ PODS:
     - ZXingObjC
   - RNReactNativeHapticFeedback (2.0.2):
     - React-Core
-  - RNReanimated (3.12.0):
+  - RNReanimated (3.15.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+    - RNReanimated/reanimated (= 3.15.0)
+    - RNReanimated/worklets (= 3.15.0)
+  - RNReanimated/reanimated (3.15.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+  - RNReanimated/worklets (3.15.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ReactCommon/turbomodule/core
@@ -646,31 +656,31 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - ZendeskAnswerBotProvidersSDK (5.0.0):
-    - ZendeskSupportProvidersSDK (~> 8.0.0)
-  - ZendeskAnswerBotSDK (5.0.0):
-    - ZendeskAnswerBotProvidersSDK (~> 5.0.0)
-    - ZendeskMessagingSDK (~> 6.0.0)
-  - ZendeskChatProvidersSDK (5.0.0)
-  - ZendeskChatSDK (5.0.0):
-    - ZendeskChatProvidersSDK (~> 5.0.0)
-    - ZendeskMessagingSDK (~> 6.0.0)
-  - ZendeskCommonUISDK (9.0.0)
-  - ZendeskCoreSDK (5.0.0)
-  - ZendeskMessagingAPISDK (6.0.0):
+  - ZendeskAnswerBotProvidersSDK (5.0.4):
+    - ZendeskSupportProvidersSDK (~> 8.0.4)
+  - ZendeskAnswerBotSDK (5.0.4):
+    - ZendeskAnswerBotProvidersSDK (~> 5.0.4)
+    - ZendeskMessagingSDK (~> 6.0.2)
+  - ZendeskChatProvidersSDK (5.0.4)
+  - ZendeskChatSDK (5.0.4):
+    - ZendeskChatProvidersSDK (~> 5.0.4)
+    - ZendeskMessagingSDK (~> 6.0.2)
+  - ZendeskCommonUISDK (9.0.2)
+  - ZendeskCoreSDK (5.0.4)
+  - ZendeskMessagingAPISDK (6.0.1):
     - ZendeskSDKConfigurationsSDK (~> 4.0.0)
-  - ZendeskMessagingSDK (6.0.0):
-    - ZendeskCommonUISDK (~> 9.0.0)
-    - ZendeskMessagingAPISDK (~> 6.0.0)
+  - ZendeskMessagingSDK (6.0.2):
+    - ZendeskCommonUISDK (~> 9.0.2)
+    - ZendeskMessagingAPISDK (~> 6.0.1)
   - ZendeskSDKConfigurationsSDK (4.0.0)
-  - ZendeskSupportProvidersSDK (8.0.0):
-    - ZendeskCoreSDK (~> 5.0.0)
-  - ZendeskSupportSDK (8.0.0):
-    - ZendeskMessagingSDK (~> 6.0.0)
-    - ZendeskSupportProvidersSDK (~> 8.0.0)
-  - ZXingObjC (3.6.5):
-    - ZXingObjC/All (= 3.6.5)
-  - ZXingObjC/All (3.6.5)
+  - ZendeskSupportProvidersSDK (8.0.4):
+    - ZendeskCoreSDK (~> 5.0.4)
+  - ZendeskSupportSDK (8.0.4):
+    - ZendeskMessagingSDK (~> 6.0.2)
+    - ZendeskSupportProvidersSDK (~> 8.0.4)
+  - ZXingObjC (3.6.9):
+    - ZXingObjC/All (= 3.6.9)
+  - ZXingObjC/All (3.6.9)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
@@ -1052,7 +1062,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
   pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
-  pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
+  pagopa-io-react-native-jwt: 27f6cb1ea58ea1df6778c67f23a932b90dc7e9a2
   pagopa-io-react-native-login-utils: a445c97d7d7dc86b089079029a1340f4c682128c
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -1125,7 +1135,7 @@ SPEC CHECKSUMS:
   RNPermissions: b3d9d00889e37cc184d365ab04bb7a3f20811b1c
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
-  RNReanimated: 108a53626a492df35db30b98fc922a7189d1c601
+  RNReanimated: c2027c397233801d4aceb7375e000ac87ec2e67d
   RNScreens: 2fc874a2605e88dedf43204a79fad1d2da4abfbe
   RNSentry: 3e667c2c6ea5d35ea292c7f262c6b44e43842cc1
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
@@ -1136,18 +1146,18 @@ SPEC CHECKSUMS:
   VisionCamera: 58d2120e6e23c155b25f4702b7912dc2b1e5e8c2
   Yoga: c32e0be1a17f8f1f0e633a3122f7666441f52c82
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  ZendeskAnswerBotProvidersSDK: a024260282886870a15e7a986bf5286c23fd9311
-  ZendeskAnswerBotSDK: b9f74105b26fda5f74d6639c0dc8fe37f522a867
-  ZendeskChatProvidersSDK: fa1c5acd7fd09157b5994fb05a3b1628409fdfd1
-  ZendeskChatSDK: 40fa26f80a589eb38c6cecf17af71206da7bcaf3
-  ZendeskCommonUISDK: b87f90874386ebcc01f4b2a0b20a28c62658987a
-  ZendeskCoreSDK: cdc814e7fd64764fb0b0acb04e596df437708faa
-  ZendeskMessagingAPISDK: 9ce539eebcaa014fe6acc44da31262a2c52891c1
-  ZendeskMessagingSDK: ccc8dd41b774b0d2f94733505b9f1882d72184da
+  ZendeskAnswerBotProvidersSDK: 516624907e1c688933dbe727ba6870b8df2237f1
+  ZendeskAnswerBotSDK: 44046f6c46ff5e8ea53c920cdf46856a84def279
+  ZendeskChatProvidersSDK: e57a8c2ac56951df3f0921325aaf07f0832b231b
+  ZendeskChatSDK: dcb3137d00695ef14b6b22541c57a1797188b14b
+  ZendeskCommonUISDK: 34c069ad52d8b350eb6af7d535a027f58a50b432
+  ZendeskCoreSDK: fe8a8076cf0384637de006ddcaff31d0d7fcf030
+  ZendeskMessagingAPISDK: c8ca98dc931a5b68a622aba65d63673cfe40af88
+  ZendeskMessagingSDK: a5e3850e40dce481c24b05ce89bcd8dfc12d8500
   ZendeskSDKConfigurationsSDK: 79c444da987390456ec05657ffa2f5ca0eb54aef
-  ZendeskSupportProvidersSDK: 4aafe8114a9bba1a98dc03ca14d8fa6510cf4e70
-  ZendeskSupportSDK: 8cf921c496269bb5f53aac9320f3d002a793991d
-  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
+  ZendeskSupportProvidersSDK: 2346d8c58d640765f4c997fac2fdad19ba947512
+  ZendeskSupportSDK: 2b4d57ae628d31f6d3ab0e25a251b52d49d40255
+  ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
 PODFILE CHECKSUM: c81fe8fa67af4bf6e27653958d177ac176ab0293
 

@@ -2,7 +2,7 @@ import { PathConfigMap } from "@react-navigation/native";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import { itwLifecycleIsValidSelector } from "../lifecycle/store/selectors";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -16,7 +16,6 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
   const isUserAllowedToItw = isItwEnabled && isItwTrialActive;
-  const canItwBeActivated = isUserAllowedToItw && !isItwValid;
 
   return {
     [ITW_ROUTES.MAIN]: {
@@ -24,10 +23,10 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
       screens: {
         ...(isUserAllowedToItw && {
           [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
-            "credential/issuance"
-        }),
-        ...(canItwBeActivated && {
-          [ITW_ROUTES.DISCOVERY.INFO]: "discovery/info"
+            "credential/issuance",
+          [isItwValid
+            ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
+            : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info"
         })
       }
     }

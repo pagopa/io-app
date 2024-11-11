@@ -444,7 +444,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 25,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
@@ -912,7 +912,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 25,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
@@ -2068,7 +2068,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 25,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
@@ -2536,7 +2536,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 25,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }

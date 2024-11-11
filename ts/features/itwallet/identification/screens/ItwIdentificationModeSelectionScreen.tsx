@@ -37,12 +37,12 @@ export const ItwIdentificationModeSelectionScreen = () => {
 
   const handleCiePinPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cie_pin" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "ciePin" });
   };
 
   const handleCieIdPress = () => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
-    trackItWalletIDMethodSelected({ ITW_ID_method: "cieid" });
+    trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
   };
 
   return (

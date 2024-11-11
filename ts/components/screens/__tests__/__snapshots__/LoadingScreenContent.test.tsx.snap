@@ -572,6 +572,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     "lineHeight": 33,
                                   },
                                   {
+                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
@@ -1170,6 +1171,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                     "lineHeight": 33,
                                   },
                                   {
+                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
@@ -1768,6 +1770,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     "lineHeight": 33,
                                   },
                                   {
+                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
@@ -2363,6 +2366,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                     "lineHeight": 33,
                                   },
                                   {
+                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]

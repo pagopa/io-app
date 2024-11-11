@@ -3,7 +3,7 @@ import _ from "lodash";
 import { TranslationKeys } from "../../../locales/locales";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus/remoteConfig";
 
 /**
  *
