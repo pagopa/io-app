@@ -12,7 +12,7 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -142,15 +142,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
       } as RequiredClaim)
   );
 
-  const mixPanelCredential = useMemo(
-    () => CREDENTIALS_MAP[credentialType],
-    [credentialType]
-  );
-
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed) {
       trackIssuanceCredentialScrollToBottom(
-        mixPanelCredential,
+        CREDENTIALS_MAP[credentialType],
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
     }
