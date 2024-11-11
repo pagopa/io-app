@@ -13,6 +13,8 @@ import { fimsTokenSelector } from "../../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsGetConsentsListAction } from "../store/actions";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
+import { preferredLanguageToString } from "../../common/utils";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 import {
   computeAndTrackAuthenticationError,
@@ -103,13 +105,18 @@ export function* handleFimsGetConsentsList(
     return;
   }
 
-  // TODO:: use with future BE lang implementation -- const lang = getLocalePrimaryWithFallback();
+  const preferredLanguageMaybe = yield* select(preferredLanguageSelector);
+  const preferredLanguage = yield* call(
+    preferredLanguageToString,
+    preferredLanguageMaybe
+  );
+
   const getConsentsResult = yield* call(nativeRequest, {
     verb: "get",
     followRedirects: true,
     url: relyingPartyRedirectUrl,
     headers: {
-      "Accept-Language": "it-IT"
+      "Accept-Language": preferredLanguage
     }
   });
 
