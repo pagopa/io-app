@@ -52,6 +52,7 @@ import {
   cgnMerchantsCount,
   cgnSearchMerchants
 } from "../../store/actions/merchants";
+import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
@@ -289,78 +290,4 @@ function highlightText({
       {chunk.text}
     </Text>
   ));
-}
-
-type HighlightChunk = { highlighted: boolean; text: string };
-
-/**
- * Highlights search results client side that were made with ILIKE sql operator server side.
- * Tries to center the first match in the available space if esimatedTextLengthToDisplay provided
- */
-export function highlightSearchText({
-  text,
-  searchText,
-  estimatedTextLengthToDisplay
-}: {
-  text: string;
-  searchText: string;
-  estimatedTextLengthToDisplay?: number;
-}): Array<HighlightChunk> {
-  const textLowerCase = text.toLowerCase();
-  const searchTextLowerCase = searchText.toLowerCase();
-  const firstOccurrence = textLowerCase.indexOf(searchTextLowerCase);
-  const relevantText =
-    estimatedTextLengthToDisplay === undefined || firstOccurrence === -1
-      ? text
-      : "..." +
-        text.slice(
-          Math.max(
-            0,
-            firstOccurrence -
-              Math.trunc(
-                estimatedTextLengthToDisplay * 0.5 - searchText.length * 0.5
-              )
-          )
-        );
-  const relevantTextLowerCase = relevantText.toLowerCase();
-  const matchMap = new Array(relevantText.length).fill(false);
-  // eslint-disable-next-line functional/no-let
-  for (let textIndex = 0; textIndex < relevantText.length; ) {
-    const matchStart = relevantTextLowerCase.indexOf(
-      searchTextLowerCase,
-      textIndex
-    );
-    if (matchStart === -1) {
-      break;
-    }
-    for (
-      // eslint-disable-next-line functional/no-let
-      let searchTextIndex = 0;
-      searchTextIndex < searchText.length;
-      searchTextIndex++
-    ) {
-      // eslint-disable-next-line functional/immutable-data
-      matchMap[matchStart + searchTextIndex] = true;
-    }
-    textIndex = matchStart + searchText.length;
-  }
-  const chunks: Array<HighlightChunk> = [];
-  // eslint-disable-next-line functional/no-let
-  let currentChunk: HighlightChunk = { highlighted: false, text: "" };
-  // eslint-disable-next-line functional/no-let
-  for (let index = 0; index < relevantText.length; index++) {
-    const char = relevantText[index];
-    const isHighlighted = matchMap[index];
-    if (currentChunk.highlighted === isHighlighted) {
-      // eslint-disable-next-line functional/immutable-data
-      currentChunk.text += char;
-    } else {
-      // eslint-disable-next-line functional/immutable-data
-      chunks.push(currentChunk);
-      currentChunk = { highlighted: isHighlighted, text: char };
-    }
-  }
-  // eslint-disable-next-line functional/immutable-data
-  chunks.push(currentChunk);
-  return chunks;
 }

@@ -1,4 +1,4 @@
-import { highlightSearchText } from "../merchants/CgnMerchantSearchScreen";
+import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 
 const text =
   "abba mulle titti heppy smile jinx left right up down defualt function luck norbert";
