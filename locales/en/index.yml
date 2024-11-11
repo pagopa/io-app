@@ -3204,10 +3204,19 @@ features:
         failure: FALLITA
         success: ""
       receipt:
+        loading: "We are hiding your receipt..."
         title: pagoPA Receipt
         shareButton: Save or share
         error: Unable to retrieve the receipt.
         download: Get receipt
+        hideFromList: Hide from list
+        delete: 
+          successful: The receipt has been hidden
+          failed: An error occurred, please try again
+        hideBanner: 
+          title: "Do you want to hide this receipt from your list?"
+          content: "This action is irreversible. The receipt will no longer be shown in your list of receipts."    
+          accept: "Yes, hide"
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
         totalFeeUnknownPsp: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto dal gestore della transazione (PSP)"
