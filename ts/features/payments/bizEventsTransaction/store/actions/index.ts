@@ -79,8 +79,20 @@ export const getPaymentsBizEventsReceiptAction = createAsyncAction(
   void
 >();
 
+type PaymentsTransactionReceiptDeletePayload = {
+  transactionId: string;
+};
+
+export const hidePaymentsBizEventsReceiptAction = createAsyncAction(
+  "PAYMENTS_BIZ_EVENTS_HIDE_REQUEST",
+  "PAYMENTS_BIZ_EVENTS_HIDE_SUCCESS",
+  "PAYMENTS_BIZ_EVENTS_HIDE_FAILURE",
+  "PAYMENTS_BIZ_EVENTS_HIDE_CANCEL"
+)<PaymentsTransactionReceiptDeletePayload, any, NetworkError, void>();
+
 export type PaymentsTransactionBizEventsActions =
   | ActionType<typeof getPaymentsBizEventsTransactionsAction>
   | ActionType<typeof getPaymentsLatestBizEventsTransactionsAction>
   | ActionType<typeof getPaymentsBizEventsTransactionDetailsAction>
-  | ActionType<typeof getPaymentsBizEventsReceiptAction>;
+  | ActionType<typeof getPaymentsBizEventsReceiptAction>
+  | ActionType<typeof hidePaymentsBizEventsReceiptAction>;

@@ -1,19 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
+import * as React from "react";
+import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../definitions/content/Config";
-import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
-import ROUTES from "../../../../../navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { ToolEnum } from "../../../../../../../definitions/content/AssistanceToolConfig";
+import { Config } from "../../../../../../../definitions/content/Config";
+import { SubscriptionStateEnum } from "../../../../../../../definitions/trial_system/SubscriptionState";
+import { itwTrialId } from "../../../../../../config";
+import ROUTES from "../../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { RemoteConfigState } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ItwLifecycleState } from "../../../../lifecycle/store/reducers";
 import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
-import { itwTrialId } from "../../../../../config";
+import { ItwDiscoveryBannerStandalone } from "../ItwDiscoveryBannerStandalone";
 
 type RenderOptions = {
   isItwTrial?: boolean;
@@ -21,16 +24,34 @@ type RenderOptions = {
   isItwEnabled?: boolean;
 };
 
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 
 describe("ItwDiscoveryBanner", () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const component = renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <ItwDiscoveryBanner />,
+    ROUTES.WALLET_HOME,
+    {},
+    createStore(appReducer, globalState as any)
+  );
+  it("should match snapshot", () => {
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+});
+
+describe("ItwDiscoveryBannerStandalone", () => {
   it("should render the banner", () => {
     const {
       component: { queryByTestId }
     } = renderComponent({});
     expect(queryByTestId("itwDiscoveryBannerTestID")).not.toBeNull();
+  });
+
+  it("should match snapshot", () => {
+    const { component } = renderComponent({});
+    expect(component.toJSON()).toMatchSnapshot();
   });
 
   test.each([
@@ -98,7 +119,7 @@ const renderComponent = ({
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBanner,
+      ItwDiscoveryBannerStandalone,
       ROUTES.WALLET_HOME,
       {},
       store

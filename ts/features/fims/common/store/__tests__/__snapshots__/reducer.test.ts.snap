@@ -11,13 +11,13 @@ exports[`fimsReducer should match snapshot 1`] = `
     },
   },
   "sso": {
-    "consentsData": {
-      "kind": "PotNone",
-    },
     "ctaText": undefined,
     "currentFlowState": "idle",
     "relyingPartyServiceId": undefined,
     "relyingPartyUrl": undefined,
+    "ssoData": {
+      "kind": "PotNone",
+    },
   },
 }
 `;
