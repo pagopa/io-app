@@ -379,7 +379,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           >
                             <Text
                               allowFontScaling={false}
-                              dynamicTypeRamp="footnote"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -391,7 +390,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -1058,7 +1057,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             >
                               <Text
                                 allowFontScaling={false}
-                                dynamicTypeRamp="footnote"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -1070,7 +1068,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 21,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
@@ -1581,7 +1579,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           >
                             <Text
                               allowFontScaling={false}
-                              dynamicTypeRamp="footnote"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -1593,7 +1590,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -2151,7 +2148,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             >
                               <Text
                                 allowFontScaling={false}
-                                dynamicTypeRamp="footnote"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -2163,7 +2159,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 21,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }

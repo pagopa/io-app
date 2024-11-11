@@ -352,7 +352,6 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            dynamicTypeRamp="footnote"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
@@ -363,7 +362,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 21,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }

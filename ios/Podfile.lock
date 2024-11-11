@@ -130,7 +130,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (1.3.0):
+  - pagopa-io-react-native-jwt (1.4.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1452,7 +1452,7 @@ PODS:
     - React-Core
   - react-native-notifications-utils (0.3.0):
     - React-Core
-  - react-native-pager-view (6.4.1):
+  - react-native-pager-view (6.5.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1479,7 +1479,7 @@ PODS:
     - React-Core
   - react-native-render-html (6.3.1):
     - React-Core
-  - react-native-safe-area-context (4.11.1):
+  - react-native-safe-area-context (4.14.0):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -1799,7 +1799,7 @@ PODS:
     - React
   - RNCAsyncStorage (2.0.0):
     - React-Core
-  - RNCClipboard (1.14.2):
+  - RNCClipboard (1.15.0):
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
@@ -1966,7 +1966,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.34.1):
+  - RNScreens (3.35.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2018,35 +2018,35 @@ PODS:
   - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.7.0)
   - SwiftCBOR (0.4.7)
-  - VisionCamera (4.5.3):
-    - VisionCamera/Core (= 4.5.3)
-    - VisionCamera/React (= 4.5.3)
-  - VisionCamera/Core (4.5.3)
-  - VisionCamera/React (4.5.3):
+  - VisionCamera (4.6.1):
+    - VisionCamera/Core (= 4.6.1)
+    - VisionCamera/React (= 4.6.1)
+  - VisionCamera/Core (4.6.1)
+  - VisionCamera/React (4.6.1):
     - React-Core
   - Yoga (0.0.0)
-  - ZendeskAnswerBotProvidersSDK (6.0.0):
-    - ZendeskSupportProvidersSDK (~> 9.0.0)
-  - ZendeskAnswerBotSDK (6.0.0):
-    - ZendeskAnswerBotProvidersSDK (~> 6.0.0)
-    - ZendeskMessagingSDK (~> 6.0.3)
-  - ZendeskChatProvidersSDK (5.0.5)
-  - ZendeskChatSDK (5.0.5):
-    - ZendeskChatProvidersSDK (~> 5.0.5)
-    - ZendeskMessagingSDK (~> 6.0.3)
-  - ZendeskCommonUISDK (9.0.3)
-  - ZendeskCoreSDK (5.0.5)
-  - ZendeskMessagingAPISDK (6.0.2):
-    - ZendeskSDKConfigurationsSDK (~> 4.0.1)
-  - ZendeskMessagingSDK (6.0.3):
-    - ZendeskCommonUISDK (~> 9.0.3)
-    - ZendeskMessagingAPISDK (~> 6.0.2)
-  - ZendeskSDKConfigurationsSDK (4.0.1)
-  - ZendeskSupportProvidersSDK (9.0.0):
-    - ZendeskCoreSDK (~> 5.0.5)
-  - ZendeskSupportSDK (9.0.0):
-    - ZendeskMessagingSDK (~> 6.0.3)
-    - ZendeskSupportProvidersSDK (~> 9.0.0)
+  - ZendeskAnswerBotProvidersSDK (5.0.4):
+    - ZendeskSupportProvidersSDK (~> 8.0.4)
+  - ZendeskAnswerBotSDK (5.0.4):
+    - ZendeskAnswerBotProvidersSDK (~> 5.0.4)
+    - ZendeskMessagingSDK (~> 6.0.2)
+  - ZendeskChatProvidersSDK (5.0.4)
+  - ZendeskChatSDK (5.0.4):
+    - ZendeskChatProvidersSDK (~> 5.0.4)
+    - ZendeskMessagingSDK (~> 6.0.2)
+  - ZendeskCommonUISDK (9.0.2)
+  - ZendeskCoreSDK (5.0.4)
+  - ZendeskMessagingAPISDK (6.0.1):
+    - ZendeskSDKConfigurationsSDK (~> 4.0.0)
+  - ZendeskMessagingSDK (6.0.2):
+    - ZendeskCommonUISDK (~> 9.0.2)
+    - ZendeskMessagingAPISDK (~> 6.0.1)
+  - ZendeskSDKConfigurationsSDK (4.0.0)
+  - ZendeskSupportProvidersSDK (8.0.4):
+    - ZendeskCoreSDK (~> 5.0.4)
+  - ZendeskSupportSDK (8.0.4):
+    - ZendeskMessagingSDK (~> 6.0.2)
+    - ZendeskSupportProvidersSDK (~> 8.0.4)
   - ZXingObjC (3.6.9):
     - ZXingObjC/All (= 3.6.9)
   - ZXingObjC/All (3.6.9)
@@ -2448,7 +2448,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 3ee0c20ccfcc9f6dbe7433d3aa66c31d66fe8ecd
   pagopa-io-react-native-integrity: 99a8772bd2d058442f08233fbfac93c367b758f6
-  pagopa-io-react-native-jwt: f76a172e2402845e01a507a5b3177c55490ac9e6
+  pagopa-io-react-native-jwt: d170ab1475627e0cf070e57fc59b73521dadd066
   pagopa-io-react-native-login-utils: a445c97d7d7dc86b089079029a1340f4c682128c
   pagopa-react-native-zendesk: 6d2339df555ff3083faddeb8be96a7a03092d73c
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
@@ -2491,11 +2491,11 @@ SPEC CHECKSUMS:
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-netinfo: f0a9899081c185db1de5bb2fdc1c88c202a059ac
   react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
-  react-native-pager-view: c476f76d54f946df5147645e902d3d7173688187
+  react-native-pager-view: bc0577047c5901fc96f6134881172072a909af7b
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
-  react-native-safe-area-context: 5141f11858b033636f1788b14f32eaba92cee810
+  react-native-safe-area-context: 4532f1a0c5d34a46b9324ccaaedcb5582a302b7d
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-skia: 00e92fdc3e2e9e7d6df254296d2f3e8c548224af
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
@@ -2531,7 +2531,7 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: d35c79ffba52c1013013e16b1fc295aec2feabb6
-  RNCClipboard: 5e503962f0719ace8f7fdfe9c60282b526305c85
+  RNCClipboard: 69ab8e51324d5b351f6ba72bbdb72478087a2c64
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFlashList: 2a5ca82c4998952060b77fa9a1eb05f7ed8783b6
@@ -2543,26 +2543,26 @@ SPEC CHECKSUMS:
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 0d591ea1e150f36cb96d868d4e8d77272243d78a
   RNReanimated: f42a5044d121d68e91680caacb0293f4274228eb
-  RNScreens: 00e01e05e3cf66bd701148c2531965437e9583e4
+  RNScreens: c7ceced6a8384cb9be5e7a5e88e9e714401fd958
   RNSentry: e280ee2f6d0aa58c8ac0eb9a45b7678b5840c1da
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
-  VisionCamera: cb84d0d8485b3e67c91b62931d3aa88f49747c92
+  VisionCamera: c95a8ad535f527562be1fb05fb2fd324578e769c
   Yoga: aa3df615739504eebb91925fc9c58b4922ea9a08
-  ZendeskAnswerBotProvidersSDK: 2f3d0e38acdbd4507862b4e4a7b28d3764072854
-  ZendeskAnswerBotSDK: de9759a504d4a262c453784e9c6d9d6907ad2222
-  ZendeskChatProvidersSDK: 5cfc4a3dee03317ba54920e3258edda52ff9a329
-  ZendeskChatSDK: 8e0041101a89c8fed51dadb14697bbb4bb4700fd
-  ZendeskCommonUISDK: f3ce3e7a1bd7762550a78dbaff57509f3112c22b
-  ZendeskCoreSDK: c542b3f82abc3ee52e1291c6fb3436515e098806
-  ZendeskMessagingAPISDK: 5b3a9d16f2f4d8b3c07b4ca0451a7cf9bfd8107d
-  ZendeskMessagingSDK: 3915f0647246f079dd20bf2fd85084f495598fde
-  ZendeskSDKConfigurationsSDK: d0b28eeb9c3d88191cfd2c7f246b2522c8c357f4
-  ZendeskSupportProvidersSDK: 281acf2bb731d2a67f913cfe653ed0da9f5b2f42
-  ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
+  ZendeskAnswerBotProvidersSDK: 516624907e1c688933dbe727ba6870b8df2237f1
+  ZendeskAnswerBotSDK: 44046f6c46ff5e8ea53c920cdf46856a84def279
+  ZendeskChatProvidersSDK: e57a8c2ac56951df3f0921325aaf07f0832b231b
+  ZendeskChatSDK: dcb3137d00695ef14b6b22541c57a1797188b14b
+  ZendeskCommonUISDK: 34c069ad52d8b350eb6af7d535a027f58a50b432
+  ZendeskCoreSDK: fe8a8076cf0384637de006ddcaff31d0d7fcf030
+  ZendeskMessagingAPISDK: c8ca98dc931a5b68a622aba65d63673cfe40af88
+  ZendeskMessagingSDK: a5e3850e40dce481c24b05ce89bcd8dfc12d8500
+  ZendeskSDKConfigurationsSDK: 79c444da987390456ec05657ffa2f5ca0eb54aef
+  ZendeskSupportProvidersSDK: 2346d8c58d640765f4c997fac2fdad19ba947512
+  ZendeskSupportSDK: 2b4d57ae628d31f6d3ab0e25a251b52d49d40255
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
 PODFILE CHECKSUM: 80686cfc2be2bcdc2b273e1709b13d531f5ebcfb

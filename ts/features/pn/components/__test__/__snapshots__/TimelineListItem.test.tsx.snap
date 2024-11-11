@@ -573,7 +573,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -677,7 +677,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -750,7 +750,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -852,7 +852,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -925,7 +925,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1027,7 +1027,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1100,7 +1100,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1202,7 +1202,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1275,7 +1275,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1377,7 +1377,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1450,7 +1450,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1552,7 +1552,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1625,7 +1625,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1727,7 +1727,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1800,7 +1800,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1902,7 +1902,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1975,7 +1975,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2077,7 +2077,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2150,7 +2150,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2254,7 +2254,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2882,7 +2882,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2986,7 +2986,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3059,7 +3059,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3161,7 +3161,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3234,7 +3234,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3336,7 +3336,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3409,7 +3409,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3511,7 +3511,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3584,7 +3584,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3686,7 +3686,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3759,7 +3759,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3861,7 +3861,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3934,7 +3934,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4036,7 +4036,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4109,7 +4109,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4211,7 +4211,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4284,7 +4284,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4386,7 +4386,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4459,7 +4459,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4563,7 +4563,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
