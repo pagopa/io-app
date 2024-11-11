@@ -238,7 +238,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -502,7 +502,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -602,7 +602,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -792,7 +792,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -1572,7 +1572,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -1836,7 +1836,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -1936,7 +1936,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -2126,7 +2126,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -2906,7 +2906,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -3170,7 +3170,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -3270,7 +3270,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -3460,7 +3460,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -4240,7 +4240,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -4504,7 +4504,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -4604,7 +4604,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -4794,7 +4794,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -5574,7 +5574,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -5838,7 +5838,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -5938,7 +5938,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -6128,7 +6128,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -6908,7 +6908,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -7172,7 +7172,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -7272,7 +7272,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -7462,7 +7462,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -8242,7 +8242,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -8506,7 +8506,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -8606,7 +8606,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -8796,7 +8796,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -9576,7 +9576,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -9840,7 +9840,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -9940,7 +9940,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -10130,7 +10130,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -10910,7 +10910,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -11174,7 +11174,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -11274,7 +11274,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -11464,7 +11464,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -12244,7 +12244,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -12508,7 +12508,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -12608,7 +12608,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -12798,7 +12798,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -13578,7 +13578,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -13842,7 +13842,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -13942,7 +13942,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -14132,7 +14132,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -14912,7 +14912,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -15176,7 +15176,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -15276,7 +15276,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -15466,7 +15466,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -16246,7 +16246,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -16510,7 +16510,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -16610,7 +16610,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -16800,7 +16800,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -17580,7 +17580,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -17844,7 +17844,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -17944,7 +17944,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -18134,7 +18134,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -18914,7 +18914,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -19178,7 +19178,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -19278,7 +19278,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -19468,7 +19468,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -20248,7 +20248,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -20512,7 +20512,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -20612,7 +20612,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -20802,7 +20802,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -21582,7 +21582,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -21846,7 +21846,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -21946,7 +21946,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -22136,7 +22136,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -22916,7 +22916,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 40,
+                                    "lineHeight": 34,
                                   },
                                 ]
                               }
@@ -23180,7 +23180,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -23280,7 +23280,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -23470,7 +23470,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
