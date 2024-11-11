@@ -4,6 +4,7 @@ import { sequenceT } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { ComponentProps } from "react";
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -80,7 +81,11 @@ export const ItwEidLifecycleAlert = ({
       }
     };
 
-    return <Alert {...alertProps[eidStatus]} />;
+    return (
+      <View style={{ marginBottom: 16 }}>
+        <Alert {...alertProps[eidStatus]} />
+      </View>
+    );
   };
 
   return pipe(

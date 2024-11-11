@@ -180,6 +180,7 @@ const OtherCardsContainer = () => {
             }
           : undefined
       }
+      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
     />
   );
 };
@@ -189,8 +190,8 @@ const OtherCardsContainer = () => {
  */
 const ItwBanners = () => (
   <>
-    <ItwUpcomingWalletBanner bottomSpacing={24} />
-    <ItwDiscoveryBannerStandalone ignoreMargins={true} closable={false} />
+    <ItwUpcomingWalletBanner />
+    <ItwDiscoveryBannerStandalone closable={false} />
   </>
 );
 

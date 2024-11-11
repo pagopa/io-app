@@ -1,5 +1,6 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import React from "react";
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
@@ -24,20 +25,22 @@ const ItwFeedbackBanner = () => {
   };
 
   return (
-    <Banner
-      testID="itwFeedbackBannerTestID"
-      title={"Dicci cosa ne pensi"}
-      content={
-        "Raccontaci la tua esperienza con la funzionalità Documenti su IO."
-      }
-      action={"Inizia"}
-      pictogramName="feedback"
-      color="neutral"
-      size="big"
-      onPress={handleOnPress}
-      labelClose={I18n.t("global.buttons.close")}
-      onClose={handleOnClose}
-    />
+    <View style={{ marginTop: 16 }}>
+      <Banner
+        testID="itwFeedbackBannerTestID"
+        title={"Dicci cosa ne pensi"}
+        content={
+          "Raccontaci la tua esperienza con la funzionalità Documenti su IO."
+        }
+        action={"Inizia"}
+        pictogramName="feedback"
+        color="neutral"
+        size="big"
+        onPress={handleOnPress}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={handleOnClose}
+      />
+    </View>
   );
 };
 
