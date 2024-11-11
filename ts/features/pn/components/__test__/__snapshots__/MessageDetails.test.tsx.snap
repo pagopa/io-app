@@ -1091,7 +1091,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               onDismiss={[Function]}
                               snapPoints={
                                 [
-                                  1,
+                                  10,
                                 ]
                               }
                               style={
