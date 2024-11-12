@@ -9,7 +9,7 @@ describe("itwIsFeedbackBannerHiddenSelector", () => {
     [false, undefined],
     [true, addMonths(new Date(), 1)],
     [false, addDays(new Date(), -2)]
-  ])("should return %p if banner is hidden %p", (expected, value) => {
+  ])("should return %p if banner is hidden until %p", (expected, value) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
     expect(

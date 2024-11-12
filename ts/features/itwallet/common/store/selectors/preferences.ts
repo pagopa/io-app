@@ -13,11 +13,6 @@ export const itwPreferencesSelector = (state: GlobalState) =>
  */
 export const itwIsFeedbackBannerHiddenSelector = createSelector(
   itwPreferencesSelector,
-  ({ hideFeedbackBannerUntil }: ItwPreferencesState) => {
-    if (hideFeedbackBannerUntil === undefined) {
-      return false;
-    }
-
-    return !isPast(hideFeedbackBannerUntil);
-  }
+  ({ hideFeedbackBannerUntil }: ItwPreferencesState) =>
+    !!hideFeedbackBannerUntil && !isPast(hideFeedbackBannerUntil)
 );
