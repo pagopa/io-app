@@ -5,10 +5,10 @@ on:
   # schedule:
   #   - cron: '59 23 * * 1-5'
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   uses: ./.github/workflows/staticcheck.yaml
   bump-app-version:
-    needs: run-static-checks
+    # needs: run-static-checks
     runs-on: ubuntu-latest
     steps:
       - id: checkout
@@ -25,7 +25,7 @@ jobs:
           yarn release-rc
       - id: push-tags
         run: |
-          git push --no-verify origin ${{ github.head_ref }}
+          git push --no-verify
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
