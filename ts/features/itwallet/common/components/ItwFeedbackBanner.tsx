@@ -17,11 +17,10 @@ const ItwFeedbackBanner = () => {
 
   const handleOnPress = () => {
     openWebUrl("https://pagopa.qualtrics.com/jfe/form/SV_40ije50GQj63CJ0");
-    dispatch(itwCloseFeedbackBanner({ withFeedback: true }));
   };
 
   const handleOnClose = () => {
-    dispatch(itwCloseFeedbackBanner({}));
+    dispatch(itwCloseFeedbackBanner());
   };
 
   return (
