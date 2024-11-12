@@ -29,6 +29,7 @@ import {
   selectWalletCgnCard,
   selectWalletPaymentMethods
 } from "../features/newWallet/store/selectors";
+import { WalletCardBonus } from "../features/newWallet/types";
 import {
   loginSessionConfigHandler,
   mixpanelOptInHandler,
@@ -166,7 +167,9 @@ const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
 
 const welfareStatusHandler = (state: GlobalState): ReadonlyArray<string> => {
   const bonusCards = selectBonusCards(state);
-  return bonusCards
-    .filter(card => card.type === "idPay")
-    .map(card => card.name);
+  const idPayCards = bonusCards.filter(
+    card => card.type === "idPay"
+  ) as Array<WalletCardBonus>;
+
+  return idPayCards.map(card => card.name);
 };
