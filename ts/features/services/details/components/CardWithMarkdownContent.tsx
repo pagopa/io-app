@@ -1,8 +1,10 @@
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+import { useLinkTo } from "@react-navigation/native";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { generateMessagesAndServicesRules } from "../../../../components/IOMarkdown/customRules";
 
 const styles = StyleSheet.create({
   card: {
@@ -18,18 +20,19 @@ export type CardWithMarkdownContentProps = {
   content: string;
 };
 
-const CSS_STYLE = `
-  body {
-    line-height: 1.5;
-  }
-`;
-
 const CardWithMarkdownContent = memo(
-  ({ content }: CardWithMarkdownContentProps) => (
-    <View style={styles.card}>
-      <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>
-    </View>
-  )
+  ({ content }: CardWithMarkdownContentProps) => {
+    const linkTo = useLinkTo();
+
+    return (
+      <View style={styles.card}>
+        <IOMarkdown
+          content={content}
+          rules={generateMessagesAndServicesRules(linkTo)}
+        />
+      </View>
+    );
+  }
 );
 
 const CardWithMarkdownContentSkeleton = () => (
