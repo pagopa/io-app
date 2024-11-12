@@ -25,7 +25,7 @@ jobs:
           yarn release-rc
       - id: push-tags
         run: |
-          git push --no-verify
+          git push --no-verify origin HEAD:${{ github.ref_name }}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
