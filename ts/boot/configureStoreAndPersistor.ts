@@ -456,7 +456,7 @@ const migrations: MigrationManifest = {
     };
   },
   // Remove old wallets&payments feature and persisted state
-  "38": (state: PersistedState) => omit(state, "features.wallet")
+  "38": (state: PersistedState) => omit(state, "payments")
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
