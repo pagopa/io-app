@@ -17,7 +17,10 @@ import {
 import { idpSelected } from "../store/actions/authentication";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { isCieLoginUatEnabledSelector } from "../features/cieLogin/store/selectors";
-import { ChosenIdentifier } from "../screens/authentication/OptInScreen";
+import {
+  ChosenIdentifier,
+  Identifier
+} from "../screens/authentication/OptInScreen";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
@@ -63,7 +66,7 @@ const useNavigateToLoginMethod = () => {
           screen: ROUTES.AUTHENTICATION_IDP_SELECTION
         });
       },
-      { identifier: "SPID" }
+      { identifier: Identifier.SPID }
     );
   }, [withIsFastLoginOptInCheck, navigate]);
 
@@ -77,7 +80,7 @@ const useNavigateToLoginMethod = () => {
           screen: ROUTES.CIE_PIN_SCREEN
         });
       },
-      { identifier: "CIE" }
+      { identifier: Identifier.CIE }
     );
   }, [withIsFastLoginOptInCheck, navigate, store, dispatch]);
 
@@ -99,7 +102,7 @@ const useNavigateToLoginMethod = () => {
               params
             });
           },
-          { identifier: "CIE_ID", params }
+          { identifier: Identifier.CIE_ID, params }
         );
       } else {
         navigate(ROUTES.AUTHENTICATION, {

@@ -90,7 +90,7 @@ type RequestInfoPositiveStates = {
 type RequestInfoError = {
   requestState: "ERROR";
   errorType: ErrorType;
-  errorCode?: string;
+  errorCodeOrMessage?: string;
   nativeAttempts: number;
 };
 
@@ -191,22 +191,27 @@ export const AuthSessionPage = () => {
   }, [selectedIdpTextData]);
 
   const handleLoginFailure = useCallback(
-    (code?: string) => {
+    (code?: string, message?: string) => {
       dispatch(
         loginFailure({
-          error: new Error(`login failure with code ${code || "n/a"}`),
+          error: new Error(
+            `login failure with code ${code || message || "n/a"}`
+          ),
           idp
         })
       );
       const logText = pipe(
-        code,
-        O.fromNullable,
+        O.fromNullable(code || message),
         O.fold(
-          () => "login failed with no error code available",
-          ec =>
-            `login failed with code (${ec}) : ${getSpidErrorCodeDescription(
-              ec
-            )}`
+          () => "login failed with no error code or message available",
+          _ => {
+            if (code) {
+              return `login failed with code (${code}) : ${getSpidErrorCodeDescription(
+                code
+              )}`;
+            }
+            return `login failed with message ${message}`;
+          }
         )
       );
 
@@ -214,7 +219,7 @@ export const AuthSessionPage = () => {
       setRequestInfo({
         requestState: "ERROR",
         errorType: ErrorType.LOGIN_ERROR,
-        errorCode: code,
+        errorCodeOrMessage: code || message,
         nativeAttempts: requestInfo.nativeAttempts
       });
     },
@@ -309,7 +314,8 @@ export const AuthSessionPage = () => {
                           result,
                           getEitherLoginResult,
                           E.fold(
-                            e => handleLoginFailure(e.errorCode),
+                            e =>
+                              handleLoginFailure(e.errorCode, e.errorMessage),
                             success => handleLoginSuccess(success.token)
                           )
                         )
@@ -370,7 +376,7 @@ export const AuthSessionPage = () => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
-        errorCode: requestInfo.errorCode,
+        errorCodeOrMessage: requestInfo.errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: "L2",
         onRetry
