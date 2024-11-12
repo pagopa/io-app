@@ -18,9 +18,12 @@ type LoginSuccess = {
 type LoginFailure = {
   success: false;
   errorCode?: string;
+  errorMessage?: string;
 };
 
 type LoginResult = LoginSuccess | LoginFailure;
+
+export type IdpTypes = "SPID" | "CIE_ID" | "CIE";
 
 export const getEitherLoginResult = (
   result: LoginResult
@@ -50,7 +53,10 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
 const LOGIN_SUCCESS_PAGE = "profile.html";
 const LOGIN_FAILURE_PAGE = "error.html";
 
-export const extractLoginResult = (url: string): LoginResult | undefined => {
+export const extractLoginResult = (
+  url: string,
+  idp: IdpTypes = "SPID"
+): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);
 
   // LOGIN_SUCCESS
@@ -64,10 +70,16 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   // LOGIN_FAILURE
   if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
     const errorCode = urlParse.query.errorCode;
-    trackLoginSpidError(errorCode);
+    const errorMessage = urlParse.query.errorMessage;
+    if (idp === "SPID") {
+      trackLoginSpidError(errorCode);
+    }
     return {
       success: false,
-      errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode
+      errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode,
+      errorMessage: isStringNullyOrEmpty(errorMessage)
+        ? undefined
+        : errorMessage
     };
   }
   // Url is not LOGIN related
@@ -84,13 +96,14 @@ export const getIdpLoginUri = (idpId: string, level: number) =>
  */
 export const onLoginUriChanged =
   (
-    onFailure: (errorCode: string | undefined) => void,
-    onSuccess: (_: SessionToken) => void
+    onFailure: (errorCode?: string, errorMessage?: string) => void,
+    onSuccess: (_: SessionToken) => void,
+    idp: IdpTypes = "SPID"
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {
       // If the url is not related to login this will be `null`
-      const loginResult = extractLoginResult(navState.url);
+      const loginResult = extractLoginResult(navState.url, idp);
       if (loginResult) {
         if (loginResult.success) {
           // In case of successful login
@@ -98,7 +111,7 @@ export const onLoginUriChanged =
           return true;
         } else {
           // In case of login failure
-          onFailure(loginResult.errorCode);
+          onFailure(loginResult.errorCode, loginResult.errorMessage);
         }
       }
     }
