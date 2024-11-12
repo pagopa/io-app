@@ -4,41 +4,41 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { itwShouldRenderFeedbackBannerSelector } from "../../store/selectors";
+import * as selectors from "../../store/selectors";
 import { ItwFeedbackBanner } from "../ItwFeedbackBanner";
-
-type JestMock = ReturnType<typeof jest.fn>;
-
-jest.mock("../../store/selectors", () => ({
-  itwShouldRenderFeedbackBannerSelector: jest.fn()
-}));
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("ItwFeedbackBanner", () => {
   beforeEach(() => {
-    jest.resetAllMocks();
     jest.clearAllMocks();
+    jest.resetAllMocks();
+    mockAccessibilityInfo();
   });
 
   it("should match the snapshot", () => {
+    jest
+      .spyOn(selectors, "itwShouldRenderFeedbackBannerSelector")
+      .mockReturnValue(true);
+
     const component = renderComponent();
     expect(component).toMatchSnapshot();
   });
 
   it("should not render", () => {
-    const { queryByTestId } = renderComponent(false);
+    jest
+      .spyOn(selectors, "itwShouldRenderFeedbackBannerSelector")
+      .mockReturnValue(false);
+
+    const { queryByTestId } = renderComponent();
     expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
   });
 });
 
-const renderComponent = (shouldRender = true) => {
+const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
-
-  (
-    itwShouldRenderFeedbackBannerSelector as unknown as JestMock
-  ).mockReturnValue(shouldRender);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ItwFeedbackBanner,
