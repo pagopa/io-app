@@ -573,7 +573,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -645,7 +645,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -876,7 +876,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -1169,7 +1169,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -1424,7 +1424,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -1677,7 +1677,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -1782,7 +1782,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -2721,7 +2721,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -2793,7 +2793,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -3024,7 +3024,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -3317,7 +3317,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -3572,7 +3572,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -3825,7 +3825,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -3930,7 +3930,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -4850,7 +4850,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -4922,7 +4922,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -5153,7 +5153,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -5446,7 +5446,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -5701,7 +5701,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -5954,7 +5954,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -6059,7 +6059,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -6964,7 +6964,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -7036,7 +7036,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -7267,7 +7267,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -7560,7 +7560,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -7815,7 +7815,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -8068,7 +8068,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -8173,7 +8173,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -9092,7 +9092,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -9164,7 +9164,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -9395,7 +9395,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -9688,7 +9688,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -9943,7 +9943,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -10196,7 +10196,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -10301,7 +10301,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -11291,7 +11291,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -11363,7 +11363,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -11594,7 +11594,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -11887,7 +11887,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -12142,7 +12142,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -12395,7 +12395,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -12500,7 +12500,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -13462,7 +13462,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -13534,7 +13534,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -13765,7 +13765,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -14058,7 +14058,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -14313,7 +14313,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -14566,7 +14566,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -14671,7 +14671,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -15576,7 +15576,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -15648,7 +15648,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -15879,7 +15879,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -16172,7 +16172,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -16427,7 +16427,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -16680,7 +16680,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -16785,7 +16785,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -17640,7 +17640,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -17712,7 +17712,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -17943,7 +17943,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -18236,7 +18236,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -18491,7 +18491,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -18744,7 +18744,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -18849,7 +18849,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -19788,7 +19788,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -19860,7 +19860,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -20091,7 +20091,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -20384,7 +20384,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -20639,7 +20639,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -20892,7 +20892,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -20997,7 +20997,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -21916,7 +21916,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -21988,7 +21988,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -22219,7 +22219,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -22512,7 +22512,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -22767,7 +22767,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -23020,7 +23020,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -23125,7 +23125,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -24064,7 +24064,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -24136,7 +24136,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -24367,7 +24367,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -24660,7 +24660,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -24915,7 +24915,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -25168,7 +25168,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -25273,7 +25273,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -26263,7 +26263,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -26335,7 +26335,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -26566,7 +26566,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -26859,7 +26859,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -27114,7 +27114,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -27367,7 +27367,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -27472,7 +27472,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -28411,7 +28411,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -28483,7 +28483,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -28714,7 +28714,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -29007,7 +29007,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -29262,7 +29262,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -29515,7 +29515,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -29620,7 +29620,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -30559,7 +30559,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -30631,7 +30631,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -30862,7 +30862,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -31155,7 +31155,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -31410,7 +31410,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -31663,7 +31663,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -31768,7 +31768,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -32715,7 +32715,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -32787,7 +32787,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -33018,7 +33018,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -33311,7 +33311,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -33566,7 +33566,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -33819,7 +33819,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -33924,7 +33924,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -34843,7 +34843,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -34915,7 +34915,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -35146,7 +35146,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -35439,7 +35439,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -35694,7 +35694,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -35947,7 +35947,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -36052,7 +36052,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -37044,7 +37044,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -37116,7 +37116,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -37347,7 +37347,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -37640,7 +37640,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -37895,7 +37895,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -38148,7 +38148,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -38253,7 +38253,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -39172,7 +39172,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -39244,7 +39244,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -39475,7 +39475,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -39768,7 +39768,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -40023,7 +40023,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -40276,7 +40276,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -40381,7 +40381,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -41421,7 +41421,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -41493,7 +41493,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -41724,7 +41724,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -42017,7 +42017,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -42272,7 +42272,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -42525,7 +42525,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -42630,7 +42630,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -43708,7 +43708,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -43780,7 +43780,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -44011,7 +44011,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -44304,7 +44304,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -44559,7 +44559,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -44812,7 +44812,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -44917,7 +44917,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -45822,7 +45822,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -45894,7 +45894,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -46125,7 +46125,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -46418,7 +46418,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -46673,7 +46673,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -46926,7 +46926,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -47031,7 +47031,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -47978,7 +47978,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -48050,7 +48050,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -48281,7 +48281,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -48574,7 +48574,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -48829,7 +48829,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -49082,7 +49082,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -49187,7 +49187,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -50106,7 +50106,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -50178,7 +50178,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -50409,7 +50409,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -50702,7 +50702,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -50957,7 +50957,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -51210,7 +51210,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -51315,7 +51315,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
