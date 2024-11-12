@@ -1,10 +1,9 @@
 name: Release new app version
 on:
-  pull_request:
-    branches: IOPLT-754-nightly-canary-release
-  workflow_dispatch:
-  schedule:
-    - cron: '59 23 * * 1-5'
+  - pull_request
+  - workflow_dispatch
+  # schedule:
+  #   - cron: '59 23 * * 1-5'
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
