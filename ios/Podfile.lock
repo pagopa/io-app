@@ -1452,7 +1452,7 @@ PODS:
     - React-Core
   - react-native-notifications-utils (0.3.0):
     - React-Core
-  - react-native-pager-view (6.5.0):
+  - react-native-pager-view (6.4.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1479,7 +1479,7 @@ PODS:
     - React-Core
   - react-native-render-html (6.3.1):
     - React-Core
-  - react-native-safe-area-context (4.14.0):
+  - react-native-safe-area-context (4.11.1):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -1799,7 +1799,7 @@ PODS:
     - React
   - RNCAsyncStorage (2.0.0):
     - React-Core
-  - RNCClipboard (1.15.0):
+  - RNCClipboard (1.14.2):
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
@@ -1966,7 +1966,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.35.0):
+  - RNScreens (3.34.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2018,11 +2018,11 @@ PODS:
   - Sentry/HybridSDK (8.36.0)
   - SocketRocket (0.7.0)
   - SwiftCBOR (0.4.7)
-  - VisionCamera (4.6.1):
-    - VisionCamera/Core (= 4.6.1)
-    - VisionCamera/React (= 4.6.1)
-  - VisionCamera/Core (4.6.1)
-  - VisionCamera/React (4.6.1):
+  - VisionCamera (4.5.3):
+    - VisionCamera/Core (= 4.5.3)
+    - VisionCamera/React (= 4.5.3)
+  - VisionCamera/Core (4.5.3)
+  - VisionCamera/React (4.5.3):
     - React-Core
   - Yoga (0.0.0)
   - ZendeskAnswerBotProvidersSDK (5.0.4):
@@ -2491,11 +2491,11 @@ SPEC CHECKSUMS:
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-netinfo: f0a9899081c185db1de5bb2fdc1c88c202a059ac
   react-native-notifications-utils: f083307d1261f34444a89ca2f9b69f920c9b81e7
-  react-native-pager-view: bc0577047c5901fc96f6134881172072a909af7b
+  react-native-pager-view: c476f76d54f946df5147645e902d3d7173688187
   react-native-pdf: 79aa75e39a80c1d45ffe58aa500f3cf08f267a2e
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
-  react-native-safe-area-context: 4532f1a0c5d34a46b9324ccaaedcb5582a302b7d
+  react-native-safe-area-context: 5141f11858b033636f1788b14f32eaba92cee810
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-skia: 00e92fdc3e2e9e7d6df254296d2f3e8c548224af
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
@@ -2531,7 +2531,7 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: d35c79ffba52c1013013e16b1fc295aec2feabb6
-  RNCClipboard: 69ab8e51324d5b351f6ba72bbdb72478087a2c64
+  RNCClipboard: 5e503962f0719ace8f7fdfe9c60282b526305c85
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFlashList: 2a5ca82c4998952060b77fa9a1eb05f7ed8783b6
@@ -2543,14 +2543,14 @@ SPEC CHECKSUMS:
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 0d591ea1e150f36cb96d868d4e8d77272243d78a
   RNReanimated: f42a5044d121d68e91680caacb0293f4274228eb
-  RNScreens: c7ceced6a8384cb9be5e7a5e88e9e714401fd958
+  RNScreens: 00e01e05e3cf66bd701148c2531965437e9583e4
   RNSentry: e280ee2f6d0aa58c8ac0eb9a45b7678b5840c1da
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
-  VisionCamera: c95a8ad535f527562be1fb05fb2fd324578e769c
+  VisionCamera: cb84d0d8485b3e67c91b62931d3aa88f49747c92
   Yoga: aa3df615739504eebb91925fc9c58b4922ea9a08
   ZendeskAnswerBotProvidersSDK: 516624907e1c688933dbe727ba6870b8df2237f1
   ZendeskAnswerBotSDK: 44046f6c46ff5e8ea53c920cdf46856a84def279

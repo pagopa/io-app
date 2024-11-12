@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import CieIdWizard from "../screens/wizards/CieIdWizard";
-import CiePinWizard from "../screens/wizards/CiePinWizard";
+import CieIdWizard, { CIE_ID_LINK } from "../screens/wizards/CieIdWizard";
+import CiePinWizard, { CIE_PIN_LINK } from "../screens/wizards/CiePinWizard";
 import SpidWizard from "../screens/wizards/SpidWizard";
 import IDActivationWizard, {
   ACTIVATE_CIE_URL,

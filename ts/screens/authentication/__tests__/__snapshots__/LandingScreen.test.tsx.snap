@@ -1864,6 +1864,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                           width={24}
                                         >
                                           <RNSVGGroup
+                                            color="#BBC2D6"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -1978,6 +1979,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2132,6 +2134,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                           width={24}
                                         >
                                           <RNSVGGroup
+                                            color="#BBC2D6"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2243,6 +2246,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -4766,6 +4770,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                           width={24}
                                         >
                                           <RNSVGGroup
+                                            color="#BBC2D6"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -4880,6 +4885,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -5034,6 +5040,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                           width={24}
                                         >
                                           <RNSVGGroup
+                                            color="#BBC2D6"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -5145,6 +5152,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
