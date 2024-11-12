@@ -67,7 +67,7 @@ test("doing nothing shows initial state", async () => {
   const { screen } = renderScreen();
   await screen.findByTestId("cgnMerchantSearchInput");
   await screen.findByText(
-    I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.title", {
+    I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.titleWithCount", {
       merchantCount: merchantList.length
     })
   );
@@ -99,7 +99,7 @@ test("searching existing shows results", async () => {
   ).toBeNull();
   expect(
     screen.queryByText(
-      I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.title", {
+      I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.titleWithCount", {
         merchantCount: merchantList.length
       })
     )
@@ -118,7 +118,7 @@ test("searching non existing shows empty state", async () => {
   expect(screen.queryByText(/three/)).toBeNull();
   expect(
     screen.queryByText(
-      I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.title", {
+      I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.titleWithCount", {
         merchantCount: merchantList.length
       })
     )
