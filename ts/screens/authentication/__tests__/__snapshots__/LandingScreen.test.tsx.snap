@@ -1904,7 +1904,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                                 {
                                                   "color": "#0B3EE3",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 16,
+                                                  "fontSize": 14,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 21,
@@ -2169,7 +2169,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                                 {
                                                   "color": "#0B3EE3",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 16,
+                                                  "fontSize": 14,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 21,
@@ -2332,6 +2332,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     }
                                   >
                                     <View
+                                      accessibilityLabel="Not sure what to choose? We give you a hand"
                                       accessibilityRole="button"
                                       accessible={true}
                                       style={
@@ -2358,7 +2359,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
@@ -4800,7 +4801,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                                 {
                                                   "color": "#0B3EE3",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 16,
+                                                  "fontSize": 14,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 21,
@@ -5065,7 +5066,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                                 {
                                                   "color": "#0B3EE3",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 16,
+                                                  "fontSize": 14,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 21,
@@ -5228,6 +5229,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     }
                                   >
                                     <View
+                                      accessibilityLabel="Not sure what to choose? We give you a hand"
                                       accessibilityRole="button"
                                       accessible={true}
                                       style={
@@ -5254,7 +5256,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 25,
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
