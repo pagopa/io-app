@@ -1,9 +1,8 @@
-name: Release new app version
+name: Nightly release new app version
 on:
-  - pull_request
-  - workflow_dispatch
-  # schedule:
-  #   - cron: '59 23 * * 1-5'
+  schedule:
+    - cron: '59 23 * * 1,5'
+  workflow_dispatch:
 jobs:
   # run-static-checks:
   #   uses: ./.github/workflows/staticcheck.yaml
@@ -20,17 +19,16 @@ jobs:
         uses: ./.github/actions/setup-composite
       - id: bump-version
         run: |
-          git config --local user.email "github-actions@users.noreply.github.com"
-          git config --local user.name "github-actions"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           yarn release-rc
       - id: push-tags
         run: |
-          git push --no-verify origin HEAD:${{ github.head_ref }}
+          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          echo $APP_VERSION
-          # gh release create $APP_VERSION --latest --generate-notes
+          gh release create $APP_VERSION --latest --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
@@ -101,7 +99,9 @@ jobs:
           path: android/app/build/outputs/bundle/release/app-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
-        run: gh release upload ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
@@ -171,7 +171,9 @@ jobs:
           path: ios/IO.ipa
       - id: upload-ipa-release
         continue-on-error: true
-        run: gh release upload ${{ github.ref_name }} ios/IO.ipa#IO-iOS.ipa
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION ios/IO.ipa#IO-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
