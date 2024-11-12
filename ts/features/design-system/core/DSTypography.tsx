@@ -17,7 +17,6 @@ import {
   Label,
   LabelMini,
   LabelSmall,
-  LabelSmallAlt,
   MdH1,
   MdH2,
   MdH3,
@@ -50,7 +49,6 @@ export const DSTypography = () => (
       <BodyRow />
       <VStack space={typographicStyleMargin}>
         <LabelSmallRow />
-        <LabelSmallAltRow />
         <LabelMiniRow />
         <LabelRow />
       </VStack>
@@ -301,21 +299,6 @@ export const LabelMiniRow = () => {
         </View>
       </HStack>
     </>
-  );
-};
-
-export const LabelSmallAltRow = () => {
-  const theme = useIOTheme();
-
-  return (
-    <HStack space={typographicStyleMargin}>
-      <LabelSmallAlt>Label small alt</LabelSmallAlt>
-      <View
-        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
-      >
-        <LabelSmallAlt color={"white"}>Label small alt</LabelSmallAlt>
-      </View>
-    </HStack>
   );
 };
 
