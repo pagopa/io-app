@@ -37,8 +37,10 @@ const mockFetch: typeof fetch = async (url, options) => {
   throw new Error(`Unexpected fetch call to ${url}`);
 };
 
-// eslint-disable-next-line functional/immutable-data
-(global as any).fetch = jest.fn(mockFetch);
+declare const global: { fetch: typeof fetch };
+beforeEach(() => {
+  jest.spyOn(global, "fetch").mockImplementation(mockFetch as any);
+});
 
 const merchantList = [
   {
@@ -63,9 +65,7 @@ const merchantList = [
 
 test("doing nothing shows initial state", async () => {
   const { screen } = renderScreen();
-  await screen.findByPlaceholderText(
-    I18n.t("bonus.cgn.merchantSearch.input.placeholder")
-  );
+  await screen.findByTestId("cgnMerchantSearchInput");
   await screen.findByText(
     I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.title", {
       merchantCount: merchantList.length
@@ -83,9 +83,7 @@ test("doing nothing shows initial state", async () => {
 
 test("searching existing shows results", async () => {
   const { screen } = renderScreen();
-  const searchInput = await screen.findByPlaceholderText(
-    I18n.t("bonus.cgn.merchantSearch.input.placeholder")
-  );
+  const searchInput = await screen.findByTestId("cgnMerchantSearchInput");
   fireEvent.changeText(searchInput, "merchant ");
   await screen.findByText(" one");
   await screen.findByText(" two");
@@ -110,9 +108,7 @@ test("searching existing shows results", async () => {
 
 test("searching non existing shows empty state", async () => {
   const { screen } = renderScreen();
-  const searchInput = await screen.findByPlaceholderText(
-    I18n.t("bonus.cgn.merchantSearch.input.placeholder")
-  );
+  const searchInput = await screen.findByTestId("cgnMerchantSearchInput");
   fireEvent.changeText(searchInput, "four");
   await screen.findByText(
     I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.title")

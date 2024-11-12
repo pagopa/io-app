@@ -150,6 +150,7 @@ export function CgnMerchantSearchScreen() {
           placeholder={I18n.t("bonus.cgn.merchantSearch.input.placeholder")}
           ref={searchInputRef}
           value={searchText}
+          testID="cgnMerchantSearchInput"
         />
       </View>
       <FlatList
