@@ -24,11 +24,12 @@ jobs:
         run: |
           git config --local user.email "github-actions@users.noreply.github.com"
           git config --local user.name "github-actions"
-          git push --no-verify --follow-tags origin ${{ github.head_ref }}
+          # git push --no-verify --follow-tags origin ${{ github.head_ref }}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release create $APP_VERSION --latest --generate-notes
+          echo $APP_VERSION
+          # gh release create $APP_VERSION --latest --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
