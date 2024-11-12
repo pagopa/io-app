@@ -353,7 +353,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -550,7 +550,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -633,7 +633,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -716,7 +716,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -799,7 +799,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -882,7 +882,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -965,7 +965,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1048,7 +1048,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1131,7 +1131,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1214,7 +1214,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1297,7 +1297,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1380,7 +1380,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1463,7 +1463,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1546,7 +1546,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -1706,7 +1706,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
@@ -1752,7 +1752,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                             "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 25,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -2282,7 +2282,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2479,7 +2479,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2562,7 +2562,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2645,7 +2645,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2728,7 +2728,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2811,7 +2811,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2894,7 +2894,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -2977,7 +2977,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3115,7 +3115,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3198,7 +3198,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3281,7 +3281,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3364,7 +3364,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3447,7 +3447,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -3607,7 +3607,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
@@ -3653,7 +3653,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                             "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 25,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -3840,7 +3840,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 25,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -4000,7 +4000,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
@@ -4046,7 +4046,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                             "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 25,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
