@@ -36,7 +36,6 @@ import {
   selectWalletPaymentMethods
 } from "../features/newWallet/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import { WalletCardBonus } from "../features/newWallet/types";
 import {
   loginSessionConfigHandler,
   notificationConfigurationHandler,
@@ -166,5 +165,5 @@ const welfareStatusHandler = (state: GlobalState): ReadonlyArray<string> => {
   const bonusCards = selectBonusCards(state);
   return bonusCards
     .filter(card => card.type === "idPay")
-    .map((card: WalletCardBonus) => card.name);
+    .map(card => card.name);
 };
