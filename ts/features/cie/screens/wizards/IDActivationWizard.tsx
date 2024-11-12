@@ -11,9 +11,11 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../utils/url";
 
-const REQUEST_CIE_URL = "https://www.cartaidentita.interno.gov.it/richiedi/";
-const ACTIVATE_CIE_URL = "https://www.cartaidentita.interno.gov.it/attiva/";
-const ACTIVATE_SPID_URL = "https://www.spid.gov.it/cittadini/";
+export const REQUEST_CIE_URL =
+  "https://www.cartaidentita.interno.gov.it/richiedi/";
+export const ACTIVATE_CIE_URL =
+  "https://www.cartaidentita.interno.gov.it/attiva/";
+export const ACTIVATE_SPID_URL = "https://www.spid.gov.it/cittadini/";
 
 const IDActivationWizard = () => {
   const { popToTop } = useIONavigation();
@@ -59,6 +61,7 @@ const IDActivationWizard = () => {
             "authentication.wizards.id_activation_wizard.list_items.request_cie.label"
           )}
           variant="primary"
+          testID="id-activation-request-cie"
           onPress={handleOpenLink(REQUEST_CIE_URL)}
         />
         <ListItemAction
@@ -67,6 +70,7 @@ const IDActivationWizard = () => {
             "authentication.wizards.id_activation_wizard.list_items.activate_cie.title"
           )}
           variant="primary"
+          testID="id-activation-activate-cie"
           onPress={handleOpenLink(ACTIVATE_CIE_URL)}
         />
         <ListItemAction
@@ -75,6 +79,7 @@ const IDActivationWizard = () => {
             "authentication.wizards.id_activation_wizard.list_items.activate_spid.title"
           )}
           variant="primary"
+          testID="id-activation-activate-spid"
           onPress={handleOpenLink(ACTIVATE_SPID_URL)}
         />
       </ContentWrapper>
