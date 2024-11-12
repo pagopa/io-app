@@ -3496,6 +3496,8 @@ features:
           requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+          claimValuesShown: "Attributi del documento mostrati"
+          claimValuesHidden: "Attributi del documento nascosti"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?

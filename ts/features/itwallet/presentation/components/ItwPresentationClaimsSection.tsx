@@ -5,11 +5,11 @@ import {
   IOStyles
 } from "@pagopa/io-app-design-system";
 import { default as React, useMemo } from "react";
-import { View } from "react-native";
+import { AccessibilityInfo, View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
-import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
+import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
 import {
   getCredentialStatus,
   parseClaims,
@@ -35,11 +35,26 @@ export const ItwPresentationClaimsSection = ({
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
   });
 
+  const handleToggleValueVisibility = (hideValues: boolean) => {
+    setTimeout(() => {
+      AccessibilityInfo.announceForAccessibility(
+        hideValues
+          ? I18n.t(
+              "features.itWallet.presentation.credentialDetails.actions.claimValuesHidden"
+            )
+          : I18n.t(
+              "features.itWallet.presentation.credentialDetails.actions.claimValuesShown"
+            )
+      );
+    }, 100);
+    setValuesHidden(hideValues);
+  };
+
   const renderHideValuesToggle = () => (
     <IconButton
       testID="toggle-claim-visibility"
       icon={valuesHidden ? "eyeHide" : "eyeShow"}
-      onPress={() => setValuesHidden(x => !x)}
+      onPress={() => handleToggleValueVisibility(!valuesHidden)}
       accessibilityLabel={I18n.t(
         valuesHidden
           ? "features.itWallet.presentation.credentialDetails.actions.showClaimValues"

@@ -3496,6 +3496,8 @@ features:
           requestAssistance: "Something wrong?"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
+          claimValuesShown: "Calim values shown"
+          claimValuesHidden: "claim values hidden"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?
