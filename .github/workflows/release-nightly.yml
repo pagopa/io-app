@@ -34,7 +34,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
-    needs: run-static-checks
+    needs: bump-app-version
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -105,7 +105,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
-    needs: run-static-checks
+    needs: bump-app-version
     environment: prod
     runs-on: macos-13-xlarge
     steps:
