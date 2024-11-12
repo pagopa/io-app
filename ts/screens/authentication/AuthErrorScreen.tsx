@@ -12,7 +12,7 @@ import { UnlockAccessProps } from "./UnlockAccessComponent";
 import AuthErrorComponent from "./components/AuthErrorComponent";
 
 type CommonAuthErrorScreenProps = {
-  errorCode?: string;
+  errorCodeOrMessage?: string;
 } & UnlockAccessProps;
 
 type SpidProps = {
@@ -42,7 +42,7 @@ const authScreenByAuthMethod = {
 const AuthErrorScreen = () => {
   const route =
     useRoute<Route<typeof ROUTES.AUTH_ERROR_SCREEN, AuthErrorScreenProps>>();
-  const { errorCode, authMethod, authLevel } = route.params;
+  const { errorCodeOrMessage, authMethod, authLevel } = route.params;
 
   const navigation = useIONavigation();
 
@@ -78,7 +78,7 @@ const AuthErrorScreen = () => {
       authLevel={authLevel}
       onCancel={onCancel}
       onRetry={onRetry}
-      errorCode={errorCode}
+      errorCodeOrMessage={errorCodeOrMessage}
     />
   );
 };
