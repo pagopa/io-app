@@ -11,12 +11,11 @@ import {
   MaterialTopTabBarProps,
   createMaterialTopTabNavigator
 } from "@react-navigation/material-top-tabs";
-import { useNavigation } from "@react-navigation/native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { CgnDetailsParamsList } from "../../navigation/params";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import CGN_ROUTES from "../../navigation/routes";
 import CgnMerchantsListScreen from "./CgnMerchantsListScreen";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
 
@@ -91,17 +90,16 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
   );
 };
 const CgnMerchantsCategoriesSelectionScreen = () => {
-  const { navigate } =
-    useNavigation<
-      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_TABS">
-    >();
+  const { navigate } = useIONavigation();
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
     secondAction: {
       icon: "search",
       onPress() {
-        navigate("CGN_MERCHANTS_SEARCH");
+        navigate(CGN_ROUTES.DETAILS.MAIN, {
+          screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
+        });
       },
       accessibilityLabel: I18n.t(
         "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"

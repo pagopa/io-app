@@ -1,13 +1,10 @@
 import {
-  Badge,
   Body,
   Divider,
   H6,
-  IOColors,
   IOSpacingScale,
   IOStyles,
   IOVisualCostants,
-  ListItemNav,
   Pictogram,
   SearchInput,
   SearchInputRef,
@@ -22,25 +19,18 @@ import React, {
 } from "react";
 import {
   FlatList,
-  Keyboard,
   ListRenderItemInfo,
   Platform,
-  Text,
   View,
   ViewStyle,
   StyleSheet
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "../../../../../i18n";
-import {
-  IOStackNavigationProp,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
-import CGN_ROUTES from "../../navigation/routes";
-import { CgnDetailsParamsList } from "../../navigation/params";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
   cgnMerchantsCountSelector,
@@ -52,13 +42,11 @@ import {
   cgnMerchantsCount,
   cgnSearchMerchants
 } from "../../store/actions/merchants";
-import { highlightSearchText } from "../../../../../utils/highlightSearchText";
+import { MerchantSearchResultListItem } from "../../components/merchants/MerchantSearchResultListItem";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
 const SEARCH_DELAY: number = 300;
-const TEXT_LEGNTH_WITH_BADGE = 60;
-const TEXT_LEGNTH_WITHOUT_BADGE = 100;
 
 export function CgnMerchantSearchScreen() {
   const insets = useSafeAreaInsets();
@@ -175,13 +163,6 @@ const styles = StyleSheet.create({
   },
   emptyListText: {
     textAlign: "center"
-  },
-  listItemTextContainer: {
-    flexGrow: 1,
-    flexShrink: 1
-  },
-  highlightYes: {
-    backgroundColor: IOColors["turquoise-150"]
   }
 });
 
@@ -221,78 +202,4 @@ function EmptyListNoResults() {
       </Body>
     </View>
   );
-}
-
-function MerchantSearchResultListItem({
-  item,
-  searchText
-}: {
-  item: SearchItem;
-  searchText: string;
-}) {
-  const { navigate } =
-    useNavigation<
-      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_SEARCH">
-    >();
-  return (
-    <View style={IOStyles.horizontalContentPadding}>
-      <ListItemNav
-        onPress={() => {
-          navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
-            merchantID: item.id
-          });
-          Keyboard.dismiss();
-        }}
-        value={
-          <View style={IOStyles.rowSpaceBetween}>
-            <View style={styles.listItemTextContainer}>
-              <H6>{highlightText({ text: item.name, searchText })}</H6>
-              <Body numberOfLines={2} ellipsizeMode="tail">
-                {highlightText({
-                  text: item.description,
-                  searchText,
-                  esimatedTextLengthToDisplay: item.newDiscounts
-                    ? TEXT_LEGNTH_WITH_BADGE
-                    : TEXT_LEGNTH_WITHOUT_BADGE
-                })}
-              </Body>
-            </View>
-            {item.newDiscounts && (
-              <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-                <Badge
-                  variant="purple"
-                  text={I18n.t("bonus.cgn.merchantsList.news")}
-                />
-              </View>
-            )}
-          </View>
-        }
-        accessibilityLabel={item.name}
-      />
-    </View>
-  );
-}
-
-function highlightText({
-  searchText,
-  text,
-  esimatedTextLengthToDisplay
-}: {
-  text: string;
-  searchText: string;
-  esimatedTextLengthToDisplay?: number;
-}) {
-  const chunks = highlightSearchText({
-    text,
-    searchText,
-    estimatedTextLengthToDisplay: esimatedTextLengthToDisplay
-  });
-  return chunks.map((chunk, index) => (
-    <Text
-      key={index}
-      style={chunk.highlighted ? styles.highlightYes : undefined}
-    >
-      {chunk.text}
-    </Text>
-  ));
 }
