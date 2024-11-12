@@ -216,6 +216,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     <SafeAreaView style={styles.container}>
       {(webviewSource || authenticatedUrl) && (
         <WebView
+          testID="cie-id-webview"
           ref={webView}
           startInLoadingState={true}
           userAgent={defaultUserAgent}
