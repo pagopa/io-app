@@ -331,7 +331,7 @@ profile:
       title: Preferences
       description: Customize your app experience
     security:
-      title: Security
+      title: Security and login
       description: Manage biometric access and unlock code
     privacy:
       title: Privacy Policy and Terms of Service
@@ -504,7 +504,7 @@ profile:
       nameSurname: Name and surname
       fiscalCode: Fiscal code
   security:
-    title: Security
+    title: Security and login
     subtitle: Manage in-app authentication methods.
     list:
       biometric_recognition:

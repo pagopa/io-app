@@ -1,6 +1,6 @@
 import {
+  ButtonLink,
   ContentWrapper,
-  Label,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,7 +13,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import { openWebUrl } from "../../../../utils/url";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 
-const CIE_ID_LINK =
+export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
 
 const CieIdWizard = () => {
@@ -25,6 +25,7 @@ const CieIdWizard = () => {
   const screenActions = (): IOScrollViewActions => ({
     type: "TwoButtons",
     primary: {
+      testID: "cie-id-wizard-login-with-cie-id",
       label: I18n.t(
         "authentication.wizards.cie_id_wizard.actions.primary.label"
       ),
@@ -33,6 +34,7 @@ const CieIdWizard = () => {
       }
     },
     secondary: {
+      testID: "cie-id-wizard-navigate-to-cie-pin-wizard",
       label: I18n.t(
         "authentication.wizards.cie_id_wizard.actions.secondary.label"
       ),
@@ -54,16 +56,15 @@ const CieIdWizard = () => {
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <Label
-          asLink
+        <ButtonLink
+          testID="cie-id-wizard-open-cie-id-link"
           onPress={() => {
             openWebUrl(CIE_ID_LINK, () => {
               error(I18n.t("global.jserror.title"));
             });
           }}
-        >
-          {I18n.t("authentication.wizards.cie_id_wizard.link")}
-        </Label>
+          label={I18n.t("authentication.wizards.cie_id_wizard.link")}
+        />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
   );
