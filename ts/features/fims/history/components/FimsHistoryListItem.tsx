@@ -13,7 +13,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { Consent } from "../../../../../definitions/fims_history/Consent";
+import { Access } from "../../../../../definitions/fims_history/Access";
 import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { potFoldWithDefault } from "../../../../utils/pot";
@@ -25,10 +25,10 @@ import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 
 type SuccessListItemProps = {
   serviceData: ServicePublic;
-  consent: Consent;
+  consent: Access;
 };
 type BaseHistoryListItemProps = {
-  item: Consent;
+  item: Access;
 };
 
 // --------- LISTITEMS
