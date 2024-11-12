@@ -1910,6 +1910,7 @@ wallet:
       PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
         title: "Il metodo di pagamento selezionato non è disponibile"
         subtitle: "Può succedere quando l’importo da pagare è particolarmente elevato, o se stai cercando di pagare una marca da bollo digitale."
+        action: "Scegli un altro metodo"
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}

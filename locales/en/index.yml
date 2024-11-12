@@ -1909,6 +1909,7 @@ wallet:
       PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
         title: "The selected payment method is not available"
         subtitle: "This can happen when the amount to be paid is particularly high, or if you are trying to pay a digital stamp duty."
+        action: "Select another payment method"
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}

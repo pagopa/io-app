@@ -1817,6 +1817,7 @@ wallet:
       PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
         title: "Die ausgewählte Zahlungsmethode ist nicht verfügbar"
         subtitle: "Dies kann passieren, wenn der zu zahlende Betrag besonders hoch ist oder wenn du versuchst, eine digitale Steuer- oder Gebührmarke zu bezahlen."
+        action: "Wähle eine andere Zahlungsmethode"
     outcome:
       SUCCESS:
         title: "Du hast {{amount}} bezahlt"
