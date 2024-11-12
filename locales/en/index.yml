@@ -4176,9 +4176,9 @@ FIMS:
       dataUnavailable: "Dati non disponibili"
       ko:
         title: "C’è un problema temporaneo"
-        body: "Il caricamento della lista degli accessi non è riuscito"
+        body: "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       toast: C’è un problema nel caricamento della lista. Riprova
-    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
+    emptyBody: "Qui troverai la lista degli accessi ogni volta che usi un servizio di terza parte tramite IO."
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
@@ -4192,8 +4192,8 @@ FIMS:
       title: "Controlla i tuoi accessi"
       subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
-      header: Accessi a servizi di terze parti
-      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
+      header: "I tuoi accessi a servizi di terze parti"
+      body: "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
   loadingScreen:
     abort:
       title: "Hai annullato l’accesso al servizio"
