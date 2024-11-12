@@ -1814,6 +1814,9 @@ wallet:
       PAYMENT_UNKNOWN:
         title: "Wir können die Zahlungsmitteilung nicht finden"
         subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
+      PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "Die ausgewählte Zahlungsmethode ist nicht verfügbar"
+        subtitle: "Dies kann passieren, wenn der zu zahlende Betrag besonders hoch ist oder wenn du versuchst, eine digitale Steuer- oder Gebührmarke zu bezahlen."
     outcome:
       SUCCESS:
         title: "Du hast {{amount}} bezahlt"

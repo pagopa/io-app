@@ -1906,6 +1906,9 @@ wallet:
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+      PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "The selected payment method is not available"
+        subtitle: "This can happen when the amount to be paid is particularly high, or if you are trying to pay a digital stamp duty."
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}

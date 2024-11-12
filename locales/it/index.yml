@@ -1423,6 +1423,7 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+      
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1906,6 +1907,9 @@ wallet:
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+      PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "Il metodo di pagamento selezionato non è disponibile"
+        subtitle: "Può succedere quando l’importo da pagare è particolarmente elevato, o se stai cercando di pagare una marca da bollo digitale."
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
