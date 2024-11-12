@@ -10,6 +10,14 @@ import { PaymentData } from "../../types";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { addUserSelectedPaymentRptId } from "../../store/actions";
+import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+
+jest.mock(
+  "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround",
+  () => ({
+    startPaymentFlowWithRptIdWorkaround: jest.fn()
+  })
+);
 
 describe("getRptIdStringFromPaymentData", () => {
   it("should properly format the RptID", () => {
@@ -102,9 +110,23 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     expect(decodeErrorCallback).not.toHaveBeenCalled();
     expect(prenavigationCallback).toHaveBeenCalledTimes(1);
     expect(analyticsCallback).toHaveBeenCalledTimes(1);
-    expect(dispatch.mock.calls).toHaveLength(2);
+    expect(dispatch.mock.calls).toHaveLength(1);
     expect(dispatch.mock.calls[0][0]).toStrictEqual(
       addUserSelectedPaymentRptId(paymentId)
+    );
+    expect(startPaymentFlowWithRptIdWorkaround).toHaveBeenCalledWith(
+      expect.objectContaining({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          auxDigit,
+          applicationCode,
+          iuv13,
+          checkDigit
+        }
+      }),
+      dispatch,
+      expect.any(Function),
+      { startOrigin: "message" }
     );
   });
   it("should navigate to Payment Transaction Summary with default 0-amount and no prenavigation callback", () => {
@@ -130,9 +152,23 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     );
     expect(decodeErrorCallback).not.toHaveBeenCalled();
     expect(analyticsCallback).toHaveBeenCalledTimes(1);
-    expect(dispatch.mock.calls).toHaveLength(2);
+    expect(dispatch.mock.calls).toHaveLength(1);
     expect(dispatch.mock.calls[0][0]).toStrictEqual(
       addUserSelectedPaymentRptId(paymentId)
+    );
+    expect(startPaymentFlowWithRptIdWorkaround).toHaveBeenCalledWith(
+      expect.objectContaining({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          auxDigit,
+          applicationCode,
+          iuv13,
+          checkDigit
+        }
+      }),
+      dispatch,
+      expect.any(Function),
+      { startOrigin: "message" }
     );
   });
   it("should navigate to Payment Transaction Summary with given amount and track PN event", () => {
@@ -160,10 +196,24 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     );
     expect(decodeErrorCallback).not.toHaveBeenCalled();
     expect(prenavigationCallback).toHaveBeenCalledTimes(1);
-    expect(dispatch.mock.calls).toHaveLength(2);
+    expect(dispatch.mock.calls).toHaveLength(1);
     expect(analyticsCallback).toHaveBeenCalledTimes(1);
     expect(dispatch.mock.calls[0][0]).toStrictEqual(
       addUserSelectedPaymentRptId(paymentId)
+    );
+    expect(startPaymentFlowWithRptIdWorkaround).toHaveBeenCalledWith(
+      expect.objectContaining({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          auxDigit,
+          applicationCode,
+          iuv13,
+          checkDigit
+        }
+      }),
+      dispatch,
+      expect.any(Function),
+      { startOrigin: "message" }
     );
   });
   it("should navigate to Payment Transaction Summary with given amount but not dispatch an `addUserSelectedPaymentRptId`", () => {
@@ -192,7 +242,21 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     expect(decodeErrorCallback).not.toHaveBeenCalled();
     expect(prenavigationCallback).toHaveBeenCalledTimes(1);
     expect(analyticsCallback).toHaveBeenCalledTimes(1);
-    expect(dispatch.mock.calls).toHaveLength(1);
+    expect(dispatch.mock.calls).toHaveLength(0);
+    expect(startPaymentFlowWithRptIdWorkaround).toHaveBeenCalledWith(
+      expect.objectContaining({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          auxDigit,
+          applicationCode,
+          iuv13,
+          checkDigit
+        }
+      }),
+      dispatch,
+      expect.any(Function),
+      { startOrigin: "message" }
+    );
   });
 
   describe("duplicateSetAndAdd", () => {
