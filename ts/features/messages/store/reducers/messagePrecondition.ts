@@ -12,7 +12,6 @@ import { UIMessageId } from "../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
-  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
   shownPreconditionStatusAction,
@@ -32,12 +31,6 @@ type MPSError = {
 };
 type MPSIdle = {
   state: "idle";
-};
-type MPSLoadingContent = {
-  state: "loadingContent";
-  messageId: UIMessageId;
-  categoryTag: MessageCategory["tag"];
-  content: ThirdPartyMessagePrecondition;
 };
 type MPSRetrievingData = {
   state: "retrievingData";
@@ -62,7 +55,6 @@ type MPSUpdateRequired = {
 export type MessagePreconditionStatus =
   | MPSError
   | MPSIdle
-  | MPSLoadingContent
   | MPSRetrievingData
   | MPSScheduled
   | MPSShown
@@ -81,12 +73,6 @@ export const preconditionReducer = (
       return foldPreconditionStatus(
         () => state,
         () => state,
-        loadingContentStatus =>
-          toErrorMPS(
-            loadingContentStatus.messageId,
-            loadingContentStatus.categoryTag,
-            action.payload.reason
-          ), // From Loading Content to Error
         retrievingDataStatus =>
           toErrorMPS(
             retrievingDataStatus.messageId,
@@ -101,32 +87,15 @@ export const preconditionReducer = (
       return foldPreconditionStatus(
         () => toIdleMPS(), // From Error to Idle
         () => state,
-        () => toIdleMPS(), // From Loading Content to Idle,
         () => toIdleMPS(), // From Retrieving Data to Idle,
         () => state,
         () => toIdleMPS(), // From Shown to Idle
         () => toIdleMPS() // From Update Required to Idle
       )(state);
-    case getType(loadingContentPreconditionStatusAction):
-      return foldPreconditionStatus(
-        () => state,
-        () => state,
-        () => state,
-        retrievingDataStatus =>
-          toLoadingContentMPS(
-            retrievingDataStatus.messageId,
-            retrievingDataStatus.categoryTag,
-            action.payload.content
-          ), // From Retrieving Data to Loading Content
-        () => state,
-        () => state,
-        () => state
-      )(state);
     case getType(retrievingDataPreconditionStatusAction):
       return foldPreconditionStatus(
         errorStatus =>
           toRetrievingDataMPS(errorStatus.messageId, errorStatus.categoryTag), // From Error to Retrieving Data
-        () => state,
         () => state,
         () => state,
         scheduledStatus =>
@@ -145,27 +114,24 @@ export const preconditionReducer = (
         () => state,
         () => state,
         () => state,
-        () => state,
         () => state
       )(state);
     case getType(shownPreconditionStatusAction):
       return foldPreconditionStatus(
         () => state,
         () => state,
-        loadingContentStatus =>
+        retrievingDataStatus =>
           toShownMPS(
-            loadingContentStatus.messageId,
-            loadingContentStatus.categoryTag,
-            loadingContentStatus.content
-          ), // From Loading Content to Shown
-        () => state,
+            retrievingDataStatus.messageId,
+            retrievingDataStatus.categoryTag,
+            action.payload.content
+          ), // From Retrieving Data to Shown
         () => state,
         () => state,
         () => state
       )(state);
     case getType(updateRequiredPreconditionStatusAction):
       return foldPreconditionStatus(
-        () => state,
         () => state,
         () => state,
         () => state,
@@ -189,16 +155,6 @@ export const toErrorMPS = (
 });
 export const toIdleMPS = (): MPSIdle => ({
   state: "idle"
-});
-export const toLoadingContentMPS = (
-  messageId: UIMessageId,
-  categoryTag: MessageCategory["tag"],
-  content: ThirdPartyMessagePrecondition
-): MPSLoadingContent => ({
-  state: "loadingContent",
-  messageId,
-  categoryTag,
-  content
 });
 export const toRetrievingDataMPS = (
   messageId: UIMessageId,
@@ -234,7 +190,6 @@ export const foldPreconditionStatus =
   <A>(
     onError: (status: MPSError) => A,
     onIdle: (status: MPSIdle) => A,
-    onLoadingContent: (status: MPSLoadingContent) => A,
     onRetrievingData: (status: MPSRetrievingData) => A,
     onScheduled: (status: MPSScheduled) => A,
     onShown: (status: MPSShown) => A,
@@ -244,8 +199,6 @@ export const foldPreconditionStatus =
     switch (status.state) {
       case "error":
         return onError(status);
-      case "loadingContent":
-        return onLoadingContent(status);
       case "retrievingData":
         return onRetrievingData(status);
       case "scheduled":
@@ -266,7 +219,6 @@ export const preconditionsRequireAppUpdateSelector = (state: GlobalState) =>
   pipe(
     state.entities.messages.precondition,
     foldPreconditionStatus(
-      constFalse,
       constFalse,
       constFalse,
       constFalse,
@@ -292,7 +244,6 @@ export const preconditionsTitleContentSelector = (state: GlobalState) =>
     foldPreconditionStatus(
       () => "empty" as const,
       constUndefined,
-      () => "header" as const,
       () => "loading" as const,
       constUndefined,
       () => "header" as const,
@@ -306,7 +257,6 @@ export const preconditionsTitleSelector = (state: GlobalState) =>
     foldPreconditionStatus(
       constUndefined,
       constUndefined,
-      loadingContentStatus => loadingContentStatus.content.title,
       constUndefined,
       constUndefined,
       shownStatus => shownStatus.content.title,
@@ -320,7 +270,6 @@ export const preconditionsContentSelector = (state: GlobalState) =>
     foldPreconditionStatus(
       _ => "error" as const,
       constUndefined,
-      _ => "content" as const,
       _ => "loading" as const,
       constUndefined,
       _ => "content" as const,
@@ -334,7 +283,6 @@ export const preconditionsContentMarkdownSelector = (state: GlobalState) =>
     foldPreconditionStatus(
       constUndefined,
       constUndefined,
-      loadingContentStatus => loadingContentStatus.content.markdown,
       constUndefined,
       constUndefined,
       shownStatus => shownStatus.content.markdown,
@@ -349,7 +297,6 @@ export const preconditionsFooterSelector = (state: GlobalState) =>
       _ => "view" as const,
       constUndefined,
       _ => "view" as const,
-      _ => "view" as const,
       constUndefined,
       _ => "content" as const,
       _ => "update" as const
@@ -362,7 +309,6 @@ export const preconditionsCategoryTagSelector = (state: GlobalState) =>
     foldPreconditionStatus(
       errorStatus => errorStatus.categoryTag,
       constUndefined,
-      loadingContentStatus => loadingContentStatus.categoryTag,
       retrievingDataStatus => retrievingDataStatus.categoryTag,
       scheduledStatus => scheduledStatus.categoryTag,
       shownStatus => shownStatus.categoryTag,
@@ -376,7 +322,6 @@ export const preconditionsMessageIdSelector = (state: GlobalState) =>
     foldPreconditionStatus(
       errorStatus => errorStatus.messageId,
       constUndefined,
-      loadingContentStatus => loadingContentStatus.messageId,
       retrievingDataStatus => retrievingDataStatus.messageId,
       scheduledStatus => scheduledStatus.messageId,
       shownStatus => shownStatus.messageId,

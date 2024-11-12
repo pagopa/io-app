@@ -11,10 +11,10 @@ import { trackDisclaimerLoadError } from "../analytics";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
-  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
+  shownPreconditionStatusAction,
   toErrorPayload,
-  toLoadingContentPayload
+  toShownPayload
 } from "../store/actions/preconditions";
 import { UIMessageId } from "../types";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
@@ -62,11 +62,7 @@ function* messagePreconditionWorker(
     if (E.isRight(result)) {
       if (result.right.status === 200) {
         const content = result.right.value;
-        yield* put(
-          loadingContentPreconditionStatusAction(
-            toLoadingContentPayload(content)
-          )
-        );
+        yield* put(shownPreconditionStatusAction(toShownPayload(content)));
         return;
       }
       throw Error(`response status ${result.right.status}`);
