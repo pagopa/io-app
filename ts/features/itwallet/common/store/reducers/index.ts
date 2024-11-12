@@ -53,7 +53,7 @@ const CURRENT_REDUX_ITW_STORE_VERSION = 0;
 const migrations: MigrationManifest = {
   // Added preferences store
   "0": (state: PersistedState): PersistedState =>
-    _.set(state, "features.itWallet.preferences", {})
+    _.set(state, "preferences", {})
 };
 
 const itwPersistConfig: PersistConfig = {
