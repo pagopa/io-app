@@ -331,7 +331,7 @@ profile:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     security:
-      title: Sicurezza
+      title: Sicurezza e accesso
       description: Gestisci accesso biometrico e codice di sblocco
     privacy:
       title: Privacy e Condizioni d'uso
@@ -504,7 +504,7 @@ profile:
       nameSurname: Nome e cognome
       fiscalCode: Codice Fiscale
   security:
-    title: Sicurezza
+    title: Sicurezza e accesso
     subtitle: Gestisci le modalità di autenticazione in app.
     list:
       biometric_recognition:

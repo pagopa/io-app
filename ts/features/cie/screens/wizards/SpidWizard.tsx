@@ -20,12 +20,14 @@ const SpidWizard = () => {
       actions={{
         type: "TwoButtons",
         primary: {
+          testID: "spid-wizard-navigate-to-idp-selection",
           label: I18n.t(
             "authentication.wizards.spid_wizard.actions.primary.label"
           ),
           onPress: navigateToIdpSelection
         },
         secondary: {
+          testID: "spid-wizard-navigate-to-id-activation-wizard",
           label: I18n.t(
             "authentication.wizards.spid_wizard.actions.secondary.label"
           ),
