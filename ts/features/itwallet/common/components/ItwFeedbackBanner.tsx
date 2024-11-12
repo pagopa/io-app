@@ -27,11 +27,9 @@ const ItwFeedbackBanner = () => {
     <View style={{ marginTop: 16 }}>
       <Banner
         testID="itwFeedbackBannerTestID"
-        title={"Dicci cosa ne pensi"}
-        content={
-          "Raccontaci la tua esperienza con la funzionalità Documenti su IO."
-        }
-        action={"Inizia"}
+        title={I18n.t("features.itWallet.feedback.banner.title")}
+        content={I18n.t("features.itWallet.feedback.banner.content")}
+        action={I18n.t("features.itWallet.feedback.banner.action")}
         pictogramName="feedback"
         color="neutral"
         size="big"
