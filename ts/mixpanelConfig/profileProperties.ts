@@ -24,6 +24,7 @@ import {
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { WalletCardBonus } from "../features/newWallet/types";
 import {
   selectBonusCards,
   selectWalletCgnCard,
@@ -168,5 +169,5 @@ const welfareStatusHandler = (state: GlobalState): ReadonlyArray<string> => {
   const bonusCards = selectBonusCards(state);
   return bonusCards
     .filter(card => card.type === "idPay")
-    .map(card => card.name);
+    .map((card: WalletCardBonus) => card.name);
 };
