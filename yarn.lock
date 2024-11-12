@@ -2215,6 +2215,7 @@
   dependencies:
     "@types/node" ">= 8"
 
+
 "@pagopa/io-app-design-system@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-2.1.0.tgz#c6dd79e9a08df83a8699d9469f0d8cf45d2abbe3"
