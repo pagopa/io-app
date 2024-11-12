@@ -610,7 +610,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
