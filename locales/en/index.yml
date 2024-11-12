@@ -2693,7 +2693,8 @@ bonus:
       goToSearchAccessibilityLabel: Vai alla ricerca operatori
       emptyList:
         shortQuery:
-          title: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+          titleWithCount: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+          titleWithoutCount: Cerca tra i partner aderenti a Carta Giovani Nazionale
         noResults:
           title: Non abbiamo trovato nulla
           subtitle: |- 

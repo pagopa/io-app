@@ -178,9 +178,16 @@ function EmptyListShortQuery({
         <VSpacer size={24} />
       </View>
       <H6 style={styles.emptyListText}>
-        {I18n.t("bonus.cgn.merchantSearch.emptyList.shortQuery.title", {
-          merchantCount
-        })}
+        {merchantCount === undefined
+          ? I18n.t(
+              "bonus.cgn.merchantSearch.emptyList.shortQuery.titleWithoutCount"
+            )
+          : I18n.t(
+              "bonus.cgn.merchantSearch.emptyList.shortQuery.titleWithCount",
+              {
+                merchantCount
+              }
+            )}
       </H6>
     </View>
   );
