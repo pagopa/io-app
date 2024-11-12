@@ -226,7 +226,7 @@ const reducer = (
           action.payload.kind === "notFound"
             ? {
                 faultCodeCategory:
-                  PaymentMethodNotAvailableEnum.PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
+                  PaymentMethodNotAvailableEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
                 faultCodeDetail: ""
               }
             : action.payload

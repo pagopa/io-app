@@ -85,11 +85,11 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const selectOtherPaymentMethodAction: OperationResultScreenContentProps["action"] =
     {
       label: I18n.t(
-        "wallet.payment.failure.PAYMENT_METHOD_NOT_AVAILABLE_ERROR.action"
+        "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.action"
       ),
       testID: "wallet-payment-failure-go-back-button",
       accessibilityLabel: I18n.t(
-        "wallet.payment.failure.PAYMENT_METHOD_NOT_AVAILABLE_ERROR.action"
+        "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.action"
       ),
       onPress: handleChangePaymentMethod
     };
@@ -168,14 +168,14 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           action: closeAction,
           secondaryAction: contactSupportAction
         };
-      case "PAYMENT_METHOD_NOT_AVAILABLE_ERROR":
+      case "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR":
         return {
           pictogram: "cardIssue",
           title: I18n.t(
-            "wallet.payment.failure.PAYMENT_METHOD_NOT_AVAILABLE_ERROR.title"
+            "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.title"
           ),
           subtitle: I18n.t(
-            "wallet.payment.failure.PAYMENT_METHOD_NOT_AVAILABLE_ERROR.subtitle"
+            "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.subtitle"
           ),
           action: selectOtherPaymentMethodAction
         };

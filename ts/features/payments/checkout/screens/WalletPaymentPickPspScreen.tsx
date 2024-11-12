@@ -77,7 +77,7 @@ const WalletPaymentPickPspScreen = () => {
     if (isError) {
       if (
         (pspListPot.error as WalletPaymentFailure)?.faultCodeCategory ===
-        FaultCodeCategoryEnum.PAYMENT_METHOD_NOT_AVAILABLE_ERROR
+        FaultCodeCategoryEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR
       ) {
         navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
           screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
