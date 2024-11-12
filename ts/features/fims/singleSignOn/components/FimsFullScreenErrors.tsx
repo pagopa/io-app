@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import {
   OperationResultScreenContent,
