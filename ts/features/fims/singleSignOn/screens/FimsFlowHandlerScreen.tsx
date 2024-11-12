@@ -53,9 +53,14 @@ export const FimsFlowHandlerScreen = (
     }
   }, [dispatch, loadingState]);
 
+  const consentsMaybe = pot.toOption(consentsPot);
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
+    canGoBack:
+      !authenticationFailed &&
+      !requiresAppUpdate &&
+      (loadingState !== undefined || O.isSome(consentsMaybe)),
     goBack: handleCancelOrAbort
   });
 
@@ -104,8 +109,7 @@ export const FimsFlowHandlerScreen = (
   }
 
   return pipe(
-    consentsPot,
-    pot.toOption,
+    consentsMaybe,
     O.fold(
       () => <FimsSSOFullScreenError />,
       consents => (

@@ -24,13 +24,6 @@ export const FimsSSOFullScreenError = () => {
     [debugData, errorTag]
   );
   useDebugInfo(debugInfo);
-  // this forces headerSecondLevel removal on page entry,
-  // since it is not intended by design
-  React.useEffect(() => {
-    navigation.setOptions({
-      header: constNull
-    });
-  });
   const getErrorComponentProps = (): OperationResultScreenContentProps => {
     switch (errorTag) {
       case "AUTHENTICATION":
@@ -39,6 +32,7 @@ export const FimsSSOFullScreenError = () => {
           subtitle: I18n.t(
             "FIMS.consentsScreen.errorStates.authentication.body"
           ),
+          isHeaderVisible: true,
           pictogram: "umbrellaNew",
           action: {
             label: I18n.t("global.buttons.close"),
@@ -53,6 +47,7 @@ export const FimsSSOFullScreenError = () => {
           subtitle: I18n.t(
             "FIMS.consentsScreen.errorStates.missingInAppBrowser.body"
           ),
+          isHeaderVisible: true,
           pictogram: "updateOS",
           action: {
             label: I18n.t("global.buttons.close"),
@@ -63,6 +58,7 @@ export const FimsSSOFullScreenError = () => {
         return {
           title: I18n.t("FIMS.consentsScreen.errorStates.general.title"),
           subtitle: I18n.t("FIMS.consentsScreen.errorStates.general.body"),
+          isHeaderVisible: true,
           pictogram: "umbrellaNew",
           action: {
             label: I18n.t("global.buttons.close"),
