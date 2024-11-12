@@ -36,13 +36,11 @@ import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
 import { cgnGenerateOtp } from "./networking/otp";
 import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
 import { eycaActivationSaga } from "./orchestration/eyca/eycaActivationSaga";
-import {
-  cgnGetMerchantsCountSaga,
-  cgnMerchantDetail,
-  cgnOfflineMerchantsSaga,
-  cgnOnlineMerchantsSaga,
-  cgnSearchMerchantsSaga
-} from "./networking/merchants/cgnMerchantsSaga";
+import { cgnMerchantDetail } from "./networking/merchants/cgnMerchantDetail";
+import { cgnOfflineMerchantsSaga } from "./networking/merchants/cgnOfflineMerchantsSaga";
+import { cgnOnlineMerchantsSaga } from "./networking/merchants/cgnOnlineMerchantsSaga";
+import { cgnSearchMerchantsSaga } from "./networking/merchants/cgnSearchMerchantsSaga";
+import { cgnGetMerchantsCountSaga } from "./networking/merchants/cgnGetMerchantsCountSaga";
 import { cgnBucketConsuption } from "./networking/bucket";
 import { cgnUnsubscriptionHandler } from "./networking/unsubscribe";
 import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
