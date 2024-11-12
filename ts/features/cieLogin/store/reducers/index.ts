@@ -2,6 +2,7 @@ import { getType } from "typesafe-actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import {
+  cieIDDisableTourGuide,
   cieIDFeatureSetEnabled,
   cieLoginDisableUat,
   cieLoginEnableUat
@@ -11,11 +12,13 @@ import { Action } from "../../../../store/actions/types";
 export type CieLoginState = {
   useUat: boolean;
   isCieIDFeatureEnabled: boolean;
+  isCieIDTourGuideEnabled: boolean;
 };
 
 export const cieLoginInitialState = {
   useUat: false,
-  isCieIDFeatureEnabled: false
+  isCieIDFeatureEnabled: false,
+  isCieIDTourGuideEnabled: true
 };
 
 const cieLoginReducer = (
@@ -38,6 +41,11 @@ const cieLoginReducer = (
         ...state,
         ...action.payload
       };
+    case getType(cieIDDisableTourGuide):
+      return {
+        ...state,
+        isCieIDTourGuideEnabled: false
+      };
     default:
       return state;
   }
@@ -49,7 +57,7 @@ const persistConfig: PersistConfig = {
   key: "cieLogin",
   storage: AsyncStorage,
   version: CURRENT_REDUX_CIE_LOGIN_STORE_VERSION,
-  whitelist: ["isCieIDFeatureEnabled"]
+  whitelist: ["isCieIDFeatureEnabled", "isCieIDTourGuideEnabled"]
 };
 
 export const cieLoginPersistor = persistReducer<CieLoginState, Action>(
