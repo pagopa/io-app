@@ -40,6 +40,10 @@ export function* cgnSearchMerchantsSaga(
       return;
     }
 
+    if (searchMerchantsResult.right.status === 401) {
+      return;
+    }
+
     throw new Error(`Response in status ${searchMerchantsResult.right.status}`);
   } catch (e) {
     yield* put(cgnSearchMerchants.failure(getNetworkError(e)));
