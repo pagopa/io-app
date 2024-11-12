@@ -61,11 +61,19 @@ export function* handleWalletPaymentCalculateFees(
         return;
       } else if (res.status !== 401) {
         // The 401 status is handled by the withPaymentsSessionToken
-        yield* put(
-          paymentsCalculatePaymentFeesAction.failure(
-            getGenericError(new Error(`Error: ${res.status}`))
-          )
-        );
+        if (res.status === 404) {
+          yield* put(
+            paymentsCalculatePaymentFeesAction.failure({
+              kind: "notFound"
+            })
+          );
+        } else {
+          yield* put(
+            paymentsCalculatePaymentFeesAction.failure(
+              getGenericError(new Error(`Error: ${res.status}`))
+            )
+          );
+        }
       }
     }
   } catch (e) {
