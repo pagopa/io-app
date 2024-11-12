@@ -33,7 +33,7 @@ import {
   walletPaymentSelectedPspSelector
 } from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
-import { FaultCodeCategoryEnum } from "../types/PaymentMethodNotAvailableProblemJson";
+import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
