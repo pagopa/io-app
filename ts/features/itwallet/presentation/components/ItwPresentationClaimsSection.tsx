@@ -5,7 +5,7 @@ import {
   IOStyles
 } from "@pagopa/io-app-design-system";
 import { default as React, useMemo } from "react";
-import { AccessibilityInfo, View } from "react-native";
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
@@ -35,32 +35,24 @@ export const ItwPresentationClaimsSection = ({
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
   });
 
-  const handleToggleValueVisibility = (hideValues: boolean) => {
-    setTimeout(() => {
-      AccessibilityInfo.announceForAccessibility(
-        hideValues
-          ? I18n.t(
-              "features.itWallet.presentation.credentialDetails.actions.claimValuesHidden"
-            )
-          : I18n.t(
-              "features.itWallet.presentation.credentialDetails.actions.claimValuesShown"
-            )
-      );
-    }, 100);
-    setValuesHidden(hideValues);
-  };
-
   const renderHideValuesToggle = () => (
-    <IconButton
-      testID="toggle-claim-visibility"
-      icon={valuesHidden ? "eyeHide" : "eyeShow"}
-      onPress={() => handleToggleValueVisibility(!valuesHidden)}
+    <View
+      accessible={true}
       accessibilityLabel={I18n.t(
-        valuesHidden
-          ? "features.itWallet.presentation.credentialDetails.actions.showClaimValues"
-          : "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
+        "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
       )}
-    />
+      accessibilityRole="switch"
+      accessibilityState={{ checked: valuesHidden }}
+    >
+      <IconButton
+        testID="toggle-claim-visibility"
+        icon={valuesHidden ? "eyeHide" : "eyeShow"}
+        onPress={() => setValuesHidden(_ => !_)}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
+        )}
+      />
+    </View>
   );
 
   return (
