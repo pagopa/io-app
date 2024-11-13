@@ -1,7 +1,6 @@
 import {
   ButtonSolidProps,
   GradientBottomActions,
-  IOColors,
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
