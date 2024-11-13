@@ -31,6 +31,7 @@ const reducer = (
         ...state,
         integrityKeyTag: O.some(action.payload)
       };
+    case getType(itwLifecycleStoresReset):
     case getType(itwRemoveIntegrityKeyTag):
       return {
         ...state,
@@ -40,11 +41,6 @@ const reducer = (
       return {
         ...state,
         integrityServiceReady: action.payload
-      };
-    case getType(itwLifecycleStoresReset):
-      return {
-        integrityKeyTag: O.none,
-        integrityServiceReady: undefined
       };
   }
   return state;
