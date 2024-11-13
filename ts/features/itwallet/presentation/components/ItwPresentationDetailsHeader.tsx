@@ -1,10 +1,12 @@
 import {
   ContentWrapper,
+  IOVisualCostants,
   makeFontStyleObject,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -38,10 +40,13 @@ const credentialsHeader: Record<string, ImageSourcePropType> = {
 const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
+  const safeAreaInsets = useSafeAreaInsets();
   const { isExperimental } = useIOExperimentalDesign();
 
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(credential.credentialType as CredentialType);
+
+  const headerHeight = safeAreaInsets.top + IOVisualCostants.headerHeight;
 
   const headerContent = React.useMemo(() => {
     if (credentialsWithCard.includes(credential.credentialType)) {
@@ -52,8 +57,8 @@ const ItwPresentationDetailsHeader = ({
       <View
         style={{
           backgroundColor,
-          marginTop: -300,
-          paddingTop: 300,
+          marginTop: -(headerHeight + 300),
+          paddingTop: headerHeight + 300,
           justifyContent: "flex-end",
           paddingBottom: 24
         }}
@@ -77,10 +82,14 @@ const ItwPresentationDetailsHeader = ({
         </ContentWrapper>
       </View>
     );
-  }, [credential, backgroundColor, textColor, isExperimental]);
+  }, [credential, backgroundColor, textColor, headerHeight, isExperimental]);
 
   return (
-    <View>
+    <View
+      style={{
+        paddingTop: headerHeight
+      }}
+    >
       <FocusAwareStatusBar
         backgroundColor={backgroundColor}
         barStyle={statusBarStyle}

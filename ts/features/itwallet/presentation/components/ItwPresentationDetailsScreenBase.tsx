@@ -28,6 +28,8 @@ export type ItwPresentationDetailsScreenBaseProps = {
   ctaProps?: CredentialCtaProps;
 };
 
+const scrollTriggerOffsetValue: number = 88;
+
 const gradientSafeArea: IOSpacingScale = 80;
 const contentEndMargin: IOSpacingScale = 32;
 const spaceBetweenActions: IOSpacer = 24;
@@ -64,6 +66,11 @@ const ItwPresentationDetailsScreenBase = ({
   const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
 
   useHeaderSecondLevel({
+    transparent: true,
+    scrollValues: {
+      triggerOffset: scrollTriggerOffsetValue,
+      contentOffsetY: scrollTranslationY
+    },
     supportRequest: true,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
@@ -114,6 +121,7 @@ const ItwPresentationDetailsScreenBase = ({
         }}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
+        snapToOffsets={[0, scrollTriggerOffsetValue]}
         snapToEnd={false}
         decelerationRate="normal"
       >
