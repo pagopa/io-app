@@ -29,7 +29,7 @@ export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
  * based on the transaction status.
  */
 
-export const getBadgeTextAndVariantByTransactionStatus = (
+export const getBadgePropsByTransactionStatus = (
   transactionStatus: ListItemTransactionStatus
 ): ListItemTransactionBadge => {
   switch (transactionStatus) {
