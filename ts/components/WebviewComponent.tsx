@@ -7,9 +7,10 @@ import {
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
 import { mixpanelTrack } from "../mixpanel";
-import GenericErrorComponent from "./screens/GenericErrorComponent";
+import I18n from "../i18n";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { IOStyles } from "./core/variables/IOStyles";
+import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
 
 type Props = {
   source: WebViewSourceUri;
@@ -32,7 +33,7 @@ const WebviewComponent = (props: Props) => {
   const handleError = (event: WebViewErrorEvent | WebViewHttpErrorEvent) => {
     void mixpanelTrack("CGN_LANDING_PAGE_LOAD_ERROR", {
       uri: props.source.uri,
-      ...event
+      description: event.nativeEvent?.description
     });
     setHasError(true);
   };
@@ -40,7 +41,16 @@ const WebviewComponent = (props: Props) => {
   return (
     <>
       {hasError ? (
-        <GenericErrorComponent onRetry={handleReload} />
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
+          isHeaderVisible
+          subtitle={I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
+          action={{
+            label: I18n.t("global.buttons.retry"),
+            onPress: handleReload
+          }}
+        />
       ) : (
         <LoadingSpinnerOverlay isLoading={loading}>
           <WebView
