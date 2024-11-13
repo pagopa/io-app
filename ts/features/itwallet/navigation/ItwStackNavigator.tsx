@@ -1,6 +1,6 @@
 import {
-  createStackNavigator,
-  TransitionPresets
+  TransitionPresets,
+  createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -34,7 +34,7 @@ import { ItwPresentationCredentialAttachmentScreen } from "../presentation/scree
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
-import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
+import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -80,11 +80,6 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
         component={ItwIpzsPrivacyScreen}
       />
-      <Stack.Screen
-        name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
-        component={ItwAlreadyActiveScreen}
-        options={hiddenHeader}
-      />
       {/* IDENTIFICATION */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
@@ -93,6 +88,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.SPID.LOGIN}
+        component={ItwSpidIdpLoginScreen}
       />
       {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen

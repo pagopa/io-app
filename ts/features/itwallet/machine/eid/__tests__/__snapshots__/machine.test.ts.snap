@@ -2,7 +2,7 @@
 
 exports[`itwEidIssuanceMachine Should obtain an eID (SPID) 1`] = `
 {
-  "cieAuthContext": undefined,
+  "AuthenticationContext": undefined,
   "eid": undefined,
   "failure": undefined,
   "identification": undefined,

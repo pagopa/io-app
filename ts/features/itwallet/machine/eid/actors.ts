@@ -14,25 +14,33 @@ import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import type { CieAuthContext, IdentificationContext } from "./context";
+import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
+import type { AuthenticationContext, IdentificationContext } from "./context";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
-  cieAuthContext: CieAuthContext | undefined;
+  authenticationContext: AuthenticationContext | undefined;
 };
 
-export type StartCieAuthFlowActorParams = {
+export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
+  identification: IdentificationContext | undefined;
 };
 
-export type CompleteCieAuthFlowActorParams = {
-  cieAuthContext: CieAuthContext | undefined;
+export type CompleteAuthFlowActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
   walletInstanceAttestation: string | undefined;
 };
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+};
+
+export type GetAuthRedirectUrlActorParam = {
+  redirectUri: string | undefined;
+  authUrl: string | undefined;
+  identification: IdentificationContext | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = (
@@ -75,51 +83,62 @@ export const createEidIssuanceActorsImplementation = (
         "walletInstanceAttestation is undefined"
       );
 
-      // When using CIE + PIN the authorization flow was already started, we just need to complete it
-      if (input.identification.mode === "ciePin") {
-        assert(
-          input.cieAuthContext,
-          "cieAuthContext must exist when the identification mode is ciePin"
-        );
+      // When using CIE + PIN or SPID the authorization flow was already started, we just need to complete it
+      assert(
+        input.authenticationContext,
+        "authenticationContext must exist when the identification mode is ciePin"
+      );
 
-        const authParams = await issuanceUtils.completeCieAuthFlow({
-          ...input.cieAuthContext,
-          walletAttestation: input.walletInstanceAttestation
-        });
-        trackItwRequest("ciePin");
-        return issuanceUtils.getPid({
-          ...authParams,
-          ...input.cieAuthContext
-        });
-      }
-
-      // SPID & CieID flow
-      const authParams = await issuanceUtils.startAndCompleteFullAuthFlow({
-        identification: input.identification,
+      const authParams = await issuanceUtils.completeAuthFlow({
+        ...input.authenticationContext,
         walletAttestation: input.walletInstanceAttestation
       });
 
       trackItwRequest(input.identification.mode);
 
-      return issuanceUtils.getPid(authParams);
+      return issuanceUtils.getPid({
+        ...authParams,
+        ...input.authenticationContext
+      });
     }
   ),
 
-  startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
+  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
     async ({ input }) => {
       assert(
         input.walletInstanceAttestation,
         "walletInstanceAttestation is undefined"
       );
+      assert(input.identification, "identification is undefined");
 
-      const cieAuthContext = await issuanceUtils.startCieAuthFlow({
-        walletAttestation: input.walletInstanceAttestation
+      const authenticationContext = await issuanceUtils.startAuthFlow({
+        walletAttestation: input.walletInstanceAttestation,
+        identification: input.identification
       });
 
       return {
-        ...cieAuthContext,
-        callbackUrl: "" // This is not important in this phase, it will be set after completing the CIE auth flow
+        ...authenticationContext,
+        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
       };
+    }
+  ),
+
+  getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
+    async ({ input }) => {
+      assert(
+        input.redirectUri,
+        "redirectUri must be defined to get authRedirectUrl"
+      );
+      assert(input.authUrl, "authUrl must be defined to get authRedirectUrl");
+      assert(input.identification, "identification is undefined");
+
+      const { authRedirectUrl } = await openUrlAndListenForAuthRedirect(
+        input.redirectUri,
+        input.authUrl,
+        input.identification.abortController?.signal
+      );
+
+      return authRedirectUrl;
     }
   ),
 
