@@ -1,6 +1,7 @@
 import {
   ButtonSolidProps,
   GradientBottomActions,
+  IOColors,
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
@@ -27,8 +28,6 @@ export type ItwPresentationDetailsScreenBaseProps = {
   children?: React.ReactNode;
   ctaProps?: CredentialCtaProps;
 };
-
-const scrollTriggerOffsetValue: number = 88;
 
 const gradientSafeArea: IOSpacingScale = 80;
 const contentEndMargin: IOSpacingScale = 32;
@@ -66,11 +65,6 @@ const ItwPresentationDetailsScreenBase = ({
   const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
 
   useHeaderSecondLevel({
-    transparent: true,
-    scrollValues: {
-      triggerOffset: scrollTriggerOffsetValue,
-      contentOffsetY: scrollTranslationY
-    },
     supportRequest: true,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
@@ -121,7 +115,6 @@ const ItwPresentationDetailsScreenBase = ({
         }}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
-        snapToOffsets={[0, scrollTriggerOffsetValue]}
         snapToEnd={false}
         decelerationRate="normal"
       >
