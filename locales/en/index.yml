@@ -3513,6 +3513,7 @@ features:
           false: No
         hiddenClaim: "Hidden"
         fiscalCode: Fiscal code
+        fiscalCodeBarcode: Barcode of your fiscal code
         status:
           valid: Valid
           invalid: Not valid

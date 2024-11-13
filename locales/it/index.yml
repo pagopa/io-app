@@ -3513,6 +3513,7 @@ features:
           false: No
         hiddenClaim: "Nascosto"
         fiscalCode: Il tuo Codice Fiscale
+        fiscalCodeBarcode: Codice a barre del tuo Codice Fiscale
         status:
           valid: Valida
           invalid: Non valida
