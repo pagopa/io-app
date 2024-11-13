@@ -1968,7 +1968,7 @@ wallet:
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
-      CVV_ERROR: 
+      CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
         subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
       PLAFOND_LIMIT_ERROR:
@@ -2697,7 +2697,7 @@ bonus:
           titleWithoutCount: Cerca tra i partner aderenti a Carta Giovani Nazionale
         noResults:
           title: Non abbiamo trovato nulla
-          subtitle: |- 
+          subtitle: |-
             Prova a cercare con parole diverse.
             Se non lo trovi, il partner potrebbe non aver aderito o non avere opportunità attive.
       input:
@@ -3523,8 +3523,6 @@ features:
           requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
-          claimValuesShown: "Attributi del documento mostrati"
-          claimValuesHidden: "Attributi del documento nascosti"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?
