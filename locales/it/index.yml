@@ -2694,6 +2694,21 @@ bonus:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
+    merchantSearch:
+      goToSearchAccessibilityLabel: Vai alla ricerca operatori
+      emptyList:
+        shortQuery:
+          titleWithCount: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+          titleWithoutCount: Cerca tra i partner aderenti a Carta Giovani Nazionale
+        noResults:
+          title: Non abbiamo trovato nulla
+          subtitle: |- 
+            Prova a cercare con parole diverse.
+            Se non lo trovi, il partner potrebbe non aver aderito o non avere opportunità attive.
+      input:
+        placeholder: Cerca tra i partner
+        cancel: "Annulla"
+        clear: "Cancella"
     merchantsList:
       news: novità
       online: Online
