@@ -4241,6 +4241,7 @@ FIMS:
       missingInAppBrowser:
         body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
         title: "Aggiorna il tuo browser per procedere"
+    inAppBrowserError: "C’è stato un problema nell’invio della richiesta. Riprova"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "IO condividerà con "
     subtitle2: " i dati necessari alla tua autenticazione su "
