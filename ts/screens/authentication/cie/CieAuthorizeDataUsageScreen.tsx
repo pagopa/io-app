@@ -4,11 +4,11 @@
 import {
   ContentWrapper,
   FooterWithButtons,
+  H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView } from "react-native";
-import { H1 } from "../../../components/core/typography/H1";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
@@ -41,7 +41,7 @@ class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
       <TopScreenComponent goBack={true}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <ContentWrapper>
-            <H1>{I18n.t("authentication.cie.noDataTitle")}</H1>
+            <H2>{I18n.t("authentication.cie.noDataTitle")}</H2>
             <VSpacer size={16} />
             <LegacyMarkdown onLoadEnd={this.handleMarkdownLoadingCompleted}>
               {I18n.t("authentication.cie.authToSendData")}

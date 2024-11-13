@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { H6, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -13,7 +13,6 @@ import {
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { H5 } from "../../../../components/core/typography/H5";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
@@ -134,8 +133,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.expiringDate && (
             <>
               <VSpacer size={16} />
-              <H5
-                weight={props.isExpired ? "Semibold" : "Regular"}
+              <H6
                 color={props.isExpired ? "red" : "bluegreyDark"}
                 testID={"expirationDate"}
               >
@@ -145,7 +143,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
                     I18n.t("global.dateFormats.numericMonthYear")
                   )
                 })}
-              </H5>
+              </H6>
             </>
           )}
         </>
