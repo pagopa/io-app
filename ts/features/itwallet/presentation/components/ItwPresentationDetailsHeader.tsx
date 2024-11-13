@@ -70,6 +70,7 @@ const ItwPresentationDetailsHeader = ({
                 : styles.headerLabel,
               { color: textColor }
             ]}
+            accessibilityRole="header"
           >
             {getCredentialNameFromType(credential.credentialType)}
           </Text>
