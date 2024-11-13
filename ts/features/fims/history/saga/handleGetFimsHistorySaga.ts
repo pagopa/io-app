@@ -1,22 +1,28 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryGet } from "../store/actions";
 import { trackHistoryFailure } from "../../common/analytics";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { preferredLanguageToString } from "../../common/utils";
 
 export function* handleGetFimsHistorySaga(
-  getFimsHistory: FimsHistoryClient["getConsents"],
+  getFimsHistory: FimsHistoryClient["getAccessHistory"],
   bearerToken: string,
   action: ActionType<typeof fimsHistoryGet.request>
 ) {
+  const preferredLanguageMaybe = yield* select(preferredLanguageSelector);
+  const preferredLanguage = preferredLanguageToString(preferredLanguageMaybe);
+
   const getHistoryRequest = getFimsHistory({
     Bearer: bearerToken,
-    continuationToken: action.payload.continuationToken
+    "Accept-Language": preferredLanguage,
+    page: action.payload.continuationToken
   });
 
   try {
@@ -40,7 +46,7 @@ export function* handleGetFimsHistorySaga(
 }
 
 const extractFimsHistoryResponseAction = (
-  historyResult: SagaCallReturnType<FimsHistoryClient["getConsents"]>
+  historyResult: SagaCallReturnType<FimsHistoryClient["getAccessHistory"]>
 ) =>
   pipe(
     historyResult,
