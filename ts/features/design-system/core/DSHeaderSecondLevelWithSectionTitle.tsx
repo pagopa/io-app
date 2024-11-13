@@ -8,13 +8,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import {
+  Body,
   H3,
   HeaderSecondLevel,
   IOColors,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 
 const styles = StyleSheet.create({
