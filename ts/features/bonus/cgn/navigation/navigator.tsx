@@ -20,6 +20,7 @@ import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByC
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
 import CgnDiscountDetailScreen from "../screens/discount/CgnDiscountDetailScreen";
 import CgnDiscountCodeScreen from "../screens/discount/CgnDiscountCodeScreen";
+import { CgnMerchantSearchScreen } from "../screens/merchants/CgnMerchantSearchScreen";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -140,6 +141,13 @@ export const CgnDetailsNavigator = () => (
       component={CgnDiscountCodeScreen}
       options={{
         presentation: "modal"
+      }}
+    />
+    <DetailStack.Screen
+      name={CGN_ROUTES.DETAILS.MERCHANTS.SEARCH}
+      component={CgnMerchantSearchScreen}
+      options={{
+        headerShown: false
       }}
     />
   </DetailStack.Navigator>
