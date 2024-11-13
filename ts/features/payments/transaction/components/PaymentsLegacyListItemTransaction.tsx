@@ -1,10 +1,10 @@
 import { ListItemTransaction } from "@pagopa/io-app-design-system";
 import React from "react";
-import I18n from "../../../../i18n";
 import { Transaction, isSuccessTransaction } from "../../../../types/pagopa";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
 import { formatNumberCurrencyCents } from "../../../idpay/common/utils/strings";
+import { getBadgeTextAndVariantByTransactionStatus } from "../../common/utils";
 
 type Props = {
   transaction: Transaction;
@@ -30,18 +30,30 @@ const PaymentsLegacyListItemTransaction = ({
   const transactionStatus =
     isSuccessTransaction(transaction) === true ? "success" : "failure";
 
+  if (transactionStatus === "failure") {
+    return (
+      <ListItemTransaction
+        accessible={true}
+        title={recipient}
+        subtitle={datetime}
+        transaction={{
+          badge: getBadgeTextAndVariantByTransactionStatus(transactionStatus)
+        }}
+        onPress={onPressTransaction}
+      />
+    );
+  }
+
   return (
     <ListItemTransaction
       accessible={true}
       title={recipient}
       subtitle={datetime}
-      transactionAmount={amountText}
-      accessibilityLabel={accessibilityLabel}
-      badgeText={I18n.t(
-        `features.payments.transactions.status.${transactionStatus}`
-      )}
+      transaction={{
+        amount: amountText,
+        amountAccessibilityLabel: accessibilityLabel
+      }}
       onPress={onPressTransaction}
-      transactionStatus={transactionStatus}
     />
   );
 };
