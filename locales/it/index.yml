@@ -1965,6 +1965,15 @@ wallet:
       IN_APP_BROWSER_CLOSED_BY_USER:
         title: Hai interrotto il pagamento
         subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
+      INSUFFICIENT_AVAILABILITY_ERROR:
+        title: Il saldo è insufficiente
+        subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
+      CVV_ERROR: 
+        title: Il codice di sicurezza inserito è errato
+        subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
+      PLAFOND_LIMIT_ERROR:
+        title: Hai superato il limite di spesa della tua carta
+        subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2680,6 +2689,21 @@ bonus:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
+    merchantSearch:
+      goToSearchAccessibilityLabel: Vai alla ricerca operatori
+      emptyList:
+        shortQuery:
+          titleWithCount: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+          titleWithoutCount: Cerca tra i partner aderenti a Carta Giovani Nazionale
+        noResults:
+          title: Non abbiamo trovato nulla
+          subtitle: |- 
+            Prova a cercare con parole diverse.
+            Se non lo trovi, il partner potrebbe non aver aderito o non avere opportunità attive.
+      input:
+        placeholder: Cerca tra i partner
+        cancel: "Annulla"
+        clear: "Cancella"
     merchantsList:
       news: novità
       online: Online
