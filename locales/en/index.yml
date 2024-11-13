@@ -2899,6 +2899,11 @@ bonus:
         conjunction: " and "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Non perderti i messaggi importanti"
+        body: "Attiva le notifiche push di IO dalle impostazioni di sistema"
+        CTA: "Attiva notifiche push"
     attachmentDownloadFeedback: "Download in progress"
     attachments: "Attachments"
     loading:
