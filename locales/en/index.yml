@@ -2689,6 +2689,21 @@ bonus:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
+    merchantSearch:
+      goToSearchAccessibilityLabel: Find a partner
+      emptyList:
+        shortQuery:
+          titleWithCount: Search among {{merchantCount}} Carta Giovani Nazionale partners
+          titleWithoutCount: Search among Carta Giovani Nazionale partners
+        noResults:
+          title: Nothing found
+          subtitle: |- 
+            Search with different words.
+            If you can't find it, it might be that your partner hasn't joined or there aren't any active opportunities.
+      input:
+        placeholder: Search among partners
+        cancel: "Cancel"
+        clear: "Clear"
     merchantsList:
       news: new
       online: Online
