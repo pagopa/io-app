@@ -1,4 +1,8 @@
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  Label,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -9,7 +13,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
-import { Label } from "../../../components/core/typography/Label";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
@@ -37,13 +40,9 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const SuccessBody = ({ emailAddress }: { emailAddress: string }) => (
   <View>
-    <Label
-      weight={"Regular"}
-      color={"bluegrey"}
-      style={{ textAlign: "center" }}
-    >
+    <Label weight={"Regular"} color="grey-700" style={{ textAlign: "center" }}>
       {I18n.t("wallet.outcomeMessage.payment.success.description1")}
-      <Label weight={"Bold"} color={"bluegrey"}>{`\n${emailAddress}\n`}</Label>
+      <Label weight={"Bold"} color="grey-700">{`\n${emailAddress}\n`}</Label>
       {I18n.t("wallet.outcomeMessage.payment.success.description2")}
     </Label>
     <VSpacer size={16} />

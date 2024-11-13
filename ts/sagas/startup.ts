@@ -332,7 +332,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
 
   // start watching for FIMS actions
-  yield* fork(watchFimsSaga);
+  yield* fork(watchFimsSaga, sessionToken);
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);

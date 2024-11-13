@@ -6,10 +6,10 @@ import {
   IOColors,
   hexToRgba,
   VSpacer,
-  IOVisualCostants
+  IOVisualCostants,
+  Body,
+  H4
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
-import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 export const DSSafeAreaCentered = () => {
@@ -41,11 +41,11 @@ export const DSSafeAreaCentered = () => {
             ]}
           >
             <View style={{ padding: IOVisualCostants.appMarginDefault }}>
-              <H2>Start</H2>
+              <H4>Start</H4>
               <VSpacer size={24} />
               <Body>Single text</Body>
               <VSpacer size={24} />
-              <H2>End</H2>
+              <H4>End</H4>
             </View>
           </ScrollView>
         </View>

@@ -353,3 +353,21 @@ export const trackPaymentStartFlow = (
     })
   );
 };
+
+export const trackPaymentsPspNotAvailableError = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_PSP_NOT_AVAILABLE_ERROR",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
+
+export const trackPaymentsPspNotAvailableSelectNew = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_PSP_NOT_AVAILABLE_SELECT_NEW",
+    buildEventProperties("UX", "action", props)
+  );
+};
