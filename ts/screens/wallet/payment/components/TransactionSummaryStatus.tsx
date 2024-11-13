@@ -1,8 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
-import { IOIcons } from "@pagopa/io-app-design-system";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { IOIcons, LabelSmall } from "@pagopa/io-app-design-system";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import I18n from "../../../../i18n";
 import { getV2ErrorMainType } from "../../../../utils/payment";
@@ -12,7 +11,7 @@ type StatusContentProps = {
   viewRef: React.RefObject<View>;
   backgroundColor: "orange" | "aqua";
   iconName: IOIcons;
-  foregroundColor: "white" | "bluegreyDark";
+  foregroundColor: "white" | "black";
   line1: string;
   line2?: string;
 };
@@ -38,6 +37,9 @@ export const renderStatusContent = (props: StatusContentProps) => (
   </StatusContent>
 );
 
+/**
+ * @deprecated Marked as to be deleted
+ */
 export const TransactionSummaryStatus = (props: {
   error: TransactionSummaryError;
 }) => {
@@ -101,7 +103,7 @@ export const TransactionSummaryStatus = (props: {
         viewRef,
         backgroundColor: "aqua",
         iconName: "ok",
-        foregroundColor: "bluegreyDark",
+        foregroundColor: "black",
         line1: I18n.t("wallet.errors.DUPLICATED")
       };
       break;

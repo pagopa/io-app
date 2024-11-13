@@ -2,8 +2,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { ButtonOutline, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { H3 } from "../../../../components/core/typography/H3";
+import { ButtonOutline, H6, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -39,7 +38,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
   return (
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
-        <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
+        <H6>{I18n.t("wallet.bancomat.details.debit.title")}</H6>
         <TouchableDefaultOpacity onPress={present} testID={"noticeIcon"}>
           <Icon name="info" size={24} color="blue" />
         </TouchableDefaultOpacity>

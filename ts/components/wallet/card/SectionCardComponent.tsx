@@ -10,12 +10,12 @@ import {
   IOColors,
   Icon,
   hexToRgba,
-  HSpacer
+  HSpacer,
+  Label
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { IOBadge } from "../../core/IOBadge";
-import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";

@@ -1,12 +1,15 @@
-import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonOutline,
+  H6,
+  Label,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { Body } from "../../../components/core/typography/Body";
-import { H3 } from "../../../components/core/typography/H3";
-import { Label } from "../../../components/core/typography/Label";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { BadgeComponent } from "../../../components/screens/BadgeComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
 
 const renderRow = (label: string, value: string) => (
   <View style={styles.row}>
-    <Label weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
+    <Label weight={"Regular"} color="grey-700" style={IOStyles.flex}>
       {label}
     </Label>
     <Body>{value}</Body>
@@ -120,7 +123,7 @@ const CreditCardOnboardingAttemptDetailScreen = () => {
 
   const renderHelper = () => (
     <View>
-      <Label color={"bluegrey"} weight={"Regular"} style={styles.padded}>
+      <Label color="grey-700" weight={"Regular"} style={styles.padded}>
         {I18n.t("wallet.creditCard.onboardingAttempts.help")}
       </Label>
       <VSpacer size={16} />
@@ -162,26 +165,26 @@ const CreditCardOnboardingAttemptDetailScreen = () => {
     >
       <SlidedContentComponent hasFlatBottom={true}>
         <VSpacer size={4} />
-        <H3 color={"bluegreyDark"}>
+        <H6 color={"bluegreyDark"}>
           {I18n.t("wallet.creditCard.onboardingAttempts.detailTitle")}
-        </H3>
+        </H6>
         {renderSeparator()}
         <View style={styles.badge}>
           <BadgeComponent color={conditionalData.color} />
-          <Label color={"bluegrey"} style={styles.badgeLabel}>
+          <Label color="grey-700" style={styles.badgeLabel}>
             {conditionalData.header}
           </Label>
         </View>
         <VSpacer size={16} />
         {
-          <Label color={"bluegrey"} weight={"Regular"}>
+          <Label color="grey-700" weight={"Regular"}>
             {getPanDescription(attempt)}
           </Label>
         }
         <VSpacer size={16} />
         {attempt.failureReason && (
           <>
-            <Label color={"bluegrey"} weight={"Regular"}>
+            <Label color="grey-700" weight={"Regular"}>
               {attempt.failureReason.kind === "GENERIC_ERROR"
                 ? attempt.failureReason.reason
                 : attempt.failureReason.kind}
@@ -191,7 +194,7 @@ const CreditCardOnboardingAttemptDetailScreen = () => {
         )}
         {errorDescription && O.isSome(errorDescription) && (
           <>
-            <Label color={"bluegrey"} weight={"Regular"}>
+            <Label color="grey-700" weight={"Regular"}>
               {errorDescription.value}
             </Label>
             <VSpacer size={16} />
