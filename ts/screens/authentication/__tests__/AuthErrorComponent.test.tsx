@@ -7,7 +7,7 @@ describe("AuthErrorComponent", () => {
   const testCases = [
     {
       description: "renders correctly with generic error code",
-      errorCode: "generic",
+      errorCodeOrMessage: "generic",
       expectedTitle: I18n.t("authentication.auth_errors.generic.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.generic.subtitle"),
       expectRetryCalled: true,
@@ -15,7 +15,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "19"',
-      errorCode: "19",
+      errorCodeOrMessage: "19",
       expectedTitle: I18n.t("authentication.auth_errors.error_19.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.error_19.subtitle"),
       expectRetryCalled: true,
@@ -23,7 +23,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "20"',
-      errorCode: "20",
+      errorCodeOrMessage: "20",
       expectedTitle: I18n.t("authentication.auth_errors.error_20.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.error_20.subtitle"),
       expectRetryCalled: true,
@@ -31,7 +31,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "21"',
-      errorCode: "21",
+      errorCodeOrMessage: "21",
       expectedTitle: I18n.t("authentication.auth_errors.error_21.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.error_21.subtitle"),
       expectRetryCalled: true,
@@ -39,7 +39,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "22"',
-      errorCode: "22",
+      errorCodeOrMessage: "22",
       expectedTitle: I18n.t("authentication.auth_errors.error_22.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.error_22.subtitle"),
       expectRetryCalled: true,
@@ -47,7 +47,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "23"',
-      errorCode: "23",
+      errorCodeOrMessage: "23",
       expectedTitle: I18n.t("authentication.auth_errors.error_23.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.error_23.subtitle"),
       expectRetryCalled: false,
@@ -55,7 +55,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "25"',
-      errorCode: "25",
+      errorCodeOrMessage: "25",
       expectedTitle: I18n.t("authentication.auth_errors.error_25.title"),
       expectedSubtitle: I18n.t("authentication.auth_errors.error_25.subtitle"),
       expectRetryCalled: true,
@@ -63,7 +63,7 @@ describe("AuthErrorComponent", () => {
     },
     {
       description: 'renders correctly with error code "1001"',
-      errorCode: "1001",
+      errorCodeOrMessage: "1001",
       expectedTitle: I18n.t("authentication.auth_errors.error_1001.title"),
       expectedSubtitle: I18n.t(
         "authentication.auth_errors.error_1001.subtitle"
@@ -76,7 +76,7 @@ describe("AuthErrorComponent", () => {
   testCases.forEach(
     ({
       description,
-      errorCode,
+      errorCodeOrMessage,
       expectedTitle,
       expectedSubtitle,
       expectRetryCalled,
@@ -89,7 +89,7 @@ describe("AuthErrorComponent", () => {
         const { getByText, queryByText } = render(
           <AuthErrorComponent
             authLevel="L2"
-            errorCode={errorCode}
+            errorCodeOrMessage={errorCodeOrMessage}
             onRetry={onRetryMock}
             onCancel={onCancelMock}
           />
