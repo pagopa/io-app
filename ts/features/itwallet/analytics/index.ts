@@ -97,7 +97,7 @@ type TrackITWalletBannerClosureProperties = {
 };
 
 type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "cie_pin" | "cieid";
+  ITW_ID_method: "spid" | "ciePin" | "cieId";
 };
 
 type TrackITWalletSpidIDPSelected = { idp: string };
@@ -472,6 +472,16 @@ export function trackWalletCredentialRenewStart(
   );
 }
 
+export function trackIssuanceCredentialScrollToBottom(
+  credential: MixPanelCredential,
+  screenRoute: string
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_ISSUANCE_CREDENTIAL_SCROLL,
+    buildEventProperties("UX", "action", { credential, screen: screenRoute })
+  );
+}
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -620,6 +630,13 @@ export const trackItwIdRequestUnexpected = ({
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
     buildEventProperties("KO", "error", { reason, type })
+  );
+};
+
+export const trackItwAlreadyActivated = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
+    buildEventProperties("KO", "error")
   );
 };
 

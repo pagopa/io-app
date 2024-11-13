@@ -5,9 +5,9 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
+import WalletTransactionCartItemDetailsScreen from "../screens/PaymentsTransactionBizEventsCartItemDetailsScreen";
 import { PaymentsTransactionBizEventsDetailsScreen } from "../screens/PaymentsTransactionBizEventsDetailsScreen";
 import { PaymentsTransactionBizEventsListScreen } from "../screens/PaymentsTransactionBizEventsListScreen";
-import WalletTransactionCartItemDetailsScreen from "../screens/PaymentsTransactionBizEventsCartItemDetailsScreen";
 import PaymentsTransactionBizEventsPreviewScreen from "../screens/PaymentsTransactionBizEventsPreviewScreen";
 import { PaymentsTransactionBizEventsParamsList } from "./params";
 import { PaymentsTransactionBizEventsRoutes } from "./routes";
