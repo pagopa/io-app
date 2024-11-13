@@ -1,5 +1,7 @@
 import {
   FooterWithButtons,
+  H2,
+  H6,
   HSpacer,
   Icon,
   VSpacer
@@ -11,9 +13,6 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -62,11 +61,9 @@ const CdcBonusRequestSelectResidence = () => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
+          <H2>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H2>
           <VSpacer size={16} />
-          <H4 weight={"Regular"}>
-            {I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}
-          </H4>
+          <H6>{I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}</H6>
 
           {[...cdcSelectedBonus].sort(compareSelectedBonusByYear).map(b => (
             <>
@@ -80,9 +77,7 @@ const CdcBonusRequestSelectResidence = () => {
               >
                 <Icon name="bonus" size={20} />
                 <HSpacer size={16} />
-                <H3 weight={"Semibold"} color={"bluegrey"}>
-                  {b.year}
-                </H3>
+                <H6>{b.year}</H6>
               </View>
               <RadioButtonList<ResidentChoice>
                 key={b.year}

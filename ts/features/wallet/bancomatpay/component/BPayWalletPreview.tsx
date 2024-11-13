@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Body } from "@pagopa/io-app-design-system";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
-import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation";
