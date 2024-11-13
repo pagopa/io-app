@@ -7,6 +7,7 @@ interface PollForStoreValueOptions<T> {
   interval?: number;
   timeout?: number;
 }
+
 /**
  * Polls the Redux store until the selected value meets the specified condition.
  * @param state The Redux store state.
@@ -25,6 +26,13 @@ export const pollForStoreValue = <T>({
 }: PollForStoreValueOptions<T>): Promise<T> =>
   new Promise((resolve, reject) => {
     const startTime = Date.now();
+
+    // Avoid starting polling if the condition is already met
+    const initialValue = selector(getState());
+    if (condition(initialValue)) {
+      resolve(initialValue);
+      return;
+    }
 
     const intervalId = setInterval(() => {
       const currentTime = Date.now();
