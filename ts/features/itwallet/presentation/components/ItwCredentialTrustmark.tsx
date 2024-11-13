@@ -351,7 +351,9 @@ export const QrCodeBottomSheetContent = ({
       <QrCodeImage
         size={170}
         value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
-        accessibilityLabel="QR code autenticità credenziale"
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.trustmark.qrCode"
+        )}
       />
       <VStack space={8}>
         <H6>{getCredentialNameFromType(credential.credentialType)}</H6>
