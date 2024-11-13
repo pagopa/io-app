@@ -22,7 +22,7 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-import { getBadgeTextAndVariantByTransactionStatus } from "../../payments/common/utils";
+import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
@@ -460,7 +460,7 @@ const renderListItemTransaction = () => (
               subtitle="subtitle"
               paymentLogoIcon={asset}
               transaction={{
-                badge: getBadgeTextAndVariantByTransactionStatus(status)
+                badge: getBadgePropsByTransactionStatus(status)
               }}
               onPress={onButtonPress}
             />
@@ -513,7 +513,7 @@ const renderListItemTransaction = () => (
         title="Refunded transaction"
         subtitle="This one has a custom icon and transaction amount with a green color"
         transaction={{
-          badge: getBadgeTextAndVariantByTransactionStatus("refunded")
+          badge: getBadgePropsByTransactionStatus("refunded")
         }}
         paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
         onPress={onButtonPress}
@@ -525,7 +525,7 @@ const renderListItemTransaction = () => (
         title="This one is not clickable"
         subtitle="subtitle"
         transaction={{
-          badge: getBadgeTextAndVariantByTransactionStatus("failure")
+          badge: getBadgePropsByTransactionStatus("failure")
         }}
         paymentLogoIcon={"postepay"}
       />

@@ -4,7 +4,7 @@ import { Transaction, isSuccessTransaction } from "../../../../types/pagopa";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { format } from "../../../../utils/dates";
 import { formatNumberCurrencyCents } from "../../../idpay/common/utils/strings";
-import { getBadgeTextAndVariantByTransactionStatus } from "../../common/utils";
+import { getBadgePropsByTransactionStatus } from "../../common/utils";
 
 type Props = {
   transaction: Transaction;
@@ -37,7 +37,7 @@ const PaymentsLegacyListItemTransaction = ({
         title={recipient}
         subtitle={datetime}
         transaction={{
-          badge: getBadgeTextAndVariantByTransactionStatus(transactionStatus)
+          badge: getBadgePropsByTransactionStatus(transactionStatus)
         }}
         onPress={onPressTransaction}
       />

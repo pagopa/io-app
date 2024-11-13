@@ -51,7 +51,7 @@ import {
   hoursAndMinutesToAccessibilityReadableFormat
 } from "../../../../utils/accessibility";
 import { localeDateFormat } from "../../../../utils/locale";
-import { getBadgeTextAndVariantByTransactionStatus } from "../../../payments/common/utils";
+import { getBadgePropsByTransactionStatus } from "../../../payments/common/utils";
 import { formatAbsNumberAmountCentsOrDefault } from "../../common/utils/strings";
 
 export type TimelineOperationListItemProps = WithTestID<
@@ -172,7 +172,7 @@ const getTransactionOperationProps = (
       title,
       subtitle,
       transaction: {
-        badge: getBadgeTextAndVariantByTransactionStatus("reversal")
+        badge: getBadgePropsByTransactionStatus("reversal")
       }
     };
   }
@@ -245,7 +245,7 @@ const getInstrumentOperationProps = (
       title: getTitle(),
       subtitle,
       transaction: {
-        badge: getBadgeTextAndVariantByTransactionStatus("failure")
+        badge: getBadgePropsByTransactionStatus("failure")
       }
     };
   }
@@ -313,7 +313,7 @@ const getRefundOperationProps = (
       subtitle,
       paymentLogoIcon,
       transaction: {
-        badge: getBadgeTextAndVariantByTransactionStatus("failure")
+        badge: getBadgePropsByTransactionStatus("failure")
       }
     };
   }
