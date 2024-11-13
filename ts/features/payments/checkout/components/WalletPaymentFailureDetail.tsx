@@ -54,6 +54,21 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const handleChangePaymentMethod = () => {
+    analytics.trackPaymentsPspNotAvailableSelectNew({
+      amount: paymentAnalyticsData?.formattedAmount,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
+      service_name: paymentAnalyticsData?.serviceName,
+      data_entry: paymentAnalyticsData?.startOrigin,
+      attempt: paymentAnalyticsData?.attempt,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
+    });
+
     dispatch(paymentsCalculatePaymentFeesAction.cancel());
     navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
       screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
