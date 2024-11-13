@@ -3477,6 +3477,8 @@ features:
             content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
       credentialDetails:
         card:
+          front: "Front"
+          back: "Back"
           showFront: "Show front"
           showBack: "Show back"
         personalDataTitle: "Personal data"
