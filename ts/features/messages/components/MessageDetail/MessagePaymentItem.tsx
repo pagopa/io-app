@@ -97,7 +97,9 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
     title={""}
     subtitle={""}
     onPress={_ => undefined}
-    paymentNoticeStatus={"error"}
+    paymentNotice={{
+      status: "error"
+    }}
     badgeText={""}
   />
 );
@@ -139,8 +141,11 @@ const modulePaymentNoticeFromPaymentStatus = (
         <ModulePaymentNotice
           title={dueDateOrUndefined}
           subtitle={description}
-          paymentNoticeStatus="default"
-          paymentNoticeAmount={formattedAmount}
+          paymentNotice={{
+            status: "default",
+            amount: formattedAmount,
+            amountAccessibilityLabel: formattedAmount
+          }}
           onPress={paymentCallback}
         />
       );
@@ -155,7 +160,9 @@ const modulePaymentNoticeFromPaymentStatus = (
           title={I18n.t("features.messages.payments.noticeCode")}
           subtitle={formattedPaymentNoticeNumber}
           onPress={paymentCallback}
-          paymentNoticeStatus={paymentNoticeStatus}
+          paymentNotice={{
+            status: paymentNoticeStatus
+          }}
           badgeText={badgeText}
         />
       );
