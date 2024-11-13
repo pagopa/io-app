@@ -46,9 +46,12 @@ import {
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionOperationDTO";
 import I18n from "../../../../i18n";
-import { hoursAndMinutesToAccessibilityReadableFormat } from "../../../../utils/accessibility";
+import {
+  getAccessibleAmountText,
+  hoursAndMinutesToAccessibilityReadableFormat
+} from "../../../../utils/accessibility";
 import { localeDateFormat } from "../../../../utils/locale";
-import { getBadgeTextByTransactionStatus } from "../../../payments/common/utils";
+import { getBadgeTextAndVariantByTransactionStatus } from "../../../payments/common/utils";
 import { formatAbsNumberAmountCentsOrDefault } from "../../common/utils/strings";
 
 export type TimelineOperationListItemProps = WithTestID<
@@ -70,8 +73,9 @@ export const TimelineOperationListItem = (
       <ListItemTransaction
         title=""
         subtitle=""
-        transactionStatus="pending"
-        badgeText={""}
+        transaction={{
+          badge: { text: "", variant: "info" }
+        }}
         isLoading={true}
       />
     );
@@ -167,8 +171,9 @@ const getTransactionOperationProps = (
       paymentLogoIcon,
       title,
       subtitle,
-      transactionStatus: "reversal",
-      badgeText: getBadgeTextByTransactionStatus("reversal")
+      transaction: {
+        badge: getBadgeTextAndVariantByTransactionStatus("reversal")
+      }
     };
   }
 
@@ -176,8 +181,11 @@ const getTransactionOperationProps = (
     paymentLogoIcon,
     title,
     subtitle,
-    transactionStatus: "success",
-    transactionAmount: getAccruedString()
+    transaction: {
+      amount: getAccruedString(),
+      amountAccessibilityLabel:
+        getAccessibleAmountText(getAccruedString()) ?? getAccruedString()
+    }
   };
 };
 
@@ -236,8 +244,9 @@ const getInstrumentOperationProps = (
       paymentLogoIcon: getLogo(),
       title: getTitle(),
       subtitle,
-      transactionStatus: "failure",
-      badgeText: getBadgeTextByTransactionStatus("failure")
+      transaction: {
+        badge: getBadgeTextAndVariantByTransactionStatus("failure")
+      }
     };
   }
 
@@ -245,8 +254,10 @@ const getInstrumentOperationProps = (
     paymentLogoIcon: getLogo(),
     title: getTitle(),
     subtitle,
-    transactionStatus: "success",
-    transactionAmount: ""
+    transaction: {
+      amount: "",
+      amountAccessibilityLabel: ""
+    }
   };
 };
 
@@ -260,8 +271,10 @@ const getIbanOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transactionStatus: "success",
-  transactionAmount: ""
+  transaction: {
+    amount: "",
+    amountAccessibilityLabel: ""
+  }
 });
 
 const getOnboardingOperationProps = (
@@ -274,8 +287,10 @@ const getOnboardingOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transactionStatus: "success",
-  transactionAmount: ""
+  transaction: {
+    amount: "",
+    amountAccessibilityLabel: ""
+  }
 });
 
 const getRefundOperationProps = (
@@ -297,8 +312,9 @@ const getRefundOperationProps = (
       title,
       subtitle,
       paymentLogoIcon,
-      transactionStatus: "failure",
-      badgeText: getBadgeTextByTransactionStatus("failure")
+      transaction: {
+        badge: getBadgeTextAndVariantByTransactionStatus("failure")
+      }
     };
   }
 
@@ -306,8 +322,12 @@ const getRefundOperationProps = (
     title,
     subtitle,
     paymentLogoIcon,
-    transactionStatus: "success",
-    transactionAmount: `${formatAbsNumberAmountCentsOrDefault(amountCents)} €`
+    transaction: {
+      amount: `${formatAbsNumberAmountCentsOrDefault(amountCents)} €`,
+      amountAccessibilityLabel: `${getAccessibleAmountText(
+        formatAbsNumberAmountCentsOrDefault(amountCents)
+      )} €`
+    }
   };
 };
 
@@ -321,8 +341,10 @@ const getSuspendOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transactionStatus: "success",
-  transactionAmount: ""
+  transaction: {
+    amount: "",
+    amountAccessibilityLabel: ""
+  }
 });
 
 const getReadmittedOperationProps = (
@@ -339,8 +361,10 @@ const getReadmittedOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transactionStatus: "success",
-  transactionAmount: ""
+  transaction: {
+    amount: "",
+    amountAccessibilityLabel: ""
+  }
 });
 const getUnsubscribedOperationProps = (
   operation: UnsubscribeOperationDTO
@@ -352,8 +376,10 @@ const getUnsubscribedOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transactionStatus: "success",
-  transactionAmount: ""
+  transaction: {
+    amount: "",
+    amountAccessibilityLabel: ""
+  }
 });
 
 export const getOperationSubtitle = (operationDate: Date): string => {

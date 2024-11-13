@@ -1,7 +1,7 @@
 import {
   IOLogoPaymentType,
   IOPaymentLogos,
-  ListItemTransactionStatusWithBadge
+  ListItemTransactionBadge
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -20,7 +20,7 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletCard } from "../../../newWallet/types";
 import { contentRepoUrl } from "../../../../config";
 import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
-import { AlertVariant } from "./types";
+import { AlertVariant, ListItemTransactionStatus } from "./types";
 
 export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
@@ -29,20 +29,36 @@ export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
  * based on the transaction status.
  */
 
-export const getBadgeTextByTransactionStatus = (
-  transactionStatus: ListItemTransactionStatusWithBadge
-) => {
+export const getBadgeTextAndVariantByTransactionStatus = (
+  transactionStatus: ListItemTransactionStatus
+): ListItemTransactionBadge => {
   switch (transactionStatus) {
     case "failure":
-      return I18n.t("global.badges.failed");
+      return {
+        text: I18n.t("global.badges.failed"),
+        variant: "error"
+      };
     case "cancelled":
-      return I18n.t("global.badges.cancelled");
+      return {
+        text: I18n.t("global.badges.cancelled"),
+        variant: "error"
+      };
     case "reversal":
-      return I18n.t("global.badges.reversal");
+      return {
+        text: I18n.t("global.badges.reversal"),
+        variant: "lightBlue"
+      };
     case "pending":
-      return I18n.t("global.badges.onGoing");
+      return {
+        text: I18n.t("global.badges.onGoing"),
+        variant: "info"
+      };
+    case "refunded":
     default:
-      return "";
+      return {
+        text: "",
+        variant: "default"
+      };
   }
 };
 

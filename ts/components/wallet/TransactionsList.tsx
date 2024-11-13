@@ -126,10 +126,11 @@ export const TransactionsList = (props: Props) => {
         title={recipient}
         subtitle={datetime}
         onPress={() => props.navigateToTransactionDetails(item)}
-        transactionStatus="success"
-        transactionAmount={amountText}
+        transaction={{
+          amount: amountText,
+          amountAccessibilityLabel: accessibilityLabel
+        }}
         accessible={true}
-        accessibilityLabel={accessibilityLabel}
       />
     );
   };
