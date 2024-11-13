@@ -399,7 +399,7 @@ $ cp .env.production .env
 > The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or fully working. Check the comments in the file for more informations about environment variables.
 
 ### io-dev-api-server
-You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes by coyping the included `.env.local` file to `.env`:
+You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes by copying the included `.env.local` file to `.env`:
 
 ```bash
 $ cp .env.local .env

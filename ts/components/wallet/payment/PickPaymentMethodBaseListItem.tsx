@@ -1,4 +1,4 @@
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { H6, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
   Image,
@@ -8,8 +8,6 @@ import {
   View
 } from "react-native";
 import { WithTestID } from "../../../types/WithTestID";
-import { H4 } from "../../core/typography/H4";
-import { H5 } from "../../core/typography/H5";
 import { IOStyles } from "../../core/variables/IOStyles";
 
 type Props = WithTestID<{
@@ -69,12 +67,12 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
         />
         <VSpacer size={16} />
         <View style={styles.paymentMethodInfo}>
-          <H4 weight={"Semibold"} color={"bluegreyDark"} numberOfLines={1}>
+          <H6 color={"bluegreyDark"} numberOfLines={1}>
             {title}
-          </H4>
-          <H5 weight={"Regular"} color={"bluegreyDark"} numberOfLines={2}>
+          </H6>
+          <H6 color={"bluegreyDark"} numberOfLines={2}>
             {description}
-          </H5>
+          </H6>
         </View>
       </View>
       <View style={styles.row}>

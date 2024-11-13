@@ -95,6 +95,7 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
       return "PAYMENT_NOT_FOUND_ERROR";
     case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
       return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
+    case "PAYMENT_VERIFY_GENERIC_ERROR":
     default:
       return "PAYMENT_GENERIC_ERROR";
   }
@@ -350,5 +351,23 @@ export const trackPaymentStartFlow = (
     buildEventProperties("UX", "action", {
       ...props
     })
+  );
+};
+
+export const trackPaymentsPspNotAvailableError = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_PSP_NOT_AVAILABLE_ERROR",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
+
+export const trackPaymentsPspNotAvailableSelectNew = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_PSP_NOT_AVAILABLE_SELECT_NEW",
+    buildEventProperties("UX", "action", props)
   );
 };
