@@ -98,7 +98,12 @@ const MultiValuePrerequisiteItemScreenContent = ({
           <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-          <Label>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Label>
+          {/* TODO: Add a proper `onPress` function to the following link.
+          It was a `<Link>` without anything else before */}
+          {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+          <Label asLink onPress={() => {}}>
+            {I18n.t("idpay.onboarding.multiPrerequisites.link")}
+          </Label>
           <VSpacer size={24} />
           <H6>{selfDeclaration.description}</H6>
           <ScrollView>
