@@ -1,8 +1,12 @@
-import { HSpacer, IOCategoryIcons, Icon } from "@pagopa/io-app-design-system";
+import {
+  H6,
+  HSpacer,
+  IOCategoryIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Pressable, View } from "react-native";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
-import { H4 } from "../../../../../../components/core/typography/H4";
 
 type Props = {
   text: string;
@@ -25,7 +29,7 @@ const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
     <View style={{ flexDirection: "row" }}>
       <Icon name={icon} size={20} color="bluegrey" />
       <HSpacer size={16} />
-      <H4 weight={"Regular"}>{text.toUpperCase()}</H4>
+      <H6>{text.toUpperCase()}</H6>
     </View>
     <RawCheckBox checked={checked} onPress={() => onPress(value)} />
   </Pressable>
