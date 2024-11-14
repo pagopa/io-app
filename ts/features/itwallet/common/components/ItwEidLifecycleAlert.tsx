@@ -1,10 +1,10 @@
-import React, { ComponentProps } from "react";
 import { Alert } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import * as O from "fp-ts/lib/Option";
 import { sequenceT } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { StyleSheet, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import React, { ComponentProps } from "react";
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -27,14 +27,12 @@ type Props = {
    * The eID statuses that will render the alert.
    */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
-  verticalSpacing?: boolean;
 };
 
 /**
  * This component renders an alert that displays information on the eID status.
  */
 export const ItwEidLifecycleAlert = ({
-  verticalSpacing = false,
   lifecycleStatus = defaultLifecycleStatus
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -84,7 +82,7 @@ export const ItwEidLifecycleAlert = ({
     };
 
     return (
-      <View style={verticalSpacing && styles.margins}>
+      <View style={{ marginBottom: 16 }}>
         <Alert {...alertProps[eidStatus]} />
       </View>
     );
@@ -97,9 +95,3 @@ export const ItwEidLifecycleAlert = ({
     ))
   );
 };
-
-const styles = StyleSheet.create({
-  margins: {
-    marginVertical: 16
-  }
-});
