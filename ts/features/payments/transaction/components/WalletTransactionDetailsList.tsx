@@ -17,6 +17,7 @@ import {
   cleanTransactionDescription,
   getTransactionIUV
 } from "../../../../utils/payment";
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 
 type Props = {
   transaction?: Transaction | null;
@@ -46,18 +47,23 @@ export const WalletTransactionDetailsList = ({
     IUV: pipe(getTransactionIUV(transaction.description), O.toUndefined)
   };
 
+  const amountText = formatNumberCentsToAmount(
+    transaction.amount.amount,
+    true,
+    "right"
+  );
+
   return (
     <>
       <ListItemTransaction
         title={cleanTransactionDescription(transaction.description)}
         subtitle={transaction.merchant}
-        transactionStatus="success"
-        transactionAmount={formatNumberCentsToAmount(
-          transaction.amount.amount,
-          true,
-          "right"
-        )}
-        hasChevronRight
+        transaction={{
+          amount: amountText,
+          amountAccessibilityLabel:
+            getAccessibleAmountText(amountText) ?? amountText
+        }}
+        showChevron
         onPress={() => onPress?.(operationDetails)}
       />
       <Divider />
