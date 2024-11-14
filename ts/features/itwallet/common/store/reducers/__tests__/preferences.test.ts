@@ -13,7 +13,7 @@ describe("IT Wallet preferences reducer", () => {
   });
 
   it("should handle itwCloseFeedbackBanner action", () => {
-    const expectedDate = addMonths(new Date(), 1).toDateString();
+    const expectedDate = addMonths(new Date(), 1).toISOString();
     const action = itwCloseFeedbackBanner();
 
     const newState = reducer(INITIAL_STATE, action);

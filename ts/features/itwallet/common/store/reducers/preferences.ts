@@ -16,7 +16,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwCloseFeedbackBanner): {
       return {
-        hideFeedbackBannerUntilDate: addMonths(new Date(), 1).toDateString()
+        hideFeedbackBannerUntilDate: addMonths(new Date(), 1).toISOString()
       };
     }
 
