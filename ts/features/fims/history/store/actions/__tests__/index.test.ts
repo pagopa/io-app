@@ -4,7 +4,7 @@ import {
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "..";
-import { Consent } from "../../../../../../../definitions/fims_history/Consent";
+import { Access } from "../../../../../../../definitions/fims_history/Access";
 import { FimsExportSuccessStates } from "../../reducer";
 
 describe("fimsHistoryGet.request", () => {
@@ -27,18 +27,18 @@ describe("fimsHistoryGet.request", () => {
 
 describe("fimsHistoryGet.success", () => {
   (
-    [[], [{}, {}, {}]] as unknown as ReadonlyArray<ReadonlyArray<Consent>>
-  ).forEach(items =>
-    [undefined, "01JBVCKDNW4Y2YMACBP56H9E2Z"].forEach(continuationToken => {
+    [[], [{}, {}, {}]] as unknown as ReadonlyArray<ReadonlyArray<Access>>
+  ).forEach(data =>
+    [undefined, "01JBVCKDNW4Y2YMACBP56H9E2Z"].forEach(next => {
       it("Should have a type of 'FIMS_GET_HISTORY_SUCCESS' and match expected 'items' and 'continuationToken' payload", () => {
         const fimsHistoryGetSuccess = fimsHistoryGet.success({
-          items,
-          continuationToken
+          data,
+          next
         });
         expect(fimsHistoryGetSuccess.type).toBe("FIMS_GET_HISTORY_SUCCESS");
         expect(fimsHistoryGetSuccess.payload).toEqual({
-          items,
-          continuationToken
+          data,
+          next
         });
       });
     })

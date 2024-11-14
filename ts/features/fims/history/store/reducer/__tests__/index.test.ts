@@ -21,8 +21,8 @@ import {
   resetFimsHistoryExportState,
   resetFimsHistoryState
 } from "../../actions";
-import { ConsentsResponseDTO } from "../../../../../../../definitions/fims_history/ConsentsResponseDTO";
-import { Consent } from "../../../../../../../definitions/fims_history/Consent";
+import { AccessHistoryPage } from "../../../../../../../definitions/fims_history/AccessHistoryPage";
+import { Access } from "../../../../../../../definitions/fims_history/Access";
 
 describe("INITIAL_STATE", () => {
   it("Should match snapshot", () => {
@@ -38,7 +38,7 @@ describe("fimsHistoryReducer", () => {
 });
 
 describe("fimsHistoryReducer, receiving 'fimsHistoryGet.request'", () => {
-  const consentsResponse = {} as ConsentsResponseDTO;
+  const consentsResponse = {} as AccessHistoryPage;
   [
     pot.none,
     pot.noneLoading,
@@ -86,24 +86,36 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
       {
         id: "id1",
         service_id: "sid1",
-        timestamp: new Date()
+        timestamp: new Date(),
+        redirect: {
+          display_name: "An Url",
+          uri: "https://www.anUrl.com"
+        }
       },
       {
         id: "id2",
         service_id: "sid2",
-        timestamp: new Date()
+        timestamp: new Date(),
+        redirect: {
+          display_name: "An Url",
+          uri: "https://www.anUrl.com"
+        }
       },
       {
         id: "id3",
         service_id: "sid3",
-        timestamp: new Date()
+        timestamp: new Date(),
+        redirect: {
+          display_name: "An Url",
+          uri: "https://www.anUrl.com"
+        }
       }
-    ] as ReadonlyArray<Consent>
+    ] as ReadonlyArray<Access>
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ].forEach(initialStateItems => {
     const consentsResponseDTO = {
-      items: initialStateItems,
-      continuationToken: "The initial continuation token"
+      data: initialStateItems,
+      next: "The initial continuation token"
     };
     [
       pot.none,
@@ -127,24 +139,32 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
               {
                 id: "id4",
                 service_id: "sid4",
-                timestamp: new Date()
+                timestamp: new Date(),
+                redirect: {
+                  display_name: "An Url",
+                  uri: "https://www.anUrl.com"
+                }
               },
               {
                 id: "id5",
                 service_id: "sid5",
-                timestamp: new Date()
+                timestamp: new Date(),
+                redirect: {
+                  display_name: "An Url",
+                  uri: "https://www.anUrl.com"
+                }
               }
-            ] as ReadonlyArray<Consent>
+            ] as ReadonlyArray<Access>
           ].forEach(responseItems => {
             const expectedOutputItems = [
               ...(pot.isSome(initialConsentsList)
-                ? initialConsentsList.value.items
+                ? initialConsentsList.value.data
                 : []),
               ...responseItems
             ];
             it(`Given 'consentsList' ${initialConsentsList.kind} (${
               pot.isSome(initialConsentsList)
-                ? initialConsentsList.value.items.length
+                ? initialConsentsList.value.data.length
                 : 0
             } items), after 'fimsHistoryGetSuccess.success' with 'continuationToken' ${
               responseContinuationToken ? "defined" : "undefined"
@@ -154,8 +174,8 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
               expectedOutputItems.length
             } final items)`, () => {
               const fimsHistoryGetSuccess = fimsHistoryGet.success({
-                items: responseItems,
-                continuationToken: responseContinuationToken
+                data: responseItems,
+                next: responseContinuationToken
               });
 
               const historyState = reducer(initialState, fimsHistoryGetSuccess);
@@ -171,10 +191,10 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
                 );
               }
 
-              expect(outputConsentsList.value.items).toEqual(
+              expect(outputConsentsList.value.data).toEqual(
                 expectedOutputItems
               );
-              expect(outputConsentsList.value.continuationToken).toEqual(
+              expect(outputConsentsList.value.next).toEqual(
                 responseContinuationToken
               );
             });
@@ -186,14 +206,18 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
 
 describe("fimsHistoryReducer, receiving 'fimsHistoryGet.failure'", () => {
   const consentsData = {
-    items: [
+    data: [
       {
         id: "01JBXRH74QWKN21SA1Q8KQZG97",
         service_id: "01JBXRHCYN6HDM2FNYBG40EPYF",
-        timestamp: new Date()
+        timestamp: new Date(),
+        redirect: {
+          display_name: "An uri",
+          uri: "https://www.anUri.com"
+        }
       }
     ],
-    continuationToken: "01JBXRGCN4RJRE0TCGR2Z86DZP"
+    next: "01JBXRGCN4RJRE0TCGR2Z86DZP"
   };
   [
     pot.none,
@@ -247,14 +271,18 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.failure'", () => {
 const generateInitialConsentsList = () =>
   pot.someError(
     {
-      items: [
+      data: [
         {
           id: "01JBXSV418Y8BC511JMBSS33GM",
           service_id: "01JBXSV79PBB4DGJ5V84RQX4H9",
-          timestamp: new Date()
+          timestamp: new Date(),
+          redirect: {
+            display_name: "An uri",
+            uri: "https://www.anUri.com"
+          }
         }
       ],
-      continuationToken: "01JBXSTE8J0WG7CAFMK6KKDS6C"
+      next: "01JBXSTE8J0WG7CAFMK6KKDS6C"
     },
     "There was an error"
   );
@@ -380,14 +408,18 @@ describe("fimsHistoryReducer, receiving 'resetFimsHistoryExportState'", () =>
 
 describe("fimsHistoryReducer, receiving 'resetFimsHistoryState'", () => {
   const consentsData = {
-    items: [
+    data: [
       {
         id: "01JBXYESDQ28QQBNM4XF9BNYCV",
         service_id: "01JBXYEX8Q1HNKJ0VJ73ZPW0XK",
-        timestamp: new Date()
+        timestamp: new Date(),
+        redirect: {
+          display_name: "An uri",
+          uri: "https://www.anUri.com"
+        }
       }
     ],
-    continuationToken: "01JBXYEJ6Z844VNB6306A400V7"
+    next: "01JBXYEJ6Z844VNB6306A400V7"
   };
   [
     pot.none,
