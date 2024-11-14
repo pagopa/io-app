@@ -1,10 +1,7 @@
 import { Body, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
-import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
-import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
