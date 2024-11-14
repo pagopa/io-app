@@ -5,10 +5,15 @@ import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import _ from "lodash";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
 import {
   CheckoutPaymentMethodsList,
   CheckoutPaymentMethodsListSkeleton
@@ -37,12 +42,6 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
-import * as analytics from "../analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();

@@ -1,9 +1,11 @@
 import {
   Body,
+  BodyProps,
   ButtonLink,
   ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H3,
   IOPictograms,
@@ -14,10 +16,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 
 export type CustomWizardScreenProps = {
   title: string;

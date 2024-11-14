@@ -1,27 +1,24 @@
-import * as React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { connect } from "react-redux";
 import {
   FooterWithButtons,
+  H2,
+  H6,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
+import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
-import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { H1 } from "../../../../../../components/core/typography/H1";
-import { H4 } from "../../../../../../components/core/typography/H4";
-import { Label } from "../../../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { abiListSelector } from "../../../store/abi";
-import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
+import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
+import { abiListSelector } from "../../../store/abi";
 
 type Props = {
   pan: PaymentInstrument;
@@ -56,8 +53,7 @@ const loadLocales = (props: Props) => ({
 const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
   const { pan, abiList } = props;
-  const { headerTitle, screenTitle, label, blockedCard, warning1, warning2 } =
-    loadLocales(props);
+  const { headerTitle, screenTitle, label } = loadLocales(props);
   React.useEffect(() => {
     const abi: Abi | undefined = abiList.find(elem => elem.abi === pan.abiCode);
     setAbiInfo(abi ?? {});
@@ -79,25 +75,12 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               IOStyles.horizontalContentPadding
             ]}
           >
-            <H1 style={styles.title}>{screenTitle}</H1>
+            <H2 style={styles.title}>{screenTitle}</H2>
             <VSpacer size={8} />
-            <H4 weight={"Regular"} style={styles.flexStart}>
-              {label}
-            </H4>
+            <H6 style={styles.flexStart}>{label}</H6>
             <VSpacer size={24} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
-            {isCoBadgeBlocked(props.pan) ? (
-              <InfoBox iconColor="red" iconName="errorFilled">
-                <Body>{blockedCard}</Body>
-              </InfoBox>
-            ) : (
-              <InfoBox>
-                <Body>
-                  {warning1} <Label color={"bluegrey"}>{warning2}</Label>
-                </Body>
-              </InfoBox>
-            )}
           </View>
           <VSpacer size={16} />
         </ScrollView>
