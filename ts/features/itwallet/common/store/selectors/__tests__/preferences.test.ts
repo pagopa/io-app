@@ -7,15 +7,18 @@ import { itwIsFeedbackBannerHiddenSelector } from "../preferences";
 describe("itwIsFeedbackBannerHiddenSelector", () => {
   it.each([
     [false, undefined],
-    [true, addMonths(new Date(), 1)],
-    [false, addDays(new Date(), -2)]
+    [false, "definitely not a date"],
+    [false, new Date().toDateString()],
+    [false, addDays(new Date(), -2).toDateString()],
+    [true, addMonths(new Date(), 1).toDateString()],
+    [true, addMonths(new Date(), 2).toDateString()]
   ])("should return %p if banner is hidden until %p", (expected, value) => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
     expect(
       itwIsFeedbackBannerHiddenSelector(
         _.set(globalState, "features.itWallet.preferences", {
-          hideFeedbackBannerUntil: value
+          hideFeedbackBannerUntilDate: value
         })
       )
     ).toBe(expected);

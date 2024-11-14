@@ -4,7 +4,7 @@ import { Action } from "../../../../../store/actions/types";
 import { itwCloseFeedbackBanner } from "../actions/preferences";
 
 export type ItwPreferencesState = {
-  hideFeedbackBannerUntil?: Date;
+  hideFeedbackBannerUntilDate?: string;
 };
 
 const INITIAL_STATE: ItwPreferencesState = {};
@@ -16,7 +16,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwCloseFeedbackBanner): {
       return {
-        hideFeedbackBannerUntil: addMonths(new Date(), 1)
+        hideFeedbackBannerUntilDate: addMonths(new Date(), 1).toDateString()
       };
     }
 
