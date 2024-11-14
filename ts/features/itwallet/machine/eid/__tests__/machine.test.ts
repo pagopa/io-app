@@ -1,11 +1,18 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { assign, createActor, fromPromise, StateFrom } from "xstate";
+import {
+  assign,
+  createActor,
+  fromPromise,
+  StateFrom,
+  waitFor as waitForActor
+} from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
+  GetAuthRedirectUrlActorParam,
   GetWalletAttestationActorParams,
   RequestEidActorParams,
   StartAuthFlowActorParams
@@ -45,6 +52,7 @@ describe("itwEidIssuanceMachine", () => {
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
   const startAuthFlow = jest.fn();
+  const getAuthRedirectUrl = jest.fn();
 
   const isNativeAuthSessionClosed = jest.fn();
   const issuedEidMatchesAuthenticatedUser = jest.fn();
@@ -90,6 +98,9 @@ describe("itwEidIssuanceMachine", () => {
       >(getWalletAttestation),
       requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
         requestEid
+      ),
+      getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
+        getAuthRedirectUrl
       ),
       startAuthFlow: fromPromise<
         AuthenticationContext,
@@ -263,8 +274,12 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
   });
 
-  it("Should obtain an eID (CieID)", () => {
+  it("Should obtain an eID (CieID)", async () => {
     /** Initial part is the same as the previous test, we can start from the identification */
+
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+    getAuthRedirectUrl.mockImplementation(() => Promise.resolve({}));
+    requestEid.mockImplementation(() => Promise.reject({}));
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -290,9 +305,12 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "select-identification-mode", mode: "cieId" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
+      UserIdentification: {
+        CieID: "StartingCieIDAuthFlow"
+      }
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -303,6 +321,26 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+
+    const cieIDBuildAuthRedirectUrlState = await waitForActor(actor, snapshot =>
+      snapshot.matches({
+        UserIdentification: { CieID: "CieIDBuildAuthRedirectUrl" }
+      })
+    );
+    expect(cieIDBuildAuthRedirectUrlState.value).toStrictEqual({
+      UserIdentification: { CieID: "CieIDBuildAuthRedirectUrl" }
+    });
+
+    expect(getAuthRedirectUrl).toHaveBeenCalledTimes(1);
+
+    const requestingEidState = await waitForActor(actor, snapshot =>
+      snapshot.matches({ Issuance: "RequestingEid" })
+    );
+    expect(requestingEidState.value).toStrictEqual({
+      Issuance: "RequestingEid"
+    });
+
+    expect(requestEid).toHaveBeenCalledTimes(1);
 
     /** Last part is the same as the previous test */
   });
@@ -399,7 +437,7 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     expect(actor.getSnapshot().context).toMatchObject({
-      cieAuthContext: {
+      authenticationContext: {
         callbackUrl: "http://test.it"
       }
     });
@@ -787,9 +825,11 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "select-identification-mode", mode: "cieId" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
+      UserIdentification: {
+        CieID: "StartingCieIDAuthFlow"
+      }
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
     await waitFor(() => expect(requestEid).toHaveBeenCalledTimes(1));
