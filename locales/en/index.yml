@@ -331,7 +331,7 @@ profile:
       title: Preferences
       description: Customize your app experience
     security:
-      title: Security
+      title: Security and login
       description: Manage biometric access and unlock code
     privacy:
       title: Privacy Policy and Terms of Service
@@ -504,7 +504,7 @@ profile:
       nameSurname: Name and surname
       fiscalCode: Fiscal code
   security:
-    title: Security
+    title: Security and login
     subtitle: Manage in-app authentication methods.
     list:
       biometric_recognition:
@@ -1910,6 +1910,10 @@ wallet:
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+      PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "The selected payment method is not available"
+        subtitle: "This can happen when the amount to be paid is particularly high, or if you are trying to pay a digital stamp duty."
+        action: "Select another payment method"
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
@@ -1969,6 +1973,15 @@ wallet:
       IN_APP_BROWSER_CLOSED_BY_USER:
         title: Hai interrotto il pagamento
         subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
+      INSUFFICIENT_AVAILABILITY_ERROR:
+        title: Il saldo è insufficiente
+        subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
+      CVV_ERROR: 
+        title: Il codice di sicurezza inserito è errato
+        subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
+      PLAFOND_LIMIT_ERROR:
+        title: Hai superato il limite di spesa della tua carta
+        subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2684,6 +2697,21 @@ bonus:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
+    merchantSearch:
+      goToSearchAccessibilityLabel: Find a partner
+      emptyList:
+        shortQuery:
+          titleWithCount: Search among {{merchantCount}} Carta Giovani Nazionale partners
+          titleWithoutCount: Search among Carta Giovani Nazionale partners
+        noResults:
+          title: Nothing found
+          subtitle: |- 
+            Search with different words.
+            If you can't find it, it might be that your partner hasn't joined or there aren't any active opportunities.
+      input:
+        placeholder: Search among partners
+        cancel: "Cancel"
+        clear: "Clear"
     merchantsList:
       news: new
       online: Online
@@ -4221,6 +4249,7 @@ FIMS:
       missingInAppBrowser:
         body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
         title: "Aggiorna il tuo browser per procedere"
+    inAppBrowserError: "C’è stato un problema nell’invio della richiesta. Riprova"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
     subtitle: "Autorizza IO a trasmettere a "
     subtitle2: " i dati necessari per la tua autenticazione su "

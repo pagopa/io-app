@@ -16,7 +16,13 @@ import {
 } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { connect } from "react-redux";
-import { Icon, HSpacer, VSpacer, Divider } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  HSpacer,
+  VSpacer,
+  Divider,
+  H6
+} from "@pagopa/io-app-design-system";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
@@ -27,8 +33,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
 import { IOBadge, IOBadgeOutlineColors } from "../core/IOBadge";
-import { H3 } from "../core/typography/H3";
-import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { LightModalContextInterface } from "../ui/LightModal";
@@ -152,18 +156,12 @@ const renderListItem = (
               <View style={IOStyles.rowSpaceBetween}>
                 <View>
                   {badgeStatus?.badge}
-                  <H3 color={"bluegreyDark"} weight={"Semibold"}>
-                    {itemInfo.item.name}
-                  </H3>
+                  <H6>{itemInfo.item.name}</H6>
                 </View>
               </View>
-              <H5
-                color={"bluegrey"}
-                weight={"Regular"}
-                style={styles.descriptionPadding}
-              >
+              <H6 style={styles.descriptionPadding}>
                 {itemInfo.item.description}
-              </H5>
+              </H6>
             </View>
             <Icon name="chevronRightListItem" color="blue" size={24} />
           </View>
@@ -188,17 +186,11 @@ const renderListItem = (
                   variant="solid"
                   color="blue"
                 />
-                <H3 color={"bluegrey"} weight={"Semibold"}>
-                  {itemInfo.item.name}
-                </H3>
+                <H6>{itemInfo.item.name}</H6>
               </View>
-              <H5
-                color={"bluegrey"}
-                weight={"Regular"}
-                style={styles.descriptionPadding}
-              >
+              <H6 style={styles.descriptionPadding}>
                 {itemInfo.item.description}
-              </H5>
+              </H6>
             </View>
           </View>
           <VSpacer />

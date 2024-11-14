@@ -3,7 +3,9 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
+  Body,
   ButtonOutline,
+  H6,
   IOColors,
   IOVisualCostants,
   ListItemTransaction,
@@ -15,8 +17,6 @@ import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { format } from "../../utils/dates";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { Body } from "../core/typography/Body";
-import { H3 } from "../core/typography/H3";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import { getAccessibleAmountText } from "../../utils/accessibility";
@@ -126,10 +126,11 @@ export const TransactionsList = (props: Props) => {
         title={recipient}
         subtitle={datetime}
         onPress={() => props.navigateToTransactionDetails(item)}
-        transactionStatus="success"
-        transactionAmount={amountText}
+        transaction={{
+          amount: amountText,
+          amountAccessibilityLabel: accessibilityLabel
+        }}
         accessible={true}
-        accessibilityLabel={accessibilityLabel}
       />
     );
   };
@@ -145,9 +146,7 @@ export const TransactionsList = (props: Props) => {
     <ScrollView scrollEnabled={false} style={styles.scrollView}>
       <View>
         <View style={styles.subHeaderContent}>
-          <H3 weight={"Semibold"} color={"bluegreyDark"}>
-            {I18n.t("wallet.latestTransactions")}
-          </H3>
+          <H6 color={"bluegreyDark"}>{I18n.t("wallet.latestTransactions")}</H6>
         </View>
       </View>
       {helpMessage}

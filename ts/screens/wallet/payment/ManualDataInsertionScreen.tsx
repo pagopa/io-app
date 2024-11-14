@@ -1,7 +1,10 @@
 import {
+  Body,
   ContentWrapper,
   FooterWithButtons,
+  H2,
   IOColors,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -20,9 +23,6 @@ import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { LabelledItem } from "../../../components/LabelledItem";
-import { Body } from "../../../components/core/typography/Body";
-import { H1 } from "../../../components/core/typography/H1";
-import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -186,11 +186,11 @@ class ManualDataInsertionScreen extends React.Component<
             keyboardShouldPersistTaps="handled"
           >
             <ContentWrapper>
-              <H1>{I18n.t("wallet.insertManually.title")}</H1>
+              <H2>{I18n.t("wallet.insertManually.title")}</H2>
               <Body>{I18n.t("wallet.insertManually.info")}</Body>
-              <Link onPress={this.showModal}>
+              <Label asLink onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
-              </Link>
+              </Label>
               <VSpacer size={16} />
               <LabelledItem
                 isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}

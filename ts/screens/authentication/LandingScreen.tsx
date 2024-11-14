@@ -87,6 +87,7 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
           )}
           icon="fiscalCodeIndividual"
+          testID="bottom-sheet-login-with-cie-pin"
           onPress={navigateToCiePinInsertion}
         />
         <VSpacer size={8} />
@@ -98,6 +99,7 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
           )}
           icon="device"
+          testID="bottom-sheet-login-with-cie-id"
           onPress={() => navigateToCieIdLoginScreen("SpidL2")}
         />
         <VSpacer size={24} />
@@ -107,6 +109,7 @@ export const LandingScreen = () => {
               screen: ROUTES.AUTHENTICATION_CIE_ID_WIZARD
             })
           }
+          testID="bottom-sheet-login-wizards"
           pictogramName="help"
           color="turquoise"
           title={I18n.t(
@@ -241,7 +244,7 @@ export const LandingScreen = () => {
   const getLoginButtons = useCallback((): [JSX.Element, JSX.Element] => {
     const loginCieButton = (
       <ButtonSolid
-        testID={"landing-button-login-cie"}
+        testID="landing-button-login-cie"
         accessibilityLabel={I18n.t("authentication.landing.loginCie")}
         fullWidth
         color={isCieUatEnabled ? "danger" : "primary"}
@@ -252,7 +255,7 @@ export const LandingScreen = () => {
     );
     const loginSpidButton = (
       <ButtonSolid
-        testID={"landing-button-login-spid"}
+        testID="landing-button-login-spid"
         fullWidth
         accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
         color="primary"
