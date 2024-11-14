@@ -7,10 +7,7 @@ import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import { v4 as uuid } from "uuid";
 
-import { InfoBox } from "../../components/box/InfoBox";
-import { Label } from "../../components/core/typography/Label";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { isTestEnv } from "../../utils/environment";
@@ -185,13 +182,7 @@ export const PayWebViewModal = (props: Props) => {
           <View
             style={styles.descriptionContainer}
             testID={"PayWebViewModal-description"}
-          >
-            <InfoBox iconName="info" iconColor="bluegreyDark" iconSize={24}>
-              <Label weight={"Regular"} color={"bluegrey"}>
-                {I18n.t("wallet.challenge3ds.description")}
-              </Label>
-            </InfoBox>
-          </View>
+          />
         )}
 
         <WebView

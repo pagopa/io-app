@@ -1,5 +1,6 @@
 import {
   FooterWithButtons,
+  H4,
   HeaderSecondLevel,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -17,7 +18,6 @@ import {
 } from "react-native";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { LabelledItem } from "../../../../../components/LabelledItem";
-import { H2 } from "../../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { Category, OrderType, categories, orders } from "../../utils/filters";
@@ -122,7 +122,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
           keyboardShouldPersistTaps={"handled"}
         >
           <View style={IOStyles.horizontalContentPadding}>
-            <H2>{I18n.t("bonus.cgn.merchantsList.filter.searchTitle")}</H2>
+            <H4>{I18n.t("bonus.cgn.merchantsList.filter.searchTitle")}</H4>
             <LabelledItem
               inputProps={{
                 value: searchValue,
@@ -137,7 +137,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             <VSpacer size={24} />
             {props.isLocal && (
               <>
-                <H2>{I18n.t("bonus.cgn.merchantsList.filter.addressTitle")}</H2>
+                <H4>{I18n.t("bonus.cgn.merchantsList.filter.addressTitle")}</H4>
                 <LabelledItem
                   inputProps={{
                     value: address,
@@ -159,7 +159,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                 <VSpacer size={24} />
               </>
             )}
-            <H2>{I18n.t("bonus.cgn.merchantsList.filter.categories")}</H2>
+            <H4>{I18n.t("bonus.cgn.merchantsList.filter.categories")}</H4>
             <VSpacer size={8} />
             <FlatList
               data={_.values(categories)}
@@ -173,7 +173,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             <VSpacer size={24} />
             {props.isLocal && (
               <>
-                <H2>{I18n.t("bonus.cgn.merchantsList.filter.orderTitle")}</H2>
+                <H4>{I18n.t("bonus.cgn.merchantsList.filter.orderTitle")}</H4>
                 <VSpacer size={8} />
                 <FlatList
                   data={_.values(orders)}
