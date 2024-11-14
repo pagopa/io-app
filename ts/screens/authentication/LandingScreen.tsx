@@ -249,7 +249,7 @@ export const LandingScreen = () => {
         fullWidth
         color={isCieUatEnabled ? "danger" : "primary"}
         label={I18n.t("authentication.landing.loginCie")}
-        icon={"cie"}
+        icon="cieLetter"
         onPress={navigateToCiePinScreen}
       />
     );
