@@ -276,7 +276,7 @@ const WalletPaymentOutcomeScreen = () => {
           : undefined
     });
   };
-
+  // eslint-disable-next-line complexity
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
       case WalletPaymentOutcomeEnum.SUCCESS:
@@ -431,6 +431,33 @@ const WalletPaymentOutcomeScreen = () => {
           ),
           action: closeFailureAction,
           isHeaderVisible: true
+        };
+      case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
+        return {
+          pictogram: "emptyWallet",
+          title: I18n.t(
+            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.subtitle"
+          ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.CVV_ERROR:
+        return {
+          pictogram: "stopSecurity",
+          title: I18n.t("wallet.payment.outcome.CVV_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.CVV_ERROR.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
+        return {
+          pictogram: "meterLimit",
+          title: I18n.t("wallet.payment.outcome.PLAFOND_LIMIT_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PLAFOND_LIMIT_ERROR.subtitle"
+          ),
+          action: closeFailureAction
         };
     }
   };

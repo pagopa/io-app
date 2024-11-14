@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   Divider,
   FooterWithButtons,
+  H2,
   H6,
   HSpacer,
   Icon,
@@ -14,8 +15,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -102,7 +101,7 @@ const IDPayPaymentAuthorizationScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.flex}>
           <ContentWrapper>
-            <H1>{I18n.t("idpay.payment.authorization.header")}</H1>
+            <H2>{I18n.t("idpay.payment.authorization.header")}</H2>
             <VSpacer size={24} />
             {renderContent()}
           </ContentWrapper>
@@ -142,7 +141,7 @@ const AuthorizationScreenContent = ({
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
       <H6>{I18n.t("idpay.payment.authorization.toAuth")}</H6>
-      <H1>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H1>
+      <H2>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H2>
     </View>
     <VSpacer size={16} />
     <Divider />
@@ -168,7 +167,7 @@ const AuthorizationScreenContent = ({
     <View style={[IOStyles.row, IOStyles.alignCenter]}>
       <Icon name="initiatives" size={24} color="bluegrey" />
       <HSpacer size={16} />
-      <H3
+      <H6
         color="bluegrey"
         style={{
           // this should not happen, but the current typography adds 4
@@ -179,7 +178,7 @@ const AuthorizationScreenContent = ({
         }}
       >
         {I18n.t("idpay.payment.authorization.infoDivider")}
-      </H3>
+      </H6>
     </View>
     <VSpacer size={16} />
 
@@ -229,7 +228,7 @@ const AuthorizationScreenSkeleton = () => (
     <View style={[IOStyles.row, IOStyles.alignCenter]}>
       <Icon name="initiatives" size={24} color="bluegrey" />
       <HSpacer size={16} />
-      <H3
+      <H6
         color="bluegrey"
         style={{
           // see previous comment
@@ -237,7 +236,7 @@ const AuthorizationScreenSkeleton = () => (
         }}
       >
         {I18n.t("idpay.payment.authorization.infoDivider")}
-      </H3>
+      </H6>
     </View>
     <VSpacer size={16} />
     <ListItemInfo

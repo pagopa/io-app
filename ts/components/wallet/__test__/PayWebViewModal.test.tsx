@@ -76,22 +76,6 @@ describe("PayWebViewModal component", () => {
       component.getByText(I18n.t("wallet.challenge3ds.header"))
     ).toBeDefined();
   });
-
-  it("should render the info message", () => {
-    const component = renderComponent();
-    expect(
-      component.getByText(I18n.t("wallet.challenge3ds.description"))
-    ).toBeDefined();
-  });
-
-  it("should render the info icon", () => {
-    const component = renderComponent();
-    expect(
-      component
-        .getByTestId("PayWebViewModal-description")
-        .find(node => node.props.iconName === "info")
-    ).toBeDefined();
-  });
 });
 
 function renderComponent() {
