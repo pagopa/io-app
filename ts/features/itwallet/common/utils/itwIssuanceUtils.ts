@@ -31,7 +31,6 @@ const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 // Different scheme to avoid conflicts with the scheme handled by io-react-native-login-utils's activity
-
 const getRedirectUri = (identificationMode: IdentificationContext["mode"]) => {
   switch (identificationMode) {
     case "cieId":
@@ -49,9 +48,10 @@ type StartAuthFlowParams = {
 };
 
 /**
- * Function to start the authentication flow when using CIE + PIN. It must be invoked before
- * reading the card to get the `authUrl` to launch the CIE web view, and other params that are needed later.
- * After successfully reading the card, the flow must be completed invoking `completeCieAuthFlow`.
+ * Function to start the authentication flow. It must be invoked before
+ * proceeding with the authentication process to get the `authUrl` and other parameters needed later.
+ * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
+ * the flow must be completed by invoking `completeAuthFlow`.
  * @param walletAttestation - The wallet attestation.
  * @returns Authentication params to use when completing the flow.
  */
@@ -119,9 +119,9 @@ export type CompleteAuthFlowResult = Awaited<
 >;
 
 /**
- * Function to complete the CIE + PIN authentication flow. It must be invoked after `startCieAuthFlow`
- * and after reading the card to get the final `callbackUrl`. The rest of the parameters are those obtained from
- * `startCieAuthFlow` + the wallet attestation.
+ * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
+ * and after obtaining the final `callbackUrl` from the WebView (CIE + PIN & SPID) or Browser (CIEID).
+ * The rest of the parameters are those obtained from `startAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns Authentication tokens.
@@ -169,9 +169,7 @@ type PidIssuanceParams = {
 
 /**
  * Function to get the PID, parse it and return it in {@link StoredCredential} format.
- * It must be called after either one of the following:
- * - `startCieAuthFlow` and `completeCieAuthFlow`
- * - `startAndCompleteFullAuthFlow`
+ * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
 const getPid = async ({
