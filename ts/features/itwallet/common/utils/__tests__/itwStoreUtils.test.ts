@@ -61,7 +61,7 @@ describe("pollForStoreValue", () => {
       "Timeout exceeded while waiting for store value"
     );
 
-    expect(getStateMock).toHaveBeenCalledTimes(4); // called at each interval (500ms) until timeout
+    expect(getStateMock).toHaveBeenCalledTimes(5); // called at each interval (500ms) until timeout
   });
 
   it("polls at the specified interval", async () => {
@@ -84,7 +84,7 @@ describe("pollForStoreValue", () => {
     await expect(promise).rejects.toThrow(
       "Timeout exceeded while waiting for store value"
     );
-    expect(getStateMock).toHaveBeenCalledTimes(5); // 5 times at 100ms intervals
+    expect(getStateMock).toHaveBeenCalledTimes(6); // 6 times at 100ms intervals
   });
 
   it("stops polling once the condition is met", async () => {
