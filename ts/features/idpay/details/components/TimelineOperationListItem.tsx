@@ -54,6 +54,11 @@ import { localeDateFormat } from "../../../../utils/locale";
 import { getBadgePropsByTransactionStatus } from "../../../payments/common/utils";
 import { formatAbsNumberAmountCentsOrDefault } from "../../common/utils/strings";
 
+const emptyAmountTransaction = {
+  amount: "",
+  amountAccessibilityLabel: ""
+};
+
 export type TimelineOperationListItemProps = WithTestID<
   | {
       isLoading?: false;
@@ -254,10 +259,7 @@ const getInstrumentOperationProps = (
     paymentLogoIcon: getLogo(),
     title: getTitle(),
     subtitle,
-    transaction: {
-      amount: "",
-      amountAccessibilityLabel: ""
-    }
+    transaction: emptyAmountTransaction
   };
 };
 
@@ -271,10 +273,7 @@ const getIbanOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transaction: {
-    amount: "",
-    amountAccessibilityLabel: ""
-  }
+  transaction: emptyAmountTransaction
 });
 
 const getOnboardingOperationProps = (
@@ -287,10 +286,7 @@ const getOnboardingOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transaction: {
-    amount: "",
-    amountAccessibilityLabel: ""
-  }
+  transaction: emptyAmountTransaction
 });
 
 const getRefundOperationProps = (
@@ -341,10 +337,7 @@ const getSuspendOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transaction: {
-    amount: "",
-    amountAccessibilityLabel: ""
-  }
+  transaction: emptyAmountTransaction
 });
 
 const getReadmittedOperationProps = (
@@ -361,10 +354,7 @@ const getReadmittedOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transaction: {
-    amount: "",
-    amountAccessibilityLabel: ""
-  }
+  transaction: emptyAmountTransaction
 });
 const getUnsubscribedOperationProps = (
   operation: UnsubscribeOperationDTO
@@ -376,10 +366,7 @@ const getUnsubscribedOperationProps = (
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
-  transaction: {
-    amount: "",
-    amountAccessibilityLabel: ""
-  }
+  transaction: emptyAmountTransaction
 });
 
 export const getOperationSubtitle = (operationDate: Date): string => {

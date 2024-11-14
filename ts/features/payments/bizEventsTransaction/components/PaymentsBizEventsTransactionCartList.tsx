@@ -40,11 +40,9 @@ export const PaymentsBizEventsTransactionCartList = ({
           title={cartItem.subject ?? ""}
           subtitle={cartItem.payee?.name ?? ""}
           transaction={{
-            amount: cartItem.amount ? formatAmountText(cartItem.amount) : "",
+            amount: formatAmountText(cartItem.amount),
             amountAccessibilityLabel:
-              getAccessibleAmountText(
-                cartItem.amount ? formatAmountText(cartItem.amount) : ""
-              ) ?? ""
+              getAccessibleAmountText(formatAmountText(cartItem.amount)) ?? ""
           }}
           showChevron
           onPress={() => onPress(cartItem)}

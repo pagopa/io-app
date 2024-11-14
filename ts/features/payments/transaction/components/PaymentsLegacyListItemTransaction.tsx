@@ -27,8 +27,9 @@ const PaymentsLegacyListItemTransaction = ({
   const accessibleAmountText = getAccessibleAmountText(amountText);
   const accessibilityLabel = `${recipient}; ${accessibleDatetime}; ${accessibleAmountText}`;
 
-  const transactionStatus =
-    isSuccessTransaction(transaction) === true ? "success" : "failure";
+  const transactionStatus = isSuccessTransaction(transaction)
+    ? "success"
+    : "failure";
 
   if (transactionStatus === "failure") {
     return (
