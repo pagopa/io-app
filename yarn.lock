@@ -2215,14 +2215,12 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-2.1.2.tgz#5dae92a69740ac32f82a27030d39a6d1e2ab2283"
-  integrity sha512-TmFuMwzyLUwi7gi+l4ZvoVwH2S5IOvHMdYiVa8HfcDYIbFh55B8v9LRB63GkM0xx8SB0RAfYoQC/rvioVoO6nA==
+"@pagopa/io-app-design-system@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-3.0.1.tgz#f4c266d17251e0fcbacde671fbaecb338165f79f"
+  integrity sha512-5jtBzQdOXZyhEUltYBWY2KokuWjPI+iFyKw8djtZ8NZK3cwYlV3HU2i9EsgZtvcNkUStenrtSj2YMTqGM5pwFw==
   dependencies:
-    "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
-    "@types/react-native-i18n" "2.0.0"
     "@types/react-test-renderer" "^18.0.0"
     auto-changelog "^2.4.0"
     lodash "^4.17.21"
@@ -2330,22 +2328,6 @@
     json-set-map "^1.1.2"
     node-fetch "^2.6.0"
     semver "^7.3.7"
-    validator "^13.7.0"
-
-"@pagopa/ts-commons@^12.0.0":
-  version "12.6.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-12.6.0.tgz#2df8bd8f626f5e70d41736bf991a88c833f729b5"
-  integrity sha512-Sci1WD2TDmKVUGyAvBkcxAoXBDfVj9cgJBlRIai36oFuYxJfvdMx/34iZFP6detmXq/McnTESBF2Tz+aCh7DGQ==
-  dependencies:
-    abort-controller "^3.0.0"
-    agentkeepalive "^4.1.4"
-    applicationinsights "^1.8.10"
-    jose "^4.15.5"
-    json-set-map "^1.1.2"
-    jsonwebtoken "^9.0.1"
-    node-fetch "^2.6.0"
-    semver "^7.5.2"
-    ulid "^2.3.0"
     validator "^13.7.0"
 
 "@pdf-lib/standard-fonts@^1.0.0":
@@ -3463,7 +3445,7 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-background-timer/-/react-native-background-timer-2.0.0.tgz#c44c57f8fbca9d9d5521fdd72a8f55232b79381e"
   integrity sha512-y5VW82dL/ESOLg+5QQHyBdsFVA4ZklENxmOyxv8o06T+3HBG2JOSuz/CIPz1vKdB7dmWDGPZNuPosdtnp+xv2A==
 
-"@types/react-native-i18n@2.0.0", "@types/react-native-i18n@^2.0.0":
+"@types/react-native-i18n@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-i18n/-/react-native-i18n-2.0.0.tgz#2df92b3392d813b39530bd126aad429eedc9c3de"
   integrity sha512-JwSsjGw99Kk7kMg2R1YPAby7v7dw4rHGDTc3WsLtQuw0DeyMRLLPNdmjg85RP3BVX94F/SU+eef65DUsUzc9fQ==

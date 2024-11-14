@@ -60,9 +60,10 @@ const PaymentsBizEventsListItemTransaction = React.memo(
           accessible={true}
           title={I18n.t("features.payments.transactions.multiplePayment")}
           subtitle={datetime}
-          transactionAmount={amountText}
-          accessibilityLabel={accessibilityLabel}
-          transactionStatus="success"
+          transaction={{
+            amount: amountText,
+            amountAccessibilityLabel: accessibilityLabel
+          }}
         />
       );
     }
@@ -74,9 +75,10 @@ const PaymentsBizEventsListItemTransaction = React.memo(
         accessible={true}
         title={recipient}
         subtitle={datetime}
-        transactionAmount={amountText}
-        accessibilityLabel={accessibilityLabel}
-        transactionStatus="success"
+        transaction={{
+          amount: amountText,
+          amountAccessibilityLabel: accessibilityLabel
+        }}
       />
     );
   },
