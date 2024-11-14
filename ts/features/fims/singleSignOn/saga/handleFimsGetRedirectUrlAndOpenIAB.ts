@@ -151,11 +151,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   try {
     yield* call(openAuthenticationSession, inAppBrowserRedirectUrl, "", true);
   } catch (error: unknown) {
-    const debugMessage = `IAB opening failed: ${inAppBrowserErrorToHumanReadable(
-      error
-    )}`;
-    yield* call(computeAndTrackAuthenticationError, debugMessage);
-    yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
+    handleInAppBrowserErrorIfNeeded(error);
   }
 }
 
@@ -495,6 +491,16 @@ function* computeAndTrackInAppBrowserOpening(
   );
 }
 
+function* handleInAppBrowserErrorIfNeeded(error: unknown) {
+  if (!isInAppBrowserClosedError(error)) {
+    const debugMessage = `IAB opening failed: ${inAppBrowserErrorToHumanReadable(
+      error
+    )}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
+    yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
+  }
+}
+
 const inAppBrowserErrorToHumanReadable = (error: unknown) => {
   if (isLoginUtilsError(error)) {
     return `${error.code} ${error.userInfo?.error}`;
@@ -504,3 +510,7 @@ const inAppBrowserErrorToHumanReadable = (error: unknown) => {
 
 const isLoginUtilsError = (error: unknown): error is LoginUtilsError =>
   (error as LoginUtilsError).userInfo !== undefined;
+
+const isInAppBrowserClosedError = (error: unknown) =>
+  isLoginUtilsError(error) &&
+  error.userInfo?.error === "NativeAuthSessionClosed";
