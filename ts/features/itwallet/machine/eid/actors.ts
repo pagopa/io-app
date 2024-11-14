@@ -83,7 +83,7 @@ export const createEidIssuanceActorsImplementation = (
         "walletInstanceAttestation is undefined"
       );
 
-      // When using CIE + PIN or SPID the authorization flow was already started, we just need to complete it
+      // At this point, the authorization flow has already started and just needs to be completed
       assert(
         input.authenticationContext,
         "authenticationContext must exist when the identification mode is ciePin"

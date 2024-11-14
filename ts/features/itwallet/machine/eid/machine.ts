@@ -242,9 +242,9 @@ export const itwEidIssuanceMachine = setup({
         CieID: {
           description:
             "This state handles the entire CieID authentication flow",
-          initial: "CieStartFlow",
+          initial: "StartingCieIDAuthFlow",
           states: {
-            CieStartFlow: {
+            StartingCieIDAuthFlow: {
               entry: [
                 assign(() => ({ authenticationContext: undefined })),
                 { type: "navigateToEidPreviewScreen" }
@@ -344,7 +344,7 @@ export const itwEidIssuanceMachine = setup({
               ],
               on: {
                 "select-spid-idp": {
-                  target: "SpidLogin",
+                  target: "StartingSpidAuthFlow",
                   actions: assign(({ event }) => ({
                     identification: { mode: "spid", idpId: event.idp.id }
                   }))
@@ -355,7 +355,7 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             },
-            SpidLogin: {
+            StartingSpidAuthFlow: {
               entry: "navigateToSpidLoginScreen",
               tags: [ItwTags.Loading],
               invoke: {
@@ -368,7 +368,7 @@ export const itwEidIssuanceMachine = setup({
                   actions: assign(({ event }) => ({
                     authenticationContext: event.output
                   })),
-                  target: "SpidLoginWithRedirect"
+                  target: "SpidLoginIdentificationCompleted"
                 },
                 onError: {
                   actions: assign(
@@ -383,7 +383,7 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             },
-            SpidLoginWithRedirect: {
+            SpidLoginIdentificationCompleted: {
               on: {
                 "spid-identification-completed": {
                   target: "Completed",
