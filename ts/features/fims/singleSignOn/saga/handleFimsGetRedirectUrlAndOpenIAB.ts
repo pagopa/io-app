@@ -151,7 +151,7 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   try {
     yield* call(openAuthenticationSession, inAppBrowserRedirectUrl, "", true);
   } catch (error: unknown) {
-    handleInAppBrowserErrorIfNeeded(error);
+    yield* call(handleInAppBrowserErrorIfNeeded, error);
   }
 }
 
