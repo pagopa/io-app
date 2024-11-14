@@ -17,7 +17,10 @@ export function* handleGetFimsHistorySaga(
   action: ActionType<typeof fimsHistoryGet.request>
 ) {
   const preferredLanguageMaybe = yield* select(preferredLanguageSelector);
-  const preferredLanguage = preferredLanguageToString(preferredLanguageMaybe);
+  const preferredLanguage = yield* call(
+    preferredLanguageToString,
+    preferredLanguageMaybe
+  );
 
   const getHistoryRequest = getFimsHistory({
     Bearer: bearerToken,
