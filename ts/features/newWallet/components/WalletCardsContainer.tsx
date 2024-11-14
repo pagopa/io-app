@@ -18,6 +18,7 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
+import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
 import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
@@ -145,10 +146,10 @@ const ItwCardsContainer = () => {
             <ItwWalletReadyBanner />
             <ItwEidLifecycleAlert
               lifecycleStatus={["jwtExpiring", "jwtExpired"]}
-              verticalSpacing={true}
             />
           </>
         }
+        bottomElement={<ItwFeedbackBanner />}
       />
       {isItwValid && eidInfoBottomSheet.bottomSheet}
     </>
@@ -179,6 +180,7 @@ const OtherCardsContainer = () => {
             }
           : undefined
       }
+      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
     />
   );
 };
@@ -188,8 +190,8 @@ const OtherCardsContainer = () => {
  */
 const ItwBanners = () => (
   <>
-    <ItwUpcomingWalletBanner bottomSpacing={24} />
-    <ItwDiscoveryBannerStandalone ignoreMargins={true} closable={false} />
+    <ItwUpcomingWalletBanner />
+    <ItwDiscoveryBannerStandalone closable={false} />
   </>
 );
 
