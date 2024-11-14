@@ -34,7 +34,8 @@ export const FimsHistoryScreen = () => {
   // ---------- HOOKS
 
   useHeaderSecondLevel({
-    title: I18n.t("FIMS.history.historyScreen.header"),
+    canGoBack: !requiresAppUpdate && !historyErrorState,
+    title: "",
     supportRequest: true
   });
 
