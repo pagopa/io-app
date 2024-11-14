@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-import { Divider, WithTestID } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
+import { Body, Divider, H6, WithTestID } from "@pagopa/io-app-design-system";
 
 export type TableRow = WithTestID<{
   label: string;
@@ -32,7 +30,7 @@ const renderTable = (data: ReadonlyArray<TableRow>): React.ReactNode =>
 export const Table = (props: TableProps) => (
   <>
     <View style={styles.sectionHeader}>
-      <H3>{props.title}</H3>
+      <H6>{props.title}</H6>
     </View>
     {renderTable(props.rows)}
   </>
