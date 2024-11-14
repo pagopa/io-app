@@ -9,6 +9,8 @@ import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDe
 import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 
+const GENERIC_ERROR_FAULT_CODE_DETAIL = "GENERIC_ERROR";
+
 export type WalletPaymentFailureScreenNavigationParams = {
   error: NetworkError | WalletPaymentFailure;
 };
@@ -29,7 +31,9 @@ const WalletPaymentFailureScreen = () => {
     // NetworkError is transformed to GENERIC_ERROR only for display purposes
     O.getOrElse<WalletPaymentFailure>(() => ({
       faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
-      faultCodeDetail: (error as WalletPaymentFailure)?.faultCodeDetail ?? ""
+      faultCodeDetail:
+        (error as WalletPaymentFailure)?.faultCodeDetail ||
+        GENERIC_ERROR_FAULT_CODE_DETAIL
     }))
   );
   return <WalletPaymentFailureDetail failure={failure} />;
