@@ -5,8 +5,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };

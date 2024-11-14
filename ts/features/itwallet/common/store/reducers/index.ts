@@ -30,7 +30,7 @@ import preferencesReducer, { ItwPreferencesState } from "./preferences";
 
 export type ItWalletState = {
   identification: ItwIdentificationState;
-  issuance: ItwIssuanceState;
+  issuance: ItwIssuanceState & PersistPartial;
   lifecycle: ItwLifecycleState;
   credentials: ItwCredentialsState & PersistPartial;
   walletInstance: ItwWalletInstanceState & PersistPartial;
@@ -59,9 +59,7 @@ const migrations: MigrationManifest = {
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
-  whitelist: ["issuance", "lifecycle", "preferences"] satisfies Array<
-    keyof ItWalletState
-  >,
+  whitelist: ["lifecycle", "preferences"] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
