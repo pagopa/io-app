@@ -2,12 +2,12 @@ import * as React from "react";
 import { BackHandler, NativeEventSubscription, View } from "react-native";
 import {
   ContentWrapper,
+  H2,
   HeaderSecondLevel,
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
-import { H1 } from "./core/typography/H1";
 
 type Props = Readonly<{
   title: string;
@@ -54,7 +54,7 @@ export default class ContextualInfo extends React.Component<Props> {
           }}
         />
         <ContentWrapper>
-          <H1>{this.props.title}</H1>
+          <H2>{this.props.title}</H2>
           {this.props.body()}
         </ContentWrapper>
       </View>
