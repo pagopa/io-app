@@ -2215,15 +2215,12 @@
   dependencies:
     "@types/node" ">= 8"
 
-
-"@pagopa/io-app-design-system@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-2.1.0.tgz#c6dd79e9a08df83a8699d9469f0d8cf45d2abbe3"
-  integrity sha512-ekHiuALQ78ugtMuKywLOTKXRkASYMquqG1dSHxf6PkoT4qni5nT5ZkTztKVbXbjNuDwGs+i68X+CwBzlbSaPMw==
+"@pagopa/io-app-design-system@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-3.0.1.tgz#f4c266d17251e0fcbacde671fbaecb338165f79f"
+  integrity sha512-5jtBzQdOXZyhEUltYBWY2KokuWjPI+iFyKw8djtZ8NZK3cwYlV3HU2i9EsgZtvcNkUStenrtSj2YMTqGM5pwFw==
   dependencies:
-    "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
-    "@types/react-native-i18n" "2.0.0"
     "@types/react-test-renderer" "^18.0.0"
     auto-changelog "^2.4.0"
     lodash "^4.17.21"
@@ -2327,22 +2324,6 @@
     applicationinsights "^1.8.10"
     fp-ts "^2.11.0"
     io-ts "^2.2.16"
-    jose "^4.11.2"
-    json-set-map "^1.1.2"
-    node-fetch "^2.6.0"
-    semver "^7.3.7"
-    validator "^13.7.0"
-
-"@pagopa/ts-commons@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-12.0.0.tgz#913ef473f15df9fd594e51394bf12d17a72d6f29"
-  integrity sha512-h+RlSWBgBld/ij1rePH0oGaxYm097dUiIwxxhQwD2AVz9iMpeVPzbneoOzKt4Irwra8+IcSOExEX4rW15xyggQ==
-  dependencies:
-    abort-controller "^3.0.0"
-    agentkeepalive "^4.1.4"
-    applicationinsights "^1.8.10"
-    fp-ts "2.14.0"
-    io-ts "2.2.20"
     jose "^4.11.2"
     json-set-map "^1.1.2"
     node-fetch "^2.6.0"
@@ -3464,7 +3445,7 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-background-timer/-/react-native-background-timer-2.0.0.tgz#c44c57f8fbca9d9d5521fdd72a8f55232b79381e"
   integrity sha512-y5VW82dL/ESOLg+5QQHyBdsFVA4ZklENxmOyxv8o06T+3HBG2JOSuz/CIPz1vKdB7dmWDGPZNuPosdtnp+xv2A==
 
-"@types/react-native-i18n@2.0.0", "@types/react-native-i18n@^2.0.0":
+"@types/react-native-i18n@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-i18n/-/react-native-i18n-2.0.0.tgz#2df92b3392d813b39530bd126aad429eedc9c3de"
   integrity sha512-JwSsjGw99Kk7kMg2R1YPAby7v7dw4rHGDTc3WsLtQuw0DeyMRLLPNdmjg85RP3BVX94F/SU+eef65DUsUzc9fQ==
@@ -7945,7 +7926,7 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
-fp-ts@2.14.0, fp-ts@^2.11.0, fp-ts@^2.12.1:
+fp-ts@^2.11.0, fp-ts@^2.12.1:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.14.0.tgz#97ac3d9f002dcd02f93ca1269ae14a7fcb805582"
   integrity sha512-QLagLSYAgMA00pZzUzeksH/78Sd14y7+Gc2A8Yaja3/IpGOFMdm/gYBuDMxYqLsJ58iT5lz+bJb953RAeFfp1A==
@@ -8909,7 +8890,7 @@ io-react-native-secure-storage@^0.1.1:
   resolved "https://registry.yarnpkg.com/io-react-native-secure-storage/-/io-react-native-secure-storage-0.1.1.tgz#c1fb28125f6c9f8f1b7436198fab726f4ae790ef"
   integrity sha512-ceBQImvJoxGoyD5tDZ9E0SqDb/9CKPSR5XrMfDDBJ5topKDXCUkC9tiuEv/RYhOOzLbaLR7qvvkEtla5fcnHmg==
 
-io-ts@2.2.20, io-ts@^2.2.16:
+io-ts@^2.2.16:
   version "2.2.20"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.20.tgz#be42b75f6668a2c44f706f72ee6e4c906777c7f5"
   integrity sha512-Rq2BsYmtwS5vVttie4rqrOCIfHCS9TgpRLFpKQCM1wZBBRY9nWVGmEvm2FnDbSE2un1UE39DvFpTR5UL47YDcA==
