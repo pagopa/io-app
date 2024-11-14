@@ -73,7 +73,7 @@ const generateIntegrityHardwareKeyTag = () =>
 
 /**
  * Ensures the integrity service is ready on the device.
- * @returns a promise with resolves with a boolean value indicating wheter or not the integrity service is available.
+ * @returns a promise with resolves with a boolean value indicating whether the integrity service is available.
  */
 const ensureIntegrityServiceIsReady = () =>
   Platform.select({
