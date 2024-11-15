@@ -73,7 +73,7 @@ const ItwSpidIdpLoginScreen = () => {
         O.fromNullable,
         O.fold(
           () => false,
-          s => s.includes(itWalletIssuanceRedirectUri)
+          s => s.startsWith(itWalletIssuanceRedirectUri)
         )
       );
 
