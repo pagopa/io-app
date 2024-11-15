@@ -33,6 +33,9 @@ export function* handleDisableBizEventsTransactionReceipt(
   };
 
   const handleHideReceiptSuccess = () => {
+    IOToast.success(
+      I18n.t("features.payments.transactions.receipt.delete.successful")
+    );
     analytics.trackHideReceiptSuccess({
       organization_name: paymentsAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentsAnalyticsData?.receiptFirstTimeOpening,
