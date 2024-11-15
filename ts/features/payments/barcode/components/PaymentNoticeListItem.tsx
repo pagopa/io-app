@@ -8,6 +8,7 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 
 type Props = {
   paymentNoticeNumber: string;
@@ -35,10 +36,13 @@ const PaymentNoticeListItem = ({
     <ListItemTransaction
       title={paymentNoticeNumber}
       subtitle={organizationFiscalCode}
-      transactionAmount={amountString}
+      transaction={{
+        amount: amountString,
+        amountAccessibilityLabel:
+          getAccessibleAmountText(amountString) ?? amountString
+      }}
       onPress={onPress}
-      hasChevronRight={true}
-      transactionStatus="success"
+      showChevron
     />
   );
 };
