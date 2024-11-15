@@ -61,11 +61,9 @@ export function* profileAndSystemNotificationsPermissions(
   const hasNotificationPermission = yield* call(
     checkAndUpdateNotificationPermissionsIfNeeded
   );
-  yield* put(setPushPermissionsRequestDuration(0));
 
   if (!hasNotificationPermission) {
-    // const startProcessTime = performance.now();
-    // const startRealTime = Date.now();
+    const startRequestTime = performance.now();
 
     // Ask the user for notification permission and update
     // the in-memory redux value if needed
@@ -73,17 +71,11 @@ export function* profileAndSystemNotificationsPermissions(
       requestNotificationPermissions
     );
 
-    // const endProcessTime = performance.now();
-    // const endDateTime = Date.now();
+    const endRequestTime = performance.now();
 
-    // WIP::::: REMOVE ME ::::: since `performance.now` only calculates the process time,
-    // we use the mismatch between process and real time to check if the app has been
-    // backgrounded by a system prompt
-    // const processDuration = endProcessTime - startProcessTime;
-    // const realDuration = endDateTime - startRealTime;
-    // console.log(
-    //   `processDuration: ${processDuration}, realDuration: ${realDuration}`
-    // );
+    const requestDuration = endRequestTime - startRequestTime;
+    yield* put(setPushPermissionsRequestDuration(requestDuration));
+
     yield* call(
       updateNotificationPermissionsIfNeeded,
       userHasGivenNotificationPermission

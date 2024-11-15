@@ -3,5 +3,6 @@
 exports[`userBehaviourReducer Should match snapshot 1`] = `
 {
   "engagementScreenShown": false,
+  "pushNotificationPermissionsRequestDuration": undefined,
 }
 `;
