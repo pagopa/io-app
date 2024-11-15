@@ -144,8 +144,10 @@ const PaymentsTransactionListScreen = () => {
           <ListItemTransaction
             isLoading={true}
             key={index}
-            transactionStatus="success"
-            transactionAmount=""
+            transaction={{
+              amount: "",
+              amountAccessibilityLabel: ""
+            }}
             title=""
             subtitle=""
           />
