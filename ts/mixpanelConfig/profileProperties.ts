@@ -25,19 +25,16 @@ import {
 } from "../features/itwallet/credentials/store/selectors";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
-  selectBonusCards,
-  selectWalletCgnCard,
-  selectWalletPaymentMethods
-} from "../features/newWallet/store/selectors";
-import { WalletCardBonus } from "../features/newWallet/types";
-import {
+  cgnStatusHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
   MixpanelOptInTrackingType,
   notificationConfigurationHandler,
+  paymentMethodsHandler,
   Property,
   PropertyToUpdate,
-  serviceConfigHandler
+  serviceConfigHandler,
+  welfareStatusHandler
 } from "./mixpanelPropertyUtils";
 
 type ProfileProperties = {
@@ -153,23 +150,4 @@ const tsStatusHandler = (state: GlobalState): ItwTs => {
 const cedStatusHandler = (state: GlobalState): ItwCed => {
   const credentialsByType = itwCredentialsByTypeSelector(state);
   return credentialsByType.EuropeanDisabilityCard ? "valid" : "not_available";
-};
-
-const paymentMethodsHandler = (state: GlobalState): number => {
-  const walletPaymentMethods = selectWalletPaymentMethods(state);
-  return walletPaymentMethods.length ?? 0;
-};
-
-const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
-  const cgnCard = selectWalletCgnCard(state);
-  return cgnCard.length > 0 ? "active" : "not_active";
-};
-
-const welfareStatusHandler = (state: GlobalState): ReadonlyArray<string> => {
-  const bonusCards = selectBonusCards(state);
-  const idPayCards = bonusCards.filter(
-    card => card.type === "idPay"
-  ) as Array<WalletCardBonus>;
-
-  return idPayCards.map(card => card.name);
 };

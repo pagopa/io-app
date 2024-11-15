@@ -11,6 +11,13 @@ import {
 } from "../store/reducers/profile";
 import { fastLoginOptInSelector } from "../features/fastLogin/store/selectors";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import {
+  selectBonusCards,
+  selectWalletCgnCard,
+  selectWalletPaymentMethods
+} from "../features/newWallet/store/selectors";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { WalletCardBonus } from "../features/newWallet/types";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
 export type Property<K, T extends keyof K> = {
@@ -71,4 +78,25 @@ export const mixpanelOptInHandler = (
     : isMixpanelEnabledResult
     ? "accepted"
     : "declined";
+};
+
+export const paymentMethodsHandler = (state: GlobalState): number => {
+  const walletPaymentMethods = selectWalletPaymentMethods(state);
+  return walletPaymentMethods.length ?? 0;
+};
+
+export const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
+  const cgnCard = selectWalletCgnCard(state);
+  return cgnCard.length > 0 ? "active" : "not_active";
+};
+
+export const welfareStatusHandler = (
+  state: GlobalState
+): ReadonlyArray<string> => {
+  const bonusCards = selectBonusCards(state);
+  const idPayCards = bonusCards.filter(
+    card => card.type === "idPay"
+  ) as Array<WalletCardBonus>;
+
+  return idPayCards.map(card => card.name);
 };
