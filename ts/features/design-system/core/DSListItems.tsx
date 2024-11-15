@@ -23,7 +23,6 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
 import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
-import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 
