@@ -28,6 +28,8 @@ import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { cgnCategories } from "../store/actions/categories";
 
+export type TrackCgnStatus = "active" | "not_active";
+
 const trackCgnAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
