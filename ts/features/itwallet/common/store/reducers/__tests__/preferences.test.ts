@@ -1,4 +1,5 @@
 import { addMonths } from "date-fns";
+import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { itwCloseFeedbackBanner } from "../../actions/preferences";
 import reducer, { ItwPreferencesState } from "../preferences";
@@ -13,14 +14,17 @@ describe("IT Wallet preferences reducer", () => {
   });
 
   it("should handle itwCloseFeedbackBanner action", () => {
-    const expectedDate = addMonths(new Date(), 1).toISOString();
-    const action = itwCloseFeedbackBanner();
+    const mockDate = "2024-11-14T20:43:21.361Z";
+    MockDate.set(mockDate);
 
+    const expectedDate = addMonths(mockDate, 1);
+    const action = itwCloseFeedbackBanner();
     const newState = reducer(INITIAL_STATE, action);
 
     expect(newState).toEqual({
       ...newState,
-      hideFeedbackBannerUntilDate: expectedDate
+      hideFeedbackBannerUntilDate: expectedDate.toISOString()
     });
+    MockDate.reset();
   });
 });
