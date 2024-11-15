@@ -1,6 +1,13 @@
 import { getType } from "typesafe-actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistConfig, persistReducer } from "redux-persist";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  persistReducer
+} from "redux-persist";
+import { merge } from "lodash";
 import {
   cieIDDisableTourGuide,
   cieIDFeatureSetEnabled,
@@ -8,6 +15,7 @@ import {
   cieLoginEnableUat
 } from "../actions";
 import { Action } from "../../../../store/actions/types";
+import { isDevEnv } from "../../../../utils/environment";
 
 export type CieLoginState = {
   useUat: boolean;
@@ -51,11 +59,17 @@ const cieLoginReducer = (
   }
 };
 
-const CURRENT_REDUX_CIE_LOGIN_STORE_VERSION = -1;
+const CURRENT_REDUX_CIE_LOGIN_STORE_VERSION = 0;
+
+const migrations: MigrationManifest = {
+  "0": (state: PersistedState) =>
+    merge(state, "features.loginFeatures.cieLogin.isCieIDTourGuideEnabled")
+};
 
 const persistConfig: PersistConfig = {
   key: "cieLogin",
   storage: AsyncStorage,
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
   version: CURRENT_REDUX_CIE_LOGIN_STORE_VERSION,
   whitelist: ["isCieIDFeatureEnabled", "isCieIDTourGuideEnabled"]
 };
