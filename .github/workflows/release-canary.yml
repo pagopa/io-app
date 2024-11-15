@@ -33,7 +33,7 @@ jobs:
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release create canary-$APP_VERSION --latest --generate-notes
+          gh release create canary-$APP_VERSION --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: setup-jdk-17
@@ -114,6 +114,9 @@ jobs:
           fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
+      - id: replace-version-with-canary
+        run: |
+          node scripts/canary/replaceCanaryVersion.js ${{ env.CANARY_VERSION }}
       - id: setup-ruby
         uses: ruby/setup-ruby@5f19ec79cedfadb78ab837f95b87734d0003c899 #v1.173.0
         with:
