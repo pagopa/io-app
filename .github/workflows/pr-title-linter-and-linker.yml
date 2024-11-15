@@ -18,7 +18,7 @@ jobs:
       - uses: Slashgear/action-check-pr-title@860e8dc639f8e60335a6f5e8936ba67ed2536890 #v4.3.0
         id: lint
         with:
-          regexp: "\\[(#?[A-Z]*-[0-9]*( |, )?){1,}\\]" # Regex the title should match.
+          regexp: "\\[(#?[A-Z]*-[0-9]*,?){1,}\\]" # Regex the title should match.
         continue-on-error: true
 
       - name: Find Jira Comment
@@ -34,20 +34,19 @@ jobs:
         if: steps.lint.outcome == 'success'
         run: |
           PR_TITLE=$(echo "${{ github.event.pull_request.title }}")
-          ISSUES_STR=$(awk -F'\\[|\\]' '{print $2}' <<< "$PR_TITLE" | sed "s/#//g" | sed "s/,//g")
-          ISSUES=($ISSUES_STR)
-          JIRA_ISSUE=$(echo ${ISSUES_STR##* })
+          ISSUES_STR=$(awk -F'\\[|\\]' '{print $2}' <<< "$PR_TITLE" | sed "s/#//g")
+          IFS=',' read -ra ISSUES <<< "$ISSUES_STR"
+          JIRA_ISSUE=$(echo "${ISSUES[-1]}" | sed 's/^ *//;s/ *$//')
           MARKDOWN_CARRIAGE_RETURN="<br>"
           MARKDOWN_PREFIX="- Link to"
           JIRA_COMMENT_MARKDOWN="This Pull Request refers to Jira issues:<br>"
-          if [[ ${#ISSUES[@]} -eq 1 ]]
-          then
+          if [[ ${#ISSUES[@]} -eq 1 ]]; then
             JIRA_COMMENT_MARKDOWN="This Pull Request refers to the following Jira issue"
             MARKDOWN_PREFIX=""
           fi
 
-          for ISSUE in "${ISSUES[@]}"
-          do
+          for ISSUE in "${ISSUES[@]}"; do
+            ISSUE=$(echo "$ISSUE" | sed 's/^ *//;s/ *$//') # Trim spaces
             JIRA_COMMENT_MARKDOWN+="$MARKDOWN_PREFIX [$ISSUE](https://pagopa.atlassian.net/browse/$ISSUE) $MARKDOWN_CARRIAGE_RETURN"
           done
 
