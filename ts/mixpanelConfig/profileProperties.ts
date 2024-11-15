@@ -12,7 +12,6 @@ import {
 import { idpSelector } from "../store/reducers/authentication";
 import { tosVersionSelector } from "../store/reducers/profile";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
-import { getPaymentsAnalyticsConfiguration } from "../features/payments/common/store/selectors";
 import {
   ItwCed,
   ItwId,
@@ -24,14 +23,18 @@ import {
   itwCredentialsByTypeSelector,
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
+  cgnStatusHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
   MixpanelOptInTrackingType,
   notificationConfigurationHandler,
+  paymentMethodsHandler,
   Property,
   PropertyToUpdate,
-  serviceConfigHandler
+  serviceConfigHandler,
+  welfareStatusHandler
 } from "./mixpanelPropertyUtils";
 
 type ProfileProperties = {
@@ -49,6 +52,8 @@ type ProfileProperties = {
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
   SAVED_PAYMENT_METHOD: number;
+  CGN_STATUS: TrackCgnStatus;
+  WELFARE_STATUS: ReadonlyArray<string>;
 };
 
 export const updateMixpanelProfileProperties = async (
@@ -71,7 +76,9 @@ export const updateMixpanelProfileProperties = async (
   const ITW_PG_V2 = pgStatusHandler(state);
   const ITW_TS_V2 = tsStatusHandler(state);
   const ITW_CED_V2 = cedStatusHandler(state);
-  const paymentsAnalyticsData = getPaymentsAnalyticsConfiguration(state);
+  const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+  const CGN_STATUS = cgnStatusHandler(state);
+  const WELFARE_STATUS = welfareStatusHandler(state);
 
   const profilePropertiesObject: ProfileProperties = {
     LOGIN_SESSION,
@@ -88,7 +95,9 @@ export const updateMixpanelProfileProperties = async (
     ITW_PG_V2,
     ITW_TS_V2,
     ITW_CED_V2,
-    SAVED_PAYMENT_METHOD: paymentsAnalyticsData.savedPaymentMethods || 0
+    SAVED_PAYMENT_METHOD,
+    CGN_STATUS,
+    WELFARE_STATUS
   };
 
   if (forceUpdateFor) {
