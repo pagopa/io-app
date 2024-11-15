@@ -31,6 +31,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToIdentificationModeScreen = jest.fn();
   const navigateToIdpSelectionScreen = jest.fn();
   const navigateToEidPreviewScreen = jest.fn();
+  const navigateToSpidLoginScreen = jest.fn();
   const navigateToSuccessScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
@@ -62,6 +63,7 @@ describe("itwEidIssuanceMachine", () => {
   const resetWalletInstance = jest.fn();
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
+  const revokeWalletInstance = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -70,6 +72,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToIdentificationModeScreen,
       navigateToIdpSelectionScreen,
       navigateToEidPreviewScreen,
+      navigateToSpidLoginScreen,
       navigateToSuccessScreen,
       navigateToFailureScreen,
       navigateToWallet,
@@ -92,6 +95,7 @@ describe("itwEidIssuanceMachine", () => {
     },
     actors: {
       createWalletInstance: fromPromise<string>(createWalletInstance),
+      revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
         string,
         GetWalletAttestationActorParams
@@ -204,7 +208,9 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "select-identification-mode", mode: "spid" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: "Spid"
+      UserIdentification: {
+        Spid: "IdpSelection"
+      }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdpSelectionScreen).toHaveBeenCalledTimes(1);
@@ -213,16 +219,22 @@ describe("itwEidIssuanceMachine", () => {
      * Choose first IDP in list for SPID identification
      */
 
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+
     requestEid.mockImplementation(() =>
       Promise.resolve(ItwStoredCredentialsMocks.eid)
     );
+
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
     actor.send({ type: "select-spid-idp", idp: idps[0] });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "RequestingEid"
+      UserIdentification: {
+        Spid: "StartingSpidAuthFlow"
+      }
     });
+
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -232,7 +244,32 @@ describe("itwEidIssuanceMachine", () => {
         idpId: idps[0].id
       }
     });
+
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "SpidLoginIdentificationCompleted"
+      }
+    });
+
+    actor.send({
+      type: "spid-identification-completed",
+      authRedirectUrl: "http://test.it"
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "RequestingEid"
+    });
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(actor.getSnapshot().context).toMatchObject({
+      authenticationContext: {
+        callbackUrl: "http://test.it"
+      }
+    });
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
     // EID obtained
 
@@ -241,6 +278,14 @@ describe("itwEidIssuanceMachine", () => {
         Issuance: "DisplayingPreview"
       })
     );
+
+    actor.send({ type: "add-to-wallet" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(storeEidCredential).toHaveBeenCalledTimes(1);
+    expect(setWalletInstanceToValid).toHaveBeenCalledTimes(1);
+    expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
+
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -249,21 +294,11 @@ describe("itwEidIssuanceMachine", () => {
         mode: "spid",
         idpId: idps[0].id
       },
+      authenticationContext: expect.objectContaining({
+        callbackUrl: "http://test.it"
+      }),
       eid: ItwStoredCredentialsMocks.eid
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
-
-    /**
-     * Add to wallet
-     */
-
-    actor.send({ type: "add-to-wallet" });
-
-    expect(actor.getSnapshot().value).toStrictEqual("Success");
-    expect(storeEidCredential).toHaveBeenCalledTimes(1);
-    expect(setWalletInstanceToValid).toHaveBeenCalledTimes(1);
-    expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     /**
      * Go to wallet
