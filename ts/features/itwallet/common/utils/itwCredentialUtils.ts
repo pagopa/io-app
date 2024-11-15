@@ -80,6 +80,9 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
   }
 };
 
+/**
+ * List of statuses that make a credential valid, especially for UI purposes.
+ */
 export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "valid",
   "expiring",
