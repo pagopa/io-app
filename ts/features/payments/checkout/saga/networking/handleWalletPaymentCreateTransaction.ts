@@ -22,9 +22,6 @@ export function* handleWalletPaymentCreateTransaction(
     );
 
     if (E.isLeft(newTransactionResult)) {
-      if (action.payload.onError) {
-        action.payload.onError();
-      }
       yield* put(
         paymentsCreateTransactionAction.failure({
           ...getGenericError(
@@ -32,41 +29,39 @@ export function* handleWalletPaymentCreateTransaction(
           )
         })
       );
-      return;
-    }
-    const status = newTransactionResult.right.status;
-    if (status === 200) {
-      yield* put(
-        paymentsCreateTransactionAction.success(
-          newTransactionResult.right.value
-        )
-      );
-      return;
-    } else if (status === 400) {
-      // Handling unhandled error from third-party services (GEC) during payment verification.
-      // This is not an internal backend error from pagoPA, but rather a third-party service error and should be handled differently.
-      yield* put(
-        paymentsCreateTransactionAction.failure({
-          ...getGenericError(
-            new Error(`Error: ${newTransactionResult.right.status}`)
+    } else {
+      const status = newTransactionResult.right.status;
+      if (status === 200) {
+        yield* put(
+          paymentsCreateTransactionAction.success(
+            newTransactionResult.right.value
           )
-        })
-      );
-    } else if (status !== 401) {
-      // The 401 status is handled by the withPaymentsSessionToken
-      yield* put(
-        paymentsCreateTransactionAction.failure(
-          newTransactionResult.right.value
-        )
-      );
+        );
+        return;
+      } else if (status === 400) {
+        // Handling unhandled error from third-party services (GEC) during payment verification.
+        // This is not an internal backend error from pagoPA, but rather a third-party service error and should be handled differently.
+        yield* put(
+          paymentsCreateTransactionAction.failure({
+            ...getGenericError(
+              new Error(`Error: ${newTransactionResult.right.status}`)
+            )
+          })
+        );
+      } else if (status !== 401) {
+        // The 401 status is handled by the withPaymentsSessionToken
+        yield* put(
+          paymentsCreateTransactionAction.failure(
+            newTransactionResult.right.value
+          )
+        );
+      }
     }
   } catch (e) {
     yield* put(
       paymentsCreateTransactionAction.failure({ ...getNetworkError(e) })
     );
   } finally {
-    if (action.payload.onError) {
-      action.payload.onError();
-    }
+    action.payload.onError?.();
   }
 }
