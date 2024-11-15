@@ -396,7 +396,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="[missing "en.features.itWallet.feedback.banner.title" translation] [missing "en.features.itWallet.feedback.banner.content" translation] [missing "en.features.itWallet.feedback.banner.action" translation]"
+                              accessibilityLabel="Dicci cosa ne pensi Raccontaci la tua esperienza con la funzionalità Documenti su IO. Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -428,7 +428,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                [missing "en.features.itWallet.feedback.banner.title" translation]
+                                Dicci cosa ne pensi
                               </Text>
                               <View
                                 style={
@@ -455,7 +455,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                [missing "en.features.itWallet.feedback.banner.content" translation]
+                                Raccontaci la tua esperienza con la funzionalità Documenti su IO.
                               </Text>
                               <View
                                 style={
@@ -477,7 +477,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                   }
                                 />
                                 <View
-                                  accessibilityLabel="[missing "en.features.itWallet.feedback.banner.action" translation]"
+                                  accessibilityLabel="Inizia"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -570,7 +570,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      [missing "en.features.itWallet.feedback.banner.action" translation]
+                                      Inizia
                                     </Text>
                                   </View>
                                 </View>
