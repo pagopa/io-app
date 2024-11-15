@@ -1,5 +1,7 @@
 import {
   Divider,
+  H2,
+  H6,
   HSpacer,
   Icon,
   ListItemNav,
@@ -17,8 +19,6 @@ import {
   useIOBottomSheetAutoresizableModal
 } from "../../utils/hooks/bottomSheet";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import { H1 } from "../core/typography/H1";
-import { H4 } from "../core/typography/H4";
 
 type NavigationListItem = {
   title: string;
@@ -85,14 +85,14 @@ const WalletHomeHeader = () => {
         paddingHorizontal: 8
       }}
     >
-      <H1
+      <H2
         color={"white"}
         accessible={true}
         accessibilityRole="header"
         testID="wallet-home-header-title"
       >
         {I18n.t("wallet.wallet")}
-      </H1>
+      </H2>
       <TouchableDefaultOpacity
         style={{
           flexDirection: "row",
@@ -105,9 +105,9 @@ const WalletHomeHeader = () => {
       >
         <Icon name="add" color="white" size={20} />
         <HSpacer size={8} />
-        <H4 color={"white"} testID="walletAddNewPaymentMethodTestId">
+        <H6 color={"white"} testID="walletAddNewPaymentMethodTestId">
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-        </H4>
+        </H6>
       </TouchableDefaultOpacity>
       {bottomSheet}
     </View>

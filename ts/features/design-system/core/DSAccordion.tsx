@@ -2,11 +2,11 @@ import {
   AccordionItem,
   VSpacer,
   H4,
-  useIOTheme
+  useIOTheme,
+  Body
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
-import { Body } from "../../../components/core/typography/Body";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const assistanceData: Array<AccordionItem> = [

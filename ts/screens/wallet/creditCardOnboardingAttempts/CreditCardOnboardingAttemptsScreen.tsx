@@ -1,6 +1,5 @@
-import { H4, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H4, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Body } from "../../../components/core/typography/Body";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";

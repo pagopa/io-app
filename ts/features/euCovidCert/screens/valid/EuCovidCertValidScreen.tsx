@@ -1,6 +1,8 @@
 import {
   BlockButtonProps,
   FooterWithButtons,
+  H4,
+  H6,
   IOColors,
   IOToast,
   Icon,
@@ -18,8 +20,6 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -146,12 +146,8 @@ const addBottomSheetItem = (config: {
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>
-          <H3 color={"bluegreyDark"} weight={"Semibold"}>
-            {config.title}
-          </H3>
-          <H5 color={"bluegrey"} weight={"Regular"}>
-            {config.subTitle}
-          </H5>
+          <H4 color={"bluegreyDark"}>{config.title}</H4>
+          <H6 color={"bluegrey"}>{config.subTitle}</H6>
         </View>
         <Icon name="chevronRightListItem" size={24} color="blue" />
       </View>
@@ -182,12 +178,12 @@ const Footer = (props: FooterProps): React.ReactElement => {
       })}
     </View>,
     <View style={IOStyles.flex}>
-      <H3 color={"bluegreyDark"} weight={"Semibold"}>
+      <H4 color={"bluegreyDark"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.title")}
-      </H3>
-      <H5 color={"bluegrey"} weight={"Regular"}>
+      </H4>
+      <H6 color={"bluegrey"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
-      </H5>
+      </H6>
       <VSpacer size={32} />
     </View>,
     320

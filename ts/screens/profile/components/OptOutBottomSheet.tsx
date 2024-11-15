@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import * as React from "react";
-import { ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
+import { Body, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
