@@ -9,9 +9,6 @@ import {
   PaymentAnalyticsSelectedPspFlag
 } from "../../common/types/PaymentAnalytics";
 
-export const WALLET_PAYMENT_FEEDBACK_URL =
-  "https://io.italia.it/diccilatua/ces-pagamento";
-
 export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
   "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
 

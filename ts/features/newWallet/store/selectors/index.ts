@@ -53,3 +53,17 @@ export const selectWalletCategoryFilter = createSelector(
   selectWalletFeature,
   wallet => wallet.preferences.categoryFilter
 );
+
+export const selectWalletPaymentMethods = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category === "payment")
+);
+
+export const selectWalletCgnCard = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category === "cgn")
+);
+
+export const selectBonusCards = createSelector(selectSortedWalletCards, cards =>
+  cards.filter(({ category }) => category === "bonus")
+);

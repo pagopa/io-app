@@ -6,6 +6,10 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { FaultCodeCategoryEnum as VerifyFaultCodeCategoryEnum } from "../../types/PaymentVerifyGenericErrorProblemJson";
+import { FaultCodeCategoryEnum as EcommerceFaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
+
+const PAYMENT_VERIFY_GENERIC_ERROR_CODE_DETAIL = "PAYMENT_VERIFY_GENERIC_ERROR";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfoForIO"],
@@ -40,6 +44,20 @@ export function* handleWalletPaymentGetDetails(
       yield* put(
         paymentsGetPaymentDetailsAction.failure({
           ...getGenericError(new Error(`Error: ${res.status}`))
+        })
+      );
+    } else if (
+      res.status === 502 &&
+      res.value.faultCodeCategory ===
+        EcommerceFaultCodeCategoryEnum.GENERIC_ERROR
+    ) {
+      yield* put(
+        paymentsGetPaymentDetailsAction.failure({
+          faultCodeCategory:
+            VerifyFaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR,
+          faultCodeDetail:
+            res.value.faultCodeDetail ||
+            PAYMENT_VERIFY_GENERIC_ERROR_CODE_DETAIL
         })
       );
     } else if (res.status !== 401) {
