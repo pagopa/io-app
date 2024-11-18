@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.77.0-rc.3](https://github.com/pagopa/io-app/compare/2.77.0-rc.2...2.77.0-rc.3) (2024-11-18)
+
+
+### Bug Fixes
+
+* [[IOAPPX-430](https://pagopa.atlassian.net/browse/IOAPPX-430)] Remove type assertion on IDP remote logo ([30e5c66](https://github.com/pagopa/io-app/commit/30e5c66eee43752c5d3b309fe9e273ca08083a07))
+
 ## [2.77.0-rc.2](https://github.com/pagopa/io-app/compare/2.77.0-rc.1...2.77.0-rc.2) (2024-11-15)
 
 
