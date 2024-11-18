@@ -17,6 +17,7 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
 import { StatusMessages } from "./components/StatusMessages";
+import { ReactQueryProvider } from "./react-query";
 
 export const routingInstrumentation = Sentry.reactNavigationIntegration({
   enableTimeToInitialDisplay: true
@@ -68,17 +69,19 @@ const App = (): JSX.Element => (
         <IOThemeContextProvider theme={"light"}>
           <ToastProvider>
             <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <StatusMessages>
-                      <RootContainer
-                        routingInstumentation={routingInstrumentation}
-                      />
-                    </StatusMessages>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
+              <ReactQueryProvider>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <StatusMessages>
+                        <RootContainer
+                          routingInstumentation={routingInstrumentation}
+                        />
+                      </StatusMessages>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </ReactQueryProvider>
             </Provider>
           </ToastProvider>
         </IOThemeContextProvider>

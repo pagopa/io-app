@@ -89,6 +89,7 @@ __pycache__
 
 # Auto generated definitions
 definitions
+fetch-sdk
 
 # Certificates
 **/*.p12
