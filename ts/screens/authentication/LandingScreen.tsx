@@ -50,7 +50,12 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { trackMethodInfo } from "./analytics";
+import {
+  loginCieWizardSelected,
+  trackCieBottomSheetScreenView,
+  trackCieLoginSelected,
+  trackMethodInfo
+} from "./analytics";
 import { Carousel } from "./carousel/Carousel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -104,11 +109,13 @@ export const LandingScreen = () => {
         />
         <VSpacer size={24} />
         <Banner
-          onPress={() =>
+          onPress={() => {
+            void loginCieWizardSelected();
+
             navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.AUTHENTICATION_CIE_ID_WIZARD
-            })
-          }
+            });
+          }}
           testID="bottom-sheet-login-wizards"
           pictogramName="help"
           color="turquoise"
@@ -211,8 +218,10 @@ export const LandingScreen = () => {
   }, [isCieSupported, navigation, navigateToCiePinInsertion]);
 
   const navigateToCiePinScreen = useCallback(() => {
+    void trackCieLoginSelected();
     if (isCieIDFFEnabled) {
       if (isCieSupported) {
+        void trackCieBottomSheetScreenView();
         present();
       } else {
         navigateToCieIdLoginScreen("SpidL2");

@@ -3,7 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import {
-  trackCieLoginSelected,
+  trackCieIDLoginSelected,
+  trackCiePinLoginSelected,
   trackSpidLoginSelected
 } from "../screens/authentication/analytics";
 import ROUTES from "../navigation/routes";
@@ -25,6 +26,12 @@ import {
 export const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
+  logo: "",
+  profileUrl: ""
+};
+export const IdpCIE_ID: SpidIdp = {
+  id: "cieid",
+  name: "CIE_ID",
   logo: "",
   profileUrl: ""
 };
@@ -72,7 +79,7 @@ const useNavigateToLoginMethod = () => {
 
   const navigateToCiePinInsertion = useCallback(() => {
     dispatch(idpSelected(IdpCIE));
-    void trackCieLoginSelected(store.getState());
+    void trackCiePinLoginSelected(store.getState());
 
     withIsFastLoginOptInCheck(
       () => {
@@ -86,8 +93,8 @@ const useNavigateToLoginMethod = () => {
 
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {
-      dispatch(idpSelected(IdpCIE));
-      // TODO: track event cieID selected https://pagopa.atlassian.net/browse/IOPID-2079
+      dispatch(idpSelected(IdpCIE_ID));
+      void trackCieIDLoginSelected(store.getState(), spidLevel);
 
       if (isCieIdAvailable(isCieUatEnabled) || cieFlowForDevServerEnabled) {
         const params = {
@@ -113,7 +120,7 @@ const useNavigateToLoginMethod = () => {
         });
       }
     },
-    [isCieUatEnabled, withIsFastLoginOptInCheck, navigate, dispatch]
+    [isCieUatEnabled, store, withIsFastLoginOptInCheck, navigate, dispatch]
   );
 
   return {
