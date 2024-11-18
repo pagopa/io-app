@@ -40,7 +40,7 @@ import Animated, {
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
   trackWalletCredentialShowTrustmark
@@ -49,6 +49,7 @@ import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { identificationRequest } from "../../../../store/actions/identification";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -84,6 +85,7 @@ export const ItwCredentialTrustmark = ({
   testID,
   credential
 }: ItwCredentialTrustmarkProps) => {
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -264,16 +266,34 @@ export const ItwCredentialTrustmark = ({
     return null;
   }
 
+  /**
+   * Show the credential trustmark screen before user identification
+   */
   const onPressWithTrackEvent = () => {
     trackWalletCredentialShowTrustmark(
       CREDENTIALS_MAP[credential.credentialType]
     );
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK,
-      params: {
-        credentialType: credential.credentialType
-      }
-    });
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => {
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK,
+              params: {
+                credentialType: credential.credentialType
+              }
+            });
+          }
+        }
+      )
+    );
   };
 
   return (
