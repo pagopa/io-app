@@ -63,5 +63,7 @@ export function* handleWalletPaymentCreateTransaction(
     yield* put(
       paymentsCreateTransactionAction.failure({ ...getNetworkError(e) })
     );
+  } finally {
+    action.payload.onError?.();
   }
 }
