@@ -72,6 +72,41 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     });
   }, [navigation]);
 
+  const navigateToCieIdAuthUrlError = useCallback(
+    (url: string) => {
+      navigation.replace(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_CIE_ID_INCORRECT_URL,
+        params: { url }
+      });
+    },
+    [navigation]
+  );
+
+  const validateUrl = useCallback(
+    (url: string) => {
+      const validUrls = [
+        "https://idserver.servizicie.interno.gov.it",
+        "https://oidc.idserver.servizicie.interno.gov.it",
+        "https://mtls.oidc.idserver.servizicie.interno.gov.it",
+        "https://mtls.idserver.servizicie.interno.gov.it",
+        "https://idserver.servizicie.interno.gov.it",
+        "https://ios.idserver.servizicie.interno.gov.it",
+        "https://ios.oidc.idserver.servizicie.interno.gov.it"
+      ];
+      // Checks if the URL starts with one of the valid URLs
+      const isUrlValid = validUrls.some(baseUrl => url.startsWith(baseUrl));
+      // Checks whether the URL starts with the specified string
+      if (isUrlValid) {
+        // Set the URL as valid
+        setAuthenticatedUrl(url);
+      } else {
+        // Redirects the user to the error screen
+        navigateToCieIdAuthUrlError(url);
+      }
+    },
+    [navigateToCieIdAuthUrlError]
+  );
+
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
 
@@ -126,7 +161,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
                 handleLoginFailure();
               }
             } else {
-              setAuthenticatedUrl(continueUrl);
+              validateUrl(continueUrl);
             }
           }
         }
@@ -134,7 +169,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     );
 
     return () => urlListenerSubscription.remove();
-  }, [handleLoginFailure]);
+  }, [handleLoginFailure, validateUrl]);
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
@@ -157,14 +192,14 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
             if (result.id === "ERROR") {
               handleLoginFailure(result.code);
             } else {
-              setAuthenticatedUrl(result.url);
+              validateUrl(result.url);
             }
           },
           isUat
         );
       }
     },
-    [handleLoginFailure, isUat]
+    [handleLoginFailure, isUat, validateUrl]
   );
 
   const handleOnShouldStartLoadWithRequest = (

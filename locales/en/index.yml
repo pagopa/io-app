@@ -659,6 +659,9 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+  cieidUrlErrorScreen:
+    title: Non riusciamo ad autenticarti con l’app CieID
+    description: Usa un altro metodo per entrare in app
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
