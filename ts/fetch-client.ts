@@ -19,7 +19,7 @@ export type RequestConfig<TData = unknown> = {
   headers?: HeadersInit;
 };
 
-export type ResponseConfig<TData = unknown, TError = unknown> = {
+export type ResponseConfig<TData = unknown> = {
   data: TData;
   status: number;
   statusText: string;
@@ -29,27 +29,26 @@ export async function fetchClient<
   TData,
   TError = unknown,
   TVariables = unknown
->(config: RequestConfig<TVariables>): Promise<ResponseConfig<TData, TError>> {
-
-    const response = await (global as any).fetch(
-      `${Config.API_URL_PREFIX}${config.baseURL}${config.url}`,
-      {
-        method: config.method.toUpperCase(),
-        body: JSON.stringify(config.data),
-        signal: config.signal,
-        headers: {
-          Authorization: `Bearer ${sessionTokenSelector(store.getState())}`,
-          ...config.headers
-        }
+>(config: RequestConfig<TVariables>): Promise<ResponseConfig<TData>> {
+  const response = await (global as any).fetch(
+    `${Config.API_URL_PREFIX}${config.baseURL}${config.url}`,
+    {
+      method: config.method.toUpperCase(),
+      body: JSON.stringify(config.data),
+      signal: config.signal,
+      headers: {
+        Authorization: `Bearer ${sessionTokenSelector(store.getState())}`,
+        ...config.headers
       }
-    );
-    const data = await response.json();
-    return {
-      data,
-      status: response.status,
-      statusText: response.statusText
-    };
-  }
+    }
+  );
+  const data = await response.json();
+  void null as TError;
+  return {
+    data,
+    status: response.status,
+    statusText: response.statusText
+  };
 }
 
 export default fetchClient;

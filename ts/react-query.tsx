@@ -122,7 +122,7 @@ export function useFocusNotifyOnChangeProps(
 }
 
 /** https://tanstack.com/query/latest/docs/framework/react/react-native#disable-queries-on-out-of-focus-screens */
-export function useQueryFocusAware(notifyOnChangeProps?: NotifyOnChangeProps) {
+export function useQueryFocusAware() {
   const focusedRef = useFocusedRef();
   return () => focusedRef.current;
 }
