@@ -17,7 +17,16 @@ if [ ! -d "$DIRECTORY" ]; then
     exit 1
 fi
 
-echo "Replacing $CHECK with $REPLACE into $DIRECTORY"
+if [ "$DIRECTORY" == "android" ]; then
+    echo "Moving all to new subfolder canary"
+    mkdir ./android/app/src/debug/java/it/pagopa/io/app/canary
+    mv -v ./android/app/src/debug/java/it/pagopa/io/app/* ./android/app/src/debug/java/it/pagopa/io/app/canary
+    mkdir ./android/app/src/main/java/it/pagopa/io/app/canary
+    mv -v ./android/app/src/main/java/it/pagopa/io/app/* ./android/app/src/main/java/it/pagopa/io/app/canary
+    mkdir ./android/app/src/release/java/it/pagopa/io/app/canary
+    mv -v ./android/app/src/release/java/it/pagopa/io/app/* ./android/app/src/release/java/it/pagopa/io/app/canary
+fi
 
+echo "Renaming package $CHECK into $REPLACE in directory $DIRECTORY"
 # Cerca i file contenenti la stringa e sostituisci
 grep -rl "$CHECK" "$DIRECTORY" | xargs sed -i "" "s/$CHECK/$REPLACE/g"
