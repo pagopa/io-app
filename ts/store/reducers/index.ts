@@ -61,7 +61,6 @@ import identificationReducer, {
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
 import onboardingReducer from "./onboarding";
-import paymentsReducer from "./payments";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
@@ -71,8 +70,6 @@ import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
-import walletReducer from "./wallet";
-import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 import remoteConfigReducer from "./backendStatus/remoteConfig";
 import statusMessagesReducer from "./backendStatus/statusMessages";
 import sectionStatusReducer from "./backendStatus/sectionStatus";
@@ -130,7 +127,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   appState: appStateReducer,
   navigation: navigationReducer,
   backoffError: backoffErrorReducer,
-  wallet: walletReducer,
   versionInfo: versionInfoReducer,
   remoteConfig: remoteConfigReducer,
   statusMessages: statusMessagesReducer,
@@ -170,7 +166,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   debug: debugPersistor,
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
-  payments: paymentsReducer,
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
@@ -287,10 +282,6 @@ export function createRootReducer(
               ...state.notifications,
               _persist: state.notifications._persist
             },
-            // payments must be kept
-            payments: {
-              ...state.payments
-            },
             // isMixpanelEnabled must be kept
             // isFingerprintEnabled must be kept only if true
             persistedPreferences: {
@@ -300,12 +291,6 @@ export function createRootReducer(
                 .isFingerprintEnabled
                 ? true
                 : undefined
-            },
-            wallet: {
-              wallets: {
-                ...walletsInitialState,
-                _persist: state.wallet.wallets._persist
-              }
             },
             lollipop: {
               ...initialLollipopState,
