@@ -82,12 +82,7 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
             )}
           </View>
           <H3
-            style={{
-              textAlign: "center",
-              /* Set minHeight to stabilize title height and avoid shifting.
-              See: https://github.com/pagopa/io-app/pull/6369 */
-              minHeight: 70
-            }}
+            style={{ textAlign: "center" }}
             color={theme["textHeading-secondary"]}
             accessibilityLabel={contentTitle}
           >

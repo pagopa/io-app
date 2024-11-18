@@ -430,7 +430,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
@@ -1286,7 +1285,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
@@ -3211,7 +3209,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
@@ -4067,7 +4064,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]
