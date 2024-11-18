@@ -418,7 +418,6 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "minHeight": 70,
                                     "textAlign": "center",
                                   },
                                 ]

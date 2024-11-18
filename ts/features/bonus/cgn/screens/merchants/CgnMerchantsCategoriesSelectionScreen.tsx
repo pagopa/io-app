@@ -14,6 +14,8 @@ import {
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import CGN_ROUTES from "../../navigation/routes";
 import CgnMerchantsListScreen from "./CgnMerchantsListScreen";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
 
@@ -88,9 +90,21 @@ const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
   );
 };
 const CgnMerchantsCategoriesSelectionScreen = () => {
+  const { navigate } = useIONavigation();
   useHeaderSecondLevel({
     title: "",
-    supportRequest: true
+    supportRequest: true,
+    secondAction: {
+      icon: "search",
+      onPress() {
+        navigate(CGN_ROUTES.DETAILS.MAIN, {
+          screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
+        });
+      },
+      accessibilityLabel: I18n.t(
+        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+      )
+    }
   });
 
   return (

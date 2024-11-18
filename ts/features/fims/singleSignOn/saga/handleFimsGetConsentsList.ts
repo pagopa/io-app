@@ -17,6 +17,8 @@ import { fimsGetConsentsListAction } from "../store/actions";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";
 import { FimsErrorStateType } from "../store/reducers";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { preferredLanguageToString } from "../../common/utils";
 import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 import {
   computeAndTrackAuthenticationError,
@@ -102,13 +104,18 @@ export function* handleFimsGetConsentsList(
     return;
   }
 
-  // TODO:: use with future BE lang implementation -- const lang = getLocalePrimaryWithFallback();
+  const preferredLanguageMaybe = yield* select(preferredLanguageSelector);
+  const preferredLanguage = yield* call(
+    preferredLanguageToString,
+    preferredLanguageMaybe
+  );
+
   const getConsentsResult = yield* call(nativeRequest, {
     verb: "get",
     followRedirects: true,
     url: relyingPartyRedirectUrl,
     headers: {
-      "Accept-Language": "it-IT"
+      "Accept-Language": preferredLanguage
     }
   });
 

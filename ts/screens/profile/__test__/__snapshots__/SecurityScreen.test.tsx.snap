@@ -366,7 +366,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             }
                           >
                             <Text
-                              accessibilityLabel="Security"
+                              accessibilityLabel="Security and login"
                               accessibilityRole="header"
                               allowFontScaling={false}
                               dynamicTypeRamp="title1"
@@ -385,7 +385,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                 ]
                               }
                             >
-                              Security
+                              Security and login
                             </Text>
                           </View>
                           <View

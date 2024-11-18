@@ -196,7 +196,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
-        errorCode: "generic",
+        errorCodeOrMessage: "generic",
         authMethod: "CIE_ID",
         authLevel: "L2",
         params: { spidLevel: SPID_LEVEL, isUat: IS_UAT }

@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     ...IOStyles.flex
   },
   contentTitle: {
-    textAlign: "center",
-    minHeight: 70 // Set minHeight to stabilize title height and avoid shifting
+    textAlign: "center"
   },
   content: {
     alignItems: "center"

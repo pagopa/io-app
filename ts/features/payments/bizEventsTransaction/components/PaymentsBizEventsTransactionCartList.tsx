@@ -9,6 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { formatAmountText } from "../utils";
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 
 type Props = {
   carts?: ReadonlyArray<CartItem>;
@@ -38,11 +39,12 @@ export const PaymentsBizEventsTransactionCartList = ({
           key={cartItem.refNumberValue ?? index.toString()}
           title={cartItem.subject ?? ""}
           subtitle={cartItem.payee?.name ?? ""}
-          transactionStatus="success"
-          transactionAmount={
-            cartItem.amount ? formatAmountText(cartItem.amount) : ""
-          }
-          hasChevronRight
+          transaction={{
+            amount: formatAmountText(cartItem.amount),
+            amountAccessibilityLabel:
+              getAccessibleAmountText(formatAmountText(cartItem.amount)) ?? ""
+          }}
+          showChevron
           onPress={() => onPress(cartItem)}
         />
       ))}

@@ -23,7 +23,7 @@ const WalletCategoryFilterTabs = () => {
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
 
   if (!isItwValid || isWalletEmpty) {
-    return <VSpacer size={16} />;
+    return null;
   }
 
   const selectedIndex = selectedCategory

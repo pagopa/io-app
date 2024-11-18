@@ -83,8 +83,8 @@ export const getAccessibleAmountText = (amount?: string) =>
   pipe(
     amount,
     O.fromNullable,
-    O.map(amount =>
-      amount.replace("-", I18n.t("global.accessibility.minusSymbol"))
+    O.map(amountText =>
+      amountText.replace("-", I18n.t("global.accessibility.minusSymbol"))
     ),
     O.getOrElseW(() => undefined)
   );

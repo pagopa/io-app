@@ -3806,13 +3806,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@pagopa/io-app-design-system@npm:2.1.0"
+"@pagopa/io-app-design-system@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@pagopa/io-app-design-system@npm:3.0.1"
   dependencies:
-    "@pagopa/ts-commons": ^12.0.0
     "@testing-library/jest-native": ^5.4.2
-    "@types/react-native-i18n": 2.0.0
     "@types/react-test-renderer": ^18.0.0
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3834,7 +3832,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 391b34c6f958cf38ce20cf64e38180b414b083d921c91e375fd26bcab50615d0e1ba91a9696207dba98916279ef276c4da479d6b30694910ff4e6e5d994e6e49
+  checksum: 788cd2fa368f8178cfa7b533577c4ceb14f3a1d8d9dfb72f9ef7d828bf9fe4965a94991295ace4b8273219cd7a35fcb266d5e48da6c2d27c94de03b87ff62ce5
   languageName: node
   linkType: hard
 
@@ -3991,24 +3989,6 @@ __metadata:
     semver: ^7.3.7
     validator: ^13.7.0
   checksum: bbad5859653a7412570646266df5c2432c4f79ad4ba9b2800b3797468af959a9241ae0dca7f7b0a4552d8502dfea8ca8a6248c36b698dd2174d156d0703997e0
-  languageName: node
-  linkType: hard
-
-"@pagopa/ts-commons@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "@pagopa/ts-commons@npm:12.0.0"
-  dependencies:
-    abort-controller: ^3.0.0
-    agentkeepalive: ^4.1.4
-    applicationinsights: ^1.8.10
-    fp-ts: 2.14.0
-    io-ts: 2.2.20
-    jose: ^4.11.2
-    json-set-map: ^1.1.2
-    node-fetch: ^2.6.0
-    semver: ^7.3.7
-    validator: ^13.7.0
-  checksum: 0fe31e196cef20496dba65fd082226794fd1645c8f92e4f747a7523603db25d9e92e76c4fec05abc8f5f93547b31230a46437fb0f45a39b41893fda6d10e430f
   languageName: node
   linkType: hard
 
@@ -5681,7 +5661,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-i18n@npm:2.0.0, @types/react-native-i18n@npm:^2.0.0":
+"@types/react-native-i18n@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/react-native-i18n@npm:2.0.0"
   dependencies:
@@ -11878,7 +11858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fp-ts@npm:2.14.0, fp-ts@npm:^2.11.0, fp-ts@npm:^2.12.1":
+"fp-ts@npm:^2.11.0, fp-ts@npm:^2.12.1":
   version: 2.14.0
   resolution: "fp-ts@npm:2.14.0"
   checksum: 39928f45fead3a62640480e48bb8c082ce6368d68ea7a338d4953cb5c2edc738a1465ffecf7850aa9561c25e0d730beabeb850e4c12ad91aac25f8303874be20
@@ -13238,7 +13218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"io-ts@npm:2.2.20, io-ts@npm:^2.2.16":
+"io-ts@npm:^2.2.16":
   version: 2.2.20
   resolution: "io-ts@npm:2.2.20"
   peerDependencies:
@@ -14012,7 +13992,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@gorhom/bottom-sheet": ^4.1.5
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 2.1.0
+    "@pagopa/io-app-design-system": 3.0.1
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^0.3.0

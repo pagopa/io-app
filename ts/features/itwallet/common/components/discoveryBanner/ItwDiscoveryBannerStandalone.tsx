@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import {
@@ -30,7 +31,7 @@ export const ItwDiscoveryBannerStandalone = (props: Props) => {
       !isBannerRenderable, // the various validity checks fail
     [isBannerRenderable, isVisible]
   );
-  // end logic
+
   if (shouldBeHidden) {
     const { fallbackComponent } = props;
     if (fallbackComponent) {
@@ -40,6 +41,12 @@ export const ItwDiscoveryBannerStandalone = (props: Props) => {
   }
 
   return (
-    <ItwDiscoveryBanner handleOnClose={() => setVisible(false)} {...props} />
+    <View style={{ marginTop: 16, marginBottom: 8 }}>
+      <ItwDiscoveryBanner
+        ignoreMargins={true}
+        handleOnClose={() => setVisible(false)}
+        {...props}
+      />
+    </View>
   );
 };

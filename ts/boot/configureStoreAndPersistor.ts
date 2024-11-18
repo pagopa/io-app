@@ -45,14 +45,13 @@ import {
 } from "../features/pushNotifications/store/reducers";
 import { getInitialState as getInstallationInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
-import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv } from "../utils/environment";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 37;
+const CURRENT_REDUX_STORE_VERSION = 38;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -451,7 +450,9 @@ const migrations: MigrationManifest = {
         }
       }
     };
-  }
+  },
+  // Remove old wallets&payments feature and persisted state
+  "38": (state: PersistedState) => omit(state, "payments")
 };
 
 const rootPersistConfig: PersistConfig = {
@@ -485,7 +486,6 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   createRootReducer([
     rootPersistConfig,
     authenticationPersistConfig,
-    walletsPersistConfig,
     entitiesPersistConfig
   ])
 );

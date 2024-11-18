@@ -13,7 +13,6 @@ module.exports = {
   assets: [
     "./assets/fonts/TitilliumSansPro",
     "./assets/fonts/Titillio",
-    "./assets/fonts/RobotoMono",
     "./assets/fonts/DMMono"
   ]
 };
