@@ -1972,7 +1972,7 @@ wallet:
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
-      CVV_ERROR: 
+      CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
         subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
       PLAFOND_LIMIT_ERROR:
@@ -2701,7 +2701,7 @@ bonus:
           titleWithoutCount: Search among Carta Giovani Nazionale partners
         noResults:
           title: Nothing found
-          subtitle: |- 
+          subtitle: |-
             Search with different words.
             If you can't find it, it might be that your partner hasn't joined or there aren't any active opportunities.
       input:
@@ -3539,11 +3539,10 @@ features:
         openPdf: "Show document"
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
-      trustmark:
-        cta: Mostra certificato di autenticità
-        title: Certificato di autenticità
-        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
-        certifiedLabel: Questo documento è certificato dall'ente emittente.
+    trustmark:
+      cta: Mostra certificato di autenticità
+      description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
+      expiration: Il QR Code si rinnova tra
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:

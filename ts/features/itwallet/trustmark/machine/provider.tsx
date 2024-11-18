@@ -5,10 +5,9 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { createItwTrustmarkActorsImplementation } from "./actors";
 import { itwTrustmarkMachine } from "./machine";
 
-type Props = {
+type Props = React.PropsWithChildren<{
   credential: StoredCredential;
-  children: JSX.Element;
-};
+}>;
 
 export const ItwTrustmarkMachineContext =
   createActorContext(itwTrustmarkMachine);

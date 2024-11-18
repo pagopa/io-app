@@ -3,5 +3,8 @@ import { ItwTrustmarkMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwTrustmarkMachine>;
 
-export const selectTrustmarkUrl = (snapshot: MachineSnapshot): string =>
-  snapshot.context.trustmarkUrl || "";
+export const selectTrustmarkUrl = ({ context }: MachineSnapshot) =>
+  context.trustmarkUrl || "";
+
+export const selectExpirationSeconds = ({ context }: MachineSnapshot) =>
+  context.expirationSeconds || 0;

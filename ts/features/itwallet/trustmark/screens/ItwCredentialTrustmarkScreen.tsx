@@ -23,7 +23,10 @@ import {
   ItwTrustmarkMachineContext,
   ItwTrustmarkMachineProvider
 } from "../machine/provider";
-import { selectTrustmarkUrl } from "../machine/selectors";
+import {
+  selectExpirationSeconds,
+  selectTrustmarkUrl
+} from "../machine/selectors";
 import { DSIOScrollViewScreenWithLargeHeader } from "../../../design-system/core/DSIOScrollViewWithLargeHeader";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useMaxBrightness } from "../../../../utils/brightness";
@@ -43,6 +46,8 @@ export const ItwCredentialTrustmarkScreen = ({ route }: ScreenProps) => {
     itwCredentialByTypeSelector(credentialType)
   );
 
+  useMaxBrightness();
+
   if (O.isNone(credentialOption)) {
     // This is unlikely to happen, but we want to handle the case where the credential is not found
     // because of inconsistencies in the state, and assert that the credential is O.some
@@ -51,39 +56,32 @@ export const ItwCredentialTrustmarkScreen = ({ route }: ScreenProps) => {
 
   return (
     <ItwTrustmarkMachineProvider credential={credentialOption.value}>
-      <ItwCredentialTrustmarkContent credential={credentialOption.value} />
+      <IOScrollViewWithLargeHeader
+        title={{
+          label: getCredentialNameFromType(credentialType)
+        }}
+      >
+        <ContentWrapper>
+          <Body>{I18n.t("features.itWallet.trustmark.description")}</Body>
+          <TrustmarkQrCode />
+          <TrustmarkExpirationTimer />
+        </ContentWrapper>
+      </IOScrollViewWithLargeHeader>
     </ItwTrustmarkMachineProvider>
   );
 };
 
-type ItwCredentialTrustmarkContentProps = {
-  credential: StoredCredential;
-};
-
-const ItwCredentialTrustmarkContent = ({
-  credential
-}: ItwCredentialTrustmarkContentProps) => {
+const TrustmarkQrCode = () => {
   const trustmarkUrl =
     ItwTrustmarkMachineContext.useSelector(selectTrustmarkUrl);
 
-  useMaxBrightness();
+  return <QrCodeImage size={"90%"} value={trustmarkUrl} correctionLevel="L" />;
+};
 
-  return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: getCredentialNameFromType(credential.credentialType)
-      }}
-    >
-      <ContentWrapper>
-        <VStack space={16}>
-          <Body>
-            {I18n.t(
-              "features.itWallet.presentation.trustmark.usageDescription"
-            )}
-          </Body>
-          <QrCodeImage size={"90%"} value={trustmarkUrl} correctionLevel="L" />
-        </VStack>
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+const TrustmarkExpirationTimer = () => {
+  const expirationSeconds = ItwTrustmarkMachineContext.useSelector(
+    selectExpirationSeconds
   );
+
+  return <QrCodeImage size={"90%"} value={trustmarkUrl} correctionLevel="L" />;
 };
