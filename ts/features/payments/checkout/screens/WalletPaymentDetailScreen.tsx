@@ -63,7 +63,7 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { FaultCodeCategoryEnum } from "../types/PaymentVerifyGenericErrorProblemJson";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -99,12 +99,12 @@ const WalletPaymentDetailScreen = () => {
       paymentDetailsPot.error,
       WalletPaymentFailure.decode,
       O.fromEither,
-      // NetworkError or undecoded error is transformed to PAYMENT_VERIFY_GENERIC_ERROR only for display purposes
+      // NetworkError or undecoded error is transformed to GENERIC_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR,
+        faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
         faultCodeDetail:
           (paymentDetailsPot.error as WalletPaymentFailure)?.faultCodeDetail ??
-          FaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR
+          FaultCodeCategoryEnum.GENERIC_ERROR
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;
