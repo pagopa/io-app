@@ -51,9 +51,9 @@ export const shouldRestartFimsAuthAfterFastLoginFailure = (
     action.payload && action.payload.handleSessionExpiration
   );
   if (fastLoginSessionExpired) {
-    const hasExpiredDuringConsentsRetrieval = pot.isLoading(state.ssoData);
+    const hasExpiredDuringConsentsRetrieval = pot.isLoading(state.consentsData);
     const hasExpiredWhileRetrievingServiceData =
-      state.currentFlowState === "consents" && isStrictSome(state.ssoData);
+      state.currentFlowState === "consents" && isStrictSome(state.consentsData);
     const hasExpiredDuringInAppBrowserRedirectUriRetrieval =
       state.currentFlowState === "in-app-browser-loading";
     return (

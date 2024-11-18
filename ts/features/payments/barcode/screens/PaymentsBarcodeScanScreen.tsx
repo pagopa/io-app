@@ -16,7 +16,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   BarcodeFailure,

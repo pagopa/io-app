@@ -7,7 +7,7 @@ import {
   NumberPad,
   VSpacer,
   hexToRgba,
-  LabelSmall,
+  LabelSmallAlt,
   IOVisualCostants,
   Pictogram,
   Body,
@@ -96,9 +96,9 @@ export const DSNumberPad = () => {
             bottom: -32
           }}
         >
-          <LabelSmall color={darkBackground ? "white" : "black"}>
+          <LabelSmallAlt color={darkBackground ? "white" : "black"}>
             {value}
-          </LabelSmall>
+          </LabelSmallAlt>
         </View>
         <CodeInput
           value={value}

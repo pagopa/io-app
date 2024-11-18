@@ -43,7 +43,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
-} from "../../../store/reducers/backendStatus/remoteConfig";
+} from "../../../store/reducers/backendStatus";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { PayloadForAction } from "../../../types/utils";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";

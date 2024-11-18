@@ -53,14 +53,12 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
 
   const closeAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("global.buttons.close"),
-    testID: "wallet-payment-failure-close-button",
     accessibilityLabel: I18n.t("global.buttons.close"),
     onPress: handleClose
   };
 
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.support.button"),
-    testID: "wallet-payment-failure-support-button",
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
   };
@@ -135,18 +133,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.subtitle"),
           action: closeAction
         };
-      case "PAYMENT_VERIFY_GENERIC_ERROR":
-        return {
-          pictogram: "umbrellaNew",
-          title: I18n.t(
-            "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.title"
-          ),
-          subtitle: I18n.t(
-            "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.subtitle"
-          ),
-          action: closeAction,
-          secondaryAction: contactSupportAction
-        };
+
       default:
         return genericErrorProps;
     }

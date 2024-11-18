@@ -58,7 +58,7 @@ const initiativesFromInstrumentMock = jest
   )
   .mockImplementation(() => [mockInitiative]);
 const isIDPayEnabledMock = jest.spyOn(
-  require("../../../../../store/reducers/backendStatus/remoteConfig"),
+  require("../../../../../store/reducers/backendStatus"),
   "isIdPayEnabledSelector"
 );
 
@@ -165,10 +165,13 @@ describe("Test CreditCardDetailScreen", () => {
   );
 });
 
-const renderDetailScreen = (store: Store, card: CreditCardPaymentMethod) =>
+const renderDetailScreen = (
+  store: Store,
+  creditCard: CreditCardPaymentMethod
+) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     CreditCardDetailScreen,
     ROUTES.WALLET_CREDIT_CARD_DETAIL,
-    { creditCard: card },
+    { creditCard },
     store
   );

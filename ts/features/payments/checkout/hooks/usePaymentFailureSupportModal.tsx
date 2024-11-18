@@ -16,7 +16,7 @@ import { Linking } from "react-native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import {

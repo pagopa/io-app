@@ -13,7 +13,7 @@ import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
-import { isFciEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isFciEnabledSelector } from "../../../store/reducers/backendStatus";
 import { isTestEnv } from "../../../utils/environment";
 import {
   NetworkError,

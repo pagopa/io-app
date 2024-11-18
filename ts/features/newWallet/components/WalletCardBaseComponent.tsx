@@ -20,7 +20,7 @@ export const withWalletCardBaseComponent =
   >(
     CardContent: React.ComponentType<CardProps>
   ) =>
-  ({ cardProps, isStacked = true, testID }: ContentProps) =>
+  ({ cardProps, isStacked = false, testID }: ContentProps) =>
     (
       <Animated.View
         testID={testID}

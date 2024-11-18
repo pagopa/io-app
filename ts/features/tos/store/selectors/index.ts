@@ -4,19 +4,19 @@ import * as O from "fp-ts/lib/Option";
 import { TosConfig } from "../../../../../definitions/content/TosConfig";
 // eslint-disable-next-line no-restricted-imports
 import { privacyUrl } from "../../../../config";
-import { remoteConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
 
 const DEFAULT_TOS_CONFIG: TosConfig = {
   tos_url: privacyUrl,
-  tos_version: 5.0
+  tos_version: 4.91
 };
 
 export const tosConfigSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
+  backendStatusSelector,
+  backendStatus =>
     pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.tos),
+      backendStatus,
+      O.chainNullableK(bs => bs.config.tos),
       O.fold(
         () => DEFAULT_TOS_CONFIG,
         v => v

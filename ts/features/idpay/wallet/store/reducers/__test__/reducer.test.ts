@@ -11,7 +11,7 @@ import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/i
 import { WalletDTO } from "../../../../../../../definitions/idpay/WalletDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { isIdPayEnabledSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { isIdPayEnabledSelector } from "../../../../../../store/reducers/backendStatus";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   idPayInitiativesFromInstrumentGet,

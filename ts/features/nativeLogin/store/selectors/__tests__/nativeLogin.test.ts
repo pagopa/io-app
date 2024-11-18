@@ -24,13 +24,19 @@ describe("NativeLogin remote flag test", () => {
 
   function checkNativeLoginFlagWithBrokenStatus(expectedValue: boolean) {
     const customStoreWithMissingMinAppVersionInNativeLoginConfig = {
-      remoteConfig: O.some({})
+      backendStatus: {
+        status: O.some({
+          ...status,
+          config: {}
+        })
+      }
     } as unknown as GlobalState;
     const actualStatus =
-      customStoreWithMissingMinAppVersionInNativeLoginConfig.remoteConfig;
+      customStoreWithMissingMinAppVersionInNativeLoginConfig.backendStatus
+        .status;
     expect(O.isSome(actualStatus)).toBe(true);
     if (O.isSome(actualStatus)) {
-      expect(actualStatus.value.nativeLogin).toBeUndefined();
+      expect(actualStatus.value.config.nativeLogin).toBeUndefined();
     }
     const isNativeLoginEnabled = isNativeLoginEnabledSelector(
       customStoreWithMissingMinAppVersionInNativeLoginConfig
@@ -40,12 +46,12 @@ describe("NativeLogin remote flag test", () => {
 
   function checkBrokenNativeLoginFlagTest(
     minAppVersion: string | undefined,
-    appVersion: string,
+    currentAppVersion: string,
     expectedValue: boolean
   ) {
     const testTitle = `NativeLogin${
       expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${appVersion}`;
+    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
     it(testTitle, () => {
       checkNativeLoginFlagWithBrokenStatus(expectedValue);
     });
@@ -80,15 +86,20 @@ describe("NativeLogin remote flag test", () => {
     expectedValue: boolean
   ) {
     const customStore = {
-      remoteConfig: O.some({
-        ...status.config,
-        nativeLogin: {
-          min_app_version: {
-            android: minAppVersion,
-            ios: minAppVersion
+      backendStatus: {
+        status: O.some({
+          ...status,
+          config: {
+            ...status.config,
+            nativeLogin: {
+              min_app_version: {
+                android: minAppVersion,
+                ios: minAppVersion
+              }
+            }
           }
-        }
-      })
+        })
+      }
     } as unknown as GlobalState;
 
     const isNativeLoginEnabled = isNativeLoginEnabledSelector(customStore);
@@ -97,12 +108,12 @@ describe("NativeLogin remote flag test", () => {
 
   function checkNativeLoginFlagTest(
     minAppVersion: string | undefined,
-    appVersion: string,
+    currentAppVersion: string,
     expectedValue: boolean
   ) {
     const testTitle = `NativeLogin${
       expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${appVersion}`;
+    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
     it(testTitle, () => {
       checkIfNativeLoginFlagIsEnableForThisAppVersion(
         minAppVersion,

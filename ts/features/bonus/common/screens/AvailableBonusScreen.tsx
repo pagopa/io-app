@@ -31,7 +31,7 @@ import { Dispatch } from "../../../../store/actions/types";
 import {
   isCGNEnabledSelector,
   isCdcEnabledSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";

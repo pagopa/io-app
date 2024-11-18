@@ -4,6 +4,7 @@ import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../../definitions/content/Config";
 import {
   SubscriptionState,
@@ -13,7 +14,7 @@ import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
 import { itwTrialId } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
@@ -94,31 +95,35 @@ const renderComponent = ({
       persistedPreferences: {
         isIdPayTestEnabled: isIdPayEnabled
       },
-      remoteConfig: O.some({
-        itw: {
-          enabled: isItwEnabled,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        idPay: isIdPayEnabled && {
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        assistanceTool: { tool: ToolEnum.none },
-        cgn: { enabled: true },
-        newPaymentSection: {
-          enabled: false,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        fims: { enabled: true }
-      } as Config) as RemoteConfigState
+      backendStatus: {
+        status: O.some({
+          config: {
+            itw: {
+              enabled: isItwEnabled,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            idPay: isIdPayEnabled && {
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            assistanceTool: { tool: ToolEnum.none },
+            cgn: { enabled: true },
+            newPaymentSection: {
+              enabled: false,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            fims: { enabled: true }
+          } as Config
+        } as BackendStatus)
+      } as BackendStatusState
     } as GlobalState)
   );
   const logic = itwCredentialIssuanceMachine.provide({

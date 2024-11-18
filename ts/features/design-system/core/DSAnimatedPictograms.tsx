@@ -27,7 +27,6 @@ import success from "../../../../assets/animated-pictograms/Success.json";
 import umbrella from "../../../../assets/animated-pictograms/Umbrella.json";
 import warning from "../../../../assets/animated-pictograms/Warning.json";
 import welcome from "../../../../assets/animated-pictograms/Welcome.json";
-import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 
 export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
@@ -47,8 +46,7 @@ export const DSAnimatedPictograms = () => {
     { name: lock, label: "Lock", loop: true },
     { name: search, label: "Search", loop: true },
     { name: success, label: "Success", loop: true },
-    { name: warning, label: "Warning", loop: true },
-    { name: waiting, label: "Waiting", loop: true }
+    { name: warning, label: "Warning", loop: true }
   ];
 
   const renderedPictogramsRefs: Array<{

@@ -395,7 +395,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           <View
                             style={
                               {
-                                "alignSelf": "flex-start",
                                 "marginRight": 12,
                               }
                             }
@@ -464,10 +463,12 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           <View
                             style={
                               [
-                                false,
-                                false,
+                                {
+                                  "marginTop": -10,
+                                },
                                 {
                                   "flex": 1,
+                                  "marginBottom": -6,
                                 },
                               ]
                             }
@@ -476,7 +477,6 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               accessibilityRole="text"
                               allowFontScaling={false}
                               maxFontSizeMultiplier={1.25}
-                              onTextLayout={[Function]}
                               style={
                                 [
                                   {},

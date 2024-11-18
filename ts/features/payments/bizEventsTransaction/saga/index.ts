@@ -3,17 +3,15 @@ import { takeLatest } from "typed-redux-saga/macro";
 
 import { TransactionClient } from "../../common/api/client";
 import {
-  getPaymentsBizEventsReceiptAction,
+  getPaymentsLatestBizEventsTransactionsAction,
   getPaymentsBizEventsTransactionDetailsAction,
   getPaymentsBizEventsTransactionsAction,
-  getPaymentsLatestBizEventsTransactionsAction,
-  hidePaymentsBizEventsReceiptAction
+  getPaymentsBizEventsReceiptAction
 } from "../store/actions";
+import { handleGetLatestBizEventsTransactions } from "./handleGetLatestBizEventsTransactions";
+import { handleGetBizEventsTransactions } from "./handleGetBizEventsTransactions";
 import { handleGetBizEventsTransactionDetails } from "./handleGetBizEventsTransactionDetails";
 import { handleGetBizEventsTransactionReceipt } from "./handleGetBizEventsTransactionReceipt";
-import { handleGetBizEventsTransactions } from "./handleGetBizEventsTransactions";
-import { handleGetLatestBizEventsTransactions } from "./handleGetLatestBizEventsTransactions";
-import { handleDisableBizEventsTransactionReceipt } from "./handleDisableBizEventsTransactionReceipt";
 
 /**
  * Handle Wallet transaction requests
@@ -44,11 +42,5 @@ export function* watchPaymentsBizEventsTransactionSaga(
     getPaymentsBizEventsReceiptAction.request,
     handleGetBizEventsTransactionReceipt,
     transactionClient.generatePDF
-  );
-
-  yield* takeLatest(
-    hidePaymentsBizEventsReceiptAction.request,
-    handleDisableBizEventsTransactionReceipt,
-    transactionClient.disablePaidNotice
   );
 }

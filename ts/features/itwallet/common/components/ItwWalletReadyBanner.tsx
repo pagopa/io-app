@@ -17,7 +17,7 @@ export const ItwWalletReadyBanner = () => {
 
   const navigation = useIONavigation();
 
-  if (!isItwValid || eidStatus === "jwtExpired" || !isWalletEmpty) {
+  if (!isItwValid || eidStatus === "expired" || !isWalletEmpty) {
     return null;
   }
 

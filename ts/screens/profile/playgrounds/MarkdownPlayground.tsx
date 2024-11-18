@@ -5,7 +5,7 @@ import {
   IOColors,
   IOVisualCostants,
   IconButtonSolid,
-  LabelSmall,
+  LabelSmallAlt,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
@@ -179,7 +179,7 @@ const MarkdownPlayground = () => {
         </View>
         <VSpacer size={16} />
 
-        {isMarkdownSet && <LabelSmall>{ctaMessage}</LabelSmall>}
+        {isMarkdownSet && <LabelSmallAlt>{ctaMessage}</LabelSmallAlt>}
 
         {O.isSome(maybeCTA) && (
           <View style={styles.row}>

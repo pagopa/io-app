@@ -4,8 +4,7 @@ import {
   Divider,
   H6,
   IOStyles,
-  ListItemInfo,
-  ListItemInfoCopy
+  ListItemInfo
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { PaymentsTransactionParamsList } from "../navigation/params";
@@ -14,7 +13,6 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import I18n from "../../../../i18n";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -95,24 +93,18 @@ const WalletTransactionOperationDetailsScreen = () => {
         )}
         {operationDetails.IUV && (
           <>
-            <ListItemInfoCopy
+            <ListItemInfo
               label={I18n.t("transaction.details.operation.iuv")}
               value={operationDetails.IUV}
-              onPress={() =>
-                clipboardSetStringWithFeedback(operationDetails.IUV ?? "")
-              }
-              accessibilityLabel={I18n.t("transaction.details.operation.iuv")}
             />
             <Divider />
           </>
         )}
         {operationSubject && (
-          <ListItemInfoCopy
+          <ListItemInfo
             numberOfLines={4}
             label={I18n.t("transaction.details.operation.subject")}
             value={operationSubject}
-            onPress={() => clipboardSetStringWithFeedback(operationSubject)}
-            accessibilityLabel={I18n.t("transaction.details.operation.subject")}
           />
         )}
       </ScrollView>

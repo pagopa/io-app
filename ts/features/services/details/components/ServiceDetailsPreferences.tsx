@@ -14,7 +14,7 @@ import { NotificationChannelEnum } from "../../../../../definitions/backend/Noti
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { EnabledChannels } from "../../../../utils/profile";
 import * as analytics from "../../common/analytics";

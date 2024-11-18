@@ -11,22 +11,20 @@ import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
-import {
-  ItwJwtCredentialStatus,
-  StoredCredential
-} from "../utils/itwTypesUtils";
+import { StoredCredential } from "../utils/itwTypesUtils";
+import { ItwCredentialStatus } from "./ItwCredentialCard";
 
-const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
+const defaultLifecycleStatus: Array<ItwCredentialStatus> = [
   "valid",
-  "jwtExpiring",
-  "jwtExpired"
+  "expiring",
+  "expired"
 ];
 
 type Props = {
   /**
    * The eID statuses that will render the alert.
    */
-  lifecycleStatus?: Array<ItwJwtCredentialStatus>;
+  lifecycleStatus?: Array<ItwCredentialStatus>;
   verticalSpacing?: boolean;
 };
 
@@ -45,14 +43,14 @@ export const ItwEidLifecycleAlert = ({
     eidStatus
   }: {
     eid: StoredCredential;
-    eidStatus: ItwJwtCredentialStatus;
+    eidStatus: ItwCredentialStatus;
   }) => {
-    if (!lifecycleStatus.includes(eidStatus)) {
+    if (eidStatus === "pending" || !lifecycleStatus.includes(eidStatus)) {
       return null;
     }
 
     const alertProps: Record<
-      ItwJwtCredentialStatus,
+      Exclude<ItwCredentialStatus, "pending">,
       ComponentProps<typeof Alert>
     > = {
       valid: {
@@ -66,7 +64,7 @@ export const ItwEidLifecycleAlert = ({
           }
         )
       },
-      jwtExpiring: {
+      expiring: {
         variant: "warning",
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.expiring",
@@ -75,7 +73,7 @@ export const ItwEidLifecycleAlert = ({
           }
         )
       },
-      jwtExpired: {
+      expired: {
         variant: "error",
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.expired"

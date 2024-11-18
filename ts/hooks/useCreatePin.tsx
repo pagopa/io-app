@@ -4,7 +4,7 @@ import { AccessibilityInfo, Platform } from "react-native";
 import I18n from "../i18n";
 import { createPinSuccess } from "../store/actions/pinset";
 import { useIODispatch, useIOSelector } from "../store/hooks";
-import { assistanceToolConfigSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../store/reducers/backendStatus";
 import { PinString } from "../types/PinString";
 import { setPin } from "../utils/keychain";
 import {

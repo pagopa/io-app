@@ -455,7 +455,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              10,
+                              1,
                             ]
                           }
                           style={
@@ -567,6 +567,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -578,7 +579,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -790,6 +791,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -801,7 +803,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -1013,6 +1015,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1024,7 +1027,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -1236,6 +1239,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1247,7 +1251,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -1459,6 +1463,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1470,7 +1475,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -1682,6 +1687,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1693,7 +1699,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -1905,6 +1911,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1916,7 +1923,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -2128,6 +2135,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2139,7 +2147,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -2351,6 +2359,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2362,7 +2371,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -2574,6 +2583,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2585,7 +2595,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }
@@ -3176,7 +3186,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              10,
+                              1,
                             ]
                           }
                           style={
@@ -3673,7 +3683,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              10,
+                              1,
                             ]
                           }
                           style={
@@ -3785,6 +3795,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="footnote"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -3796,7 +3807,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": 24,
+                                                "lineHeight": 21,
                                               },
                                             ]
                                           }

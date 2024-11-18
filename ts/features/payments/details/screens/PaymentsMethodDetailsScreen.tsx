@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { capitalize } from "../../../../utils/strings";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";

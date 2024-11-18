@@ -9,6 +9,7 @@ import { PersistedNotificationsState } from "../../features/pushNotifications/st
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
+import { BackendStatusState } from "./backendStatus";
 import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
@@ -28,19 +29,12 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { WalletState } from "./wallet";
 import { StartupState } from "./startup";
-import { RemoteConfigState } from "./backendStatus/remoteConfig";
-import { StatusMessagesState } from "./backendStatus/statusMessages";
-import { SectionStatusState } from "./backendStatus/sectionStatus";
-import { BackedInfoState } from "./backendStatus/backendInfo";
 
 export type GlobalState = Readonly<{
   appState: AppState;
   navigation: NavigationState;
   authentication: PersistedAuthenticationState;
-  remoteConfig: RemoteConfigState;
-  statusMessages: StatusMessagesState;
-  sectionStatus: SectionStatusState;
-  backendInfo: BackedInfoState;
+  backendStatus: BackendStatusState;
   versionInfo: VersionInfoState;
   entities: PersistedEntitiesState;
   backoffError: BackoffErrorState;

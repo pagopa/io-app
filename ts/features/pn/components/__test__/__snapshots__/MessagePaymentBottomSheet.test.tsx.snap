@@ -859,6 +859,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -870,7 +871,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
@@ -902,7 +903,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 25,
                                             },
                                           ]
                                         }
@@ -1083,6 +1084,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1094,7 +1096,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
@@ -1332,6 +1334,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1343,7 +1346,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
@@ -1581,6 +1584,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1592,7 +1596,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
@@ -1830,6 +1834,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1841,7 +1846,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
@@ -2079,6 +2084,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -2090,7 +2096,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
@@ -2328,6 +2334,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="footnote"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -2339,7 +2346,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
-                                              "lineHeight": 24,
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }

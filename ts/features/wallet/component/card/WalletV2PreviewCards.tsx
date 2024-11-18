@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { paymentMethodListVisibleInWalletSelector } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";

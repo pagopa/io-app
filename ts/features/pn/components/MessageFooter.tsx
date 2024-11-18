@@ -17,7 +17,7 @@ import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { shouldUseBottomSheetForPayments } from "../utils";
-import { isNewPaymentSectionEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isNewPaymentSectionEnabledSelector } from "../../../store/reducers/backendStatus";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 type MessageFooterProps = {

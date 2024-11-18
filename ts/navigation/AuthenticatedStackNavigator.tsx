@@ -60,7 +60,7 @@ import {
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isIdPayEnabledSelector
-} from "../store/reducers/backendStatus/remoteConfig";
+} from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";

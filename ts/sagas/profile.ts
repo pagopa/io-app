@@ -36,7 +36,7 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
-import { isCGNEnabledSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { profileSelector } from "../store/reducers/profile";
 import { ProfileError } from "../store/reducers/profileErrorType";

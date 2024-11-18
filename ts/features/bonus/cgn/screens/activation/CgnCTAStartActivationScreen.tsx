@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
-import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { ID_CGN_TYPE } from "../../../common/utils";

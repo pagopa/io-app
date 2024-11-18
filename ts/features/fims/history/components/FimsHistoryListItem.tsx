@@ -13,11 +13,11 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { Consent } from "../../../../../definitions/fims_history/Consent";
+import { Consent } from "../../../../../definitions/fims/Consent";
 import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { potFoldWithDefault } from "../../../../utils/pot";
-import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
+import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
 import { FimsHistorySharedStyles } from "../utils/styles";
 import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 

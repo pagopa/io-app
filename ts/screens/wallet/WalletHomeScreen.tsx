@@ -73,7 +73,7 @@ import {
 import {
   isCGNEnabledSelector,
   isIdPayEnabledSelector
-} from "../../store/reducers/backendStatus/remoteConfig";
+} from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";

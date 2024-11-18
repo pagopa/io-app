@@ -7,10 +7,7 @@ import { call, fork, put, select } from "typed-redux-saga/macro";
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { contentRepoUrl } from "../config";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import {
-  deadsCounterSelector,
-  isBackendServicesStatusOffSelector
-} from "../store/reducers/backendStatus/backendInfo";
+import { backendServicesStatusSelector } from "../store/reducers/backendStatus";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
@@ -52,28 +49,23 @@ export function* backendStatusWatcherLoop(
       backendStatusSaga,
       getStatus
     );
+    const currentState: ReturnType<typeof backendServicesStatusSelector> =
+      yield* select(backendServicesStatusSelector);
 
     // if we have no information increase rate
     if (response === false) {
       yield* call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
       continue;
     }
-
-    const areSystemsDead = yield* select(isBackendServicesStatusOffSelector);
-
     // if backend is off increase rate
-    if (areSystemsDead) {
+    if (currentState.areSystemsDead) {
       yield* call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
       continue;
     }
-    const deadsCounter: ReturnType<typeof deadsCounterSelector> = yield* select(
-      deadsCounterSelector
-    );
-
     // if counter of dead > 0 but areSystem if false (must do other check to valid this information)
     // we change the sleep timeout (more frequent when dead is detected)
     const sleepTime =
-      deadsCounter > 0 && areSystemsDead === false
+      currentState.deadsCounter > 0 && currentState.areSystemsDead === false
         ? BACKEND_SERVICES_STATUS_FAILURE_INTERVAL
         : BACKEND_SERVICES_STATUS_LOAD_INTERVAL;
     yield* call(startTimer, sleepTime);

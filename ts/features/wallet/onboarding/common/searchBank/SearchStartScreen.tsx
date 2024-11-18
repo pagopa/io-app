@@ -8,7 +8,7 @@ import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { SectionStatusKey } from "../../../../../store/reducers/backendStatus/sectionStatus";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";

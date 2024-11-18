@@ -1,17 +1,18 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { ItwCredentialCard } from "../ItwCredentialCard";
-import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+import { ItwCredentialCard, ItwCredentialStatus } from "../ItwCredentialCard";
 
 describe("ItwCredentialCard", () => {
-  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "MDL"])(
-    "should match snapshot when credential type is %p",
-    type => {
-      const component = render(<ItwCredentialCard credentialType={type} />);
-      expect(component).toMatchSnapshot();
-    }
-  );
+  it.each([
+    "EuropeanHealthInsuranceCard",
+    "EuropeanDisabilityCard",
+    "MDL",
+    "PersonIdentificationData"
+  ])("should match snapshot when credential type is %p", type => {
+    const component = render(<ItwCredentialCard credentialType={type} />);
+    expect(component).toMatchSnapshot();
+  });
 
   it.each([
     "valid",
@@ -30,10 +31,7 @@ describe("ItwCredentialCard", () => {
 
   it("should render the preview", () => {
     const component = render(
-      <ItwCredentialCard
-        credentialType={CredentialType.DRIVING_LICENSE}
-        isPreview={true}
-      />
+      <ItwCredentialCard credentialType={CredentialType.PID} isPreview={true} />
     );
     expect(component).toMatchSnapshot();
   });

@@ -31,7 +31,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import { isAndroid } from "../../../utils/platform";

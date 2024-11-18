@@ -5,13 +5,13 @@ import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
 import { GestureResponderEvent } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
+import { sectionStatusSelector } from "../../../../store/reducers/backendStatus";
 import { getFullLocale } from "../../../../utils/locale";
 import { openWebUrl } from "../../../../utils/url";
 import { getAlertVariant } from "../../common/utils";
 
 export const PaymentsAlertStatus = () => {
-  const alertInfo = useIOSelector(sectionStatusByKeySelector("payments"));
+  const alertInfo = useIOSelector(sectionStatusSelector("payments"));
   if (!alertInfo || !alertInfo.is_visible) {
     return null;
   }

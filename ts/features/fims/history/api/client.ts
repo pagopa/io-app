@@ -1,4 +1,4 @@
-import { createClient } from "../../../../../definitions/fims_history/client";
+import { createClient } from "../../../../../definitions/fims/client";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 export const createFimsClient = (baseUrl: string) =>

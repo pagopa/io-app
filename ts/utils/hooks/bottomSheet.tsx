@@ -29,7 +29,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
 import { isScreenReaderEnabled } from "../accessibility";
-import { isIos } from "../platform";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -222,9 +221,7 @@ export const useIOBottomSheetModal = ({
   return { present, dismiss: dismissAll, bottomSheet };
 };
 
-// On iOS the autoresizable bottom sheet does not open on first tap.
-// This workaround seems to bypass the problem.
-const DEFAULT_AUTORESIZABLE_SNAP_POINT = isIos ? 10 : 1;
+const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
 const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 72;
 
 /**

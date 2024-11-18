@@ -11,7 +11,7 @@ import { Text } from "react-native";
 type AllowedWeight = Extract<IOFontWeight, "Regular">;
 type AllowedColors = Extract<IOColors, "grey-650">;
 
-const fontName: IOFontFamily = "Titillio";
+const fontName: IOFontFamily = "ReadexPro";
 const legacyFontName: IOFontFamily = "TitilliumSansPro";
 const fontSize = 14;
 

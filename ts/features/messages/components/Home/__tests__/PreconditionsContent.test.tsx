@@ -8,7 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PreconditionsContent } from "../PreconditionsContent";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
-import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as backendStatus from "../../../../../store/reducers/backendStatus";
 import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 import {
   errorPreconditionStatusAction,

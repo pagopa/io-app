@@ -730,7 +730,6 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -799,10 +798,12 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                         <View
                           style={
                             [
-                              false,
-                              false,
+                              {
+                                "marginTop": -10,
+                              },
                               {
                                 "flex": 1,
+                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -811,7 +812,6 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
                             style={
                               [
                                 {},

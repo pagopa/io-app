@@ -432,6 +432,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         >
                           <Text
                             allowFontScaling={false}
+                            dynamicTypeRamp="footnote"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
@@ -442,7 +443,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 24,
+                                  "lineHeight": 21,
                                 },
                               ]
                             }

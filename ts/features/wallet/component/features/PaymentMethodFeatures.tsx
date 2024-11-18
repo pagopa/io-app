@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 
 import I18n from "../../../../i18n";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { isPaymentMethodExpired } from "../../../../utils/paymentMethod";
 

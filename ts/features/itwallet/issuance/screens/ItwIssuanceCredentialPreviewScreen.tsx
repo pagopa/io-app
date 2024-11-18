@@ -21,7 +21,6 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import {
   CREDENTIALS_MAP,
   trackCredentialPreview,
-  trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../../analytics";
@@ -35,7 +34,6 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -113,15 +111,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     );
   };
 
-  const trackScrollToBottom = (crossed: boolean) => {
-    if (crossed) {
-      trackIssuanceCredentialScrollToBottom(
-        mixPanelCredential,
-        ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
-      );
-    }
-  };
-
   useHeaderSecondLevel({
     title: "",
     goBack: dismissDialog.show
@@ -132,10 +121,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   });
 
   return (
-    <ForceScrollDownView
-      contentContainerStyle={styles.scrollView}
-      onThresholdCrossed={trackScrollToBottom}
-    >
+    <ForceScrollDownView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {

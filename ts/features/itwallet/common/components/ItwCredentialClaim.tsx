@@ -27,7 +27,7 @@ import {
   isExpirationDateClaim,
   getSafeText
 } from "../utils/itwClaimsUtils";
-import { ItwCredentialStatus } from "../utils/itwTypesUtils";
+import { ItwCredentialStatus } from "./ItwCredentialCard";
 
 const HIDDEN_CLAIM = "******";
 
@@ -119,28 +119,29 @@ const DateClaimItem = ({
   );
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    const ns = "features.itWallet.presentation.credentialDetails.status";
-    switch (status) {
-      case "valid":
-      case "expiring":
-      case "jwtExpiring":
-        return {
-          type: "badge",
-          componentProps: { variant: "success", text: I18n.t(`${ns}.valid`) }
-        };
-      case "expired":
-        return {
-          type: "badge",
-          componentProps: { variant: "error", text: I18n.t(`${ns}.expired`) }
-        };
-      case "invalid":
-        return {
-          type: "badge",
-          componentProps: { variant: "error", text: I18n.t(`${ns}.invalid`) }
-        };
-      default:
-        return undefined;
+    if (!status || status === "pending") {
+      return;
     }
+
+    const credentialStatusProps = {
+      expired: {
+        badge: "error",
+        text: "features.itWallet.presentation.credentialDetails.status.expired"
+      },
+      expiring: {
+        badge: "warning",
+        text: "features.itWallet.presentation.credentialDetails.status.expiring"
+      },
+      valid: {
+        badge: "success",
+        text: "features.itWallet.presentation.credentialDetails.status.valid"
+      }
+    } as const;
+    const { badge, text } = credentialStatusProps[status];
+    return {
+      type: "badge",
+      componentProps: { variant: badge, text: I18n.t(text) }
+    };
   }, [status]);
 
   return (

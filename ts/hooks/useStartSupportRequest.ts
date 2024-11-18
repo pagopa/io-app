@@ -7,7 +7,7 @@ import {
 } from "../components/screens/BaseScreenComponent";
 import { zendeskSupportStart } from "../features/zendesk/store/actions";
 import { useIODispatch, useIOSelector } from "../store/hooks";
-import { assistanceToolConfigSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../store/reducers/backendStatus";
 import { FAQsCategoriesType } from "../utils/faq";
 import {
   assistanceToolRemoteConfig,

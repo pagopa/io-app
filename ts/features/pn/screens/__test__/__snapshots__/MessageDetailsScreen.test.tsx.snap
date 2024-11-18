@@ -512,6 +512,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               >
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
@@ -522,7 +523,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -766,7 +767,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 25,
                                           },
                                         ]
                                       }
@@ -864,6 +865,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
@@ -875,7 +877,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -1087,6 +1089,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
@@ -1098,7 +1101,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -1640,7 +1643,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               onDismiss={[Function]}
                               snapPoints={
                                 [
-                                  10,
+                                  1,
                                 ]
                               }
                               style={
@@ -1712,7 +1715,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 24,
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
@@ -1899,7 +1902,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 24,
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
@@ -2025,7 +2028,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 24,
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }
@@ -2212,7 +2215,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 24,
+                                                    "lineHeight": 25,
                                                   },
                                                 ]
                                               }

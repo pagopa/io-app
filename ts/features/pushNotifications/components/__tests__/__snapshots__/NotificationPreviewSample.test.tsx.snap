@@ -490,7 +490,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 24,
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
@@ -1022,7 +1022,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 24,
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
@@ -1554,7 +1554,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 24,
+                                  "lineHeight": 25,
                                 },
                               ]
                             }
@@ -2086,7 +2086,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 24,
+                                  "lineHeight": 25,
                                 },
                               ]
                             }

@@ -22,7 +22,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   isCGNEnabledSelector,
   isCdcEnabledSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";

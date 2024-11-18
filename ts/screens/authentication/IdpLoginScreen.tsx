@@ -36,7 +36,7 @@ import {
   loggedOutWithIdpAuthSelector,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { SessionToken } from "../../types/SessionToken";
 import { trackSpidLoginError } from "../../utils/analytics";

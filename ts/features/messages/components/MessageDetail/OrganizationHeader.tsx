@@ -4,8 +4,8 @@ import {
   Avatar,
   IOSpacingScale,
   IOStyles,
-  Label,
   LabelSmall,
+  LabelSmallAlt,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -64,7 +64,7 @@ export const OrganizationHeader = ({
   return (
     <View style={styles.item}>
       <View style={IOStyles.flex}>
-        <Label color="grey-700">{organizationName}</Label>
+        <LabelSmallAlt color="grey-700">{organizationName}</LabelSmallAlt>
         <LabelSmall
           color={theme["interactiveElem-default"]}
           onPress={navigateToServiceDetails}

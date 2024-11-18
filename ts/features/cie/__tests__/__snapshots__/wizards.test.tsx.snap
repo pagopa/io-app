@@ -50,7 +50,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 34,
+                "lineHeight": 40,
               },
             ]
           }
@@ -553,7 +553,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 34,
+                "lineHeight": 40,
               },
             ]
           }
@@ -1431,7 +1431,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 34,
+                "lineHeight": 40,
               },
             ]
           }
@@ -1508,7 +1508,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "fontSize": 18,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 24,
+                "lineHeight": 25,
               },
             ]
           }
@@ -2364,7 +2364,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 34,
+                "lineHeight": 40,
               },
             ]
           }

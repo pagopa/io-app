@@ -22,7 +22,7 @@ import { trackScreen } from "../store/middlewares/navigation";
 import {
   isCGNEnabledSelector,
   isNewPaymentSectionEnabledSelector
-} from "../store/reducers/backendStatus/remoteConfig";
+} from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,

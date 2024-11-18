@@ -35,7 +35,7 @@ import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPrefe
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../utils/url";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { sectionStatusByKeySelector } from "../../store/reducers/backendStatus/sectionStatus";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { AlertModal } from "../../components/ui/AlertModal";
 
@@ -58,7 +58,7 @@ const LanguagesPreferencesScreen = () => {
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const bannerInfoSelector = useIOSelector(
-    sectionStatusByKeySelector("favourite_language")
+    sectionStatusSelector("favourite_language")
   );
   const isBannerVisible = bannerInfoSelector && bannerInfoSelector.is_visible;
   const preferredLanguageSelect = useIOSelector(

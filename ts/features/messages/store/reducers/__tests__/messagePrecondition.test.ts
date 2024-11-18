@@ -42,7 +42,7 @@ import {
   toUpdateRequiredMPS
 } from "../messagePrecondition";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as backendStatus from "../../../../../store/reducers/backendStatus";
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 
 const messageId = "01J1FJADCJ53SN4A11J3TBSKQE" as UIMessageId;

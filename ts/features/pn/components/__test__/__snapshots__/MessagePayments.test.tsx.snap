@@ -801,7 +801,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -922,6 +922,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -933,7 +934,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -1172,6 +1173,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1183,7 +1185,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -1422,6 +1424,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1433,7 +1436,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -1672,6 +1675,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1683,7 +1687,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -1922,6 +1926,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1933,7 +1938,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -2172,6 +2177,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -2183,7 +2189,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -2422,6 +2428,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -2433,7 +2440,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -3032,7 +3039,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -3153,6 +3160,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3164,7 +3172,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -3403,6 +3411,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3414,7 +3423,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -3653,6 +3662,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3664,7 +3674,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -3903,6 +3913,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3914,7 +3925,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -4153,6 +4164,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -4164,7 +4176,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -4403,6 +4415,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -4414,7 +4427,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -4653,6 +4666,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -4664,7 +4678,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -5607,7 +5621,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -5720,6 +5734,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -5731,7 +5746,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -5763,7 +5778,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
@@ -5944,6 +5959,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -5955,7 +5971,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -6193,6 +6209,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -6204,7 +6221,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -6442,6 +6459,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -6453,7 +6471,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -6691,6 +6709,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -6702,7 +6721,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -7301,7 +7320,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -7414,6 +7433,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -7425,7 +7445,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -7457,7 +7477,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
@@ -7638,6 +7658,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -7649,7 +7670,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -7887,6 +7908,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -7898,7 +7920,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -8136,6 +8158,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -8147,7 +8170,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -8385,6 +8408,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -8396,7 +8420,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -8995,7 +9019,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -9108,6 +9132,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9119,7 +9144,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -9151,7 +9176,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
@@ -9332,6 +9357,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9343,7 +9369,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -9581,6 +9607,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9592,7 +9619,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -9830,6 +9857,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9841,7 +9869,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -10079,6 +10107,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -10090,7 +10119,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -10809,7 +10838,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -10922,6 +10951,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -10933,7 +10963,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -10965,7 +10995,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
@@ -11146,6 +11176,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11157,7 +11188,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -11395,6 +11426,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11406,7 +11438,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -11644,6 +11676,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11655,7 +11688,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -11893,6 +11926,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11904,7 +11938,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -12623,7 +12657,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -12736,6 +12770,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -12747,7 +12782,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -12779,7 +12814,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }
@@ -13321,7 +13356,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 24,
+                                      "lineHeight": 25,
                                     },
                                   ]
                                 }
@@ -13434,6 +13469,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="footnote"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -13445,7 +13481,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
@@ -13477,7 +13513,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                         "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 24,
+                                        "lineHeight": 25,
                                       },
                                     ]
                                   }

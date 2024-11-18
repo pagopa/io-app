@@ -6,11 +6,11 @@ import {
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { WalletPaymentDetailScreen } from "../screens/WalletPaymentDetailScreen";
-import { WalletPaymentFailureScreen } from "../screens/WalletPaymentFailureScreen";
 import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInputFiscalCodeScreen";
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
 import { WalletPaymentMakeScreen } from "../screens/WalletPaymentMakeScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
+import { WalletPaymentFailureScreen } from "../screens/WalletPaymentFailureScreen";
 import { PaymentsCheckoutParamsList } from "./params";
 import { PaymentsCheckoutRoutes } from "./routes";
 
@@ -38,7 +38,7 @@ export const PaymentsCheckoutNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={PaymentsCheckoutRoutes.PAYMENT_NOTICE_SUMMARY}
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL}
       component={WalletPaymentDetailScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -58,7 +58,7 @@ export const PaymentsCheckoutNavigator = () => (
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME}
       component={WalletPaymentOutcomeScreen}
       options={{
-        gestureEnabled: false,
+        gestureEnabled: isGestureEnabled,
         headerShown: false
       }}
     />

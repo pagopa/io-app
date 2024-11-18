@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject(26, "TitilliumSansPro", 30, "Semibold")
   },
   headerLabelExperimental: {
-    ...makeFontStyleObject(26, "Titillio", 30, "Semibold")
+    ...makeFontStyleObject(26, "ReadexPro", 30, "Semibold")
   }
 });
 

@@ -34,7 +34,7 @@ import { Dispatch } from "../../store/actions/types";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
-} from "../../store/reducers/backendStatus/remoteConfig";
+} from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { paypalSelector } from "../../store/reducers/wallet/wallets";
 import { AsyncAlert } from "../../utils/asyncAlert";

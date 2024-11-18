@@ -11,7 +11,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { trackPinEducationalScreen } from "./analytics";

@@ -13,6 +13,12 @@ const PaymentsMethodDetailsErrorContent = ({ walletId }: Props) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      header: undefined
+    });
+  }, [navigation]);
+
   const handleOnRetry = () => {
     dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
   };

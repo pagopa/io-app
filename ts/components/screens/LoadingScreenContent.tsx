@@ -13,10 +13,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { WithTestID } from "../../types/WithTestID";
-import {
-  AnimatedPictogram,
-  AnimatedPictogramSource
-} from "../ui/AnimatedPictogramComponent";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,8 +21,7 @@ const styles = StyleSheet.create({
     ...IOStyles.flex
   },
   contentTitle: {
-    textAlign: "center",
-    minHeight: 70 // Set minHeight to stabilize title height and avoid shifting
+    textAlign: "center"
   },
   content: {
     alignItems: "center"
@@ -39,18 +34,11 @@ type LoadingScreenContentProps = WithTestID<{
   contentTitle: string;
   children?: React.ReactNode;
   headerVisible?: boolean;
-  animatedPictogramSource?: AnimatedPictogramSource;
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
   const theme = useIOTheme();
-  const {
-    contentTitle,
-    children,
-    headerVisible,
-    testID,
-    animatedPictogramSource
-  } = props;
+  const { contentTitle, children, headerVisible, testID } = props;
 
   React.useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -77,11 +65,7 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
             accessibilityElementsHidden={true}
             importantForAccessibility={"no-hide-descendants"}
           >
-            {animatedPictogramSource ? (
-              <AnimatedPictogram source={animatedPictogramSource} />
-            ) : (
-              <LoadingIndicator />
-            )}
+            <LoadingIndicator />
           </View>
           <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
           <H3

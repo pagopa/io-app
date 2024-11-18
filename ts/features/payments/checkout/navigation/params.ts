@@ -8,7 +8,7 @@ export type PaymentsCheckoutParamsList = {
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: undefined;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER]: undefined;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_FISCAL_CODE]: WalletPaymentInputFiscalCodeScreenNavigationParams;
-  [PaymentsCheckoutRoutes.PAYMENT_NOTICE_SUMMARY]: WalletPaymentDetailScreenNavigationParams;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL]: WalletPaymentDetailScreenNavigationParams;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE]: undefined;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE]: WalletPaymentFailureScreenNavigationParams;

@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { uniqWith, isEqual } from "lodash";
-import { remoteConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
 import { fastLoginOptIn, fastLoginEnabled } from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
@@ -31,10 +31,10 @@ export const isSecurityAdviceReadyToShow = (state: GlobalState) =>
  * if there is no data, false is the default value -> (FastLoginOptIn disabled)
  */
 export const fastLoginOptInFFEnabled = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
+  backendStatusSelector,
+  backendStatus =>
     isPropertyWithMinAppVersionEnabled({
-      remoteConfig,
+      backendStatus,
       mainLocalFlag: fastLoginEnabled,
       configPropertyName: "fastLogin",
       optionalLocalFlag: fastLoginOptIn,
@@ -59,10 +59,10 @@ const isFastLoginOptInEnabledSelector = createSelector(
  * if there is no data, false is the default value -> (FastLogin disabled)
  */
 export const isFastLoginFFEnabledSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
+  backendStatusSelector,
+  backendStatus =>
     isPropertyWithMinAppVersionEnabled({
-      remoteConfig,
+      backendStatus,
       mainLocalFlag: fastLoginEnabled,
       configPropertyName: "fastLogin"
     })

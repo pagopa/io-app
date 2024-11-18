@@ -10,7 +10,6 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
-  const jwtExpiration = "2100-09-04T00:00:00.000Z";
   const mockedEid: StoredCredential = {
     credential: "",
     credentialType: CredentialType.PID,
@@ -22,7 +21,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     issuerConf: {} as StoredCredential["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
-      expiration: jwtExpiration
+      expiration: "2025-09-30T07:32:50.000Z"
     }
   };
 
@@ -69,7 +68,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
-                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
@@ -77,7 +75,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "3",
                 credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
-                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
@@ -123,7 +120,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
-                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }

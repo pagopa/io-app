@@ -3,7 +3,7 @@ import {
   IOSpacingScale,
   VStack
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   Directions,
@@ -47,10 +47,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType
   );
-  const credentialStatus = useMemo(
-    () => getCredentialStatus(credential),
-    [credential]
-  );
+  const credentialStatus = getCredentialStatus(credential);
 
   const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
     credential.credentialType

@@ -20,7 +20,7 @@ import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { CreditCardInsertion } from "../../../store/reducers/wallet/creditCard";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
 import customVariables from "../../../theme/variables";

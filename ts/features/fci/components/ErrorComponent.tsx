@@ -31,7 +31,7 @@ import {
   zendeskSupportStart
 } from "../../zendesk/store/actions";
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 

@@ -1,4 +1,4 @@
-import { H6, IOColors, LabelSmall, Tag } from "@pagopa/io-app-design-system";
+import { H6, IOColors, LabelSmallAlt, Tag } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -61,15 +61,15 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
           <H6>{I18n.t("bonus.cgn.name")}</H6>
           {isExpired && expiredTag}
         </View>
-        <LabelSmall color="blueItalia-850" style={{ width: "70%" }}>
+        <LabelSmallAlt color="blueItalia-850" style={{ width: "70%" }}>
           {I18n.t("bonus.cgn.departmentName")}
-        </LabelSmall>
-        <LabelSmall color="blueItalia-850">
+        </LabelSmallAlt>
+        <LabelSmallAlt color="blueItalia-850">
           {expireDate &&
             I18n.t("bonusCard.validUntil", {
               endDate: format(expireDate, "MM/YY")
             })}
-        </LabelSmall>
+        </LabelSmallAlt>
       </View>
       {!isExpired && cngLogoComponent}
       {withEycaLogo && eycaLogoComponent}

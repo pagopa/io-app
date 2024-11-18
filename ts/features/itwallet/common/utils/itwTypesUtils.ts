@@ -49,11 +49,7 @@ export type StoredStatusAttestation =
       statusAttestation: string;
       parsedStatusAttestation: ParsedStatusAttestation;
     }
-  | {
-      credentialStatus: "invalid" | "unknown";
-      // Error code that might contain more details on the invalid status, provided by the issuer
-      errorCode?: string;
-    };
+  | { credentialStatus: "invalid" | "unknown" };
 
 /**
  * Type for a stored credential.
@@ -75,13 +71,3 @@ export type StoredCredential = {
     issuedAt?: string;
   };
 };
-
-// Digital credential status
-export type ItwJwtCredentialStatus = "valid" | "jwtExpired" | "jwtExpiring";
-// Combined status of a credential, that includes both the physical and the digital version
-export type ItwCredentialStatus =
-  | "valid"
-  | "invalid"
-  | "expiring"
-  | "expired"
-  | ItwJwtCredentialStatus;

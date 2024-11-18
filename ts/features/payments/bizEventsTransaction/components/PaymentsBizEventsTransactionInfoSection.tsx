@@ -22,7 +22,6 @@ import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletI
 import { getPayerInfoLabel } from "../utils";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
-import { capitalizeTextName } from "../../../../utils/strings";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -100,9 +99,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
                     label={I18n.t("transaction.details.info.headedTo")}
                     value={
                       transactionInfo.walletInfo?.maskedEmail ??
-                      capitalizeTextName(
-                        transactionInfo.walletInfo?.accountHolder ?? ""
-                      )
+                      transactionInfo.walletInfo?.accountHolder
                     }
                   />
                   <Divider />

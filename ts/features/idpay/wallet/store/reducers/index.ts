@@ -7,7 +7,7 @@ import { StatusEnum as InstrumentInitiativeStatus } from "../../../../../../defi
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
-import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {

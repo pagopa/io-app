@@ -5,7 +5,6 @@ import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/bac
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
 import { isFastLoginEnabledSelector } from "..";
-import { Config } from "../../../../../../definitions/content/Config";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
@@ -34,13 +33,18 @@ describe("FastLogin remote flag test", () => {
           }
         }
       },
-      remoteConfig: O.some({})
+      backendStatus: {
+        status: O.some({
+          ...status,
+          config: {}
+        })
+      }
     } as unknown as GlobalState;
     const actualStatus =
-      customStoreWithMissingMinAppVersionInFastLoginConfig.remoteConfig;
+      customStoreWithMissingMinAppVersionInFastLoginConfig.backendStatus.status;
     expect(O.isSome(actualStatus)).toBe(true);
     if (O.isSome(actualStatus)) {
-      expect(actualStatus.value.fastLogin).toBeUndefined();
+      expect(actualStatus.value.config.fastLogin).toBeUndefined();
     }
     const isFastLoginEnabled = isFastLoginEnabledSelector(
       customStoreWithMissingMinAppVersionInFastLoginConfig
@@ -50,12 +54,12 @@ describe("FastLogin remote flag test", () => {
 
   function checkBrokenFastLoginFlagTest(
     minAppVersion: string | undefined,
-    appVersion: string,
+    currentAppVersion: string,
     expectedValue: boolean
   ) {
     const testTitle = `FastLogin${
       expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${appVersion}`;
+    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
     it(testTitle, () => {
       checkFastLoginFlagWithBrokenStatus(expectedValue);
     });
@@ -99,15 +103,20 @@ describe("FastLogin remote flag test", () => {
           }
         }
       },
-      remoteConfig: O.some({
-        ...status.config,
-        fastLogin: {
-          min_app_version: {
-            android: minAppVersion,
-            ios: minAppVersion
+      backendStatus: {
+        status: O.some({
+          ...status,
+          config: {
+            ...status.config,
+            fastLogin: {
+              min_app_version: {
+                android: minAppVersion,
+                ios: minAppVersion
+              }
+            }
           }
-        }
-      } as Config)
+        })
+      }
     } as unknown as GlobalState;
 
     const isFastLoginEnabled = isFastLoginEnabledSelector(customStore);
@@ -116,12 +125,12 @@ describe("FastLogin remote flag test", () => {
 
   function checkFastLoginFlagTest(
     minAppVersion: string | undefined,
-    appVersion: string,
+    currentAppVersion: string,
     expectedValue: boolean
   ) {
     const testTitle = `FastLogin${
       expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${appVersion}`;
+    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
     it(testTitle, () => {
       checkIfFastLoginFlagIsEnableForThisAppVersion(
         minAppVersion,

@@ -46,7 +46,6 @@ import {
 } from "../components/ItwRequiredClaimsList";
 import {
   CREDENTIALS_MAP,
-  trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackOpenItwTos,
   trackWalletDataShare,
@@ -54,7 +53,6 @@ import {
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { itwIpzsPrivacyUrl } from "../../../../config";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -142,17 +140,8 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
       } as RequiredClaim)
   );
 
-  const trackScrollToBottom = (crossed: boolean) => {
-    if (crossed) {
-      trackIssuanceCredentialScrollToBottom(
-        CREDENTIALS_MAP[credentialType],
-        ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
-      );
-    }
-  };
-
   return (
-    <ForceScrollDownView onThresholdCrossed={trackScrollToBottom}>
+    <ForceScrollDownView>
       <ContentWrapper>
         <VSpacer size={24} />
         <View style={styles.header}>

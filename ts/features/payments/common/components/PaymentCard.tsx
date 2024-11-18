@@ -1,7 +1,7 @@
 import {
   H6,
   IOColors,
-  LabelSmall,
+  LabelSmallAlt,
   Tag,
   VSpacer,
   WithTestID
@@ -45,42 +45,42 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   );
 
   const holderNameText = props.holderName && (
-    <LabelSmall
+    <LabelSmallAlt
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.owner", {
         fullOwnerName: props.holderName
       })}
     >
       {props.holderName}
-    </LabelSmall>
+    </LabelSmallAlt>
   );
 
   const expireDateText = props.expireDate && (
-    <LabelSmall>
+    <LabelSmallAlt>
       {I18n.t("wallet.creditCard.validUntil", {
         expDate: format(props.expireDate, "MM/YY")
       })}
-    </LabelSmall>
+    </LabelSmallAlt>
   );
 
   const maskedEmailText = props.holderEmail && (
-    <LabelSmall
+    <LabelSmallAlt
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.paypal.owner", {
         email: props.holderEmail
       })}
     >
       {props.holderEmail}
-    </LabelSmall>
+    </LabelSmallAlt>
   );
 
   const maskedPhoneText = props.holderPhone && (
-    <LabelSmall
+    <LabelSmallAlt
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
         // we do this to make the screen reader read the number digit by digit,
         phoneNumber: props.holderPhone.split("").join(" ")
       })}
     >
       {props.holderPhone}
-    </LabelSmall>
+    </LabelSmallAlt>
   );
 
   const renderBankLogo = () => {

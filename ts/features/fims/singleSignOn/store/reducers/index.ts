@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
+import { ConsentData } from "../../types";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";
 import {
   fimsCancelOrAbortAction,
@@ -21,17 +21,15 @@ export type FimsFlowStateTags =
   | "abort"
   | "fastLogin_forced_restart";
 
-export type FIMS_SSO_ERROR_TAGS =
-  | "AUTHENTICATION"
-  | "GENERIC"
-  | "MISSING_INAPP_BROWSER";
+export type FIMS_SSO_ERROR_TAGS = "GENERIC" | "DEBUG" | "MISSING_INAPP_BROWSER";
 export type FimsErrorStateType = {
   errorTag: FIMS_SSO_ERROR_TAGS;
+  standardMessage: string; // this will be deprecated
   debugMessage: string;
 };
 
 export type FimsSSOState = {
-  ssoData: pot.Pot<Consent, FimsErrorStateType>;
+  consentsData: pot.Pot<ConsentData, FimsErrorStateType>;
   ctaText?: string;
   currentFlowState: FimsFlowStateTags;
   relyingPartyServiceId?: ServiceId;
@@ -39,7 +37,7 @@ export type FimsSSOState = {
 };
 
 const INITIAL_STATE: FimsSSOState = {
-  ssoData: pot.none,
+  consentsData: pot.none,
   ctaText: undefined,
   currentFlowState: "idle",
   relyingPartyServiceId: undefined,
@@ -55,7 +53,7 @@ const reducer = (
       return shouldRestartFimsAuthAfterFastLoginFailure(state, action)
         ? {
             ...state,
-            ssoData: pot.none,
+            consentsData: pot.none,
             currentFlowState: "fastLogin_forced_restart",
             relyingPartyServiceId: undefined
           }
@@ -65,21 +63,21 @@ const reducer = (
       return {
         ctaText: action.payload.ctaText,
         currentFlowState: "consents",
-        ssoData: pot.noneLoading,
+        consentsData: pot.noneLoading,
         relyingPartyServiceId: undefined,
         relyingPartyUrl: action.payload.ctaUrl
       };
     case getType(fimsGetConsentsListAction.success):
       return {
         ...state,
-        ssoData: pot.some(action.payload),
+        consentsData: pot.some(action.payload),
         relyingPartyServiceId: action.payload.service_id as ServiceId
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.request):
       return {
         ...state,
         currentFlowState: "in-app-browser-loading",
-        ssoData: pot.none
+        consentsData: pot.none
       };
     case getType(fimsGetRedirectUrlAndOpenIABAction.success):
       return {
@@ -91,11 +89,11 @@ const reducer = (
       return {
         ...state,
         currentFlowState: "idle",
-        ssoData: pot.toError(state.ssoData, action.payload)
+        consentsData: pot.toError(state.consentsData, action.payload)
       };
     case getType(fimsCancelOrAbortAction):
       return pipe(
-        state.ssoData,
+        state.consentsData,
         abortUrlFromConsentsPot,
         O.foldW(
           () => ({ ...state, currentFlowState: "idle" }),

@@ -7,7 +7,7 @@ import {
 import UnsupportedDeviceScreen from "../../features/lollipop/screens/UnsupportedDeviceScreen";
 import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { mixpanelTrack } from "../../mixpanel";
-import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus/backendInfo";
+import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import {
   isFastLoginUserInteractionNeededForSessionExpiredSelector,
   tokenRefreshSelector

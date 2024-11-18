@@ -16,7 +16,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import { fetchPagoPaTimeout } from "../../../../../config";
 import I18n from "../../../../../i18n";
 import { navigateBack } from "../../../../../store/actions/navigation";
-import { SectionStatusKey } from "../../../../../store/reducers/backendStatus/sectionStatus";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { loadAbi } from "../../bancomat/store/actions";
