@@ -1,13 +1,8 @@
 /* eslint-disable functional/immutable-data */
 import {
-  Body,
   Caption,
-  FeatureInfo,
-  H6,
   hexToRgba,
   useIOExperimentalDesign,
-  VSpacer,
-  VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import {
@@ -44,22 +39,15 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
-// import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { QrCodeImage } from "../../../../components/QrCodeImage";
-import { itwEaaVerifierBaseUrl } from "../../../../config";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
   trackWalletCredentialShowTrustmark
 } from "../../analytics";
-import {
-  generateTrustmarkUrl,
-  getCredentialNameFromType,
-  validCredentialStatuses
-} from "../../common/utils/itwCredentialUtils";
+import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
+import { useItwCredentialTrustmarkBottomSheet } from "../hooks/useItwCredentialTrustmarkBottomSheet";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -100,10 +88,7 @@ export const ItwCredentialTrustmark = ({
   );
 
   /* Bottom sheet for the QR code */
-  const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("features.itWallet.presentation.trustmark.title"),
-    component: <QrCodeBottomSheetContent credential={credential} />
-  });
+  const trustmarkBottomSheet = useItwCredentialTrustmarkBottomSheet(credential);
 
   /* Enable the effect only when the experimental DS is enabled */
   const { isExperimental: enableIridescence } = useIOExperimentalDesign();
@@ -335,32 +320,6 @@ export const ItwCredentialTrustmark = ({
     </>
   );
 };
-
-export const QrCodeBottomSheetContent = ({
-  credential
-}: {
-  credential: StoredCredential;
-}) => (
-  <View>
-    <VStack space={24}>
-      <QrCodeImage
-        size={170}
-        value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
-      />
-      <VStack space={8}>
-        <H6>{getCredentialNameFromType(credential.credentialType)}</H6>
-        <Body>
-          {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
-        </Body>
-      </VStack>
-      <FeatureInfo
-        iconName="security"
-        body={I18n.t("features.itWallet.presentation.trustmark.certifiedLabel")}
-      />
-    </VStack>
-    <VSpacer size={24} />
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {
