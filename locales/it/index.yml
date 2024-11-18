@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Entra con CieID
         subtitle: Usa l'app CieID
+        badge: Novità
       help_banner:
         title: Non sai cosa scegliere?
         action: Ti diamo una mano
@@ -659,6 +660,9 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+    tour_guide:
+      title: Novità
+      content: Ora puoi usare CieID per entrare su IO!
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
@@ -1902,8 +1906,8 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Si è verificato un errore imprevisto"
-        subtitle: "Riprova, oppure contatta l’assistenza."
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."

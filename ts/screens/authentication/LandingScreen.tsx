@@ -8,7 +8,8 @@ import {
   ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
-  VSpacer
+  VSpacer,
+  Tooltip
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
@@ -32,6 +33,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import {
   isCieIDFFEnabledSelector,
+  isCieIDTourGuideEnabledSelector,
   isCieLoginUatEnabledSelector
 } from "../../features/cieLogin/store/selectors";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -50,6 +52,7 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
+import { cieIDDisableTourGuide } from "../../features/cieLogin/store/actions";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -67,6 +70,9 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 
 export const LandingScreen = () => {
+  const isCieIDTourGuideEnabled = useIOSelector(
+    isCieIDTourGuideEnabledSelector
+  );
   const isCieIDFFEnabled = useIOSelector(isCieIDFFEnabledSelector);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
@@ -105,6 +111,12 @@ export const LandingScreen = () => {
           )}
           icon="device"
           testID="bottom-sheet-login-with-cie-id"
+          badge={{
+            variant: "turquoise",
+            text: I18n.t(
+              "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
+            )
+          }}
           onPress={() => navigateToCieIdLoginScreen("SpidL2")}
         />
         <VSpacer size={24} />
@@ -250,17 +262,28 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const getLoginButtons = useCallback((): [JSX.Element, JSX.Element] => {
+  const [firstButton, secondButton] = useMemo((): [
+    JSX.Element,
+    JSX.Element
+  ] => {
     const loginCieButton = (
-      <ButtonSolid
-        testID="landing-button-login-cie"
-        accessibilityLabel={I18n.t("authentication.landing.loginCie")}
-        fullWidth
-        color={isCieUatEnabled ? "danger" : "primary"}
-        label={I18n.t("authentication.landing.loginCie")}
-        icon={"cie"}
-        onPress={navigateToCiePinScreen}
-      />
+      <Tooltip
+        closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
+        isVisible={isCieIDTourGuideEnabled}
+        onClose={() => dispatch(cieIDDisableTourGuide())}
+        title={I18n.t("authentication.landing.tour_guide.title")}
+        content={I18n.t("authentication.landing.tour_guide.content")}
+      >
+        <ButtonSolid
+          testID="landing-button-login-cie"
+          accessibilityLabel={I18n.t("authentication.landing.loginCie")}
+          fullWidth
+          color={isCieUatEnabled ? "danger" : "primary"}
+          label={I18n.t("authentication.landing.loginCie")}
+          icon="cieLetter"
+          onPress={navigateToCiePinScreen}
+        />
+      </Tooltip>
     );
     const loginSpidButton = (
       <ButtonSolid
@@ -283,11 +306,13 @@ export const LandingScreen = () => {
 
     return [loginSpidButton, loginCieButton];
   }, [
-    isCieIDFFEnabled,
-    isCieSupported,
+    isCieIDTourGuideEnabled,
     isCieUatEnabled,
     navigateToCiePinScreen,
-    navigateToIdpSelection
+    navigateToIdpSelection,
+    isCieIDFFEnabled,
+    isCieSupported,
+    dispatch
   ]);
 
   const LandingScreenComponent = () => {
@@ -353,8 +378,6 @@ export const LandingScreen = () => {
       ],
       []
     );
-
-    const [firstButton, secondButton] = getLoginButtons();
 
     return (
       <View style={IOStyles.flex}>

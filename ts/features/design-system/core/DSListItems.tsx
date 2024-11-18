@@ -23,7 +23,6 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
 import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
-import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 
@@ -78,17 +77,6 @@ export const DSListItems = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Specific</H4>
           <VStack space={24}>
-            <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
-              <BankPreviewItem
-                onPress={onButtonPress}
-                bank={{
-                  abi: "03069",
-                  logoUrl:
-                    "https://assets.cdn.io.pagopa.it/logos/abi/03069.png",
-                  name: "Intesa Sanpaolo"
-                }}
-              />
-            </DSComponentViewerBox>
             <DSComponentViewerBox name="CgnMerchantDiscountItem">
               <CgnMerchantDiscountItem
                 discount={{
