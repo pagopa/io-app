@@ -1,13 +1,16 @@
 /**
  * A screens to express the preferences related to email forwarding.
  */
-import { ListItemSwitch, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  BodyProps,
+  ListItemSwitch,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { BodyProps } from "../../components/core/typography/ComposedBodyFromArray";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";

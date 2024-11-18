@@ -15,7 +15,7 @@ export function* removePersistedStatesSaga() {
   // MVL was removed from app v2.33.x but we still need to
   // remove the persisted data until minimum app version
   // becomes greater or equal to v2.33.x
-  const keys = ["persist:mvl", "persist:pn"];
+  const keys = ["persist:mvl", "persist:pn", "persist:wallets"];
 
   try {
     yield* call(AsyncStorage.multiRemove, keys);

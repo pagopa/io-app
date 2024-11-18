@@ -13,13 +13,13 @@ import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import themeVariables from "../../../../theme/variables";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
   selectAreInstrumentsSkipped,
   selectInitiativeDetails
 } from "../machine/selectors";
+import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 
 export const ConfigurationSuccessScreen = () => {
   const navigation = useIONavigation();
@@ -36,9 +36,8 @@ export const ConfigurationSuccessScreen = () => {
   const handleNavigateToInitiativePress = () => machine.send({ type: "next" });
 
   const handleAddPaymentMethodButtonPress = () =>
-    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
-      params: { inPayment: O.none }
+    navigation.replace(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });
 
   const renderButtons = () => {

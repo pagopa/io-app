@@ -5,7 +5,6 @@ import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../../i18n";
-import { fetchPsp } from "../../../../store/actions/wallet/transactions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { Psp } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -16,6 +15,7 @@ import { PaymentsTransactionParamsList } from "../navigation/params";
 import { getPaymentsTransactionDetailsAction } from "../store/actions";
 import { walletTransactionDetailsPotSelector } from "../store/selectors";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { fetchPsp } from "../store/actions/legacyTransactionsActions";
 
 export type PaymentsTransactionDetailsScreenParams = {
   transactionId: number;

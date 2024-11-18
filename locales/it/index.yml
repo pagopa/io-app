@@ -1423,6 +1423,7 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+      
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1906,6 +1907,10 @@ wallet:
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+      PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "Il metodo di pagamento selezionato non è disponibile"
+        subtitle: "Può succedere quando l’importo da pagare è particolarmente elevato, o se stai cercando di pagare una marca da bollo digitale."
+        action: "Scegli un altro metodo"
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
@@ -2689,6 +2694,21 @@ bonus:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
+    merchantSearch:
+      goToSearchAccessibilityLabel: Vai alla ricerca operatori
+      emptyList:
+        shortQuery:
+          titleWithCount: Cerca tra {{merchantCount}} partner aderenti a Carta Giovani Nazionale
+          titleWithoutCount: Cerca tra i partner aderenti a Carta Giovani Nazionale
+        noResults:
+          title: Non abbiamo trovato nulla
+          subtitle: |- 
+            Prova a cercare con parole diverse.
+            Se non lo trovi, il partner potrebbe non aver aderito o non avere opportunità attive.
+      input:
+        placeholder: Cerca tra i partner
+        cancel: "Annulla"
+        clear: "Cancella"
     merchantsList:
       news: novità
       online: Online
@@ -3219,10 +3239,10 @@ features:
         error: Non è stato possibile recuperare la ricevuta.
         download: Ottieni ricevuta
         hideFromList: Nascondi dalla lista
-        delete: 
+        delete:
           successful: La ricevuta è stata nascosta
           failed: C’è stato un errore, riprova
-        hideBanner: 
+        hideBanner:
           title: "Vuoi nascondere questa ricevuta dalla tua lista?"
           content: "L’operazione è irreversibile. La ricevuta non verrà più mostrata nell’elenco delle tue ricevute."
           accept: "Sì, nascondi"
@@ -3537,6 +3557,11 @@ features:
       failureScreen:
         title: Si è verificato un errore imprevisto
         subtitle: Non è stato possibile disattivare il servizio. Riprova.
+    feedback:
+      banner:
+        title: Dicci cosa ne pensi
+        content: Raccontaci la tua esperienza con la funzionalità Documenti su IO.
+        action: Inizia
 support:
   ticketList:
     noTicket:
@@ -4185,9 +4210,9 @@ FIMS:
       dataUnavailable: "Dati non disponibili"
       ko:
         title: "C’è un problema temporaneo"
-        body: "Il caricamento della lista degli accessi non è riuscito"
+        body: "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       toast: C’è un problema nel caricamento della lista. Riprova
-    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
+    emptyBody: "Qui troverai la lista degli accessi ogni volta che usi un servizio di terza parte tramite IO."
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
@@ -4201,11 +4226,11 @@ FIMS:
       title: "Controlla i tuoi accessi"
       subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
-      header: Accessi a servizi di terze parti
-      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
+      header: "I tuoi accessi a servizi di terze parti"
+      body: "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
   loadingScreen:
     abort:
-      title: "I dati non sono stati condivisi"
+      title: "Hai annullato l’accesso al servizio"
     consents:
       title: "Attendi qualche secondo"
     idle:
@@ -4226,14 +4251,15 @@ FIMS:
       missingInAppBrowser:
         body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
         title: "Aggiorna il tuo browser per procedere"
+    inAppBrowserError: "C’è stato un problema nell’invio della richiesta. Riprova"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
-    subtitle: "Autorizza IO a trasmettere a "
-    subtitle2: " i dati necessari per la tua autenticazione su "
+    subtitle: "IO condividerà con "
+    subtitle2: " i dati necessari alla tua autenticazione su "
     requiredData: "Dati richiesti"
     privacy1: "Per maggiori informazioni, leggi "
     privacyCta: "l’Informativa sulla Privacy "
     bottomSheet:
-      title: "Accedi a servizi di terze parti tramite IO"
-      body: "Per consentirti di accedere al servizio esterno senza autenticarti nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente che lo eroga."
-      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’ "
+      title: "Servizi di terze parti tramite IO: come funziona"
+      body: "Per consentirti di accedere a un servizio esterno senza autenticarti ogni volta, l'app IO condivide alcuni tuoi dati con l'ente che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’"
       bodyPrivacy: "Informativa sulla Privacy."

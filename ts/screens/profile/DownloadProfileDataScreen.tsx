@@ -1,5 +1,7 @@
 import {
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   VSpacer,
   useIOToast
@@ -7,20 +9,16 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ComponentProps, useCallback, useEffect, useMemo } from "react";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
+import { BulletList, BulletListItem } from "../../components/BulletList";
+import { IOScrollViewActions } from "../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 import { upsertUserDataProcessing } from "../../store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { BulletList, BulletListItem } from "../../components/BulletList";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../../components/core/typography/ComposedBodyFromArray";
-import { IOScrollViewActions } from "../../components/ui/IOScrollView";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
-import ROUTES from "../../navigation/routes";
 
 /**
  * A screen to explain how profile data export works.

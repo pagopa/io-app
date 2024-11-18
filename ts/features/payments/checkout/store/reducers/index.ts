@@ -17,6 +17,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
 import { FaultCodeCategoryEnum } from "../../types/PaymentGenericErrorAfterUserCancellationProblemJson";
+import { FaultCodeCategoryEnum as PaymentMethodNotAvailableEnum } from "../../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   paymentsCalculatePaymentFeesAction,
@@ -48,7 +49,7 @@ export type PaymentsCheckoutState = {
   userWallets: pot.Pot<Wallets, NetworkError>;
   recentUsedPaymentMethod: pot.Pot<UserLastPaymentMethodResponse, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
-  pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
+  pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError | WalletPaymentFailure>;
   selectedWallet: O.Option<WalletInfo>;
   selectedPaymentMethod: O.Option<PaymentMethodResponse>;
   selectedPsp: O.Option<Bundle>;
@@ -210,10 +211,28 @@ const reducer = (
         currentStep,
         selectedPsp
       };
+    case getType(paymentsCalculatePaymentFeesAction.cancel):
+      return {
+        ...state,
+        pspList: pot.none,
+        selectedPaymentMethod: O.none,
+        currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+        selectedPsp: O.none,
+        selectedWallet: O.none
+      };
     case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
         ...state,
-        pspList: pot.toError(state.pspList, action.payload)
+        pspList: pot.toError(
+          state.pspList,
+          action.payload.kind === "notFound"
+            ? {
+                faultCodeCategory:
+                  PaymentMethodNotAvailableEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
+                faultCodeDetail: ""
+              }
+            : action.payload
+        )
       };
 
     case getType(selectPaymentPspAction):
