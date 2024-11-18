@@ -8,7 +8,6 @@ import {
   IOStyles,
   IOVisualCostants,
   Label,
-  LabelMini,
   LabelSmall,
   Tag,
   useIOTheme,
@@ -154,8 +153,7 @@ export const MessageListItem = ({
           </View>
           <View style={styles.serviceNameAndMessageTitleContainer}>
             <Body numberOfLines={2} style={IOStyles.flex}>
-              <Label weight="Semibold">{serviceName}</Label>
-              <LabelMini color={theme["textBody-tertiary"]}>{" • "}</LabelMini>
+              <Label weight="Semibold">{`${serviceName} · `}</Label>
               <Label weight="Regular">{messageTitle}</Label>
             </Body>
             {!isRead && (

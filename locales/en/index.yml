@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Login with CieID
         subtitle: Use the CieID app
+        badge: New
       help_banner:
         title: Not sure what to choose?
         action: We give you a hand
@@ -659,6 +660,9 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+    tour_guide:
+      title: New
+      content: Now you can use CieID to log in IO!
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
@@ -1972,7 +1976,7 @@ wallet:
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
-      CVV_ERROR: 
+      CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
         subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
       PLAFOND_LIMIT_ERROR:
@@ -2089,7 +2093,7 @@ messages:
       failure: "Failed to archive"
     generic:
       failure: "Operation failed"
-      success: "Operazione successful!"
+      success: "Operation successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
