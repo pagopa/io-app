@@ -4,7 +4,6 @@ import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
-  cgnMerchantsCount,
   cgnOfflineMerchants,
   cgnOnlineMerchants,
   cgnSearchMerchants,
@@ -27,7 +26,6 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
 
 export type CgnMerchantsState = {
-  merchantsCount: RemoteValue<number, NetworkError>;
   searchMerchants: RemoteValue<SearchResult["items"], NetworkError>;
   onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;
   offlineMerchants: RemoteValue<OfflineMerchants["items"], NetworkError>;
@@ -37,7 +35,6 @@ export type CgnMerchantsState = {
 };
 
 const INITIAL_STATE: CgnMerchantsState = {
-  merchantsCount: remoteUndefined,
   searchMerchants: remoteUndefined,
   onlineMerchants: remoteUndefined,
   offlineMerchants: remoteUndefined,
@@ -51,23 +48,6 @@ const reducer = (
   action: Action
 ): CgnMerchantsState => {
   switch (action.type) {
-    // Merchants count
-    case getType(cgnMerchantsCount.request):
-      return {
-        ...state,
-        merchantsCount: remoteLoading
-      };
-    case getType(cgnMerchantsCount.success):
-      return {
-        ...state,
-        merchantsCount: remoteReady(action.payload.count)
-      };
-    case getType(cgnMerchantsCount.failure):
-      return {
-        ...state,
-        merchantsCount: remoteError(action.payload)
-      };
-
     // Search Merchants
     case getType(cgnSearchMerchants.request):
       return {
@@ -161,11 +141,6 @@ export default reducer;
 
 export const cgnMerchantsSelector = (state: GlobalState) =>
   state.bonus.cgn.merchants;
-
-export const cgnMerchantsCountSelector = createSelector(
-  cgnMerchantsSelector,
-  merchantsState => merchantsState.merchantsCount
-);
 
 export const cgnSearchMerchantsSelector = createSelector(
   cgnMerchantsSelector,

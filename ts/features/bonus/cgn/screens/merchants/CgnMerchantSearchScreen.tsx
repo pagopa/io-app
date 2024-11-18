@@ -28,21 +28,17 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { useQuery } from "@tanstack/react-query";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import {
-  cgnMerchantsCountSelector,
-  cgnSearchMerchantsSelector
-} from "../../store/reducers/merchants";
+import { cgnSearchMerchantsSelector } from "../../store/reducers/merchants";
 import { getValue } from "../../../../../common/model/RemoteValue";
 import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
-import {
-  cgnMerchantsCount,
-  cgnSearchMerchants
-} from "../../store/actions/merchants";
+import { cgnSearchMerchants } from "../../store/actions/merchants";
 import { MerchantSearchResultListItem } from "../../components/merchants/MerchantSearchResultListItem";
+import { cgnMerchantsCountQueryOptions } from "../../../../../../fetch-sdk/cgnMerchants";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
@@ -94,11 +90,8 @@ export function CgnMerchantSearchScreen() {
     [searchTextDebouncedTrimmed]
   );
 
-  const merchantsCountRemoteValue = useIOSelector(cgnMerchantsCountSelector);
-  useEffect(() => {
-    dispatch(cgnMerchantsCount.request());
-  }, [dispatch]);
-  const merchantsCount = getValue(merchantsCountRemoteValue);
+  const merchantsCountQuery = useQuery(cgnMerchantsCountQueryOptions());
+  const merchantsCount = merchantsCountQuery.data?.count;
 
   const renderListEmptyComponent = useCallback(() => {
     if (searchText.trim().length < MIN_SEARCH_TEXT_LENGTH) {
