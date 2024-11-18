@@ -21,7 +21,7 @@ export const itwTrustmarkMachine = setup({
     })),
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
-        ? differenceInSeconds(new Date(), context.expirationDate)
+        ? differenceInSeconds(context.expirationDate, new Date())
         : undefined
     }))
   },
@@ -58,14 +58,26 @@ export const itwTrustmarkMachine = setup({
       }
     },
     Displaying: {
-      always: {
-        guard: "isExpired",
-        target: "Refreshing"
-      },
-      after: {
-        1000: {
-          target: "Displaying",
-          actions: "updateExpirationSeconds"
+      initial: "Idle",
+      states: {
+        Idle: {
+          after: {
+            1000: {
+              target: "Checking"
+            }
+          }
+        },
+        Checking: {
+          entry: "updateExpirationSeconds",
+          always: [
+            {
+              guard: "isExpired",
+              target: "#itwTrustmarkMachine.Refreshing"
+            },
+            {
+              target: "Idle"
+            }
+          ]
         }
       }
     },
