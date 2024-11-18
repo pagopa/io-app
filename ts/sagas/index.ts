@@ -13,10 +13,6 @@ import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import { removePersistedStatesSaga } from "./removePersistedStates";
 
-import {
-  watchBackToEntrypointPaymentSaga,
-  watchPaymentInitializeSaga
-} from "./wallet";
 import { watchIdentification } from "./identification";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 
@@ -30,8 +26,6 @@ export default function* root() {
     call(loadSystemPreferencesSaga),
     call(removePersistedStatesSaga),
     call(watchContentSaga),
-    call(watchPaymentInitializeSaga),
-    call(watchBackToEntrypointPaymentSaga),
     call(watchTokenRefreshSaga),
     call(watchPendingActionsSaga),
     zendeskEnabled ? call(watchZendeskSupportSaga) : undefined

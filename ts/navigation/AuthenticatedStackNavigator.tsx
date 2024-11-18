@@ -74,7 +74,6 @@ import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
-import WalletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -149,11 +148,6 @@ const AuthenticatedStackNavigator = () => {
             default: undefined
           })
         }}
-      />
-      <Stack.Screen
-        name={ROUTES.WALLET_NAVIGATOR}
-        options={hideHeaderOptions}
-        component={WalletNavigator}
       />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
