@@ -8,7 +8,6 @@ import {
   paymentsResetPagoPaPlatformSessionTokenAction,
   savePaymentsPendingAction
 } from "../actions";
-export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsPagoPaPlatformState = {
   sessionToken: pot.Pot<string, NetworkError>;

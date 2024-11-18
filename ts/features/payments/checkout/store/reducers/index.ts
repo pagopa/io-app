@@ -217,7 +217,9 @@ const reducer = (
         ...state,
         pspList: pot.none,
         selectedPaymentMethod: O.none,
-        currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+        currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+        selectedPsp: O.none,
+        selectedWallet: O.none
       };
     case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
@@ -254,12 +256,12 @@ const reducer = (
         ...state,
         transaction: pot.some(action.payload)
       };
-    case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsDeleteTransactionAction.success):
       return {
         ...state,
         transaction: pot.none
       };
+    case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
       return {
         ...state,
