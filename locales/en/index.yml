@@ -1901,8 +1901,8 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Si è verificato un errore imprevisto"
-        subtitle: "Riprova, oppure contatta l’assistenza."
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
@@ -1972,7 +1972,7 @@ wallet:
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
-      CVV_ERROR: 
+      CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
         subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
       PLAFOND_LIMIT_ERROR:
@@ -2089,7 +2089,7 @@ messages:
       failure: "Failed to archive"
     generic:
       failure: "Operation failed"
-      success: "Operazione successful!"
+      success: "Operation successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"

@@ -41,7 +41,6 @@ import {
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
-import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { computeAndTrackPaymentStart } from "./detailsUtils";
@@ -176,7 +175,6 @@ export const MessagePaymentItem = ({
   messageId,
   noSpaceOnTop = false,
   noticeNumber,
-  paymentAmount = undefined,
   rptId,
   serviceId,
   willNavigateToPayment = undefined
@@ -198,17 +196,10 @@ export const MessagePaymentItem = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
 
-  // Checks if the new wallet section is enabled
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
-      isNewWalletSectionEnabled,
-      messageId,
       rptId,
       isError(paymentStatusForUI),
-      paymentAmount,
       canNavigateToPayment,
       dispatch,
       () => {
@@ -224,10 +215,7 @@ export const MessagePaymentItem = ({
   }, [
     canNavigateToPayment,
     dispatch,
-    isNewWalletSectionEnabled,
     isPNPayment,
-    messageId,
-    paymentAmount,
     paymentStatusForUI,
     rptId,
     serviceId,

@@ -5,12 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import {
-  RouteProp,
-  useFocusEffect,
-  useNavigation,
-  useRoute
-} from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { contramap } from "fp-ts/lib/Ord";
 import { pipe } from "fp-ts/lib/function";
@@ -19,16 +14,6 @@ import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
-import {
-  PaymentStartOrigin,
-  paymentInitializeState
-} from "../../../../store/actions/wallet/payment";
-import { useIODispatch } from "../../../../store/hooks";
 import * as analytics from "../../../barcode/analytics";
 import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
@@ -45,11 +30,7 @@ const sortByAmount = pipe(
 );
 
 const PaymentsBarcodeChoiceScreen = () => {
-  const dispatch = useIODispatch();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-
-  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
-    usePagoPaPayment();
+  const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -63,28 +44,16 @@ const PaymentsBarcodeChoiceScreen = () => {
   const { barcodes } = route.params;
 
   const handleBarcodeSelected = (barcode: PagoPaBarcode) => {
-    const paymentStartOrigin: PaymentStartOrigin =
+    const paymentStartOrigin =
       barcode.format === "DATA_MATRIX"
         ? "poste_datamatrix_scan"
         : "qrcode_scan";
     analytics.trackBarcodeMultipleCodesSelection();
 
-    if (isNewWalletSectionEnabled) {
-      startPaymentFlowWithRptId(barcode.rptId, {
-        onSuccess: "showTransaction",
-        startOrigin: paymentStartOrigin
-      });
-    } else {
-      dispatch(paymentInitializeState());
-      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-        screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-        params: {
-          initialAmount: barcode.amount,
-          rptId: barcode.rptId,
-          paymentStartOrigin
-        }
-      });
-    }
+    startPaymentFlowWithRptId(barcode.rptId, {
+      onSuccess: "showTransaction",
+      startOrigin: paymentStartOrigin
+    });
   };
 
   const renderBarcodeItem = (barcode: PagoPaBarcode) => {
