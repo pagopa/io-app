@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageSourcePropType, useWindowDimensions } from "react-native";
 import Placeholder from "rn-placeholder";
-import RNQRGenerator from "rn-qr-generator";
+import RNQRGenerator, { QRCodeGenerateOptions } from "rn-qr-generator";
 import { AnimatedImage } from "./AnimatedImage";
 
 export type QrCodeImageProps = {
@@ -11,6 +11,8 @@ export type QrCodeImageProps = {
   size?: number | `${number}%`;
   // Optional background color for the QR Code image
   backgroundColor?: string;
+  // Optional correction level for the QR Code image
+  correctionLevel?: QRCodeGenerateOptions["correctionLevel"];
 };
 
 /**
@@ -19,7 +21,8 @@ export type QrCodeImageProps = {
 export const QrCodeImage = ({
   value,
   size = 200,
-  backgroundColor
+  backgroundColor,
+  correctionLevel = "H"
 }: QrCodeImageProps) => {
   const [source, setSource] = React.useState<ImageSourcePropType>();
   const { width } = useWindowDimensions();
@@ -37,11 +40,11 @@ export const QrCodeImage = ({
       height: realSize,
       width: realSize,
       backgroundColor,
-      correctionLevel: "H"
+      correctionLevel
     })
       .then(result => setSource(result))
       .catch(_ => undefined);
-  }, [value, realSize, backgroundColor]);
+  }, [value, realSize, backgroundColor, correctionLevel]);
 
   return source ? (
     <AnimatedImage source={source} />
