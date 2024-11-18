@@ -41,7 +41,7 @@ import {
   walletPaymentIsTransactionActivatedSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -158,6 +158,22 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
+  const getFirstPotError = React.useCallback(() => {
+    if (pot.isError(transactionPot)) {
+      return transactionPot.error;
+    }
+    if (pot.isError(pspListPot)) {
+      return pspListPot.error;
+    }
+    if (pot.isError(paymentMethodsPot)) {
+      return paymentMethodsPot.error;
+    }
+    if (pot.isError(userWalletsPots)) {
+      return userWalletsPots.error;
+    }
+    return null;
+  }, [transactionPot, pspListPot, paymentMethodsPot, userWalletsPots]);
+
   useOnFirstRender(
     () => {
       analytics.trackPaymentMethodSelection({
@@ -179,22 +195,20 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   React.useEffect(() => {
-    if (isError && !pot.isError(transactionPot)) {
-      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-        params: {
-          outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
-        }
-      });
-    } else if (isError && pot.isError(transactionPot)) {
+    if (isError) {
+      // create a constant error that contains the error if transactionPot is in error or paymentMethodsPot is in error or userWalletsPots is in error or pspListPot is in error
+      const error = getFirstPotError();
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
         params: {
-          error: transactionPot.error
+          error: error ?? {
+            faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+            faultCodeDetail: "GENERIC_ERROR"
+          }
         }
       });
     }
-  }, [isError, navigation, transactionPot]);
+  }, [isError, navigation, getFirstPotError]);
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
