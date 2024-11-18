@@ -10,6 +10,8 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import * as analytics from "../../analytics";
+import { paymentAnalyticsDataSelector } from "../../../history/store/selectors";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFeesForIO"],
@@ -61,11 +63,29 @@ export function* handleWalletPaymentCalculateFees(
         return;
       } else if (res.status !== 401) {
         // The 401 status is handled by the withPaymentsSessionToken
-        yield* put(
-          paymentsCalculatePaymentFeesAction.failure(
-            getGenericError(new Error(`Error: ${res.status}`))
-          )
-        );
+        if (res.status === 404) {
+          const paymentAnalyticsData = yield* select(
+            paymentAnalyticsDataSelector
+          );
+          analytics.trackPaymentsPspNotAvailableError({
+            organization_name: paymentAnalyticsData?.verifiedData?.paName,
+            organization_fiscal_code:
+              paymentAnalyticsData?.verifiedData?.paFiscalCode,
+            expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+            attempt: paymentAnalyticsData?.attempt
+          });
+          yield* put(
+            paymentsCalculatePaymentFeesAction.failure({
+              kind: "notFound"
+            })
+          );
+        } else {
+          yield* put(
+            paymentsCalculatePaymentFeesAction.failure(
+              getGenericError(new Error(`Error: ${res.status}`))
+            )
+          );
+        }
       }
     }
   } catch (e) {

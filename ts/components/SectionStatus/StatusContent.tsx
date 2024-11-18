@@ -1,13 +1,13 @@
 import React, { ComponentProps, forwardRef } from "react";
 import { AccessibilityRole, StyleSheet, View } from "react-native";
 import {
-  FontSize,
   IOColors,
+  IOFontSize,
   IOIcons,
-  Icon
+  Icon,
+  Label
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
-import { Label } from "../core/typography/Label";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 
 const iconSize = 24;
@@ -34,7 +34,7 @@ type Props = WithTestID<{
   accessibilityRole?: AccessibilityRole;
   backgroundColor: IOColors;
   iconName: IOIcons;
-  fontSize?: FontSize;
+  fontSize?: IOFontSize;
   foregroundColor: ComponentProps<typeof Label>["color"];
   labelPaddingVertical?: number;
 }>;
@@ -52,10 +52,8 @@ export const statusIconMap: Record<LevelEnum, IOIcons> = {
 };
 
 // map the text background color with the relative text color
-export const getStatusTextColor = (
-  level: LevelEnum
-): "bluegreyDark" | "white" =>
-  level === LevelEnum.normal ? "bluegreyDark" : "white";
+export const getStatusTextColor = (level: LevelEnum): "grey-700" | "white" =>
+  level === LevelEnum.normal ? "grey-700" : "white";
 
 const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
   (
@@ -83,11 +81,10 @@ const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
       </View>
       <Label
         color={foregroundColor}
-        fontSize={fontSize}
-        style={[
+        style={StyleSheet.flatten([
           styles.text,
           labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
-        ]}
+        ])}
         weight={"Regular"}
       >
         {children}

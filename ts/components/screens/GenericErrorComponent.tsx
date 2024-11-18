@@ -1,4 +1,9 @@
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  FooterWithButtons,
+  H4,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -14,8 +19,6 @@ import {
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { Body } from "../core/typography/Body";
-import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = WithTestID<
@@ -116,9 +119,9 @@ const GenericErrorComponent = (props: Props) => {
           />
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>
-            <H2 weight="Bold" ref={ref}>
+            <H4 ref={ref}>
               {props.text ? props.text : I18n.t("wallet.errors.GENERIC_ERROR")}
-            </H2>
+            </H4>
             <VSpacer size={16} />
             <Body accessible={subTextAccessible}>
               {props.subText !== undefined

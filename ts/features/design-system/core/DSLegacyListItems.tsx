@@ -2,7 +2,6 @@ import { Divider, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
 import * as React from "react";
 
 import { Alert } from "react-native";
-import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import ListItemComponent from "../../../components/screens/ListItemComponent";
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -126,23 +125,6 @@ export const DSLegacyListItems = () => {
               />
             </DSComponentViewerBox>
           </VStack>
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Misc</H4>
-          <DSComponentViewerBox name="DetailedlistItemComponent">
-            <DetailedlistItemComponent
-              isNew={true}
-              text11={"Payment Recipient"}
-              text12={"+200,00 €"}
-              text2={"19/12/2022 - 1:25:23 PM"}
-              text3={"Transaction Name"}
-              onPressItem={onListItemPress}
-              accessible={true}
-              accessibilityRole={"button"}
-              accessibilityLabel={"Accessibility Label"}
-            />
-          </DSComponentViewerBox>
         </VStack>
       </VStack>
     </DesignSystemScreen>

@@ -143,7 +143,14 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   yield* call(deallocateFimsResourcesAndNavigateBack);
   yield* call(computeAndTrackInAppBrowserOpening, action);
 
-  return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
+  try {
+    yield* call(openAuthenticationSession, inAppBrowserRedirectUrl, "", true);
+  } catch (error: unknown) {
+    // At the time of writing, openAuthenticationSession returns
+    // different kind of structures for error's instances so we
+    // are not able to distinguish between normal closing of the
+    // InApp Browser on both systems and other kind of errors.
+  }
 }
 
 const recurseUntilRPUrl = async (
