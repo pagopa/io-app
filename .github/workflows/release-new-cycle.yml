@@ -75,7 +75,6 @@ jobs:
         run: |
           ./scripts/android-release.sh ./android/app
           cd android && bundle exec fastlane alpha
-          # bundle exec fastlane promote_internal_to_alpha
         shell: bash
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
