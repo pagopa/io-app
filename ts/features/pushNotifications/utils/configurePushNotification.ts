@@ -13,7 +13,6 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../messages/store/actions";
-import { isDevEnv } from "../../../utils/environment";
 import {
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap
@@ -75,16 +74,9 @@ function handleForegroundMessageReload() {
       })
     );
   }
-  // TODO: shall we deep link in foreground?
-  // see https://pagopaspa.slack.com/archives/C013V764P9U/p1639558176007600
 }
 
 function configurePushNotifications() {
-  // if isDevEnv is enabled and we are on Android, we need to disable the push notifications to avoid crash for missing firebase settings
-  if (isDevEnv && Platform.OS === "android") {
-    return;
-  }
-
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
