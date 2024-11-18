@@ -8,7 +8,6 @@ import {
   IOStyles,
   IOVisualCostants,
   Label,
-  LabelMini,
   LabelSmall,
   Tag,
   WithTestID
