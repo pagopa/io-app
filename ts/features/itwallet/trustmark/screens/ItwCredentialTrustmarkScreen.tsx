@@ -1,22 +1,24 @@
 import {
   Body,
   ContentWrapper,
-  FeatureInfo,
-  H2,
-  H6,
-  VSpacer,
+  HSpacer,
+  Icon,
+  IOStyles,
+  IOVisualCostants,
   VStack
 } from "@pagopa/io-app-design-system";
+import { format } from "date-fns";
 import * as O from "fp-ts/Option";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { useMaxBrightness } from "../../../../utils/brightness";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import {
@@ -27,9 +29,6 @@ import {
   selectExpirationSeconds,
   selectTrustmarkUrl
 } from "../machine/selectors";
-import { DSIOScrollViewScreenWithLargeHeader } from "../../../design-system/core/DSIOScrollViewWithLargeHeader";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useMaxBrightness } from "../../../../utils/brightness";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -60,28 +59,63 @@ export const ItwCredentialTrustmarkScreen = ({ route }: ScreenProps) => {
         title={{
           label: getCredentialNameFromType(credentialType)
         }}
+        headerActionsProp={{ showHelp: true }}
       >
         <ContentWrapper>
-          <Body>{I18n.t("features.itWallet.trustmark.description")}</Body>
-          <TrustmarkQrCode />
-          <TrustmarkExpirationTimer />
+          <VStack space={24}>
+            <Body>{I18n.t("features.itWallet.trustmark.description")}</Body>
+            <TrustmarkQrCode />
+            <TrustmarkExpirationTimer />
+          </VStack>
         </ContentWrapper>
       </IOScrollViewWithLargeHeader>
     </ItwTrustmarkMachineProvider>
   );
 };
 
+/**
+ * Component that renders the QR code of the trustmark
+ */
 const TrustmarkQrCode = () => {
   const trustmarkUrl =
     ItwTrustmarkMachineContext.useSelector(selectTrustmarkUrl);
 
-  return <QrCodeImage size={"90%"} value={trustmarkUrl} correctionLevel="L" />;
+  return (
+    <View style={styles.qrCodeContainer}>
+      <QrCodeImage size={"95%"} value={trustmarkUrl} correctionLevel="L" />
+    </View>
+  );
 };
 
+/**
+ * Timer that shows the remaining time before the trustmark expires
+ */
 const TrustmarkExpirationTimer = () => {
   const expirationSeconds = ItwTrustmarkMachineContext.useSelector(
     selectExpirationSeconds
   );
 
-  return <QrCodeImage size={"90%"} value={trustmarkUrl} correctionLevel="L" />;
+  // Format the expiration time to mm:ss
+  const formattedExpirationTime = format(
+    new Date(expirationSeconds * 1000),
+    "mm:ss"
+  );
+
+  return (
+    <View style={[IOStyles.row, IOStyles.alignCenter]}>
+      <Icon name="history" size={24} color="grey-300" />
+      <HSpacer size={24} />
+      <Body>
+        {I18n.t("features.itWallet.trustmark.expiration") + " "}
+        <Body weight="Bold">{formattedExpirationTime}</Body>
+      </Body>
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  qrCodeContainer: {
+    marginHorizontal: -IOVisualCostants.appMarginDefault,
+    alignItems: "center"
+  }
+});
