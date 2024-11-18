@@ -18,19 +18,19 @@ import {
   IconButton,
   HSpacer,
   IOSpacer,
-  IOStyles
+  IOStyles,
+  Body
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { maybeNotNullyString } from "../../utils/strings";
-import { Body } from "../core/typography/Body";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";

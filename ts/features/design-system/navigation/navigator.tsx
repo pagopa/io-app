@@ -48,7 +48,6 @@ import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActio
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyAlert } from "../core/DSLegacyAlert";
 import { DSLegacyBadges } from "../core/DSLegacyBadges";
@@ -57,7 +56,6 @@ import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
-import { DSLegacyTypography } from "../core/DSLegacyTypography";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -575,13 +573,6 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.route}
-          component={DSLegacyTypography}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.title
-          }}
-        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
@@ -628,14 +619,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacySelection}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.route}
-          component={DSLegacyAccordion}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.title
           }}
         />
 

@@ -5,7 +5,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
-import { ItwCredentialStatus } from "../common/components/ItwCredentialCard";
+import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -97,7 +97,7 @@ type TrackITWalletBannerClosureProperties = {
 };
 
 type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "cie_pin" | "cieid";
+  ITW_ID_method: "spid" | "ciePin" | "cieId";
 };
 
 type TrackITWalletSpidIDPSelected = { idp: string };
@@ -122,9 +122,11 @@ export const ID_STATUS_MAP: Record<
   "valid" | "not_valid" | "expiring"
 > = {
   valid: "valid",
-  pending: "not_valid",
+  invalid: "not_valid",
   expired: "not_valid",
-  expiring: "expiring"
+  expiring: "expiring",
+  jwtExpired: "not_valid",
+  jwtExpiring: "expiring"
 };
 
 // #region SCREEN VIEW EVENTS
@@ -470,6 +472,16 @@ export function trackWalletCredentialRenewStart(
   );
 }
 
+export function trackIssuanceCredentialScrollToBottom(
+  credential: MixPanelCredential,
+  screenRoute: string
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_ISSUANCE_CREDENTIAL_SCROLL,
+    buildEventProperties("UX", "action", { credential, screen: screenRoute })
+  );
+}
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -618,6 +630,13 @@ export const trackItwIdRequestUnexpected = ({
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
     buildEventProperties("KO", "error", { reason, type })
+  );
+};
+
+export const trackItwAlreadyActivated = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
+    buildEventProperties("KO", "error")
   );
 };
 

@@ -216,10 +216,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 31,
+                                    "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 43,
+                                    "lineHeight": 42,
                                   },
                                 ]
                               }
@@ -451,7 +451,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -551,7 +551,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -741,7 +741,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -857,6 +857,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -1668,10 +1669,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 31,
+                                    "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 43,
+                                    "lineHeight": 42,
                                   },
                                 ]
                               }
@@ -1903,7 +1904,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -2003,7 +2004,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -2193,7 +2194,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -2309,6 +2310,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -3121,10 +3123,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 31,
+                                    "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 43,
+                                    "lineHeight": 42,
                                   },
                                 ]
                               }
@@ -3356,7 +3358,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -3456,7 +3458,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -3646,7 +3648,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -3762,6 +3764,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -4574,10 +4577,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 31,
+                                    "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 43,
+                                    "lineHeight": 42,
                                   },
                                 ]
                               }
@@ -4809,7 +4812,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -4909,7 +4912,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -5099,7 +5102,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -5215,6 +5218,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -6027,10 +6031,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 31,
+                                    "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 43,
+                                    "lineHeight": 42,
                                   },
                                 ]
                               }
@@ -6262,7 +6266,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -6362,7 +6366,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -6698,7 +6702,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -6960,6 +6964,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             >
                               <View
+                                accessibilityLabel="You can change this choice anytime in Profile > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [

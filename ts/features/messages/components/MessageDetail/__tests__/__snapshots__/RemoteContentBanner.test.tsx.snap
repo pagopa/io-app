@@ -396,6 +396,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           }
                         >
                           <View
+                            accessibilityLabel="This is a dynamic message: its content may change over time to give you up-to-date information. Learn more"
                             accessibilityRole="button"
                             accessible={true}
                             style={
@@ -758,7 +759,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={

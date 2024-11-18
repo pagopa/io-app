@@ -15,7 +15,7 @@ import { trackIngressScreen } from "../../../screens/profile/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus";
+import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { setIsBlockingScreen } from "../store/actions";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
@@ -25,6 +25,7 @@ import {
   trackIngressTimeout
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
+import waiting from "../../../../assets/animated-pictograms/Waiting.json";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -107,6 +108,7 @@ export const IngressScreen = () => {
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
+        animatedPictogramSource={waiting}
       />
     </>
   );

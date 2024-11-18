@@ -4,17 +4,16 @@ import React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../definitions/content/Config";
 import * as zendeskActions from "../../../../features/zendesk/store/actions";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 import BaseScreenComponent, { Props } from "../index";
 import { MESSAGES_ROUTES } from "../../../../features/messages/navigation/routes";
+import { RemoteConfigState } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 jest.useFakeTimers();
 
@@ -28,13 +27,9 @@ describe("BaseScreenComponent", () => {
   const mockStore = configureMockStore<GlobalState>();
   const state = {
     ...globalState,
-    backendStatus: {
-      status: O.some({
-        config: {
-          assistanceTool: { tool: ToolEnum.none }
-        } as Config
-      } as BackendStatus)
-    } as BackendStatusState
+    remoteConfig: O.some({
+      assistanceTool: { tool: ToolEnum.none }
+    } as Config) as RemoteConfigState
   };
 
   it.each`
@@ -49,29 +44,25 @@ describe("BaseScreenComponent", () => {
         defaultProps,
         mockStore({
           ...state,
-          backendStatus: {
-            status: O.some({
-              config: {
-                assistanceTool: { tool },
-                cgn: { enabled: true },
-                newPaymentSection: {
-                  enabled: false,
-                  min_app_version: {
-                    android: "0.0.0.0",
-                    ios: "0.0.0.0"
-                  }
-                },
-                fims: { enabled: true },
-                itw: {
-                  enabled: true,
-                  min_app_version: {
-                    android: "0.0.0.0",
-                    ios: "0.0.0.0"
-                  }
-                }
-              } as Config
-            } as BackendStatus)
-          } as BackendStatusState
+          remoteConfig: O.some({
+            assistanceTool: { tool },
+            cgn: { enabled: true },
+            newPaymentSection: {
+              enabled: false,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            },
+            fims: { enabled: true },
+            itw: {
+              enabled: true,
+              min_app_version: {
+                android: "0.0.0.0",
+                ios: "0.0.0.0"
+              }
+            }
+          } as Config) as RemoteConfigState
         })
       );
       expect(component.queryByTestId("helpButton")).toBeNull();
@@ -83,29 +74,25 @@ describe("BaseScreenComponent", () => {
       defaultProps,
       mockStore({
         ...state,
-        backendStatus: {
-          status: O.some({
-            config: {
-              assistanceTool: { tool: ToolEnum.zendesk },
-              cgn: { enabled: true },
-              newPaymentSection: {
-                enabled: false,
-                min_app_version: {
-                  android: "0.0.0.0",
-                  ios: "0.0.0.0"
-                }
-              },
-              fims: { enabled: true },
-              itw: {
-                enabled: true,
-                min_app_version: {
-                  android: "0.0.0.0",
-                  ios: "0.0.0.0"
-                }
-              }
-            } as Config
-          } as BackendStatus)
-        } as BackendStatusState
+        remoteConfig: O.some({
+          assistanceTool: { tool: ToolEnum.zendesk },
+          cgn: { enabled: true },
+          newPaymentSection: {
+            enabled: false,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
+          },
+          fims: { enabled: true },
+          itw: {
+            enabled: true,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
+          }
+        } as Config) as RemoteConfigState
       })
     );
     const helpButton = component.queryByTestId("helpButton");

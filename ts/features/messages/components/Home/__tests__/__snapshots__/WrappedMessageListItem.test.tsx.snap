@@ -609,7 +609,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -1578,7 +1578,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -2723,7 +2723,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -3723,7 +3723,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -4778,7 +4778,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -5649,7 +5649,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -6454,7 +6454,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,
@@ -7204,7 +7204,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                           "fontSize": 18,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": 25,
+                                          "lineHeight": 24,
                                         },
                                         {
                                           "flex": 1,

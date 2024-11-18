@@ -363,6 +363,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -431,12 +432,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -445,6 +444,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -839,6 +839,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -907,12 +908,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -921,6 +920,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -1315,6 +1315,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -1383,12 +1384,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -1397,6 +1396,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -1791,6 +1791,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -1859,12 +1860,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -1873,6 +1872,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -2267,6 +2267,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -2335,12 +2336,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -2349,6 +2348,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -2743,6 +2743,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -2811,12 +2812,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -2825,6 +2824,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -3219,6 +3219,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -3287,12 +3288,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -3301,6 +3300,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -3695,6 +3695,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -3763,12 +3764,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -3777,6 +3776,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},
@@ -4171,6 +4171,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -4239,12 +4240,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -4253,6 +4252,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             accessibilityRole="text"
                             allowFontScaling={false}
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
                                 {},

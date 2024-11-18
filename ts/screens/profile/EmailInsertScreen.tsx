@@ -3,6 +3,7 @@
  * not present in the profile.
  */
 import {
+  Body,
   ButtonSolid,
   ContentWrapper,
   H1,
@@ -34,7 +35,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { Body } from "../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";

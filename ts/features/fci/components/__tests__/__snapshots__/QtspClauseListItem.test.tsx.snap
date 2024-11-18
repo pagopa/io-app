@@ -381,7 +381,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                     "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 25,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -424,7 +424,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                     "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 25,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -606,7 +606,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                     "fontSize": 18,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 25,
+                                    "lineHeight": 24,
                                   },
                                   {
                                     "flexShrink": 1,
