@@ -131,7 +131,7 @@ export const DesignSystemNavigator = () => {
     headerTitleStyle: {
       ...makeFontStyleObject(
         14,
-        isExperimental ? "ReadexPro" : "TitilliumSansPro",
+        isExperimental ? "Titillio" : "TitilliumSansPro",
         18,
         isExperimental ? "Regular" : "Semibold",
         undefined
@@ -153,7 +153,7 @@ export const DesignSystemNavigator = () => {
           headerTitleStyle: {
             ...makeFontStyleObject(
               14,
-              isExperimental ? "ReadexPro" : "TitilliumSansPro",
+              isExperimental ? "Titillio" : "TitilliumSansPro",
               18,
               isExperimental ? "Regular" : "Semibold",
               undefined
