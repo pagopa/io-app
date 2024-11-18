@@ -1,6 +1,4 @@
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
-import { euCovidCertificateEnabled } from "../../../config";
 import { mixpanel } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../utils/errors";
@@ -54,9 +52,4 @@ const trackEuCovidCertificateGetSuccessResponse = (
   };
 };
 
-const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
-  constVoid();
-
-export default euCovidCertificateEnabled
-  ? trackEuCovidCertificateActions
-  : emptyTracking;
+export default trackEuCovidCertificateActions;

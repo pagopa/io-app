@@ -14,6 +14,7 @@ export type MessagesParamsList = {
   [MESSAGES_ROUTES.MESSAGE_DETAIL]: MessageDetailsScreenRouteParams;
   [MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT]: MessageAttachmentScreenRouteParams;
   [MESSAGES_ROUTES.MESSAGE_DETAIL_CALENDAR]: MessageCalendarScreenRouteParams;
+  [MESSAGES_ROUTES.MESSAGE_GREEN_PASS]: undefined;
   [EUCOVIDCERT_ROUTES.MAIN]: NavigatorScreenParams<EUCovidCertParamsList>;
   [PN_ROUTES.MAIN]: NavigatorScreenParams<PnParamsList>;
 };

@@ -93,14 +93,14 @@ export const MessageRouterScreen = (
         fromPushNotification
       );
 
-      if (data.euCovidCerficateAuthCode) {
+      if (data.isGreenPass) {
         navigation.dispatch(
           StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
             screen: EUCOVIDCERT_ROUTES.MAIN,
             params: {
               screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
               params: {
-                authCode: data.euCovidCerficateAuthCode,
+                authCode: "",
                 messageId: data.messageId
               }
             }
