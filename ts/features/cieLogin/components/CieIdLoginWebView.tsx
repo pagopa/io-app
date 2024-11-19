@@ -89,7 +89,6 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
         "https://oidc.idserver.servizicie.interno.gov.it",
         "https://mtls.oidc.idserver.servizicie.interno.gov.it",
         "https://mtls.idserver.servizicie.interno.gov.it",
-        "https://idserver.servizicie.interno.gov.it",
         "https://ios.idserver.servizicie.interno.gov.it",
         "https://ios.oidc.idserver.servizicie.interno.gov.it"
       ];
