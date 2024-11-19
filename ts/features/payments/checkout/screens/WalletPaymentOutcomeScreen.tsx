@@ -400,8 +400,7 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
           ),
           action: onboardPaymentMethodAction,
-          secondaryAction: onboardPaymentMethodCloseAction,
-          isHeaderVisible: true
+          secondaryAction: onboardPaymentMethodCloseAction
         };
       case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
         return {
@@ -429,8 +428,7 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t(
             "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.subtitle"
           ),
-          action: closeFailureAction,
-          isHeaderVisible: true
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
         return {
@@ -474,7 +472,7 @@ const WalletPaymentOutcomeScreen = () => {
 
   return (
     <>
-      <OperationResultScreenContent {...getPropsForOutcome()}>
+      <OperationResultScreenContent isHeaderVisible {...getPropsForOutcome()}>
         {requiresFeedback && <WalletPaymentFeebackBanner />}
       </OperationResultScreenContent>
       {supportModal.bottomSheet}
