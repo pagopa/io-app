@@ -6,7 +6,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
-import { GestureResponderEvent, StatusBarStyle } from "react-native";
+import { GestureResponderEvent } from "react-native";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
