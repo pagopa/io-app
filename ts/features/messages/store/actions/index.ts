@@ -41,7 +41,7 @@ export type SuccessGetMessageDataActionType = {
   containsPayment?: boolean;
   firstTimeOpening: boolean;
   hasRemoteContent: boolean;
-  isGreenPass?: boolean;
+  isLegacyGreenPass?: boolean;
   isPNMessage: boolean;
   messageId: UIMessageId;
   organizationFiscalCode: string;

@@ -320,7 +320,7 @@ function* dispatchSuccessAction(
       containsPayment,
       firstTimeOpening: !paginatedMessage.isRead,
       hasRemoteContent: !!thirdPartyMessage,
-      isGreenPass: !!messageDetails.euCovidCertificate?.authCode,
+      isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
       isPNMessage: isPnEnabled && isPNMessageCategory,
       messageId: paginatedMessage.id,
       organizationFiscalCode: paginatedMessage.organizationFiscalCode,

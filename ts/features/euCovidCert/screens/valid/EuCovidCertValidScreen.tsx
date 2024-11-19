@@ -41,7 +41,6 @@ import {
   ValidCertificate,
   WithEUCovidCertificateHeaderData
 } from "../../types/EUCovidCertificate";
-import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 type Props = {
@@ -242,19 +241,7 @@ export const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     // it should not never happen
     if (screenShotViewContainer.current === null) {
       showToastError();
-      return;
     }
-    captureScreenshot(screenShotViewContainer, screenshotOptions, {
-      onSuccess: () =>
-        IOToast.success(I18n.t("features.euCovidCertificate.save.ok")),
-      onNoPermissions: () =>
-        IOToast.info(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => IOToast.error(I18n.t("global.genericError")),
-      onEnd: () => {
-        setFlashAnimationState("fadeOut");
-        setIsCapturingScreenShoot(false);
-      }
-    });
   };
   const header = <EuCovidCertHeader {...props} />;
   return (

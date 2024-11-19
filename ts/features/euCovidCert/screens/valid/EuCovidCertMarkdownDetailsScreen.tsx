@@ -18,7 +18,6 @@ import {
 } from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { EUCovidCertParamsList } from "../../navigation/params";
-import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 
 export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
   markdownDetails: string;
@@ -59,19 +58,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
     if (screenShotViewContainerRef.current === null) {
       showToastError();
       setIsCapturingScreenShoot(false);
-      return;
     }
-    captureScreenshot(screenShotViewContainerRef, screenshotOptions, {
-      onSuccess: () =>
-        IOToast.success(I18n.t("features.euCovidCertificate.save.ok")),
-      onNoPermissions: () =>
-        IOToast.info(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => IOToast.error(I18n.t("global.genericError")),
-      onEnd: () => {
-        setFlashAnimationState("fadeOut");
-        setIsCapturingScreenShoot(false);
-      }
-    });
   };
   // show button when markdown is loaded and it is not capturing the screenshot
   const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;
