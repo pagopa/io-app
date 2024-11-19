@@ -1840,6 +1840,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -3988,6 +3989,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -6117,6 +6119,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -8231,6 +8234,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -10359,6 +10363,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -12558,6 +12563,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -14729,6 +14735,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -16843,6 +16850,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -18907,6 +18915,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -21055,6 +21064,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -23183,6 +23193,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -25331,6 +25342,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -27530,6 +27542,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -29678,6 +29691,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -31826,6 +31840,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -33982,6 +33997,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -36110,6 +36126,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -38311,6 +38328,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -40439,6 +40457,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -42688,6 +42707,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -44975,6 +44995,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -47089,6 +47110,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -49245,6 +49267,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -51373,6 +51396,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={

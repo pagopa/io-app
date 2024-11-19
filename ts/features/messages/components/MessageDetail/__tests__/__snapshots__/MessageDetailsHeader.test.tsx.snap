@@ -431,6 +431,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         >
                           <Text
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [

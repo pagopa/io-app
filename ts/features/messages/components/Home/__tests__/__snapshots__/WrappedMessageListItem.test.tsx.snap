@@ -673,6 +673,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -692,6 +693,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -1621,6 +1623,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -1640,6 +1643,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -2745,6 +2749,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -2764,6 +2769,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -3724,6 +3730,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -3743,6 +3750,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -4758,6 +4766,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -4777,6 +4786,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -5608,6 +5618,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -5627,6 +5638,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -6392,6 +6404,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -6411,6 +6424,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -7121,6 +7135,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -7140,6 +7155,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [

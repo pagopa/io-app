@@ -136,6 +136,7 @@ exports[`StatusContent should match the snapshot 1`] = `
   </View>
   <Text
     allowFontScaling={false}
+    dynamicTypeRamp="body"
     maxFontSizeMultiplier={1.25}
     style={
       [
