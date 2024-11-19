@@ -1458,7 +1458,7 @@ wallet:
     android:
       confirm: Delete
     successful: Method removed!
-    failed: The method could not be removed from your Wallet
+    failed: There was a problem, please try again
   newPaymentMethod:
     add: add
     show: show
@@ -2014,7 +2014,7 @@ cardComponent:
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
-  removeCta: "Delete this payment method"
+  removeCta: "Remove from Wallet"
 messages:
   accessibility:
     message:
