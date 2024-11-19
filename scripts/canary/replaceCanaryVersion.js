@@ -17,7 +17,7 @@ const replaceCanaryVersion = () => {
   // read package.json as JSON
   const package = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
   // replace the version, removing the rc part
-  package.version = process.argv[0];
+  package.version = process.argv[2];
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
 };
 
