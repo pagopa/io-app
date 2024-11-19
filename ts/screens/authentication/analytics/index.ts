@@ -82,6 +82,18 @@ export function trackCieLoginSuccess(login_session: LoginSessionDuration) {
     })
   );
 }
+export function trackCieIDLoginSuccess(
+  login_session: LoginSessionDuration,
+  spidLevel: SpidLevel
+) {
+  void mixpanelTrack(
+    "LOGIN_CIEID_UX_SUCCESS",
+    buildEventProperties("UX", "confirm", {
+      login_session,
+      security_level: SECURITY_LEVEL_MAP[spidLevel]
+    })
+  );
+}
 
 export function trackSpidLoginSuccess(
   login_session: LoginSessionDuration,
