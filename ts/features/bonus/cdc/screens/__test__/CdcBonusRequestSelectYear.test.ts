@@ -78,7 +78,7 @@ describe("CdcBonusRequestSelectYear", () => {
     );
     const component = renderComponent(store);
 
-    const checkBox = component.getByTestId("RawCheckbox");
+    const checkBox = component.getByTestId("CheckboxLabel");
     const continueButton = component.getByTestId("continueButton");
 
     expect(checkBox).toBeDefined();
