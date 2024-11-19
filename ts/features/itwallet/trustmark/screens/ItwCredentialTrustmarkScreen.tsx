@@ -17,7 +17,6 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useMaxBrightness } from "../../../../utils/brightness";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -50,7 +49,7 @@ export const ItwCredentialTrustmarkScreen = ({ route }: ScreenProps) => {
   if (O.isNone(credentialOption)) {
     // This is unlikely to happen, but we want to handle the case where the credential is not found
     // because of inconsistencies in the state, and assert that the credential is O.some
-    return <ItwGenericErrorContent />;
+    return null;
   }
 
   return (
@@ -82,7 +81,7 @@ const TrustmarkQrCode = () => {
 
   return (
     <View style={styles.qrCodeContainer}>
-      <QrCodeImage size={"95%"} value={trustmarkUrl} correctionLevel="L" />
+      <QrCodeImage size={"92%"} value={trustmarkUrl} correctionLevel="L" />
     </View>
   );
 };

@@ -6,7 +6,7 @@ import { AnimatedImage } from "./AnimatedImage";
 
 export type QrCodeImageProps = {
   // Value to decode and present using a QR Code
-  value: string;
+  value?: string;
   // Relative or absolute size of the QRCode image
   size?: number | `${number}%`;
   // Optional background color for the QR Code image
@@ -35,15 +35,17 @@ export const QrCodeImage = ({
   }, [size, width]);
 
   React.useEffect(() => {
-    RNQRGenerator.generate({
-      value,
-      height: realSize,
-      width: realSize,
-      backgroundColor,
-      correctionLevel
-    })
-      .then(result => setSource(result))
-      .catch(_ => undefined);
+    if (value) {
+      RNQRGenerator.generate({
+        value,
+        height: realSize,
+        width: realSize,
+        backgroundColor,
+        correctionLevel
+      })
+        .then(result => setSource(result))
+        .catch(_ => undefined);
+    }
   }, [value, realSize, backgroundColor, correctionLevel]);
 
   return source ? (

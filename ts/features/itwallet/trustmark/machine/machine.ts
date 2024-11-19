@@ -1,9 +1,12 @@
-import { addMinutes, differenceInSeconds, isPast } from "date-fns";
+import { differenceInSeconds, isPast } from "date-fns";
 import { assign, fromPromise, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
+import {
+  GetCredentialTrustmarkUrlActorInput,
+  GetCredentialTrustmarkUrlActorOutput
+} from "./actors";
 import { Context } from "./context";
 import { Input } from "./input";
-import { GetCredentialTrustmarkUrlActorInput } from "./actors";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -15,10 +18,6 @@ export const itwTrustmarkMachine = setup({
     input: {} as Input
   },
   actions: {
-    setExpirationDate: assign(() => ({
-      expirationDate: addMinutes(new Date(), 2),
-      expirationSeconds: 120
-    })),
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
         ? differenceInSeconds(context.expirationDate, new Date())
@@ -26,8 +25,8 @@ export const itwTrustmarkMachine = setup({
     }))
   },
   actors: {
-    getCredentialTrustmarkUrlActor: fromPromise<
-      string,
+    getCredentialTrustmarkActor: fromPromise<
+      GetCredentialTrustmarkUrlActorOutput,
       GetCredentialTrustmarkUrlActorInput
     >(notImplemented)
   },
@@ -43,14 +42,14 @@ export const itwTrustmarkMachine = setup({
     Refreshing: {
       tags: [ItwTags.Loading],
       invoke: {
-        src: "getCredentialTrustmarkUrlActor",
+        src: "getCredentialTrustmarkActor",
         input: ({ context }) => ({ credential: context.credential }),
         onDone: {
           target: "Displaying",
-          actions: [
-            "setExpirationDate",
-            assign(({ event }) => ({ trustmarkUrl: event.output }))
-          ]
+          actions: assign(({ event }) => ({
+            trustmarkUrl: event.output.url,
+            expirationDate: new Date(event.output.expirationTime * 1000)
+          }))
         },
         onError: {
           target: "Failure"
@@ -72,6 +71,7 @@ export const itwTrustmarkMachine = setup({
           always: [
             {
               guard: "isExpired",
+              actions: assign({ trustmarkUrl: undefined }),
               target: "#itwTrustmarkMachine.Refreshing"
             },
             {

@@ -2,13 +2,8 @@ import { IOColors, Tag } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
-import { WellKnownClaim } from "./itwClaimsUtils";
 import { CredentialType } from "./itwMocksUtils";
-import {
-  ItwCredentialStatus,
-  ParsedCredential,
-  StoredCredential
-} from "./itwTypesUtils";
+import { ItwCredentialStatus } from "./itwTypesUtils";
 
 export const itwCredentialNameByCredentialType: {
   [type: string]: string;
@@ -75,25 +70,3 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "expiring",
   "jwtExpiring"
 ];
-
-/**
- * Returns the document number for a credential, if applicable
- * @param credential the credential from which to extract the document number
- * @returns a string representing the document number, undefined if not found
- */
-export const getCredentialDocumentNumber = (
-  parsedCredential: ParsedCredential
-): string | undefined => {
-  const documentNumberClaim = parsedCredential[WellKnownClaim.document_number];
-  return documentNumberClaim?.value as string;
-};
-
-export const generateTrustmarkUrl = (
-  walletInstanceAttestation: string,
-  { parsedCredential, credentialType }: StoredCredential,
-  verifierUrl: string
-) => {
-  const documentNumber = getCredentialDocumentNumber(parsedCredential);
-  const trustmarkJwt = "";
-  return `${verifierUrl}?tm=${trustmarkJwt}`;
-};
