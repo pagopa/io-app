@@ -78,7 +78,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     <Text
       style={
         {
-          "fontWeight": "800",
+          "fontWeight": "600",
         }
       }
     >
