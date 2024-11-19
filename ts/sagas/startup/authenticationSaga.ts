@@ -64,7 +64,7 @@ export function* authenticationSaga(): Generator<
       case IdpCIE_ID.id:
         // We currently request only a Level 2 login; however, once in the CieID app, if the only configured method is a Level 3 login, it will be possible to proceed with that higher level of security.
         // Unfortunately, at the time this event is logged, we do not have information about the actual level used for the recently completed login.
-        trackCieIDLoginSuccess(isFastLoginEnabled ? "365" : "30", "SpidL2");
+        trackCieIDLoginSuccess(isFastLoginEnabled ? "365" : "30");
         break;
       default:
         trackSpidLoginSuccess(

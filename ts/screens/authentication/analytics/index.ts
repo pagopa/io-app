@@ -82,15 +82,15 @@ export function trackCieLoginSuccess(login_session: LoginSessionDuration) {
     })
   );
 }
-export function trackCieIDLoginSuccess(
-  login_session: LoginSessionDuration,
-  spidLevel: SpidLevel
-) {
+// As in the `trackCieIDLoginSelected` event, there should be a `security_level` property;
+// however, this value might differ from the one selected before,
+// and this information cannot be retrieved in the current implementation at the flow step where this event is dispatched.
+// TODO: Add the `security_level` property with the correct value.
+export function trackCieIDLoginSuccess(login_session: LoginSessionDuration) {
   void mixpanelTrack(
     "LOGIN_CIEID_UX_SUCCESS",
     buildEventProperties("UX", "confirm", {
-      login_session,
-      security_level: SECURITY_LEVEL_MAP[spidLevel]
+      login_session
     })
   );
 }
