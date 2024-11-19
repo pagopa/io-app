@@ -1982,6 +1982,9 @@ wallet:
       PLAFOND_LIMIT_ERROR:
         title: Hai superato il limite di spesa della tua carta
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
+      BE_NODE_KO:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza

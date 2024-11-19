@@ -459,6 +459,14 @@ const WalletPaymentOutcomeScreen = () => {
           ),
           action: closeFailureAction
         };
+      case WalletPaymentOutcomeEnum.BE_NODE_KO:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
+          subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
+          action: closeFailureAction,
+          secondaryAction: contactSupportAction
+        };
     }
   };
 
