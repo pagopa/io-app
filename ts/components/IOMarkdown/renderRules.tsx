@@ -159,7 +159,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   Strong(strong: TxtStrongNode, render: Renderer) {
     return (
-      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "800" }}>
+      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "600" }}>
         {strong.children.map(render)}
       </Text>
     );
