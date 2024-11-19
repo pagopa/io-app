@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
+  Body,
   IOColors,
   IOStyles,
   Label,
@@ -49,7 +50,8 @@ const SignatureFieldItem = (props: Props) => {
         accessibilityLabel={props.title}
       />
       <View style={[IOStyles.row, styles.details]}>
-        <Label
+        <Body
+          weight="Semibold"
           asLink
           accessibilityLabel={I18n.t(
             "features.fci.signatureFields.showOnDocument"
@@ -61,7 +63,7 @@ const SignatureFieldItem = (props: Props) => {
           testID="SignatureFieldItemDetailTestID"
         >
           {I18n.t("features.fci.signatureFields.showOnDocument")}
-        </Label>
+        </Body>
       </View>
     </View>
   );

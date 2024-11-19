@@ -7,7 +7,6 @@ import {
   H3,
   IOColors,
   IOStyles,
-  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -21,6 +20,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
@@ -31,7 +31,6 @@ import {
   isIdPayCodeFailureSelector,
   isIdPayCodeLoadingSelector
 } from "../store/selectors";
-import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 
 type IdPayCodeDisplayRouteParams = {
   isOnboarding?: boolean;
@@ -92,9 +91,9 @@ const IdPayCodeDisplayScreen = () => {
             <Body color="grey-700" weight="Bold">
               {I18n.t("idpay.code.onboarding.bodyBold")}
             </Body>
-            <Label asLink onPress={presentCieBottomSheet}>
+            <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
               {I18n.t("idpay.code.onboarding.bodyCta")}
-            </Label>
+            </Body>
             <VSpacer size={24} />
             <CodeDisplayComponent code={idPayCode} />
             <VSpacer size={24} />

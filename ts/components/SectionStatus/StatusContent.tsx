@@ -1,14 +1,14 @@
-import React, { ComponentProps, forwardRef } from "react";
-import { AccessibilityRole, StyleSheet, View } from "react-native";
 import {
+  Body,
   IOColors,
   IOFontSize,
   IOIcons,
-  Icon,
-  Label
+  Icon
 } from "@pagopa/io-app-design-system";
-import { WithTestID } from "../../types/WithTestID";
+import React, { ComponentProps, forwardRef } from "react";
+import { AccessibilityRole, StyleSheet, View } from "react-native";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
+import { WithTestID } from "../../types/WithTestID";
 
 const iconSize = 24;
 
@@ -35,7 +35,7 @@ type Props = WithTestID<{
   backgroundColor: IOColors;
   iconName: IOIcons;
   fontSize?: IOFontSize;
-  foregroundColor: ComponentProps<typeof Label>["color"];
+  foregroundColor: ComponentProps<typeof Body>["color"];
   labelPaddingVertical?: number;
 }>;
 
@@ -79,16 +79,15 @@ const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
       <View style={styles.alignCenter}>
         <Icon color={foregroundColor} name={iconName} size={iconSize} />
       </View>
-      <Label
+      <Body
         color={foregroundColor}
         style={StyleSheet.flatten([
           styles.text,
           labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
         ])}
-        weight={"Regular"}
       >
         {children}
-      </Label>
+      </Body>
     </View>
   )
 );

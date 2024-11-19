@@ -13,7 +13,6 @@ import {
   IOPictogramsBleed,
   IOStyles,
   IOToast,
-  Label,
   Nullable,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -186,9 +185,14 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     };
 
     return (
-      <Label asLink key={getTxtNodeKey(link)} onPress={handleOpenLink}>
+      <Body
+        weight="Semibold"
+        asLink
+        key={getTxtNodeKey(link)}
+        onPress={handleOpenLink}
+      >
         {link.children.map(render)}
-      </Label>
+      </Body>
     );
   },
   /**

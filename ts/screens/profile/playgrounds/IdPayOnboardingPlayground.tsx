@@ -176,9 +176,9 @@ const TestServiceItem = (props: TestServiceItemProps) => {
               alignItems: "center"
             }}
           >
-            <Label>
+            <Body weight="Semibold">
               {label} <LabelSmall>{willFail ? "❌" : "✅"}</LabelSmall>
-            </Label>
+            </Body>
           </View>
           <BodyMonospace selectable>{serviceId}</BodyMonospace>
         </View>

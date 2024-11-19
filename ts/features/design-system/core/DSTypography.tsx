@@ -13,7 +13,6 @@ import {
   HStack,
   Hero,
   IOColors,
-  Label,
   LabelMini,
   LabelSmall,
   MdH1,
@@ -48,7 +47,6 @@ export const DSTypography = () => (
       <VStack space={typographicStyleMargin}>
         <LabelSmallRow />
         <LabelMiniRow />
-        <LabelRow />
       </VStack>
     </VStack>
     <VSpacer size={blockMargin} />
@@ -285,27 +283,6 @@ export const LabelMiniRow = () => {
         </View>
       </HStack>
     </>
-  );
-};
-
-export const LabelRow = () => {
-  const theme = useIOTheme();
-
-  return (
-    <HStack space={typographicStyleMargin}>
-      <Label>Label</Label>
-      <View
-        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
-      >
-        <Label color={"white"}>Label</Label>
-      </View>
-      <Label asLink onPress={linkOnPress}>
-        Label asLink
-      </Label>
-      <Label weight="Regular" asLink onPress={linkOnPress}>
-        Label Regular asLink
-      </Label>
-    </HStack>
   );
 };
 
