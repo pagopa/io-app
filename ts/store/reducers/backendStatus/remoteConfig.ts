@@ -410,6 +410,7 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
   remoteConfig =>
     pipe(
       remoteConfig,
+      // @ts-expect-error update io-services-metadata definitions
       O.map(config => config.itw.feedback_banner_visible),
       O.getOrElse(() => false)
     )
