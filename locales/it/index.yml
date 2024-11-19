@@ -1459,7 +1459,7 @@ wallet:
     android:
       confirm: Rimuovi
     successful: Metodo rimosso!
-    failed: Impossibile rimuovere il metodo dal tuo Portafoglio
+    failed: C’è stato un problema, riprova
   newPaymentMethod:
     add: aggiungi
     show: mostra
@@ -2012,7 +2012,7 @@ cardComponent:
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
-  removeCta: "Elimina questo metodo"
+  removeCta: "Rimuovi dal Portafoglio"
 messages:
   accessibility:
     message:
