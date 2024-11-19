@@ -16,6 +16,10 @@ jest.mock("@react-navigation/native", () => ({
   })
 }));
 
+jest.mock("../../../hooks/useHeaderSecondLevel", () => ({
+  useHeaderSecondLevel: jest.fn()
+}));
+
 describe(CieIdLoginScreen, () => {
   jest
     .spyOn(Linking, "addEventListener")

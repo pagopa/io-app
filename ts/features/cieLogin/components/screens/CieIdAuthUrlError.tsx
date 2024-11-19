@@ -33,6 +33,7 @@ const CieIdAuthUrlError = () => {
       subtitle={i18n.t("authentication.cieidUrlErrorScreen.description")}
       action={{
         label: i18n.t("global.buttons.close"),
+        accessibilityLabel: i18n.t("global.buttons.close"),
         onPress: handleClose
       }}
     />
