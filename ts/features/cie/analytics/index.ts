@@ -89,3 +89,31 @@ export const trackCieIdNotInstalledDownloadAction = async () => {
     buildEventProperties("UX", "action")
   );
 };
+
+// Cie Id error screen view events
+export const trackCieIdErrorCiePinFallbackScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIEID_FALLBACK_CIE_PIN",
+    buildEventProperties("KO", "error")
+  );
+};
+export const trackCieIdErrorSpidFallbackScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIEID_FALLBACK_SPID",
+    buildEventProperties("KO", "error")
+  );
+};
+
+// Cie Id error screen action events
+export const trackCieIdErrorCiePinSelected = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIEID_FALLBACK_CIE_PIN_SELECTED",
+    buildEventProperties("UX", "action")
+  );
+};
+export const trackCieIdErrorSpidSelected = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIEID_FALLBACK_CIE_SPID_SELECTED",
+    buildEventProperties("UX", "action")
+  );
+};

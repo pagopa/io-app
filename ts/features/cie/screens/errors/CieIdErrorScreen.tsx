@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -6,6 +6,12 @@ import I18n from "../../../../i18n";
 import { TranslationKeys } from "../../../../../locales/locales";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import ROUTES from "../../../../navigation/routes";
+import {
+  trackCieIdErrorCiePinFallbackScreen,
+  trackCieIdErrorCiePinSelected,
+  trackCieIdErrorSpidFallbackScreen,
+  trackCieIdErrorSpidSelected
+} from "../../analytics";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -22,6 +28,14 @@ const CieIdErrorScreen = () => {
   const { replace } = useIONavigation();
 
   useAvoidHardwareBackButton();
+
+  useEffect(() => {
+    if (isCieSupported) {
+      void trackCieIdErrorCiePinFallbackScreen();
+    } else {
+      void trackCieIdErrorSpidFallbackScreen();
+    }
+  }, [isCieSupported]);
 
   const subtitle = I18n.t(isCieSupported ? CIE_PIN_DESC : SPID_DESC);
   const primaryActionLabel = I18n.t(
@@ -43,9 +57,15 @@ const CieIdErrorScreen = () => {
         testID: "cie-id-error-primary-action",
         label: primaryActionLabel,
         accessibilityLabel: primaryActionLabel,
-        onPress: isCieSupported
-          ? navigateToCiePinInsertion
-          : navigateToIdpSelection
+        onPress: () => {
+          if (isCieSupported) {
+            void trackCieIdErrorCiePinSelected();
+            navigateToCiePinInsertion();
+          } else {
+            void trackCieIdErrorSpidSelected();
+            navigateToIdpSelection();
+          }
+        }
       }}
       secondaryAction={{
         testID: "cie-id-error-secondary-action",
