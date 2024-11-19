@@ -26,11 +26,6 @@ import { ServicePublic } from "../../../../../definitions/backend/ServicePublic"
 import { trackMessageDataLoadFailure } from "../../analytics";
 import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 
-jest.mock("../../../../config.ts", () => ({
-  ...jest.requireActual("../../../../config.ts"),
-  euCovidCertificateEnabled: true
-}));
-
 describe("getPaginatedMessage", () => {
   it("when no paginated message is in store, it should dispatch a loadMessageById.request and retrieve its result from the store if it succeeds", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
@@ -606,7 +601,7 @@ describe("dispatchSuccessAction", () => {
       .next()
       .isDone();
   });
-  it("should properly report a EU Covid message", () => {
+  it("should properly report a legacy EU Covid message", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
     const serviceName = "serName";

@@ -2410,56 +2410,6 @@ features:
       title: "pagoPA Zahlungsaufforderungen"
       noticeCode: "Zahlungskodex"
       pay: "Zahlen"
-  euCovidCertificate:
-    save:
-      album: "IO"
-      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfe deine Geräteeinstellungen."
-      ok: "Das Bild wurde auf deinem Smartphone gespeichert"
-      bottomSheet:
-        title: "Speichere das Zertifikat"
-        subTitle: "Auch ohne der IO-App und Internetverbindung kann das Zertifikat angezeigt werden."
-        saveAsImage:
-          title: "Bild in Galerie speichern"
-          subTitle: "Du findest den QR-Code auch als Bild auf deinem Smartphone."
-    listItem:
-      cta: "Anzeigen"
-    common:
-      title: "Grünes COVID-19-Zertifikat"
-      subtitle: "EU Digital COVID Certificate"
-      learnMore: "Erfahre mehr"
-      authorizationCode: "Autorisierungscode"
-      messageIdentifier: "Identifizierung der Nachricht"
-    loading:
-      title: "Herunterladen der Zertifikatsdaten von der nationalen Plattform des Gesundheitsministeriums"
-      subtitle: "Bitte warten"
-    valid:
-      accessibility:
-        qrCode: "QR-Code"
-        hint: "QR-Code als Vollbild anzeigen"
-      markdownDetails:
-        headerTitle: "Zertifikats-Details"
-        save: "Details speichern"
-    revoked:
-      title: "Dieses Zertifikat ist nicht mehr gültig"
-    expired:
-      title: "Dieses Zertifikat ist abgelaufen"
-    ko:
-      genericError:
-        title: "Deine Zertifikatsdaten konnten nicht abgerufen werden: Bitte versuche es erneut"
-        subtitle: "Dies kann ein vorübergehendes Problem sein."
-      notFound:
-        title: "Das Zertifikat existiert anscheinend nicht: Kontaktiere den Support"
-        subtitle: "Nützliche Informationen für den Support:"
-        cta: "Support kontaktieren"
-      notOperational:
-        title: "Das Grüne COVID-19-Zertifikat funktioniert derzeit nicht"
-      temporarilyNotAvailable:
-        title: "Der Dienst ist vorübergehend nicht verfügbar"
-        subtitle: "Bitte versuche es später erneut"
-      wrongFormat:
-        title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktiere den Support"
-        subtitle: "Nützliche Informationen um Support zu erhalten:"
-        cta: "Support kontaktieren"
   pn:
     service:
       activate: "Aktiviere den Dienst"
