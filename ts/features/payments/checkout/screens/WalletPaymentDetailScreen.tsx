@@ -251,10 +251,19 @@ const WalletPaymentDetailContent = ({
     formatNumberAmount(amountValue, true, "right")
   );
 
+  const YEARS_TO_EXPIRE = 10;
+
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(_ => format(_, "DD/MM/YYYY")),
+    O.map(date => {
+      const formattedDate = format(date, "DD/MM/YYYY");
+      const tenYearsFromNow = new Date();
+      tenYearsFromNow.setFullYear(
+        tenYearsFromNow.getFullYear() + YEARS_TO_EXPIRE
+      );
+      return new Date(date) > tenYearsFromNow ? undefined : formattedDate;
+    }),
     O.toUndefined
   );
 
