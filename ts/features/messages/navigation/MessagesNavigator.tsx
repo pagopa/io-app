@@ -44,6 +44,9 @@ export const MessagesStackNavigator = () => {
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
           component={MessageGreenPassScreen}
+          options={{
+            animationEnabled: false
+          }}
         />
 
         {isPnEnabled && (
