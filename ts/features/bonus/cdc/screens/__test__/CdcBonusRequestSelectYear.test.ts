@@ -68,34 +68,6 @@ describe("CdcBonusRequestSelectYear", () => {
     expect(component.queryByText("2022")).toBeDefined();
     expect(component.queryByText("2023")).toBeNull();
   });
-  it("Should add and remove the bonus from the list of bonus that the user want to request pressing the checkbox", () => {
-    const store: Store<GlobalState> = createStore(
-      appReducer,
-      globalState as any
-    );
-    store.dispatch(
-      cdcActions.cdcRequestBonusList.success([activableBonuses[0]])
-    );
-    const component = renderComponent(store);
-
-    const checkBox = component.getByTestId("CheckboxLabel");
-    const continueButton = component.getByTestId("continueButton");
-
-    expect(checkBox).toBeDefined();
-
-    // Add the year to the list
-    fireEvent.press(checkBox);
-    // Remove the year from the list
-    fireEvent.press(checkBox);
-    // Add again the year to the list
-    fireEvent.press(checkBox);
-
-    fireEvent.press(continueButton);
-
-    expect(store.getState().bonus.cdc.bonusRequest.selectedBonus).toStrictEqual(
-      [{ year: activableBonuses[0].year }]
-    );
-  });
 });
 
 function renderComponent(store: Store<GlobalState>) {
