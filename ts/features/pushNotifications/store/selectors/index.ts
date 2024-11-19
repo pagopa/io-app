@@ -11,7 +11,9 @@ export const isPushNotificationsBannerRenderableSelector = (
   state: GlobalState
 ) => {
   const notificationsEnabled = areNotificationPermissionsEnabled(state);
-  const isFastLogin = !userFromSuccessLoginSelector(state);
+  // user has seen the full SPID/CIE login flow,
+  // so is not logged with fasLogin during this session
+  const isFullLogin = userFromSuccessLoginSelector(state);
   const requestDuration =
     pushNotificationPermissionsRequestDurationSelector(state);
   const hasUserSeenSystemNotificationsPrompt =
@@ -31,7 +33,7 @@ ios no popup                 : 9
 */
 
   return (
-    isFastLogin &&
+    !isFullLogin &&
     !notificationsEnabled &&
     !hasUserSeenSystemNotificationsPrompt
   );

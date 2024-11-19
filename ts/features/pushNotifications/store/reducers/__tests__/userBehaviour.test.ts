@@ -1,5 +1,8 @@
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { setEngagementScreenShown } from "../../actions/userBehaviour";
+import {
+  setEngagementScreenShown,
+  setPushPermissionsRequestDuration
+} from "../../actions/userBehaviour";
 import { INITIAL_STATE, userBehaviourReducer } from "../userBehaviour";
 
 describe("userBehaviourReducer", () => {
@@ -19,5 +22,14 @@ describe("userBehaviourReducer", () => {
       setEngagementScreenShown()
     );
     expect(userBehaviourState.engagementScreenShown).toBe(true);
+  });
+  it("'pushNotificationPermissionsRequestDuration' should be '100' after receiving 'setPushPermissionsRequestDuration(100)'", () => {
+    const userBehaviourState = userBehaviourReducer(
+      undefined,
+      setPushPermissionsRequestDuration(100)
+    );
+    expect(userBehaviourState.pushNotificationPermissionsRequestDuration).toBe(
+      100
+    );
   });
 });

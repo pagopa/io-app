@@ -13,6 +13,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   return (
     <View style={styles.margins}>
       <Banner
+        testID="pushNotificationsBanner"
         viewRef={bannerRef}
         title={I18n.t("features.messages.pushNotifications.banner.title")}
         content={I18n.t("features.messages.pushNotifications.banner.body")}
