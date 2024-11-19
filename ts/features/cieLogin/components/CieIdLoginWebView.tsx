@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Linking, Platform, StyleSheet, View } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
@@ -24,6 +30,10 @@ import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAu
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
 import { apiUrlPrefix } from "../../../config";
+import {
+  HeaderSecondLevelHookProps,
+  useHeaderSecondLevel
+} from "../../../hooks/useHeaderSecondLevel";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -65,6 +75,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const loginUri = getCieIDLoginUri(spidLevel, isUat);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(ROUTES.AUTHENTICATION, {
@@ -81,6 +92,12 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     },
     [navigation]
   );
+
+  const navigateToLandingScreen = useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_LANDING
+    });
+  }, [navigation]);
 
   const validateUrl = useCallback(
     (url: string) => {
@@ -242,12 +259,24 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     [navigateToCieIdAuthenticationError]
   );
 
+  const headerProps: HeaderSecondLevelHookProps = useMemo(
+    () => ({
+      title: "",
+      ...(webviewSource && !isLoading && !loggedInAuth
+        ? { goBack: navigateToLandingScreen }
+        : { canGoBack: false })
+    }),
+    [isLoading, loggedInAuth, navigateToLandingScreen, webviewSource]
+  );
+
+  useHeaderSecondLevel(headerProps);
+
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["bottom"]}>
       {(webviewSource || authenticatedUrl) && (
         <WebView
           testID="cie-id-webview"
@@ -255,9 +284,13 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           startInLoadingState={true}
           userAgent={defaultUserAgent}
           javaScriptEnabled={true}
-          renderLoading={() => (
-            <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
-          )}
+          renderLoading={() => {
+            setIsLoading(true);
+            return (
+              <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+            );
+          }}
+          onLoadEnd={() => setIsLoading(false)}
           originWhitelist={originSchemasWhiteList}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           onHttpError={handleLoadingError}
