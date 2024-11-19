@@ -1,10 +1,12 @@
 import {
+  Alert,
   HeaderActionProps,
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
+import { GestureResponderEvent, StatusBarStyle } from "react-native";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -56,8 +58,28 @@ type WithAdditionalActions =
       thirdAction?: HeaderActionProps;
     };
 
+export type AlertProps = {
+  variant: "error" | "warning" | "info";
+  content: string;
+} & AlertActionProps;
+
+type AlertActionProps =
+  | {
+      action: string;
+      onPress: (event: GestureResponderEvent) => void;
+    }
+  | {
+      action?: never;
+      onPress?: never;
+    };
+
+type PropsWithAlert = {
+  alert?: AlertProps;
+};
+
 type PropsWithSupport = SpecificHookProps &
-  HeaderHookManagedProps & {
+  HeaderHookManagedProps &
+  PropsWithAlert & {
     supportRequest: true;
     faqCategories?: ReadonlyArray<FAQsCategoriesType>;
     contextualHelp?: ContextualHelpProps;
@@ -65,7 +87,8 @@ type PropsWithSupport = SpecificHookProps &
   } & WithAdditionalActions;
 
 type PropsWithoutSupport = SpecificHookProps &
-  HeaderHookManagedProps & {
+  HeaderHookManagedProps &
+  PropsWithAlert & {
     supportRequest?: false;
     faqCategories?: never;
     contextualHelp?: never;
@@ -104,7 +127,8 @@ export const useHeaderSecondLevel = ({
   variant,
   backgroundColor,
   enableDiscreteTransition,
-  animatedRef
+  animatedRef,
+  alert
 }: HeaderSecondLevelHookProps) => {
   const alertProps = useStatusAlertProps();
   const startSupportRequest = useStartSupportRequest({
@@ -207,13 +231,24 @@ export const useHeaderSecondLevel = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
-        <HeaderSecondLevel
-          {...headerComponentProps}
-          transparent={transparent}
-        />
+        <>
+          {alert && (
+            <Alert
+              variant={alert.variant}
+              content={alert.content}
+              action={alert.action}
+              fullWidth={true}
+              onPress={() => alert.onPress}
+            />
+          )}
+          <HeaderSecondLevel
+            {...headerComponentProps}
+            transparent={transparent}
+          />
+        </>
       ),
       headerShown,
       headerTransparent: transparent
     });
-  }, [headerComponentProps, headerShown, navigation, transparent]);
+  }, [headerComponentProps, headerShown, navigation, transparent, alert]);
 };
