@@ -468,8 +468,6 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-view-shot (3.1.2):
-    - React
   - react-native-webview (13.10.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -761,7 +759,6 @@ DEPENDENCIES:
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
-  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -947,8 +944,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
-  react-native-view-shot:
-    :path: "../node_modules/react-native-view-shot"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -1101,7 +1096,6 @@ SPEC CHECKSUMS:
   react-native-skia: c0d99aa1fb10f6d97627c1dc018c0ab269439a76
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
   react-native-webview: 9946090a1cd4add775cf91327f93bc910bf89286
   React-NativeModulesApple: 3107f777453f953906d9ba9dc5f8cbd91a6ef913
   React-perflogger: daabc494c6328efc1784a4b49b8b74fca305d11c
@@ -1161,4 +1155,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c81fe8fa67af4bf6e27653958d177ac176ab0293
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
