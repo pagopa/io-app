@@ -8,6 +8,7 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
@@ -38,6 +39,11 @@ export const MessagesStackNavigator = () => {
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
           component={MessageAttachmentScreen}
+        />
+
+        <Stack.Screen
+          name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
+          component={MessageGreenPassScreen}
         />
 
         {isPnEnabled && (

@@ -2940,6 +2940,10 @@ features:
       title: "pagoPA notices"
       noticeCode: "Notice code"
       pay: "Pay"
+  greenPass:
+    button: "Indietro"
+    description: "Puoi accedere alla tua Certificazione verde COVID-19 dal Fascicolo Sanitario Elettronico o puoi chiedere una copia al medico di base."
+    title: "Questo servizio non è più attivo su IO"
   pn:
     service:
       activate: "Attiva il servizio"
