@@ -1,0 +1,76 @@
+import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
+import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
+import { buildEventProperties } from "../../../utils/analytics";
+import { SpidLevel } from "../../cieLogin/utils";
+
+const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
+  SpidL2: "L2",
+  SpidL3: "L3"
+};
+
+// Wizards screen view events
+export const trackCieIdWizardScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_CIEID",
+    buildEventProperties("UX", "screen_view")
+  );
+};
+export const trackCiePinWizardScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_PIN",
+    buildEventProperties("UX", "screen_view")
+  );
+};
+export const trackSpidWizardScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_SPID",
+    buildEventProperties("UX", "screen_view")
+  );
+};
+export const trackIdpActivationWizardScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_IDP_ACTIVATION",
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
+// Wizards action events
+export const trackWizardCieIdSelected = async (
+  state: GlobalState,
+  spidLevel: SpidLevel
+) => {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: IdpCIE_ID.id
+  });
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_CIEID_SELECTED",
+    buildEventProperties("UX", "action", {
+      security_level: SECURITY_LEVEL_MAP[spidLevel]
+    })
+  );
+};
+export const trackWizardCiePinSelected = async (state: GlobalState) => {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: IdpCIE.id
+  });
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_PIN_SELECTED",
+    buildEventProperties("UX", "action")
+  );
+};
+export const trackWizardCiePinInfoSelected = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_PIN_INFO",
+    buildEventProperties("UX", "action")
+  );
+};
+export const trackWizardSpidSelected = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_SPID_SELECTED",
+    buildEventProperties("UX", "action")
+  );
+};
