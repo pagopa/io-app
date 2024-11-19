@@ -74,3 +74,18 @@ export const trackWizardSpidSelected = async () => {
     buildEventProperties("UX", "action")
   );
 };
+
+// Cie id not installed screen view events
+export const trackCieIdNotInstalledScreen = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIEID_APP_NOT_FOUND",
+    buildEventProperties("KO", "error")
+  );
+};
+// Cie id not installed action events
+export const trackCieIdNotInstalledDownloadAction = async () => {
+  void mixpanelTrack(
+    "LOGIN_CIEID_APP_NOT_FOUND_DOWNLOAD",
+    buildEventProperties("UX", "action")
+  );
+};
