@@ -3,7 +3,8 @@ import { assign, fromPromise, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
 import {
   GetCredentialTrustmarkUrlActorInput,
-  GetCredentialTrustmarkUrlActorOutput
+  GetCredentialTrustmarkUrlActorOutput,
+  GetWalletAttestationActorOutput
 } from "./actors";
 import { Context } from "./context";
 import { Input } from "./input";
@@ -15,9 +16,11 @@ const notImplemented = () => {
 export const itwTrustmarkMachine = setup({
   types: {
     context: {} as Context,
-    input: {} as Input
+    input: {} as Input,
+    events: {} as { type: "" }
   },
   actions: {
+    handleSessionExpired: notImplemented,
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
         ? differenceInSeconds(context.expirationDate, new Date())
@@ -25,38 +28,91 @@ export const itwTrustmarkMachine = setup({
     }))
   },
   actors: {
+    getWalletAttestationActor:
+      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     getCredentialTrustmarkActor: fromPromise<
       GetCredentialTrustmarkUrlActorOutput,
       GetCredentialTrustmarkUrlActorInput
     >(notImplemented)
   },
   guards: {
-    isExpired: ({ context }) =>
-      context.expirationDate ? isPast(context.expirationDate) : true
+    isTrustmarkExpired: ({ context }) =>
+      context.expirationDate ? isPast(context.expirationDate) : true,
+    isSessionExpired: notImplemented,
+    hasValidWalletInstanceAttestation: notImplemented
   }
 }).createMachine({
   id: "itwTrustmarkMachine",
   context: ({ input }) => input,
-  initial: "Refreshing",
+  initial: "CheckingWalletInstanceAttestation",
   states: {
-    Refreshing: {
+    CheckingWalletInstanceAttestation: {
+      tags: [ItwTags.Loading],
+      description:
+        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      always: [
+        {
+          guard: "hasValidWalletInstanceAttestation",
+          target: "RefreshingTrustmark"
+        },
+        {
+          target: "ObtainingWalletInstanceAttestation"
+        }
+      ]
+    },
+    ObtainingWalletInstanceAttestation: {
+      description:
+        "This state obtains the wallet instance attestation and stores it in the context for later use in the issuance flow.",
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "getWalletAttestationActor",
+        onDone: {
+          target: "RefreshingTrustmark",
+          actions: [
+            assign(({ event }) => ({
+              walletInstanceAttestation: event.output
+            }))
+          ]
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired"
+          },
+          {
+            target: "Failure"
+          }
+        ]
+      }
+    },
+    RefreshingTrustmark: {
+      description:
+        "This state obtains the trustmark url and stores it in the context for later use in the displaying flow.",
       tags: [ItwTags.Loading],
       invoke: {
         src: "getCredentialTrustmarkActor",
-        input: ({ context }) => ({ credential: context.credential }),
+        input: ({ context }) => ({
+          credential: context.credential,
+          walletInstanceAttestation: context.walletInstanceAttestation
+        }),
         onDone: {
-          target: "Displaying",
-          actions: assign(({ event }) => ({
-            trustmarkUrl: event.output.url,
-            expirationDate: new Date(event.output.expirationTime * 1000)
-          }))
+          target: "DisplayingTrustmark",
+          actions: [
+            assign(({ event }) => ({
+              trustmarkUrl: event.output.url,
+              expirationDate: new Date(event.output.expirationTime * 1000)
+            })),
+            "updateExpirationSeconds"
+          ]
         },
         onError: {
           target: "Failure"
         }
       }
     },
-    Displaying: {
+    DisplayingTrustmark: {
+      description:
+        "This state displays the trustmark QR Code and checks if it has expired or not.",
       initial: "Idle",
       states: {
         Idle: {
@@ -70,9 +126,9 @@ export const itwTrustmarkMachine = setup({
           entry: "updateExpirationSeconds",
           always: [
             {
-              guard: "isExpired",
+              guard: "isTrustmarkExpired",
               actions: assign({ trustmarkUrl: undefined }),
-              target: "#itwTrustmarkMachine.Refreshing"
+              target: "#itwTrustmarkMachine.RefreshingTrustmark"
             },
             {
               target: "Idle"
@@ -81,7 +137,9 @@ export const itwTrustmarkMachine = setup({
         }
       }
     },
-    Failure: {}
+    Failure: {
+      description: "This state is reached when an error occurs"
+    }
   }
 });
 

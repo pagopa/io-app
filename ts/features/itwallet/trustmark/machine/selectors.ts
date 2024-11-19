@@ -7,4 +7,4 @@ export const selectTrustmarkUrl = ({ context }: MachineSnapshot) =>
   context.trustmarkUrl;
 
 export const selectExpirationSeconds = ({ context }: MachineSnapshot) =>
-  context.expirationSeconds || 0;
+  context.expirationSeconds;

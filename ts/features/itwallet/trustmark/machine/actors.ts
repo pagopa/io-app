@@ -1,11 +1,21 @@
+import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
 import { useIOStore } from "../../../../store/hooks";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { assert } from "../../../../utils/assert";
+import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import { getCredentialTrustmark } from "../../common/utils/itwTrustmarkUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+
+export type GetWalletAttestationActorOutput = Awaited<
+  ReturnType<typeof itwAttestationUtils.getAttestation>
+>;
 
 export type GetCredentialTrustmarkUrlActorInput = {
+  walletInstanceAttestation: string;
   credential: StoredCredential;
 };
 
@@ -21,31 +31,45 @@ export type GetCredentialTrustmarkUrlActorOutput = Awaited<
 export const createItwTrustmarkActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => {
-  /**
-   * Get the credential trustmark actor
-   */
+  const getWalletAttestationActor =
+    fromPromise<GetWalletAttestationActorOutput>(async () => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      const integrityKeyTag = itwIntegrityKeyTagSelector(store.getState());
+
+      assert(sessionToken, "sessionToken is undefined");
+      assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
+
+      /**
+       * Get the wallet instance attestation
+       */
+      const wia = await itwAttestationUtils.getAttestation(
+        integrityKeyTag.value,
+        sessionToken
+      );
+
+      /**
+       * Store the wallet instance attestation in the store to persist it across sessions
+       */
+      store.dispatch(itwWalletInstanceAttestationStore(wia));
+
+      return wia;
+    });
+
   const getCredentialTrustmarkActor = fromPromise<
     GetCredentialTrustmarkUrlActorOutput,
     GetCredentialTrustmarkUrlActorInput
-  >(async ({ input }) => {
-    // Gets the Wallet Instance Attestation from the persisted store
-    const walletInstanceAttestation = itwWalletInstanceAttestationSelector(
-      store.getState()
-    );
-
-    if (!walletInstanceAttestation) {
-      throw new Error("Wallet Instance Attestation not found");
-    }
-
-    // Generate trustmark url to be presented
-    return await getCredentialTrustmark(
-      walletInstanceAttestation,
-      input.credential,
-      itwEaaVerifierBaseUrl
-    );
-  });
+  >(
+    async ({ input }) =>
+      // Generate trustmark url to be presented
+      await getCredentialTrustmark(
+        input.walletInstanceAttestation,
+        input.credential,
+        itwEaaVerifierBaseUrl
+      )
+  );
 
   return {
+    getWalletAttestationActor,
     getCredentialTrustmarkActor
   };
 };
