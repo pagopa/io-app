@@ -1,7 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
-import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
 import { MessageRouterScreen } from "../screens/MessageRouterScreen";
@@ -40,15 +38,6 @@ export const MessagesStackNavigator = () => {
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
           component={MessageAttachmentScreen}
-        />
-
-        <Stack.Screen
-          name={EUCOVIDCERT_ROUTES.MAIN}
-          component={EUCovidCertStackNavigator}
-          options={{
-            gestureEnabled: false,
-            headerShown: false
-          }}
         />
 
         {isPnEnabled && (

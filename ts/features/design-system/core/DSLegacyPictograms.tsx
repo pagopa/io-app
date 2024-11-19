@@ -16,19 +16,12 @@ import {
 
 /* PICTOGRAMS */
 import BrokenLink from "../../../../img/broken-link.png";
-import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
 import Question from "../../../../img/pictograms/doubt.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
 import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
 import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
 import Unrecognized from "../../../../img/wallet/errors/payment-unknown-icon.png";
-/* EU Covid Certificate */
-import CertificateExpired from "../../../../img/features/euCovidCert/certificate_expired.png";
-import CertificateNotFound from "../../../../img/features/euCovidCert/certificate_not_found.png";
-import CertificateRevoked from "../../../../img/features/euCovidCert/certificate_revoked.png";
-import CertificateWrongFormat from "../../../../img/features/euCovidCert/certificate_wrong_format.png";
-import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
 /* Sections */
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -61,11 +54,6 @@ export const DSLegacyPictograms = () => {
           <H4 color={theme["textHeading-default"]}>Raster</H4>
           {renderRasterPictograms()}
         </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>EU Covid Certificate</H4>
-          {renderEUCovidCertificatePictograms()}
-        </VStack>
       </VStack>
     </DesignSystemScreen>
   );
@@ -91,11 +79,6 @@ const renderRasterPictograms = () => (
       type="raster"
       name={"Question"}
       image={renderRasterImage(Question)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"PiggyBank"}
-      image={renderRasterImage(PiggyBank)}
     />
     <DSAssetViewerBox
       type="raster"
@@ -128,36 +111,5 @@ const renderRasterPictograms = () => (
       name={"BrokenLink"}
       image={renderRasterImage(BrokenLink)}
     />
-  </View>
-);
-
-const renderEUCovidCertificatePictograms = () => (
-  <View style={styles.itemsWrapper}>
-    <DSAssetViewerBox
-      type="raster"
-      name={"Baloons"}
-      image={renderRasterImage(Baloons)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Certificate Expired"}
-      image={renderRasterImage(CertificateExpired)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Certificate not found"}
-      image={renderRasterImage(CertificateNotFound)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Certificate (revoked)"}
-      image={renderRasterImage(CertificateRevoked)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"Certificate (wrong format)"}
-      image={renderRasterImage(CertificateWrongFormat)}
-    />
-    {/* ↳ Duplicate of Question */}
   </View>
 );
