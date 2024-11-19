@@ -1,12 +1,11 @@
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
 import {
   Body,
   IOColors,
   IOStyles,
-  Label,
   ListItemCheckbox
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 
 type Props = {

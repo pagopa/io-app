@@ -1,10 +1,10 @@
-import { Body, Label, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
+import { tosConfigSelector } from "../../../../features/tos/store/selectors";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
-import { useIOSelector } from "../../../../store/hooks";
-import { tosConfigSelector } from "../../../../features/tos/store/selectors";
 import {
   AnalyticsFeatureInfo,
   FeatureProps,

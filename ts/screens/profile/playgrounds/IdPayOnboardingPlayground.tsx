@@ -3,7 +3,6 @@ import {
   BodyMonospace,
   H4,
   IOColors,
-  Label,
   LabelSmall,
   PressableListItemBase,
   VSpacer
