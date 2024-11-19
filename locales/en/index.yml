@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Login with CieID
         subtitle: Use the CieID app
+        badge: New
       help_banner:
         title: Not sure what to choose?
         action: We give you a hand
@@ -662,6 +663,9 @@ authentication:
   cieidUrlErrorScreen:
     title: Non riusciamo ad autenticarti con l’app CieID
     description: Usa un altro metodo per entrare in app
+    tour_guide:
+      title: New
+      content: Now you can use CieID to log in IO!
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
