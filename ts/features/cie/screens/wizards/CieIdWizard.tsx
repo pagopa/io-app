@@ -12,12 +12,19 @@ import ROUTES from "../../../../navigation/routes";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { openWebUrl } from "../../../../utils/url";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
-import { trackCieIdWizardScreen } from "../../analytics";
+import {
+  trackCieIdWizardScreen,
+  trackWizardCieIdSelected
+} from "../../analytics";
+import { SpidLevel } from "../../../cieLogin/utils";
+import { useIOStore } from "../../../../store/hooks";
 
 export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
+const SPID_LEVEL: SpidLevel = "SpidL2";
 
 const CieIdWizard = () => {
+  const store = useIOStore();
   const { error } = useIOToast();
   const { navigate } = useIONavigation();
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
@@ -35,7 +42,8 @@ const CieIdWizard = () => {
         "authentication.wizards.cie_id_wizard.actions.primary.label"
       ),
       onPress: () => {
-        navigateToCieIdLoginScreen("SpidL2");
+        void trackWizardCieIdSelected(store.getState(), SPID_LEVEL);
+        navigateToCieIdLoginScreen(SPID_LEVEL);
       }
     },
     secondary: {
