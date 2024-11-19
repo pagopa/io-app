@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
+import useNavigateToLoginMethod, {
+  IdpCIE
+} from "../../../../hooks/useNavigateToLoginMethod";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import I18n from "../../../../i18n";
 import { TranslationKeys } from "../../../../../locales/locales";
@@ -12,6 +14,8 @@ import {
   trackCieIdErrorSpidFallbackScreen,
   trackCieIdErrorSpidSelected
 } from "../../analytics";
+import { useIODispatch } from "../../../../store/hooks";
+import { idpSelected } from "../../../../store/actions/authentication";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -23,9 +27,9 @@ const SPID_ACTION_LABEL: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_not_supported.primary_action_label";
 
 const CieIdErrorScreen = () => {
-  const { navigateToIdpSelection, navigateToCiePinInsertion, isCieSupported } =
-    useNavigateToLoginMethod();
-  const { replace } = useIONavigation();
+  const { isCieSupported } = useNavigateToLoginMethod();
+  const dispatch = useIODispatch();
+  const { replace, navigate } = useIONavigation();
 
   useAvoidHardwareBackButton();
 
@@ -60,10 +64,19 @@ const CieIdErrorScreen = () => {
         onPress: () => {
           if (isCieSupported) {
             void trackCieIdErrorCiePinSelected();
-            navigateToCiePinInsertion();
+            // Since this screen will only be accessible after the user has already
+            // made their choice on the Opt-In screen, we can navigate directly to it
+            dispatch(idpSelected(IdpCIE));
+            navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_PIN_SCREEN
+            });
           } else {
             void trackCieIdErrorSpidSelected();
-            navigateToIdpSelection();
+            // Since this screen will only be accessible after the user has already
+            // made their choice on the Opt-In screen, we can navigate directly to it
+            navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+            });
           }
         }
       }}
