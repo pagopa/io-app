@@ -134,9 +134,8 @@ const BarcodeScanBaseScreenComponent = ({
 
   const currentScreenName = useIOSelector(currentRouteSelector);
 
-  const appState = React.useRef(AppState.currentState);
   const [isAppInBackground, setIsAppInBackground] = React.useState(
-    appState.current !== "active"
+    AppState.currentState !== "active"
   );
 
   const dispatch = useIODispatch();
@@ -153,9 +152,7 @@ const BarcodeScanBaseScreenComponent = ({
    */
   React.useEffect(() => {
     const subscription = AppState.addEventListener("change", nextAppState => {
-      // eslint-disable-next-line functional/immutable-data
-      appState.current = nextAppState;
-      setIsAppInBackground(appState.current !== "active");
+      setIsAppInBackground(nextAppState !== "active");
     });
 
     return () => {
