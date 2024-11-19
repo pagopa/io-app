@@ -3,7 +3,6 @@ import {
   BodyMonospace,
   ButtonText,
   Caption,
-  Chip,
   Divider,
   H1,
   H2,
@@ -45,7 +44,6 @@ export const DSTypography = () => (
       <H6Row />
       <ButtonTextRow />
       <CaptionRow />
-      <ChipRow />
       <BodyRow />
       <VStack space={typographicStyleMargin}>
         <LabelSmallRow />
@@ -171,18 +169,6 @@ const CaptionRow = () => {
       <Caption>Caption</Caption>
       <Caption color={theme["textBody-tertiary"]}>Caption</Caption>
       <Caption color={theme["interactiveElem-default"]}>Caption</Caption>
-    </HStack>
-  );
-};
-
-const ChipRow = () => {
-  const theme = useIOTheme();
-
-  return (
-    <HStack space={16}>
-      <Chip>Chip</Chip>
-      <Chip color={theme["textBody-tertiary"]}>Chip</Chip>
-      <Chip color={theme["interactiveElem-default"]}>Chip</Chip>
     </HStack>
   );
 };

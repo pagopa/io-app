@@ -1,8 +1,8 @@
 import {
-  Chip,
   IOColors,
   IOStyles,
   Icon,
+  LabelMini,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -81,13 +81,14 @@ const PaymentCardSmall = ({
           )}
         </View>
         <VSpacer size={8} />
-        <Chip
+        <LabelMini
+          weight="Regular"
           ellipsizeMode="tail"
           numberOfLines={1}
           color={props.isExpired ? "error-850" : "grey-700"}
         >
           {labelText}
-        </Chip>
+        </LabelMini>
       </View>
     </WalletCardPressableBase>
   );
