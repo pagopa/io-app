@@ -6,7 +6,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useCallback, useMemo } from "react";
 import { useServicesHomeBottomSheet } from "../../features/services/home/hooks/useServicesHomeBottomSheet";
-import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import {
   SupportRequestParams,
@@ -18,10 +17,7 @@ import { SERVICES_ROUTES } from "../../features/services/common/navigation/route
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import {
-  isNewPaymentSectionEnabledSelector,
-  isSettingsVisibleAndHideProfileSelector
-} from "../../store/reducers/backendStatus/remoteConfig";
+import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import * as analytics from "../../features/services/common/analytics";
 import {
   isArchivingInProcessingModeSelector,
@@ -88,10 +84,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
-
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
 
   const isSettingsVisibleAndHideProfile = useIOSelector(
     isSettingsVisibleAndHideProfileSelector
@@ -209,21 +201,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     [startSupportRequest]
   );
 
-  const {
-    bottomSheet: WalletHomeHeaderBottomSheet,
-    present: presentWalletHomeHeaderBottomsheet
-  } = useWalletHomeHeaderBottomSheet();
-
-  const walletAction: HeaderActionProps = useMemo(
-    () => ({
-      icon: "add",
-      accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-      onPress: presentWalletHomeHeaderBottomsheet,
-      testID: "walletAddNewPaymentMethodTestId"
-    }),
-    [presentWalletHomeHeaderBottomsheet]
-  );
-
   const searchMessageAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
@@ -266,36 +243,16 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           firstAction: helpAction
         };
       case ROUTES.WALLET_HOME:
-        if (isNewWalletSectionEnabled) {
-          return {
-            ...commonProp,
-            title: I18n.t("wallet.wallet"),
-            firstAction: helpAction,
-            testID: "wallet-home-header-title",
-            ...(isSettingsVisibleAndHideProfile
-              ? {
-                  type: "twoActions",
-                  secondAction: settingsAction
-                }
-              : { type: "singleAction" })
-          };
-        }
         return {
-          ...commonProp,
           title: I18n.t("wallet.wallet"),
           firstAction: helpAction,
-          backgroundColor: "dark",
           testID: "wallet-home-header-title",
           ...(isSettingsVisibleAndHideProfile
             ? {
-                type: "threeActions",
-                secondAction: settingsAction,
-                thirdAction: walletAction
-              }
-            : {
                 type: "twoActions",
-                secondAction: walletAction
-              })
+                secondAction: settingsAction
+              }
+            : { type: "singleAction" })
         };
       case ROUTES.PAYMENTS_HOME:
         return {
@@ -334,10 +291,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     helpAction,
     settingsActionInServicesSection,
     searchInstitutionAction,
-    isNewWalletSectionEnabled,
     isSettingsVisibleAndHideProfile,
     settingsAction,
-    walletAction,
     settingsActionInMessageSection,
     searchMessageAction
   ]);
@@ -346,7 +301,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     <>
       <HeaderFirstLevel {...headerProps} />
       {ServicesHomeBottomSheet}
-      {WalletHomeHeaderBottomSheet}
     </>
   );
 };

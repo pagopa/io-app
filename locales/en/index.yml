@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Login with CieID
         subtitle: Use the CieID app
+        badge: New
       help_banner:
         title: Not sure what to choose?
         action: We give you a hand
@@ -659,6 +660,9 @@ authentication:
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
     expiredCardHelp: How to renew your Electronic Identity Card?
+    tour_guide:
+      title: New
+      content: Now you can use CieID to log in IO!
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
@@ -1901,11 +1905,15 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Si è verificato un errore imprevisto"
-        subtitle: "Riprova, oppure contatta l’assistenza."
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+      PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "The selected payment method is not available"
+        subtitle: "This can happen when the amount to be paid is particularly high, or if you are trying to pay a digital stamp duty."
+        action: "Select another payment method"
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
@@ -1968,7 +1976,7 @@ wallet:
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
-      CVV_ERROR: 
+      CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
         subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
       PLAFOND_LIMIT_ERROR:
@@ -2085,7 +2093,7 @@ messages:
       failure: "Failed to archive"
     generic:
       failure: "Operation failed"
-      success: "Operazione successful!"
+      success: "Operation successful!"
     restore:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
@@ -2689,6 +2697,21 @@ bonus:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     departmentName: Dipartimento per le Politiche Giovanili e il Servizio Civile Universale
+    merchantSearch:
+      goToSearchAccessibilityLabel: Find a partner
+      emptyList:
+        shortQuery:
+          titleWithCount: Search among {{merchantCount}} Carta Giovani Nazionale partners
+          titleWithoutCount: Search among Carta Giovani Nazionale partners
+        noResults:
+          title: Nothing found
+          subtitle: |- 
+            Search with different words.
+            If you can't find it, it might be that your partner hasn't joined or there aren't any active opportunities.
+      input:
+        placeholder: Search among partners
+        cancel: "Cancel"
+        clear: "Clear"
     merchantsList:
       news: new
       online: Online
@@ -3219,12 +3242,12 @@ features:
         error: Unable to retrieve the receipt.
         download: Get receipt
         hideFromList: Hide from list
-        delete: 
+        delete:
           successful: The receipt has been hidden
           failed: An error occurred, please try again
-        hideBanner: 
+        hideBanner:
           title: "Do you want to hide this receipt from your list?"
-          content: "This action is irreversible. The receipt will no longer be shown in your list of receipts."    
+          content: "This action is irreversible. The receipt will no longer be shown in your list of receipts."
           accept: "Yes, hide"
       details:
         totalFeeUnknown: "Il totale non include i costi di commissione: puoi trovarli nel documento che hai ricevuto da {{pspName}}"
@@ -3537,6 +3560,11 @@ features:
       failureScreen:
         title: Si è verificato un errore imprevisto
         subtitle: Non è stato possibile disattivare il servizio. Riprova.
+    feedback:
+      banner:
+        title: Dicci cosa ne pensi
+        content: Raccontaci la tua esperienza con la funzionalità Documenti su IO.
+        action: Inizia
 support:
   ticketList:
     noTicket:
@@ -4185,9 +4213,9 @@ FIMS:
       dataUnavailable: "Dati non disponibili"
       ko:
         title: "C’è un problema temporaneo"
-        body: "Il caricamento della lista degli accessi non è riuscito"
+        body: "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       toast: C’è un problema nel caricamento della lista. Riprova
-    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
+    emptyBody: "Qui troverai la lista degli accessi ogni volta che usi un servizio di terza parte tramite IO."
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
@@ -4201,11 +4229,11 @@ FIMS:
       title: "Controlla i tuoi accessi"
       subTitle: "Consulta la cronologia degli accessi con IO"
     historyScreen:
-      header: Accessi a servizi di terze parti
-      body: Qui puoi vedere tutti gli accessi a servizi esterni che hai fatto tramite IO e richiederne una copia via email
+      header: "I tuoi accessi a servizi di terze parti"
+      body: "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
   loadingScreen:
     abort:
-      title: "I dati non sono stati condivisi"
+      title: "Hai annullato l’accesso al servizio"
     consents:
       title: "Attendi qualche secondo"
     idle:
@@ -4226,14 +4254,15 @@ FIMS:
       missingInAppBrowser:
         body: "Per completare l'accesso in modo sicuro, scarica o aggiorna il browser installato sul tuo dispositivo."
         title: "Aggiorna il tuo browser per procedere"
+    inAppBrowserError: "C’è stato un problema nell’invio della richiesta. Riprova"
     title: "Per accedere al servizio, consenti la condivisione dei seguenti dati"
-    subtitle: "Autorizza IO a trasmettere a "
-    subtitle2: " i dati necessari per la tua autenticazione su "
+    subtitle: "IO condividerà con "
+    subtitle2: " i dati necessari alla tua autenticazione su "
     requiredData: "Dati richiesti"
     privacy1: "Per maggiori informazioni, leggi "
     privacyCta: "l’Informativa sulla Privacy "
     bottomSheet:
-      title: "Accedi a servizi di terze parti tramite IO"
-      body: "Per consentirti di accedere al servizio esterno senza autenticarti nuovamente con SPID o CIE, l’app IO condivide un set di dati con l’ente che lo eroga."
-      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’ "
+      title: "Servizi di terze parti tramite IO: come funziona"
+      body: "Per consentirti di accedere a un servizio esterno senza autenticarti ogni volta, l'app IO condivide alcuni tuoi dati con l'ente che lo eroga."
+      body2: "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’"
       bodyPrivacy: "Informativa sulla Privacy."

@@ -1,15 +1,11 @@
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { debounce } from "lodash";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { FlatList, Keyboard, RefreshControl, SafeAreaView } from "react-native";
+import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import {
   ContentWrapper,
   Divider,
-  ListItemHeader,
-  TextInput,
-  VSpacer
+  ListItemHeader
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
@@ -41,8 +37,6 @@ import { mixAndSortMerchants } from "../../utils/merchants";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
-
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
@@ -52,11 +46,6 @@ export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [searchValue, setSearchValue] = React.useState("");
-  const [merchantList, setMerchantsList] = React.useState<
-    ReadonlyArray<MerchantsAll>
-  >([]);
-
   const { navigateToMerchantDetail } = props;
 
   // Mixes online and offline merchants to render on the same list
@@ -70,32 +59,6 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     [props.onlineMerchants, props.offlineMerchants]
   );
 
-  const performSearch = (
-    text: string,
-    merchantList: ReadonlyArray<MerchantsAll>
-  ) => {
-    // if search text is empty, restore the whole list
-    if (text.length === 0) {
-      setMerchantsList(merchantList);
-      return;
-    }
-    const resultList = merchantList.filter(
-      m => m.name.toLowerCase().indexOf(text.toLowerCase()) > -1
-    );
-    setMerchantsList(resultList);
-  };
-
-  const debounceRef = React.useRef(debounce(performSearch, DEBOUNCE_SEARCH));
-
-  React.useEffect(() => {
-    debounceRef.current(searchValue, merchantsAll);
-  }, [
-    searchValue,
-    props.onlineMerchants,
-    props.offlineMerchants,
-    merchantsAll
-  ]);
-
   const { requestOfflineMerchants, requestOnlineMerchants } = props;
 
   const initLoadingLists = useCallback(() => {
@@ -108,7 +71,6 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   const onItemPress = React.useCallback(
     (id: Merchant["id"]) => {
       navigateToMerchantDetail(id);
-      Keyboard.dismiss();
     },
     [navigateToMerchantDetail]
   );
@@ -125,20 +87,11 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
           <ListItemHeader
             label={I18n.t("bonus.cgn.merchantsList.merchantsAll")}
           />
-          <TextInput
-            accessibilityLabel={I18n.t("global.buttons.search")}
-            icon="search"
-            value={searchValue}
-            onChangeText={setSearchValue}
-            placeholder={I18n.t("global.buttons.search")}
-            autoFocus={false}
-          />
-          <VSpacer />
         </ContentWrapper>
       )}
       {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
         <FlatList
-          data={merchantList}
+          data={merchantsAll}
           keyExtractor={item => item.id}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <Divider />}

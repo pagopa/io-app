@@ -1,7 +1,6 @@
-import { Icon } from "@pagopa/io-app-design-system";
+import { H6, Icon } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Pressable } from "react-native";
-import { H4 } from "../../../../../../components/core/typography/H4";
 
 type Props = {
   text: string;
@@ -20,9 +19,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
     }}
     onPress={() => onPress(value)}
   >
-    <H4 weight={checked ? "Semibold" : "Regular"} color={"bluegreyDark"}>
-      {text}
-    </H4>
+    <H6 color={"bluegreyDark"}>{text}</H6>
     <Icon
       name={checked ? "legRadioOn" : "legRadioOff"}
       size={24}

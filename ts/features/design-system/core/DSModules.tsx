@@ -135,8 +135,11 @@ const renderModulePaymentNotice = () => (
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="default"
-        paymentNoticeAmount="1.000,00 €"
+        paymentNotice={{
+          status: "default",
+          amount: "1.000,00 €",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         isLoading={true}
         onPress={onButtonPress}
       />
@@ -145,8 +148,11 @@ const renderModulePaymentNotice = () => (
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="default"
-        paymentNoticeAmount="1.000,00 €"
+        paymentNotice={{
+          status: "default",
+          amount: "1.000,00 €",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
@@ -158,7 +164,11 @@ const renderModulePaymentNotice = () => (
               key={`paymentNotice-${noticeStatus}`}
               title="Codice avviso"
               subtitle="9999 9999 9999 9999 99"
-              paymentNoticeStatus={noticeStatus}
+              paymentNotice={{
+                status: noticeStatus,
+                amount: "1.000,00 €",
+                amountAccessibilityLabel: "1000 euro"
+              }}
               badgeText={getBadgeTextByPaymentNoticeStatus(noticeStatus)}
               onPress={onButtonPress}
             />
@@ -169,8 +179,11 @@ const renderModulePaymentNotice = () => (
     <DSComponentViewerBox name="ModulePaymentNotice, default, without title">
       <ModulePaymentNotice
         subtitle="TARI 2023 - Rata 01"
-        paymentNoticeStatus="default"
-        paymentNoticeAmount="1.000,00 €"
+        paymentNotice={{
+          status: "default",
+          amount: "1.000,00 €",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
