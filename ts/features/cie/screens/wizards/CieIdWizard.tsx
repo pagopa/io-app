@@ -4,7 +4,7 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useEffect } from "react";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
@@ -12,6 +12,7 @@ import ROUTES from "../../../../navigation/routes";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { openWebUrl } from "../../../../utils/url";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
+import { trackCieIdWizardScreen } from "../../analytics";
 
 export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
@@ -21,6 +22,10 @@ const CieIdWizard = () => {
   const { navigate } = useIONavigation();
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
   const { navigateToCieIdLoginScreen } = useNavigateToLoginMethod();
+
+  useEffect(() => {
+    void trackCieIdWizardScreen();
+  }, []);
 
   const screenActions = (): IOScrollViewActions => ({
     type: "TwoButtons",

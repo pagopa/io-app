@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   ButtonLink,
   ContentWrapper,
@@ -17,6 +17,7 @@ import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../../utils/url";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { trackCiePinWizardScreen } from "../../analytics";
 
 export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
@@ -56,6 +57,10 @@ const CiePinWizard = () => {
       setAccessibilityFocus(buttonRef);
     }
   });
+
+  useEffect(() => {
+    void trackCiePinWizardScreen();
+  }, []);
 
   // eslint-disable-next-line arrow-body-style
   useFocusEffect(() => {

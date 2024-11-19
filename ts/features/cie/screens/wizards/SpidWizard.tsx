@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { trackSpidWizardScreen } from "../../analytics";
 
 const SpidWizard = () => {
   const { navigate } = useIONavigation();
   const { navigateToIdpSelection } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.spid_wizard.title");
+
+  useEffect(() => {
+    void trackSpidWizardScreen();
+  }, []);
 
   return (
     <IOScrollViewWithLargeHeader
