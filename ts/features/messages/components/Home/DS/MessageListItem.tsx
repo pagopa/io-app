@@ -1,7 +1,6 @@
 import {
   AnimatedMessageCheckbox,
   Avatar,
-  Body,
   H6,
   HSpacer,
   IOColors,
@@ -143,10 +142,10 @@ export const MessageListItem = ({
           </LabelSmall>
         </View>
         <View style={styles.serviceNameAndMessageTitleContainer}>
-          <Body numberOfLines={2} style={IOStyles.flex}>
-            <Body weight="Semibold">{`${serviceName} · `}</Body>
-            <Body weight="Regular">{messageTitle}</Body>
-          </Body>
+          <LabelSmall numberOfLines={2} style={IOStyles.flex}>
+            <LabelSmall weight="Semibold">{`${serviceName} · `}</LabelSmall>
+            <LabelSmall weight="Regular">{messageTitle}</LabelSmall>
+          </LabelSmall>
           {!isRead && (
             <View style={styles.messageReadContainer}>
               <BadgeComponent />
