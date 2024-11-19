@@ -11,7 +11,7 @@ import {
   useRoute
 } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { AppState, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   SafeAreaView,
@@ -134,10 +134,31 @@ const BarcodeScanBaseScreenComponent = ({
 
   const currentScreenName = useIOSelector(currentRouteSelector);
 
+  const [isAppInBackground, setIsAppInBackground] = React.useState(
+    AppState.currentState !== "active"
+  );
+
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const canShowHelp = useIOSelector(canShowHelpSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  /**
+   * Updates the app state when it changes.
+   *
+   * @param {string} nextAppState - The next state of the app.
+   *
+   * @returns {void}
+   */
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      setIsAppInBackground(nextAppState !== "active");
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -190,7 +211,7 @@ const BarcodeScanBaseScreenComponent = ({
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
-    isDisabled: !isFocused || isDisabled,
+    isDisabled: isAppInBackground || !isFocused || isDisabled,
     isLoading
   });
 
