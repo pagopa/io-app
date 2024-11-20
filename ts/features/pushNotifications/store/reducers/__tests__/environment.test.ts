@@ -3,7 +3,10 @@ import {
   applicationInitialized
 } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { updateSystemNotificationsEnabled } from "../../actions/environment";
+import {
+  setPushPermissionsRequestDuration,
+  updateSystemNotificationsEnabled
+} from "../../actions/environment";
 import { notificationsInfoScreenConsent } from "../../actions/profileNotificationPermissions";
 import {
   areNotificationPermissionsEnabled,
@@ -72,6 +75,19 @@ describe("environmentReducer", () => {
     expect(state.applicationInitialized).toBe(true);
     expect(state.onboardingInstructionsShown).toBe(false);
     expect(state.systemNotificationsEnabled).toBe(false);
+  });
+  it("'pushNotificationPermissionsRequestDuration' should be '100' after receiving 'setPushPermissionsRequestDuration(100)'", () => {
+    const userBehaviourState = environmentReducer(
+      {
+        applicationInitialized: true,
+        onboardingInstructionsShown: false,
+        systemNotificationsEnabled: false
+      },
+      setPushPermissionsRequestDuration(100)
+    );
+    expect(userBehaviourState.pushNotificationPermissionsRequestDuration).toBe(
+      100
+    );
   });
 });
 
