@@ -30,6 +30,7 @@ export type PaymentAnalyticsProps = {
   editing: PaymentAnalyticsEditingType;
 };
 
+// eslint-disable-next-line complexity
 export const getPaymentAnalyticsEventFromFailureOutcome = (
   outcome: WalletPaymentOutcomeEnum
 ) => {
@@ -68,6 +69,20 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_WEBVIEW_USER_CANCELLATION";
     case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
       return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
+    case WalletPaymentOutcomeEnum.BE_NODE_KO:
+      return "PAYMENT_SLOWDOWN_ERROR";
+    case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
+      return "PAYMENT_INSUFFICIENT_AVAILABILITY_ERROR";
+    case WalletPaymentOutcomeEnum.CVV_ERROR:
+      return "PAYMENT_CVV_ERROR";
+    case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
+      return "PAYMENT_PLAFOND_LIMIT_ERROR";
+    case WalletPaymentOutcomeEnum.KO_RETRIABLE:
+      return "PAYMENT_KO_RETRIABLE";
+    case WalletPaymentOutcomeEnum.ORDER_NOT_PRESENT:
+      return "PAYMENT_ORDER_NOT_PRESENT";
+    case WalletPaymentOutcomeEnum.DUPLICATE_ORDER:
+      return "PAYMENT_DUPLICATE_ORDER";
     default:
       return outcome;
   }
