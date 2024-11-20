@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Entra con CieID
         subtitle: Usa l'app CieID
+        badge: Novità
       help_banner:
         title: Non sai cosa scegliere?
         action: Ti diamo una mano
@@ -659,6 +660,9 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+    tour_guide:
+      title: Novità
+      content: Ora puoi usare CieID per entrare su IO!
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
@@ -1455,7 +1459,7 @@ wallet:
     android:
       confirm: Rimuovi
     successful: Metodo rimosso!
-    failed: Impossibile rimuovere il metodo dal tuo Portafoglio
+    failed: C’è stato un problema, riprova
   newPaymentMethod:
     add: aggiungi
     show: mostra
@@ -2008,7 +2012,7 @@ cardComponent:
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
-  removeCta: "Elimina questo metodo"
+  removeCta: "Rimuovi dal Portafoglio"
 messages:
   accessibility:
     message:
