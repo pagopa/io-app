@@ -35,7 +35,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { format } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -55,6 +54,7 @@ import {
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
@@ -63,7 +63,8 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { FaultCodeCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
+import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
+import { isDueDateValid } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -101,10 +102,10 @@ const WalletPaymentDetailScreen = () => {
       O.fromEither,
       // NetworkError or undecoded error is transformed to PAYMENT_SLOWDOWN_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCodeCategoryEnum.PAYMENT_SLOWDOWN_ERROR,
+        faultCodeCategory: FaultCodeSlowdownCategoryEnum.PAYMENT_SLOWDOWN_ERROR,
         faultCodeDetail:
           (paymentDetailsPot.error as WalletPaymentFailure)?.faultCodeDetail ??
-          FaultCodeCategoryEnum.PAYMENT_SLOWDOWN_ERROR
+          FaultCodeSlowdownCategoryEnum.PAYMENT_SLOWDOWN_ERROR
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;
@@ -254,7 +255,7 @@ const WalletPaymentDetailContent = ({
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(_ => format(_, "DD/MM/YYYY")),
+    O.map(date => isDueDateValid(date)),
     O.toUndefined
   );
 
