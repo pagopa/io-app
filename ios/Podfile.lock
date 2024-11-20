@@ -634,17 +634,17 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTImage
-  - RNSentry (5.32.0):
+  - RNSentry (6.2.0):
     - hermes-engine
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-hermes
-    - Sentry/HybridSDK (= 8.36.0)
+    - Sentry/HybridSDK (= 8.40.1)
   - RNShare (10.2.1):
     - React-Core
   - RNSVG (15.1.0):
     - React-Core
-  - Sentry/HybridSDK (8.36.0)
+  - Sentry/HybridSDK (8.40.1)
   - SocketRocket (0.6.1)
   - SwiftCBOR (0.4.7)
   - VisionCamera (4.3.1):
@@ -1137,10 +1137,10 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: c2027c397233801d4aceb7375e000ac87ec2e67d
   RNScreens: b8d370282cdeae9df85dd5eab20c88eb5181243b
-  RNSentry: 3e667c2c6ea5d35ea292c7f262c6b44e43842cc1
+  RNSentry: 92731647f56e97f1a409f109183e50c8323ab2c1
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
-  Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
+  Sentry: e9215d7b17f7902692b4f8700e061e4f853e3521
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
   VisionCamera: 58d2120e6e23c155b25f4702b7912dc2b1e5e8c2
