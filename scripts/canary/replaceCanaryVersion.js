@@ -4,8 +4,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require("fs-extra");
 
-const version = "0.1.0-rc.0";
-
 const packagePath = "package.json";
 
 /**
@@ -16,8 +14,13 @@ const packagePath = "package.json";
 const replaceCanaryVersion = () => {
   // read package.json as JSON
   const package = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
+
+  const versionSplit = package.version.split("-");
+  const canarySplit = process.argv[2].split("-");
+
   // replace the version, removing the rc part
-  package.version = process.argv[2];
+  package.version = `${versionSplit[0]}-${canarySplit[1]}`;
+
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
 };
 
