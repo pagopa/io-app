@@ -1458,7 +1458,7 @@ wallet:
     android:
       confirm: Delete
     successful: Method removed!
-    failed: The method could not be removed from your Wallet
+    failed: There was a problem, please try again
   newPaymentMethod:
     add: add
     show: show
@@ -1982,6 +1982,9 @@ wallet:
       PLAFOND_LIMIT_ERROR:
         title: Hai superato il limite di spesa della tua carta
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
+      BE_NODE_KO:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2011,7 +2014,7 @@ cardComponent:
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
-  removeCta: "Delete this payment method"
+  removeCta: "Remove from Wallet"
 messages:
   accessibility:
     message:
