@@ -1,14 +1,13 @@
 import { createStore, Store } from "redux";
-import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import CdcBonusRequestSelectYear from "../CdcBonusRequestSelectYear";
-import * as cdcActions from "../../store/actions/cdcBonusRequest";
 import { Anno } from "../../../../../../definitions/cdc/Anno";
 import { StatoBeneficiarioEnum } from "../../../../../../definitions/cdc/StatoBeneficiario";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as cdcActions from "../../store/actions/cdcBonusRequest";
+import CdcBonusRequestSelectYear from "../CdcBonusRequestSelectYear";
 
 jest.useFakeTimers();
 
