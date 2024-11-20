@@ -68,29 +68,33 @@ describe("getAlertVariant", () => {
 
 describe("getBadgeTextByTransactionStatus", () => {
   it("should return the correct badge text for 'failure'", () => {
-    expect(getBadgePropsByTransactionStatus("failure")).toBe(
-      I18n.t("global.badges.failed")
-    );
+    expect(getBadgePropsByTransactionStatus("failure")).toStrictEqual({
+      text: I18n.t("global.badges.failed"),
+      variant: "error"
+    });
   });
   it("should return the correct badge text for 'cancelled'", () => {
-    expect(getBadgePropsByTransactionStatus("cancelled")).toBe(
-      I18n.t("global.badges.cancelled")
-    );
+    expect(getBadgePropsByTransactionStatus("cancelled")).toStrictEqual({
+      text: I18n.t("global.badges.cancelled"),
+      variant: "error"
+    });
   });
   it("should return the correct badge text for 'reversal'", () => {
-    expect(getBadgePropsByTransactionStatus("reversal")).toBe(
-      I18n.t("global.badges.reversal")
-    );
+    expect(getBadgePropsByTransactionStatus("reversal")).toStrictEqual({
+      text: I18n.t("global.badges.reversal"),
+      variant: "lightBlue"
+    });
   });
   it("should return the correct badge text for 'pending'", () => {
-    expect(getBadgePropsByTransactionStatus("pending")).toBe(
-      I18n.t("global.badges.onGoing")
-    );
+    expect(getBadgePropsByTransactionStatus("pending")).toStrictEqual({
+      text: I18n.t("global.badges.onGoing"),
+      variant: "info"
+    });
   });
   it("should return an empty string for an unknown status", () => {
     expect(
       getBadgePropsByTransactionStatus("unknown" as ListItemTransactionStatus)
-    ).toBe("");
+    ).toStrictEqual({ text: "", variant: "default" });
   });
 });
 
