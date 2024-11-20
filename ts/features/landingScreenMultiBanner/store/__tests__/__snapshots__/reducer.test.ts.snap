@@ -4,6 +4,6 @@ exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 
 {
   "ITW_DISCOVERY": true,
   "PUSH_NOTIFICATIONS_REMINDER": true,
-  "SETTINGS_DISCOVERY": true,
+  "SETTINGS_DISCOVERY": false,
 }
 `;

@@ -24,7 +24,7 @@ export type LandingScreenBannerId =
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   PUSH_NOTIFICATIONS_REMINDER: true,
   ITW_DISCOVERY: true,
-  SETTINGS_DISCOVERY: true
+  SETTINGS_DISCOVERY: false
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {

@@ -2924,9 +2924,9 @@ features:
   messages:
     pushNotifications:
       banner:
-        title: "Non perderti i messaggi importanti"
-        body: "Attiva le notifiche push di IO dalle impostazioni di sistema"
-        CTA: "Attiva notifiche push"
+        title: "Don't miss any important messages!"
+        body: "Turn on push notifications to know when you get a message on IO."
+        CTA: "Turn on push notifications"
     attachmentDownloadFeedback: "Download in progress"
     attachments: "Attachments"
     loading:
