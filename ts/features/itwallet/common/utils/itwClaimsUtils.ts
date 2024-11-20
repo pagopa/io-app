@@ -15,9 +15,9 @@ import I18n from "../../../../i18n";
 import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
 import {
+  ItwCredentialStatus,
   ParsedCredential,
-  StoredCredential,
-  ItwCredentialStatus
+  StoredCredential
 } from "./itwTypesUtils";
 
 /**
@@ -193,7 +193,10 @@ export const DateWithoutTimezoneClaim = new t.Type<Date, string, unknown>(
       )
     ),
   (date: Date) =>
-    `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`
+    `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getUTCDate()).padStart(2, "0")}`
 );
 
 /**
