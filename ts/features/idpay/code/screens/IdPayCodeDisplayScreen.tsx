@@ -88,7 +88,7 @@ const IdPayCodeDisplayScreen = () => {
             <Body color="grey-700" weight="Regular">
               {I18n.t("idpay.code.onboarding.body1")}
             </Body>
-            <Body color="grey-700" weight="Bold">
+            <Body color="grey-700" weight="Semibold">
               {I18n.t("idpay.code.onboarding.bodyBold")}
             </Body>
             <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>

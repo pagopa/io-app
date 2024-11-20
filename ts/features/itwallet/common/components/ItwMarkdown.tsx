@@ -73,7 +73,7 @@ const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
     </React.Fragment>
   ),
   strong: (node: ASTNode, children: Array<ReactNode>) => (
-    <Body key={node.key} weight="Bold">
+    <Body key={node.key} weight="Semibold">
       {children}
     </Body>
   ),

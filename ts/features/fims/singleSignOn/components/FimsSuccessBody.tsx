@@ -86,9 +86,9 @@ export const FimsFlowSuccessBody = ({
     serviceData !== undefined ? (
       <Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Body>
-        <Body weight="Bold">{serviceData.organization_name}</Body>
+        <Body weight="Semibold">{serviceData.organization_name}</Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle2")}</Body>
-        <Body weight="Bold">{consents.redirect.display_name ?? ""}.</Body>
+        <Body weight="Semibold">{consents.redirect.display_name ?? ""}.</Body>
       </Body>
     ) : (
       <LoadingSkeleton lines={3} />
