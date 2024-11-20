@@ -18,7 +18,7 @@ export type QrCodeImageProps = {
 /**
  * This components renders a QR Code which resolves in the provided value
  */
-export const QrCodeImage = ({
+const QrCodeImage = ({
   value,
   size = 200,
   backgroundColor,
@@ -49,3 +49,6 @@ export const QrCodeImage = ({
     />
   );
 };
+
+const MemoizedQrCodeImage = React.memo(QrCodeImage);
+export { MemoizedQrCodeImage as QrCodeImage };
