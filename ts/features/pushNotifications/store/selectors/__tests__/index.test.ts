@@ -1,4 +1,7 @@
-import { isPushNotificationsBannerRenderableSelector } from "..";
+import {
+  hasUserSeenSystemNotificationsPromptSelector,
+  isPushNotificationsBannerRenderableSelector
+} from "..";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { userFromSuccessLoginSelector } from "../../../../login/info/store/selectors";
 import { areNotificationPermissionsEnabled } from "../../reducers/environment";
@@ -12,14 +15,16 @@ jest.mock("../../reducers/environment", () => ({
   areNotificationPermissionsEnabled: jest.fn()
 }));
 
-const getTestState = (hasSeen: boolean): GlobalState =>
-  ({
+const getTestState = (hasSeen?: boolean): GlobalState => {
+  const duration = hasSeen !== undefined ? (hasSeen ? 1000 : 1) : undefined;
+  return {
     notifications: {
-      userBehaviour: {
-        pushNotificationPermissionsRequestDuration: hasSeen ? 1000 : 1
+      environment: {
+        pushNotificationPermissionsRequestDuration: duration
       }
     }
-  } as unknown as GlobalState);
+  } as unknown as GlobalState;
+};
 
 describe("isPushNotificationsBannerRenderableSelector", () => {
   beforeEach(() => {
@@ -58,4 +63,28 @@ describe("isPushNotificationsBannerRenderableSelector", () => {
       ).toBe(expected);
     }
   );
+});
+
+describe("hasUserSeenSystemNotificationPromptSelector", () => {
+  it("should return true when pushNotificationPermissionsRequestDuration is greater than 750", () => {
+    expect(
+      hasUserSeenSystemNotificationsPromptSelector(
+        getTestState(true) as unknown as GlobalState
+      )
+    ).toBe(true);
+  });
+  it("should return false when pushNotificationPermissionsRequestDuration is less than 750", () => {
+    expect(
+      hasUserSeenSystemNotificationsPromptSelector(
+        getTestState(false) as unknown as GlobalState
+      )
+    ).toBe(false);
+  });
+  it("should return false when pushNotificationPermissionsRequestDuration is undefined", () => {
+    expect(
+      hasUserSeenSystemNotificationsPromptSelector(
+        getTestState() as unknown as GlobalState
+      )
+    ).toBe(false);
+  });
 });

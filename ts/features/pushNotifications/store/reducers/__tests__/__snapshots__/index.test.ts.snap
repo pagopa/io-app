@@ -5,6 +5,7 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
   "environment": {
     "applicationInitialized": false,
     "onboardingInstructionsShown": false,
+    "pushNotificationPermissionsRequestDuration": undefined,
     "systemNotificationsEnabled": false,
   },
   "installation": {
@@ -14,7 +15,6 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
   "pendingMessage": null,
   "userBehaviour": {
     "engagementScreenShown": false,
-    "pushNotificationPermissionsRequestDuration": undefined,
   },
 }
 `;
@@ -24,6 +24,7 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
   "environment": {
     "applicationInitialized": false,
     "onboardingInstructionsShown": false,
+    "pushNotificationPermissionsRequestDuration": undefined,
     "systemNotificationsEnabled": false,
   },
   "installation": {
@@ -33,7 +34,6 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
   "pendingMessage": null,
   "userBehaviour": {
     "engagementScreenShown": false,
-    "pushNotificationPermissionsRequestDuration": undefined,
   },
 }
 `;

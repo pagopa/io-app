@@ -8,6 +8,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
       "marginVertical": 16,
     }
   }
+  testID="pushnotif-bannerContainer"
 >
   <View
     accessibilityState={

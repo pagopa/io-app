@@ -7,27 +7,22 @@ type Props = {
   closeHandler: () => void;
 };
 
-export const PushNotificationsBanner = ({ closeHandler }: Props) => {
-  const bannerRef = React.createRef<View>();
-
-  return (
-    <View style={styles.margins}>
-      <Banner
-        testID="pushNotificationsBanner"
-        viewRef={bannerRef}
-        title={I18n.t("features.messages.pushNotifications.banner.title")}
-        content={I18n.t("features.messages.pushNotifications.banner.body")}
-        action={I18n.t("features.messages.pushNotifications.banner.CTA")}
-        pictogramName="notification"
-        color="turquoise"
-        size="big"
-        onClose={closeHandler}
-        labelClose={I18n.t("global.buttons.close")}
-        onPress={openSystemNotificationSettingsScreen}
-      />
-    </View>
-  );
-};
+export const PushNotificationsBanner = ({ closeHandler }: Props) => (
+  <View style={styles.margins} testID="pushnotif-bannerContainer">
+    <Banner
+      testID="pushNotificationsBanner"
+      title={I18n.t("features.messages.pushNotifications.banner.title")}
+      content={I18n.t("features.messages.pushNotifications.banner.body")}
+      action={I18n.t("features.messages.pushNotifications.banner.CTA")}
+      pictogramName="notification"
+      color="turquoise"
+      size="big"
+      onClose={closeHandler}
+      labelClose={I18n.t("global.buttons.close")}
+      onPress={openSystemNotificationSettingsScreen}
+    />
+  </View>
+);
 const styles = StyleSheet.create({
   margins: {
     marginHorizontal: IOVisualCostants.appMarginDefault,

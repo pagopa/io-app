@@ -20,7 +20,7 @@ import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded
 } from "../common";
-import { setPushPermissionsRequestDuration } from "../../store/actions/userBehaviour";
+import { setPushPermissionsRequestDuration } from "../../store/actions/environment";
 
 const generateUserProfile = (
   hasDoneNotificationOptIn: boolean,

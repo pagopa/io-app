@@ -13,8 +13,8 @@ import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
 } from "../analytics";
+import { setPushPermissionsRequestDuration } from "../store/actions/environment";
 import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
-import { setPushPermissionsRequestDuration } from "../store/actions/userBehaviour";
 import { requestNotificationPermissions } from "../utils";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,

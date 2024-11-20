@@ -1,18 +1,13 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import {
-  setEngagementScreenShown,
-  setPushPermissionsRequestDuration
-} from "../actions/userBehaviour";
+import { setEngagementScreenShown } from "../actions/userBehaviour";
 
 export type UserBehaviourState = {
   engagementScreenShown: boolean;
-  pushNotificationPermissionsRequestDuration?: number;
 };
 
 export const INITIAL_STATE: UserBehaviourState = {
-  engagementScreenShown: false,
-  pushNotificationPermissionsRequestDuration: undefined
+  engagementScreenShown: false
 };
 
 export const userBehaviourReducer = (
@@ -22,11 +17,6 @@ export const userBehaviourReducer = (
   switch (action.type) {
     case getType(setEngagementScreenShown):
       return { ...state, engagementScreenShown: true };
-    case getType(setPushPermissionsRequestDuration):
-      return {
-        ...state,
-        pushNotificationPermissionsRequestDuration: action.payload
-      };
   }
   return state;
 };
