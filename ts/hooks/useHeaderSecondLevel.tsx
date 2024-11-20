@@ -238,7 +238,7 @@ export const useHeaderSecondLevel = ({
               content={alert.content}
               action={alert.action}
               fullWidth={true}
-              onPress={() => alert.onPress}
+              onPress={event => alert.onPress?.(event)}
             />
           )}
           <HeaderSecondLevel
