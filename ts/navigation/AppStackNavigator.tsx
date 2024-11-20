@@ -7,7 +7,6 @@ import {
 } from "@react-navigation/native";
 import React, { useRef } from "react";
 import { View } from "react-native";
-import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
@@ -35,6 +34,7 @@ import {
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
+import { ReactNavigationInstrumentation } from "../App";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
