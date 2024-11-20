@@ -153,10 +153,6 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DESIGN_SYSTEM_LEGACY_BADGES",
       title: "Badges"
     },
-    SELECTION: {
-      route: "DESIGN_SYSTEM_LEGACY_SELECTION",
-      title: "Selection"
-    },
     ALERT: {
       route: "DESIGN_SYSTEM_LEGACY_ALERT",
       title: "Alert"
