@@ -22,3 +22,10 @@ export const isCieIDLocalFeatureEnabledSelector = (state: GlobalState) =>
 export const isCieIDFFEnabledSelector = (state: GlobalState) =>
   isCieIDLocalFeatureEnabledSelector(state) ||
   isCieIdMinAppVersionEnabledSelector(state);
+
+/**
+ * Both `isCieIDTourGuideEnabled` and `isCieIDFFEnabledSelector` return value must be `true`
+ */
+export const isCieIDTourGuideEnabledSelector = (state: GlobalState) =>
+  state.features.loginFeatures.cieLogin.isCieIDTourGuideEnabled &&
+  isCieIDFFEnabledSelector(state);
