@@ -1,10 +1,9 @@
-import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import {
   formatPaymentNoticeNumber,
   getAlertVariant,
-  getBadgeTextByTransactionStatus,
+  getBadgePropsByTransactionStatus,
   getPaymentLogoFromWalletDetails,
   getSortedPspList,
   getTransactionLogo,
@@ -18,10 +17,11 @@ import { LevelEnum } from "../../../../../../definitions/content/SectionStatus";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletStatus";
+import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
+import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../../i18n";
 import { UIWalletInfoDetails } from "../../types/UIWalletInfoDetails";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
+import { ListItemTransactionStatus } from "../types";
 
 describe("formatPaymentNoticeNumber", () => {
   it("should properly format a standard notice number", () => {
@@ -68,30 +68,28 @@ describe("getAlertVariant", () => {
 
 describe("getBadgeTextByTransactionStatus", () => {
   it("should return the correct badge text for 'failure'", () => {
-    expect(getBadgeTextByTransactionStatus("failure")).toBe(
+    expect(getBadgePropsByTransactionStatus("failure")).toBe(
       I18n.t("global.badges.failed")
     );
   });
   it("should return the correct badge text for 'cancelled'", () => {
-    expect(getBadgeTextByTransactionStatus("cancelled")).toBe(
+    expect(getBadgePropsByTransactionStatus("cancelled")).toBe(
       I18n.t("global.badges.cancelled")
     );
   });
   it("should return the correct badge text for 'reversal'", () => {
-    expect(getBadgeTextByTransactionStatus("reversal")).toBe(
+    expect(getBadgePropsByTransactionStatus("reversal")).toBe(
       I18n.t("global.badges.reversal")
     );
   });
   it("should return the correct badge text for 'pending'", () => {
-    expect(getBadgeTextByTransactionStatus("pending")).toBe(
+    expect(getBadgePropsByTransactionStatus("pending")).toBe(
       I18n.t("global.badges.onGoing")
     );
   });
   it("should return an empty string for an unknown status", () => {
     expect(
-      getBadgeTextByTransactionStatus(
-        "unknown" as ListItemTransactionStatusWithBadge
-      )
+      getBadgePropsByTransactionStatus("unknown" as ListItemTransactionStatus)
     ).toBe("");
   });
 });
