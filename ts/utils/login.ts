@@ -5,8 +5,7 @@ import * as E from "fp-ts/lib/Either";
 import { SessionToken } from "../types/SessionToken";
 import { trackLoginSpidError } from "../screens/authentication/analytics/spidAnalytics";
 import { apiUrlPrefix, spidRelayState } from "../config";
-import { store } from "../boot/configureStoreAndPersistor";
-import { selectedIdentityProviderSelector } from "../store/reducers/authentication";
+import { IdpData } from "../../definitions/content/IdpData";
 import { isStringNullyOrEmpty } from "./strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
@@ -25,7 +24,7 @@ type LoginFailure = {
 
 type LoginResult = LoginSuccess | LoginFailure;
 
-export type IdpTypes = "SPID" | "CIE_ID" | "CIE";
+type IdpTypes = keyof IdpData | "cie" | "cieid";
 
 export const getEitherLoginResult = (
   result: LoginResult
@@ -57,10 +56,8 @@ const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (
   url: string,
-  idp: IdpTypes = "SPID"
+  idp?: IdpTypes
 ): LoginResult | undefined => {
-  const state = store.getState();
-  const selectedIdp = selectedIdentityProviderSelector(state);
   const urlParse = new URLParse(url, true);
 
   // LOGIN_SUCCESS
@@ -75,9 +72,10 @@ export const extractLoginResult = (
   if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
     const errorCode = urlParse.query.errorCode;
     const errorMessage = urlParse.query.errorMessage;
-    if (idp === "SPID") {
+    // TODO: move the error tracking in the `AuthErrorScreen` & properly type `idp`
+    if (idp !== "cie" && idp !== "cieid") {
       trackLoginSpidError(errorCode, {
-        idp: selectedIdp?.id || "not_set",
+        idp: idp || "not_set",
         ...(errorMessage ? { "error message": errorMessage } : {})
       });
     }
@@ -105,7 +103,7 @@ export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
     onSuccess: (_: SessionToken) => void,
-    idp: IdpTypes = "SPID"
+    idp?: IdpTypes
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {

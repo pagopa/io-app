@@ -79,6 +79,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
+      // TODO: move the error tracking in the `AuthErrorScreen`
       trackLoginSpidError(code || message, {
         idp: IdpCIE_ID.id,
         ...(message ? { "error message": message } : {})
@@ -190,7 +191,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     const isLoginUrlWithToken = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,
-      "CIE_ID"
+      "cieid"
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
