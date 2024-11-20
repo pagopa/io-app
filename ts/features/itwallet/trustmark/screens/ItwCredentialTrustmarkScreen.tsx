@@ -36,8 +36,8 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_TRUSTMARK"
 >;
 
-export const ItwCredentialTrustmarkScreen = ({ route }: ScreenProps) => {
-  const { credentialType } = route.params;
+export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
+  const { credentialType } = params.route.params;
 
   useMaxBrightness();
 
