@@ -19,8 +19,8 @@ const CgnActivationTimeoutScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="pending"
-      title={I18n.t("bonus.cgn.activation.timeout.title")}
-      subtitle={I18n.t("bonus.cgn.activation.timeout.body")}
+      title={I18n.t("bonus.cgn.activation.pending.title")}
+      subtitle={I18n.t("bonus.cgn.activation.pending.body")}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
