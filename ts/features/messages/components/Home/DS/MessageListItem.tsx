@@ -6,7 +6,7 @@ import {
   IOColors,
   IOStyles,
   IOVisualCostants,
-  LabelSmall,
+  BodySmall,
   Tag,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -133,19 +133,19 @@ export const MessageListItem = ({
           <H6 numberOfLines={1} color="black" style={IOStyles.flex}>
             {organizationName}
           </H6>
-          <LabelSmall
+          <BodySmall
             color="grey-700"
             weight="Regular"
             style={{ marginLeft: 8 }}
           >
             {formattedDate}
-          </LabelSmall>
+          </BodySmall>
         </View>
         <View style={styles.serviceNameAndMessageTitleContainer}>
-          <LabelSmall numberOfLines={2} style={IOStyles.flex}>
-            <LabelSmall weight="Semibold">{`${serviceName} · `}</LabelSmall>
-            <LabelSmall weight="Regular">{messageTitle}</LabelSmall>
-          </LabelSmall>
+          <BodySmall numberOfLines={2} style={IOStyles.flex}>
+            <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
+            <BodySmall weight="Regular">{messageTitle}</BodySmall>
+          </BodySmall>
           {!isRead && (
             <View style={styles.messageReadContainer}>
               <BadgeComponent />

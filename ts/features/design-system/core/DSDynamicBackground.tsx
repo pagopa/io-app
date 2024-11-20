@@ -8,7 +8,7 @@ import {
   HStack,
   IOColors,
   IOVisualCostants,
-  LabelSmall,
+  BodySmall,
   RadioGroup,
   VStack,
   hexToRgba,
@@ -163,13 +163,13 @@ export const DSDynamicBackground = () => {
             />
             <View style={{ alignSelf: "center", flexShrink: 1 }}>
               <H3 color={theme["textBody-secondary"]}>{entityData?.name}</H3>
-              <LabelSmall
+              <BodySmall
                 weight="Regular"
                 color={theme["textBody-secondary"]}
                 style={{ opacity: 0.8 }}
               >
                 {entityData?.name}
-              </LabelSmall>
+              </BodySmall>
             </View>
           </HStack>
 

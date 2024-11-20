@@ -3,7 +3,7 @@ import {
   Body,
   IOSpacingScale,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
@@ -67,13 +67,13 @@ export const OrganizationHeader = ({
         <Body weight="Semibold" color="grey-700">
           {organizationName}
         </Body>
-        <LabelSmall
+        <BodySmall
           color={theme["interactiveElem-default"]}
           onPress={navigateToServiceDetails}
-          weight="Bold"
+          weight="Semibold"
         >
           {serviceName}
-        </LabelSmall>
+        </BodySmall>
       </View>
       <View style={styles.itemAvatar}>
         {paymentData ? (

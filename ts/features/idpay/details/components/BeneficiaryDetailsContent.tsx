@@ -1,4 +1,4 @@
-import { Body, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -235,9 +235,9 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         ]}
       />
       <VSpacer size={8} />
-      <LabelSmall weight="Regular" color="bluegrey">
+      <BodySmall weight="Regular" color="bluegrey">
         {lastUpdateString}
-      </LabelSmall>
+      </BodySmall>
       <VSpacer size={8} />
       <Table
         title={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}

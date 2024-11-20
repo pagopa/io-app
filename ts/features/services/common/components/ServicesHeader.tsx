@@ -5,7 +5,7 @@ import {
   IOSpacingScale,
   IOStyles,
   IOVisualCostants,
-  LabelSmall,
+  BodySmall,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -48,9 +48,9 @@ export const ServicesHeader = ({
       </View>
       <View style={IOStyles.flex}>
         <H3 color={theme["textHeading-secondary"]}>{title}</H3>
-        <LabelSmall weight="Regular" color="grey-700">
+        <BodySmall weight="Regular" color="grey-700">
           {subTitle}
-        </LabelSmall>
+        </BodySmall>
       </View>
     </View>
   );

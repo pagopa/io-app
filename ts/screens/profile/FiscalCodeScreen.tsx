@@ -5,7 +5,7 @@ import {
   VSpacer,
   ContentWrapper,
   H3,
-  LabelSmall
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import Barcode from "react-native-barcode-builder";
 import { useFocusEffect } from "@react-navigation/native";
@@ -93,9 +93,9 @@ const FiscalCodeScreen = () => {
             style={styles.box}
             testID="barcode-box"
           >
-            <LabelSmall weight="Semibold" color="black">
+            <BodySmall weight="Semibold" color="black">
               {nameSurname}
-            </LabelSmall>
+            </BodySmall>
             <Barcode
               value={fiscalCode}
               width={1.3}
