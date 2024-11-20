@@ -1,11 +1,11 @@
 import React from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import {
+  Body,
   ContentWrapper,
   H2,
-  IOStyles,
   useIOTheme,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import Animated, { AnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -15,6 +15,7 @@ type Props = {
   animatedRef: AnimatedRef<Animated.ScrollView>;
   title: string;
   titleAccessibilityLabel?: string;
+  description?: string;
 };
 
 /**
@@ -26,7 +27,8 @@ export const ItwScrollViewWithLargeHeader = ({
   children,
   animatedRef,
   title,
-  titleAccessibilityLabel
+  titleAccessibilityLabel,
+  description
 }: Props) => {
   const [titleHeight, setTitleHeight] = React.useState(0);
   const theme = useIOTheme();
@@ -42,21 +44,23 @@ export const ItwScrollViewWithLargeHeader = ({
       animatedRef={animatedRef}
       snapOffset={titleHeight}
     >
-      <View
-        accessible
-        style={IOStyles.horizontalContentPadding}
-        onLayout={getTitleHeight}
-      >
-        <H2
-          color={theme["textHeading-default"]}
-          accessibilityLabel={titleAccessibilityLabel ?? title}
-          accessibilityRole="header"
-        >
-          {title}
-        </H2>
-      </View>
-      <VSpacer size={16} />
-      <ContentWrapper>{children}</ContentWrapper>
+      <ContentWrapper>
+        <VStack space={16}>
+          <View accessible onLayout={getTitleHeight}>
+            <H2
+              color={theme["textHeading-default"]}
+              accessibilityLabel={titleAccessibilityLabel ?? title}
+              accessibilityRole="header"
+            >
+              {title}
+            </H2>
+          </View>
+          {description && (
+            <Body color={theme["textBody-tertiary"]}>{description}</Body>
+          )}
+          <View>{children}</View>
+        </VStack>
+      </ContentWrapper>
     </IOScrollView>
   );
 };
