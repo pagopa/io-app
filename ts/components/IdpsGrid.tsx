@@ -61,7 +61,7 @@ const renderItem =
       <ModuleIDP
         key={id}
         name={name}
-        logo={logo as ImageSourcePropType}
+        logo={{ uri: logo }}
         localLogo={localLogo as ImageSourcePropType}
         onPress={onPress}
         testID={`idp-${item.id}-button`}
