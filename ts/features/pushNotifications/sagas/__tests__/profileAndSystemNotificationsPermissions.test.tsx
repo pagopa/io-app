@@ -20,6 +20,7 @@ import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded
 } from "../common";
+import { setPushPermissionsRequestDuration } from "../../store/actions/environment";
 
 const generateUserProfile = (
   hasDoneNotificationOptIn: boolean,
@@ -79,6 +80,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
       .select()
@@ -121,6 +124,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .call(
@@ -191,6 +196,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
       .select()
@@ -210,6 +217,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .select()
@@ -265,6 +274,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
       .select()
@@ -307,6 +318,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .call(
@@ -377,6 +390,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(true)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, true)
       .next()
       .select()
@@ -396,6 +411,8 @@ describe("checkNotificationsPreferencesSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next(false)
+      .put(setPushPermissionsRequestDuration(0))
+      .next()
       .call(updateNotificationPermissionsIfNeeded, false)
       .next()
       .select()

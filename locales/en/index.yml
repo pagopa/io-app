@@ -2928,6 +2928,11 @@ bonus:
         conjunction: " and "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Don't miss any important messages!"
+        body: "Turn on push notifications to know when you get a message on IO."
+        CTA: "Turn on push notifications"
     attachmentDownloadFeedback: "Download in progress"
     attachments: "Attachments"
     loading:

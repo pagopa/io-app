@@ -2929,6 +2929,11 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Non perderti i messaggi importanti"
+        body: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
+        CTA: "Attiva notifiche push"
     attachmentDownloadFeedback: "Download in corso"
     attachments: "Allegati"
     loading:
