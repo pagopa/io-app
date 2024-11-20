@@ -50,6 +50,12 @@ const mapLevelToColor = (level: LevelEnum): string => {
   }
 };
 
+/**
+ * Hook that takes a SectionStatus and maps it to create alert properties.
+ * Also configures a FocusAwareStatusBar based on the alert level.
+ * @param sectionStatus - The section status can be undefined.
+ * @returns An object containing the alert properties and the configured status bar.
+ */
 export const useItwAlertWithStatusBar = (sectionStatus?: SectionStatus) => {
   if (!sectionStatus || !sectionStatus.is_visible) {
     return {
