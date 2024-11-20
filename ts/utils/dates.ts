@@ -313,10 +313,11 @@ export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
  * @param date - the date to remove timezone from
  * @returns a new date with the timezone removed
  */
-export const removeTimezoneFromDate = (date: Date) => {
+export const removeTimezoneFromDate = (date: Date): Date => {
   if (isNaN(date.getTime())) {
     throw new Error("Invalid date");
   }
-  const userTimezoneOffset = date.getTimezoneOffset() * 60000;
-  return new Date(date.getTime() + userTimezoneOffset);
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
 };
