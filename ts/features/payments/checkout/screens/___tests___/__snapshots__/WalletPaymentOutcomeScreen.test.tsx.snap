@@ -47248,7 +47248,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -47259,6 +47259,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -47310,7 +47311,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -47349,7 +47350,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
