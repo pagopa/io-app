@@ -7,10 +7,6 @@ export const walletTransactionBizEventsDetailsPotSelector = (
   state: GlobalState
 ) => walletTransactionBizEventsSelector(state).details;
 
-export const walletTransactionBizEventsBizEventsDetailsPotSelector = (
-  state: GlobalState
-) => walletTransactionBizEventsSelector(state).details;
-
 export const walletTransactionBizEventsListPotSelector = (state: GlobalState) =>
   walletTransactionBizEventsSelector(state).transactions;
 

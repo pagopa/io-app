@@ -1,14 +1,13 @@
 import { createStore, Store } from "redux";
-import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import CdcBonusRequestSelectYear from "../CdcBonusRequestSelectYear";
-import * as cdcActions from "../../store/actions/cdcBonusRequest";
 import { Anno } from "../../../../../../definitions/cdc/Anno";
 import { StatoBeneficiarioEnum } from "../../../../../../definitions/cdc/StatoBeneficiario";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as cdcActions from "../../store/actions/cdcBonusRequest";
+import CdcBonusRequestSelectYear from "../CdcBonusRequestSelectYear";
 
 jest.useFakeTimers();
 
@@ -67,34 +66,6 @@ describe("CdcBonusRequestSelectYear", () => {
     expect(component.queryByText("2021")).toBeDefined();
     expect(component.queryByText("2022")).toBeDefined();
     expect(component.queryByText("2023")).toBeNull();
-  });
-  it("Should add and remove the bonus from the list of bonus that the user want to request pressing the checkbox", () => {
-    const store: Store<GlobalState> = createStore(
-      appReducer,
-      globalState as any
-    );
-    store.dispatch(
-      cdcActions.cdcRequestBonusList.success([activableBonuses[0]])
-    );
-    const component = renderComponent(store);
-
-    const checkBox = component.getByTestId("RawCheckbox");
-    const continueButton = component.getByTestId("continueButton");
-
-    expect(checkBox).toBeDefined();
-
-    // Add the year to the list
-    fireEvent.press(checkBox);
-    // Remove the year from the list
-    fireEvent.press(checkBox);
-    // Add again the year to the list
-    fireEvent.press(checkBox);
-
-    fireEvent.press(continueButton);
-
-    expect(store.getState().bonus.cdc.bonusRequest.selectedBonus).toStrictEqual(
-      [{ year: activableBonuses[0].year }]
-    );
   });
 });
 

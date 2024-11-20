@@ -22,17 +22,18 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import I18n from "../../../../i18n";
 import { PaymentsTransactionRoutes } from "../navigation/routes";
+
 import {
+  isPaymentsLegacyTransactionsEmptySelector,
   areMoreTransactionsAvailable,
   getTransactionsLoadedLength,
   latestTransactionsSelector
-} from "../../../../store/reducers/wallet/transactions";
-import { isPaymentsLegacyTransactionsEmptySelector } from "../store/selectors";
-import { fetchTransactionsRequestWithExpBackoff } from "../../../../store/actions/wallet/transactions";
+} from "../store/selectors";
 import { Transaction } from "../../../../types/pagopa";
 import { PaymentsLegacyListItemTransaction } from "../components/PaymentsLegacyListItemTransaction";
 import { usePaymentsLegacyAttachmentBottomSheet } from "../components/PaymentsLegacyAttachmentBottomSheet";
 import { PaymentsLegacyTransactionsEmptyContent } from "../components/PaymentsLegacyTransactionsEmptyContent";
+import { fetchTransactionsRequestWithExpBackoff } from "../store/actions/legacyTransactionsActions";
 import * as analytics from "../analytics";
 
 export type PaymentsTransactionListScreenProps = RouteProp<
