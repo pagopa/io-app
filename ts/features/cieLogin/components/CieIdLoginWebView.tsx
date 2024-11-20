@@ -75,7 +75,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const loginUri = getCieIDLoginUri(spidLevel, isUat);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingWebView, setIsLoadingWebView] = useState(false);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(ROUTES.AUTHENTICATION, {
@@ -99,9 +99,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     });
   }, [navigation]);
 
-  const validateUrl = useCallback(
+  const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
-      const validUrls = [
+      const whitelistedUrls = [
         "https://idserver.servizicie.interno.gov.it",
         "https://oidc.idserver.servizicie.interno.gov.it",
         "https://mtls.oidc.idserver.servizicie.interno.gov.it",
@@ -110,7 +110,9 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
         "https://ios.oidc.idserver.servizicie.interno.gov.it"
       ];
       // Checks if the URL starts with one of the valid URLs
-      const isUrlValid = validUrls.some(baseUrl => url.startsWith(baseUrl));
+      const isUrlValid = whitelistedUrls.some(baseUrl =>
+        url.startsWith(baseUrl)
+      );
       // Checks whether the URL starts with the specified string
       if (isUrlValid) {
         // Set the URL as valid
@@ -177,7 +179,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
                 handleLoginFailure();
               }
             } else {
-              validateUrl(continueUrl);
+              checkIfUrlIsWhitelisted(continueUrl);
             }
           }
         }
@@ -185,7 +187,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     );
 
     return () => urlListenerSubscription.remove();
-  }, [handleLoginFailure, validateUrl]);
+  }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
@@ -208,14 +210,14 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
             if (result.id === "ERROR") {
               handleLoginFailure(result.code);
             } else {
-              validateUrl(result.url);
+              checkIfUrlIsWhitelisted(result.url);
             }
           },
           isUat
         );
       }
     },
-    [handleLoginFailure, isUat, validateUrl]
+    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
   );
 
   const handleOnShouldStartLoadWithRequest = (
@@ -259,15 +261,20 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     [navigateToCieIdAuthenticationError]
   );
 
-  const headerProps: HeaderSecondLevelHookProps = useMemo(
-    () => ({
+  const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
+    if (webviewSource && !authenticatedUrl && !isLoadingWebView) {
+      return { title: "", goBack: navigateToLandingScreen };
+    }
+    return {
       title: "",
-      ...(webviewSource && !isLoading && !loggedInAuth
-        ? { goBack: navigateToLandingScreen }
-        : { canGoBack: false })
-    }),
-    [isLoading, loggedInAuth, navigateToLandingScreen, webviewSource]
-  );
+      canGoBack: false
+    };
+  }, [
+    authenticatedUrl,
+    isLoadingWebView,
+    navigateToLandingScreen,
+    webviewSource
+  ]);
 
   useHeaderSecondLevel(headerProps);
 
@@ -285,12 +292,12 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           userAgent={defaultUserAgent}
           javaScriptEnabled={true}
           renderLoading={() => {
-            setIsLoading(true);
+            setIsLoadingWebView(true);
             return (
               <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
             );
           }}
-          onLoadEnd={() => setIsLoading(false)}
+          onLoadEnd={() => setIsLoadingWebView(false)}
           originWhitelist={originSchemasWhiteList}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           onHttpError={handleLoadingError}

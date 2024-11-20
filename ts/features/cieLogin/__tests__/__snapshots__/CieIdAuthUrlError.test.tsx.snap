@@ -16,7 +16,6 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
       "marginHorizontal": 24,
     }
   }
-  testID="cie-id-aurl-error-screen"
 >
   <RCTScrollView
     centerContent={true}
