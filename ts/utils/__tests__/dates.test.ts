@@ -117,11 +117,12 @@ describe("getDateFromExpiryDate", () => {
 
 describe("removeTimezoneFromDate", () => {
   it("should remove the timezone from a date", () => {
-    const date = new Date("2023-02-01");
+    const date = new Date("2023-02-01T12:00:00-05:00");
     const dateWithoutTimezone = removeTimezoneFromDate(date);
     expect(dateWithoutTimezone.getDate()).toBe(1);
     expect(dateWithoutTimezone.getMonth()).toBe(1); // Month is zero based
     expect(dateWithoutTimezone.getFullYear()).toBe(2023);
+    expect(dateWithoutTimezone.toISOString()).toBe("2023-02-01T00:00:00.000Z");
   });
 
   it("should throw if the date is invalid", () => {
