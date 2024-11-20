@@ -401,3 +401,16 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
   );
+
+/**
+ * Return IT Wallet credentials that have been disabled remotely.
+ */
+export const itwDisabledCredentialsSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.itw.disabled_credentials),
+      O.toUndefined
+    )
+);

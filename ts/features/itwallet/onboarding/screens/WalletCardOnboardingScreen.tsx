@@ -1,6 +1,5 @@
 import {
   Badge,
-  ContentWrapper,
   IOIcons,
   ListItemHeader,
   ModuleCredential,
@@ -10,11 +9,14 @@ import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isItwEnabledSelector,
+  itwDisabledCredentialsSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import {
@@ -38,18 +40,49 @@ import {
   trackShowCredentialsList,
   trackStartAddNewCredential
 } from "../../analytics";
+import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
+import { useItwAlertWithStatusBar } from "../../common/hooks/useItwAlertWithStatusBar";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { ItwScrollViewWithLargeHeader } from "../../common/components/ItwScrollViewWithLargeHeader";
+
+// List of available credentials to show to the user
+const availableCredentials = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+] as const;
 
 const activeBadge: Badge = {
   variant: "success",
   text: I18n.t("features.wallet.onboarding.badge.active")
 };
 
+const disabledBadge: Badge = {
+  variant: "default",
+  text: I18n.t("features.wallet.onboarding.badge.unavailable")
+};
+
 const WalletCardOnboardingScreen = () => {
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const sectionStatus = useIOSelector(
+    sectionStatusByKeySelector("itw_credential_onboarding")
+  );
 
-  useFocusEffect(() => trackShowCredentialsList());
+  const { alertProps, statusBar } = useItwAlertWithStatusBar(sectionStatus);
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
+  useFocusEffect(trackShowCredentialsList);
+
+  useHeaderSecondLevel({
+    title: I18n.t("features.wallet.onboarding.title"),
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["wallet", "wallet_methods"],
+    supportRequest: true,
+    enableDiscreteTransition: true,
+    alert: alertProps
+  });
 
   const isItwSectionVisible = React.useMemo(
     // IT Wallet credential catalog should be visible if
@@ -61,24 +94,22 @@ const WalletCardOnboardingScreen = () => {
   );
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("features.wallet.onboarding.title")
-      }}
-      contextualHelp={emptyContextualHelp}
-      faqCategories={["wallet", "wallet_methods"]}
-      headerActionsProp={{ showHelp: true }}
+    <ItwScrollViewWithLargeHeader
+      title={I18n.t("features.wallet.onboarding.title")}
+      animatedRef={animatedScrollViewRef}
     >
-      <ContentWrapper>
-        {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
-        <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+      {statusBar}
+      {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
+      <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
+    </ItwScrollViewWithLargeHeader>
   );
 };
 
 const ItwCredentialOnboardingSection = () => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const remotelyDisabledCredentials = useIOSelector(
+    itwDisabledCredentialsSelector
+  );
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -99,12 +130,6 @@ const ItwCredentialOnboardingSection = () => {
       skipNavigation: true
     });
   };
-  // List of available credentials to show to the user
-  const availableCredentials = [
-    CredentialType.DRIVING_LICENSE,
-    CredentialType.EUROPEAN_DISABILITY_CARD,
-    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-  ] as const;
 
   const credentialIconByType: Record<
     (typeof availableCredentials)[number],
@@ -123,6 +148,18 @@ const ItwCredentialOnboardingSection = () => {
       <VStack space={8}>
         {availableCredentials.map(type => {
           const isCredentialAlreadyActive = itwCredentialsTypes.includes(type);
+          const isCredentialDisabled =
+            !!remotelyDisabledCredentials?.includes(type);
+
+          const getBadge = () => {
+            if (isCredentialAlreadyActive) {
+              return activeBadge;
+            }
+            if (isCredentialDisabled) {
+              return disabledBadge;
+            }
+            return undefined;
+          };
 
           return (
             <ModuleCredential
@@ -131,9 +168,9 @@ const ItwCredentialOnboardingSection = () => {
               icon={credentialIconByType[type]}
               label={getCredentialNameFromType(type)}
               onPress={
-                !isCredentialAlreadyActive
-                  ? beginCredentialIssuance(type)
-                  : undefined
+                isCredentialAlreadyActive || isCredentialDisabled
+                  ? undefined
+                  : beginCredentialIssuance(type)
               }
               isFetching={
                 isCredentialIssuancePending &&
@@ -143,7 +180,7 @@ const ItwCredentialOnboardingSection = () => {
                   O.getOrElse(constFalse)
                 )
               }
-              badge={isCredentialAlreadyActive ? activeBadge : undefined}
+              badge={getBadge()}
             />
           );
         })}
