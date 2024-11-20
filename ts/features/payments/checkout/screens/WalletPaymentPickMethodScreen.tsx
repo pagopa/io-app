@@ -171,7 +171,10 @@ const WalletPaymentPickMethodScreen = () => {
     if (pot.isError(userWalletsPots)) {
       return userWalletsPots.error;
     }
-    return null;
+    return {
+      faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+      faultCodeDetail: "GENERIC_ERROR"
+    };
   }, [transactionPot, pspListPot, paymentMethodsPot, userWalletsPots]);
 
   useOnFirstRender(
@@ -201,10 +204,7 @@ const WalletPaymentPickMethodScreen = () => {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
         params: {
-          error: error ?? {
-            faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
-            faultCodeDetail: "GENERIC_ERROR"
-          }
+          error
         }
       });
     }
