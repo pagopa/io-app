@@ -22,9 +22,9 @@ export type LandingScreenBannerId =
   keyof typeof LANDING_SCREEN_BANNERS_ENABLED_MAP;
 
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
-  PUSH_NOTIFICATIONS_REMINDER: true,
+  PUSH_NOTIFICATIONS_REMINDER: false,
   ITW_DISCOVERY: true,
-  SETTINGS_DISCOVERY: false
+  SETTINGS_DISCOVERY: true
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {

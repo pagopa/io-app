@@ -68,7 +68,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
       }
     >
       <View
-        accessibilityLabel="Non perderti i messaggi importanti Attiva le notifiche push di IO dalle impostazioni di sistema Attiva notifiche push"
+        accessibilityLabel="Don't miss any important messages! Turn on push notifications to know when you get a message on IO. Turn on push notifications"
         accessibilityRole="button"
         accessible={true}
         style={
@@ -100,7 +100,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
             ]
           }
         >
-          Non perderti i messaggi importanti
+          Don't miss any important messages!
         </Text>
         <View
           style={
@@ -127,7 +127,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
             ]
           }
         >
-          Attiva le notifiche push di IO dalle impostazioni di sistema
+          Turn on push notifications to know when you get a message on IO.
         </Text>
         <View
           style={
@@ -149,7 +149,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
             }
           />
           <View
-            accessibilityLabel="Attiva notifiche push"
+            accessibilityLabel="Turn on push notifications"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -242,7 +242,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
                   ]
                 }
               >
-                Attiva notifiche push
+                Turn on push notifications
               </Text>
             </View>
           </View>
