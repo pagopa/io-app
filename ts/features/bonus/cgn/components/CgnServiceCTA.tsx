@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { ButtonSolid, IOToast } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -51,7 +51,7 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
           IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
           dispatch(loadServicePreference.request(serviceId));
         },
-        () => IOToast.error(I18n.t("global.genericError"))
+        () => IOToast.error(I18n.t("wallet.delete.failed"))
       );
     }
     // eslint-disable-next-line functional/immutable-data
@@ -65,11 +65,11 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
         I18n.t("bonus.cgn.activation.deactivate.alert.message"),
         [
           {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.deactivate"),
+            text:
+              Platform.OS === "ios"
+                ? I18n.t(`wallet.delete.ios.confirm`)
+                : I18n.t(`wallet.delete.android.confirm`),
+            style: "destructive",
             onPress: () => {
               analytics.trackSpecialServiceStatusChanged({
                 is_active: false,
@@ -77,8 +77,13 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
               });
               dispatch(cgnUnsubscribe.request());
             }
+          },
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "default"
           }
-        ]
+        ],
+        { cancelable: false }
       ),
     [dispatch, serviceId]
   );
