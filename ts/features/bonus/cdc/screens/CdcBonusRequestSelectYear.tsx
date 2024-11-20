@@ -1,8 +1,8 @@
 import {
+  CheckboxLabel,
   FooterWithButtons,
   H2,
   H6,
-  HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -12,7 +12,6 @@ import { SafeAreaView, ScrollView, View } from "react-native";
 import { Anno } from "../../../../../definitions/cdc/Anno";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { isReady } from "../../../../common/model/RemoteValue";
-import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -75,19 +74,16 @@ const CdcBonusRequestSelectYear = () => {
           <H6>{I18n.t("bonus.cdc.bonusRequest.selectYear.body")}</H6>
           <VSpacer size={24} />
           {[...activableBonus].sort(compareSelectedBonusByYear).map(b => (
-            <View key={b.year}>
-              <View style={{ flexDirection: "row" }}>
-                <CheckBox
-                  onValueChange={(v: boolean) => {
-                    const updatedYears = v
-                      ? [...years, b.year]
-                      : years.filter(y => y !== b.year);
-                    setYears(updatedYears);
-                  }}
-                />
-                <HSpacer size={16} />
-                <H6>{b.year}</H6>
-              </View>
+            <View key={b.year} testID={"CheckboxLabel"}>
+              <CheckboxLabel
+                label={b.year}
+                onValueChange={(v: boolean) => {
+                  const updatedYears = v
+                    ? [...years, b.year]
+                    : years.filter(y => y !== b.year);
+                  setYears(updatedYears);
+                }}
+              />
               <VSpacer size={24} />
             </View>
           ))}
