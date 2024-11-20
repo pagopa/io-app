@@ -46,6 +46,10 @@ export const QrCodeImage = ({
         .then(result => setSource(result))
         .catch(_ => undefined);
     }
+
+    return () => {
+      setSource(undefined);
+    };
   }, [value, realSize, backgroundColor, correctionLevel]);
 
   return source ? (

@@ -20,12 +20,18 @@ export const itwTrustmarkMachine = setup({
     events: {} as { type: "" }
   },
   actions: {
+    onInit: notImplemented,
     handleSessionExpired: notImplemented,
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
         ? differenceInSeconds(context.expirationDate, new Date())
         : undefined
-    }))
+    })),
+    resetTrustmark: assign({
+      trustmarkUrl: undefined,
+      expirationDate: undefined,
+      expirationSeconds: undefined
+    })
   },
   actors: {
     getWalletAttestationActor:
@@ -43,7 +49,10 @@ export const itwTrustmarkMachine = setup({
   }
 }).createMachine({
   id: "itwTrustmarkMachine",
-  context: ({ input }) => input,
+  context: ({ input }) => ({
+    credentialType: input.credentialType
+  }),
+  entry: "onInit",
   initial: "CheckingWalletInstanceAttestation",
   states: {
     CheckingWalletInstanceAttestation: {
@@ -127,8 +136,8 @@ export const itwTrustmarkMachine = setup({
           always: [
             {
               guard: "isTrustmarkExpired",
-              actions: assign({ trustmarkUrl: undefined }),
-              target: "#itwTrustmarkMachine.RefreshingTrustmark"
+              actions: "resetTrustmark",
+              target: "#itwTrustmarkMachine.CheckingWalletInstanceAttestation"
             },
             {
               target: "Idle"

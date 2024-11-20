@@ -1,12 +1,6 @@
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-
 export type Input = {
   /**
-   * The wallet instance attestation to be used to get the trustmark
+   * The credential type to get the trustmark for
    */
-  walletInstanceAttestation: string;
-  /**
-   * The credential to get the trustmark for
-   */
-  credential: StoredCredential;
+  credentialType: string;
 };

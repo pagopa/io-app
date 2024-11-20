@@ -15,8 +15,8 @@ export type GetWalletAttestationActorOutput = Awaited<
 >;
 
 export type GetCredentialTrustmarkUrlActorInput = {
-  walletInstanceAttestation: string;
-  credential: StoredCredential;
+  walletInstanceAttestation?: string;
+  credential?: StoredCredential;
 };
 
 export type GetCredentialTrustmarkUrlActorOutput = Awaited<
@@ -31,6 +31,9 @@ export type GetCredentialTrustmarkUrlActorOutput = Awaited<
 export const createItwTrustmarkActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => {
+  /**
+   * This actor gets the wallet instance attestation in case it's expired
+   */
   const getWalletAttestationActor =
     fromPromise<GetWalletAttestationActorOutput>(async () => {
       const sessionToken = sessionTokenSelector(store.getState());
@@ -58,15 +61,20 @@ export const createItwTrustmarkActorsImplementation = (
   const getCredentialTrustmarkActor = fromPromise<
     GetCredentialTrustmarkUrlActorOutput,
     GetCredentialTrustmarkUrlActorInput
-  >(
-    async ({ input }) =>
-      // Generate trustmark url to be presented
-      await getCredentialTrustmark(
-        input.walletInstanceAttestation,
-        input.credential,
-        itwEaaVerifierBaseUrl
-      )
-  );
+  >(async ({ input }) => {
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    assert(input.credential, "credential is undefined");
+
+    // Generate trustmark url to be presented
+    return await getCredentialTrustmark(
+      input.walletInstanceAttestation,
+      input.credential,
+      itwEaaVerifierBaseUrl
+    );
+  });
 
   return {
     getWalletAttestationActor,

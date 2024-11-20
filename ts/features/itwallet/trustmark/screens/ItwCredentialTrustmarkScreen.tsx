@@ -8,7 +8,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import * as O from "fp-ts/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
@@ -16,10 +15,8 @@ import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import {
   ItwTrustmarkMachineContext,
@@ -29,8 +26,6 @@ import {
   selectExpirationSeconds,
   selectTrustmarkUrl
 } from "../machine/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -43,27 +38,11 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 export const ItwCredentialTrustmarkScreen = ({ route }: ScreenProps) => {
   const { credentialType } = route.params;
-  const walletInstanceAttestation = useIOSelector(
-    itwWalletInstanceAttestationSelector
-  );
-
-  const credentialOption = useIOSelector(
-    itwCredentialByTypeSelector(credentialType)
-  );
 
   useMaxBrightness();
 
-  if (O.isNone(credentialOption) || !walletInstanceAttestation) {
-    // This is unlikely to happen, but we want to handle the case where the credential or WIA are not found
-    // because of inconsistencies in the state, and assert that the credential is O.some
-    return <ItwGenericErrorContent />;
-  }
-
   return (
-    <ItwTrustmarkMachineProvider
-      credential={credentialOption.value}
-      walletInstanceAttestation={walletInstanceAttestation}
-    >
+    <ItwTrustmarkMachineProvider credentialType={credentialType}>
       <IOScrollViewWithLargeHeader
         title={{
           label: getCredentialNameFromType(credentialType)
@@ -104,10 +83,15 @@ const TrustmarkExpirationTimer = () => {
     selectExpirationSeconds
   );
 
-  // Format the expiration time to mm:ss
-  const formattedExpirationTime = expirationSeconds
-    ? format(new Date(expirationSeconds * 1000), "mm:ss")
-    : undefined;
+  // Format the expiration time to mm:ss and show a placeholder if the expiration time is undefined
+  const formattedExpirationTime =
+    expirationSeconds !== undefined ? (
+      <Body weight="Bold">
+        {format(new Date(expirationSeconds * 1000), "mm:ss")}
+      </Body>
+    ) : (
+      <Placeholder.Box height={18} width={40} animate="fade" radius={4} />
+    );
 
   return (
     <View style={[IOStyles.row, IOStyles.alignCenter]}>
@@ -115,11 +99,7 @@ const TrustmarkExpirationTimer = () => {
       <HSpacer size={24} />
       <Body>
         {I18n.t("features.itWallet.trustmark.expiration") + " "}
-        {formattedExpirationTime ? (
-          <Body weight="Bold">{formattedExpirationTime}</Body>
-        ) : (
-          <Placeholder.Box height={18} width={40} animate="fade" radius={4} />
-        )}
+        {formattedExpirationTime}
       </Body>
     </View>
   );

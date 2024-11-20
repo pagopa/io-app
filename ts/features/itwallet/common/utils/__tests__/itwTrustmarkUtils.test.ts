@@ -46,6 +46,13 @@ describe("itwTrustmarkUtils", () => {
         "https://verifier.url"
       );
 
+      expect(Credential.Trustmark.getCredentialTrustmark).toHaveBeenCalledWith({
+        walletInstanceAttestation: "walletInstanceAttestation",
+        wiaCryptoContext: expect.any(Object),
+        credentialType: "MDL",
+        docNumber: "RM8375131N"
+      });
+
       expect(trustmark).toStrictEqual({
         jwt: "testJwt",
         expirationTime: 1000,

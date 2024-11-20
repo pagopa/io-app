@@ -2,23 +2,20 @@ import { createActorContext } from "@xstate/react";
 import React from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../store/hooks";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { createItwTrustmarkActionsImplementation } from "./actions";
 import { createItwTrustmarkActorsImplementation } from "./actors";
 import { createItwTrustmarkGuardsImplementation } from "./guards";
 import { itwTrustmarkMachine } from "./machine";
 
 type Props = React.PropsWithChildren<{
-  walletInstanceAttestation: string;
-  credential: StoredCredential;
+  credentialType: string;
 }>;
 
 export const ItwTrustmarkMachineContext =
   createActorContext(itwTrustmarkMachine);
 
 export const ItwTrustmarkMachineProvider = ({
-  credential,
-  walletInstanceAttestation,
+  credentialType,
   children
 }: Props) => {
   const store = useIOStore();
@@ -33,7 +30,7 @@ export const ItwTrustmarkMachineProvider = ({
   return (
     <ItwTrustmarkMachineContext.Provider
       logic={trustmarkMachine}
-      options={{ input: { credential, walletInstanceAttestation } }}
+      options={{ input: { credentialType } }}
     >
       {children}
     </ItwTrustmarkMachineContext.Provider>
