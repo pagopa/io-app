@@ -1,10 +1,14 @@
-/* eslint-disable no-console */
-/* eslint-disable no-throw-literal */
 /* eslint-disable functional/immutable-data */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require("fs-extra");
 
 const packagePath = "package.json";
+const gradlePath = "./android/app/build.gradle";
+const versionCodeRegex = /(versionCode )([0-9]+)/gm;
+
+function replaceVersionCode(_, version, p1, __) {
+  return [p1, version].join("");
+}
 
 /**
  * Prepare the package.json file for a new fix|release|breaking cycle.
@@ -21,7 +25,15 @@ const replaceCanaryVersion = () => {
   // replace the version, removing the rc part
   package.version = `${versionSplit[0]}-${canarySplit[1]}`;
 
+  const contents = fs.readFileSync(gradlePath).toString("utf8");
+
+  const updatedGradleContents = contents.replace(
+    versionCodeRegex,
+    (substr, ...args) =>
+      replaceVersionCode(substr, parseInt(process.argv[3], 10), ...args)
+  );
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
+  fs.writeFileSync(gradlePath, updatedGradleContents);
 };
 
 replaceCanaryVersion();

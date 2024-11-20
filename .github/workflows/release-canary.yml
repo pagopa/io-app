@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       currentAppVersion: ${{ steps.store-current-version.outputs.CURRENT_APP_VERSION }}
+      currentAppBuildCode: ${{ steps.store-current-version.outputs.CURRENT_APP_BUILD_CODE }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -20,9 +21,11 @@ jobs:
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
           echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
+          echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
       - id: replace-version-with-canary
         run: |
-          node scripts/canary/replaceCanaryVersion.js ${{ env.CANARY_VERSION }}
+          node scripts/canary/replaceCanaryVersion.js ${{ env.CANARY_VERSION }} ${{ env.CANARY_BUILD_CODE }}
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
       - id: bump-version
@@ -38,6 +41,8 @@ jobs:
           APP_VERSION=$(node -p -e "require('./package.json').version")
           gh release create "(Canary) $APP_VERSION" --generate-notes
           gh variable set CANARY_VERSION -b "$APP_VERSION" -e canary
+          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
+          gh variable set CANARY_BUILD_CODE -b "$BUILD_CODE" -e canary
   release-android:
     needs: prepare-canary-release
     environment: canary
@@ -195,7 +200,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          node scripts/canary/replaceCanaryVersion.js ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
+          node scripts/canary/replaceCanaryVersion.js ${{ needs.prepare-canary-release.outputs.currentAppVersion }} ${{ needs.prepare-canary-release.outputs.currentAppBuildCode }}
           bash ./.github/scripts/package-name-restore.sh it.pagopa.io.app.canary it.pagopa.io.app android
           bash ./.github/scripts/package-name-restore.sh it.pagopa.app.io.canary it.pagopa.app.io ios
           git add .
