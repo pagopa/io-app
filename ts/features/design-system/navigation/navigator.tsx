@@ -57,7 +57,6 @@ import { DSLegacyBadges } from "../core/DSLegacyBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
-import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -625,14 +624,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyBadges}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.route}
-          component={DSLegacySelection}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.title
           }}
         />
 
