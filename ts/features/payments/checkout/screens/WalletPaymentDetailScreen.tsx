@@ -35,7 +35,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { format } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -55,6 +54,7 @@ import {
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
@@ -63,7 +63,7 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
+import { isValidDueDate } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -251,19 +251,10 @@ const WalletPaymentDetailContent = ({
     formatNumberAmount(amountValue, true, "right")
   );
 
-  const YEARS_TO_EXPIRE = 10;
-
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(date => {
-      const formattedDate = format(date, "DD/MM/YYYY");
-      const tenYearsFromNow = new Date();
-      tenYearsFromNow.setFullYear(
-        tenYearsFromNow.getFullYear() + YEARS_TO_EXPIRE
-      );
-      return new Date(date) > tenYearsFromNow ? undefined : formattedDate;
-    }),
+    O.map(date => isValidDueDate(date)),
     O.toUndefined
   );
 

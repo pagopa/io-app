@@ -1,13 +1,14 @@
 import _ from "lodash";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import { WalletPaymentStepEnum } from "../types";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { format } from "../../../../utils/dates";
 import {
   PaymentAnalyticsPhase,
   PaymentAnalyticsSelectedPspFlag
 } from "../../common/types/PaymentAnalytics";
+import { WalletPaymentStepEnum } from "../types";
 
 export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
   "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
@@ -64,4 +65,16 @@ export const trimAndLimitValue = (value: string, maxLength: number): string => {
   return trimmedValue.length > maxLength
     ? trimmedValue.substring(0, maxLength)
     : trimmedValue;
+};
+
+const YEARS_TO_EXPIRE = 10;
+
+export const isValidDueDate = (date: string): string | undefined => {
+  const formattedDate = format(date, "DD/MM/YYYY");
+  if (formattedDate === "Invalid Date") {
+    return undefined;
+  }
+  const tenYearsFromNow = new Date();
+  tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + YEARS_TO_EXPIRE);
+  return new Date(date) > tenYearsFromNow ? undefined : formattedDate;
 };
