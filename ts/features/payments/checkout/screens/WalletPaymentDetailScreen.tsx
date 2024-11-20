@@ -63,7 +63,7 @@ import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { isValidDueDate } from "../utils";
+import { isDueDateValid } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -254,7 +254,7 @@ const WalletPaymentDetailContent = ({
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(date => isValidDueDate(date)),
+    O.map(date => isDueDateValid(date)),
     O.toUndefined
   );
 
