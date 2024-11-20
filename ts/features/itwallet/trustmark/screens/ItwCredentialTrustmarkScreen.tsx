@@ -26,6 +26,7 @@ import {
   selectExpirationSeconds,
   selectTrustmarkUrl
 } from "../machine/selectors";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -67,6 +68,8 @@ export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
 const TrustmarkQrCode = () => {
   const trustmarkUrl =
     ItwTrustmarkMachineContext.useSelector(selectTrustmarkUrl);
+
+  useDebugInfo({ trustmarkUrl });
 
   return (
     <View style={styles.qrCodeContainer}>
