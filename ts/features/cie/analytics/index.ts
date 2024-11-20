@@ -94,13 +94,13 @@ export const trackCieIdNotInstalledDownloadAction = async () => {
 export const trackCieIdErrorCiePinFallbackScreen = async () => {
   void mixpanelTrack(
     "LOGIN_CIEID_FALLBACK_CIE_PIN",
-    buildEventProperties("KO", "error")
+    buildEventProperties("KO", undefined)
   );
 };
 export const trackCieIdErrorSpidFallbackScreen = async () => {
   void mixpanelTrack(
     "LOGIN_CIEID_FALLBACK_SPID",
-    buildEventProperties("KO", "error")
+    buildEventProperties("KO", undefined)
   );
 };
 
