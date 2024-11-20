@@ -2,15 +2,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
 import { areNotificationPermissionsEnabled } from "../reducers/environment";
 
-const pushNotificationPermissionsRequestDurationSelector = (
-  state: GlobalState
-) => state.notifications.environment.pushNotificationPermissionsRequestDuration;
-
 export const hasUserSeenSystemNotificationsPromptSelector = (
   state: GlobalState
 ) => {
   const requestDuration =
-    pushNotificationPermissionsRequestDurationSelector(state);
+    state.notifications.environment.pushNotificationPermissionsRequestDuration;
 
   /*
     tested requestDuration timings (in ms) using physical devices:
