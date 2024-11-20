@@ -1458,7 +1458,7 @@ wallet:
     android:
       confirm: Delete
     successful: Method removed!
-    failed: The method could not be removed from your Wallet
+    failed: There was a problem, please try again
   newPaymentMethod:
     add: add
     show: show
@@ -1982,6 +1982,9 @@ wallet:
       PLAFOND_LIMIT_ERROR:
         title: Hai superato il limite di spesa della tua carta
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
+      BE_NODE_KO:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2011,7 +2014,7 @@ cardComponent:
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
-  removeCta: "Delete this payment method"
+  removeCta: "Remove from Wallet"
 messages:
   accessibility:
     message:
@@ -2787,7 +2790,7 @@ bonus:
     cta:
       activeBonus: Activate Carta Giovani Nazionale
       back: Not now
-      deactivateBonus: Deactivate Carta Giovani Nazionale
+      deactivateBonus: Remove from Wallet
       goToDetail: Use the card
     detail:
       cta:
@@ -2856,10 +2859,10 @@ bonus:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
       deactivate:
-        toast: "The request to deactivate the card has been successfully executed"
+        toast: "Method removed!"
         alert:
-          title: "Deactivate card"
-          message: "Do you really want to deactivate your Carta Giovani Nazionale? If you confirm, you will no longer be able to access the opportunities and the card will disappear from your Wallet."
+          title: "Do you want to remove Carta Giovani from the Wallet?"
+          message: "The card will be deactivated and you will no longer be able to access the available opportunities."
         expired: Delete Carta Giovani Nazionale
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
