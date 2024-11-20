@@ -1,10 +1,7 @@
 name: Nightly release new app version
 on:
   - issue_comment
-  - workflow_dispatch
 jobs:
-  # check-branch:
-  #   runs-on: ubuntu-latest
   run-static-checks:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/release-canary') 
     uses: ./.github/workflows/staticcheck.yaml
