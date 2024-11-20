@@ -542,7 +542,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 21,
                                       },
                                     ]
@@ -864,6 +864,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
@@ -1087,6 +1088,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   >
                                     <Text
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
@@ -1403,7 +1405,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                         ]
@@ -1611,7 +1613,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                         ]

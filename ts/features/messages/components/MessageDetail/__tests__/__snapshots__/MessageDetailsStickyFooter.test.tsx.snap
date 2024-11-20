@@ -455,7 +455,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                     {
@@ -570,7 +570,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": undefined,
                                     },
                                     {
@@ -1053,7 +1053,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                     {
@@ -1160,7 +1160,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   [
@@ -1279,7 +1279,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": undefined,
                                     },
                                     {
@@ -2105,7 +2105,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                     {
@@ -3562,7 +3562,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                     {
@@ -4045,7 +4045,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                     {
@@ -4160,7 +4160,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": undefined,
                                     },
                                     {

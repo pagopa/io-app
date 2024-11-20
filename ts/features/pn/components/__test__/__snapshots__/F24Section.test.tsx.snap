@@ -577,7 +577,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   {
@@ -719,6 +719,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -942,6 +943,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2696,6 +2698,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             >
                               <Text
                                 allowFontScaling={false}
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={

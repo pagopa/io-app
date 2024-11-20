@@ -377,6 +377,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           >
                             <Text
                               allowFontScaling={false}
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -1053,6 +1054,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             >
                               <Text
                                 allowFontScaling={false}
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -1572,6 +1574,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           >
                             <Text
                               allowFontScaling={false}
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -2138,6 +2141,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             >
                               <Text
                                 allowFontScaling={false}
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={

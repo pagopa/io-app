@@ -857,6 +857,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1081,6 +1082,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1330,6 +1332,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1579,6 +1582,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1828,6 +1832,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -2077,6 +2082,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -2326,6 +2332,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={

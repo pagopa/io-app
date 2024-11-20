@@ -537,7 +537,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -810,7 +810,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -977,7 +977,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -2686,7 +2686,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -2959,7 +2959,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -3126,7 +3126,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -4816,7 +4816,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -5089,7 +5089,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -5256,7 +5256,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -6931,7 +6931,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -7204,7 +7204,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -7371,7 +7371,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -9060,7 +9060,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -9333,7 +9333,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -9500,7 +9500,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -11145,7 +11145,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -11261,7 +11261,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -11533,7 +11533,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -11700,7 +11700,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -13317,7 +13317,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -13433,7 +13433,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -13705,7 +13705,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -13872,7 +13872,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -15547,7 +15547,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -15820,7 +15820,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -15987,7 +15987,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -17612,7 +17612,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -17885,7 +17885,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -18052,7 +18052,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -19761,7 +19761,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -20034,7 +20034,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -20201,7 +20201,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -21890,7 +21890,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -22163,7 +22163,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -22330,7 +22330,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -24039,7 +24039,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -24312,7 +24312,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -24479,7 +24479,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -26124,7 +26124,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -26240,7 +26240,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -26512,7 +26512,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -26679,7 +26679,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -28388,7 +28388,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -28661,7 +28661,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -28828,7 +28828,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -30537,7 +30537,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -30810,7 +30810,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -30977,7 +30977,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -32694,7 +32694,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -32967,7 +32967,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -33134,7 +33134,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -34823,7 +34823,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -35096,7 +35096,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -35263,7 +35263,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -36910,7 +36910,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -37026,7 +37026,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -37298,7 +37298,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -37465,7 +37465,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -39154,7 +39154,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -39427,7 +39427,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -39594,7 +39594,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -41289,7 +41289,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -41405,7 +41405,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -41677,7 +41677,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -41844,7 +41844,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -43692,7 +43692,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -43965,7 +43965,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -44132,7 +44132,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -45841,7 +45841,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -45957,7 +45957,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -46229,7 +46229,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -46396,7 +46396,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -48071,7 +48071,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -48344,7 +48344,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -48511,7 +48511,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -50228,7 +50228,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -50501,7 +50501,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -50668,7 +50668,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -52357,7 +52357,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -52630,7 +52630,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -52797,7 +52797,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
