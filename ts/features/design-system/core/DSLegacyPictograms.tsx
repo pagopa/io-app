@@ -15,12 +15,8 @@ import {
 } from "../components/DSAssetViewerBox";
 
 /* PICTOGRAMS */
-import BrokenLink from "../../../../img/broken-link.png";
-import Question from "../../../../img/pictograms/doubt.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
-import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
-import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
 import Unrecognized from "../../../../img/wallet/errors/payment-unknown-icon.png";
 /* Sections */
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -77,23 +73,8 @@ const renderRasterPictograms = () => (
   <View style={styles.itemsWrapper}>
     <DSAssetViewerBox
       type="raster"
-      name={"Question"}
-      image={renderRasterImage(Question)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"ABILogo"}
-      image={renderRasterImage(ABILogo)}
-    />
-    <DSAssetViewerBox
-      type="raster"
       name={"Umbrella"}
       image={renderRasterImage(Umbrella)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"NotAvailable"}
-      image={renderRasterImage(NotAvailable)}
     />
     <DSAssetViewerBox
       type="raster"
@@ -105,11 +86,6 @@ const renderRasterPictograms = () => (
       type="raster"
       name={"Completed"}
       image={renderRasterImage(CompletedRaster)}
-    />
-    <DSAssetViewerBox
-      type="raster"
-      name={"BrokenLink"}
-      image={renderRasterImage(BrokenLink)}
     />
   </View>
 );
