@@ -5,6 +5,8 @@ import * as E from "fp-ts/lib/Either";
 import { SessionToken } from "../types/SessionToken";
 import { trackLoginSpidError } from "../screens/authentication/analytics/spidAnalytics";
 import { apiUrlPrefix, spidRelayState } from "../config";
+import { store } from "../boot/configureStoreAndPersistor";
+import { selectedIdentityProviderSelector } from "../store/reducers/authentication";
 import { isStringNullyOrEmpty } from "./strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
@@ -57,6 +59,8 @@ export const extractLoginResult = (
   url: string,
   idp: IdpTypes = "SPID"
 ): LoginResult | undefined => {
+  const state = store.getState();
+  const selectedIdp = selectedIdentityProviderSelector(state);
   const urlParse = new URLParse(url, true);
 
   // LOGIN_SUCCESS
@@ -72,7 +76,10 @@ export const extractLoginResult = (
     const errorCode = urlParse.query.errorCode;
     const errorMessage = urlParse.query.errorMessage;
     if (idp === "SPID") {
-      trackLoginSpidError(errorCode);
+      trackLoginSpidError(errorCode, {
+        idp: selectedIdp?.id || "not_set",
+        ...(errorMessage ? { "error message": errorMessage } : {})
+      });
     }
     return {
       success: false,

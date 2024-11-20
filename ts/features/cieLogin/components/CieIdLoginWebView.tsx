@@ -24,6 +24,8 @@ import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAu
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
 import { apiUrlPrefix } from "../../../config";
+import { trackLoginSpidError } from "../../../screens/authentication/analytics/spidAnalytics";
+import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -77,7 +79,10 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      // TODO: Check missing SAML response (error message) https://pagopa.atlassian.net/browse/IOPID-2406
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {})
+      });
       dispatch(
         loginFailure({
           error: new Error(
