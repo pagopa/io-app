@@ -663,6 +663,9 @@ authentication:
     tour_guide:
       title: Novità
       content: Ora puoi usare CieID per entrare su IO!
+  cieidUrlErrorScreen:
+    title: Non riusciamo ad autenticarti con l’app CieID
+    description: Usa un altro metodo per entrare in app
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
@@ -1908,6 +1911,9 @@ wallet:
       GENERIC_ERROR:
         title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
         subtitle: "Riprova più tardi."
+      PAYMENT_SLOWDOWN_ERROR:
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
@@ -2926,6 +2932,11 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Non perderti i messaggi importanti"
+        body: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
+        CTA: "Attiva notifiche push"
     attachmentDownloadFeedback: "Download in corso"
     attachments: "Allegati"
     loading:
