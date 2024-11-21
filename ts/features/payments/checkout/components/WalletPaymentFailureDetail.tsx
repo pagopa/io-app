@@ -64,7 +64,6 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
-      service_name: paymentAnalyticsData?.serviceName,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
     });
 
