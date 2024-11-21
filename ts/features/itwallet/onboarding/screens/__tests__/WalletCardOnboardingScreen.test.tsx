@@ -29,6 +29,7 @@ type RenderOptions = {
   isItwEnabled?: boolean;
   isItwTestEnabled?: boolean;
   itwLifecycle?: ItwLifecycleState;
+  remotelyDisabledCredentials?: Array<string>;
 };
 
 jest.mock("../../../../../config", () => ({
@@ -64,13 +65,27 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
+
+  test.each([
+    { remotelyDisabledCredentials: ["MDL"] },
+    { remotelyDisabledCredentials: ["MDL", "EuropeanHealthInsuranceCard"] }
+  ] as ReadonlyArray<RenderOptions>)(
+    "it should hide credential modules when $remotelyDisabledCredentials are remotely disabled",
+    options => {
+      const { queryByTestId } = renderComponent(options);
+      for (const type of options.remotelyDisabledCredentials!) {
+        expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
+      }
+    }
+  );
 });
 
 const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
   itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
+  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID,
+  remotelyDisabledCredentials
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -100,7 +115,8 @@ const renderComponent = ({
           min_app_version: {
             android: "0.0.0.0",
             ios: "0.0.0.0"
-          }
+          },
+          disabled_credentials: remotelyDisabledCredentials
         },
         idPay: isIdPayEnabled && {
           min_app_version: {
