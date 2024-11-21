@@ -53,16 +53,7 @@ jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
 jest.mock("@gorhom/bottom-sheet", () =>
   jest.requireActual("../../../__mocks__/@gorhom/bottom-sheet.ts")
 );
-jest.mock("../analytics", () => {
-  const analytics: Record<string, typeof jest.fn> = {};
-  // eslint-disable-next-line guard-for-in
-  for (const key in jest.requireActual("../analytics")) {
-    // eslint-disable-next-line functional/immutable-data
-    analytics[key] = jest.fn();
-  }
-
-  return analytics;
-});
+jest.mock("../analytics");
 
 describe(CieIdWizard, () => {
   afterEach(jest.clearAllMocks);
