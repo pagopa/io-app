@@ -2215,10 +2215,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-4.0.0.tgz#cc7aea4423381484afc4705b58d6da7700b68e1b"
-  integrity sha512-Xyo/V0+rHxe34LYOPDSIhI4qrPwWa894dHRB1zz/t9EymgbGvuNAIyqEoPDkhqV11ndg4cMF7Ok8eAhXXH+YxQ==
+"@pagopa/io-app-design-system@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-4.0.1.tgz#1f939232e3662fa519eba9d2334b33a597643ebb"
+  integrity sha512-CSaWgbkZ9Tjzz7qdCKz6wnRQ1c3/rej6ordgDeDH0faIlMwCkzNqpduwUWF3j91dIirLpSRCJPhKMfnOkhQsAA==
   dependencies:
     "@testing-library/jest-native" "^5.4.2"
     "@types/react-test-renderer" "^18.0.0"
