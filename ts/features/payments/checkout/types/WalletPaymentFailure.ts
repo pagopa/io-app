@@ -11,6 +11,7 @@ import { ValidationFaultPaymentUnknownProblemJson } from "../../../../../definit
 import { PaymentGenericErrorAfterUserCancellationProblemJson } from "./PaymentGenericErrorAfterUserCancellationProblemJson";
 import { PaymentVerifyGenericErrorProblemJson } from "./PaymentVerifyGenericErrorProblemJson";
 import { PspPaymentMethodNotAvailableProblemJson } from "./PspPaymentMethodNotAvailableProblemJson";
+import { PaymentSlowdownErrorProblemJson } from "./PaymentSlowdownErrorProblemJson";
 
 export type WalletPaymentFailure = t.TypeOf<typeof WalletPaymentFailure>;
 export const WalletPaymentFailure = t.union([
@@ -25,5 +26,6 @@ export const WalletPaymentFailure = t.union([
   PaymentDuplicatedStatusFaultPaymentProblemJson,
   PaymentGenericErrorAfterUserCancellationProblemJson,
   PaymentVerifyGenericErrorProblemJson,
-  PspPaymentMethodNotAvailableProblemJson
+  PspPaymentMethodNotAvailableProblemJson,
+  PaymentSlowdownErrorProblemJson
 ]);
