@@ -34,7 +34,6 @@ import {
 } from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { FaultCodeCategoryEnum } from "../types/PspPaymentMethodNotAvailableProblemJson";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
 const WalletPaymentPickPspScreen = () => {
@@ -74,25 +73,17 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   React.useEffect(() => {
-    if (isError) {
-      if (
-        (pspListPot.error as WalletPaymentFailure)?.faultCodeCategory ===
+    if (
+      isError &&
+      (pspListPot.error as WalletPaymentFailure)?.faultCodeCategory ===
         FaultCodeCategoryEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR
-      ) {
-        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
-          params: {
-            error: pspListPot.error
-          }
-        });
-      } else {
-        navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-          screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-          params: {
-            outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
-          }
-        });
-      }
+    ) {
+      navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
+        params: {
+          error: pspListPot.error
+        }
+      });
     }
   }, [isError, navigation, pspListPot]);
 
