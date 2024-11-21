@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
-import { IOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -48,6 +48,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const toast = useIOToast();
 
   useDebugInfo({
     failure
@@ -120,7 +121,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         ),
         onPress: () =>
           openWebUrl("https://io.italia.it/documenti-su-io/faq/#n1_12", () =>
-            IOToast.error(I18n.t("global.jserror.title"))
+            toast.error(I18n.t("global.jserror.title"))
           )
       }
     },
