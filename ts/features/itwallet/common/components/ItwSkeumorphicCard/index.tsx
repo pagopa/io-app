@@ -1,17 +1,26 @@
-import React, { ReactNode, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Tag } from "@pagopa/io-app-design-system";
+import React, { ReactNode, useMemo } from "react";
+import {
+  AccessibilityProps,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle
+} from "react-native";
+import I18n from "../../../../../i18n";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
+import {
+  borderColorByStatus,
+  getCredentialNameFromType,
+  tagPropsByStatus,
+  validCredentialStatuses
+} from "../../utils/itwCredentialUtils";
 import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../utils/itwTypesUtils";
-import {
-  borderColorByStatus,
-  tagPropsByStatus,
-  validCredentialStatuses
-} from "../../utils/itwCredentialUtils";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
@@ -84,12 +93,30 @@ const ItwSkeumorphicCard = ({
     [credential, status]
   );
 
+  const accessibilityProps = React.useMemo(
+    () =>
+      ({
+        accessible: true,
+        accessibilityLabel: `${getCredentialNameFromType(
+          credential.credentialType
+        )}, ${I18n.t(
+          isFlipped
+            ? "features.itWallet.presentation.credentialDetails.card.back"
+            : "features.itWallet.presentation.credentialDetails.card.front"
+        )}`,
+        accessibilityRole: "image",
+        accessibilityValue: { text: accessibilityLabelByStatus[status] }
+      } as AccessibilityProps),
+    [credential.credentialType, isFlipped, status]
+  );
+
   return (
     <FlippableCard
       containerStyle={styles.card}
       FrontComponent={FrontSide}
       BackComponent={BackSide}
       isFlipped={isFlipped}
+      {...accessibilityProps}
     />
   );
 };
