@@ -1907,6 +1907,9 @@ wallet:
       GENERIC_ERROR:
         title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
         subtitle: "Riprova più tardi."
+      PAYMENT_SLOWDOWN_ERROR:
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
@@ -2925,6 +2928,11 @@ bonus:
         conjunction: " and "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Don't miss any important messages!"
+        body: "Turn on push notifications to know when you get a message on IO."
+        CTA: "Turn on push notifications"
     attachmentDownloadFeedback: "Download in progress"
     attachments: "Attachments"
     loading:
