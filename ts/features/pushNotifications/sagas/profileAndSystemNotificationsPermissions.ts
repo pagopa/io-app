@@ -63,7 +63,7 @@ export function* profileAndSystemNotificationsPermissions(
   );
 
   if (!hasNotificationPermission) {
-    const startRequestTime = performance.now();
+    const startRequestTime = yield* call(performance.now);
 
     // Ask the user for notification permission and update
     // the in-memory redux value if needed
@@ -71,7 +71,7 @@ export function* profileAndSystemNotificationsPermissions(
       requestNotificationPermissions
     );
 
-    const endRequestTime = performance.now();
+    const endRequestTime = yield* call(performance.now);
 
     const requestDuration = endRequestTime - startRequestTime;
     yield* put(setPushPermissionsRequestDuration(requestDuration));
