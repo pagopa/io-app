@@ -27,6 +27,6 @@ if [ "$DIRECTORY" == "android" ]; then
     mv -v ./android/app/src/release/java/it/pagopa/io/app/* ./android/app/src/release/java/it/pagopa/io/app/canary
 fi
 
-echo "Renaming package $CHECK into $REPLACE in directory $DIRECTORY"
+echo "Renaming $CHECK into $REPLACE in directory $DIRECTORY"
 # Cerca i file contenenti la stringa e sostituisci
 grep -rl "$CHECK" "$DIRECTORY" | xargs sed -i "" "s/$CHECK/$REPLACE/g"

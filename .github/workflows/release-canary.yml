@@ -28,6 +28,7 @@ jobs:
           node scripts/canary/replaceCanaryVersion.js ${{ env.CANARY_VERSION }} ${{ env.CANARY_BUILD_CODE }}
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
+          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -203,6 +204,7 @@ jobs:
           node scripts/canary/replaceCanaryVersion.js ${{ needs.prepare-canary-release.outputs.currentAppVersion }} ${{ needs.prepare-canary-release.outputs.currentAppBuildCode }}
           bash ./.github/scripts/package-name-restore.sh it.pagopa.io.app.canary it.pagopa.io.app android
           bash ./.github/scripts/package-name-restore.sh it.pagopa.app.io.canary it.pagopa.app.io ios
+          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-canary-certs.git" "git\@github.com:pagopa\/IO-App-certs.git" ios
           git add .
           git commit -m "revert: restoring repository to default package name and version" --no-verify
           git push --no-verify origin HEAD:${{ github.head_ref }}
