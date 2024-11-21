@@ -2,6 +2,7 @@ import { Tag } from "@pagopa/io-app-design-system";
 import React, { ReactNode, useMemo } from "react";
 import {
   AccessibilityProps,
+  Pressable,
   StyleProp,
   StyleSheet,
   View,
@@ -57,11 +58,13 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
   isFlipped?: boolean;
+  onPress?: () => void;
 };
 
 const ItwSkeumorphicCard = ({
   credential,
-  isFlipped = false
+  isFlipped = false,
+  onPress
 }: ItwSkeumorphicCardProps) => {
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -104,20 +107,32 @@ const ItwSkeumorphicCard = ({
             ? "features.itWallet.presentation.credentialDetails.card.back"
             : "features.itWallet.presentation.credentialDetails.card.front"
         )}`,
-        accessibilityRole: "image",
         accessibilityValue: { text: accessibilityLabelByStatus[status] }
       } as AccessibilityProps),
     [credential.credentialType, isFlipped, status]
   );
 
-  return (
+  const card = (
     <FlippableCard
       containerStyle={styles.card}
       FrontComponent={FrontSide}
       BackComponent={BackSide}
       isFlipped={isFlipped}
-      {...accessibilityProps}
     />
+  );
+
+  if (onPress) {
+    return (
+      <Pressable onPress={onPress} {...accessibilityProps}>
+        {card}
+      </Pressable>
+    );
+  }
+
+  return (
+    <View {...accessibilityProps} accessibilityRole="image">
+      {card}
+    </View>
   );
 };
 
