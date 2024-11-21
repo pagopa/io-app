@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
-import { Linking } from "react-native";
+import { IOToast } from "@pagopa/io-app-design-system";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -27,6 +27,7 @@ import {
   trackItwUnsupportedDevice,
   trackWalletCreationFailed
 } from "../../analytics";
+import { openWebUrl } from "../../../../utils/url";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const failureOption =
@@ -118,7 +119,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
           "features.itWallet.unsupportedDevice.error.secondaryAction"
         ),
         onPress: () =>
-          Linking.openURL("https://io.italia.it/documenti-su-io/faq/#n1_12")
+          openWebUrl("https://io.italia.it/documenti-su-io/faq/#n1_12", () =>
+            IOToast.error(I18n.t("global.jserror.title"))
+          )
       }
     },
     [IssuanceFailureType.NOT_MATCHING_IDENTITY]: {
