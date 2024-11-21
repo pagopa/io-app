@@ -14,15 +14,16 @@ const mapSectionStatusToAlertProps = (
   sectionStatus: SectionStatus
 ): AlertProps => {
   const locale = getFullLocale();
+  const webUrl = sectionStatus.web_url ? sectionStatus.web_url[locale] : null;
   return {
     variant: mapLevelToVariant(sectionStatus.level),
     content:
       sectionStatus.message[locale as keyof typeof sectionStatus.message] ||
       sectionStatus.message["it-IT"],
-    action: I18n.t("global.sectionStatus.moreInfo"),
+    action: webUrl ? I18n.t("global.sectionStatus.moreInfo") : "",
     onPress: () => {
-      if (sectionStatus.web_url) {
-        openWebUrl(sectionStatus.web_url[locale]);
+      if (webUrl) {
+        openWebUrl(webUrl);
       }
     }
   };
