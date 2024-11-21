@@ -25,6 +25,7 @@ import { Banner } from "../../../../definitions/content/Banner";
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
 const initialRemoteConfigState: RemoteConfigState = O.none;
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
 export default function remoteConfigReducer(
   state: RemoteConfigState = initialRemoteConfigState,
@@ -359,6 +360,20 @@ export const isItwEnabledSelector = createSelector(
 );
 
 /**
+ * Returns the authentication methods that are disabled.
+ * If there is no data, an empty array is returned as the default value.
+ */
+export const isItwDisabledIdentificationMethodsSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): ReadonlyArray<string> =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_identification_methods),
+      O.getOrElse(() => emptyArray)
+    )
+);
+
+/**
  * Return the remote feature flag about the payment feedback banner enabled/disabled
  * that is shown after a successful payment.
  */
@@ -392,7 +407,6 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
-const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,
