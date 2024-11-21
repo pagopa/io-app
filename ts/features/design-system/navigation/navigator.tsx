@@ -1,6 +1,7 @@
 import {
   IOVisualCostants,
   IconButton,
+  makeFontStyleObject,
   useIOExperimentalDesign,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
@@ -12,7 +13,6 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Alert, Platform, View } from "react-native";
-import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import {
   IONavigationDarkTheme,
@@ -156,12 +156,12 @@ export const DesignSystemNavigator = () => {
   const { themeType } = useIOThemeContext();
 
   const customHeaderConf: StackNavigationOptions = {
-    headerTitleStyle: {
-      ...(isExperimental
-        ? makeFontStyleObject("Regular", false, "ReadexPro")
-        : makeFontStyleObject("Semibold", false, "TitilliumSansPro")),
-      fontSize: 14
-    },
+    headerTitleStyle: makeFontStyleObject(
+      14,
+      isExperimental ? "Titillio" : "TitilliumSansPro",
+      14,
+      "Semibold"
+    ),
     headerTitleAlign: "center",
     headerLeft: RNNBackButton
   };
