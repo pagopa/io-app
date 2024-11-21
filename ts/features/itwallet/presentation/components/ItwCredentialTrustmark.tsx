@@ -5,7 +5,6 @@ import {
   FeatureInfo,
   H6,
   hexToRgba,
-  useIOExperimentalDesign,
   VSpacer,
   VStack,
   WithTestID
@@ -47,6 +46,7 @@ import I18n from "../../../../i18n";
 // import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { itwEaaVerifierBaseUrl } from "../../../../config";
+import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import {
   CREDENTIALS_MAP,
@@ -58,7 +58,6 @@ import {
   validCredentialStatuses
 } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
@@ -105,8 +104,9 @@ export const ItwCredentialTrustmark = ({
     component: <QrCodeBottomSheetContent credential={credential} />
   });
 
-  /* Enable the effect only when the experimental DS is enabled */
-  const { isExperimental: enableIridescence } = useIOExperimentalDesign();
+  /* If you want to restore the static variant of the trustmark,
+  please set the following variable to false */
+  const enableIridescence = true;
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
   const currentRoll = useSharedValue(0);
