@@ -3857,13 +3857,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-crypto@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@pagopa/io-react-native-crypto@npm:0.3.0"
+"@pagopa/io-react-native-crypto@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@pagopa/io-react-native-crypto@npm:1.0.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 36b7f854e6e6de07b10846db251dee8badac647918888634b2fd1a1215ac968d970d24d40e0d360902d2b4de6cb0cfda983937e5b41b39d97b37908b54a1862c
+  checksum: cda573a770f3cbbc27a084102b134c5ff26f1864834eacdbac677a6f695fd0c6a642ce2922619055966f556ff46f0db2d2ff74eaaab69a3747a55e2755294929
   languageName: node
   linkType: hard
 
@@ -13995,7 +13995,7 @@ __metadata:
     "@pagopa/io-app-design-system": 3.0.1
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
-    "@pagopa/io-react-native-crypto": ^0.3.0
+    "@pagopa/io-react-native-crypto": ^1.0.1
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.0
     "@pagopa/io-react-native-jwt": ^1.4.0

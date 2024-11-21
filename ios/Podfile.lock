@@ -84,8 +84,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-crypto (0.3.0):
+  - pagopa-io-react-native-crypto (1.0.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - pagopa-io-react-native-http-client (1.0.5):
     - Alamofire (~> 5.9.1)
     - DoubleConversion
@@ -2445,7 +2464,7 @@ SPEC CHECKSUMS:
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
   pagopa-io-react-native-cieid: 1b63abc3e851ee3285234d45719a2d928d8e8a98
-  pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
+  pagopa-io-react-native-crypto: 6ca129c232a916e00094e2a4164931349b8af671
   pagopa-io-react-native-http-client: 3ee0c20ccfcc9f6dbe7433d3aa66c31d66fe8ecd
   pagopa-io-react-native-integrity: 99a8772bd2d058442f08233fbfac93c367b758f6
   pagopa-io-react-native-jwt: d170ab1475627e0cf070e57fc59b73521dadd066
