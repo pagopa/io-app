@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
@@ -19,11 +20,17 @@ import {
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { selectPaymentOnboardingRptIdToResume } from "../store/selectors";
+import {
+  selectPaymentOnboardingMethods,
+  selectPaymentOnboardingRptIdToResume,
+  selectPaymentOnboardingSelectedMethod
+} from "../store/selectors";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { paymentsResetRptIdToResume } from "../store/actions";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import * as analytics from "../analytics";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -52,6 +59,11 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const route = useRoute<PaymentsOnboardingFeedbackScreenRouteProps>();
   const dispatch = useIODispatch();
   const { outcome, walletId } = route.params;
+  const paymentMethodsPot = useIOSelector(selectPaymentOnboardingMethods);
+  const selectedPaymentMethodId = useIOSelector(
+    selectPaymentOnboardingSelectedMethod
+  );
+  const availablePaymentMethods = pot.toUndefined(paymentMethodsPot);
 
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
   const { startPaymentFlow } = usePagoPaPayment();
@@ -60,6 +72,17 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
   ] as keyof typeof WalletOnboardingOutcomeEnum;
+
+  useOnFirstRender(() => {
+    const onboardedPaymentMethodName = availablePaymentMethods?.find(
+      paymentMethod => paymentMethod.id === selectedPaymentMethodId
+    )?.name;
+    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
+      analytics.trackSuccessOnboardingPaymentMethod({
+        payment_method_selected: onboardedPaymentMethodName
+      });
+    }
+  });
 
   React.useEffect(
     () => () => {
