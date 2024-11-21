@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.77.0-rc.2",
+  "version": "2.77.0-rc.3",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.1.5",
-    "@pagopa/io-app-design-system": "3.0.1",
+    "@pagopa/io-app-design-system": "3.1.0",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cieid": "^0.3.5",
     "@pagopa/io-react-native-crypto": "^1.0.1",

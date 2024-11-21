@@ -66,7 +66,6 @@ const ItwPresentationDetailsScreenBase = ({
   const headerProps = getHeaderPropsByCredentialType(credential.credentialType);
 
   useHeaderSecondLevel({
-    transparent: true,
     scrollValues: {
       triggerOffset: scrollTriggerOffsetValue,
       contentOffsetY: scrollTranslationY

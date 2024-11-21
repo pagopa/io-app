@@ -5,9 +5,9 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
   edges={
     {
       "bottom": "additive",
-      "left": "additive",
-      "right": "additive",
-      "top": "additive",
+      "left": "off",
+      "right": "off",
+      "top": "off",
     }
   }
   style={

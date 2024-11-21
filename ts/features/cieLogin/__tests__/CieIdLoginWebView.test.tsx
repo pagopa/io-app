@@ -37,6 +37,11 @@ jest.mock("@react-navigation/native", () => ({
 jest.mock("../../../config", () => ({
   apiUrlPrefix: API_PREFIX_URL
 }));
+
+jest.mock("../../../hooks/useHeaderSecondLevel", () => ({
+  useHeaderSecondLevel: jest.fn()
+}));
+
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: () => mockDispatch
