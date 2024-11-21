@@ -10,6 +10,7 @@ import {
   IOColorsTints,
   IOThemeDark,
   IOThemeLight,
+  LabelSmall,
   VStack,
   hexToRgba,
   themeStatusColorsDarkMode,
@@ -19,7 +20,6 @@ import {
 import * as React from "react";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";

@@ -4,6 +4,7 @@
  * TODO: when 100% is reached, the animation end
  */
 import {
+  Body,
   ButtonLink,
   ButtonSolid,
   ContentWrapper,
@@ -33,7 +34,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../components/cie/CieCardReadingAnimation";
-import { Body } from "../../../components/core/typography/Body";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { getCieUatEndpoint } from "../../../features/cieLogin/utils/endpoints";
 import I18n from "../../../i18n";
@@ -46,7 +46,7 @@ import {
   cieAuthenticationError
 } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   isScreenReaderEnabled,

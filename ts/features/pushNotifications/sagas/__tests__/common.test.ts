@@ -10,7 +10,6 @@ import {
   trackMessageNotificationTapIfNeeded,
   updateNotificationPermissionsIfNeeded
 } from "../common";
-import { isPaymentOngoingSelector } from "../../../../store/reducers/wallet/payment";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
 import { UIMessageId } from "../../../messages/types";
 import { clearNotificationPendingMessage } from "../../store/actions/pendingMessage";
@@ -42,8 +41,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next(mockedPendingMessageState)
       .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
       .next()
-      .select(isPaymentOngoingSelector)
-      .next(false)
       .put(clearNotificationPendingMessage())
       .next()
       .select(isArchivingDisabledSelector)
@@ -68,8 +65,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next(mockedPendingMessageState)
       .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
       .next()
-      .select(isPaymentOngoingSelector)
-      .next(false)
       .put(clearNotificationPendingMessage())
       .next()
       .call(navigateToMainNavigatorAction)
@@ -96,8 +91,6 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .next(mockedPendingMessageState)
       .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
       .next()
-      .select(isPaymentOngoingSelector)
-      .next(false)
       .put(clearNotificationPendingMessage())
       .next()
       .select(isArchivingDisabledSelector)
@@ -112,36 +105,12 @@ describe("handlePendingMessageStateIfAllowed", () => {
       .isDone();
   });
 
-  it("does nothing if there is a payment going on", () => {
-    testSaga(handlePendingMessageStateIfAllowed, false)
-      .next()
-      .select(pendingMessageStateSelector)
-      .next(mockedPendingMessageState)
-      .next()
-      .select(isPaymentOngoingSelector)
-      .next(true)
-      .isDone();
-  });
-
   it("does nothing if there are not pending messages", () => {
     testSaga(handlePendingMessageStateIfAllowed, false)
       .next()
       .select(pendingMessageStateSelector)
       .next(null)
       .next()
-      .select(isPaymentOngoingSelector)
-      .next(false)
-      .isDone();
-  });
-
-  it("does nothing if there are not pending messages and there is a payment going on", () => {
-    testSaga(handlePendingMessageStateIfAllowed, false)
-      .next()
-      .select(pendingMessageStateSelector)
-      .next(null)
-      .next()
-      .select(isPaymentOngoingSelector)
-      .next(true)
       .isDone();
   });
 });

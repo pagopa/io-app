@@ -16,17 +16,23 @@ import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 
+type NotFound = { kind: "notFound" };
+
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
   "PAYMENTS_GET_PAYMENT_DETAILS_SUCCESS",
   "PAYMENTS_GET_PAYMENT_DETAILS_FAILURE"
 )<RptId, PaymentRequestsGetResponse, NetworkError | WalletPaymentFailure>();
 
+export type PaymentMethodsRequest = {
+  amount?: number;
+};
+
 export const paymentsGetPaymentMethodsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_METHODS_REQUEST",
   "PAYMENTS_GET_PAYMENT_METHODS_SUCCESS",
   "PAYMENTS_GET_PAYMENT_METHODS_FAILURE"
-)<undefined, PaymentMethodsResponse, NetworkError>();
+)<PaymentMethodsRequest, PaymentMethodsResponse, NetworkError>();
 
 type PaymentGetPaymentUserMethodsPayload = {
   onResponse?: (wallets: ReadonlyArray<WalletInfo> | undefined) => void;
@@ -52,11 +58,13 @@ export type CalculateFeePayload = {
 export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   "PAYMENTS_CALCULATE_PAYMENT_FEES_REQUEST",
   "PAYMENTS_CALCULATE_PAYMENT_FEES_SUCCESS",
-  "PAYMENTS_CALCULATE_PAYMENT_FEES_FAILURE"
+  "PAYMENTS_CALCULATE_PAYMENT_FEES_FAILURE",
+  "PAYMENTS_CALCULATE_PAYMENT_FEES_CANCEL"
 )<
   CalculateFeeRequest & CalculateFeePayload,
   CalculateFeeResponse,
-  NetworkError
+  NetworkError | NotFound,
+  undefined
 >();
 
 export type WalletPaymentCreateTransactionPayload = {

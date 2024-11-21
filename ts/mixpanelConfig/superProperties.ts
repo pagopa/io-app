@@ -1,4 +1,5 @@
 import { Appearance, ColorSchemeName } from "react-native";
+import * as O from "fp-ts/Option";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { getAppVersion } from "../utils/appVersion";
 import {
@@ -7,10 +8,10 @@ import {
 } from "../utils/device";
 import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
+  getNotificationPermissionType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
-  ServiceConfigurationTrackingType,
-  getNotificationPermissionType
+  ServiceConfigurationTrackingType
 } from "../screens/profile/analytics";
 
 import { GlobalState } from "../store/reducers/types";
@@ -29,12 +30,16 @@ import {
   itwCredentialsByTypeSelector,
   itwCredentialsSelector
 } from "../features/itwallet/credentials/store/selectors";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
-  Property,
-  PropertyToUpdate,
+  cgnStatusHandler,
   loginSessionConfigHandler,
   notificationConfigurationHandler,
-  serviceConfigHandler
+  paymentMethodsHandler,
+  Property,
+  PropertyToUpdate,
+  serviceConfigHandler,
+  welfareStatusHandler
 } from "./mixpanelPropertyUtils";
 
 type SuperProperties = {
@@ -53,6 +58,9 @@ type SuperProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
+  SAVED_PAYMENT_METHOD: number;
+  CGN_STATUS: TrackCgnStatus;
+  WELFARE_STATUS: ReadonlyArray<string>;
 };
 
 export const updateMixpanelSuperProperties = async (
@@ -76,6 +84,9 @@ export const updateMixpanelSuperProperties = async (
   const ITW_PG_V2 = pgStatusHandler(state);
   const ITW_TS_V2 = tsStatusHandler(state);
   const ITW_CED_V2 = cedStatusHandler(state);
+  const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
+  const CGN_STATUS = cgnStatusHandler(state);
+  const WELFARE_STATUS = welfareStatusHandler(state);
 
   const superPropertiesObject: SuperProperties = {
     isScreenReaderEnabled: screenReaderEnabled,
@@ -93,7 +104,10 @@ export const updateMixpanelSuperProperties = async (
     ITW_ID_V2,
     ITW_PG_V2,
     ITW_TS_V2,
-    ITW_CED_V2
+    ITW_CED_V2,
+    SAVED_PAYMENT_METHOD,
+    CGN_STATUS,
+    WELFARE_STATUS
   };
 
   if (forceUpdateFor) {
@@ -113,12 +127,12 @@ const forceUpdate = <T extends keyof SuperProperties>(
 
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const credentialsState = itwCredentialsSelector(state);
-  return credentialsState.eid ? "L2" : "not_active";
+  return O.isSome(credentialsState.eid) ? "L2" : "not_active";
 };
 
 const idStatusHandler = (state: GlobalState): ItwId => {
   const credentialsState = itwCredentialsSelector(state);
-  return credentialsState.eid ? "valid" : "not_available";
+  return O.isSome(credentialsState.eid) ? "valid" : "not_available";
 };
 const pgStatusHandler = (state: GlobalState): ItwPg => {
   const credentialsByType = itwCredentialsByTypeSelector(state);

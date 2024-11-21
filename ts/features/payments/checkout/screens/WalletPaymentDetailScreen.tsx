@@ -24,9 +24,9 @@ import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -35,7 +35,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { format } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -43,6 +42,8 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
+import { formatPaymentNoticeNumber } from "../../common/utils";
+import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -52,18 +53,16 @@ import {
 } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { storeNewPaymentAttemptAction } from "../../history/store/actions";
-import { formatPaymentNoticeNumber } from "../../common/utils";
-import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
-
-import * as analytics from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
-import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
+import { isDueDateValid } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -71,7 +70,7 @@ type WalletPaymentDetailScreenNavigationParams = {
 
 type WalletPaymentDetailRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
-  "PAYMENT_CHECKOUT_DETAIL"
+  "PAYMENT_NOTICE_SUMMARY"
 >;
 
 const WalletPaymentDetailScreen = () => {
@@ -99,10 +98,12 @@ const WalletPaymentDetailScreen = () => {
       paymentDetailsPot.error,
       WalletPaymentFailure.decode,
       O.fromEither,
-      // NetworkError is transformed to GENERIC_ERROR only for display purposes
+      // NetworkError or undecoded error is transformed to PAYMENT_SLOWDOWN_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
-        faultCodeDetail: ""
+        faultCodeCategory: FaultCodeSlowdownCategoryEnum.PAYMENT_SLOWDOWN_ERROR,
+        faultCodeDetail:
+          (paymentDetailsPot.error as WalletPaymentFailure)?.faultCodeDetail ??
+          FaultCodeSlowdownCategoryEnum.PAYMENT_SLOWDOWN_ERROR
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;
@@ -119,7 +120,10 @@ const WalletPaymentDetailScreen = () => {
 
   return (
     <SafeAreaView style={styles.loadingContainer}>
-      <LoadingIndicator size={48} />
+      <LoadingIndicator
+        testID="wallet-payment-detail-loading-indicator"
+        size={48}
+      />
       <VSpacer size={24} />
       <H3 style={{ textAlign: "center" }}>
         {I18n.t("wallet.firstTransactionSummary.loading")}
@@ -249,7 +253,7 @@ const WalletPaymentDetailContent = ({
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(_ => format(_, "DD/MM/YYYY")),
+    O.map(date => isDueDateValid(date)),
     O.toUndefined
   );
 
@@ -275,6 +279,7 @@ const WalletPaymentDetailContent = ({
   const amountEndElement: ComponentProps<typeof ListItemInfo>["endElement"] = {
     type: "iconButton",
     componentProps: {
+      testID: "amount-info-icon",
       icon: "info",
       accessibilityLabel: "info",
       onPress: () => {
@@ -303,6 +308,7 @@ const WalletPaymentDetailContent = ({
   return (
     <GradientScrollView
       primaryActionProps={{
+        testID: "wallet-payment-detail-make-payment-button",
         label: "Vai al pagamento",
         accessibilityLabel: "Vai al pagmento",
         onPress: navigateToMakePaymentScreen,
@@ -311,6 +317,7 @@ const WalletPaymentDetailContent = ({
       }}
     >
       <ListItemInfo
+        testID="wallet-payment-detail-recipient"
         icon={"institution"}
         label={I18n.t("wallet.firstTransactionSummary.recipient")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.recipient")}
@@ -318,6 +325,7 @@ const WalletPaymentDetailContent = ({
       />
       <Divider />
       <ListItemInfo
+        testID="wallet-payment-detail-object"
         icon={"notes"}
         label={I18n.t("wallet.firstTransactionSummary.object")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.object")}
@@ -325,6 +333,7 @@ const WalletPaymentDetailContent = ({
       />
       <Divider />
       <ListItemInfo
+        testID="wallet-payment-detail-amount"
         icon={"psp"}
         label={I18n.t("wallet.firstTransactionSummary.amount")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.amount")}
@@ -346,6 +355,7 @@ const WalletPaymentDetailContent = ({
         </>
       )}
       <ListItemInfoCopy
+        testID="payment-notice-copy-button"
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}
         accessibilityLabel={I18n.t("payment.noticeCode")}

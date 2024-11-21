@@ -79,10 +79,10 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
-  backendStatusSelector,
+  remoteConfigSelector,
   isPnEnabledSelector,
   isSettingsVisibleAndHideProfileSelector
-} from "../store/reducers/backendStatus";
+} from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
   isIdPayTestEnabledSelector,
@@ -99,7 +99,6 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
-import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
@@ -116,6 +115,7 @@ import { cancellAllLocalNotifications } from "../features/pushNotifications/util
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
+import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -152,7 +152,6 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
-import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
@@ -241,8 +240,8 @@ export function* initializeApplicationSaga(
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
-  const backendStatus = yield* select(backendStatusSelector);
-  if (O.isNone(backendStatus)) {
+  const remoteConfig = yield* select(remoteConfigSelector);
+  if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
   }
 
@@ -332,7 +331,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchMessagesSaga, backendClient, sessionToken);
 
   // start watching for FIMS actions
-  yield* fork(watchFimsSaga);
+  yield* fork(watchFimsSaga, sessionToken);
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
@@ -605,8 +604,7 @@ export function* initializeApplicationSaga(
     yield* select(isPagoPATestEnabledSelector);
 
   yield* fork(
-    watchWalletSaga,
-    sessionToken,
+    watchLegacyTransactionSaga,
     walletToken,
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
   );
@@ -689,7 +687,7 @@ export function* initializeApplicationSaga(
 
   yield* put(
     applicationInitialized({
-      actionsToWaitFor: [walletPaymentHandlersInitialized]
+      actionsToWaitFor: []
     })
   );
 }

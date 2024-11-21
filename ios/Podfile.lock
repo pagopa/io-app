@@ -107,7 +107,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - SwiftCBOR
-  - pagopa-io-react-native-jwt (1.2.0):
+  - pagopa-io-react-native-jwt (1.3.0):
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -616,7 +616,17 @@ PODS:
     - ZXingObjC
   - RNReactNativeHapticFeedback (2.0.2):
     - React-Core
-  - RNReanimated (3.12.0):
+  - RNReanimated (3.15.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+    - RNReanimated/reanimated (= 3.15.0)
+    - RNReanimated/worklets (= 3.15.0)
+  - RNReanimated/reanimated (3.15.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+  - RNReanimated/worklets (3.15.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ReactCommon/turbomodule/core
@@ -1052,7 +1062,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
   pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
-  pagopa-io-react-native-jwt: 662d4e722715996758b079774abea1996b057467
+  pagopa-io-react-native-jwt: 27f6cb1ea58ea1df6778c67f23a932b90dc7e9a2
   pagopa-io-react-native-login-utils: a445c97d7d7dc86b089079029a1340f4c682128c
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -1125,7 +1135,7 @@ SPEC CHECKSUMS:
   RNPermissions: b3d9d00889e37cc184d365ab04bb7a3f20811b1c
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
-  RNReanimated: 108a53626a492df35db30b98fc922a7189d1c601
+  RNReanimated: c2027c397233801d4aceb7375e000ac87ec2e67d
   RNScreens: b8d370282cdeae9df85dd5eab20c88eb5181243b
   RNSentry: 3e667c2c6ea5d35ea292c7f262c6b44e43842cc1
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c

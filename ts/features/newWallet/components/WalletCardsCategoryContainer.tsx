@@ -1,10 +1,6 @@
-import { Platform } from "react-native";
-import {
-  ListItemHeader,
-  VSpacer,
-  WithTestID
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, WithTestID } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
   FadeOutDown,
@@ -15,9 +11,9 @@ import { renderWalletCardFn } from "../utils";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
-  isStacked?: boolean;
   header?: ListItemHeader;
   topElement?: JSX.Element;
+  bottomElement?: JSX.Element;
 }>;
 
 // The item layout animation has a bug on Android for a FlatList that doesn't have a fixed height [https://github.com/software-mansion/react-native-reanimated/issues/5728]
@@ -33,25 +29,48 @@ const itemLayoutAnimation =
  */
 export const WalletCardsCategoryContainer = ({
   cards,
-  isStacked = false,
   header,
   topElement,
+  bottomElement,
   testID
 }: WalletCardsCategoryContainerProps) => (
-  <Animated.View testID={testID} layout={LinearTransition.duration(200)}>
+  <Animated.View
+    style={styles.container}
+    testID={testID}
+    layout={LinearTransition.duration(200)}
+  >
     {header && <ListItemHeader {...header} />}
-    {React.isValidElement(topElement) && React.cloneElement(topElement)}
     <Animated.FlatList
       scrollEnabled={false}
       data={cards}
-      ItemSeparatorComponent={() => (!isStacked ? <VSpacer size={16} /> : null)}
       renderItem={({ index, item }) =>
-        renderWalletCardFn(item, isStacked && index < cards.length - 1)
+        renderWalletCardFn(item, index < cards.length - 1)
       }
       itemLayoutAnimation={itemLayoutAnimation}
+      style={styles.cardList}
       entering={FadeInDown.duration(150)}
       exiting={FadeOutDown.duration(150)}
+      ListHeaderComponent={topElement}
+      ListHeaderComponentStyle={styles.listHeader}
+      ListFooterComponent={bottomElement}
+      ListFooterComponentStyle={styles.listFooter}
     />
-    <VSpacer size={24} />
   </Animated.View>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: 16
+  },
+  listHeader: {
+    marginHorizontal: 8
+  },
+  listFooter: {
+    marginHorizontal: 8
+  },
+  cardList: {
+    marginHorizontal: -8
+  }
+});

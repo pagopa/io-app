@@ -1,12 +1,11 @@
 import MockDate from "mockdate";
-import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import {
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
-  getCredentialExpireStatus,
+  getCredentialStatus,
   getFiscalCodeFromCredential,
   ImageClaim
 } from "../itwClaimsUtils";
@@ -83,31 +82,6 @@ describe("getCredentialExpireDays", () => {
       MockDate.reset();
     }
   );
-});
-
-describe("getCredentialExpireStatus", () => {
-  it("should return undefined", () => {
-    const expireStatus = getCredentialExpireStatus({});
-    expect(expireStatus).toBeUndefined();
-  });
-
-  test.each([
-    [new Date(2000, 0, 18), "expiring"],
-    [new Date(2000, 0, 30), "valid"],
-    [new Date(2000, 0, 9), "expired"]
-  ])("if %p should return %p", (expiryDate, expectedStatus) => {
-    MockDate.set(new Date(2000, 0, 10, 23, 59));
-    expect(new Date()).toStrictEqual(new Date(2000, 0, 10, 23, 59));
-
-    const status = getCredentialExpireStatus({
-      expiry_date: {
-        name: "",
-        value: format(expiryDate, "YYYY-MM-DD")
-      }
-    });
-    expect(status).toStrictEqual(expectedStatus);
-    MockDate.reset();
-  });
 });
 
 describe("extractFiscalCode", () => {
@@ -209,5 +183,288 @@ describe("getFiscalCodeFromCredential", () => {
     expect(getFiscalCodeFromCredential(mockCredential)).toEqual(
       "MRARSS00A01H501B"
     );
+  });
+});
+
+describe("getCredentialStatus", () => {
+  afterEach(() => {
+    MockDate.reset();
+  });
+
+  describe("expired", () => {
+    it("should return the physical document expired status", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z" // Still valid
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2024-01-12" // Expired
+          }
+        },
+        storedStatusAttestation: { credentialStatus: "invalid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("expired");
+    });
+
+    it("should return the digital document expired status", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2024-01-10T00:00:00Z" // Expired
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2034-12-31" // Still valid
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpired");
+    });
+
+    // Physical document wins
+    it("should return the physical document expired status when both are expired", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2024-01-10T00:00:00Z" // Expired
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2024-01-12" // Expired
+          }
+        },
+        storedStatusAttestation: { credentialStatus: "invalid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("expired");
+    });
+
+    it("should return jwtExpired when only JWT data are available", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        jwt: {
+          expiration: "2024-01-10T00:00:00Z"
+        }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpired");
+    });
+  });
+
+  describe("expiring", () => {
+    it("should return the physical document expiring status", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z" // Still valid
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2024-01-30" // Expiring
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("expiring");
+    });
+
+    it("should return the digital document expiring status", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2024-01-30T00:00:00Z" // Expiring
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2034-12-31" // Still valid
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+    });
+
+    // Digital document wins
+    it("should return the digital document expiring status when both are expiring", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2024-01-30T00:00:00Z" // Expiring
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2024-01-25" // Expiring
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+    });
+
+    // Physical document wins
+    it("should return the physical document expiring status when both expires the same day", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2024-01-30T01:00:00Z" // Expiring
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2024-01-30" // Expiring
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("expiring");
+    });
+
+    it("should return jwtExpiring when only JWT data are available", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        jwt: {
+          expiration: "2024-01-30T00:00:00Z"
+        }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("jwtExpiring");
+    });
+  });
+
+  describe("invalid", () => {
+    it("should return the physical document invalid status", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z" // Still valid
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2034-12-31"
+          }
+        },
+        storedStatusAttestation: { credentialStatus: "invalid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("invalid");
+    });
+
+    it("should return the physical document invalid status over any digital document status", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2024-01-30T01:00:00Z" // Expiring
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2034-12-31"
+          }
+        },
+        storedStatusAttestation: { credentialStatus: "invalid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("invalid");
+    });
+  });
+
+  describe("valid", () => {
+    it("should return valid in normal conditions", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z"
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: { "en-US": "Expiry date", "it-IT": "Scadenza" },
+            value: "2034-12-31"
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+    });
+
+    it("should return valid when the credential does not have an expiration date and it is not invalid for other reasons", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.mdl,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z"
+        },
+        parsedCredential: {
+          expiry_date: {
+            name: undefined,
+            value: undefined
+          }
+        },
+        // @ts-expect-error partial type
+        storedStatusAttestation: { credentialStatus: "valid" }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+    });
+
+    it("should return valid when only JWT data are available", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        jwt: {
+          expiration: "2025-01-20T00:00:00Z"
+        }
+      };
+
+      expect(getCredentialStatus(mockCredential)).toEqual("valid");
+    });
   });
 });

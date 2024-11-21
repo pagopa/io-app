@@ -1,5 +1,7 @@
 import {
+  Body,
   FooterWithButtons,
+  H2,
   IOColors,
   IOStyles,
   IOVisualCostants,
@@ -12,8 +14,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -55,7 +55,7 @@ const IDPayPaymentCodeInputScreen = () => {
       />
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.wrapper}>
-          <H1>{I18n.t("idpay.payment.manualInput.title")}</H1>
+          <H2>{I18n.t("idpay.payment.manualInput.title")}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.payment.manualInput.subtitle")}</Body>
           <VSpacer size={40} />

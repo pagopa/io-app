@@ -3,14 +3,24 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
+import PaymentsBizEventsHideReceiptButton from "../components/PaymentsBizEventsHideReceiptButton";
 import { PaymentsBizEventsTransactionHeadingSection } from "../components/PaymentsBizEventsTransactionHeadingSection";
 import WalletTransactionInfoSection from "../components/PaymentsBizEventsTransactionInfoSection";
 import { PaymentsTransactionBizEventsParamsList } from "../navigation/params";
+import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import {
   getPaymentsBizEventsReceiptAction,
   getPaymentsBizEventsTransactionDetailsAction
@@ -19,13 +29,6 @@ import {
   walletTransactionBizEventsDetailsPotSelector,
   walletTransactionsBizEventsReceiptPotSelector
 } from "../store/selectors";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
-import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type PaymentsTransactionBizEventsDetailsScreenParams = {
   transactionId: string;
@@ -73,6 +76,7 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   const isLoadingReceipt = pot.isLoading(transactionReceiptPot);
   const isError = pot.isError(transactionDetailsPot);
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useOnFirstRender(() => {
     fetchTransactionDetails();
@@ -121,6 +125,16 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
     );
   };
 
+  useHeaderSecondLevel({
+    title:
+      transactionDetails?.carts?.[0].payee?.name ??
+      I18n.t("transaction.details.title"),
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef,
+    faqCategories: ["wallet_transaction" as FAQsCategoriesType],
+    supportRequest: true
+  });
+
   if (isError) {
     return (
       <OperationResultScreenContent
@@ -141,10 +155,9 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
   }
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t("transaction.details.title")
-      }}
+    <IOScrollView
+      includeContentMargins={false}
+      animatedRef={animatedScrollViewRef}
       actions={
         transactionDetails?.infoNotice?.origin !== OriginEnum.PM
           ? {
@@ -160,9 +173,6 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
             }
           : undefined
       }
-      contextualHelp={emptyContextualHelp}
-      faqCategories={["wallet_transaction"]}
-      headerActionsProp={{ showHelp: true }}
     >
       <FocusAwareStatusBar barStyle={"dark-content"} />
       <View style={styles.wrapper}>
@@ -176,8 +186,9 @@ const PaymentsTransactionBizEventsDetailsScreen = () => {
           transaction={transactionDetails}
           loading={isLoading}
         />
+        <PaymentsBizEventsHideReceiptButton transactionId={transactionId} />
       </View>
-    </IOScrollViewWithLargeHeader>
+    </IOScrollView>
   );
 };
 

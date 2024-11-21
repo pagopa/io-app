@@ -2,10 +2,6 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { WalletCard, walletCardCategories } from "../../types";
 
-export const isWalletPaymentsRedirectBannerVisibleSelector = (
-  state: GlobalState
-) => state.features.wallet.preferences.shouldShowPaymentsRedirectBanner;
-
 const selectWalletFeature = (state: GlobalState) => state.features.wallet;
 
 export const selectWalletPlaceholders = createSelector(
@@ -56,4 +52,18 @@ export const selectIsWalletCardsLoading = (state: GlobalState) =>
 export const selectWalletCategoryFilter = createSelector(
   selectWalletFeature,
   wallet => wallet.preferences.categoryFilter
+);
+
+export const selectWalletPaymentMethods = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category === "payment")
+);
+
+export const selectWalletCgnCard = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category === "cgn")
+);
+
+export const selectBonusCards = createSelector(selectSortedWalletCards, cards =>
+  cards.filter(({ category }) => category === "bonus")
 );

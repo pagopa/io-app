@@ -1,5 +1,4 @@
 import { pipe } from "fp-ts/lib/function";
-import * as _ from "lodash";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { ItwLifecycleState } from "../../reducers";

@@ -15,7 +15,9 @@ export function* handleWalletPaymentGetAllMethods(
     const getAllPaymentMethodsResult = yield* withPaymentsSessionToken(
       getAllPaymentMethods,
       action,
-      {},
+      {
+        amount: action.payload.amount
+      },
       "pagoPAPlatformSessionToken"
     );
 

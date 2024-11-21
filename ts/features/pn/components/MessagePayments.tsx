@@ -142,7 +142,9 @@ export const MessagePayments = ({
                       )
                     )
                   }
-                  paymentNoticeStatus={"paid"}
+                  paymentNotice={{
+                    status: "paid"
+                  }}
                   badgeText={getBadgeTextByPaymentNoticeStatus("paid")}
                   testID={"PnCancelledPaymentModulePaymentNotice"}
                 />

@@ -9,7 +9,6 @@ import { PersistedNotificationsState } from "../../features/pushNotifications/st
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
-import { BackendStatusState } from "./backendStatus";
 import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
@@ -21,20 +20,25 @@ import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
 import { NavigationState } from "./navigation";
 import { OnboardingState } from "./onboarding";
-import { PaymentsState } from "./payments";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
-import { WalletState } from "./wallet";
 import { StartupState } from "./startup";
+import { RemoteConfigState } from "./backendStatus/remoteConfig";
+import { StatusMessagesState } from "./backendStatus/statusMessages";
+import { SectionStatusState } from "./backendStatus/sectionStatus";
+import { BackedInfoState } from "./backendStatus/backendInfo";
 
 export type GlobalState = Readonly<{
   appState: AppState;
   navigation: NavigationState;
   authentication: PersistedAuthenticationState;
-  backendStatus: BackendStatusState;
+  remoteConfig: RemoteConfigState;
+  statusMessages: StatusMessagesState;
+  sectionStatus: SectionStatusState;
+  backendInfo: BackedInfoState;
   versionInfo: VersionInfoState;
   entities: PersistedEntitiesState;
   backoffError: BackoffErrorState;
@@ -42,7 +46,6 @@ export type GlobalState = Readonly<{
   onboarding: OnboardingState;
   profile: ProfileState;
   userDataProcessing: UserDataProcessingState;
-  wallet: WalletState;
   preferences: PreferencesState;
   persistedPreferences: PersistedPreferencesState;
   content: ContentState;
@@ -50,7 +53,6 @@ export type GlobalState = Readonly<{
   installation: InstallationState;
   debug: PersistedDebugState;
   search: SearchState;
-  payments: PaymentsState;
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;

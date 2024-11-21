@@ -1,5 +1,6 @@
 import { CieIdNotInstalledProps } from "../../features/cie/components/CieIdNotInstalled";
 import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
+import { UrlNotCompliant } from "../../features/cieLogin/components/screens/CieIdAuthUrlError";
 import { AuthErrorScreenProps } from "../../screens/authentication/AuthErrorScreen";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
@@ -40,4 +41,5 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_ID_ACTIVATION_WIZARD]: undefined;
   // CieID sign in Error
   [ROUTES.AUTHENTICATION_CIE_ID_ERROR]: undefined;
+  [ROUTES.AUTHENTICATION_CIE_ID_INCORRECT_URL]: UrlNotCompliant;
 };

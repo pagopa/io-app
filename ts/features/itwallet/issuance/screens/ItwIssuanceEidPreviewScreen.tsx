@@ -20,14 +20,12 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   selectEidOption,
-  selectIdentification,
-  selectIsDisplayingPreview
+  selectIdentification
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import {
@@ -43,23 +41,17 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
-  const isDisplayingPreview = ItwEidIssuanceMachineContext.useSelector(
-    selectIsDisplayingPreview
-  );
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  // In the state machine this screen is mounted before we actually reach the eID preview state.
-  // While in the other states we render the loading screen to avoid accidentally showing the generic error content.
-  if (!isDisplayingPreview) {
-    return <ItwIssuanceLoadingScreen />;
-  }
-
   return pipe(
     eidOption,
     O.fold(
-      () => <ItwGenericErrorContent />,
+      // If there is no eID in the context (None), we can safely assume the issuing phase is still ongoing.
+      // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
+      // to the Failure state.
+      () => <ItwIssuanceLoadingScreen />,
       eid => <ContentView eid={eid} />
     )
   );

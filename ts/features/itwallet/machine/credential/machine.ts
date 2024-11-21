@@ -32,7 +32,8 @@ export const itwCredentialIssuanceMachine = setup({
     closeIssuance: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented,
-    onInit: notImplemented
+    onInit: notImplemented,
+    trackAddCredential: notImplemented
   },
   actors: {
     getWalletAttestation:
@@ -115,7 +116,8 @@ export const itwCredentialIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "Idle"
           },
           {
             target: "#itwCredentialIssuanceMachine.Failure",
@@ -221,7 +223,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet"]
+          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
         },
         close: {
           actions: ["closeIssuance"]
@@ -241,11 +243,6 @@ export const itwCredentialIssuanceMachine = setup({
           target: "#itwCredentialIssuanceMachine.RequestingCredential"
         }
       }
-    },
-    SessionExpired: {
-      entry: ["handleSessionExpired"],
-      // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "Idle" }
     }
   }
 });

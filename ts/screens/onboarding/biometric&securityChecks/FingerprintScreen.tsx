@@ -1,6 +1,5 @@
-import { Banner, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { Banner, Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import React, { ComponentProps, useMemo } from "react";
-import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
@@ -17,7 +16,7 @@ import { FAQsCategoriesType } from "../../../utils/faq";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import useContentWithFF from "../../profile/useContentWithFF";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus";
+import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,

@@ -4,8 +4,8 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
-  StartCieAuthFlowActorParams,
-  type RequestEidActorParams
+  type RequestEidActorParams,
+  StartCieAuthFlowActorParams
 } from "./actors";
 import { CieAuthContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -49,6 +49,7 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     abortIdentification: notImplemented,
     resetWalletInstance: notImplemented,
+    trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented
@@ -132,7 +133,8 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
             actions: "setFailure",
@@ -152,12 +154,19 @@ export const itwEidIssuanceMachine = setup({
             "trackWalletInstanceRevocation"
           ]
         },
-        onError: {
-          actions: assign(
-            setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
-          ),
-          target: "#itwEidIssuanceMachine.Failure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.Idle"
+          },
+          {
+            actions: assign(
+              setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
+            ),
+            target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
       }
     },
     WalletInstanceAttestationObtainment: {
@@ -179,7 +188,8 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
             actions: "setFailure",
@@ -412,7 +422,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "setWalletInstanceToValid"],
+              actions: [
+                "storeEidCredential",
+                "setWalletInstanceToValid",
+                "trackWalletInstanceCreation"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
@@ -442,6 +456,9 @@ export const itwEidIssuanceMachine = setup({
         close: {
           actions: ["closeIssuance"]
         },
+        retry: {
+          target: "UserIdentification"
+        },
         reset: {
           target: "Idle"
         },
@@ -450,11 +467,6 @@ export const itwEidIssuanceMachine = setup({
           target: "WalletInstanceRevocation"
         }
       }
-    },
-    SessionExpired: {
-      entry: ["handleSessionExpired"],
-      // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "TosAcceptance" }
     }
   }
 });
