@@ -194,6 +194,16 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           ),
           action: selectOtherPaymentMethodAction
         };
+      case "PAYMENT_SLOWDOWN_ERROR":
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
+          ),
+          action: closeAction,
+          secondaryAction: contactSupportAction
+        };
 
       default:
         return genericErrorProps;
