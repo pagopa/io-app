@@ -663,6 +663,9 @@ authentication:
     tour_guide:
       title: Novità
       content: Ora puoi usare CieID per entrare su IO!
+  cieidUrlErrorScreen:
+    title: Non riusciamo ad autenticarti con l’app CieID
+    description: Usa un altro metodo per entrare in app
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
