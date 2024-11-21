@@ -110,9 +110,13 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
       return "PAYMENT_NOT_FOUND_ERROR";
     case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
       return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
+    case "GENERIC_ERROR":
     case "PAYMENT_VERIFY_GENERIC_ERROR":
+      return "PAYMENT_502_ERROR";
+    case "PAYMENT_SLOWDOWN_ERROR":
+      return "PAYMENT_SLOWDOWN_ERROR";
     default:
-      return "PAYMENT_GENERIC_ERROR";
+      return "PAYMENT_NOT_MAPPED_CATEGORY_ERROR";
   }
 };
 
