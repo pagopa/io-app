@@ -22,7 +22,7 @@ import { trackScreen } from "../store/middlewares/navigation";
 import {
   isCGNEnabledSelector,
   isNewPaymentSectionEnabledSelector
-} from "../store/reducers/backendStatus";
+} from "../store/reducers/backendStatus/remoteConfig";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -121,14 +121,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             [ROUTES.PROFILE_PREFERENCES_HOME]: "preferences",
             [ROUTES.PROFILE_PRIVACY]: "privacy",
             [ROUTES.PROFILE_PRIVACY_MAIN]: "privacy-main"
-          }
-        },
-        [ROUTES.WALLET_NAVIGATOR]: {
-          path: "wallet",
-          screens: {
-            [ROUTES.PAYMENTS_HISTORY_SCREEN]: "payments-history",
-            [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
-              "card-onboarding-attempts"
           }
         },
         [SERVICES_ROUTES.SERVICES_NAVIGATOR]: {

@@ -10,7 +10,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { trackAuthenticationError } from "../../common/analytics";
 import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
 import { FimsParamsList } from "../../common/navigation";
@@ -22,7 +22,7 @@ import {
 } from "../store/actions/";
 import {
   fimsConsentsDataSelector,
-  fimsErrorTagSelector,
+  fimsAuthenticationFailedSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
 
@@ -45,7 +45,7 @@ export const FimsFlowHandlerScreen = (
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
-  const errorTag = useIOSelector(fimsErrorTagSelector);
+  const authenticationFailed = useIOSelector(fimsAuthenticationFailedSelector);
 
   const handleCancelOrAbort = React.useCallback(() => {
     if (loadingState !== "abort") {
@@ -53,9 +53,14 @@ export const FimsFlowHandlerScreen = (
     }
   }, [dispatch, loadingState]);
 
+  const consentsMaybe = pot.toOption(consentsPot);
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
+    canGoBack:
+      !authenticationFailed &&
+      !requiresAppUpdate &&
+      (loadingState !== undefined || O.isSome(consentsMaybe)),
     goBack: handleCancelOrAbort
   });
 
@@ -82,8 +87,8 @@ export const FimsFlowHandlerScreen = (
     return <FimsUpdateAppAlert />;
   }
 
-  if (errorTag !== undefined) {
-    return <FimsSSOFullScreenError errorTag={errorTag} />;
+  if (authenticationFailed) {
+    return <FimsSSOFullScreenError />;
   }
   if (loadingState !== undefined) {
     const subtitle =
@@ -104,10 +109,9 @@ export const FimsFlowHandlerScreen = (
   }
 
   return pipe(
-    consentsPot,
-    pot.toOption,
+    consentsMaybe,
     O.fold(
-      () => <FimsSSOFullScreenError errorTag="GENERIC" />,
+      () => <FimsSSOFullScreenError />,
       consents => (
         <FimsFlowSuccessBody
           consents={consents}

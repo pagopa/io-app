@@ -4,7 +4,7 @@ import * as React from "react";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   trackHistoryFailure,
   trackHistoryScreen
@@ -24,7 +24,7 @@ export const FimsHistoryScreen = () => {
   const dispatch = useIODispatch();
 
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
-  const consents = useIOSelector(fimsHistoryToUndefinedSelector);
+  const accesses = useIOSelector(fimsHistoryToUndefinedSelector);
   const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
   const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
 
@@ -34,7 +34,8 @@ export const FimsHistoryScreen = () => {
   // ---------- HOOKS
 
   useHeaderSecondLevel({
-    title: I18n.t("FIMS.history.historyScreen.header"),
+    canGoBack: !requiresAppUpdate && !historyErrorState,
+    title: "",
     supportRequest: true
   });
 
@@ -64,14 +65,14 @@ export const FimsHistoryScreen = () => {
       ? Date.now() - lastErrorToastDate.current >= 500
       : true;
 
-    if (hasErrorTimeoutExpired && consents?.continuationToken) {
+    if (hasErrorTimeoutExpired && accesses?.next) {
       dispatch(
         fimsHistoryGet.request({
-          continuationToken: consents.continuationToken
+          continuationToken: accesses.next
         })
       );
     }
-  }, [consents, dispatch]);
+  }, [accesses, dispatch]);
 
   // ---------- FAILURE CASES
 
@@ -86,13 +87,13 @@ export const FimsHistoryScreen = () => {
   // ---------- SUCCESS
 
   const shouldShowEmptyContent =
-    !isHistoryLoading && (consents?.items ?? []).length === 0;
+    !isHistoryLoading && (accesses?.data ?? []).length === 0;
 
   return shouldShowEmptyContent ? (
     <FimsHistoryEmptyContent />
   ) : (
     <FimsHistoryNonEmptyContent
-      consents={consents}
+      accesses={accesses}
       fetchMore={fetchMoreHistoryItems}
     />
   );

@@ -5,10 +5,15 @@ import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import _ from "lodash";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
 import {
   CheckoutPaymentMethodsList,
   CheckoutPaymentMethodsListSkeleton
@@ -36,13 +41,7 @@ import {
   walletPaymentIsTransactionActivatedSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
-import * as analytics from "../analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -159,6 +158,25 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
+  const getFirstPotError = React.useCallback(() => {
+    if (pot.isError(transactionPot)) {
+      return transactionPot.error;
+    }
+    if (pot.isError(pspListPot)) {
+      return pspListPot.error;
+    }
+    if (pot.isError(paymentMethodsPot)) {
+      return paymentMethodsPot.error;
+    }
+    if (pot.isError(userWalletsPots)) {
+      return userWalletsPots.error;
+    }
+    return {
+      faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+      faultCodeDetail: "GENERIC_ERROR"
+    };
+  }, [transactionPot, pspListPot, paymentMethodsPot, userWalletsPots]);
+
   useOnFirstRender(
     () => {
       analytics.trackPaymentMethodSelection({
@@ -180,22 +198,17 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   React.useEffect(() => {
-    if (isError && !pot.isError(transactionPot)) {
-      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-        params: {
-          outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
-        }
-      });
-    } else if (isError && pot.isError(transactionPot)) {
+    if (isError) {
+      // create a constant error that contains the error if transactionPot is in error or paymentMethodsPot is in error or userWalletsPots is in error or pspListPot is in error
+      const error = getFirstPotError();
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
         params: {
-          error: transactionPot.error
+          error
         }
       });
     }
-  }, [isError, navigation, transactionPot]);
+  }, [isError, navigation, getFirstPotError]);
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 

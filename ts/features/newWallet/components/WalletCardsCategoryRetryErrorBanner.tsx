@@ -1,15 +1,16 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as React from "react";
+import { View } from "react-native";
 import { BannerErrorState } from "../../../components/ui/BannerErrorState";
+import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { idPayWalletInitiativeListSelector } from "../../idpay/wallet/store/reducers";
-import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
+import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
-import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
-import { cgnDetails } from "../../bonus/cgn/store/actions/details";
+import { idPayWalletInitiativeListSelector } from "../../idpay/wallet/store/reducers";
 import { usePaymentsBackoffRetry } from "../../payments/common/hooks/usePaymentsBackoffRetry";
-import I18n from "../../../i18n";
+import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
+import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
 
 const WALLET_OTHER_CARDS_CATEGORY_BACKOFF =
   "WALLET_OTHER_CARDS_CATEGORY_BACKOFF";
@@ -48,14 +49,16 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
 
   return (
     (isPaymentMethodsError || isCgnError || isIdPayError) && (
-      <BannerErrorState
-        icon="warningFilled"
-        label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
-        actionText={I18n.t(
-          "features.wallet.home.otherMethods.error.banner.cta"
-        )}
-        onPress={handleOnRetry}
-      />
+      <View style={{ marginTop: 16 }}>
+        <BannerErrorState
+          icon="warningFilled"
+          label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
+          actionText={I18n.t(
+            "features.wallet.home.otherMethods.error.banner.cta"
+          )}
+          onPress={handleOnRetry}
+        />
+      </View>
     )
   );
 };

@@ -1,0 +1,337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`featuresPersistor should match snapshot 1`] = `
+{
+  "euCovidCert": {
+    "byAuthCode": {},
+  },
+  "fci": {
+    "documentPreview": {
+      "kind": "PotNone",
+    },
+    "documentSignatures": {
+      "documents": [],
+    },
+    "environment": {
+      "_tag": "None",
+    },
+    "metadata": {
+      "kind": "PotNone",
+    },
+    "pollFilledDocument": {
+      "kind": "PotSome",
+      "value": {
+        "isReady": false,
+      },
+    },
+    "qstpFilledDocument": {
+      "kind": "PotNone",
+    },
+    "qtspClauses": {
+      "kind": "PotNone",
+    },
+    "signature": {
+      "kind": "PotNone",
+    },
+    "signatureFieldDrawing": {
+      "kind": "PotNone",
+    },
+    "signatureRequest": {
+      "kind": "PotNone",
+    },
+    "signaturesList": {
+      "kind": "PotNone",
+    },
+  },
+  "fims": {
+    "history": {
+      "consentsList": {
+        "kind": "PotNone",
+      },
+      "historyExportState": {
+        "kind": "undefined",
+      },
+    },
+    "sso": {
+      "ctaText": undefined,
+      "currentFlowState": "idle",
+      "relyingPartyServiceId": undefined,
+      "relyingPartyUrl": undefined,
+      "ssoData": {
+        "kind": "PotNone",
+      },
+    },
+  },
+  "idPay": {
+    "barcode": {},
+    "code": {
+      "code": {
+        "kind": "PotNone",
+      },
+      "enrollmentRequest": {
+        "kind": "PotNone",
+      },
+      "isIdPayInitiativeBannerClosed": {},
+      "isOnboarded": {
+        "kind": "PotNone",
+      },
+    },
+    "configuration": {
+      "instrumentStatus": {},
+      "instruments": {
+        "kind": "PotNone",
+      },
+    },
+    "initiative": {
+      "beneficiaryDetails": {
+        "kind": "PotNone",
+      },
+      "details": {
+        "kind": "PotNone",
+      },
+      "onboardingStatus": {
+        "kind": "PotNone",
+      },
+      "timeline": {
+        "kind": "PotNone",
+      },
+    },
+    "timeline": {
+      "details": {
+        "kind": "PotNone",
+      },
+    },
+    "unsubscription": {
+      "kind": "PotNone",
+    },
+    "wallet": {
+      "initiatives": {
+        "kind": "PotNone",
+      },
+      "initiativesAwaitingStatusUpdate": {},
+      "initiativesWithInstrument": {
+        "kind": "PotNone",
+      },
+    },
+  },
+  "ingress": {
+    "isBlockingScreen": false,
+  },
+  "itWallet": {
+    "credentials": {
+      "credentials": [],
+      "eid": {
+        "_tag": "None",
+      },
+    },
+    "identification": {
+      "isCieSupported": {
+        "kind": "PotNone",
+      },
+      "isNfcEnabled": {
+        "kind": "PotNone",
+      },
+    },
+    "issuance": {
+      "integrityKeyTag": {
+        "_tag": "None",
+      },
+    },
+    "lifecycle": 0,
+    "preferences": {},
+    "walletInstance": {
+      "attestation": undefined,
+    },
+  },
+  "landingBanners": {
+    "ITW_DISCOVERY": true,
+    "PUSH_NOTIFICATIONS_REMINDER": false,
+    "SETTINGS_DISCOVERY": true,
+  },
+  "loginFeatures": {
+    "cieLogin": {
+      "isCieIDFeatureEnabled": false,
+      "isCieIDTourGuideEnabled": true,
+      "useUat": false,
+    },
+    "fastLogin": {
+      "automaticSessionRefresh": {
+        "areAlreadyTwoMinAfterLastActivity": false,
+      },
+      "optIn": {
+        "enabled": undefined,
+      },
+      "securityAdviceAcknowledged": {
+        "acknowledged": false,
+        "readyToShow": false,
+      },
+      "tokenRefreshHandler": {
+        "pendingActions": [],
+        "tokenRefresh": {
+          "kind": "idle",
+        },
+        "userInteractionForSessionExpiredNeeded": false,
+      },
+    },
+    "loginInfo": {
+      "userFromSuccessLogin": false,
+    },
+    "nativeLogin": {
+      "enabled": true,
+    },
+    "testLogin": {
+      "kind": "idle",
+    },
+  },
+  "mixpanel": {
+    "isMixpanelInitialized": false,
+  },
+  "payments": {
+    "bizEventsTransaction": {
+      "cancelTransactionRecord": {
+        "kind": "PotNone",
+      },
+      "details": {
+        "kind": "PotNoneLoading",
+      },
+      "latestTransactions": {
+        "kind": "PotNone",
+      },
+      "receiptDocument": {
+        "kind": "PotNone",
+      },
+      "transactions": {
+        "kind": "PotNoneLoading",
+      },
+    },
+    "checkout": {
+      "allPaymentMethods": {
+        "kind": "PotNone",
+      },
+      "authorizationUrl": {
+        "kind": "PotNone",
+      },
+      "currentStep": 0,
+      "paymentDetails": {
+        "kind": "PotNone",
+      },
+      "pspList": {
+        "kind": "PotNone",
+      },
+      "recentUsedPaymentMethod": {
+        "kind": "PotNone",
+      },
+      "selectedPaymentMethod": {
+        "_tag": "None",
+      },
+      "selectedPsp": {
+        "_tag": "None",
+      },
+      "selectedWallet": {
+        "_tag": "None",
+      },
+      "transaction": {
+        "kind": "PotNone",
+      },
+      "userWallets": {
+        "kind": "PotNone",
+      },
+    },
+    "details": {
+      "isWalletPayPalBannerClosed": false,
+      "walletDetails": {
+        "kind": "PotNoneLoading",
+      },
+    },
+    "history": {
+      "archive": [],
+      "receiptsOpened": Set {},
+    },
+    "home": {
+      "shouldShowAddMethodsBanner": true,
+    },
+    "legacyTransaction": {
+      "details": {
+        "kind": "PotNoneLoading",
+      },
+      "total": {
+        "kind": "PotNone",
+      },
+      "transactions": {
+        "kind": "PotNone",
+      },
+    },
+    "onboarding": {
+      "paymentMethods": {
+        "kind": "PotNoneLoading",
+      },
+      "result": {
+        "kind": "PotNone",
+      },
+      "rptIdToResume": undefined,
+      "selectedPaymentMethodId": undefined,
+    },
+    "pagoPaPlatform": {
+      "pendingActions": [],
+      "sessionToken": {
+        "kind": "PotNone",
+      },
+    },
+    "paymentsBackoffRetry": {},
+    "wallet": {
+      "userMethods": {
+        "kind": "PotNone",
+      },
+    },
+  },
+  "pn": {
+    "activation": {
+      "kind": "PotNone",
+    },
+  },
+  "profileSettings": {
+    "hasUserAcknowledgedSettingsBanner": false,
+    "showProfileBanner": true,
+  },
+  "services": {
+    "details": {
+      "byId": {},
+      "servicePreference": {
+        "kind": "PotNone",
+      },
+    },
+    "home": {
+      "featuredInstitutions": {
+        "kind": "PotNone",
+      },
+      "featuredServices": {
+        "kind": "PotNone",
+      },
+      "paginatedInstitutions": {
+        "kind": "PotNone",
+      },
+    },
+    "institution": {
+      "paginatedServices": {
+        "kind": "PotNone",
+      },
+    },
+    "search": {
+      "paginatedInstitutions": {
+        "kind": "PotNone",
+      },
+    },
+  },
+  "wallet": {
+    "cards": {},
+    "placeholders": {
+      "isLoading": false,
+      "items": {},
+    },
+    "preferences": {},
+  },
+  "whatsNew": {
+    "lastVisualizedVersion": undefined,
+  },
+}
+`;

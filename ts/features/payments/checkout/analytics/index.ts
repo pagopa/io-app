@@ -30,6 +30,7 @@ export type PaymentAnalyticsProps = {
   editing: PaymentAnalyticsEditingType;
 };
 
+// eslint-disable-next-line complexity
 export const getPaymentAnalyticsEventFromFailureOutcome = (
   outcome: WalletPaymentOutcomeEnum
 ) => {
@@ -68,15 +69,29 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_WEBVIEW_USER_CANCELLATION";
     case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
       return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
+    case WalletPaymentOutcomeEnum.BE_NODE_KO:
+      return "PAYMENT_SLOWDOWN_ERROR";
+    case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
+      return "PAYMENT_INSUFFICIENT_AVAILABILITY_ERROR";
+    case WalletPaymentOutcomeEnum.CVV_ERROR:
+      return "PAYMENT_CVV_ERROR";
+    case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
+      return "PAYMENT_PLAFOND_LIMIT_ERROR";
+    case WalletPaymentOutcomeEnum.KO_RETRIABLE:
+      return "PAYMENT_KO_RETRIABLE";
+    case WalletPaymentOutcomeEnum.ORDER_NOT_PRESENT:
+      return "PAYMENT_ORDER_NOT_PRESENT";
+    case WalletPaymentOutcomeEnum.DUPLICATE_ORDER:
+      return "PAYMENT_DUPLICATE_ORDER";
     default:
       return outcome;
   }
 };
 
 export const getPaymentAnalyticsEventFromRequestFailure = (
-  falure: WalletPaymentFailure
+  failure: WalletPaymentFailure
 ) => {
-  switch (falure.faultCodeCategory) {
+  switch (failure.faultCodeCategory) {
     case "PAYMENT_UNAVAILABLE":
       return "PAYMENT_TECHNICAL_ERROR";
     case "PAYMENT_DATA_ERROR":
@@ -93,8 +108,15 @@ export const getPaymentAnalyticsEventFromRequestFailure = (
       return "PAYMENT_ALREADY_PAID_ERROR";
     case "PAYMENT_UNKNOWN":
       return "PAYMENT_NOT_FOUND_ERROR";
+    case "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION":
+      return "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION";
+    case "GENERIC_ERROR":
+    case "PAYMENT_VERIFY_GENERIC_ERROR":
+      return "PAYMENT_502_ERROR";
+    case "PAYMENT_SLOWDOWN_ERROR":
+      return "PAYMENT_SLOWDOWN_ERROR";
     default:
-      return "PAYMENT_GENERIC_ERROR";
+      return "PAYMENT_NOT_MAPPED_CATEGORY_ERROR";
   }
 };
 
@@ -348,5 +370,23 @@ export const trackPaymentStartFlow = (
     buildEventProperties("UX", "action", {
       ...props
     })
+  );
+};
+
+export const trackPaymentsPspNotAvailableError = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_PSP_NOT_AVAILABLE_ERROR",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
+
+export const trackPaymentsPspNotAvailableSelectNew = (
+  props: Partial<PaymentAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "PAYMENT_PSP_NOT_AVAILABLE_SELECT_NEW",
+    buildEventProperties("UX", "action", props)
   );
 };
