@@ -20,13 +20,13 @@ import { sectionStatusByKeySelector } from "../../../../store/reducers/backendSt
 import { useItwAlertWithStatusBar } from "../../common/hooks/useItwAlertWithStatusBar";
 import { ItwScrollViewWithLargeHeader } from "../../common/components/ItwScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { isItwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isCieSupportedPot = useIOSelector(itwIsCieSupportedSelector);
   const disabledIdentificationMethods = useIOSelector(
-    isItwDisabledIdentificationMethodsSelector
+    itwDisabledIdentificationMethodsSelector
   );
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 

@@ -363,7 +363,7 @@ export const isItwEnabledSelector = createSelector(
  * Returns the authentication methods that are disabled.
  * If there is no data, an empty array is returned as the default value.
  */
-export const isItwDisabledIdentificationMethodsSelector = createSelector(
+export const itwDisabledIdentificationMethodsSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): ReadonlyArray<string> =>
     pipe(
