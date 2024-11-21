@@ -38,14 +38,22 @@ const ItwPresentationFiscalCode = () => {
       >
         {fiscalCode}
       </Text>
-      <Barcode
-        value={fiscalCode}
-        width={barCodeWidth}
-        height={50}
-        format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
-        background={IOColors[theme["appBackground-primary"]]}
-        lineColor={IOColors[theme["textBody-default"]]}
-      />
+      <View
+        accessible={true}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.fiscalCodeBarcode"
+        )}
+        accessibilityRole="image"
+      >
+        <Barcode
+          value={fiscalCode}
+          width={barCodeWidth}
+          height={50}
+          format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
+          background={IOColors[theme["appBackground-primary"]]}
+          lineColor={IOColors[theme["textBody-default"]]}
+        />
+      </View>
     </View>
   );
 };
