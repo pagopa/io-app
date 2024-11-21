@@ -11,7 +11,11 @@ export type QrCodeImageProps = {
   size?: number | `${number}%`;
   // Optional background color for the QR Code image
   backgroundColor?: string;
+  // Accessibility
+  accessibilityLabel?: string;
 };
+
+const defaultAccessibilityLabel = "QR Code";
 
 /**
  * This components renders a QR Code which resolves in the provided value
@@ -19,7 +23,8 @@ export type QrCodeImageProps = {
 export const QrCodeImage = ({
   value,
   size = 200,
-  backgroundColor
+  backgroundColor,
+  accessibilityLabel = defaultAccessibilityLabel
 }: QrCodeImageProps) => {
   const [source, setSource] = React.useState<ImageSourcePropType>();
   const { width } = useWindowDimensions();
@@ -44,7 +49,12 @@ export const QrCodeImage = ({
   }, [value, realSize, backgroundColor]);
 
   return source ? (
-    <AnimatedImage source={source} />
+    <AnimatedImage
+      source={source}
+      accessible={true}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="image"
+    />
   ) : (
     <Placeholder.Box
       height={realSize}
