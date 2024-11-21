@@ -664,8 +664,8 @@ authentication:
       title: New
       content: Now you can use CieID to log in IO!
   cieidUrlErrorScreen:
-    title: Non riusciamo ad autenticarti con l’app CieID
-    description: Usa un altro metodo per entrare in app
+    title: We can't authenticate you with the CieID app
+    description: Log in to the app using a different method
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
