@@ -34,10 +34,7 @@ const routesToNavigationLink: Record<string, string> = {
   [SERVICES_ROUTES.SERVICES_HOME]: "/main/services",
   [ROUTES.PROFILE_MAIN]: "/main/profile",
   [ROUTES.PROFILE_PRIVACY]: "/profile/privacy",
-  [ROUTES.PROFILE_PRIVACY_MAIN]: "/profile/privacy-main",
-  [ROUTES.PAYMENTS_HISTORY_SCREEN]: "/wallet/payments-history",
-  [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
-    "/wallet/card-onboarding-attempts"
+  [ROUTES.PROFILE_PRIVACY_MAIN]: "/profile/privacy-main"
 };
 
 const legacyRoutesToNavigationLink: Record<string, string> = {

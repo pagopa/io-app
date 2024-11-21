@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Entra con CieID
         subtitle: Usa l'app CieID
+        badge: Novità
       help_banner:
         title: Non sai cosa scegliere?
         action: Ti diamo una mano
@@ -659,6 +660,12 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+    tour_guide:
+      title: Novità
+      content: Ora puoi usare CieID per entrare su IO!
+  cieidUrlErrorScreen:
+    title: Non riusciamo ad autenticarti con l’app CieID
+    description: Usa un altro metodo per entrare in app
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
@@ -1455,7 +1462,7 @@ wallet:
     android:
       confirm: Rimuovi
     successful: Metodo rimosso!
-    failed: Impossibile rimuovere il metodo dal tuo Portafoglio
+    failed: C’è stato un problema, riprova
   newPaymentMethod:
     add: aggiungi
     show: mostra
@@ -1902,8 +1909,11 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Si è verificato un errore imprevisto"
-        subtitle: "Riprova, oppure contatta l’assistenza."
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
+      PAYMENT_SLOWDOWN_ERROR:
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
@@ -1979,6 +1989,9 @@ wallet:
       PLAFOND_LIMIT_ERROR:
         title: Hai superato il limite di spesa della tua carta
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
+      BE_NODE_KO:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2008,7 +2021,7 @@ cardComponent:
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
-  removeCta: "Elimina questo metodo"
+  removeCta: "Rimuovi dal Portafoglio"
 messages:
   accessibility:
     message:
@@ -2784,7 +2797,7 @@ bonus:
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
-      deactivateBonus: Disattiva Carta Giovani Nazionale
+      deactivateBonus: Rimuovi dal Portafoglio
       goToDetail: Usa la Carta
     detail:
       cta:
@@ -2853,10 +2866,10 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
       deactivate:
-        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        toast: "Metodo rimosso!"
         alert:
-          title: "Disattiva carta"
-          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
+          title: "Vuoi rimuovere Carta Giovani dal Portafoglio?"
+          message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
         expired: Elimina Carta Giovani Nazionale
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
@@ -2919,6 +2932,11 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Non perderti i messaggi importanti"
+        body: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
+        CTA: "Attiva notifiche push"
     attachmentDownloadFeedback: "Download in corso"
     attachments: "Allegati"
     loading:

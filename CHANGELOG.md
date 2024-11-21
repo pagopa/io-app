@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.77.0-rc.3](https://github.com/pagopa/io-app/compare/2.77.0-rc.2...2.77.0-rc.3) (2024-11-18)
+
+
+### Bug Fixes
+
+* [[IOAPPX-430](https://pagopa.atlassian.net/browse/IOAPPX-430)] Remove type assertion on IDP remote logo ([30e5c66](https://github.com/pagopa/io-app/commit/30e5c66eee43752c5d3b309fe9e273ca08083a07))
+
+## [2.77.0-rc.2](https://github.com/pagopa/io-app/compare/2.77.0-rc.1...2.77.0-rc.2) (2024-11-15)
+
+
+### Features
+
+* [[IOBP-870](https://pagopa.atlassian.net/browse/IOBP-870)] Add bonus & payments profile and super properties on mixpanel ([#6391](https://github.com/pagopa/io-app/issues/6391)) ([3bba229](https://github.com/pagopa/io-app/commit/3bba229e74ff3eb0e5d0ecead575c12ba50f94dc))
+
+
+### Bug Fixes
+
+* [[IOCOM-1927](https://pagopa.atlassian.net/browse/IOCOM-1927)] Remove error Toast on InApp Browser opening on FIMS ([#6403](https://github.com/pagopa/io-app/issues/6403)) ([c9efcfe](https://github.com/pagopa/io-app/commit/c9efcfe38bc392da03dfb2c13dec543208a424fc))
+* **IT Wallet:** [[SIW-1845](https://pagopa.atlassian.net/browse/SIW-1845)] Hide trustmark when a credential is invalid ([#6406](https://github.com/pagopa/io-app/issues/6406)) ([68f631a](https://github.com/pagopa/io-app/commit/68f631ab53db941db72c7d31296cd629c63c294e))
+* [[IOBP-997](https://pagopa.atlassian.net/browse/IOBP-997)] Missing success toast on hide receipt ([#6405](https://github.com/pagopa/io-app/issues/6405)) ([1b5ed8f](https://github.com/pagopa/io-app/commit/1b5ed8f6900b908f358aa41e256d43059c783794))
+* IT Wallet preferences reducer tests ([#6404](https://github.com/pagopa/io-app/issues/6404)) ([fdc1ec5](https://github.com/pagopa/io-app/commit/fdc1ec54f02d5f5c2809ea1dc7cfc9b37767c326))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1823](https://pagopa.atlassian.net/browse/SIW-1823)] Handle local integrity errors ([#6408](https://github.com/pagopa/io-app/issues/6408)) ([6c4fabe](https://github.com/pagopa/io-app/commit/6c4fabe0a0cf6f00696908ab5b3b407e46291a94))
+
 ## [2.77.0-rc.1](https://github.com/pagopa/io-app/compare/2.77.0-rc.0...2.77.0-rc.1) (2024-11-14)
 
 
