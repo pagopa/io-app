@@ -55,17 +55,16 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
 
   const handleChangePaymentMethod = () => {
     analytics.trackPaymentsPspNotAvailableSelectNew({
-      amount: paymentAnalyticsData?.formattedAmount,
-      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      attempt: paymentAnalyticsData?.attempt,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
       organization_fiscal_code:
         paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      amount: paymentAnalyticsData?.formattedAmount,
       saved_payment_method:
-        paymentAnalyticsData?.savedPaymentMethods?.length || 0,
-      service_name: paymentAnalyticsData?.serviceName,
-      data_entry: paymentAnalyticsData?.startOrigin,
-      attempt: paymentAnalyticsData?.attempt,
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
       payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      service_name: paymentAnalyticsData?.serviceName,
       selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
     });
 
