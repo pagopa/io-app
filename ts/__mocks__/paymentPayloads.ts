@@ -3,10 +3,10 @@ import {
   IWithinRangeStringTag
 } from "@pagopa/ts-commons/lib/strings";
 
-import { paymentVerifica } from "../store/actions/wallet/payment";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { myRptId } from "../utils/testFaker";
 import { Amount, Transaction } from "../types/pagopa";
+import { paymentVerifica } from "../store/actions/legacyWallet";
 
 export const messageId = "abcde-12345";
 

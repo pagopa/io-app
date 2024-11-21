@@ -53,7 +53,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "missing FIMS domain",
         debugMessage
       })
     );
@@ -68,7 +67,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "unable to accept grants: invalid URL",
         debugMessage
       })
     );
@@ -97,7 +95,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "could not get RelyingParty redirect URL",
         debugMessage
       })
     );
@@ -134,7 +131,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "IAB url call failed or without a valid redirect",
         debugMessage
       })
     );
@@ -147,7 +143,14 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   yield* call(deallocateFimsResourcesAndNavigateBack);
   yield* call(computeAndTrackInAppBrowserOpening, action);
 
-  return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
+  try {
+    yield* call(openAuthenticationSession, inAppBrowserRedirectUrl, "", true);
+  } catch (error: unknown) {
+    // At the time of writing, openAuthenticationSession returns
+    // different kind of structures for error's instances so we
+    // are not able to distinguish between normal closing of the
+    // InApp Browser on both systems and other kind of errors.
+  }
 }
 
 const recurseUntilRPUrl = async (
@@ -237,8 +240,6 @@ function* postToRelyingPartyWithImplicitCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "Could notprocess redirection page, Implicit code flow",
         debugMessage
       })
     );
@@ -262,8 +263,6 @@ function* postToRelyingPartyWithImplicitCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "could not sign request with LolliPoP, Implicit code flow",
         debugMessage
       })
     );
@@ -301,8 +300,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "Could not find valid Location header, Authorization code flow",
         debugMessage
       })
     );
@@ -319,7 +316,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "could not extract data from RelyingParty URL",
         debugMessage
       })
     );
@@ -339,8 +335,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "could not sign request with LolliPoP, Authorization code flow",
         debugMessage
       })
     );

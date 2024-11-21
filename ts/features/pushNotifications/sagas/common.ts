@@ -9,7 +9,6 @@ import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../store/reducers/pendingMessage";
-import { isPaymentOngoingSelector } from "../../../store/reducers/wallet/payment";
 import { clearNotificationPendingMessage } from "../store/actions/pendingMessage";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
@@ -69,10 +68,7 @@ export function* handlePendingMessageStateIfAllowed(
   // the application was killed and the push notification is tapped)
   yield* call(trackMessageNotificationTapIfNeeded, pendingMessageState);
 
-  // Check if there is a payment ongoing
-  const isPaymentOngoing = yield* select(isPaymentOngoingSelector);
-
-  if (!isPaymentOngoing && pendingMessageState) {
+  if (pendingMessageState) {
     // We have a pending notification message to handle
     const messageId = pendingMessageState.id;
 

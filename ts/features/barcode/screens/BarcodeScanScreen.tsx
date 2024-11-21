@@ -17,8 +17,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
   isIdPayEnabledSelector
@@ -48,7 +47,6 @@ import { FCI_ROUTES } from "../../fci/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
@@ -132,8 +130,6 @@ const BarcodeScanScreen = () => {
 
     switch (barcode.type) {
       case "PAGOPA":
-        dispatch(paymentInitializeState());
-
         const isDataMatrix = barcode.format === "DATA_MATRIX";
 
         if (isDataMatrix) {

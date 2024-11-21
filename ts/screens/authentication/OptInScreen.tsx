@@ -35,6 +35,11 @@ import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 
+export enum Identifier {
+  SPID = "SPID",
+  CIE = "CIE",
+  CIE_ID = "CIE_ID"
+}
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
   body: "authentication.opt_in.contextualHelpContent"
@@ -42,10 +47,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 export type ChosenIdentifier =
   | {
-      identifier: "SPID" | "CIE";
+      identifier: Identifier.SPID | Identifier.CIE;
     }
   | {
-      identifier: "CIE_ID";
+      identifier: Identifier.CIE_ID;
       params: CieIdLoginProps;
     };
 

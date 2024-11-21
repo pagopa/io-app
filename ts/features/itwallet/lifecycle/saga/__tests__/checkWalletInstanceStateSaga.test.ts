@@ -16,6 +16,7 @@ import { sessionTokenSelector } from "../../../../../store/reducers/authenticati
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/reducers";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
+import { itwIntegrityServiceReadySelector } from "../../../issuance/store/selectors";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
@@ -47,6 +48,7 @@ describe("checkWalletInstanceStateSaga", () => {
         itWallet: {
           lifecycle: ItwLifecycleState.ITW_LIFECYCLE_OPERATIONAL,
           issuance: {
+            integrityServiceReady: true,
             integrityKeyTag: O.some("aac6e82a-e27e-4293-9b55-94a9fab22763")
           },
           credentials: { eid: O.none, credentials: [] }
@@ -59,6 +61,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
+        [matchers.select(itwIntegrityServiceReadySelector), true],
         [
           matchers.call.fn(getAttestation),
           "aac6e82a-e27e-4293-9b55-94a9fab22763"

@@ -9,6 +9,9 @@ import { ValidationFaultPaymentDataErrorProblemJson } from "../../../../../defin
 import { ValidationFaultPaymentUnavailableProblemJson } from "../../../../../definitions/pagopa/ecommerce/ValidationFaultPaymentUnavailableProblemJson";
 import { ValidationFaultPaymentUnknownProblemJson } from "../../../../../definitions/pagopa/ecommerce/ValidationFaultPaymentUnknownProblemJson";
 import { PaymentGenericErrorAfterUserCancellationProblemJson } from "./PaymentGenericErrorAfterUserCancellationProblemJson";
+import { PaymentVerifyGenericErrorProblemJson } from "./PaymentVerifyGenericErrorProblemJson";
+import { PspPaymentMethodNotAvailableProblemJson } from "./PspPaymentMethodNotAvailableProblemJson";
+import { PaymentSlowdownErrorProblemJson } from "./PaymentSlowdownErrorProblemJson";
 
 export type WalletPaymentFailure = t.TypeOf<typeof WalletPaymentFailure>;
 export const WalletPaymentFailure = t.union([
@@ -21,5 +24,8 @@ export const WalletPaymentFailure = t.union([
   PaymentCanceledStatusFaultPaymentProblemJson,
   ValidationFaultPaymentUnavailableProblemJson,
   PaymentDuplicatedStatusFaultPaymentProblemJson,
-  PaymentGenericErrorAfterUserCancellationProblemJson
+  PaymentGenericErrorAfterUserCancellationProblemJson,
+  PaymentVerifyGenericErrorProblemJson,
+  PspPaymentMethodNotAvailableProblemJson,
+  PaymentSlowdownErrorProblemJson
 ]);

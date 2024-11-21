@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  BodyProps,
+  ComposedBodyFromArray,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { trackRemoteContentInfo } from "../../analytics";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../../../../components/core/typography/ComposedBodyFromArray";
 
 export const RemoteContentBanner = () => {
   const bodyPropsArray = useMemo(

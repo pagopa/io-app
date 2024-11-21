@@ -17,12 +17,12 @@ import {
   HSpacer,
   Divider,
   VSpacer,
-  NativeSwitch
+  NativeSwitch,
+  Body
 } from "@pagopa/io-app-design-system";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
 import { IOBadge } from "../core/IOBadge";
-import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -170,19 +170,19 @@ export default class ListItemComponent extends React.Component<Props> {
                 ))}
             </View>
             {this.props.subTitle && (
-              <Body
-                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-                style={[
-                  { alignSelf: "flex-start" },
-                  {
-                    paddingRight:
-                      this.props.paddingRightDescription ||
-                      PADDING_R_DESCRIPTION
-                  }
-                ]}
+              <View
+                style={{
+                  alignSelf: "flex-start",
+                  paddingRight:
+                    this.props.paddingRightDescription || PADDING_R_DESCRIPTION
+                }}
               >
-                {this.props.subTitle}
-              </Body>
+                <Body
+                  numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+                >
+                  {this.props.subTitle}
+                </Body>
+              </View>
             )}
           </View>
           {this.props.iconName !== undefined &&

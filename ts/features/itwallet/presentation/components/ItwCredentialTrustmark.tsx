@@ -51,13 +51,14 @@ import {
   CREDENTIALS_MAP,
   trackWalletCredentialShowTrustmark
 } from "../../analytics";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import {
   generateTrustmarkUrl,
-  getCredentialNameFromType
+  getCredentialNameFromType,
+  validCredentialStatuses
 } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -67,17 +68,6 @@ type ButtonSize = {
   width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
 };
-
-const trustmarkEnabledCredentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-];
-
-const shouldDisplayTrustmark = (credential: StoredCredential) =>
-  trustmarkEnabledCredentials.includes(
-    credential.credentialType as CredentialType
-  ) && getCredentialStatus(credential) !== "expired";
 
 /* VISUAL PARAMETERS */
 
@@ -104,6 +94,10 @@ export const ItwCredentialTrustmark = ({
   testID,
   credential
 }: ItwCredentialTrustmarkProps) => {
+  const { status = "valid" } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
+  );
+
   /* Bottom sheet for the QR code */
   const trustmarkBottomSheet = useIOBottomSheetModal({
     title: I18n.t("features.itWallet.presentation.trustmark.title"),
@@ -280,7 +274,8 @@ export const ItwCredentialTrustmark = ({
   const { onPressIn, onPressOut, animatedScaleStyle } =
     useSpringPressScaleAnimation();
 
-  if (!shouldDisplayTrustmark(credential)) {
+  // Hide trustmark when the credential is not valid
+  if (!validCredentialStatuses.includes(status)) {
     return null;
   }
 
@@ -350,6 +345,9 @@ export const QrCodeBottomSheetContent = ({
       <QrCodeImage
         size={170}
         value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.trustmark.qrCode"
+        )}
       />
       <VStack space={8}>
         <H6>{getCredentialNameFromType(credential.credentialType)}</H6>

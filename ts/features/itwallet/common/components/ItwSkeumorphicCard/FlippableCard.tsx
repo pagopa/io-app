@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  AccessibilityProps,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle
+} from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -15,7 +21,7 @@ export type FlippableCardProps = {
   duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
-};
+} & AccessibilityProps;
 
 /**
  * Renders a component which can be flipped to show both of its sides with an animation.
@@ -25,14 +31,15 @@ const FlippableCard = ({
   BackComponent,
   containerStyle,
   duration = DEFAULT_DURATION,
-  ...props
+  isFlipped: _isFlipped,
+  ...accessibilityProps
 }: FlippableCardProps) => {
-  const isFlipped = useSharedValue(props.isFlipped);
+  const isFlipped = useSharedValue(_isFlipped);
 
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
-    isFlipped.value = props.isFlipped;
-  }, [isFlipped, props]);
+    isFlipped.value = _isFlipped;
+  }, [isFlipped, _isFlipped]);
 
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
@@ -53,7 +60,7 @@ const FlippableCard = ({
   });
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} {...accessibilityProps}>
       <Animated.View
         style={[styles.card, styles.front, regularCardAnimatedStyle]}
       >
