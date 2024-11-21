@@ -1,23 +1,72 @@
-import { ButtonSolid, H3, VStack } from "@pagopa/io-app-design-system";
+import { ButtonLink, H3, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import { View } from "react-native";
+import I18n from "../../../../i18n";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { useCredentialFullScreenCardModal } from "../../presentation/hooks/useCredentialFullScreenCardModal";
 
-export const ItwSkeumorphicCredentialSection = () => {
+const credentialsWithCard: ReadonlyArray<string> = [
+  "MDL",
+  "EuropeanDisabilityCard"
+];
+
+export const ItwSkeumorphicCredentialSection = () => (
+  <VStack space={16}>
+    <H3>{"Skeumorphic credential card"}</H3>
+
+    {Object.values(ItwStoredCredentialsMocks)
+      .filter(({ credentialType }) =>
+        credentialsWithCard.includes(credentialType)
+      )
+      .map(credential => (
+        <ItwSkeumorphicCredentialItem
+          key={credential.credentialType}
+          credential={credential}
+        />
+      ))}
+  </VStack>
+);
+
+const ItwSkeumorphicCredentialItem = ({
+  credential
+}: {
+  credential: StoredCredential;
+}) => {
   const [isFlipped, setFlipped] = React.useState(false);
 
+  const fullScreenCardModal = useCredentialFullScreenCardModal({ credential });
+
+  const handleOnPress = () => {
+    fullScreenCardModal.present();
+  };
+
   return (
-    <VStack space={16}>
-      <H3>{"Skeumorphic credential card"}</H3>
+    <VStack key={credential.credentialType} space={16}>
       <ItwSkeumorphicCard
-        credential={ItwStoredCredentialsMocks.mdl}
+        credential={credential}
         isFlipped={isFlipped}
+        onPress={handleOnPress}
       />
-      <ButtonSolid
-        label={isFlipped ? "Show front" : "Show rear"}
-        onPress={() => setFlipped(_ => !_)}
-        fullWidth={true}
-      />
+      <View
+        style={{
+          alignSelf: "center"
+        }}
+      >
+        <ButtonLink
+          label={I18n.t(
+            `features.itWallet.presentation.credentialDetails.card.${
+              isFlipped ? "showFront" : "showBack"
+            }`
+          )}
+          onPress={() => setFlipped(_ => !_)}
+          icon="switchCard"
+          iconPosition="end"
+        />
+      </View>
+      {fullScreenCardModal.content}
     </VStack>
   );
 };
