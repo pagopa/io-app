@@ -65,13 +65,14 @@ export const ItwIdentificationModeSelectionScreen = () => {
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
   }, [machineRef]);
 
-  const bannerInfoSelector = useIOSelector(
+  const itwIdentificationSection = useIOSelector(
     sectionStatusByKeySelector("itw_identification")
   );
 
   const title = I18n.t("features.itWallet.identification.mode.title");
-  const { alertProps, statusBar } =
-    useItwAlertWithStatusBar(bannerInfoSelector);
+  const { alertProps, statusBar } = useItwAlertWithStatusBar(
+    itwIdentificationSection
+  );
 
   useHeaderSecondLevel({
     title,
@@ -103,6 +104,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
               subtitle={I18n.t(
                 "features.itWallet.identification.mode.method.spid.subtitle"
               )}
+              testID="Spid"
               icon="spid"
               onPress={handleSpidPress}
             />
@@ -115,6 +117,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
               subtitle={I18n.t(
                 "features.itWallet.identification.mode.method.ciePin.subtitle"
               )}
+              testID="CiePin"
               icon="fiscalCodeIndividual"
               onPress={handleCiePinPress}
             />
@@ -128,6 +131,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
                 "features.itWallet.identification.mode.method.cieId.subtitle"
               )}
               icon="device"
+              testID="CieID"
               onPress={handleCieIdPress}
             />
           )}

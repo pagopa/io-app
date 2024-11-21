@@ -37,10 +37,10 @@ const ItwDiscoveryInfoScreen = () => {
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const bannerInfoSelector = useIOSelector(
+  const itwDiscoveryTosSection = useIOSelector(
     sectionStatusByKeySelector("itw_discovery_tos")
   );
-  const bannerInfoSelectorVisility = bannerInfoSelector?.is_visible;
+  const itwDiscoveryTosSectionVisibility = itwDiscoveryTosSection?.is_visible;
 
   const handleContinuePress = () => {
     trackItWalletActivationStart();
@@ -51,8 +51,9 @@ const ItwDiscoveryInfoScreen = () => {
     machineRef.send({ type: "start" });
   });
 
-  const { alertProps, statusBar } =
-    useItwAlertWithStatusBar(bannerInfoSelector);
+  const { alertProps, statusBar } = useItwAlertWithStatusBar(
+    itwDiscoveryTosSection
+  );
 
   useHeaderSecondLevel({
     title: "",
@@ -90,7 +91,7 @@ const ItwDiscoveryInfoScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
-            disabled: bannerInfoSelectorVisility,
+            disabled: itwDiscoveryTosSectionVisibility,
             loading: isLoading,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
