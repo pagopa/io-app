@@ -1,13 +1,12 @@
 import {
   Badge,
-  IOIcons,
   ListItemHeader,
   ModuleCredential,
   VStack
 } from "@pagopa/io-app-design-system";
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import I18n from "../../../../i18n";
@@ -26,7 +25,6 @@ import {
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -44,6 +42,7 @@ import { sectionStatusByKeySelector } from "../../../../store/reducers/backendSt
 import { useItwAlertWithStatusBar } from "../../common/hooks/useItwAlertWithStatusBar";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwScrollViewWithLargeHeader } from "../../common/components/ItwScrollViewWithLargeHeader";
+import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
 
 // List of available credentials to show to the user
 const availableCredentials = [
@@ -55,11 +54,6 @@ const availableCredentials = [
 const activeBadge: Badge = {
   variant: "success",
   text: I18n.t("features.wallet.onboarding.badge.active")
-};
-
-const disabledBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.unavailable")
 };
 
 const WalletCardOnboardingScreen = () => {
@@ -118,27 +112,17 @@ const ItwCredentialOnboardingSection = () => {
 
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
 
-  const beginCredentialIssuance = (type: CredentialType) => () => {
-    if (isCredentialIssuancePending) {
-      return;
-    }
-    const credentialName = CREDENTIALS_MAP[type];
-    trackStartAddNewCredential(credentialName);
-    machineRef.send({
-      type: "select-credential",
-      credentialType: type,
-      skipNavigation: true
-    });
-  };
-
-  const credentialIconByType: Record<
-    (typeof availableCredentials)[number],
-    IOIcons
-  > = {
-    [CredentialType.DRIVING_LICENSE]: "car",
-    [CredentialType.EUROPEAN_DISABILITY_CARD]: "accessibility",
-    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: "healthCard"
-  };
+  const beginCredentialIssuance = useCallback(
+    (type: string) => {
+      trackStartAddNewCredential(CREDENTIALS_MAP[type]);
+      machineRef.send({
+        type: "select-credential",
+        credentialType: type,
+        skipNavigation: true
+      });
+    },
+    [machineRef]
+  );
 
   return (
     <>
@@ -146,44 +130,21 @@ const ItwCredentialOnboardingSection = () => {
         label={I18n.t("features.wallet.onboarding.sections.itw")}
       />
       <VStack space={8}>
-        {availableCredentials.map(type => {
-          const isCredentialAlreadyActive = itwCredentialsTypes.includes(type);
-          const isCredentialDisabled =
-            !!remotelyDisabledCredentials?.includes(type);
-
-          const getBadge = () => {
-            if (isCredentialAlreadyActive) {
-              return activeBadge;
-            }
-            if (isCredentialDisabled) {
-              return disabledBadge;
-            }
-            return undefined;
-          };
-
-          return (
-            <ModuleCredential
-              key={`itw_credential_${type}`}
-              testID={`${type}ModuleTestID`}
-              icon={credentialIconByType[type]}
-              label={getCredentialNameFromType(type)}
-              onPress={
-                isCredentialAlreadyActive || isCredentialDisabled
-                  ? undefined
-                  : beginCredentialIssuance(type)
-              }
-              isFetching={
-                isCredentialIssuancePending &&
-                pipe(
-                  selectedCredentialOption,
-                  O.map(t => t === type),
-                  O.getOrElse(constFalse)
-                )
-              }
-              badge={getBadge()}
-            />
-          );
-        })}
+        {availableCredentials.map(type => (
+          <ItwOnboardingModuleCredential
+            key={`itw_credential_${type}`}
+            type={type}
+            isActive={itwCredentialsTypes.includes(type)}
+            isDisabled={remotelyDisabledCredentials.includes(type)}
+            isCredentialIssuancePending={isCredentialIssuancePending}
+            isSelectedCredential={pipe(
+              selectedCredentialOption,
+              O.map(t => t === type),
+              O.getOrElse(constFalse)
+            )}
+            onPress={beginCredentialIssuance}
+          />
+        ))}
       </VStack>
     </>
   );

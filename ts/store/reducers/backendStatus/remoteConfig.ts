@@ -410,7 +410,7 @@ export const itwDisabledCredentialsSelector = createSelector(
   remoteConfig =>
     pipe(
       remoteConfig,
-      O.map(config => config.itw.disabled_credentials),
-      O.toUndefined
+      O.chainNullableK(config => config.itw.disabled_credentials),
+      O.getOrElse(() => emptyArray)
     )
 );
