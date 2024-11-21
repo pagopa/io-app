@@ -3,7 +3,7 @@ import {
   IOSpacingScale,
   VStack
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   Directions,
@@ -12,13 +12,13 @@ import {
 } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import I18n from "../../../../i18n";
+import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 
 /**
  * Credentials that should display a skeumorphic card
@@ -39,7 +39,7 @@ type Props = {
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const [isFlipped, setIsFlipped] = React.useState(false);
 
-  const handleOnPress = useCallback(() => {
+  const handleOnPress = React.useCallback(() => {
     trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
     setIsFlipped(_ => !_);
   }, [credential.credentialType]);
@@ -68,11 +68,19 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
             <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
           </CardContainer>
         </GestureDetector>
-        <View style={styles.flipButton}>
+        <View
+          style={styles.flipButton}
+          accessible={true}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.presentation.credentialDetails.card.showBack"
+          )}
+          accessibilityRole="switch"
+          accessibilityState={{ checked: isFlipped }}
+        >
           <ButtonLink
             label={I18n.t(
-              `features.itWallet.presentation.credentialDetails.${
-                isFlipped ? "flipCardBack" : "flipCardFront"
+              `features.itWallet.presentation.credentialDetails.card.${
+                isFlipped ? "showFront" : "showBack"
               }`
             )}
             onPress={handleOnPress}
