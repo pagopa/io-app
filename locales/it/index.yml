@@ -1908,6 +1908,9 @@ wallet:
       GENERIC_ERROR:
         title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
         subtitle: "Riprova più tardi."
+      PAYMENT_SLOWDOWN_ERROR:
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
@@ -2791,7 +2794,7 @@ bonus:
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
-      deactivateBonus: Disattiva Carta Giovani Nazionale
+      deactivateBonus: Rimuovi dal Portafoglio
       goToDetail: Usa la Carta
     detail:
       cta:
@@ -2860,10 +2863,10 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
       deactivate:
-        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        toast: "Metodo rimosso!"
         alert:
-          title: "Disattiva carta"
-          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
+          title: "Vuoi rimuovere Carta Giovani dal Portafoglio?"
+          message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
         expired: Elimina Carta Giovani Nazionale
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
@@ -2926,6 +2929,11 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Non perderti i messaggi importanti"
+        body: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
+        CTA: "Attiva notifiche push"
     attachmentDownloadFeedback: "Download in corso"
     attachments: "Allegati"
     loading:
