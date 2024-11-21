@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  AccessibilityProps,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle
-} from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { CardOrientation } from "./types";
 
 const DEFAULT_DURATION = 500;
 
@@ -21,7 +16,8 @@ export type FlippableCardProps = {
   duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
-} & AccessibilityProps;
+  orientation?: CardOrientation;
+};
 
 /**
  * Renders a component which can be flipped to show both of its sides with an animation.
@@ -32,7 +28,7 @@ const FlippableCard = ({
   containerStyle,
   duration = DEFAULT_DURATION,
   isFlipped: _isFlipped,
-  ...accessibilityProps
+  orientation = "portrait"
 }: FlippableCardProps) => {
   const isFlipped = useSharedValue(_isFlipped);
 
@@ -46,7 +42,11 @@ const FlippableCard = ({
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
 
     return {
-      transform: [{ rotateY: rotateValue }]
+      transform: [
+        orientation === "landscape"
+          ? { rotateY: rotateValue }
+          : { rotateX: rotateValue }
+      ]
     };
   });
 
@@ -55,12 +55,16 @@ const FlippableCard = ({
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
 
     return {
-      transform: [{ rotateY: rotateValue }]
+      transform: [
+        orientation === "landscape"
+          ? { rotateY: rotateValue }
+          : { rotateX: rotateValue }
+      ]
     };
   });
 
   return (
-    <View style={containerStyle} {...accessibilityProps}>
+    <View style={containerStyle}>
       <Animated.View
         style={[styles.card, styles.front, regularCardAnimatedStyle]}
       >

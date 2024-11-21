@@ -25,6 +25,7 @@ import {
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
+import { CardOrientation } from "./types";
 
 type CardSideBaseProps = {
   status: ItwCredentialStatus;
@@ -59,12 +60,14 @@ export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
   isFlipped?: boolean;
   onPress?: () => void;
+  orientation?: CardOrientation;
 };
 
 const ItwSkeumorphicCard = ({
   credential,
   isFlipped = false,
-  onPress
+  onPress,
+  orientation = "portrait"
 }: ItwSkeumorphicCardProps) => {
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -114,7 +117,10 @@ const ItwSkeumorphicCard = ({
 
   const card = (
     <FlippableCard
-      containerStyle={styles.card}
+      containerStyle={[
+        styles.card,
+        orientation === "landscape" && styles.cardLandscape
+      ]}
       FrontComponent={FrontSide}
       BackComponent={BackSide}
       isFlipped={isFlipped}
@@ -139,6 +145,9 @@ const ItwSkeumorphicCard = ({
 const styles = StyleSheet.create({
   card: {
     aspectRatio: 16 / 10.09
+  },
+  cardLandscape: {
+    transform: [{ rotate: "90deg" }, { scale: 1.6 }]
   },
   tag: {
     position: "absolute",

@@ -2,7 +2,6 @@ import { ButtonLink, H3, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
