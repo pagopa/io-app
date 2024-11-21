@@ -199,7 +199,6 @@ const WalletPaymentPickMethodScreen = () => {
 
   React.useEffect(() => {
     if (isError) {
-      // create a constant error that contains the error if transactionPot is in error or paymentMethodsPot is in error or userWalletsPots is in error or pspListPot is in error
       const error = getFirstPotError();
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
