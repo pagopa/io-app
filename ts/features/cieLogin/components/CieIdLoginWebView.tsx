@@ -57,6 +57,15 @@ const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
 const CIE_ID_ERROR = "cieiderror";
 const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
+const WHITELISTED_URLS = [
+  "https://idserver.servizicie.interno.gov.it",
+  "https://oidc.idserver.servizicie.interno.gov.it",
+  "https://mtls.oidc.idserver.servizicie.interno.gov.it",
+  "https://mtls.idserver.servizicie.interno.gov.it",
+  "https://ios.idserver.servizicie.interno.gov.it",
+  "https://ios.oidc.idserver.servizicie.interno.gov.it"
+];
+
 export type CieIdLoginProps = {
   spidLevel: SpidLevel;
   isUat: boolean;
@@ -101,16 +110,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
-      const whitelistedUrls = [
-        "https://idserver.servizicie.interno.gov.it",
-        "https://oidc.idserver.servizicie.interno.gov.it",
-        "https://mtls.oidc.idserver.servizicie.interno.gov.it",
-        "https://mtls.idserver.servizicie.interno.gov.it",
-        "https://ios.idserver.servizicie.interno.gov.it",
-        "https://ios.oidc.idserver.servizicie.interno.gov.it"
-      ];
       // Checks if the URL starts with one of the valid URLs
-      const isUrlValid = whitelistedUrls.some(baseUrl =>
+      const isUrlValid = WHITELISTED_URLS.some(baseUrl =>
         url.startsWith(baseUrl)
       );
       // Checks whether the URL starts with the specified string

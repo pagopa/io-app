@@ -188,7 +188,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
           ]
         }
       >
-        Non riusciamo ad autenticarti con l’app CieID
+        We can't authenticate you with the CieID app
       </Text>
       <View
         style={
@@ -218,7 +218,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
           ]
         }
       >
-        Usa un altro metodo per entrare in app
+        Log in to the app using a different method
       </Text>
       <View
         style={
