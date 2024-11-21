@@ -71,8 +71,10 @@ export function* handleWalletPaymentCalculateFees(
             organization_name: paymentAnalyticsData?.verifiedData?.paName,
             organization_fiscal_code:
               paymentAnalyticsData?.verifiedData?.paFiscalCode,
-            expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
-            attempt: paymentAnalyticsData?.attempt
+            attempt: paymentAnalyticsData?.attempt,
+            payment_method_selected:
+              paymentAnalyticsData?.selectedPaymentMethod,
+            amount: paymentAnalyticsData?.formattedAmount
           });
           yield* put(
             paymentsCalculatePaymentFeesAction.failure({
