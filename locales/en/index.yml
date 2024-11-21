@@ -663,6 +663,9 @@ authentication:
     tour_guide:
       title: New
       content: Now you can use CieID to log in IO!
+  cieidUrlErrorScreen:
+    title: We can't authenticate you with the CieID app
+    description: Log in to the app using a different method
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
@@ -1905,6 +1908,9 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
+      PAYMENT_SLOWDOWN_ERROR:
         title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
         subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:

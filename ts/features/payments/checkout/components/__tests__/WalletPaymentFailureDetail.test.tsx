@@ -83,7 +83,9 @@ describe("WalletPaymentFailureDetail", () => {
     "PAYMENT_CANCELED",
     "PAYMENT_DUPLICATED",
     "PAYMENT_UNKNOWN",
-    "PAYMENT_VERIFY_GENERIC_ERROR"
+    "PAYMENT_VERIFY_GENERIC_ERROR",
+    "GENERIC_ERROR",
+    "PAYMENT_SLOWDOWN_ERROR"
   ] as ReadonlyArray<
     Exclude<
       WalletPaymentFailure["faultCodeCategory"],
