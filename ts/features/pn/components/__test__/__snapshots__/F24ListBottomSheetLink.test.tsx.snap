@@ -546,9 +546,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -560,7 +560,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -770,9 +770,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -784,7 +784,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -994,9 +994,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1008,7 +1008,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -1218,9 +1218,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1232,7 +1232,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -1442,9 +1442,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1456,7 +1456,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -1666,9 +1666,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1680,7 +1680,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -1890,9 +1890,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1904,7 +1904,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -2114,9 +2114,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2128,7 +2128,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -2338,9 +2338,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2352,7 +2352,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -2562,9 +2562,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2576,7 +2576,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -3772,9 +3772,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -3786,7 +3786,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >

@@ -820,9 +820,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1045,9 +1045,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1295,9 +1295,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1545,9 +1545,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1795,9 +1795,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -2045,9 +2045,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -2295,9 +2295,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >

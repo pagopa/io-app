@@ -1774,9 +1774,9 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1784,11 +1784,11 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         style={
                                           {
                                             "alignItems": "center",
-                                            "columnGap": 12,
                                             "display": "flex",
                                             "flexDirection": "row",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
+                                            "gap": 12,
                                           }
                                         }
                                       >
@@ -2042,9 +2042,9 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2052,11 +2052,11 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                         style={
                                           {
                                             "alignItems": "center",
-                                            "columnGap": 12,
                                             "display": "flex",
                                             "flexDirection": "row",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
+                                            "gap": 12,
                                           }
                                         }
                                       >
@@ -4625,9 +4625,9 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -4635,11 +4635,11 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         style={
                                           {
                                             "alignItems": "center",
-                                            "columnGap": 12,
                                             "display": "flex",
                                             "flexDirection": "row",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
+                                            "gap": 12,
                                           }
                                         }
                                       >
@@ -4893,9 +4893,9 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -4903,11 +4903,11 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                         style={
                                           {
                                             "alignItems": "center",
-                                            "columnGap": 12,
                                             "display": "flex",
                                             "flexDirection": "row",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
+                                            "gap": 12,
                                           }
                                         }
                                       >

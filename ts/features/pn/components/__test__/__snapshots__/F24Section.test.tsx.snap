@@ -699,9 +699,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -713,7 +713,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -923,9 +923,9 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -937,7 +937,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
@@ -2678,9 +2678,9 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -2692,7 +2692,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >

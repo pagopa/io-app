@@ -367,7 +367,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 16,
+                                "gap": 16,
                               }
                             }
                           >
@@ -562,7 +562,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "alignItems": "center",
                                     "display": "flex",
                                     "flexDirection": "column",
-                                    "rowGap": 8,
+                                    "gap": 8,
                                   }
                                 }
                               >

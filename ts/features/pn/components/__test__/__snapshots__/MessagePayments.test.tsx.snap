@@ -883,9 +883,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1134,9 +1134,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1385,9 +1385,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1636,9 +1636,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1887,9 +1887,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -2138,9 +2138,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -2389,9 +2389,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3120,9 +3120,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3371,9 +3371,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3622,9 +3622,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3873,9 +3873,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -4124,9 +4124,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -4375,9 +4375,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -4626,9 +4626,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -5692,9 +5692,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -5917,9 +5917,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -6167,9 +6167,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -6417,9 +6417,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -6667,9 +6667,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -7390,9 +7390,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -7615,9 +7615,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -7865,9 +7865,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -8115,9 +8115,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -8365,9 +8365,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9088,9 +9088,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9313,9 +9313,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9563,9 +9563,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9813,9 +9813,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -10063,9 +10063,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -10906,9 +10906,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11131,9 +11131,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11381,9 +11381,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11631,9 +11631,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11881,9 +11881,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -12724,9 +12724,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -13422,9 +13422,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
