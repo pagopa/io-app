@@ -74,12 +74,12 @@ const PaymentsOnboardingFeedbackScreen = () => {
   ] as keyof typeof WalletOnboardingOutcomeEnum;
 
   useOnFirstRender(() => {
-    const onboardedPaymentMethodName = availablePaymentMethods?.find(
+    const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
       analytics.trackSuccessOnboardingPaymentMethod({
-        payment_method_selected: onboardedPaymentMethodName
+        payment_method_selected
       });
     }
   });
