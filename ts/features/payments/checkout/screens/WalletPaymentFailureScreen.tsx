@@ -6,10 +6,10 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { NetworkError } from "../../../../utils/errors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
-import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { FaultCodeCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
 
-const GENERIC_ERROR_FAULT_CODE_DETAIL = "GENERIC_ERROR";
+const GENERIC_ERROR_FAULT_CODE_DETAIL = "PAYMENT_SLOWDOWN_ERROR";
 
 export type WalletPaymentFailureScreenNavigationParams = {
   error: NetworkError | WalletPaymentFailure;
@@ -28,9 +28,9 @@ const WalletPaymentFailureScreen = () => {
     error,
     WalletPaymentFailure.decode,
     O.fromEither,
-    // NetworkError is transformed to GENERIC_ERROR only for display purposes
+    // NetworkError is transformed to PAYMENT_SLOWDOWN_ERROR only for display purposes
     O.getOrElse<WalletPaymentFailure>(() => ({
-      faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+      faultCodeCategory: FaultCodeCategoryEnum.PAYMENT_SLOWDOWN_ERROR,
       faultCodeDetail:
         (error as WalletPaymentFailure)?.faultCodeDetail ||
         GENERIC_ERROR_FAULT_CODE_DETAIL

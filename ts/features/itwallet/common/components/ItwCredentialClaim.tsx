@@ -224,7 +224,8 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
         accessibilityIgnoresInvertColors
       />
     }
-    accessibilityLabel={`${label}`}
+    accessibilityLabel={label}
+    accessibilityRole="image"
   />
 );
 
@@ -280,7 +281,9 @@ const DrivingPrivilegesClaimItem = ({
             "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
           )}
           value={localIssueDate}
-          accessibilityLabel={`${label} ${localIssueDate}`}
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
+          )} ${localIssueDate}`}
         />
         <Divider />
         <ListItemInfo
@@ -288,7 +291,9 @@ const DrivingPrivilegesClaimItem = ({
             "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
           )}
           value={localExpiryDate}
-          accessibilityLabel={`${label} ${localExpiryDate}`}
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
+          )} ${localExpiryDate}`}
         />
         {claim.restrictions_conditions && (
           <>
@@ -297,8 +302,10 @@ const DrivingPrivilegesClaimItem = ({
               label={I18n.t(
                 "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
               )}
-              value={claim.restrictions_conditions || "-"}
-              accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
+              value={claim.restrictions_conditions}
+              accessibilityLabel={`${I18n.t(
+                "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+              )} ${claim.restrictions_conditions}`}
             />
           </>
         )}
