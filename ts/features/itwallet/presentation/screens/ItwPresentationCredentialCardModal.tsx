@@ -1,10 +1,12 @@
 import {
   HeaderSecondLevel,
   IOVisualCostants,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
@@ -32,6 +34,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
+  const safeAreaInsets = useSafeAreaInsets();
   const [isFlipped, setFlipped] = React.useState(false);
   const theme = useIOTheme();
 
@@ -57,10 +60,20 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     <View
       style={[
         styles.contentContainer,
-        { backgroundColor: theme["appBackground-primary"] }
+        {
+          paddingBottom: safeAreaInsets.bottom,
+          backgroundColor: theme["appBackground-primary"]
+        }
       ]}
     >
-      <View style={styles.cardContainer}>
+      <View
+        style={[
+          styles.cardContainer,
+          {
+            top: -safeAreaInsets.top
+          }
+        ]}
+      >
         <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
           <ItwSkeumorphicCard
             credential={credential}
@@ -70,32 +83,25 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
           />
         </FlipGestureDetector>
       </View>
-      <View style={styles.flipButtonContainer}>
-        <ItwPresentationCredentialCardFlipButton
-          isFlipped={isFlipped}
-          handleOnPress={() => setFlipped(_ => !_)}
-        />
-      </View>
+      <ItwPresentationCredentialCardFlipButton
+        isFlipped={isFlipped}
+        handleOnPress={() => setFlipped(_ => !_)}
+      />
+      <VSpacer size={16} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1
+    flex: 1,
+    justifyContent: "flex-end"
   },
   cardContainer: {
     position: "absolute",
     paddingHorizontal: 24,
     justifyContent: "center",
-    left: 0,
-    right: 0,
-    top: -IOVisualCostants.headerHeight,
-    bottom: 0
-  },
-  flipButtonContainer: {
-    position: "absolute",
-    bottom: 32,
+    bottom: IOVisualCostants.headerHeight,
     left: 0,
     right: 0
   }
