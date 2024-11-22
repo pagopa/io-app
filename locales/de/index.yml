@@ -1381,7 +1381,7 @@ wallet:
     android:
       confirm: "Entfernen"
     successful: "Zahlungsmethode von deinem Konto entfernt!"
-    failed: "Die Zahlungsmethode kann nicht von deinem Konto entfernt werden"
+    failed: "Es gab ein Problem, bitte versuche es erneut"
   newPaymentMethod:
     add: "Hinzufügen"
     show: "Anzeigen"
@@ -1814,6 +1814,10 @@ wallet:
       PAYMENT_UNKNOWN:
         title: "Wir können die Zahlungsmitteilung nicht finden"
         subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
+      PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR:
+        title: "Die ausgewählte Zahlungsmethode ist nicht verfügbar"
+        subtitle: "Dies kann passieren, wenn der zu zahlende Betrag besonders hoch ist oder wenn du versuchst, eine digitale Steuer- oder Gebührmarke zu bezahlen."
+        action: "Wähle eine andere Zahlungsmethode"
     outcome:
       SUCCESS:
         title: "Du hast {{amount}} bezahlt"
@@ -1885,7 +1889,7 @@ cardComponent:
   lastUsage: "Letzte Verwendung"
   detailsAndTransactions: "Details und Transaktionen"
   pick: "Diese Zahlungsmethode verwenden"
-  removeCta: "Diese Zahlungsmethode entfernen"
+  removeCta: "Aus Wallet entfernen"
 messages:
   accessibility:
     message:
@@ -2303,7 +2307,7 @@ bonus:
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
-      deactivateBonus: "Die Karte deaktivieren"
+      deactivateBonus: "Aus Wallet entfernen"
       goToDetail: Usa la Carta
     detail:
       cta:
@@ -2370,10 +2374,10 @@ bonus:
         title: "Geschafft!"
         body: "Deine Nationale Jugendkarte ist aktiv."
       deactivate:
-        toast: "Die Anfrage zur Deaktivierung war erfolgreich"
+        toast: "Zahlungsmethode von deinem Konto entfernt!"
         alert:
           title: "Karte deaktivieren"
-          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
+          message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
         expired: Elimina Carta Giovani Nazionale
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."

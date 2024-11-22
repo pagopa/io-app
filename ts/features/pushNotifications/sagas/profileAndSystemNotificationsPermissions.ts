@@ -1,20 +1,21 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
-import { call, select, take } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { profileUpsert } from "../../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import { requestNotificationPermissions } from "../utils";
+import { GlobalState } from "../../../store/reducers/types";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus
 } from "../analytics";
-import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
-import { GlobalState } from "../../../store/reducers/types";
-import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { setPushPermissionsRequestDuration } from "../store/actions/environment";
 import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
+import { requestNotificationPermissions } from "../utils";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded
@@ -62,11 +63,19 @@ export function* profileAndSystemNotificationsPermissions(
   );
 
   if (!hasNotificationPermission) {
+    const startRequestTime = yield* call(performance.now);
+
     // Ask the user for notification permission and update
     // the in-memory redux value if needed
     const userHasGivenNotificationPermission = yield* call(
       requestNotificationPermissions
     );
+
+    const endRequestTime = yield* call(performance.now);
+
+    const requestDuration = endRequestTime - startRequestTime;
+    yield* put(setPushPermissionsRequestDuration(requestDuration));
+
     yield* call(
       updateNotificationPermissionsIfNeeded,
       userHasGivenNotificationPermission

@@ -23,8 +23,10 @@ export const PaymentsBizEventsTransactionLoadingList = ({
       <PaymentsBizEventsFadeInOutAnimationView key={index}>
         <ListItemTransaction
           isLoading={true}
-          transactionStatus="success"
-          transactionAmount=""
+          transaction={{
+            amount: "",
+            amountAccessibilityLabel: ""
+          }}
           title=""
           subtitle=""
         />

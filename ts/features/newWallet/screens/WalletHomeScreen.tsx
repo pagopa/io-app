@@ -24,6 +24,11 @@ import {
 } from "../../itwallet/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
+export type WalletHomeNavigationParams = Readonly<{
+  newMethodAdded: boolean;
+  keyFrom?: string;
+}>;
+
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {

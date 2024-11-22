@@ -137,10 +137,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
-    TYPOGRAPHY: {
-      route: "DESIGN_SYSTEM_LEGACY_TYPOGRAPHY",
-      title: "Typography"
-    },
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
       title: "Pictograms"
@@ -160,14 +156,6 @@ const DESIGN_SYSTEM_ROUTES = {
     BADGES: {
       route: "DESIGN_SYSTEM_LEGACY_BADGES",
       title: "Badges"
-    },
-    SELECTION: {
-      route: "DESIGN_SYSTEM_LEGACY_SELECTION",
-      title: "Selection"
-    },
-    ACCORDION: {
-      route: "DESIGN_SYSTEM_LEGACY_ACCORDION",
-      title: "Accordion"
     },
     ALERT: {
       route: "DESIGN_SYSTEM_LEGACY_ALERT",

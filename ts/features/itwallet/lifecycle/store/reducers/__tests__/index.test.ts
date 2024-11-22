@@ -1,10 +1,12 @@
 import { pipe } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { itwLifecycleStateUpdated } from "../../actions";
+import {
+  itwLifecycleStateUpdated,
+  itwLifecycleStoresReset
+} from "../../actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import { ItwLifecycleState } from "..";
 
 const curriedAppReducer =

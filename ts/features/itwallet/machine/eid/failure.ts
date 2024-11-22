@@ -1,4 +1,8 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
+import {
+  type IntegrityError,
+  type IntegrityErrorCodes
+} from "@pagopa/io-react-native-integrity";
 import { assert } from "../../../../utils/assert";
 import { EidIssuanceEvents } from "./events";
 
@@ -27,9 +31,11 @@ export const mapEventToFailure = (
   try {
     assert("error" in event && event.error, "Not an error event");
     const error = event.error;
+
     if (
       error instanceof Errors.WalletInstanceCreationIntegrityError ||
-      error instanceof Errors.WalletInstanceIntegrityFailedError
+      error instanceof Errors.WalletInstanceIntegrityFailedError ||
+      isLocalIntegrityError(error)
     ) {
       return {
         type: IssuanceFailureType.UNSUPPORTED_DEVICE,
@@ -48,3 +54,18 @@ export const mapEventToFailure = (
     };
   }
 };
+
+/**
+ * Integrity errors thrown by the device.
+ * These errors might occur locally before calling the Wallet Provider.
+ */
+const localIntegrityErrors: Array<IntegrityErrorCodes> = [
+  "REQUEST_ATTESTATION_FAILED",
+  "UNSUPPORTED_DEVICE",
+  "UNSUPPORTED_IOS_VERSION",
+  "UNSUPPORTED_SERVICE"
+];
+
+const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
+  e instanceof Error &&
+  localIntegrityErrors.includes(e.message as IntegrityErrorCodes);

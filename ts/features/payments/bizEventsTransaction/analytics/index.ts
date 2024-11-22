@@ -75,3 +75,39 @@ export const trackPaymentsDownloadReceiptError = (
     })
   );
 };
+
+export const trackHideReceipt = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "HIDE_RECEIPT",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackHideReceiptConfirm = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "HIDE_RECEIPT_CONFIRM",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackHideReceiptSuccess = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "HIDE_RECEIPT_SUCCESS",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackHideReceiptFailure = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "HIDE_RECEIPT_FAILURE",
+    buildEventProperties("KO", undefined, props)
+  );
+};

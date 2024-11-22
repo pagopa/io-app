@@ -143,8 +143,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
           <ListItemTransaction
             isLoading={true}
             key={index}
-            transactionStatus="success"
-            transactionAmount=""
+            transaction={{
+              amount: "",
+              amountAccessibilityLabel: ""
+            }}
             title=""
             subtitle=""
           />
