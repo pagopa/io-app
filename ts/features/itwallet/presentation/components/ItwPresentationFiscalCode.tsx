@@ -1,12 +1,14 @@
 import {
+  H3,
   IOAppMargin,
   IOColors,
-  makeFontStyleObject,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { LayoutChangeEvent, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import Animated from "react-native-reanimated";
+import { useScaleAnimation } from "../../../../components/ui/utils/hooks/useScaleAnimation";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
@@ -22,51 +24,59 @@ const ENCODED_FISCAL_CODE_LENGTH_CODE39 = 288;
 const ItwPresentationFiscalCode = () => {
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
   const theme = useIOTheme();
-  const barCodeWidth =
-    (Dimensions.get("window").width - IOAppMargin[4]) / // Subtracting the horizontal padding which is 24 but has to be multiplied by 2 for each side
-    ENCODED_FISCAL_CODE_LENGTH_CODE39;
+  const [barCodeWidth, setBarCodeWidth] = React.useState(1);
+
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const width = event.nativeEvent.layout.width;
+    setBarCodeWidth(
+      (width - IOAppMargin[3]) / // Subtracting the horizontal padding which is 16 but has to be multiplied by 2 for each side
+        ENCODED_FISCAL_CODE_LENGTH_CODE39
+    );
+  };
+
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[styles.label, { color: IOColors[theme["textBody-tertiary"]] }]}
-      >
-        {I18n.t("features.itWallet.presentation.credentialDetails.fiscalCode")}
-      </Text>
-      <Text
-        style={[styles.value, { color: IOColors[theme["textBody-default"]] }]}
-      >
-        {fiscalCode}
-      </Text>
-      <View
-        accessible={true}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.fiscalCodeBarcode"
-        )}
-        accessibilityRole="image"
+    <Pressable
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityHint={I18n.t(
+        "features.itWallet.presentation.credentialDetails.fiscalCode.action"
+      )}
+      accessibilityLabel={I18n.t(
+        "features.itWallet.presentation.credentialDetails.fiscalCode.label"
+      )}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+    >
+      <Animated.View
+        style={[styles.button, scaleAnimatedStyle]}
+        onLayout={handleLayout}
       >
         <Barcode
           value={fiscalCode}
           width={barCodeWidth}
-          height={50}
+          height={80}
           format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
           background={IOColors[theme["appBackground-primary"]]}
           lineColor={IOColors[theme["textBody-default"]]}
         />
-      </View>
-    </View>
+        <H3 style={styles.fiscalCode}>{fiscalCode}</H3>
+      </Animated.View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 12
+  button: {
+    padding: 16,
+    rowGap: 8,
+    borderColor: IOColors["grey-100"],
+    borderWidth: 1,
+    borderRadius: 8
   },
-  label: {
-    ...makeFontStyleObject(14, "TitilliumSansPro", 21, "Regular")
-  },
-  value: {
-    ...makeFontStyleObject(16, "DMMono", 24, "Regular")
+  fiscalCode: {
+    alignSelf: "center"
   }
 });
 
