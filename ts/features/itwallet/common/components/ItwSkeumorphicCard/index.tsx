@@ -8,6 +8,8 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import Animated from "react-native-reanimated";
+import { useScaleAnimation } from "../../../../../components/ui/utils/hooks/useScaleAnimation";
 import I18n from "../../../../../i18n";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
@@ -95,10 +97,17 @@ const ItwSkeumorphicCard = ({
     />
   );
 
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
+
   if (onPress) {
     return (
-      <Pressable onPress={onPress} {...accessibilityProps}>
-        {card}
+      <Pressable
+        onPress={onPress}
+        {...accessibilityProps}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+      >
+        <Animated.View style={scaleAnimatedStyle}>{card}</Animated.View>
       </Pressable>
     );
   }
