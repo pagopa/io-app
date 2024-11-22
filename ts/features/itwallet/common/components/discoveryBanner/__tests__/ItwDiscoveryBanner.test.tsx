@@ -24,10 +24,6 @@ type RenderOptions = {
   isItwEnabled?: boolean;
 };
 
-jest.mock("../../../../../../config", () => ({
-  itwEnabled: true
-}));
-
 describe("ItwDiscoveryBanner", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const component = renderScreenWithNavigationStoreContext<GlobalState>(

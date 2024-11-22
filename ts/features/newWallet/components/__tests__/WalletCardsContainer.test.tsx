@@ -29,13 +29,6 @@ type RenderOptions = {
   isWalletEmpty?: boolean;
 };
 
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  Layout: {
-    duration: jest.fn()
-  }
-}));
-
 jest.mock("../../../../config", () => ({
   itwEnabled: true
 }));
