@@ -80,7 +80,8 @@ const cardPaddingHorizontal: IOSpacingScale = 16;
 const styles = StyleSheet.create({
   cardContainer: {
     position: "relative",
-    paddingHorizontal: cardPaddingHorizontal
+    paddingHorizontal: cardPaddingHorizontal,
+    paddingTop: 8 // Add top padding to prevent card clipping during flip animation
   },
   cardBackdrop: {
     height: "200%", // Twice the card in order to avoid the white background when the scrollview bounces
