@@ -689,27 +689,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -1658,27 +1638,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -2803,27 +2763,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -3803,27 +3743,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -4858,27 +4778,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -5729,27 +5629,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -6534,27 +6414,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
@@ -7284,27 +7144,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         ]
                                       }
                                     >
-                                      Service name
-                                    </Text>
-                                    <Text
-                                      allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 12,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 18,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                       • 
+                                      Service name · 
                                     </Text>
                                     <Text
                                       allowFontScaling={false}
