@@ -143,7 +143,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
           error: new Error(
             `login failure with code ${code || message || "n/a"}`
           ),
-          idp: "cie"
+          idp: "cieid"
         })
       );
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
@@ -198,7 +198,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
-      dispatch(loginSuccess({ token, idp: "cie" }));
+      dispatch(loginSuccess({ token, idp: "cieid" }));
     },
     [dispatch]
   );
