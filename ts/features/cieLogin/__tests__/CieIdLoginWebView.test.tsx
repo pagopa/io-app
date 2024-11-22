@@ -196,7 +196,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginFailure({ idp: "cie", error: expect.any(Error) })
+      loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
     expect(mockReplace).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
@@ -226,7 +226,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ idp: "cie", token: "my-secret-token" as SessionToken })
+      loginSuccess({ idp: "cieid", token: "my-secret-token" as SessionToken })
     );
   });
   it("Shouldn't execute the login because of missing token", () => {
@@ -247,7 +247,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginFailure({ idp: "cie", error: expect.any(Error) })
+      loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
     expect(mockReplace).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
