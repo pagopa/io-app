@@ -42,9 +42,7 @@ export function* handleDeleteWalletDetails(
           action.payload.walletId
         );
         yield* put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess();
-        }
+        action.payload.onSuccess?.();
         return;
       }
       if (deleteWalletResult.right.status !== 401) {
@@ -55,9 +53,7 @@ export function* handleDeleteWalletDetails(
           )
         });
         yield* put(failureAction);
-        if (action.payload.onFailure) {
-          action.payload.onFailure();
-        }
+        action.payload.onFailure?.();
       }
     } else {
       // cannot decode response
@@ -67,13 +63,12 @@ export function* handleDeleteWalletDetails(
         )
       });
       yield* put(failureAction);
-      if (action.payload.onFailure) {
-        action.payload.onFailure();
-      }
+      action.payload.onFailure?.();
     }
   } catch (e) {
     yield* put(
       paymentsGetMethodDetailsAction.failure({ ...getNetworkError(e) })
     );
+    action.payload.onFailure?.();
   }
 }

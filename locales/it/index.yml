@@ -628,6 +628,7 @@ authentication:
       module_cie_id:
         title: Entra con CieID
         subtitle: Usa l'app CieID
+        badge: Novità
       help_banner:
         title: Non sai cosa scegliere?
         action: Ti diamo una mano
@@ -659,6 +660,12 @@ authentication:
     expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+    tour_guide:
+      title: Novità
+      content: Ora puoi usare CieID per entrare su IO!
+  cieidUrlErrorScreen:
+    title: Non riusciamo ad autenticarti con l’app CieID
+    description: Usa un altro metodo per entrare in app
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
@@ -1455,7 +1462,7 @@ wallet:
     android:
       confirm: Rimuovi
     successful: Metodo rimosso!
-    failed: Impossibile rimuovere il metodo dal tuo Portafoglio
+    failed: C’è stato un problema, riprova
   newPaymentMethod:
     add: aggiungi
     show: mostra
@@ -1902,8 +1909,11 @@ wallet:
         title: "Non riusciamo a verificare lo stato di questo avviso"
         subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       GENERIC_ERROR:
-        title: "Si è verificato un errore imprevisto"
-        subtitle: "Riprova, oppure contatta l’assistenza."
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
+      PAYMENT_SLOWDOWN_ERROR:
+        title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
+        subtitle: "Riprova più tardi."
       PAYMENT_UNKNOWN:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
@@ -1973,12 +1983,15 @@ wallet:
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
-      CVV_ERROR: 
+      CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
         subtitle: Non è stato addebitato alcun importo. Il codice (CVV o CVC) ha 3 cifre ed è riportato sul retro della carta. Se usi American Express, il codice (CID) ha 4 cifre ed è sul fronte.
       PLAFOND_LIMIT_ERROR:
         title: Hai superato il limite di spesa della tua carta
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, modifica il limite di spesa o usa un altro metodo di pagamento.
+      BE_NODE_KO:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2008,7 +2021,7 @@ cardComponent:
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
-  removeCta: "Elimina questo metodo"
+  removeCta: "Rimuovi dal Portafoglio"
 messages:
   accessibility:
     message:
@@ -2702,7 +2715,7 @@ bonus:
           titleWithoutCount: Cerca tra i partner aderenti a Carta Giovani Nazionale
         noResults:
           title: Non abbiamo trovato nulla
-          subtitle: |- 
+          subtitle: |-
             Prova a cercare con parole diverse.
             Se non lo trovi, il partner potrebbe non aver aderito o non avere opportunità attive.
       input:
@@ -2784,7 +2797,7 @@ bonus:
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
-      deactivateBonus: Disattiva Carta Giovani Nazionale
+      deactivateBonus: Rimuovi dal Portafoglio
       goToDetail: Usa la Carta
     detail:
       cta:
@@ -2853,10 +2866,10 @@ bonus:
         title: "Fatto!"
         body: "La tua Carta Giovani Nazionale è attiva."
       deactivate:
-        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        toast: "Metodo rimosso!"
         alert:
-          title: "Disattiva carta"
-          message: "Vuoi davvero disattivare la tua Carta Giovani Nazionale? Se confermi, non potrai più accedere alle opportunità e la carta scomparirà dal Portafoglio."
+          title: "Vuoi rimuovere Carta Giovani dal Portafoglio?"
+          message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
         expired: Elimina Carta Giovani Nazionale
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
@@ -2919,6 +2932,11 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Non perderti i messaggi importanti"
+        body: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
+        CTA: "Attiva notifiche push"
     attachmentDownloadFeedback: "Download in corso"
     attachments: "Allegati"
     loading:
@@ -3505,8 +3523,11 @@ features:
             title: "Carta europea della disabilità su IO: documento in scadenza"
             content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
       credentialDetails:
-        flipCardFront: "Mostra retro"
-        flipCardBack: "Mostra fronte"
+        card:
+          front: "Fronte"
+          back: "Retro"
+          showFront: "Mostra fronte"
+          showBack: "Mostra retro"
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati del documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
@@ -3515,6 +3536,7 @@ features:
           false: No
         hiddenClaim: "Nascosto"
         fiscalCode: Il tuo Codice Fiscale
+        fiscalCodeBarcode: Codice a barre del tuo Codice Fiscale
         status:
           valid: Valida
           invalid: Non valida
@@ -3545,6 +3567,7 @@ features:
         title: Certificato di autenticità
         usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
         certifiedLabel: Questo documento è certificato dall'ente emittente.
+        qrCode: QR code autenticità credenziale
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:

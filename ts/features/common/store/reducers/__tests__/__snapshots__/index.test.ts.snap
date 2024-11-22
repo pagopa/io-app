@@ -145,11 +145,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "landingBanners": {
     "ITW_DISCOVERY": true,
+    "PUSH_NOTIFICATIONS_REMINDER": false,
     "SETTINGS_DISCOVERY": true,
   },
   "loginFeatures": {
     "cieLogin": {
       "isCieIDFeatureEnabled": false,
+      "isCieIDTourGuideEnabled": true,
       "useUat": false,
     },
     "fastLogin": {
@@ -248,6 +250,17 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "home": {
       "shouldShowAddMethodsBanner": true,
     },
+    "legacyTransaction": {
+      "details": {
+        "kind": "PotNoneLoading",
+      },
+      "total": {
+        "kind": "PotNone",
+      },
+      "transactions": {
+        "kind": "PotNone",
+      },
+    },
     "onboarding": {
       "paymentMethods": {
         "kind": "PotNoneLoading",
@@ -265,11 +278,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "paymentsBackoffRetry": {},
-    "transaction": {
-      "details": {
-        "kind": "PotNoneLoading",
-      },
-    },
     "wallet": {
       "userMethods": {
         "kind": "PotNone",
