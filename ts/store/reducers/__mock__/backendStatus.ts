@@ -300,7 +300,8 @@ export const baseRawBackendStatus: BackendStatus = {
       min_app_version: {
         android: "0.0.0.0",
         ios: "0.0.0.0"
-      }
+      },
+      feedback_banner_visible: true
     }
   }
 };
@@ -389,6 +390,7 @@ export const baseBackendConfig: Config = {
     min_app_version: {
       android: "0.0.0.0",
       ios: "0.0.0.0"
-    }
+    },
+    feedback_banner_visible: true
   }
 };
