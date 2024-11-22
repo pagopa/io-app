@@ -7,7 +7,8 @@ import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   shouldRequestStatusAttestation,
-  getCredentialStatusAttestation
+  getCredentialStatusAttestation,
+  StatusAttestationError
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -15,7 +16,6 @@ import { itwCredentialsStore } from "../store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
-import { StatusAttestationError } from "./types";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
