@@ -2,84 +2,105 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
+import { AUTH_ERRORS } from "../components/AuthErrorComponent";
 
-function trackLoginSpidGenericError() {
+type EventProperties = {
+  idp: string;
+  "error message"?: string;
+};
+
+function trackLoginSpidGenericError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_GENERIC_ERROR",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-function trackLoginSpidAttemptsError() {
+function trackLoginSpidAttemptsError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_ATTEMPTS_ERROR",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-function trackLoginSpid2StepError() {
+function trackLoginSpid2StepError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_SECURITY_LEVEL",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-function trackLoginSpidTimeoutError() {
+function trackLoginSpidTimeoutError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_TIMEOUT_ERROR",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-function trackLoginSpidDataSharingError() {
+function trackLoginSpidDataSharingError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_DATA_SHARING_ERROR",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-function trackLoginSpidIdentityError() {
+function trackLoginSpidIdentityError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_IDENTITY_ERROR",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-function trackLoginSpidCancelError() {
+function trackLoginSpidCancelError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_SPID_CANCEL_ERROR",
-    buildEventProperties("KO", undefined)
+    buildEventProperties("KO", undefined, properties)
+  );
+}
+function trackMissingSAMLResponseError(properties?: EventProperties) {
+  void mixpanelTrack(
+    "LOGIN_ERROR_MESSAGE",
+    buildEventProperties("KO", undefined, properties)
   );
 }
 
-export function trackLoginSpidError(errorCode?: string) {
+export function trackLoginSpidError(
+  errorCode?: string,
+  properties?: EventProperties
+) {
   switch (errorCode) {
-    case "19": {
-      trackLoginSpidAttemptsError();
+    case AUTH_ERRORS.ERROR_19: {
+      trackLoginSpidAttemptsError(properties);
       return;
     }
-    case "20": {
-      trackLoginSpid2StepError();
+    case AUTH_ERRORS.ERROR_20: {
+      trackLoginSpid2StepError(properties);
       return;
     }
-    case "21": {
-      trackLoginSpidTimeoutError();
+    case AUTH_ERRORS.ERROR_21: {
+      trackLoginSpidTimeoutError(properties);
       return;
     }
-    case "22": {
-      trackLoginSpidDataSharingError();
+    case AUTH_ERRORS.ERROR_22: {
+      trackLoginSpidDataSharingError(properties);
       return;
     }
-    case "23": {
-      trackLoginSpidIdentityError();
+    case AUTH_ERRORS.ERROR_23: {
+      trackLoginSpidIdentityError(properties);
       return;
     }
-    case "25": {
-      trackLoginSpidCancelError();
+    case AUTH_ERRORS.ERROR_25:
+    case AUTH_ERRORS.CIEID_IOS_OPERATION_CANCELED_MESSAGE:
+    case AUTH_ERRORS.CIEID_OPERATION_CANCEL: {
+      trackLoginSpidCancelError(properties);
+      return;
+    }
+    case AUTH_ERRORS.MISSING_SAML_RESPONSE: {
+      trackMissingSAMLResponseError(properties);
       return;
     }
     default: {
-      trackLoginSpidGenericError();
+      trackLoginSpidGenericError(properties);
       return;
     }
   }
