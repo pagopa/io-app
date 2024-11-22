@@ -1,7 +1,7 @@
 import { select, call, all, put } from "typed-redux-saga/macro";
 import { pipe } from "fp-ts/lib/function";
-import * as RA from "fp-ts/ReadonlyArray";
-import * as O from "fp-ts/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as O from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -15,6 +15,9 @@ import { itwCredentialsStore } from "../store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
+import { StatusAttestationError } from "./types";
+
+const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
@@ -32,13 +35,26 @@ export function* updateCredentialStatusAttestationSaga(
         parsedStatusAttestation: parsedStatusAttestation.payload
       }
     };
-  } catch (error) {
+  } catch (e) {
+    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
+      return {
+        ...credential,
+        storedStatusAttestation: {
+          credentialStatus: "invalid",
+          errorCode: pipe(
+            StatusAttestationError.decode(e.reason),
+            O.fromEither,
+            O.map(x => x.error),
+            O.toUndefined
+          )
+        }
+      };
+    }
+
+    // We do not have enough information on the status, the error was unexpected
     return {
       ...credential,
-      storedStatusAttestation:
-        error instanceof Errors.CredentialInvalidStatusError
-          ? { credentialStatus: "invalid", errorCode: error.errorCode }
-          : { credentialStatus: "unknown" } // We do not have enough information on the status, the error was unexpected
+      storedStatusAttestation: { credentialStatus: "unknown" }
     };
   }
 }

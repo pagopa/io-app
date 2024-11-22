@@ -12,6 +12,11 @@ import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { itwIntegritySetServiceIsReady } from "../../issuance/store/actions";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
+const {
+  isWalletProviderResponseError,
+  WalletProviderResponseErrorCodes: Codes
+} = Errors;
+
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
   assert(sessionToken, "Missing session token");
@@ -31,8 +36,8 @@ export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
     yield* call(getAttestation, integrityKeyTag, sessionToken);
   } catch (err) {
     if (
-      err instanceof Errors.WalletInstanceRevokedError ||
-      err instanceof Errors.WalletInstanceNotFoundError
+      isWalletProviderResponseError(err, Codes.WalletInstanceRevoked) ||
+      isWalletProviderResponseError(err, Codes.WalletInstanceNotFound)
     ) {
       yield* call(handleWalletInstanceResetSaga);
     }
