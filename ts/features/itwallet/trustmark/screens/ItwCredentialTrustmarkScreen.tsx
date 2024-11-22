@@ -73,7 +73,12 @@ const TrustmarkQrCode = () => {
 
   return (
     <View style={styles.qrCodeContainer}>
-      <QrCodeImage size={"92%"} value={trustmarkUrl} correctionLevel="L" />
+      <QrCodeImage
+        size={"92%"}
+        value={trustmarkUrl}
+        correctionLevel="L"
+        accessibilityLabel={I18n.t("features.itWallet.trustmark.qrCode")}
+      />
     </View>
   );
 };

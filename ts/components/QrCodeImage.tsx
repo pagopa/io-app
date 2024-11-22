@@ -1,5 +1,5 @@
 import React from "react";
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";
 import Placeholder from "rn-placeholder";
 
@@ -13,7 +13,11 @@ export type QrCodeImageProps = {
   backgroundColor?: string;
   // Optional correction level for the QR Code image
   correctionLevel?: QRCodeProps["ecl"];
+  // Accessibility
+  accessibilityLabel?: string;
 };
+
+const defaultAccessibilityLabel = "QR Code";
 
 /**
  * This components renders a QR Code which resolves in the provided value
@@ -22,7 +26,8 @@ const QrCodeImage = ({
   value,
   size = 200,
   backgroundColor,
-  correctionLevel = "H"
+  correctionLevel = "H",
+  accessibilityLabel = defaultAccessibilityLabel
 }: QrCodeImageProps) => {
   const { width } = useWindowDimensions();
   const realSize = React.useMemo<number>(() => {
@@ -34,12 +39,18 @@ const QrCodeImage = ({
   }, [size, width]);
 
   return value ? (
-    <QRCode
-      value={value}
-      size={realSize}
-      ecl={correctionLevel}
-      backgroundColor={backgroundColor}
-    />
+    <View
+      accessible={true}
+      accessibilityRole="image"
+      accessibilityLabel={accessibilityLabel}
+    >
+      <QRCode
+        value={value}
+        size={realSize}
+        ecl={correctionLevel}
+        backgroundColor={backgroundColor}
+      />
+    </View>
   ) : (
     <Placeholder.Box
       height={realSize}

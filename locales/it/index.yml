@@ -3523,8 +3523,11 @@ features:
             title: "Carta europea della disabilità su IO: documento in scadenza"
             content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
       credentialDetails:
-        flipCardFront: "Mostra retro"
-        flipCardBack: "Mostra fronte"
+        card:
+          front: "Fronte"
+          back: "Retro"
+          showFront: "Mostra fronte"
+          showBack: "Mostra retro"
         personalDataTitle: "Dati personali"
         documentDataTitle: "Dati del documento"
         lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
@@ -3533,6 +3536,7 @@ features:
           false: No
         hiddenClaim: "Nascosto"
         fiscalCode: Il tuo Codice Fiscale
+        fiscalCodeBarcode: Codice a barre del tuo Codice Fiscale
         status:
           valid: Valida
           invalid: Non valida
@@ -3562,6 +3566,7 @@ features:
       cta: Mostra certificato di autenticità
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       expiration: Il QR Code si rinnova tra
+      qrCode: QR code autenticità credenziale
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
