@@ -75,6 +75,7 @@ const WalletCardOnboardingScreen = () => {
     faqCategories: ["wallet", "wallet_methods"],
     supportRequest: true,
     enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef,
     alert: alertProps
   });
 
