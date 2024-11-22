@@ -11,7 +11,8 @@ import {
   EvidenceClaim,
   ImageClaim,
   PlaceOfBirthClaim,
-  SimpleDateClaim
+  SimpleDateClaim,
+  SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
@@ -47,7 +48,7 @@ export type CardClaimProps = Prettify<
     // Claim dimensions
     dimensions?: ClaimDimensions;
     // Optional format for dates contained in the claim component
-    dateFormat?: string;
+    dateFormat?: SimpleDateFormat;
   } & ClaimLabelProps
 >;
 
@@ -60,7 +61,7 @@ const CardClaim = ({
   position,
   dimensions,
   testID,
-  dateFormat = "%d/%m/%Y",
+  dateFormat = "DD/MM/YY",
   ...labelProps
 }: WithTestID<CardClaimProps>) => {
   const claimContent = React.useMemo(
@@ -70,7 +71,7 @@ const CardClaim = ({
         ClaimValue.decode,
         E.fold(constNull, decoded => {
           if (SimpleDateClaim.is(decoded)) {
-            const formattedDate = decoded.toString("DD/MM/YY");
+            const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (EvidenceClaim.is(decoded)) {
             return (
@@ -98,7 +99,7 @@ const CardClaim = ({
           }
         })
       ),
-    [claim, labelProps]
+    [claim, labelProps, dateFormat]
   );
 
   if (!claimContent) {

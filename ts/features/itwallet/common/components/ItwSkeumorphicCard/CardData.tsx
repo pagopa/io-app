@@ -48,7 +48,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
       <CardClaim
         claim={claims["birth_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[2]}%` }}
-        dateFormat="%d/%m/%y"
+        dateFormat="DD/MM/YY"
       />
       <CardClaim
         claim={claims["place_of_birth"]}
@@ -58,6 +58,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         claim={claims["issue_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[3]}%` }}
         fontWeight={"Bold"}
+        dateFormat={"DD/MM/YYYY"}
       />
       <CardClaim
         claim={claims["issuing_authority"]}
@@ -67,6 +68,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         claim={claims["expiry_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[4]}%` }}
         fontWeight={"Bold"}
+        dateFormat={"DD/MM/YYYY"}
       />
       <CardClaim
         claim={claims["document_number"]}
