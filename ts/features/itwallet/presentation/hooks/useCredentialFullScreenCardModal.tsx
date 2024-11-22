@@ -9,6 +9,7 @@ import {
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
+import { useMaxBrightness } from "../../../../utils/brightness";
 
 type UseCredentialFullScreenCardModalProps = {
   credential: StoredCredential;
@@ -19,7 +20,6 @@ export const useCredentialFullScreenCardModal = ({
   credential,
   status
 }: UseCredentialFullScreenCardModalProps) => {
-  const [isFlipped, setFlipped] = React.useState(false);
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
 
   const handlePresentModalPress = React.useCallback(() => {
@@ -38,31 +38,11 @@ export const useCredentialFullScreenCardModal = ({
       enablePanDownToClose={false}
       enableOverDrag={false}
     >
-      <BottomSheetView style={styles.contentContainer}>
-        <HeaderSecondLevel
-          title={""}
-          type="singleAction"
-          firstAction={{
-            icon: "closeLarge",
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: handleCloseModalPress
-          }}
-        />
-        <View style={styles.cardContainer}>
-          <ItwSkeumorphicCard
-            credential={credential}
-            status={status}
-            isFlipped={isFlipped}
-            orientation="landscape"
-          />
-        </View>
-        <View style={styles.flipButtonContainer}>
-          <ItwPresentationCredentialCardFlipButton
-            isFlipped={isFlipped}
-            handleOnPress={() => setFlipped(_ => !_)}
-          />
-        </View>
-      </BottomSheetView>
+      <CredentialFullScreenCardModal
+        credential={credential}
+        status={status}
+        handleCloseModalPress={handleCloseModalPress}
+      />
     </BottomSheetModal>
   );
 
@@ -71,6 +51,50 @@ export const useCredentialFullScreenCardModal = ({
     close: handleCloseModalPress,
     content: modal
   };
+};
+
+type CredentialFullScreenCardModalProps = {
+  credential: StoredCredential;
+  status: ItwCredentialStatus;
+  handleCloseModalPress: () => void;
+};
+
+const CredentialFullScreenCardModal = ({
+  credential,
+  status,
+  handleCloseModalPress
+}: CredentialFullScreenCardModalProps) => {
+  const [isFlipped, setFlipped] = React.useState(false);
+
+  useMaxBrightness();
+
+  return (
+    <BottomSheetView style={styles.contentContainer}>
+      <HeaderSecondLevel
+        title={""}
+        type="singleAction"
+        firstAction={{
+          icon: "closeLarge",
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          onPress: handleCloseModalPress
+        }}
+      />
+      <View style={styles.cardContainer}>
+        <ItwSkeumorphicCard
+          credential={credential}
+          status={status}
+          isFlipped={isFlipped}
+          orientation="landscape"
+        />
+      </View>
+      <View style={styles.flipButtonContainer}>
+        <ItwPresentationCredentialCardFlipButton
+          isFlipped={isFlipped}
+          handleOnPress={() => setFlipped(_ => !_)}
+        />
+      </View>
+    </BottomSheetView>
+  );
 };
 
 const styles = StyleSheet.create({
