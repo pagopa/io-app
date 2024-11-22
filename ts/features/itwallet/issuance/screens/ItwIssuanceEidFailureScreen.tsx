@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useEffect } from "react";
-import { Linking } from "react-native";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -27,6 +27,7 @@ import {
   trackItwUnsupportedDevice,
   trackWalletCreationFailed
 } from "../../analytics";
+import { openWebUrl } from "../../../../utils/url";
 
 const FAQ_URL = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
@@ -49,6 +50,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const toast = useIOToast();
 
   useDebugInfo({
     failure
@@ -124,7 +126,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.unsupportedDevice.error.secondaryAction"
               ),
-              onPress: () => Linking.openURL(FAQ_URL)
+              onPress: () =>
+                openWebUrl(FAQ_URL, () =>
+                  toast.error(I18n.t("global.jserror.title"))
+                )
             }
           };
         case IssuanceFailureType.NOT_MATCHING_IDENTITY:
