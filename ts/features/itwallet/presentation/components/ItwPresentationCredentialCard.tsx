@@ -1,15 +1,10 @@
 import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  Directions,
-  Gesture,
-  GestureDetector
-} from "react-native-gesture-handler";
-import { runOnJS } from "react-native-reanimated";
 import { useIOSelector } from "../../../../store/hooks";
 import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
@@ -45,22 +40,18 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     credential.credentialType
   );
 
-  const flipGesture = Gesture.Fling()
-    .direction(Directions.LEFT + Directions.RIGHT)
-    .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
-
   return (
     <VStack space={8}>
-      <GestureDetector gesture={flipGesture}>
-        <CardContainer backgroundColor={backgroundColor}>
+      <CardContainer backgroundColor={backgroundColor}>
+        <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setIsFlipped}>
           <ItwSkeumorphicCard
             credential={credential}
             isFlipped={isFlipped}
             status={status}
             onPress={fullScreenCardModal.present}
           />
-        </CardContainer>
-      </GestureDetector>
+        </FlipGestureDetector>
+      </CardContainer>
       <ItwPresentationCredentialCardFlipButton
         isFlipped={isFlipped}
         handleOnPress={handleFlipButtonPress}

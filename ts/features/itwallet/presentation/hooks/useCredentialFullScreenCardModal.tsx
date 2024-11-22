@@ -10,6 +10,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
 import { useMaxBrightness } from "../../../../utils/brightness";
+import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 
 type UseCredentialFullScreenCardModalProps = {
   credential: StoredCredential;
@@ -70,22 +71,27 @@ const CredentialFullScreenCardModal = ({
 
   return (
     <BottomSheetView style={styles.contentContainer}>
-      <HeaderSecondLevel
-        title={""}
-        type="singleAction"
-        firstAction={{
-          icon: "closeLarge",
-          accessibilityLabel: I18n.t("global.buttons.close"),
-          onPress: handleCloseModalPress
-        }}
-      />
-      <View style={styles.cardContainer}>
-        <ItwSkeumorphicCard
-          credential={credential}
-          status={status}
-          isFlipped={isFlipped}
-          orientation="landscape"
+      <View style={{ zIndex: 1000 }}>
+        <HeaderSecondLevel
+          title={""}
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: handleCloseModalPress
+          }}
         />
+      </View>
+
+      <View style={styles.cardContainer}>
+        <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
+          <ItwSkeumorphicCard
+            credential={credential}
+            status={status}
+            orientation="landscape"
+            isFlipped={isFlipped}
+          />
+        </FlipGestureDetector>
       </View>
       <View style={styles.flipButtonContainer}>
         <ItwPresentationCredentialCardFlipButton
