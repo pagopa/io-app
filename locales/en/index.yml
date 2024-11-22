@@ -669,7 +669,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
-      description: "If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.\n\n To enter the IO app without physically using the Electronic Identity Card,you must first enable Level 1 and Level 2 access in the CieID application."
+      description: "If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.\n\nTo enter the IO app without physically using the Electronic Identity Card,you must first enable Level 1 and Level 2 access in the CieID application."
       actions:
         primary:
           label: Yes, log in with CieID
