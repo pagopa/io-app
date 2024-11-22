@@ -67,7 +67,7 @@ const CredentialFullScreenCardModal = ({
 }: CredentialFullScreenCardModalProps) => {
   const [isFlipped, setFlipped] = React.useState(false);
 
-  useMaxBrightness();
+  useMaxBrightness({ useSmoothTransition: true });
 
   return (
     <BottomSheetView style={styles.contentContainer}>
