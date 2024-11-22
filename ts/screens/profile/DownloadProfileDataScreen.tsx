@@ -147,8 +147,8 @@ const DownloadProfileDataScreen = () => {
         <Body accessibilityRole="link" onPress={handleNavigateToProfilePrivacy}>
           {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
           <Body
-            weight="Semibold"
             asLink
+            weight="Semibold"
             onPress={handleNavigateToProfilePrivacy}
           >
             {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}

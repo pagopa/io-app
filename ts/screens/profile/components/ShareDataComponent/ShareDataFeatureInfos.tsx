@@ -64,7 +64,7 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
     () => (
       <Body ref={bodyRef}>
         {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
-        <Body weight="Semibold" color="info-850">
+        <Body weight="Semibold">
           {I18n.t("profile.main.privacy.shareData.screen.why.description.two")}
         </Body>
         {`${I18n.t(
@@ -109,7 +109,7 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
           )}
-          <Body weight="Semibold" color="info-850">
+          <Body weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.security.description.two"
             )}
@@ -139,7 +139,7 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
       body={
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
-          <Body weight="Semibold" color="info-850">
+          <Body weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.gdpr.description.two"
             )}

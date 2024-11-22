@@ -1,6 +1,5 @@
+import { BodySmall, RadioGroup } from "@pagopa/io-app-design-system";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { IOColors, BodySmall, RadioGroup } from "@pagopa/io-app-design-system";
-import { Text } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../../../i18n";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
@@ -20,11 +19,11 @@ const ServicesContactComponent = (props: Props): ReactElement => {
       value: I18n.t("services.optIn.preferences.quickConfig.title"),
       id: ServicesPreferencesModeEnum.AUTO,
       description: (
-        <BodySmall color="grey-700" weight="Regular">
+        <BodySmall weight="Regular">
           {I18n.t("services.optIn.preferences.quickConfig.body.text1")}{" "}
-          <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+          <BodySmall weight="Semibold">
             {I18n.t("services.optIn.preferences.quickConfig.body.text2")}
-          </Text>
+          </BodySmall>
         </BodySmall>
       )
     },

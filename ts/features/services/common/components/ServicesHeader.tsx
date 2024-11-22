@@ -48,7 +48,7 @@ export const ServicesHeader = ({
       </View>
       <View style={IOStyles.flex}>
         <H3 color={theme["textHeading-secondary"]}>{title}</H3>
-        <BodySmall weight="Regular" color="grey-700">
+        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           {subTitle}
         </BodySmall>
       </View>
