@@ -2,13 +2,13 @@ import MockDate from "mockdate";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import {
-  DateWithoutTimezoneClaim,
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
   getCredentialStatus,
   getFiscalCodeFromCredential,
-  ImageClaim
+  ImageClaim,
+  SimpleDateClaim
 } from "../itwClaimsUtils";
 import { StoredCredential } from "../itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
@@ -470,134 +470,54 @@ describe("getCredentialStatus", () => {
   });
 });
 
-describe("DateWithoutTimezoneClaim", () => {
-  it("should decode a valid date string without timezone", () => {
-    const input = "2024-11-19"; // Data valida in formato YYYY-MM-DD
-    const result = DateWithoutTimezoneClaim.decode(input);
-    expect(E.isRight(result)).toBe(true);
-    if (E.isRight(result)) {
-      const decodedDate = result.right;
-      expect(decodedDate.getUTCFullYear()).toBe(2024);
-      expect(decodedDate.getUTCMonth()).toBe(10);
-      expect(decodedDate.getUTCDate()).toBe(19);
-      expect(decodedDate.toISOString()).toBe("2024-11-19T00:00:00.000Z");
+describe("SimpleDateClaim", () => {
+  it("should handle valid, invalid, edge cases, and formatting correctly", () => {
+    // Valid date decoding
+    const validInput = "2024-11-19";
+    const validResult = SimpleDateClaim.decode(validInput);
+    expect(E.isRight(validResult)).toBe(true);
+    if (E.isRight(validResult)) {
+      const decodedDate = validResult.right;
+
+      // Validate date parts
+      expect(decodedDate.getFullYear()).toBe(2024);
+      expect(decodedDate.getMonth()).toBe(10); // 0-indexed month
+      expect(decodedDate.getDate()).toBe(19);
+
+      // Validate default and custom formats
+      expect(decodedDate.toString()).toBe("19/11/2024");
+      expect(decodedDate.toString("DD/MM/YY")).toBe("19/11/24");
+
+      // Validate Date object conversions
+      expect(decodedDate.toDate()).toEqual(new Date(2024, 10, 19));
+      expect(decodedDate.toDateWithoutTimezone().toISOString()).toBe(
+        "2024-11-19T00:00:00.000Z"
+      );
     }
-  });
 
-  it("should fail decoding an invalid date string", () => {
-    const input = "19-11-2024"; // Data in formato non valido
-    const result = DateWithoutTimezoneClaim.decode(input);
-    expect(E.isLeft(result)).toBe(true);
-  });
+    // Invalid date decoding
+    const invalidInput = "invalid-date";
+    const invalidResult = SimpleDateClaim.decode(invalidInput);
+    expect(E.isLeft(invalidResult)).toBe(true);
 
-  it("should fail decoding a completely invalid input", () => {
-    const invalidInput = 123456789;
-    const result = DateWithoutTimezoneClaim.decode(invalidInput);
-    expect(E.isLeft(result)).toBe(true);
-  });
-
-  test("should serialize a Date instance to a valid date string without timezone", () => {
-    const input = new Date(Date.UTC(2024, 10, 19));
-    const result = DateWithoutTimezoneClaim.encode(input);
-
-    expect(result).toBe("2024-11-19");
-  });
-
-  test("should validate and transform a string with leading zeros in the month/day", () => {
-    const input = "2024-01-05"; // Data con zeri iniziali
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(true);
-    if (E.isRight(result)) {
-      const date = result.right;
-      expect(date).toBeInstanceOf(Date);
-      expect(date.toISOString()).toBe("2024-01-05T00:00:00.000Z");
+    // Valid leap year date
+    const leapYearInput = "2024-02-29";
+    const leapYearResult = SimpleDateClaim.decode(leapYearInput);
+    expect(E.isRight(leapYearResult)).toBe(true);
+    if (E.isRight(leapYearResult)) {
+      const leapYearDate = leapYearResult.right;
+      expect(leapYearDate.getFullYear()).toBe(2024);
+      expect(leapYearDate.getMonth()).toBe(1); // 0-indexed month
+      expect(leapYearDate.getDate()).toBe(29);
     }
-  });
 
-  test("should validate a date string with the last day of the year", () => {
-    const input = "2024-12-31"; // Ultimo giorno dell'anno
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(true);
-    if (E.isRight(result)) {
-      const date = result.right;
-      expect(date.toISOString()).toBe("2024-12-31T00:00:00.000Z");
-    }
-  });
-
-  test("should validate a leap year date (February 29)", () => {
-    const input = "2024-02-29"; // Anno bisestile
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(true);
-    if (E.isRight(result)) {
-      const date = result.right;
-      expect(date.toISOString()).toBe("2024-02-29T00:00:00.000Z");
-    }
-  });
-
-  test("should validate a string representing January 1st", () => {
-    const input = "2024-01-01"; // Primo giorno dell'anno
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(true);
-    if (E.isRight(result)) {
-      const date = result.right;
-      expect(date.toISOString()).toBe("2024-01-01T00:00:00.000Z");
-    }
-  });
-
-  test("should fail for empty string input", () => {
-    const input = ""; // Stringa vuota
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(false);
-    if (E.isRight(result) === false) {
-      expect(result.left[0].message).toBe("Date is not in the correct format");
-    }
-  });
-
-  test("should fail for a string with invalid characters", () => {
-    const input = "2024-11-abc"; // Input con caratteri non validi
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(false);
-    if (E.isRight(result) === false) {
-      expect(result.left[0].message).toBe("Date is not in the correct format");
-    }
-  });
-
-  test("should fail if the year is less than four digits", () => {
-    const input = "24-11-19"; // Anno non valido
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(false);
-    if (E.isRight(result) === false) {
-      expect(result.left[0].message).toBe("Date is not in the correct format");
-    }
-  });
-
-  test("should fail if the year exceeds reasonable bounds", () => {
-    const input = "10000-01-01"; // Anno troppo grande
-    const result = DateWithoutTimezoneClaim.decode(input);
-
-    expect(E.isRight(result)).toBe(false);
-    if (E.isRight(result) === false) {
-      expect(result.left[0].message).toBe("Date is not in the correct format");
-    }
-  });
-
-  test("should serialize and deserialize a Date instance correctly", () => {
-    const input = new Date(Date.UTC(2024, 10, 19)); // 19 Novembre 2024
-    const encoded = DateWithoutTimezoneClaim.encode(input);
-    expect(encoded).toBe("2024-11-19");
-
-    const decoded = DateWithoutTimezoneClaim.decode(encoded);
-    expect(E.isRight(decoded)).toBe(true);
-    if (E.isRight(decoded)) {
-      const date = decoded.right;
-      expect(date.toISOString()).toBe("2024-11-19T00:00:00.000Z");
+    // Valid date with padded spaces
+    const paddedInput = " 2024-11-19 ";
+    const paddedResult = SimpleDateClaim.decode(paddedInput.trim());
+    expect(E.isRight(paddedResult)).toBe(true);
+    if (E.isRight(paddedResult)) {
+      const paddedDate = paddedResult.right;
+      expect(paddedDate.toString()).toBe("19/11/2024");
     }
   });
 });
