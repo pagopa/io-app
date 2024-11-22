@@ -1,4 +1,7 @@
-import { isItwEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isItwEnabledSelector,
+  isItwFeedbackBannerEnabledSelector
+} from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isItwTrialActiveSelector } from "../../../../trialSystem/store/reducers";
 import { itwIsWalletEmptySelector } from "../../../credentials/store/selectors";
@@ -27,6 +30,7 @@ export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
  * @returns true if the banner should be visible, false otherwise
  */
 export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
+  isItwFeedbackBannerEnabledSelector(state) &&
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletEmptySelector(state) &&
   !itwIsFeedbackBannerHiddenSelector(state);
