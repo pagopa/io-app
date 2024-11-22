@@ -66,7 +66,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
   }, [machineRef]);
 
   const itwIdentificationSection = useIOSelector(
-    sectionStatusByKeySelector("cashback")
+    sectionStatusByKeySelector("itw_identification")
   );
 
   const title = I18n.t("features.itWallet.identification.mode.title");

@@ -948,6 +948,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -1151,6 +1198,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -1354,6 +1448,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -1557,6 +1698,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -1760,6 +1948,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -1963,6 +2198,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -2166,6 +2448,53 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -2849,6 +3178,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -3052,6 +3428,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -3255,6 +3678,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -3458,6 +3928,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -3661,6 +4178,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -3864,6 +4428,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -4067,6 +4678,53 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -5085,6 +5743,28 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <Text
+                                  accessibilityLabel="1.99 €"
+                                  allowFontScaling={false}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  1.99 €
+                                </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -5287,6 +5967,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Revoked
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -5489,6 +6216,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Expired
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -5691,6 +6465,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F5FE",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#215C76",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Ongoing
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -5893,6 +6714,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -6568,6 +7436,28 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <Text
+                                  accessibilityLabel="1.99 €"
+                                  allowFontScaling={false}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  1.99 €
+                                </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -6770,6 +7660,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Revoked
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -6972,6 +7909,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Expired
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -7174,6 +8158,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F5FE",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#215C76",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Ongoing
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -7376,6 +8407,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -8051,6 +9129,28 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <Text
+                                  accessibilityLabel="1.99 €"
+                                  allowFontScaling={false}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  1.99 €
+                                </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -8253,6 +9353,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Revoked
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -8455,6 +9602,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Expired
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -8657,6 +9851,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F5FE",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#215C76",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Ongoing
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -8859,6 +10100,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -9654,6 +10942,28 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <Text
+                                  accessibilityLabel="1.99 €"
+                                  allowFontScaling={false}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  1.99 €
+                                </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -9856,6 +11166,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Revoked
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -10058,6 +11415,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#F4F5F8",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Expired
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -10260,6 +11664,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F5FE",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#215C76",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Ongoing
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -10462,6 +11913,53 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
+                                <View
+                                  accessible={true}
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 24,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 4,
+                                      },
+                                      {
+                                        "backgroundColor": "#E1F4E1",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#224021",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 12,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 16,
+                                        },
+                                        {
+                                          "alignSelf": "center",
+                                          "flexShrink": 1,
+                                          "letterSpacing": 0.5,
+                                          "textTransform": "uppercase",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Paid
+                                  </Text>
+                                </View>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -11257,6 +12755,28 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   }
                                 }
                               >
+                                <Text
+                                  accessibilityLabel="1.99 €"
+                                  allowFontScaling={false}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  1.99 €
+                                </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
@@ -11932,6 +13452,28 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   }
                                 }
                               >
+                                <Text
+                                  accessibilityLabel="1.99 €"
+                                  allowFontScaling={false}
+                                  dynamicTypeRamp="headline"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  1.99 €
+                                </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
                                   accessibilityLabel=""
