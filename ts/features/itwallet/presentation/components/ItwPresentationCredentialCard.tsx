@@ -13,6 +13,7 @@ import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
+import { useCredentialFullScreenCardModal } from "../hooks/useCredentialFullScreenCardModal";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton";
 
 type Props = {
@@ -30,7 +31,12 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  const handleOnPress = React.useCallback(() => {
+  const fullScreenCardModal = useCredentialFullScreenCardModal({
+    credential,
+    status
+  });
+
+  const handleFlipButtonPress = React.useCallback(() => {
     trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
     setIsFlipped(_ => !_);
   }, [credential.credentialType]);
@@ -51,13 +57,15 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
             credential={credential}
             isFlipped={isFlipped}
             status={status}
+            onPress={fullScreenCardModal.present}
           />
         </CardContainer>
       </GestureDetector>
       <ItwPresentationCredentialCardFlipButton
         isFlipped={isFlipped}
-        handleOnPress={handleOnPress}
+        handleOnPress={handleFlipButtonPress}
       />
+      {fullScreenCardModal.content}
     </VStack>
   );
 };
