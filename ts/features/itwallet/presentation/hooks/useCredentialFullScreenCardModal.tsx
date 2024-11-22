@@ -1,20 +1,24 @@
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
-import { ButtonLink, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  ItwCredentialStatus,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
+import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
 
 type UseCredentialFullScreenCardModalProps = {
   credential: StoredCredential;
+  status: ItwCredentialStatus;
 };
 
-export const useCredentialFullScreenCardModal = (
-  props: UseCredentialFullScreenCardModalProps
-) => {
-  const { credential } = props;
-
+export const useCredentialFullScreenCardModal = ({
+  credential,
+  status
+}: UseCredentialFullScreenCardModalProps) => {
   const [isFlipped, setFlipped] = React.useState(false);
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
 
@@ -47,20 +51,15 @@ export const useCredentialFullScreenCardModal = (
         <View style={styles.cardContainer}>
           <ItwSkeumorphicCard
             credential={credential}
+            status={status}
             isFlipped={isFlipped}
             orientation="landscape"
           />
         </View>
-        <View style={styles.flipButton}>
-          <ButtonLink
-            label={I18n.t(
-              `features.itWallet.presentation.credentialDetails.card.${
-                isFlipped ? "showFront" : "showBack"
-              }`
-            )}
-            onPress={() => setFlipped(_ => !_)}
-            icon="switchCard"
-            iconPosition="end"
+        <View style={styles.flipButtonContainer}>
+          <ItwPresentationCredentialCardFlipButton
+            isFlipped={isFlipped}
+            handleOnPress={() => setFlipped(_ => !_)}
           />
         </View>
       </BottomSheetView>
@@ -81,14 +80,14 @@ const styles = StyleSheet.create({
   cardContainer: {
     position: "absolute",
     paddingHorizontal: 24,
-    flex: 1,
     justifyContent: "center",
     width: "100%",
     height: "100%"
   },
-  flipButton: {
-    alignSelf: "center",
+  flipButtonContainer: {
     position: "absolute",
-    bottom: 32
+    bottom: 32,
+    left: 0,
+    right: 0
   }
 });

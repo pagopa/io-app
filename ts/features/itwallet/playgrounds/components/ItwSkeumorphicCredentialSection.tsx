@@ -1,11 +1,12 @@
-import { ButtonLink, H3, VStack } from "@pagopa/io-app-design-system";
+import { H3, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
-import I18n from "../../../../i18n";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwPresentationCredentialCardFlipButton } from "../../presentation/components/ItwPresentationCredentialCardFlipButton";
 import { useCredentialFullScreenCardModal } from "../../presentation/hooks/useCredentialFullScreenCardModal";
+import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 
 const credentialsWithCard: ReadonlyArray<string> = [
   "MDL",
@@ -36,7 +37,12 @@ const ItwSkeumorphicCredentialItem = ({
 }) => {
   const [isFlipped, setFlipped] = React.useState(false);
 
-  const fullScreenCardModal = useCredentialFullScreenCardModal({ credential });
+  const { status = "valid" } = getCredentialStatusObject(credential);
+
+  const fullScreenCardModal = useCredentialFullScreenCardModal({
+    credential,
+    status
+  });
 
   const handleOnPress = () => {
     fullScreenCardModal.present();
@@ -44,27 +50,19 @@ const ItwSkeumorphicCredentialItem = ({
 
   return (
     <VStack key={credential.credentialType} space={16}>
-      <ItwSkeumorphicCard
-        credential={credential}
-        isFlipped={isFlipped}
-        onPress={handleOnPress}
-      />
-      <View
-        style={{
-          alignSelf: "center"
-        }}
-      >
-        <ButtonLink
-          label={I18n.t(
-            `features.itWallet.presentation.credentialDetails.card.${
-              isFlipped ? "showFront" : "showBack"
-            }`
-          )}
-          onPress={() => setFlipped(_ => !_)}
-          icon="switchCard"
-          iconPosition="end"
+      <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
+        <ItwSkeumorphicCard
+          credential={credential}
+          status={status}
+          isFlipped={isFlipped}
+          onPress={handleOnPress}
+          orientation="portrait"
         />
-      </View>
+      </FlipGestureDetector>
+      <ItwPresentationCredentialCardFlipButton
+        isFlipped={isFlipped}
+        handleOnPress={() => setFlipped(_ => !_)}
+      />
       {fullScreenCardModal.content}
     </VStack>
   );

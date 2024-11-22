@@ -9,8 +9,6 @@ import {
   ViewStyle
 } from "react-native";
 import I18n from "../../../../../i18n";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
   borderColorByStatus,
@@ -27,37 +25,9 @@ import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
 import { CardOrientation } from "./types";
 
-type CardSideBaseProps = {
-  status: ItwCredentialStatus;
-  children: ReactNode;
-};
-
-const CardSideBase = ({ status, children }: CardSideBaseProps) => {
-  const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorByStatus[status];
-
-  const dynamicStyle: StyleProp<ViewStyle> = {
-    borderColor,
-    backgroundColor: validCredentialStatuses.includes(status)
-      ? undefined
-      : "rgba(255,255,255,0.7)"
-  };
-
-  return (
-    <View>
-      {statusTagProps && (
-        <View style={styles.tag}>
-          <Tag {...statusTagProps} />
-        </View>
-      )}
-      <View style={[styles.faded, dynamicStyle]} />
-      {children}
-    </View>
-  );
-};
-
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
+  status: ItwCredentialStatus;
   isFlipped?: boolean;
   onPress?: () => void;
   orientation?: CardOrientation;
@@ -65,14 +35,11 @@ export type ItwSkeumorphicCardProps = {
 
 const ItwSkeumorphicCard = ({
   credential,
+  status,
   isFlipped = false,
   onPress,
   orientation = "portrait"
 }: ItwSkeumorphicCardProps) => {
-  const { status = "valid" } = useIOSelector(state =>
-    itwCredentialStatusSelector(state, credential.credentialType)
-  );
-
   const FrontSide = useMemo(
     () => (
       <CardSideBase status={status}>
@@ -124,6 +91,7 @@ const ItwSkeumorphicCard = ({
       FrontComponent={FrontSide}
       BackComponent={BackSide}
       isFlipped={isFlipped}
+      orientation={orientation}
     />
   );
 
@@ -142,12 +110,49 @@ const ItwSkeumorphicCard = ({
   );
 };
 
+type CardSideBaseProps = {
+  status: ItwCredentialStatus;
+  children: ReactNode;
+};
+
+const CardSideBase = ({ status, children }: CardSideBaseProps) => {
+  const statusTagProps = tagPropsByStatus[status];
+  const borderColor = borderColorByStatus[status];
+
+  const dynamicStyle: StyleProp<ViewStyle> = {
+    borderColor,
+    backgroundColor: validCredentialStatuses.includes(status)
+      ? undefined
+      : "rgba(255,255,255,0.7)"
+  };
+
+  return (
+    <View>
+      {statusTagProps && (
+        <View style={styles.tag}>
+          <Tag {...statusTagProps} />
+        </View>
+      )}
+      <View style={[styles.faded, dynamicStyle]} />
+      {children}
+    </View>
+  );
+};
+
+// Magic number for the aspect ratio of the card
+// extracted from the design
+const CARD_ASPECT_RATIO = 16 / 10.09;
+
+// When rotating the card to landscape, we need to scale it up to fit the screen
+// The scale factor is the same as the aspect ratio
+const CARD_LANDSCAPE_SCALE = CARD_ASPECT_RATIO;
+
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: 16 / 10.09
+    aspectRatio: CARD_ASPECT_RATIO
   },
   cardLandscape: {
-    transform: [{ rotate: "90deg" }, { scale: 1.6 }]
+    transform: [{ rotate: "90deg" }, { scale: CARD_LANDSCAPE_SCALE }]
   },
   tag: {
     position: "absolute",

@@ -52,7 +52,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
   );
-  const { status } = useIOSelector(state =>
+  const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credentialType)
   );
 

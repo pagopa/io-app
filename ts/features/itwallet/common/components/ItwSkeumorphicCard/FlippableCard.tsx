@@ -44,11 +44,11 @@ const FlippableCard = ({
     return {
       transform: [
         orientation === "landscape"
-          ? { rotateY: rotateValue }
-          : { rotateX: rotateValue }
+          ? { rotateX: rotateValue }
+          : { rotateY: rotateValue }
       ]
     };
-  });
+  }, [orientation]);
 
   const flippedCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]);
@@ -57,11 +57,11 @@ const FlippableCard = ({
     return {
       transform: [
         orientation === "landscape"
-          ? { rotateY: rotateValue }
-          : { rotateX: rotateValue }
+          ? { rotateX: rotateValue }
+          : { rotateY: rotateValue }
       ]
     };
-  });
+  }, [orientation]);
 
   return (
     <View style={containerStyle}>
