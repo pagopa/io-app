@@ -104,6 +104,7 @@ const ItwSkeumorphicCard = ({
       <Pressable
         onPress={onPress}
         {...accessibilityProps}
+        accessibilityRole="button"
         onPressIn={onPressIn}
         onPressOut={onPressOut}
       >
