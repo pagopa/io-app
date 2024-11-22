@@ -30,6 +30,8 @@ import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAu
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
 import { apiUrlPrefix } from "../../../config";
+import { trackLoginSpidError } from "../../../screens/authentication/analytics/spidAnalytics";
+import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -131,13 +133,17 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      // TODO: Check missing SAML response (error message) https://pagopa.atlassian.net/browse/IOPID-2406
+      // TODO: move the error tracking in the `AuthErrorScreen`
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {})
+      });
       dispatch(
         loginFailure({
           error: new Error(
             `login failure with code ${code || message || "n/a"}`
           ),
-          idp: "cie"
+          idp: "cieid"
         })
       );
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
@@ -192,7 +198,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
-      dispatch(loginSuccess({ token, idp: "cie" }));
+      dispatch(loginSuccess({ token, idp: "cieid" }));
     },
     [dispatch]
   );
@@ -239,7 +245,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     const isLoginUrlWithToken = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,
-      "CIE_ID"
+      "cieid"
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
