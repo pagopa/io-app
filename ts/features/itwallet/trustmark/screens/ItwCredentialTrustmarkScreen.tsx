@@ -40,7 +40,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
 
-  useMaxBrightness();
+  useMaxBrightness({ useSmoothTransition: true });
 
   return (
     <ItwTrustmarkMachineProvider credentialType={credentialType}>
