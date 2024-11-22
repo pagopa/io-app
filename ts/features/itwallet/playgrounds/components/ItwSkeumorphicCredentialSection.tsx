@@ -5,8 +5,9 @@ import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/components/ItwPresentationCredentialCardFlipButton";
-import { useCredentialFullScreenCardModal } from "../../presentation/hooks/useCredentialFullScreenCardModal";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 const credentialsWithCard: ReadonlyArray<string> = [
   "MDL",
@@ -35,17 +36,18 @@ const ItwSkeumorphicCredentialItem = ({
 }: {
   credential: StoredCredential;
 }) => {
+  const navigation = useIONavigation();
   const [isFlipped, setFlipped] = React.useState(false);
-
   const { status = "valid" } = getCredentialStatusObject(credential);
 
-  const fullScreenCardModal = useCredentialFullScreenCardModal({
-    credential,
-    status
-  });
-
   const handleOnPress = () => {
-    fullScreenCardModal.present();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+      params: {
+        credential,
+        status
+      }
+    });
   };
 
   return (
@@ -63,7 +65,6 @@ const ItwSkeumorphicCredentialItem = ({
         isFlipped={isFlipped}
         handleOnPress={() => setFlipped(_ => !_)}
       />
-      {fullScreenCardModal.content}
     </VStack>
   );
 };

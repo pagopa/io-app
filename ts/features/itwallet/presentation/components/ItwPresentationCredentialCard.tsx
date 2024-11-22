@@ -1,6 +1,7 @@
 import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
@@ -8,7 +9,7 @@ import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
-import { useCredentialFullScreenCardModal } from "../hooks/useCredentialFullScreenCardModal";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton";
 
 type Props = {
@@ -20,21 +21,27 @@ type Props = {
  * If the credential supports the skeumorphic card, it also renders it with the flip button.
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
+  const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = React.useState(false);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  const fullScreenCardModal = useCredentialFullScreenCardModal({
-    credential,
-    status
-  });
-
   const handleFlipButtonPress = React.useCallback(() => {
     trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
     setIsFlipped(_ => !_);
   }, [credential.credentialType]);
+
+  const handleCardPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+      params: {
+        credential,
+        status
+      }
+    });
+  };
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType
@@ -48,7 +55,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
             credential={credential}
             isFlipped={isFlipped}
             status={status}
-            onPress={fullScreenCardModal.present}
+            onPress={handleCardPress}
           />
         </FlipGestureDetector>
       </CardContainer>
@@ -56,7 +63,6 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
         isFlipped={isFlipped}
         handleOnPress={handleFlipButtonPress}
       />
-      {fullScreenCardModal.content}
     </VStack>
   );
 };
