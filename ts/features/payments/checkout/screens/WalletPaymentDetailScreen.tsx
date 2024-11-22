@@ -372,38 +372,6 @@ const WalletPaymentDetailContent = ({
         value={orgFiscalCode}
         onPress={() => handleOnCopy(orgFiscalCode)}
       />
-      <ListItemInfoCopy
-        testID="payment-notice-copy-button"
-        icon="docPaymentCode"
-        label={I18n.t("payment.noticeCode")}
-        accessibilityLabel={I18n.t("payment.noticeCode")}
-        value={formattedPaymentNoticeNumber}
-        onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
-      />
-      <Divider />
-      <ListItemInfoCopy
-        icon="entityCode"
-        label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        value={orgFiscalCode}
-        onPress={() => handleOnCopy(orgFiscalCode)}
-      />
-      <ListItemInfoCopy
-        testID="payment-notice-copy-button"
-        icon="docPaymentCode"
-        label={I18n.t("payment.noticeCode")}
-        accessibilityLabel={I18n.t("payment.noticeCode")}
-        value={formattedPaymentNoticeNumber}
-        onPress={() => handleOnCopy(formattedPaymentNoticeNumber)}
-      />
-      <Divider />
-      <ListItemInfoCopy
-        icon="entityCode"
-        label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
-        value={orgFiscalCode}
-        onPress={() => handleOnCopy(orgFiscalCode)}
-      />
       {amountInfoBottomSheet.bottomSheet}
     </IOScrollView>
   );
