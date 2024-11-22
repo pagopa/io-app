@@ -337,13 +337,6 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "Markdown",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.MARKDOWN_PLAYGROUND
-        })
-    },
-    {
       value: "IO Markdown",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
