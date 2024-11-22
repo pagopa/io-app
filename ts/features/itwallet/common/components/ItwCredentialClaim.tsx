@@ -113,7 +113,7 @@ const DateClaimItem = ({
 }) => {
   // Remove the timezone offset to display the date in its original format
 
-  const value = claim.toString("DD/MM/YY");
+  const value = claim.toString("DD/MM/YYYY");
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
     const ns = "features.itWallet.presentation.credentialDetails.status";
