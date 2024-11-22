@@ -32,10 +32,6 @@ type RenderOptions = {
   remotelyDisabledCredentials?: Array<string>;
 };
 
-jest.mock("../../../../../config", () => ({
-  itwEnabled: true
-}));
-
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
     const component = renderComponent({});
@@ -47,6 +43,11 @@ describe("WalletCardOnboardingScreen", () => {
 
     expect(
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeTruthy();
+    expect(
+      queryByTestId(
+        `${CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}ModuleTestID`
+      )
     ).toBeTruthy();
     expect(
       queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
@@ -74,8 +75,11 @@ describe("WalletCardOnboardingScreen", () => {
     options => {
       const { queryByTestId } = renderComponent(options);
       for (const type of options.remotelyDisabledCredentials!) {
+        // Currently ModuleCredential does not attach the testID if onPress is undefined.
+        // Since disabled credentials have undefined onPress, we can test for null.
         expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
       }
+      expect(queryByTestId("EuropeanDisabilityCardModuleTestID")).toBeTruthy();
     }
   );
 });
