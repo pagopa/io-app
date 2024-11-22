@@ -307,17 +307,3 @@ export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
     return undefined;
   }
 };
-
-/**
- * Remove timezone from a date.
- * @param date - the date to remove timezone from
- * @returns a new date with the timezone removed
- */
-export const removeTimezoneFromDate = (date: Date): Date => {
-  if (isNaN(date.getTime())) {
-    throw new Error("Invalid date");
-  }
-  return new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
-};
