@@ -1,6 +1,11 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  useIOTheme,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/reducers";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -16,7 +21,6 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors["grey-50"],
     paddingBottom: "75%",
     marginBottom: "-75%"
   }
@@ -108,8 +112,16 @@ export const MessageDetailsFooter = ({
     [messageId, noticeNumber, payeeFiscalCode]
   );
 
+  const theme = useIOTheme();
+
   return (
-    <View style={[IOStyles.horizontalContentPadding, styles.container]}>
+    <View
+      style={[
+        IOStyles.horizontalContentPadding,
+        styles.container,
+        { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+      ]}
+    >
       <VSpacer size={16} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
         <ContactsListItem

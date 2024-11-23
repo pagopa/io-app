@@ -222,15 +222,12 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                         >
                           <View
                             style={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "height": 100,
-                                  "justifyContent": "center",
-                                },
-                                undefined,
-                              ]
+                              {
+                                "alignItems": "center",
+                                "flex": 1,
+                                "height": 100,
+                                "justifyContent": "center",
+                              }
                             }
                           >
                             <View
