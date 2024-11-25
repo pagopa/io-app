@@ -1,5 +1,7 @@
 import {
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H2,
   HeaderSecondLevel,
@@ -19,10 +21,6 @@ import {
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
@@ -42,6 +40,7 @@ type Props = WithTestID<
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreSafeAreaMargin"];
+    includeContentMargins?: boolean;
     headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
@@ -66,6 +65,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelpMarkdown,
       faqCategories,
       ignoreSafeAreaMargin = false,
+      includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
       testID
@@ -146,7 +146,11 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         {children && (
           <>
             <VSpacer size={16} />
-            {children}
+            {includeContentMargins ? (
+              <ContentWrapper>{children}</ContentWrapper>
+            ) : (
+              children
+            )}
           </>
         )}
       </IOScrollView>

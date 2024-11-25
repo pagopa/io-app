@@ -12,8 +12,12 @@ import {
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import {
+  itwIntegrityKeyTagSelector,
+  itwIntegrityServiceReadySelector
+} from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
 import type { AuthenticationContext, IdentificationContext } from "./context";
 
@@ -59,6 +63,23 @@ export const createEidIssuanceActorsImplementation = (
 
     // Reset the wallet store to prevent having dirty state before registering a new wallet instance
     store.dispatch(itwLifecycleStoresReset());
+    // Await the integrity preparation before requesting the integrity key tag
+    const isIntegrityServiceReady = await pollForStoreValue({
+      getState: store.getState,
+      selector: itwIntegrityServiceReadySelector,
+      condition: value => value !== undefined
+    });
+    // If the integrity service preparation is not ready (still undefined) after 10 seconds the user will be prompted with an error,
+    // he will need to retry.
+    // TODO: Create a personalized error message for this case informing the user that the integrity service is not ready yet.
+    assert(
+      isIntegrityServiceReady !== undefined,
+      "Integrity service not ready after 10 seconds"
+    );
+    // If the integrity service preparation is ready, but it is failed, the user will be prompted with an error
+    // and the wallet instance creation will be aborted.
+    // TODO: Create a personalized error message for this case informing the user that the integrity service is not available on his device.
+    assert(isIntegrityServiceReady, "Integrity service not available");
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(hardwareKeyTag, sessionToken);
 

@@ -1,4 +1,6 @@
 import {
+  H4,
+  H6,
   HSpacer,
   IOColors,
   IOStyles,
@@ -7,12 +9,10 @@ import {
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { H3 } from "../../../components/core/typography/H3";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import CustomBadge from "../../../components/ui/CustomBadge";
 import { IOBadge } from "../../../components/core/IOBadge";
-import { H4 } from "../../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
   fakeNavItem: {
@@ -24,14 +24,12 @@ const styles = StyleSheet.create({
 
 export const DSLegacyBadges = () => (
   <DesignSystemScreen title={"Legacy Badges"}>
-    <H3 style={{ marginBottom: 16 }}>IOBadge</H3>
+    <H6 style={{ marginBottom: 16 }}>IOBadge</H6>
     {renderIOBadge()}
 
     <VSpacer size={24} />
 
-    <H4 weight="Semibold" color="bluegreyDark">
-      DiscountValueBox (CGN)
-    </H4>
+    <H6>DiscountValueBox (CGN)</H6>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
       <CgnDiscountValueBox value={25} small />
@@ -41,11 +39,9 @@ export const DSLegacyBadges = () => (
 
     <VSpacer size={40} />
 
-    <H3>Notifications</H3>
+    <H4>Notifications</H4>
     <VSpacer size={16} />
-    <H4 weight="Semibold" color="bluegreyDark">
-      CustomBadge
-    </H4>
+    <H6>CustomBadge</H6>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
       <View style={styles.fakeNavItem}>

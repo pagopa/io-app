@@ -1,7 +1,6 @@
 import {
   Body,
   Divider,
-  GradientScrollView,
   H3,
   IOSpacingScale,
   ListItemInfo,
@@ -26,6 +25,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -35,9 +35,9 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { format } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
@@ -45,6 +45,9 @@ import {
 } from "../../../../utils/stringBuilder";
 import { formatPaymentNoticeNumber } from "../../common/utils";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
+import * as analytics from "../analytics";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -52,18 +55,14 @@ import {
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentUserMethodsAction
 } from "../store/actions/networking";
-import { walletPaymentDetailsSelector } from "../store/selectors";
-import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
-import * as analytics from "../analytics";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
+import { walletPaymentDetailsSelector } from "../store/selectors";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { FaultCodeCategoryEnum } from "../types/PaymentVerifyGenericErrorProblemJson";
+import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { isDueDateValid } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -99,12 +98,12 @@ const WalletPaymentDetailScreen = () => {
       paymentDetailsPot.error,
       WalletPaymentFailure.decode,
       O.fromEither,
-      // NetworkError or undecoded error is transformed to PAYMENT_VERIFY_GENERIC_ERROR only for display purposes
+      // NetworkError or undecoded error is transformed to PAYMENT_SLOWDOWN_ERROR only for display purposes
       O.getOrElse<WalletPaymentFailure>(() => ({
-        faultCodeCategory: FaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR,
+        faultCodeCategory: FaultCodeSlowdownCategoryEnum.PAYMENT_SLOWDOWN_ERROR,
         faultCodeDetail:
           (paymentDetailsPot.error as WalletPaymentFailure)?.faultCodeDetail ??
-          FaultCodeCategoryEnum.PAYMENT_VERIFY_GENERIC_ERROR
+          FaultCodeSlowdownCategoryEnum.PAYMENT_SLOWDOWN_ERROR
       }))
     );
     return <WalletPaymentFailureDetail failure={failure} />;
@@ -254,7 +253,7 @@ const WalletPaymentDetailContent = ({
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(_ => format(_, "DD/MM/YYYY")),
+    O.map(date => isDueDateValid(date)),
     O.toUndefined
   );
 
@@ -307,14 +306,16 @@ const WalletPaymentDetailContent = ({
   };
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        testID: "wallet-payment-detail-make-payment-button",
-        label: "Vai al pagamento",
-        accessibilityLabel: "Vai al pagmento",
-        onPress: navigateToMakePaymentScreen,
-        loading: pot.isLoading(userWalletsPots),
-        disabled: pot.isLoading(userWalletsPots)
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: "Vai al pagamento",
+          onPress: navigateToMakePaymentScreen,
+          loading: pot.isLoading(userWalletsPots),
+          disabled: pot.isLoading(userWalletsPots),
+          testID: "wallet-payment-detail-make-payment-button"
+        }
       }}
     >
       <ListItemInfo
@@ -372,7 +373,7 @@ const WalletPaymentDetailContent = ({
         onPress={() => handleOnCopy(orgFiscalCode)}
       />
       {amountInfoBottomSheet.bottomSheet}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

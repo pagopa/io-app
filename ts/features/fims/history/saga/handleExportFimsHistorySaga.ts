@@ -9,12 +9,12 @@ import { fimsHistoryExport } from "../store/actions";
 import { trackExportSucceeded } from "../../common/analytics";
 
 export function* handleExportFimsHistorySaga(
-  exportHistory: FimsHistoryClient["exports"],
+  exportHistory: FimsHistoryClient["requestExport"],
   bearerToken: string,
   action: ActionType<typeof fimsHistoryExport.request>
 ) {
   const exportHistoryRequest = exportHistory({
-    Bearer: bearerToken
+    Bearer: `Bearer ${bearerToken}`
   });
 
   try {

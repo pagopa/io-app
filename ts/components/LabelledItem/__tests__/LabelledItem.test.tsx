@@ -130,30 +130,6 @@ describe("Test LabelledItem", () => {
     expect(onPress).toHaveBeenCalled();
   });
 
-  it("should have red description color if isValid is false", () => {
-    const component = renderComponent({
-      ...textInputProps,
-      description,
-      isValid: false
-    });
-    expect(component.queryByTestId("description")).not.toBeNull();
-    expect(component.queryByText(description)).toBeTruthy();
-    expect(component.getByTestId("H5-description").props.color).toBe("red");
-  });
-
-  it("should have bluegreyDark description color if isValid is true", () => {
-    const component = renderComponent({
-      ...textInputProps,
-      description,
-      isValid: true
-    });
-    expect(component.queryByTestId("description")).not.toBeNull();
-    expect(component.queryByText(description)).toBeTruthy();
-    expect(component.getByTestId("H5-description").props.color).toBe(
-      "bluegreyDark"
-    );
-  });
-
   it("should have the correct borderColor if focusBorderColor is defined", () => {
     const focusBorderColor = "red";
     const component = renderComponent({ ...textInputProps, focusBorderColor });

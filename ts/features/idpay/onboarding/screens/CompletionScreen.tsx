@@ -1,13 +1,13 @@
 import {
+  Body,
   FooterWithButtons,
+  H6,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -42,7 +42,7 @@ const CompletionScreen = () => {
         <View style={styles.container}>
           <Pictogram name="completed" size={120} />
           <VSpacer size={16} />
-          <H3> {I18n.t("idpay.onboarding.success.requestSent.title")}</H3>
+          <H6> {I18n.t("idpay.onboarding.success.requestSent.title")}</H6>
           <VSpacer size={16} />
           <Body style={styles.message}>
             {I18n.t("idpay.onboarding.success.requestSent.body")}

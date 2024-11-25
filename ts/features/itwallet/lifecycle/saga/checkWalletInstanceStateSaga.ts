@@ -1,6 +1,6 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
-import { call, select } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
@@ -9,6 +9,7 @@ import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUt
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwIsWalletInstanceAttestationValidSelector } from "../../walletInstance/store/reducers";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
+import { itwIntegritySetServiceIsReady } from "../../issuance/store/actions";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getAttestationOrResetWalletInstance(integrityKeyTag: string) {
@@ -47,9 +48,11 @@ export function* checkWalletInstanceStateSaga(): Generator<
   void
 > {
   // We start the warming up process of the integrity service on Android
-  // TODO: consider the result of the operation to decide whether to proceed or not [SIW-1759]
   try {
-    yield* call(ensureIntegrityServiceIsReady);
+    const integrityServiceReadyResult: boolean = yield* call(
+      ensureIntegrityServiceIsReady
+    );
+    yield* put(itwIntegritySetServiceIsReady(integrityServiceReadyResult));
 
     const isItwOperationalOrValid = yield* select(
       itwLifecycleIsOperationalOrValid

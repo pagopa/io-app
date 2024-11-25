@@ -5,10 +5,10 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import { LabelSmall } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { WithTestID } from "../types/WithTestID";
 import { getAppVersion } from "../utils/appVersion";
-import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";
 
 export type AppVersion = WithTestID<{

@@ -1,19 +1,13 @@
+import { Banner } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Banner, IOSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { Linking } from "react-native";
+import { Linking, View } from "react-native";
+import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
+import { itwDocumentsOnIOUrl, itwTrialId } from "../../../../config";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { trialStatusSelector } from "../../../trialSystem/store/reducers";
-import { itwDocumentsOnIOUrl, itwTrialId } from "../../../../config";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 
-type ItwUpcomingWalletBannerProps = {
-  bottomSpacing?: IOSpacer;
-};
-
-export const ItwUpcomingWalletBanner = ({
-  bottomSpacing
-}: ItwUpcomingWalletBannerProps) => {
+export const ItwUpcomingWalletBanner = () => {
   const itwTrialStatus = useIOSelector(trialStatusSelector(itwTrialId));
 
   if (itwTrialStatus === SubscriptionStateEnum.ACTIVE) {
@@ -21,7 +15,7 @@ export const ItwUpcomingWalletBanner = ({
   }
 
   return (
-    <>
+    <View style={{ marginTop: 16, marginBottom: 8 }}>
       <Banner
         testID="itwUpcomingWalletBannerTestID"
         color="neutral"
@@ -36,7 +30,6 @@ export const ItwUpcomingWalletBanner = ({
         )}
         onPress={() => Linking.openURL(itwDocumentsOnIOUrl)}
       />
-      {bottomSpacing && <VSpacer size={bottomSpacing} />}
-    </>
+    </View>
   );
 };
