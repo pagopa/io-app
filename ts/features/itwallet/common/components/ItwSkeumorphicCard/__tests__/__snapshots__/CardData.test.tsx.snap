@@ -334,7 +334,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       }
       weight="Semibold"
     >
-      15/03/1990
+      15/03/90
     </Text>
   </View>
   <View
@@ -434,7 +434,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       }
       weight="Semibold"
     >
-      23/03/2032
+      23/03/32
     </Text>
   </View>
 </View>

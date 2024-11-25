@@ -669,7 +669,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Hai l'app CieID?
-      description: Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID  o usa il tuo volto o l’impronta.
+      description: "Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID o usa il tuo volto o l’impronta.\n\nPer entrare su IO senza usare fisicamente la Carta di Identità Elettronica, devi prima abilitare l’accesso con livello 1 e 2 nell’app CieID."
       actions:
         primary:
           label: Sì, entra con CieID
