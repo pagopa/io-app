@@ -168,7 +168,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
             }
           };
-        case IssuanceFailureType.WALLET_REVOCATION_GENERIC:
+        case IssuanceFailureType.WALLET_REVOCATION_ERROR:
           return {
             title: I18n.t(
               "features.itWallet.walletRevocation.failureScreen.title"

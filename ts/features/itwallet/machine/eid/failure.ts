@@ -17,7 +17,7 @@ export enum IssuanceFailureType {
   NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
-  WALLET_REVOCATION_GENERIC = "WALLET_REVOCATION_GENERIC"
+  WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR"
 }
 
 /**
@@ -30,7 +30,7 @@ export type ReasonTypeByFailure = {
     | IntegrityError
     | Errors.WalletProviderResponseError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
-  [IssuanceFailureType.WALLET_REVOCATION_GENERIC]: unknown;
+  [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
   [IssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -55,8 +55,12 @@ export const mapEventToFailure = (
 ): IssuanceFailure => {
   // This should never happen
   if (!("error" in event)) {
-    return { type: IssuanceFailureType.UNEXPECTED, reason: null };
+    return {
+      type: IssuanceFailureType.UNEXPECTED,
+      reason: "Not an error event"
+    };
   }
+
   const { error } = event;
 
   if (

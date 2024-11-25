@@ -157,7 +157,7 @@ export const itwEidIssuanceMachine = setup({
           {
             actions: assign({
               failure: ({ event }) => ({
-                type: IssuanceFailureType.WALLET_REVOCATION_GENERIC,
+                type: IssuanceFailureType.WALLET_REVOCATION_ERROR,
                 reason: event.error
               })
             }),
