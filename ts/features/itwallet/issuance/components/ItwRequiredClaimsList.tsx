@@ -12,11 +12,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as O from "fp-ts/Option";
 import I18n from "../../../../i18n";
-import { localeDateFormat } from "../../../../utils/locale";
 import {
+  BoolClaim,
   ClaimDisplayFormat,
   ClaimValue,
-  DateWithoutTimezoneClaim,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
   EvidenceClaim,
@@ -24,8 +23,8 @@ import {
   FiscalCodeClaim,
   getSafeText,
   ImageClaim,
-  BoolClaim,
   PlaceOfBirthClaim,
+  SimpleDateClaim,
   StringClaim
 } from "../../common/utils/itwClaimsUtils";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
@@ -94,11 +93,8 @@ export const getClaimDisplayValue = (
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
           return `${decoded.locality} (${decoded.country})`;
-        } else if (DateWithoutTimezoneClaim.is(decoded)) {
-          return localeDateFormat(
-            decoded,
-            I18n.t("global.dateFormats.shortFormat")
-          );
+        } else if (SimpleDateClaim.is(decoded)) {
+          return decoded.toString();
         } else if (EvidenceClaim.is(decoded)) {
           return decoded[0].record.source.organization_name;
         } else if (ImageClaim.is(decoded)) {
