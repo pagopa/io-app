@@ -5,13 +5,15 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { LayoutChangeEvent, Pressable, StyleSheet } from "react-native";
+import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
 import { useScaleAnimation } from "../../../../components/ui/utils/hooks/useScaleAnimation";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
@@ -21,17 +23,33 @@ import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
  */
 const ENCODED_FISCAL_CODE_LENGTH_CODE39 = 288;
 
-const ItwPresentationFiscalCode = () => {
-  const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
-  const theme = useIOTheme();
-  const [barCodeWidth, setBarCodeWidth] = React.useState(1);
+/**
+ * For the barcode width, we start from the window width and subtract the horizontal padding.
+ */
+const windowWidth = Dimensions.get("window").width;
 
-  const handleLayout = (event: LayoutChangeEvent) => {
-    const width = event.nativeEvent.layout.width;
-    setBarCodeWidth(
-      (width - IOAppMargin[3]) / // Subtracting the horizontal padding which is 16 but has to be multiplied by 2 for each side
-        ENCODED_FISCAL_CODE_LENGTH_CODE39
-    );
+/**
+ * The total width is the window width minus the horizontal screen padding and the fiscal code button padding.
+ */
+const barcodeTotalWidth =
+  windowWidth -
+  IOAppMargin[4] - // Subtracting the horizontal screen padding
+  IOAppMargin[3]; // Subtracting the fiscal code button padding
+
+/**
+ * The barcode width is the total width divided by the encoded fiscal code length.
+ */
+const barcodeWidth = barcodeTotalWidth / ENCODED_FISCAL_CODE_LENGTH_CODE39;
+
+const ItwPresentationFiscalCode = () => {
+  const navigation = useIONavigation();
+  const theme = useIOTheme();
+  const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
+
+  const handleOnPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL
+    });
   };
 
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
@@ -48,14 +66,12 @@ const ItwPresentationFiscalCode = () => {
       )}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onPress={handleOnPress}
     >
-      <Animated.View
-        style={[styles.button, scaleAnimatedStyle]}
-        onLayout={handleLayout}
-      >
+      <Animated.View style={[styles.button, scaleAnimatedStyle]}>
         <Barcode
           value={fiscalCode}
-          width={barCodeWidth}
+          width={barcodeWidth}
           height={80}
           format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
           background={IOColors[theme["appBackground-primary"]]}
@@ -69,8 +85,10 @@ const ItwPresentationFiscalCode = () => {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 16,
-    rowGap: 8,
+    paddingTop: 8,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    rowGap: 0,
     borderColor: IOColors["grey-100"],
     borderWidth: 1,
     borderRadius: 8
