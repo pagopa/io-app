@@ -1,12 +1,10 @@
 import {
-  Alert,
   HeaderActionProps,
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
-import { GestureResponderEvent } from "react-native";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
