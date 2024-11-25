@@ -1,8 +1,6 @@
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { sequenceS } from "fp-ts/lib/Apply";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -31,8 +29,7 @@ import {
 } from "../../analytics";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
-import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { useCredentialInvalidStatusDetails } from "../hooks/useCredentialInvalidStatusDetails";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -57,8 +54,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
+    selectIssuerConfigurationOption
+  );
 
-  const invalidStatusDetails = useCredentialInvalidStatusDetails(failure);
+  const invalidStatusDetails = useCredentialInvalidStatusDetails(failure, {
+    credentialType,
+    issuerConf
+  });
 
   const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
@@ -195,47 +198,4 @@ const defaultInvalidStatusMessage = {
   description: I18n.t(
     "features.itWallet.issuance.notEntitledCredentialError.body"
   )
-};
-
-/**
- * Hook used to safely extract details from an invalid status error, including the localized message.
- *
- * **Note:** The message is dynamic and must be extracted from the EC.
- */
-const useCredentialInvalidStatusDetails = (
-  failure: CredentialIssuanceFailure
-) => {
-  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
-  const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
-    selectIssuerConfigurationOption
-  );
-
-  const errorCodeOption = pipe(
-    failure,
-    O.fromPredicate(
-      e => e.type === CredentialIssuanceFailureType.INVALID_STATUS
-    ),
-    O.chainEitherK(e => StatusAttestationError.decode(e.reason.reason)),
-    O.map(x => x.error)
-  );
-
-  const localizedMessage = pipe(
-    sequenceS(O.Monad)({
-      errorCode: errorCodeOption,
-      credentialType,
-      issuerConf
-    }),
-    O.map(({ errorCode, ...rest }) =>
-      Errors.extractErrorMessageFromIssuerConf(errorCode, rest)
-    ),
-    O.map(message => message?.[getClaimsFullLocale()]),
-    O.toUndefined
-  );
-
-  return {
-    message: localizedMessage,
-    errorCode: pipe(errorCodeOption, O.toUndefined)
-  };
 };
