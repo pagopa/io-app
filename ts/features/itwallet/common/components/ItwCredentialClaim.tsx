@@ -267,8 +267,8 @@ const DrivingPrivilegesClaimItem = ({
   claim: DrivingPrivilegeClaimType;
   detailsButtonVisible?: boolean;
 }) => {
-  const localExpiryDate = claim.expiry_date.toString("DD/MM/YY");
-  const localIssueDate = claim.issue_date.toString("DD/MM/YY");
+  const localExpiryDate = claim.expiry_date.toString("DD/MM/YYYY");
+  const localIssueDate = claim.issue_date.toString("DD/MM/YYYY");
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
