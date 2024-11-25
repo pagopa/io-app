@@ -33,6 +33,9 @@ export function useMaxBrightness({
 }: UseMaxBrightnessOptions = {}) {
   const initialBrightness = useRef<number | null>(null);
 
+  /**
+   * Get the current brightness
+   */
   const getBrightness = useCallback(
     async () =>
       Platform.select({
@@ -42,6 +45,9 @@ export function useMaxBrightness({
     []
   );
 
+  /**
+   * Set the brightness
+   */
   const setBrightness = useCallback(
     async (brightness: number) =>
       Platform.select({
@@ -51,6 +57,9 @@ export function useMaxBrightness({
     []
   );
 
+  /**
+   * Set the brightness with a smooth transition
+   */
   const setSmoothBrightness = useCallback(
     async (brightness: number, duration: number) => {
       const startBrightness = await getBrightness();
@@ -77,15 +86,44 @@ export function useMaxBrightness({
     [getBrightness, setBrightness]
   );
 
+  /**
+   * Set the brightness to the maximum, uses a smooth transition if `useSmoothTransition` is true
+   */
+  const setMaxBrightness = useCallback(
+    async () =>
+      await (useSmoothTransition
+        ? setSmoothBrightness(HIGH_BRIGHTNESS, transitionDuration)
+        : setBrightness(HIGH_BRIGHTNESS)),
+    [
+      setSmoothBrightness,
+      setBrightness,
+      useSmoothTransition,
+      transitionDuration
+    ]
+  );
+
+  /**
+   * Restore the original brightness with a smooth transition.
+   * Using a smooth transition may cause glitches, so we don't use it here.
+   */
+  const restoreOriginalBrightness = useCallback(async () => {
+    if (initialBrightness.current !== null) {
+      void setBrightness(initialBrightness.current);
+    }
+  }, [setBrightness]);
+
+  /**
+   * Set the brightness when the app is active and restore the original brightness when the app is inactive
+   */
   useEffect(() => {
     // eslint-disable-next-line functional/no-let
     let appStateSubscription: any;
 
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === "active") {
-        await setBrightness(HIGH_BRIGHTNESS);
+        await setMaxBrightness();
       } else if (initialBrightness.current !== null) {
-        await setBrightness(initialBrightness.current);
+        await restoreOriginalBrightness();
       }
     };
 
@@ -94,9 +132,7 @@ export function useMaxBrightness({
         // Store initial brightness
         initialBrightness.current = await getBrightness();
         // Set to max brightness
-        await (useSmoothTransition
-          ? setSmoothBrightness(HIGH_BRIGHTNESS, transitionDuration)
-          : setBrightness(HIGH_BRIGHTNESS));
+        await setMaxBrightness();
         // Listen for app state changes
         appStateSubscription = AppState.addEventListener(
           "change",
@@ -110,16 +146,8 @@ export function useMaxBrightness({
     void initialize();
 
     return () => {
-      if (initialBrightness.current !== null) {
-        void setBrightness(initialBrightness.current);
-      }
+      void restoreOriginalBrightness();
       appStateSubscription?.remove();
     };
-  }, [
-    useSmoothTransition,
-    transitionDuration,
-    setSmoothBrightness,
-    getBrightness,
-    setBrightness
-  ]);
+  }, [getBrightness, restoreOriginalBrightness, setMaxBrightness]);
 }
