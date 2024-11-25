@@ -5,6 +5,7 @@ import * as E from "fp-ts/lib/Either";
 import { SessionToken } from "../types/SessionToken";
 import { trackLoginSpidError } from "../screens/authentication/analytics/spidAnalytics";
 import { apiUrlPrefix, spidRelayState } from "../config";
+import { IdpData } from "../../definitions/content/IdpData";
 import { isStringNullyOrEmpty } from "./strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
@@ -22,8 +23,6 @@ type LoginFailure = {
 };
 
 type LoginResult = LoginSuccess | LoginFailure;
-
-export type IdpTypes = "SPID" | "CIE_ID" | "CIE";
 
 export const getEitherLoginResult = (
   result: LoginResult
@@ -55,7 +54,7 @@ const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (
   url: string,
-  idp: IdpTypes = "SPID"
+  idp?: keyof IdpData
 ): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);
 
@@ -71,8 +70,12 @@ export const extractLoginResult = (
   if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
     const errorCode = urlParse.query.errorCode;
     const errorMessage = urlParse.query.errorMessage;
-    if (idp === "SPID") {
-      trackLoginSpidError(errorCode);
+    // TODO: move the error tracking in the `AuthErrorScreen` & properly type `idp`
+    if (idp !== "cie" && idp !== "cieid") {
+      trackLoginSpidError(errorCode, {
+        idp: idp || "not_set",
+        ...(errorMessage ? { "error message": errorMessage } : {})
+      });
     }
     return {
       success: false,
@@ -98,7 +101,7 @@ export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
     onSuccess: (_: SessionToken) => void,
-    idp: IdpTypes = "SPID"
+    idp?: keyof IdpData
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {
