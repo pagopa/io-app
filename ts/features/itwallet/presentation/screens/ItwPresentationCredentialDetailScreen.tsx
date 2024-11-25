@@ -23,7 +23,6 @@ import {
 } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
@@ -35,6 +34,7 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
+import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;

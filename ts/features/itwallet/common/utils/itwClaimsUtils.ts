@@ -49,7 +49,11 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the fiscal code, used for checks based on the user's identity.
    */
-  tax_id_code = "tax_id_code"
+  tax_id_code = "tax_id_code",
+  /**
+   * Claims that contains the document number, if applicable for the credential
+   */
+  document_number = "document_number"
 }
 
 /**

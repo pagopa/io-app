@@ -36,6 +36,7 @@ import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
+import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -191,6 +192,10 @@ const InnerNavigator = () => {
           gestureEnabled: false,
           presentation: "transparentModal"
         }}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK}
+        component={ItwCredentialTrustmarkScreen}
       />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
