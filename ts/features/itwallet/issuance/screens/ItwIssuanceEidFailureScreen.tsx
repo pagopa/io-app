@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import React, { useEffect } from "react";
+import React from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import {
   OperationResultScreenContent,
@@ -19,15 +19,9 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  KoState,
-  trackIdNotMatch,
-  trackItwIdRequestFailure,
-  trackItwIdRequestUnexpected,
-  trackItwUnsupportedDevice,
-  trackWalletCreationFailed
-} from "../../analytics";
+import { KoState, trackWalletCreationFailed } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
+import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 
 const FAQ_URL = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
@@ -189,36 +183,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
       }
     };
 
-  useEffect(() => {
-    if (
-      failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
-      identification
-    ) {
-      trackIdNotMatch(identification.mode);
-    }
-
-    if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
-      trackItwUnsupportedDevice(failure);
-    }
-
-    if (failure.type === IssuanceFailureType.ISSUER_GENERIC && identification) {
-      trackItwIdRequestFailure({
-        ITW_ID_method: identification.mode,
-        reason: failure.reason,
-        type: failure.type
-      });
-    }
-
-    if (
-      failure.type === IssuanceFailureType.UNEXPECTED ||
-      failure.type === IssuanceFailureType.WALLET_PROVIDER_GENERIC
-    ) {
-      trackItwIdRequestUnexpected({
-        reason: failure.reason,
-        type: failure.type
-      });
-    }
-  }, [failure, identification]);
+  useEidEventsTracking({ failure, identification });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 

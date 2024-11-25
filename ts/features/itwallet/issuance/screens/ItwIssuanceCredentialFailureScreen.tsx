@@ -1,6 +1,6 @@
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -19,17 +19,11 @@ import {
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  CREDENTIALS_MAP,
-  trackAddCredentialFailure,
-  trackCredentialInvalidStatusFailure,
-  trackCredentialNotEntitledFailure,
-  trackItWalletDeferredIssuing,
-  trackWalletCreationFailed
-} from "../../analytics";
+import { trackWalletCreationFailed } from "../../analytics";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { useCredentialInvalidStatusDetails } from "../hooks/useCredentialInvalidStatusDetails";
+import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -42,6 +36,13 @@ export const ItwIssuanceCredentialFailureScreen = () => {
     failureOption,
     O.fold(constNull, failure => <ContentView failure={failure} />)
   );
+};
+
+const defaultInvalidStatusMessage = {
+  title: I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
+  description: I18n.t(
+    "features.itWallet.issuance.notEntitledCredentialError.body"
+  )
 };
 
 type ContentViewProps = { failure: CredentialIssuanceFailure };
@@ -146,56 +147,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
       }
     };
 
-  useEffect(() => {
-    if (O.isNone(credentialType)) {
-      return;
-    }
-
-    if (failure.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE) {
-      trackItWalletDeferredIssuing(CREDENTIALS_MAP[credentialType.value]);
-      return;
-    }
-
-    if (failure.type === CredentialIssuanceFailureType.INVALID_STATUS) {
-      const trackingFunction =
-        invalidStatusDetails.errorCode === "credential_not_found"
-          ? trackCredentialNotEntitledFailure
-          : trackCredentialInvalidStatusFailure;
-
-      trackingFunction({
-        reason: invalidStatusDetails.errorCode,
-        type: failure.type,
-        credential: CREDENTIALS_MAP[credentialType.value]
-      });
-      return;
-    }
-
-    if (
-      failure.type === CredentialIssuanceFailureType.UNEXPECTED ||
-      failure.type === CredentialIssuanceFailureType.ISSUER_GENERIC ||
-      failure.type === CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC
-    ) {
-      trackAddCredentialFailure({
-        reason: failure.reason,
-        type: failure.type,
-        credential: CREDENTIALS_MAP[credentialType.value]
-      });
-    }
-
-    /* trackAddCredentialTimeout({
-      reason: failure.reason,
-      type: failure.type,
-      credential: CREDENTIALS_MAP[credentialType.value]
-    }); */
-  }, [credentialType, failure, invalidStatusDetails.errorCode]);
+  useCredentialEventsTracking({
+    failure,
+    credentialType: O.toUndefined(credentialType),
+    invalidErrorCode: invalidStatusDetails.errorCode
+  });
 
   const resultScreenProps = getOperationResultScreenContentProps();
   return <OperationResultScreenContent {...resultScreenProps} />;
-};
-
-const defaultInvalidStatusMessage = {
-  title: I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
-  description: I18n.t(
-    "features.itWallet.issuance.notEntitledCredentialError.body"
-  )
 };
