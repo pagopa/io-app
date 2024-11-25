@@ -24,7 +24,7 @@ import {
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
-import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
+import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import I18n from "../../../../i18n";
