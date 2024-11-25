@@ -8,7 +8,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import I18n from "../../../../i18n";
 import { ioSuppliersUrl } from "../../../../urls";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
@@ -43,10 +43,11 @@ const MarkdownBody = () => {
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
       >
-        <LegacyMarkdown>
-          {I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
-        </LegacyMarkdown>
+        <IOMarkdown
+          content={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
+        />
       </View>
+      <VSpacer size={8} />
       {bottom === 0 && <VSpacer size={16} />}
     </View>
   );
