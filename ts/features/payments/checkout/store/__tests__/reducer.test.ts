@@ -213,7 +213,7 @@ describe("payment checkout reducers", () => {
       store.dispatch(paymentsCreateTransactionAction.failure(networkError));
       expect(
         store.getState().features.payments.checkout.transaction
-      ).toStrictEqual(pot.none);
+      ).toStrictEqual(pot.noneError(networkError));
     });
   });
 
