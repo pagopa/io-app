@@ -116,11 +116,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       // Checks if the URL starts with one of the valid URLs
 
       try {
-        const { hostname, protocol } = new URL(url);
-
-        const isDomainValid = WHITELISTED_DOMAINS.includes(
-          `${protocol}//${hostname}`
-        );
+        const { origin } = new URL(url);
+        const isDomainValid = WHITELISTED_DOMAINS.includes(origin);
 
         if (isDomainValid) {
           // Set the URL as valid
