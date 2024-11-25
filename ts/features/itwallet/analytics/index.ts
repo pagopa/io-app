@@ -602,11 +602,12 @@ export const trackAddCredentialFailure = ({
 
 export const trackAddCredentialUnexpectedFailure = ({
   credential,
-  reason
+  reason,
+  type
 }: CredentialUnexpectedFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { credential, reason })
+    buildEventProperties("KO", "error", { credential, reason, type })
   );
 };
 
@@ -633,11 +634,12 @@ export const trackCredentialInvalidStatusFailure = ({
 };
 
 export const trackItwIdRequestUnexpectedFailure = ({
-  reason
+  reason,
+  type
 }: IdUnexpectedFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { reason })
+    buildEventProperties("KO", "error", { reason, type })
   );
 };
 
