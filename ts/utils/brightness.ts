@@ -1,75 +1,125 @@
-import * as React from "react";
-import { useRef, useState } from "react";
+/* eslint-disable functional/immutable-data */
+import { useCallback, useEffect, useRef } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
 
-const getBrightness = (): Promise<number> =>
-  Platform.select({
-    ios: ScreenBrightness.getBrightness,
-    default: ScreenBrightness.getAppBrightness
-  })();
+// The maximum brightness
+const HIGH_BRIGHTNESS = 1.0;
 
-const setBrightness = (brightness: number): Promise<number> =>
-  Platform.select({
-    ios: ScreenBrightness.setBrightness,
-    default: ScreenBrightness.setAppBrightness
-  })(brightness);
+// This duration is chosen to be long enough to be noticeable but short enough to not be annoying
+const DEFAULT_TRANSITION_DURATION = 1500;
 
-const HIGH_BRIGHTNESS = 1.0; // Max brightness value
+type UseMaxBrightnessOptions = {
+  /**
+   * Whether to use a smooth transition to the maximum brightness
+   */
+  useSmoothTransition?: boolean;
+  /**
+   * The duration of the smooth transition
+   */
+  transitionDuration?: number;
+};
 
 /**
- * Set the device brightness to the max value and restore the original brightness when
- * the component is unmount or the app changes state (!== active)
+ * Custom hook that manages screen brightness
+ * - Sets maximum brightness when mounted and app is active
+ * - Restores original brightness when unmounted or app is inactive
+ * - Handles platform-specific brightness APIs
+ * - Smoothly transitions brightness when `useSmoothTransition` is true
  */
-export const useMaxBrightness = () => {
-  const [initialBrightness, setInitialBrightness] = useState<
-    number | undefined
-  >(undefined);
-  // The current app state
-  const [appState, setAppState] = useState<AppStateStatus | undefined>(
-    undefined
+export function useMaxBrightness({
+  useSmoothTransition = false,
+  transitionDuration = DEFAULT_TRANSITION_DURATION
+}: UseMaxBrightnessOptions = {}) {
+  const initialBrightness = useRef<number | null>(null);
+
+  const getBrightness = useCallback(
+    async () =>
+      Platform.select({
+        ios: () => ScreenBrightness.getBrightness(),
+        default: () => ScreenBrightness.getAppBrightness()
+      })(),
+    []
   );
-  // Track the current async transition, in order to wait before execute the next async transition
-  const currentTransition = useRef<Promise<void>>(Promise.resolve());
 
-  // Change the device brightness
-  const setNewBrightness = async (brightness: number) => {
-    await currentTransition.current;
-    await setBrightness(brightness).catch(_ => undefined);
-  };
+  const setBrightness = useCallback(
+    async (brightness: number) =>
+      Platform.select({
+        ios: () => ScreenBrightness.setBrightness(brightness),
+        default: () => ScreenBrightness.setAppBrightness(brightness)
+      })(),
+    []
+  );
 
-  // First mount, read and save the current device brightness
-  React.useEffect(() => {
-    const subscription = AppState.addEventListener("change", setAppState);
-    const getCurrentBrightness = async () => {
-      const currentBrightness = await getBrightness().catch(_ => undefined);
-      setInitialBrightness(currentBrightness);
-    };
-    // eslint-disable-next-line functional/immutable-data
-    currentTransition.current = getCurrentBrightness();
-    return () => {
-      subscription.remove();
-    };
-  }, []);
+  const setSmoothBrightness = useCallback(
+    async (brightness: number, duration: number) => {
+      const startBrightness = await getBrightness();
+      const startTime = Date.now();
+      const diff = brightness - startBrightness;
 
-  // If app state changes of currentBrightness changes, update the brightness
-  React.useEffect(() => {
-    if (initialBrightness === undefined) {
-      return;
-    }
-    const newBrightness =
-      appState === "active" || appState === undefined
-        ? HIGH_BRIGHTNESS
-        : initialBrightness;
+      // Animate brightness change over duration
+      const animate = async () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
 
-    // eslint-disable-next-line functional/immutable-data
-    currentTransition.current = setNewBrightness(newBrightness);
+        // Calculate current brightness using linear interpolation
+        const currentBrightness = startBrightness + diff * progress;
+        await setBrightness(currentBrightness);
 
-    // unmount and reset the initial brightness
-    return () => {
-      if (initialBrightness) {
-        void setNewBrightness(initialBrightness);
+        if (progress < 1) {
+          // Continue animation
+          requestAnimationFrame(animate);
+        }
+      };
+
+      await animate();
+    },
+    [getBrightness, setBrightness]
+  );
+
+  useEffect(() => {
+    // eslint-disable-next-line functional/no-let
+    let appStateSubscription: any;
+
+    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+      if (nextAppState === "active") {
+        await setBrightness(HIGH_BRIGHTNESS);
+      } else if (initialBrightness.current !== null) {
+        await setBrightness(initialBrightness.current);
       }
     };
-  }, [initialBrightness, appState]);
-};
+
+    const initialize = async () => {
+      try {
+        // Store initial brightness
+        initialBrightness.current = await getBrightness();
+        // Set to max brightness
+        await (useSmoothTransition
+          ? setSmoothBrightness(HIGH_BRIGHTNESS, transitionDuration)
+          : setBrightness(HIGH_BRIGHTNESS));
+        // Listen for app state changes
+        appStateSubscription = AppState.addEventListener(
+          "change",
+          handleAppStateChange
+        );
+      } catch (error) {
+        // Ignore
+      }
+    };
+
+    void initialize();
+
+    return () => {
+      if (initialBrightness.current !== null) {
+        void setBrightness(initialBrightness.current);
+      }
+      appStateSubscription?.remove();
+    };
+  }, [
+    useSmoothTransition,
+    transitionDuration,
+    setSmoothBrightness,
+    getBrightness,
+    setBrightness
+  ]);
+}
