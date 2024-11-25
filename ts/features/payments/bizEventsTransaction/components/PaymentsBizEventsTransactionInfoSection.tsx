@@ -1,28 +1,31 @@
-import { capitalize } from "lodash";
-import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
   Alert,
   Divider,
+  IOColors,
   IOLogoPaymentType,
   IORadiusScale,
   IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { capitalize } from "lodash";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
+
+import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import { format } from "../../../../utils/dates";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
-import { WalletInfo } from "../../../../../definitions/pagopa/biz-events/WalletInfo";
-import { getPayerInfoLabel } from "../utils";
-import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
-import { OriginEnum } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
+import { WalletTransactionReceiptDivider } from "../../transaction/components/WalletTransactionReceiptDivider";
+import { getPayerInfoLabel } from "../utils";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -36,7 +39,6 @@ const styles = StyleSheet.create({
   },
   contentCard: {
     ...IOStyles.horizontalContentPadding,
-    ...IOStyles.bgWhite,
     borderRadius: IORadiusScale["1"],
     marginVertical: IOVisualCostants.appMarginDefault
   }
@@ -49,16 +51,16 @@ const PaymentsBizEventsTransactionInfoSection = ({
   transaction,
   loading
 }: PaymentsBizEventsTransactionInfoSectionProps) => {
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+
   const transactionInfo = transaction?.infoNotice;
+
   return (
     <>
-      <TransactionReceiptDivider
-        height={24}
-        width={"100%"}
-        preserveAspectRatio="xMin slice"
-      />
+      <WalletTransactionReceiptDivider />
       <View style={styles.container}>
-        <View style={styles.contentCard}>
+        <View style={[styles.contentCard, { backgroundColor }]}>
           <ListItemHeader
             label={I18n.t("transaction.details.info.title")}
             accessibilityLabel={I18n.t("transaction.details.info.title")}
