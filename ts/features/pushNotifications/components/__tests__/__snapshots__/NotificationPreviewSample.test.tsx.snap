@@ -389,7 +389,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#2351E6"
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -424,6 +424,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}
@@ -932,7 +933,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#2351E6"
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -967,6 +968,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}
@@ -1475,7 +1477,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#2351E6"
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -1510,6 +1512,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}
@@ -2018,7 +2021,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           width={24}
                         >
                           <RNSVGGroup
-                            color="#2351E6"
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -2053,6 +2056,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}

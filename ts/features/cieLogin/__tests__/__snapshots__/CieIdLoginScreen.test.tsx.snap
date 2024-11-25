@@ -114,15 +114,12 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
         >
           <View
             style={
-              [
-                {
-                  "alignItems": "center",
-                  "flex": 1,
-                  "height": 100,
-                  "justifyContent": "center",
-                },
-                undefined,
-              ]
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "height": 100,
+                "justifyContent": "center",
+              }
             }
           >
             <View

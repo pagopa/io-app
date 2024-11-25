@@ -350,7 +350,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -385,6 +385,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -1815,7 +1816,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1850,6 +1851,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -3281,7 +3283,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3316,6 +3318,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -4747,7 +4750,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4782,6 +4785,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -6213,7 +6217,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6248,6 +6252,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}

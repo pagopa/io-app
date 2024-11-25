@@ -392,7 +392,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -427,6 +427,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -1730,7 +1731,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1765,6 +1766,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -3068,7 +3070,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3103,6 +3105,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -4406,7 +4409,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4441,6 +4444,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -5744,7 +5748,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5779,6 +5783,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -7082,7 +7087,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7117,6 +7122,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -8420,7 +8426,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8455,6 +8461,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -9758,7 +9765,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9793,6 +9800,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -11096,7 +11104,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11131,6 +11139,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -12434,7 +12443,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -12469,6 +12478,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -13772,7 +13782,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -13807,6 +13817,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -15110,7 +15121,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -15145,6 +15156,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -16448,7 +16460,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -16483,6 +16495,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -17786,7 +17799,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -17821,6 +17834,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -19124,7 +19138,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -19159,6 +19173,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -20462,7 +20477,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -20497,6 +20512,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -21800,7 +21816,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -21835,6 +21851,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -23138,7 +23155,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
-                                    color="#2351E6"
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -23173,6 +23190,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}

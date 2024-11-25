@@ -46,19 +46,22 @@ declare -a apis=(
 
 for elem in "${apis[@]}"; do
     read -a strarr <<< "$elem"  # uses default whitespace IFS
-    echo ${strarr[0]}
-    rm -rf ${strarr[0]}
-    mkdir -p ${strarr[0]}
-    yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client
+    echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
 done
+wait
 
-yarn run gen-api-models --api-spec "https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml" --out-dir ./definitions/backend
-yarn run gen-api-models --api-spec "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml" --out-dir ./definitions/session_manager
-yarn run gen-api-models --api-spec "https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/consumed/api-piattaforma-notifiche.yaml" --out-dir ./definitions/pn
+declare -a apisNoClient=(
+  "./definitions/backend https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
+  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml"
+  "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/consumed/api-piattaforma-notifiche.yaml"
+)
+
+for elem in "${apisNoClient[@]}"; do
+    read -a strarr <<< "$elem"  # uses default whitespace IFS
+    yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} &
+done
+wait
 
 cp mock-google-services.json ./android/app/google-services.json
-
-# "generate:fci-api": "rm -rf ./definitions/fci && mkdir -p ./definitions/fci  && gen-api-models --api-spec $npm_package_api_fci --out-dir ./definitions/fci --no-strict --request-types --response-decoders --client"
-
 
 yarn ts-node --skip-project -O '{"lib":["es2015"]}' scripts/make-locales.ts
