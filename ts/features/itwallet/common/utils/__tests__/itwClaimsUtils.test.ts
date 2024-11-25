@@ -6,7 +6,8 @@ import {
   getCredentialExpireDate,
   getCredentialExpireDays,
   getFiscalCodeFromCredential,
-  ImageClaim
+  ImageClaim,
+  SimpleDateClaim
 } from "../itwClaimsUtils";
 import { StoredCredential } from "../itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
@@ -182,5 +183,57 @@ describe("getFiscalCodeFromCredential", () => {
     expect(getFiscalCodeFromCredential(mockCredential)).toEqual(
       "MRARSS00A01H501B"
     );
+  });
+});
+
+describe("SimpleDateClaim", () => {
+  it("should handle valid, invalid, edge cases, and formatting correctly", () => {
+    // Valid date decoding
+    const validInput = "2024-11-19";
+    const validResult = SimpleDateClaim.decode(validInput);
+    expect(E.isRight(validResult)).toBe(true);
+    if (E.isRight(validResult)) {
+      const decodedDate = validResult.right;
+
+      // Validate date parts
+      expect(decodedDate.getFullYear()).toBe(2024);
+      expect(decodedDate.getMonth()).toBe(10); // 0-indexed month
+      expect(decodedDate.getDate()).toBe(19);
+
+      // Validate default and custom formats
+      expect(decodedDate.toString()).toBe("19/11/2024");
+      expect(decodedDate.toString("DD/MM/YY")).toBe("19/11/24");
+
+      // Validate Date object conversions
+      expect(decodedDate.toDate()).toEqual(new Date(2024, 10, 19));
+      expect(decodedDate.toDateWithoutTimezone().toISOString()).toBe(
+        "2024-11-19T00:00:00.000Z"
+      );
+    }
+
+    // Invalid date decoding
+    const invalidInput = "invalid-date";
+    const invalidResult = SimpleDateClaim.decode(invalidInput);
+    expect(E.isLeft(invalidResult)).toBe(true);
+
+    // Valid leap year date
+    const leapYearInput = "2024-02-29";
+    const leapYearResult = SimpleDateClaim.decode(leapYearInput);
+    expect(E.isRight(leapYearResult)).toBe(true);
+    if (E.isRight(leapYearResult)) {
+      const leapYearDate = leapYearResult.right;
+      expect(leapYearDate.getFullYear()).toBe(2024);
+      expect(leapYearDate.getMonth()).toBe(1); // 0-indexed month
+      expect(leapYearDate.getDate()).toBe(29);
+    }
+
+    // Valid date with padded spaces
+    const paddedInput = " 2024-11-19 ";
+    const paddedResult = SimpleDateClaim.decode(paddedInput.trim());
+    expect(E.isRight(paddedResult)).toBe(true);
+    if (E.isRight(paddedResult)) {
+      const paddedDate = paddedResult.right;
+      expect(paddedDate.toString()).toBe("19/11/2024");
+    }
   });
 });
