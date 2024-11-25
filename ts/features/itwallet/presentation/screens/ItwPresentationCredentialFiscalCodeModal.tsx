@@ -92,7 +92,15 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.landscape}>
+      <View
+        style={[
+          styles.landscape,
+          {
+            // Centers the barcode in the screen by removing/adding the safe area insets
+            top: -safeAreaInsets.top + safeAreaInsets.bottom
+          }
+        ]}
+      >
         <View style={styles.container}>
           <LabelSmall style={{ alignSelf: "center" }}>{nameSurname}</LabelSmall>
           <Barcode
