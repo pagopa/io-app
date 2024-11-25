@@ -58,28 +58,8 @@ type WithAdditionalActions =
       thirdAction?: HeaderActionProps;
     };
 
-export type AlertProps = {
-  variant: "error" | "warning" | "info";
-  content: string;
-} & AlertActionProps;
-
-type AlertActionProps =
-  | {
-      action: string;
-      onPress: (event: GestureResponderEvent) => void;
-    }
-  | {
-      action?: never;
-      onPress?: never;
-    };
-
-type PropsWithAlert = {
-  alert?: AlertProps;
-};
-
 type PropsWithSupport = SpecificHookProps &
-  HeaderHookManagedProps &
-  PropsWithAlert & {
+  HeaderHookManagedProps & {
     supportRequest: true;
     faqCategories?: ReadonlyArray<FAQsCategoriesType>;
     contextualHelp?: ContextualHelpProps;
@@ -87,8 +67,7 @@ type PropsWithSupport = SpecificHookProps &
   } & WithAdditionalActions;
 
 type PropsWithoutSupport = SpecificHookProps &
-  HeaderHookManagedProps &
-  PropsWithAlert & {
+  HeaderHookManagedProps & {
     supportRequest?: false;
     faqCategories?: never;
     contextualHelp?: never;
@@ -127,8 +106,7 @@ export const useHeaderSecondLevel = ({
   variant,
   backgroundColor,
   enableDiscreteTransition,
-  animatedRef,
-  alert
+  animatedRef
 }: HeaderSecondLevelHookProps) => {
   const alertProps = useStatusAlertProps();
   const startSupportRequest = useStartSupportRequest({
@@ -231,24 +209,13 @@ export const useHeaderSecondLevel = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
-        <>
-          {alert && (
-            <Alert
-              variant={alert.variant}
-              content={alert.content}
-              action={alert.action}
-              fullWidth={true}
-              onPress={event => alert.onPress?.(event)}
-            />
-          )}
-          <HeaderSecondLevel
-            {...headerComponentProps}
-            transparent={transparent}
-          />
-        </>
+        <HeaderSecondLevel
+          {...headerComponentProps}
+          transparent={transparent}
+        />
       ),
       headerShown,
       headerTransparent: transparent
     });
-  }, [headerComponentProps, headerShown, navigation, transparent, alert]);
+  }, [headerComponentProps, headerShown, navigation, transparent]);
 };

@@ -1,4 +1,5 @@
 import {
+  ContentWrapper,
   ListItemHeader,
   ModuleNavigation,
   VStack
@@ -6,7 +7,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useCallback, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
@@ -16,11 +16,8 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
-import { useItwAlertWithStatusBar } from "../../common/hooks/useItwAlertWithStatusBar";
-import { ItwScrollViewWithLargeHeader } from "../../common/components/ItwScrollViewWithLargeHeader";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -28,7 +25,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
-  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   const isSpidDisabled = useMemo(
     () => disabledIdentificationMethods.includes("SPID"),
@@ -65,33 +61,13 @@ export const ItwIdentificationModeSelectionScreen = () => {
     trackItWalletIDMethodSelected({ ITW_ID_method: "cieId" });
   }, [machineRef]);
 
-  const itwIdentificationSection = useIOSelector(
-    sectionStatusByKeySelector("itw_identification")
-  );
-
-  const title = I18n.t("features.itWallet.identification.mode.title");
-  const { alertProps, statusBar } = useItwAlertWithStatusBar(
-    itwIdentificationSection
-  );
-
-  useHeaderSecondLevel({
-    title,
-    supportRequest: true,
-    enableDiscreteTransition: true,
-    animatedRef: animatedScrollViewRef,
-    alert: alertProps
-  });
-
   return (
-    <>
-      {statusBar}
-      <ItwScrollViewWithLargeHeader
-        title={title}
-        description={I18n.t(
-          "features.itWallet.identification.mode.description"
-        )}
-        animatedRef={animatedScrollViewRef}
-      >
+    <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("features.itWallet.identification.mode.title") }}
+      description={I18n.t("features.itWallet.identification.mode.description")}
+      headerActionsProp={{ showHelp: true }}
+    >
+      <ContentWrapper>
         <ListItemHeader
           label={I18n.t("features.itWallet.identification.mode.header")}
         />
@@ -136,7 +112,7 @@ export const ItwIdentificationModeSelectionScreen = () => {
             />
           )}
         </VStack>
-      </ItwScrollViewWithLargeHeader>
-    </>
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };
