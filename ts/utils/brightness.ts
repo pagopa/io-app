@@ -62,7 +62,9 @@ export function useMaxBrightness({
    */
   const setSmoothBrightness = useCallback(
     async (brightness: number, duration: number) => {
-      const startBrightness = await getBrightness();
+      // Ensure minimum starting brightness of 0.4 to prevent unintended dimming
+      // Some android devices report negative values, which could cause jarring transitions
+      const startBrightness = Math.max(0.4, await getBrightness());
       const startTime = Date.now();
       const diff = brightness - startBrightness;
 
