@@ -401,3 +401,16 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
   );
+
+/**
+ * Return whether the IT Wallet feedback banner is remotely enabled.
+ */
+export const isItwFeedbackBannerEnabledSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.itw.feedback_banner_visible),
+      O.getOrElse(() => false)
+    )
+);
