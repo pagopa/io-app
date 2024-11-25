@@ -8,17 +8,17 @@ import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../UnlockAccessComponent";
 
-enum AUTH_ERRORS {
+export enum AUTH_ERRORS {
   ERROR_19 = "19",
   ERROR_20 = "20",
   ERROR_21 = "21",
   ERROR_22 = "22",
   ERROR_23 = "23",
   ERROR_25 = "25",
-  ERROR_1001 = "1001",
-  ERROR_1002 = "1002",
+  ERROR_1001 = "1001", // This error is tracked as generic error
+  ERROR_1002 = "1002", // This error is tracked as generic error
   MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS",
-  MISSING_IDP_ISSUER = "Error: Missing idpIssuer inside configuration",
+  MISSING_IDP_ISSUER = "Error: Missing idpIssuer inside configuration", // This error is tracked as generic error
   CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
   CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
   CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
