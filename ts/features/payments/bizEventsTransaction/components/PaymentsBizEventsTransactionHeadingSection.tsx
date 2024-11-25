@@ -1,5 +1,12 @@
 import _ from "lodash";
-import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  IOColors,
+  IOStyles,
+  useIOTheme,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
@@ -26,6 +33,9 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
 }: Props) => {
   const navigation =
     useNavigation<PaymentsTransactionBizEventsStackNavigation>();
+
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
 
   const transactionInfo = transaction?.infoNotice;
 
@@ -81,24 +91,21 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
   const totalAmount = calculateTotalAmount(transactionInfo);
 
   return (
-    <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
-      <PaymentsBizEventsTransactionCartList
-        carts={transaction?.carts}
-        loading={isLoading}
-        onPress={handlePressTransactionDetails}
-      />
-      <VSpacer size={8} />
-      {totalAmount && (
-        <>
+    <View style={[IOStyles.horizontalContentPadding, { backgroundColor }]}>
+      <VStack space={8}>
+        <PaymentsBizEventsTransactionCartList
+          carts={transaction?.carts}
+          loading={isLoading}
+          onPress={handlePressTransactionDetails}
+        />
+        {totalAmount && (
           <PaymentsBizEventsTransactionTotalAmount
             loading={isLoading}
             totalAmount={totalAmount}
           />
-          <VSpacer size={8} />
-        </>
-      )}
-      <FeeAmountSection />
-      <VSpacer size={8} />
+        )}
+        <FeeAmountSection />
+      </VStack>
     </View>
   );
 };
