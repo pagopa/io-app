@@ -1,6 +1,6 @@
 /* eslint-disable functional/immutable-data */
 const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
-// const regexCanaryVersion = /([0-9.]+)(-canary.(\d+))?/gm;
+const regexCanaryVersion = /([0-9.]+)(-canary.(\d+))?/gm;
 /**
  * Return the version (without the rc).
  * eg: "1.4.0-rc.0" will return => "1.4.0"
@@ -8,9 +8,9 @@ const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
  * @return {string}
  */
 module.exports.getVersion = function (rawVersion) {
-  // if (regexCanaryVersion.test(rawVersion)) {
-  //   return rawVersion.replace(regexCanaryVersion, "$1");
-  // }
+  if (rawVersion.indexOf("canary") !== -1) {
+    return rawVersion.replace(regexCanaryVersion, "$1");
+  }
   return rawVersion.replace(regexVersion, "$1");
 };
 
@@ -21,9 +21,9 @@ module.exports.getVersion = function (rawVersion) {
  * @return {string}
  */
 function getRC(rawVersion) {
-  // if (regexCanaryVersion.test(rawVersion)) {
-  //   return rawVersion.replace(regexCanaryVersion, "$3");
-  // }
+  if (rawVersion.indexOf("canary") !== -1) {
+    return rawVersion.replace(regexCanaryVersion, "$3");
+  }
   return rawVersion.replace(regexVersion, "$3");
 }
 
@@ -36,9 +36,9 @@ function getRC(rawVersion) {
  * @return {boolean}
  */
 function isRc(rawVersion) {
-  // if (regexCanaryVersion.test(rawVersion)) {
-  //   return rawVersion.replace(regexCanaryVersion, "$3") !== "";
-  // }
+  if (rawVersion.indexOf("canary") !== -1) {
+    return rawVersion.replace(regexCanaryVersion, "$3") !== "";
+  }
   return rawVersion.replace(regexVersion, "$3") !== "";
 }
 
