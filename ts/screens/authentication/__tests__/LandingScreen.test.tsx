@@ -41,6 +41,7 @@ jest.mock("../../../features/cieLogin/store/selectors", () => ({
 jest.mock("@gorhom/bottom-sheet", () =>
   jest.requireActual("../../../__mocks__/@gorhom/bottom-sheet.ts")
 );
+jest.mock("../analytics");
 
 const navigateToIdpSelection = () => {
   const { getByTestId } = renderComponent();
