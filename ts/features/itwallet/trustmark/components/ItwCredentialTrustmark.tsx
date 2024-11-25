@@ -34,7 +34,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
-// import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
