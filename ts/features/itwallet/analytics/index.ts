@@ -45,7 +45,7 @@ type TrackCredentialDetail = {
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
-type ItwFailureActor = "CredentialIssuer" | "WalletProvider";
+type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
 
 /**
  * This map is used to map the credential type to the MixPanel credential
@@ -75,14 +75,14 @@ type AddCredentialFailure = {
   credential: MixPanelCredential;
   reason: unknown;
   type: string;
-  caused_by: ItwFailureActor;
+  caused_by: ItwFailureCause;
 };
 
 type IdRequestFailure = {
   ITW_ID_method: ItwIdMethod;
   reason: unknown;
   type: string;
-  caused_by: ItwFailureActor;
+  caused_by: ItwFailureCause;
 };
 
 type IdUnexpectedFailure = {
