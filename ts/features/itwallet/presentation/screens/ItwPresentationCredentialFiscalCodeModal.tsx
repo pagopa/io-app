@@ -96,8 +96,8 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
         style={[
           styles.landscape,
           {
-            // Centers the barcode in the screen by removing/adding the safe area insets
-            top: -safeAreaInsets.top + safeAreaInsets.bottom
+            // Centers the barcode in the screen by removing the safe area top inset (if any)
+            top: -safeAreaInsets.top
           }
         ]}
       >
