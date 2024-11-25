@@ -1,20 +1,20 @@
 import {
-  Label,
   Body,
   FeatureInfo,
+  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "../../../../i18n";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
+import I18n from "../../../../i18n";
+import { ioSuppliersUrl } from "../../../../urls";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
-import { ioSuppliersUrl } from "../../../../urls";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 export type FeatureProps = {
   trackAction: (info: TrackingInfo) => void;
@@ -69,7 +69,7 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
     () => (
       <Body ref={bodyRef}>
         {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
-        <Label color="info-850">
+        <Label weight="Semibold">
           {I18n.t("profile.main.privacy.shareData.screen.why.description.two")}
         </Label>
         {`${I18n.t(
@@ -114,7 +114,7 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
           )}
-          <Label color="info-850">
+          <Label weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.security.description.two"
             )}
@@ -144,7 +144,7 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
       body={
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
-          <Label color="info-850">
+          <Label weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.gdpr.description.two"
             )}
@@ -159,4 +159,4 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
   );
 };
 
-export { AnalyticsFeatureInfo, SecurityFeatureInfo, GDPRFeatureInfo };
+export { AnalyticsFeatureInfo, GDPRFeatureInfo, SecurityFeatureInfo };
