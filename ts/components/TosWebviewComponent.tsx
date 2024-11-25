@@ -1,4 +1,4 @@
-import { FooterWithButtons, IOStyles } from "@pagopa/io-app-design-system";
+import { FooterActions, IOStyles } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import React, { FunctionComponent, memo, useCallback, useState } from "react";
@@ -82,11 +82,10 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
         />
       </View>
       {shouldRenderFooter && onAcceptTos && (
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t("onboarding.tos.accept"),
               onPress: onAcceptTos,
               testID: "AcceptToSButton"
