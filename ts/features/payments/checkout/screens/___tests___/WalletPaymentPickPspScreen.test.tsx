@@ -10,6 +10,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsCheckoutRoutes } from "../../navigation/routes";
+import { selectPaymentPspAction } from "../../store/actions/orchestration";
 import { PaymentsCheckoutState } from "../../store/reducers";
 import { WalletPaymentStepEnum } from "../../types";
 import { WalletPaymentPickPspScreen } from "../WalletPaymentPickPspScreen";
@@ -140,5 +141,36 @@ describe("WalletPaymentPickPspScreen", () => {
     expect(
       getByText(I18n.t("wallet.payment.psp.sortBottomSheet.name"))
     ).toBeDefined();
+  });
+
+  it("should select a PSP", () => {
+    const store: ReturnType<typeof mockStore> = mockStore({
+      ...state,
+      features: {
+        ...state.features,
+        payments: {
+          ...state.features.payments,
+          checkout: {
+            ...checkout,
+            pspList: pot.some([
+              {
+                idBundle: "test",
+                pspBusinessName: "Test PSP",
+                taxPayerFee: 100
+              }
+            ])
+          }
+        }
+      }
+    });
+    const { getByText } = renderPspScreen(store);
+    fireEvent.press(getByText("Test PSP"));
+    expect(store.getActions()).toContainEqual(
+      selectPaymentPspAction({
+        idBundle: "test",
+        pspBusinessName: "Test PSP",
+        taxPayerFee: 100
+      })
+    );
   });
 });
