@@ -2277,10 +2277,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.6.tgz#b211e953eb05b76b43effc0d9d7be79767c361f9"
   integrity sha512-Dx1WPdqFaB76Wv8WgkLCIQoj9ADZeWyfe/GTnGWQKeIWnTe5v3socbEDdax9fh0asxizuTVzTVj962H2nCQxwg==
 
-"@pagopa/io-react-native-wallet@^0.23.0":
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.23.0.tgz#c29bc006ed437835ae879fecd08a7b8923ca5c4c"
-  integrity sha512-1nAAvrMpblZRryoIAwFarR45uUyfdeNk6NbdyMMzVa9MD0/Uh9utSdWsaHolVZp5NEs4C3MKWB7XrooFLh3UIw==
+"@pagopa/io-react-native-wallet@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.24.1.tgz#588240ca45cfed2facf5cf1403b062098954ce6d"
+  integrity sha512-7f2m4S9MGQxG5i6BNKSgGTTHLAUvWIXmDQTCqaN465wIn1frR5xguoNA8IEQDHdLCNZo8BiVLKm0atf8DcvCtA==
   dependencies:
     js-base64 "^3.7.7"
     js-sha256 "^0.9.0"
@@ -6657,6 +6657,11 @@ diffie-hellman@^5.0.0:
     bn.js "^4.1.0"
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
+
+dijkstrajs@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.3.tgz#4c8dbdea1f0f6478bff94d9c49c784d623e4fc23"
+  integrity sha512-qiSlmBq9+BCdCA/L46dw8Uy93mloxsPSbwnm5yrKn2vMPiy8KyAskTF6zuV/j5BMsmOGZDPs7KjU+mjb670kfA==
 
 dir-glob@^3.0.1:
   version "3.0.1"
@@ -13068,6 +13073,11 @@ plist@^3.0.5:
     base64-js "^1.5.1"
     xmlbuilder "^9.0.7"
 
+pngjs@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-5.0.0.tgz#e79dd2b215767fd9c04561c01236df960bce7fbb"
+  integrity sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==
+
 portfinder@^1.0.23:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"
@@ -13210,7 +13220,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*, prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@*, prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.7.2, prop-types@^15.8.0, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -13303,6 +13313,15 @@ q@^1.1.2, q@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
+
+qrcode@^1.5.1:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.4.tgz#5cb81d86eb57c675febb08cf007fff963405da88"
+  integrity sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==
+  dependencies:
+    dijkstrajs "^1.0.1"
+    pngjs "^5.0.0"
+    yargs "^15.3.1"
 
 qs@6.11.0:
   version "6.11.0"
@@ -13665,6 +13684,15 @@ react-native-push-notification@^8.1.1:
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#a41d20c70ea5a7709417e96261b225461f8dc73a"
   integrity sha512-XpBtG/w+a6WXTxu6l1dNYyTiHnbgnvjoc3KxPTxYkaIABRmvuJZkFxqruyGvfCw7ELAlZEAJO+dthdTabCe1XA==
+
+react-native-qrcode-svg@^6.3.12:
+  version "6.3.12"
+  resolved "https://registry.yarnpkg.com/react-native-qrcode-svg/-/react-native-qrcode-svg-6.3.12.tgz#ee2c34c836c0c58f0a7f2d79304bcf12b9e151a9"
+  integrity sha512-7Bx23ZdFNJJdVXyW9BJmFWdI5kccjnpotzmL3exkV0irUKTmj51jesxpn5sqtgVdYFE4IUVoGzdS+8qg6Ua9BA==
+  dependencies:
+    prop-types "^15.8.0"
+    qrcode "^1.5.1"
+    text-encoding "^0.7.0"
 
 react-native-reanimated@3.15.0:
   version "3.15.0"
@@ -15586,6 +15614,11 @@ test-exclude@^6.0.0:
     "@istanbuljs/schema" "^0.1.2"
     glob "^7.1.4"
     minimatch "^3.0.4"
+
+text-encoding@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
+  integrity sha512-oJQ3f1hrOnbRLOcwKz0Liq2IcrvDeZRHXhd9RgLrsT+DjWY/nty1Hi7v3dtkaEYbPYe0mUoOfzRrMwfXXwgPUA==
 
 text-extensions@^1.0.0:
   version "1.9.0"
