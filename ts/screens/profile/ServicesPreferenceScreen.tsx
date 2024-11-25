@@ -1,4 +1,4 @@
-import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
@@ -107,18 +107,17 @@ const ServicesPreferenceScreen = (): ReactElement => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
+        includeContentMargins
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
       >
-        <ContentWrapper>
-          <ServicesContactComponent
-            onSelectMode={handleOnSelectMode}
-            mode={profileServicePreferenceMode}
-          />
-        </ContentWrapper>
+        <ServicesContactComponent
+          onSelectMode={handleOnSelectMode}
+          mode={profileServicePreferenceMode}
+        />
         {manualConfigBottomSheet}
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
