@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState
 } from "react";
+import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Linking, Platform, StyleSheet, View } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
@@ -59,13 +60,13 @@ const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
 const CIE_ID_ERROR = "cieiderror";
 const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
-const WHITELISTED_URLS = [
-  "https://idserver.servizicie.interno.gov.it/",
-  "https://oidc.idserver.servizicie.interno.gov.it/",
-  "https://mtls.oidc.idserver.servizicie.interno.gov.it/",
-  "https://mtls.idserver.servizicie.interno.gov.it/",
-  "https://ios.idserver.servizicie.interno.gov.it/",
-  "https://ios.oidc.idserver.servizicie.interno.gov.it/"
+const WHITELISTED_DOMAINS = [
+  "https://idserver.servizicie.interno.gov.it",
+  "https://oidc.idserver.servizicie.interno.gov.it",
+  "https://mtls.oidc.idserver.servizicie.interno.gov.it",
+  "https://mtls.idserver.servizicie.interno.gov.it",
+  "https://ios.idserver.servizicie.interno.gov.it",
+  "https://ios.oidc.idserver.servizicie.interno.gov.it"
 ];
 
 export type CieIdLoginProps = {
@@ -113,14 +114,22 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
       // Checks if the URL starts with one of the valid URLs
-      const isUrlValid = WHITELISTED_URLS.some(baseUrl =>
-        url.startsWith(baseUrl)
-      );
-      // Checks whether the URL starts with the specified string
-      if (isUrlValid) {
-        // Set the URL as valid
-        setAuthenticatedUrl(url);
-      } else {
+
+      try {
+        const { hostname, protocol } = new URL(url);
+
+        const isDomainValid = WHITELISTED_DOMAINS.includes(
+          `${protocol}//${hostname}`
+        );
+
+        if (isDomainValid) {
+          // Set the URL as valid
+          setAuthenticatedUrl(url);
+        } else {
+          // Redirects the user to the error screen
+          navigateToCieIdAuthUrlError(url);
+        }
+      } catch (error) {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }
