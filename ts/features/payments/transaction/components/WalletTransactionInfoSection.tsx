@@ -1,24 +1,26 @@
-import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
   Alert,
   Divider,
+  IOColors,
   IORadiusScale,
   IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import { Psp, Transaction } from "../../../../types/pagopa";
-import { format } from "../../../../utils/dates";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { Psp, Transaction } from "../../../../types/pagopa";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { format } from "../../../../utils/dates";
+import { WalletTransactionReceiptDivider } from "./WalletTransactionReceiptDivider";
 
 type WalletTransactionInfoSectionProps = {
   transaction?: Transaction;
@@ -33,7 +35,6 @@ const styles = StyleSheet.create({
   },
   contentCard: {
     ...IOStyles.horizontalContentPadding,
-    ...IOStyles.bgWhite,
     borderRadius: IORadiusScale["1"],
     marginVertical: IOVisualCostants.appMarginDefault
   }
@@ -49,15 +50,14 @@ const WalletTransactionInfoSection = ({
   loading
 }: WalletTransactionInfoSectionProps) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+
   return (
     <>
-      <TransactionReceiptDivider
-        height={24}
-        width={"100%"}
-        preserveAspectRatio="xMin slice" // Add this property to fit the width to the parent
-      />
+      <WalletTransactionReceiptDivider />
       <View style={styles.container}>
-        <View style={styles.contentCard}>
+        <View style={[styles.contentCard, { backgroundColor }]}>
           <ListItemHeader
             label={I18n.t("transaction.details.info.title")}
             accessibilityLabel={I18n.t("transaction.details.info.title")}
