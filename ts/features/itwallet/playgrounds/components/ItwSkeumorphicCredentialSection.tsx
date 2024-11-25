@@ -58,7 +58,6 @@ const ItwSkeumorphicCredentialItem = ({
           status={status}
           isFlipped={isFlipped}
           onPress={handleOnPress}
-          orientation="portrait"
         />
       </FlipGestureDetector>
       <ItwPresentationCredentialCardFlipButton

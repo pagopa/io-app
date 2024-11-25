@@ -6,10 +6,16 @@ import {
 } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 
+const directions = {
+  updown: Directions.UP + Directions.DOWN,
+  leftright: Directions.LEFT + Directions.RIGHT
+};
+
 type FlipsGestureDetectorProps = {
   isFlipped: boolean;
   setIsFlipped: (isFlipped: boolean) => void;
   children: React.ReactNode;
+  direction?: keyof typeof directions;
 };
 
 /**
@@ -18,10 +24,11 @@ type FlipsGestureDetectorProps = {
 export const FlipGestureDetector = ({
   isFlipped,
   setIsFlipped,
-  children
+  children,
+  direction = "leftright"
 }: FlipsGestureDetectorProps) => {
   const flipGesture = Gesture.Fling()
-    .direction(Directions.LEFT + Directions.RIGHT)
+    .direction(directions[direction])
     .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
 
   return <GestureDetector gesture={flipGesture}>{children}</GestureDetector>;

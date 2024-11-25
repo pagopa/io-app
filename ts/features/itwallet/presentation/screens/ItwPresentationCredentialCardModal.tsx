@@ -10,7 +10,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
-import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import {
+  ItwSkeumorphicCard,
+  SKEUMORPHIC_CARD_ASPECT_RATIO
+} from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import {
   ItwCredentialStatus,
@@ -74,11 +77,14 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
           }
         ]}
       >
-        <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
+        <FlipGestureDetector
+          isFlipped={isFlipped}
+          setIsFlipped={setFlipped}
+          direction={"updown"}
+        >
           <ItwSkeumorphicCard
             credential={credential}
             status={status}
-            orientation="landscape"
             isFlipped={isFlipped}
           />
         </FlipGestureDetector>
@@ -98,6 +104,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   cardContainer: {
+    transform: [
+      { rotate: "90deg" }, // Rotates the card to landscape
+      { scale: SKEUMORPHIC_CARD_ASPECT_RATIO } // Scales the card to fit the screen
+    ],
     position: "absolute",
     paddingHorizontal: 24,
     justifyContent: "center",

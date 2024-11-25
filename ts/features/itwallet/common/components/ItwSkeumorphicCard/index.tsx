@@ -25,22 +25,19 @@ import {
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
-import { CardOrientation } from "./types";
 
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
   status: ItwCredentialStatus;
   isFlipped?: boolean;
   onPress?: () => void;
-  orientation?: CardOrientation;
 };
 
 const ItwSkeumorphicCard = ({
   credential,
   status,
   isFlipped = false,
-  onPress,
-  orientation = "portrait"
+  onPress
 }: ItwSkeumorphicCardProps) => {
   const FrontSide = useMemo(
     () => (
@@ -86,14 +83,10 @@ const ItwSkeumorphicCard = ({
 
   const card = (
     <FlippableCard
-      containerStyle={[
-        styles.card,
-        orientation === "landscape" && styles.cardLandscape
-      ]}
+      containerStyle={[styles.card]}
       FrontComponent={FrontSide}
       BackComponent={BackSide}
       isFlipped={isFlipped}
-      orientation={orientation}
     />
   );
 
@@ -151,18 +144,11 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 
 // Magic number for the aspect ratio of the card
 // extracted from the design
-const CARD_ASPECT_RATIO = 16 / 10.09;
-
-// When rotating the card to landscape, we need to scale it up to fit the screen
-// The scale factor is the same as the aspect ratio
-const CARD_LANDSCAPE_SCALE = CARD_ASPECT_RATIO;
+export const SKEUMORPHIC_CARD_ASPECT_RATIO = 16 / 10.09;
 
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: CARD_ASPECT_RATIO
-  },
-  cardLandscape: {
-    transform: [{ rotate: "90deg" }, { scale: CARD_LANDSCAPE_SCALE }]
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",

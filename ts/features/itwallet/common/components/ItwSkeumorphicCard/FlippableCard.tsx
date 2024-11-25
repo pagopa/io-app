@@ -6,7 +6,6 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import { CardOrientation } from "./types";
 
 const DEFAULT_DURATION = 500;
 
@@ -16,7 +15,6 @@ export type FlippableCardProps = {
   duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
-  orientation?: CardOrientation;
 };
 
 /**
@@ -27,8 +25,7 @@ const FlippableCard = ({
   BackComponent,
   containerStyle,
   duration = DEFAULT_DURATION,
-  isFlipped: _isFlipped,
-  orientation = "portrait"
+  isFlipped: _isFlipped
 }: FlippableCardProps) => {
   const isFlipped = useSharedValue(_isFlipped);
 
@@ -42,26 +39,18 @@ const FlippableCard = ({
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
 
     return {
-      transform: [
-        orientation === "landscape"
-          ? { rotateX: rotateValue }
-          : { rotateY: rotateValue }
-      ]
+      transform: [{ rotateY: rotateValue }]
     };
-  }, [orientation]);
+  }, []);
 
   const flippedCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]);
     const rotateValue = withTiming(`${spinValue}deg`, { duration });
 
     return {
-      transform: [
-        orientation === "landscape"
-          ? { rotateX: rotateValue }
-          : { rotateY: rotateValue }
-      ]
+      transform: [{ rotateY: rotateValue }]
     };
-  }, [orientation]);
+  }, []);
 
   return (
     <View style={containerStyle}>
