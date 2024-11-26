@@ -46,6 +46,6 @@ export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
   userFromSuccessLoginSelector(state) &&
   !state.notifications.environment.systemNotificationsEnabled &&
   !hasUserSeenSystemNotificationsPromptSelector(state) &&
-  !state.notifications.userBehaviour.engagementScreenShown && // user hasn't already seen the screen
+  !state.notifications.userBehaviour.engagementScreenShown &&
   state.notifications.environment.applicationInitialized &&
   !state.notifications.environment.onboardingInstructionsShown;
