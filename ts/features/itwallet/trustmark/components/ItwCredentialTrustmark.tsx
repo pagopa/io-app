@@ -1,10 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import {
-  Caption,
-  hexToRgba,
-  useIOExperimentalDesign,
-  WithTestID
-} from "@pagopa/io-app-design-system";
+import { Caption, hexToRgba, WithTestID } from "@pagopa/io-app-design-system";
 import {
   Canvas,
   ImageSVG,
@@ -91,8 +86,9 @@ export const ItwCredentialTrustmark = ({
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  /* Enable the effect only when the experimental DS is enabled */
-  const { isExperimental: enableIridescence } = useIOExperimentalDesign();
+  /* If you want to restore the static variant of the trustmark,
+  please set the following variable to false */
+  const enableIridescence = true;
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
   const currentRoll = useSharedValue(0);
