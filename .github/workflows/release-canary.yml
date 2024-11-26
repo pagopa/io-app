@@ -55,6 +55,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -119,7 +120,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
-    needs: run-static-checks
+    needs: prepare-canary-release
     environment: canary
     runs-on: macos-13-xlarge
     steps:
@@ -130,6 +131,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
