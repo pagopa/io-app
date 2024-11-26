@@ -104,9 +104,7 @@ describe("environmentReducer", () => {
       },
       setEngagementScreenShown()
     );
-    expect(userBehaviourState.pushNotificationPermissionsRequestDuration).toBe(
-      100
-    );
+    expect(userBehaviourState.engagementScreenShownThisSession).toBe(true);
   });
 });
 
