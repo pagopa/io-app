@@ -1,8 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { getFiscalCodeFromCredential } from "../../../common/utils/itwClaimsUtils";
+import {
+  getFamilyNameFromCredential,
+  getFirstNameFromCredential,
+  getFiscalCodeFromCredential
+} from "../../../common/utils/itwClaimsUtils";
 import {
   getCredentialStatus,
   getCredentialStatusObject
@@ -47,12 +52,38 @@ export const itwCredentialsTypesSelector = createSelector(
   credentials => Object.keys(credentials)
 );
 
+/**
+ * Returns the fiscal code from the stored eID.
+ */
 export const selectFiscalCodeFromEid = createSelector(
   itwCredentialsSelector,
   credentials =>
     pipe(
       credentials.eid,
       O.map(getFiscalCodeFromCredential),
+      O.getOrElse(() => "")
+    )
+);
+
+/**
+ * Returns the name and surname from the stored eID.
+ */
+export const selectNameSurnameFromEid = createSelector(
+  itwCredentialsSelector,
+  credentials =>
+    pipe(
+      credentials.eid,
+      O.map(getFirstNameFromCredential),
+      O.chain(firstName =>
+        pipe(
+          credentials.eid,
+          O.map(getFamilyNameFromCredential),
+          O.map(
+            familyName =>
+              `${_.capitalize(firstName)} ${_.capitalize(familyName)}`
+          )
+        )
+      ),
       O.getOrElse(() => "")
     )
 );
