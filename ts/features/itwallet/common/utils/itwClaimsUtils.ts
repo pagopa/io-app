@@ -4,19 +4,15 @@
 
 import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
-import {
-  ItwCredentialStatus,
-  ParsedCredential,
-  StoredCredential
-} from "./itwTypesUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -53,7 +49,11 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the fiscal code, used for checks based on the user's identity.
    */
-  tax_id_code = "tax_id_code"
+  tax_id_code = "tax_id_code",
+  /**
+   * Claims that contains the document number, if applicable for the credential
+   */
+  document_number = "document_number"
 }
 
 /**
@@ -432,76 +432,6 @@ export const getCredentialExpireDays = (
   }
 
   return differenceInCalendarDays(expireDate, Date.now());
-};
-
-type GetCredentialStatusOptions = {
-  /**
-   * Number of days before expiration required to mark a credential as "EXPIRING".
-   */
-  expiringDays?: number;
-};
-
-/**
- * Get the overall status of the credential, taking into account the status attestation,
- * the physical document's expiration date and the JWT's expiration date.
- * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
- *
- * @param credential the stored credential
- * @param options see {@link GetCredentialStatusOptions}
- * @returns ItwCredentialStatus
- */
-export const getCredentialStatus = (
-  credential: StoredCredential,
-  options: GetCredentialStatusOptions = {}
-): ItwCredentialStatus => {
-  const { expiringDays = 14 } = options;
-  const {
-    jwt,
-    parsedCredential,
-    storedStatusAttestation: statusAttestation
-  } = credential;
-  const now = Date.now();
-
-  const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
-
-  // Not all credentials have an expiration date
-  const documentExpireDays = pipe(
-    getCredentialExpireDate(parsedCredential),
-    O.fromNullable,
-    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
-    O.getOrElse(() => NaN)
-  );
-
-  const isIssuerAttestedExpired =
-    statusAttestation?.credentialStatus === "invalid" &&
-    statusAttestation.errorCode === "credential_expired";
-
-  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
-    return "expired";
-  }
-
-  // Invalid must prevail over non-expired statuses
-  if (statusAttestation?.credentialStatus === "invalid") {
-    return "invalid";
-  }
-
-  if (jwtExpireDays <= 0) {
-    return "jwtExpired";
-  }
-
-  const isSameDayExpiring =
-    documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
-
-  // When both credentials are expiring the digital one wins unless they expire the same day
-  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
-    return "jwtExpiring";
-  }
-
-  if (documentExpireDays <= expiringDays) {
-    return "expiring";
-  }
-
-  return "valid";
 };
 
 const FISCAL_CODE_REGEX =
