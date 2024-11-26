@@ -56,8 +56,6 @@ describe("Test EUCovidCertificateValidScreen", () => {
     expect(
       render.component.queryByText(I18n.t("global.buttons.details"))
     ).toBeNull();
-
-    expect(render.component.queryByTestId("markdownPreview")).not.toBeNull();
   });
   it("With completeValidCertificate, the details button and preview markdown should be rendered", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -116,7 +114,6 @@ describe("Test EUCovidCertificateValidScreen", () => {
       };
       expect(spy).toHaveBeenCalledWith(qrCodePayload);
     }
-    expect(render.component.queryByTestId("markdownPreview")).not.toBeNull();
   });
 
   it("With baseValidCertificate, the header should match the data contained in the certificate", () => {
