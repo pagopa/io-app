@@ -8,7 +8,7 @@ const regexCanaryVersion = /([0-9.]+)(-canary.(\d+))?/gm;
  * @return {string}
  */
 module.exports.getVersion = function (rawVersion) {
-  if (regexCanaryVersion.test(rawVersion)) {
+  if (rawVersion.indexOf("canary") !== -1) {
     return rawVersion.replace(regexCanaryVersion, "$1");
   }
   return rawVersion.replace(regexVersion, "$1");
@@ -21,7 +21,7 @@ module.exports.getVersion = function (rawVersion) {
  * @return {string}
  */
 function getRC(rawVersion) {
-  if (regexCanaryVersion.test(rawVersion)) {
+  if (rawVersion.indexOf("canary") !== -1) {
     return rawVersion.replace(regexCanaryVersion, "$3");
   }
   return rawVersion.replace(regexVersion, "$3");
@@ -36,7 +36,7 @@ function getRC(rawVersion) {
  * @return {boolean}
  */
 function isRc(rawVersion) {
-  if (regexCanaryVersion.test(rawVersion)) {
+  if (rawVersion.indexOf("canary") !== -1) {
     return rawVersion.replace(regexCanaryVersion, "$3") !== "";
   }
   return rawVersion.replace(regexVersion, "$3") !== "";
