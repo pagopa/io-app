@@ -1,10 +1,7 @@
-import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
-
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
 import { H6, IOColors } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import { normalizedDiscountPercentage } from "./utils";
 
 type ValueBoxProps = {
   value: number;
@@ -37,17 +34,12 @@ const PERCENTAGE_SYMBOL = "%";
 const MINUS_SYMBOL = "-";
 
 const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
-  const normalizedValue = pipe(
-    WithinRangeInteger(0, 100).decode(value),
-    E.map(v => v.toString()),
-    E.getOrElse(() => "-")
-  );
   const percentage = <H6 color={"white"}>{PERCENTAGE_SYMBOL}</H6>;
   return (
     <View style={small ? styles.smallValueBox : styles.discountValueBox}>
       <H6 color={"white"} style={styles.percentage}>
         {MINUS_SYMBOL}
-        {normalizedValue}
+        {normalizedDiscountPercentage(value)}
         {percentage}
       </H6>
     </View>
