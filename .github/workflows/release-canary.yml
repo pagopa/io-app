@@ -1,4 +1,4 @@
-name: Nightly release new app version
+name: Canary release
 on:
   - issue_comment
 jobs:

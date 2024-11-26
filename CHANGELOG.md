@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.5](https://github.com/pagopa/io-app/compare/2.78.0-rc.4...2.78.0-rc.5) (2024-11-26)
+
+
+### Bug Fixes
+
+* [[PE-796](https://pagopa.atlassian.net/browse/PE-796)] CGN hide percentage badge if value not in range `1-100` ([#6454](https://github.com/pagopa/io-app/issues/6454)) ([b151329](https://github.com/pagopa/io-app/commit/b1513299122508f672ca61e2423319700ec8ec6e))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-434](https://pagopa.atlassian.net/browse/IOAPPX-434)] Remove dark mode app icon to fix build rejection ([#6458](https://github.com/pagopa/io-app/issues/6458)) ([6677fe5](https://github.com/pagopa/io-app/commit/6677fe504fa2acbace10dc0448f77b7a8f004fa7))
+
+## [2.78.0-rc.4](https://github.com/pagopa/io-app/compare/2.78.0-rc.3...2.78.0-rc.4) (2024-11-25)
+
+## [2.78.0-rc.3](https://github.com/pagopa/io-app/compare/2.78.0-rc.2...2.78.0-rc.3) (2024-11-25)
+
+
+### Bug Fixes
+
+* version utility script ([d0a3707](https://github.com/pagopa/io-app/commit/d0a37076a1b6f41ac489f39d7c4993992f1bebc0))
+
 ## [2.78.0-rc.2](https://github.com/pagopa/io-app/compare/2.78.0-rc.1...2.78.0-rc.2) (2024-11-25)
 
 ## [2.78.0-rc.1](https://github.com/pagopa/io-app/compare/2.78.0-rc.0...2.78.0-rc.1) (2024-11-25)
