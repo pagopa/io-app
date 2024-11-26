@@ -164,9 +164,15 @@ export const createEidIssuanceActorsImplementation = (
   ),
 
   revokeWalletInstance: fromPromise(async () => {
-    const sessionToken = sessionTokenSelector(store.getState());
+    const state = store.getState();
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+
+    if (O.isNone(integrityKeyTag)) {
+      return;
+    }
     assert(sessionToken, "sessionToken is undefined");
 
-    await revokeCurrentWalletInstance(sessionToken);
+    await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
   })
 });

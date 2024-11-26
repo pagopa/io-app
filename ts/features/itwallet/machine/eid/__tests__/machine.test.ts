@@ -183,7 +183,7 @@ describe("itwEidIssuanceMachine", () => {
         undefined
       )
     );
-    expect(actor.getSnapshot().context).toMatchSnapshot({
+    expect(actor.getSnapshot().context).toMatchObject({
       walletInstanceAttestation: T_WIA,
       integrityKeyTag: T_INTEGRITY_KEY
     });

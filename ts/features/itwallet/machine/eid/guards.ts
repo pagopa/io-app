@@ -1,4 +1,4 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
+import { Credential } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as J from "fp-ts/lib/Json";
@@ -29,7 +29,10 @@ export const createEidIssuanceGuardsImplementation = (
    * opened with io-react-native-login-utils was closed by the user.
    */
   isNativeAuthSessionClosed: ({ event }: { event: EidIssuanceEvents }) => {
-    if ("error" in event && event.error instanceof Errors.AuthorizationError) {
+    if (
+      "error" in event &&
+      event.error instanceof Credential.Issuance.Errors.AuthorizationError
+    ) {
       return pipe(
         event.error.message,
         J.parse,
@@ -62,7 +65,8 @@ export const createEidIssuanceGuardsImplementation = (
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
   isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
-    "error" in event && event.error instanceof Errors.OperationAbortedError,
+    "error" in event &&
+    event.error instanceof Credential.Issuance.Errors.OperationAbortedError,
 
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(

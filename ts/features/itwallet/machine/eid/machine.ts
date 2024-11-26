@@ -16,12 +16,6 @@ const notImplemented = () => {
   throw new Error("Not implemented");
 };
 
-const setFailure =
-  (type: IssuanceFailureType) =>
-  ({ event }: { event: EidIssuanceEvents }): Partial<Context> => ({
-    failure: { type, reason: "error" in event ? event.error : undefined }
-  });
-
 export const itwEidIssuanceMachine = setup({
   types: {
     context: {} as Context,
@@ -158,12 +152,22 @@ export const itwEidIssuanceMachine = setup({
             "trackWalletInstanceRevocation"
           ]
         },
-        onError: {
-          actions: assign(
-            setFailure(IssuanceFailureType.WALLET_REVOCATION_GENERIC)
-          ),
-          target: "#itwEidIssuanceMachine.Failure"
-        }
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.Idle"
+          },
+          {
+            actions: assign({
+              failure: ({ event }) => ({
+                type: IssuanceFailureType.WALLET_REVOCATION_ERROR,
+                reason: event.error
+              })
+            }),
+            target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
       }
     },
     WalletInstanceAttestationObtainment: {
@@ -203,6 +207,7 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         error: {
+          actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"
@@ -263,9 +268,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 onError: [
                   {
-                    actions: assign(
-                      setFailure(IssuanceFailureType.ISSUER_GENERIC)
-                    ),
+                    actions: "setFailure",
                     target: "#itwEidIssuanceMachine.Failure"
                   }
                 ]
@@ -310,9 +313,7 @@ export const itwEidIssuanceMachine = setup({
                     target: "#itwEidIssuanceMachine.UserIdentification"
                   },
                   {
-                    actions: assign(
-                      setFailure(IssuanceFailureType.ISSUER_GENERIC)
-                    ),
+                    actions: "setFailure",
                     target: "#itwEidIssuanceMachine.Failure"
                   }
                 ]
@@ -371,9 +372,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "SpidLoginIdentificationCompleted"
                 },
                 onError: {
-                  actions: assign(
-                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
-                  ),
+                  actions: "setFailure",
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
@@ -474,9 +473,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "ReadingCieCard"
                 },
                 onError: {
-                  actions: assign(
-                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
-                  ),
+                  actions: "setFailure",
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
@@ -550,7 +547,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
-                actions: assign(setFailure(IssuanceFailureType.ISSUER_GENERIC)),
+                actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
@@ -566,9 +563,12 @@ export const itwEidIssuanceMachine = setup({
               target: "DisplayingPreview"
             },
             {
-              actions: assign(
-                setFailure(IssuanceFailureType.NOT_MATCHING_IDENTITY)
-              ),
+              actions: assign({
+                failure: {
+                  type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
+                  reason: "IT Wallet identity does not match IO identity"
+                }
+              }),
               target: "#itwEidIssuanceMachine.Failure"
             }
           ]
