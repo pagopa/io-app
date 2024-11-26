@@ -40,6 +40,7 @@ import Animated, {
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
@@ -49,7 +50,6 @@ import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { identificationRequest } from "../../../../store/actions/identification";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
