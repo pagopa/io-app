@@ -1,15 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import {
-  Body,
-  Caption,
-  FeatureInfo,
-  H6,
-  hexToRgba,
-  useIOExperimentalDesign,
-  VSpacer,
-  VStack,
-  WithTestID
-} from "@pagopa/io-app-design-system";
+import { Caption, hexToRgba, WithTestID } from "@pagopa/io-app-design-system";
 import {
   Canvas,
   ImageSVG,
@@ -44,22 +34,17 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import I18n from "../../../../i18n";
-// import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { QrCodeImage } from "../../../../components/QrCodeImage";
-import { itwEaaVerifierBaseUrl } from "../../../../config";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   CREDENTIALS_MAP,
   trackWalletCredentialShowTrustmark
 } from "../../analytics";
-import {
-  generateTrustmarkUrl,
-  getCredentialNameFromType,
-  validCredentialStatuses
-} from "../../common/utils/itwCredentialUtils";
+import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { useIOSelector } from "../../../../store/hooks";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
   credential: StoredCredential;
@@ -95,18 +80,15 @@ export const ItwCredentialTrustmark = ({
   testID,
   credential
 }: ItwCredentialTrustmarkProps) => {
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  /* Bottom sheet for the QR code */
-  const trustmarkBottomSheet = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("features.itWallet.presentation.trustmark.title"),
-    component: <QrCodeBottomSheetContent credential={credential} />
-  });
-
-  /* Enable the effect only when the experimental DS is enabled */
-  const { isExperimental: enableIridescence } = useIOExperimentalDesign();
+  /* If you want to restore the static variant of the trustmark,
+  please set the following variable to false */
+  const enableIridescence = true;
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
   const currentRoll = useSharedValue(0);
@@ -280,90 +262,77 @@ export const ItwCredentialTrustmark = ({
     return null;
   }
 
+  /**
+   * Show the credential trustmark screen before user identification
+   */
   const onPressWithTrackEvent = () => {
     trackWalletCredentialShowTrustmark(
       CREDENTIALS_MAP[credential.credentialType]
     );
-    trustmarkBottomSheet.present();
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => {
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK,
+              params: {
+                credentialType: credential.credentialType
+              }
+            });
+          }
+        }
+      )
+    );
   };
 
   return (
-    <>
-      <Pressable
-        onPress={onPressWithTrackEvent}
-        testID={testID}
-        accessible={true}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.trustmark.cta"
-        )}
-        accessibilityRole="button"
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
-        onTouchEnd={onPressOut}
+    <Pressable
+      onPress={onPressWithTrackEvent}
+      testID={testID}
+      accessible={true}
+      accessibilityLabel={I18n.t("features.itWallet.trustmark.cta")}
+      accessibilityRole="button"
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+    >
+      <Animated.View
+        style={[styles.container, animatedScaleStyle]}
+        onLayout={getButtonSize}
       >
-        <Animated.View
-          style={[styles.container, animatedScaleStyle]}
-          onLayout={getButtonSize}
-        >
-          <LinearGradient
-            useAngle
-            angle={1}
-            angleCenter={buttonBackgroundGradient.center}
-            locations={buttonBackgroundGradient.locations}
-            colors={buttonBackgroundGradient.colors}
-            style={styles.gradientView}
-          />
-          <View style={styles.buttonInnerBorder} />
-          <View style={styles.content}>
-            <Caption>
-              {I18n.t(
-                "features.itWallet.presentation.trustmark.cta"
-              ).toUpperCase()}
-            </Caption>
-            {!enableIridescence && (
-              <Image
-                style={styles.trustmarkAsset}
-                source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
-                accessibilityIgnoresInvertColors
-              />
-            )}
-          </View>
-          {enableIridescence && <SkiaIridescentTrustmark />}
-        </Animated.View>
-      </Pressable>
-      {trustmarkBottomSheet.bottomSheet}
-    </>
+        <LinearGradient
+          useAngle
+          angle={1}
+          angleCenter={buttonBackgroundGradient.center}
+          locations={buttonBackgroundGradient.locations}
+          colors={buttonBackgroundGradient.colors}
+          style={styles.gradientView}
+        />
+        <View style={styles.buttonInnerBorder} />
+        <View style={styles.content}>
+          <Caption>
+            {I18n.t("features.itWallet.trustmark.cta").toUpperCase()}
+          </Caption>
+          {!enableIridescence && (
+            <Image
+              style={styles.trustmarkAsset}
+              source={require("../../../../../img/features/itWallet/credential/trustmark.png")}
+              accessibilityIgnoresInvertColors
+            />
+          )}
+        </View>
+        {enableIridescence && <SkiaIridescentTrustmark />}
+      </Animated.View>
+    </Pressable>
   );
 };
-
-export const QrCodeBottomSheetContent = ({
-  credential
-}: {
-  credential: StoredCredential;
-}) => (
-  <View>
-    <VStack space={24}>
-      <QrCodeImage
-        size={170}
-        value={generateTrustmarkUrl(credential, itwEaaVerifierBaseUrl)}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.trustmark.qrCode"
-        )}
-      />
-      <VStack space={8}>
-        <H6>{getCredentialNameFromType(credential.credentialType)}</H6>
-        <Body>
-          {I18n.t("features.itWallet.presentation.trustmark.usageDescription")}
-        </Body>
-      </VStack>
-      <FeatureInfo
-        iconName="security"
-        body={I18n.t("features.itWallet.presentation.trustmark.certifiedLabel")}
-      />
-    </VStack>
-    <VSpacer size={24} />
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {

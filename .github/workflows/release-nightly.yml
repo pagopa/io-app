@@ -1,24 +1,42 @@
-name: Release new app version
-on:  
-  push:
-    tags: 
-      - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
+name: Nightly release new app version
+on:
+  schedule:
+    - cron: '59 21 * * 1-5'
+  workflow_dispatch:
 jobs:
-  create-gh-release:
+  run-static-checks:
+    uses: ./.github/workflows/staticcheck.yaml
+  bump-app-version:
+    needs: run-static-checks
     runs-on: ubuntu-latest
+    environment: prod
+    outputs:
+      currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: bump-version
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          yarn release-rc
+      - id: push-tags
+        run: |
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
-        run: gh release create ${{ github.ref_name }} --latest --generate-notes
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+          gh release create $APP_VERSION --latest --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  run-static-checks:
-     uses: ./.github/workflows/staticcheck.yaml
   release-android:
-    needs: run-static-checks
+    needs: bump-app-version
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -26,6 +44,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -44,7 +63,6 @@ jobs:
         run: |
           ./scripts/android-release.sh ./android/app
           cd android && bundle exec fastlane alpha
-          bundle exec fastlane promote_internal_to_alpha
         shell: bash
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
@@ -85,11 +103,13 @@ jobs:
           path: android/app/build/outputs/bundle/release/app-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
-        run: gh release upload ${{ github.ref_name }} android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
-    needs: run-static-checks
+    needs: bump-app-version
     environment: prod
     runs-on: macos-13-xlarge
     steps:
@@ -100,6 +120,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
@@ -121,7 +142,7 @@ jobs:
           chmod 400 ~/.ssh/id_ed25519
           ssh-add ~/.ssh/id_ed25519
         env:
-          SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY}}
+          SSH_DEPLOY_KEY: ${{secrets.SSH_CERTS_DEPLOY_KEY}}
       - id: build-upload-app-store
         name: Build & submit to App store
         run: |
@@ -155,21 +176,8 @@ jobs:
           path: ios/IO.ipa
       - id: upload-ipa-release
         continue-on-error: true
-        run: gh release upload ${{ github.ref_name }} ios/IO.ipa#IO-iOS.ipa
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION ios/IO.ipa#IO-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  notify-new-version:
-    environment: dev
-    runs-on: ubuntu-latest
-    needs:
-        - release-android
-        - release-ios
-    steps:
-      - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - id: setup-node
-        uses: ./.github/actions/setup-composite
-      - id: send-notification
-        run: 'yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
-        env: 
-          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
