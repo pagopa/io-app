@@ -36,6 +36,7 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/I
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
+import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -195,6 +196,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK}
         component={ItwCredentialTrustmarkScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
+        component={ItwPresentationCredentialFiscalCodeModal}
       />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.6](https://github.com/pagopa/io-app/compare/2.78.0-rc.5...2.78.0-rc.6) (2024-11-26)
+
+
+### Features
+
+* [[IOCOM-1936](https://pagopa.atlassian.net/browse/IOCOM-1936)] Handling of InApp Browser opening failure for FIMS SSO ([#6450](https://github.com/pagopa/io-app/issues/6450)) ([785882d](https://github.com/pagopa/io-app/commit/785882d1112e68cb2e5d3d8ab1975fd82eb6bb89))
+
+
+### Bug Fixes
+
+* [[IOCOM-1955](https://pagopa.atlassian.net/browse/IOCOM-1955)] Fix message time going out of screen ([#6459](https://github.com/pagopa/io-app/issues/6459)) ([113d171](https://github.com/pagopa/io-app/commit/113d17130b27d6cbf948a759257ed0a0676e1e81))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1854](https://pagopa.atlassian.net/browse/SIW-1854)] Route every unsupported device error code ([#6452](https://github.com/pagopa/io-app/issues/6452)) ([9d8f0e1](https://github.com/pagopa/io-app/commit/9d8f0e119c83350d4c56a440d8464ecf3105a103))
+* **IT Wallet:** [[SIW-1869](https://pagopa.atlassian.net/browse/SIW-1869)] Add fiscal code full screen modal ([#6456](https://github.com/pagopa/io-app/issues/6456)) ([3293ed3](https://github.com/pagopa/io-app/commit/3293ed3198fe94c2e4363aba74178f7f4a86a5b6))
+
 ## [2.78.0-rc.5](https://github.com/pagopa/io-app/compare/2.78.0-rc.4...2.78.0-rc.5) (2024-11-26)
 
 
