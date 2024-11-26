@@ -1,7 +1,7 @@
 name: Nightly release new app version
 on:
   schedule:
-    - cron: '59 23 * * 1,5'
+    - cron: '59 21 * * 1-5'
   workflow_dispatch:
 jobs:
   run-static-checks:
