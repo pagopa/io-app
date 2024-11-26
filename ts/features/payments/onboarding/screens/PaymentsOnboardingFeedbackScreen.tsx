@@ -31,6 +31,7 @@ import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -77,10 +78,28 @@ const PaymentsOnboardingFeedbackScreen = () => {
     const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
-    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
-      analytics.trackSuccessOnboardingPaymentMethod({
-        payment_method_selected
-      });
+
+    switch (outcome) {
+      case WalletOnboardingOutcomeEnum.SUCCESS:
+        analytics.trackSuccessOnboardingPaymentMethod({
+          payment_method_selected
+        });
+        break;
+      case WalletOnboardingOutcomeEnum.AUTH_ERROR:
+        analytics.trackOnboardingPaymentMethodDenied({
+          payment_method_selected
+        });
+        break;
+      case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
+        analytics.trackAddOnboardingPaymentMethodCanceled({
+          payment_method_selected
+        });
+        break;
+      case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
+        analytics.trackAddOnboardingPaymentMethodDuplicated({
+          payment_method_selected
+        });
+        break;
     }
   });
 
