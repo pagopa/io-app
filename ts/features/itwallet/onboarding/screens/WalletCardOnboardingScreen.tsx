@@ -1,5 +1,6 @@
 import {
   Badge,
+  ContentWrapper,
   ListItemHeader,
   ModuleCredential,
   VStack
@@ -8,7 +9,7 @@ import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -38,10 +39,6 @@ import {
   trackShowCredentialsList,
   trackStartAddNewCredential
 } from "../../analytics";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
-import { useItwAlertWithStatusBar } from "../../common/hooks/useItwAlertWithStatusBar";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { ItwScrollViewWithLargeHeader } from "../../common/components/ItwScrollViewWithLargeHeader";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
 
 // List of available credentials to show to the user
@@ -60,24 +57,8 @@ const WalletCardOnboardingScreen = () => {
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const sectionStatus = useIOSelector(
-    sectionStatusByKeySelector("itw_credential_onboarding")
-  );
-
-  const { alertProps, statusBar } = useItwAlertWithStatusBar(sectionStatus);
-  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useFocusEffect(trackShowCredentialsList);
-
-  useHeaderSecondLevel({
-    title: I18n.t("features.wallet.onboarding.title"),
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["wallet", "wallet_methods"],
-    supportRequest: true,
-    enableDiscreteTransition: true,
-    animatedRef: animatedScrollViewRef,
-    alert: alertProps
-  });
 
   const isItwSectionVisible = React.useMemo(
     // IT Wallet credential catalog should be visible if
@@ -89,14 +70,19 @@ const WalletCardOnboardingScreen = () => {
   );
 
   return (
-    <ItwScrollViewWithLargeHeader
-      title={I18n.t("features.wallet.onboarding.title")}
-      animatedRef={animatedScrollViewRef}
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("features.wallet.onboarding.title")
+      }}
+      contextualHelp={emptyContextualHelp}
+      faqCategories={["wallet", "wallet_methods"]}
+      headerActionsProp={{ showHelp: true }}
     >
-      {statusBar}
-      {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
-      <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
-    </ItwScrollViewWithLargeHeader>
+      <ContentWrapper>
+        {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
+        <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
