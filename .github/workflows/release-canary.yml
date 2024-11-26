@@ -1,9 +1,11 @@
 name: Canary release
 on:
-  - issue_comment
+  workflow_dispatch:
+  issue_comment:                                     
+    types: [created, edited, deleted]
 jobs:
   run-static-checks:
-    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/release-canary') 
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
