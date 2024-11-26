@@ -9,18 +9,3 @@ index 97e0d44..3dd14ce 100644
 -    implementation 'androidx.core:core:1.+'
 +    implementation 'androidx.core:core:1.5.0'
  }
-diff --git a/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java b/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java
-index a0767e7..fb82774 100644
---- a/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java
-+++ b/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java
-@@ -214,8 +214,8 @@ public class ScreenBrightnessModule extends ReactContextBaseJavaModule
-     public void getAppBrightness(Promise promise) {
-         Activity activity = getCurrentActivity();
-         if (activity != null) {
--            float brightness = getCurrentActivity().getWindow().getAttributes().screenBrightness;
--            promise.resolve(brightness);
-+            String brightness = Settings.System.getString(activity.getContentResolver(), "screen_brightness");
-+            promise.resolve(Integer.parseInt(brightness)/255f);
-         } else {
-             promise.reject(new Error("Unable to access the current window"));
-         }
