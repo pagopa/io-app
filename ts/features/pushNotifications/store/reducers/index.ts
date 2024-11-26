@@ -1,12 +1,14 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers } from "redux";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
+import { EnvironmentState, environmentReducer } from "./environment";
 import { InstallationState, installationReducer } from "./installation";
 import { PendingMessageState, pendingMessageReducer } from "./pendingMessage";
-import { EnvironmentState, environmentReducer } from "./environment";
-import { userBehaviourReducer, UserBehaviourState } from "./userBehaviour";
+import { UserBehaviourState, userBehaviourReducer } from "./userBehaviour";
 
 export const NOTIFICATIONS_STORE_VERSION = -1;
 
@@ -41,7 +43,9 @@ export const persistedNotificationsReducer = persistReducer<
 >(notificationsPersistConfig, notificationsReducer);
 
 export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
+  userFromSuccessLoginSelector(state) &&
   !state.notifications.environment.systemNotificationsEnabled &&
-  !state.notifications.userBehaviour.engagementScreenShown &&
+  !hasUserSeenSystemNotificationsPromptSelector(state) &&
+  !state.notifications.userBehaviour.engagementScreenShown && // user hasn't already seen the screen
   state.notifications.environment.applicationInitialized &&
   !state.notifications.environment.onboardingInstructionsShown;

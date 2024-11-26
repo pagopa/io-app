@@ -7,19 +7,22 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { notificationsInfoScreenConsent } from "../actions/profileNotificationPermissions";
 import { applicationInitialized } from "../../../../store/actions/application";
+import { setEngagementScreenShown } from "../actions/userBehaviour";
 
 export type EnvironmentState = {
   applicationInitialized: boolean;
   onboardingInstructionsShown: boolean;
   systemNotificationsEnabled: boolean;
   pushNotificationPermissionsRequestDuration?: number;
+  engagementScreenShownThisSession: boolean;
 };
 
 export const INITIAL_STATE = {
   applicationInitialized: false,
   onboardingInstructionsShown: false,
   systemNotificationsEnabled: false,
-  pushNotificationPermissionsRequestDuration: undefined
+  pushNotificationPermissionsRequestDuration: undefined,
+  engagementScreenShownThisSession: false
 };
 
 export const environmentReducer = (
@@ -37,6 +40,11 @@ export const environmentReducer = (
       return {
         ...state,
         pushNotificationPermissionsRequestDuration: action.payload
+      };
+    case getType(setEngagementScreenShown):
+      return {
+        ...state,
+        engagementScreenShownThisSession: true
       };
   }
   return state;

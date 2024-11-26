@@ -39,8 +39,12 @@ export const isPushNotificationsBannerRenderableSelector = (
   const hasUserSeenSystemNotificationsPrompt =
     hasUserSeenSystemNotificationsPromptSelector(state);
 
+  const engagementScreenShownThisSession =
+    state.notifications.environment.engagementScreenShownThisSession;
+
   return (
     !isFullLogin &&
+    !engagementScreenShownThisSession &&
     !notificationsEnabled &&
     !hasUserSeenSystemNotificationsPrompt
   );

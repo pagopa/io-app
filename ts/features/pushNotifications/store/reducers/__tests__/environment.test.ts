@@ -42,7 +42,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: false,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: true
+        systemNotificationsEnabled: true,
+        engagementScreenShownThisSession: false
       },
       updateSystemNotificationsEnabled(false)
     );
@@ -55,7 +56,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: false,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: false
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
       },
       notificationsInfoScreenConsent()
     );
@@ -68,7 +70,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: false,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: false
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
       },
       applicationInitialized({ actionsToWaitFor: [] })
     );
@@ -81,7 +84,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: true,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: false
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
       },
       setPushPermissionsRequestDuration(100)
     );
