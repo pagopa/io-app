@@ -3,6 +3,7 @@ import { Linking, Platform } from "react-native";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
+import { trackCieIdNotInstalledDownloadAction } from "../analytics";
 
 export const CIE_ID_IOS_LINK =
   "https://apps.apple.com/it/app/cieid/id1504644677";
@@ -28,6 +29,7 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
           "authentication.cie_id.cie_not_installed.primary_action_label"
         ),
         onPress: () => {
+          void trackCieIdNotInstalledDownloadAction();
           void Linking.openURL(
             Platform.select({
               ios: CIE_ID_IOS_LINK,
