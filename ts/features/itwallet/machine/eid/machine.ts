@@ -204,6 +204,7 @@ export const itwEidIssuanceMachine = setup({
           target: "UserIdentification"
         },
         error: {
+          actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"

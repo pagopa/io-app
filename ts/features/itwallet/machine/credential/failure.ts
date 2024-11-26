@@ -49,11 +49,10 @@ export type CredentialIssuanceFailure =
 export const mapEventToFailure = (
   event: CredentialIssuanceEvents
 ): CredentialIssuanceFailure => {
-  // This should never happen
   if (!("error" in event)) {
     return {
       type: CredentialIssuanceFailureType.UNEXPECTED,
-      reason: "Not an error event"
+      reason: event
     };
   }
 

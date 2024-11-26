@@ -53,11 +53,10 @@ export type IssuanceFailure =
 export const mapEventToFailure = (
   event: EidIssuanceEvents
 ): IssuanceFailure => {
-  // This should never happen
   if (!("error" in event)) {
     return {
       type: IssuanceFailureType.UNEXPECTED,
-      reason: "Not an error event"
+      reason: event
     };
   }
 
