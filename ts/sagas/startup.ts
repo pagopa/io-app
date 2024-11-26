@@ -75,7 +75,6 @@ import {
 } from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
-  idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -117,13 +116,6 @@ import { handleApplicationStartupTransientError } from "../features/startup/saga
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
-import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
-import { IdpCIE, IdpCIE_ID } from "../hooks/useNavigateToLoginMethod";
-import {
-  trackCieIDLoginSuccess,
-  trackCieLoginSuccess,
-  trackSpidLoginSuccess
-} from "../screens/authentication/analytics";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -386,11 +378,7 @@ export function* initializeApplicationSaga(
       return;
     }
   }
-  const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
-  // Track login success events
-  if (userFromSuccessLogin) {
-    yield* call(trackLoginSuccessSaga);
-  }
+
   const publicKey = yield* select(lollipopPublicKeySelector);
 
   // #LOLLIPOP_CHECK_BLOCK2_START
@@ -771,31 +759,6 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
     getType(startApplicationInitialization),
     initializeApplicationSaga
   );
-}
-
-function* trackLoginSuccessSaga() {
-  const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-  const idpSelected = yield* select(idpSelector);
-  const sessionInfo = yield* select(sessionInfoSelector);
-
-  if (O.isSome(idpSelected) && O.isSome(sessionInfo)) {
-    switch (idpSelected.value.id) {
-      case IdpCIE.id:
-        trackCieLoginSuccess(isFastLoginEnabled ? "365" : "30");
-        break;
-      case IdpCIE_ID.id:
-        trackCieIDLoginSuccess(
-          isFastLoginEnabled ? "365" : "30",
-          sessionInfo.value.spidLevel
-        );
-        break;
-      default:
-        trackSpidLoginSuccess(
-          isFastLoginEnabled ? "365" : "30",
-          idpSelected.value.id
-        );
-    }
-  }
 }
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv
