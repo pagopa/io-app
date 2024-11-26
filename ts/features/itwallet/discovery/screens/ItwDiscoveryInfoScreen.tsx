@@ -22,9 +22,8 @@ import {
   trackOpenItwTos
 } from "../../analytics";
 import { itwPrivacyUrl, itwTosUrl } from "../../../../config";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import { useIOSelector } from "../../../../store/hooks";
-import { useItwAlertWithStatusBar } from "../../common/hooks/useItwAlertWithStatusBar";
+import { isItwActivationDisabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -37,10 +36,7 @@ const ItwDiscoveryInfoScreen = () => {
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const itwDiscoveryTosSection = useIOSelector(
-    sectionStatusByKeySelector("itw_discovery_tos")
-  );
-  const itwDiscoveryTosSectionVisibility = itwDiscoveryTosSection?.is_visible;
+  const itwActivationDisabled = useIOSelector(isItwActivationDisabledSelector);
 
   const handleContinuePress = () => {
     trackItWalletActivationStart();
@@ -51,20 +47,14 @@ const ItwDiscoveryInfoScreen = () => {
     machineRef.send({ type: "start" });
   });
 
-  const { alertProps, statusBar } = useItwAlertWithStatusBar(
-    itwDiscoveryTosSection
-  );
-
   useHeaderSecondLevel({
     title: "",
     contextualHelp: emptyContextualHelp,
-    supportRequest: true,
-    alert: alertProps
+    supportRequest: true
   });
 
   return (
     <ForceScrollDownView threshold={50}>
-      {statusBar}
       <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/itw_hero.png")}
         style={styles.hero}
@@ -91,8 +81,8 @@ const ItwDiscoveryInfoScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
-            disabled: itwDiscoveryTosSectionVisibility,
             loading: isLoading,
+            disabled: itwActivationDisabled,
             label: I18n.t("global.buttons.continue"),
             accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: handleContinuePress
