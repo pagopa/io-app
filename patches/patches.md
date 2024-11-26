@@ -1,5 +1,11 @@
 This file describes the reason for the patches applied.
 
+### react-native-screen-brightness+2.0.0-alpha
+Created on **26/11/2024**
+
+#### Reason:
+- fixed `getAppBrightness` android method which was returning negative values for app brigthness
+
 ### detox+19.13.0
 Created on 03/05/2024
 

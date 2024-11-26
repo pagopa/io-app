@@ -9,6 +9,33 @@ index 97e0d44..3dd14ce 100644
 -    implementation 'androidx.core:core:1.+'
 +    implementation 'androidx.core:core:1.5.0'
  }
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/results.bin b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/results.bin
+new file mode 100644
+index 0000000..5ff383e
+--- /dev/null
++++ b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/results.bin
+@@ -0,0 +1 @@
++o/debug
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.dex b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.dex
+new file mode 100644
+index 0000000..65fc177
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.dex differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.dex b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.dex
+new file mode 100644
+index 0000000..08d88b8
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.dex differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.dex b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.dex
+new file mode 100644
+index 0000000..03fe571
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.dex differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.dex b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.dex
+new file mode 100644
+index 0000000..bd4e869
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.dex differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/desugar_graph.bin b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/desugar_graph.bin
+new file mode 100644
+index 0000000..c163078
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/.transforms/0011929677a3c5bbe5403c859cf8615d/transformed/desugar_graph.bin differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/32453f779e6c521732ae158e9cea2dfa.bin b/node_modules/react-native-screen-brightness/android/build/.transforms/32453f779e6c521732ae158e9cea2dfa.bin
 new file mode 100644
 index 0000000..0d259dd
@@ -18,8 +45,14 @@ index 0000000..0d259dd
 +o/classes
 diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/32453f779e6c521732ae158e9cea2dfa/classes/classes.dex b/node_modules/react-native-screen-brightness/android/build/.transforms/32453f779e6c521732ae158e9cea2dfa/classes/classes.dex
 new file mode 100644
-index 0000000..d2bfbc7
-Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/.transforms/32453f779e6c521732ae158e9cea2dfa/classes/classes.dex differ
+index 0000000..e69de29
+diff --git a/node_modules/react-native-screen-brightness/android/build/.transforms/7b9198b7e56aec0b8a7fef9a48da89cc/results.bin b/node_modules/react-native-screen-brightness/android/build/.transforms/7b9198b7e56aec0b8a7fef9a48da89cc/results.bin
+new file mode 100644
+index 0000000..1ed65e0
+--- /dev/null
++++ b/node_modules/react-native-screen-brightness/android/build/.transforms/7b9198b7e56aec0b8a7fef9a48da89cc/results.bin
+@@ -0,0 +1 @@
++i/
 diff --git a/node_modules/react-native-screen-brightness/android/build/generated/source/buildConfig/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.java b/node_modules/react-native-screen-brightness/android/build/generated/source/buildConfig/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.java
 new file mode 100644
 index 0000000..aba68e9
@@ -38,30 +71,26 @@ index 0000000..aba68e9
 +}
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
 new file mode 100644
-index 0000000..543c76a
+index 0000000..27dae7e
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
-@@ -0,0 +1,11 @@
+@@ -0,0 +1,7 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+    package="com.robinpowered.react.ScreenBrightness"
-+    android:versionCode="1"
-+    android:versionName="1.0" >
++    package="com.robinpowered.react.ScreenBrightness" >
 +
-+    <uses-sdk
-+        android:minSdkVersion="21"
-+        android:targetSdkVersion="29" />
++    <uses-sdk android:minSdkVersion="25" />
 +
 +</manifest>
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json b/node_modules/react-native-screen-brightness/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json
 new file mode 100644
-index 0000000..1677330
+index 0000000..116113e
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output-metadata.json
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,18 @@
 +{
-+  "version": 2,
++  "version": 3,
 +  "artifactType": {
 +    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
 +    "kind": "Directory"
@@ -72,19 +101,24 @@ index 0000000..1677330
 +    {
 +      "type": "SINGLE",
 +      "filters": [],
++      "attributes": [],
 +      "outputFile": "AndroidManifest.xml"
 +    }
-+  ]
++  ],
++  "elementType": "File"
 +}
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/aar_metadata/debug/aar-metadata.properties b/node_modules/react-native-screen-brightness/android/build/intermediates/aar_metadata/debug/aar-metadata.properties
 new file mode 100644
-index 0000000..d8560bd
+index 0000000..776557e
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/aar_metadata/debug/aar-metadata.properties
-@@ -0,0 +1,2 @@
+@@ -0,0 +1,5 @@
 +aarFormatVersion=1.0
 +aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json b/node_modules/react-native-screen-brightness/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
 new file mode 100644
 index 0000000..9e26dfe
@@ -95,18 +129,18 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/compile_library_classes_jar/debug/classes.jar b/node_modules/react-native-screen-brightness/android/build/intermediates/compile_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..5bc9d36
+index 0000000..9f6c88a
 Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/compile_library_classes_jar/debug/classes.jar differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/compile_r_class_jar/debug/R.jar b/node_modules/react-native-screen-brightness/android/build/intermediates/compile_r_class_jar/debug/R.jar
 new file mode 100644
-index 0000000..9145c52
+index 0000000..1314f5b
 Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/compile_r_class_jar/debug/R.jar differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/compile_symbol_list/debug/R.txt b/node_modules/react-native-screen-brightness/android/build/intermediates/compile_symbol_list/debug/R.txt
 new file mode 100644
-index 0000000..808b1be
+index 0000000..5347f17
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/compile_symbol_list/debug/R.txt
-@@ -0,0 +1,1844 @@
+@@ -0,0 +1,1954 @@
 +int anim abc_fade_in 0x0
 +int anim abc_fade_out 0x0
 +int anim abc_grow_fade_in_from_bottom 0x0
@@ -119,12 +153,31 @@ index 0000000..808b1be
 +int anim abc_slide_out_top 0x0
 +int anim abc_tooltip_enter 0x0
 +int anim abc_tooltip_exit 0x0
++int anim btn_checkbox_to_checked_box_inner_merged_animation 0x0
++int anim btn_checkbox_to_checked_box_outer_merged_animation 0x0
++int anim btn_checkbox_to_checked_icon_null_animation 0x0
++int anim btn_checkbox_to_unchecked_box_inner_merged_animation 0x0
++int anim btn_checkbox_to_unchecked_check_path_merged_animation 0x0
++int anim btn_checkbox_to_unchecked_icon_null_animation 0x0
++int anim btn_radio_to_off_mtrl_dot_group_animation 0x0
++int anim btn_radio_to_off_mtrl_ring_outer_animation 0x0
++int anim btn_radio_to_off_mtrl_ring_outer_path_animation 0x0
++int anim btn_radio_to_on_mtrl_dot_group_animation 0x0
++int anim btn_radio_to_on_mtrl_ring_outer_animation 0x0
++int anim btn_radio_to_on_mtrl_ring_outer_path_animation 0x0
 +int anim catalyst_fade_in 0x0
 +int anim catalyst_fade_out 0x0
 +int anim catalyst_push_up_in 0x0
 +int anim catalyst_push_up_out 0x0
 +int anim catalyst_slide_down 0x0
 +int anim catalyst_slide_up 0x0
++int anim fragment_fast_out_extra_slow_in 0x0
++int animator fragment_close_enter 0x0
++int animator fragment_close_exit 0x0
++int animator fragment_fade_enter 0x0
++int animator fragment_fade_exit 0x0
++int animator fragment_open_enter 0x0
++int animator fragment_open_exit 0x0
 +int attr actionBarDivider 0x0
 +int attr actionBarItemBackground 0x0
 +int attr actionBarPopupTheme 0x0
@@ -143,6 +196,7 @@ index 0000000..808b1be
 +int attr actionMenuTextColor 0x0
 +int attr actionModeBackground 0x0
 +int attr actionModeCloseButtonStyle 0x0
++int attr actionModeCloseContentDescription 0x0
 +int attr actionModeCloseDrawable 0x0
 +int attr actionModeCopyDrawable 0x0
 +int attr actionModeCutDrawable 0x0
@@ -153,6 +207,7 @@ index 0000000..808b1be
 +int attr actionModeShareDrawable 0x0
 +int attr actionModeSplitBackground 0x0
 +int attr actionModeStyle 0x0
++int attr actionModeTheme 0x0
 +int attr actionModeWebSearchDrawable 0x0
 +int attr actionOverflowButtonStyle 0x0
 +int attr actionOverflowMenuStyle 0x0
@@ -177,6 +232,11 @@ index 0000000..808b1be
 +int attr autoSizePresetSizes 0x0
 +int attr autoSizeStepGranularity 0x0
 +int attr autoSizeTextType 0x0
++int attr autofillInlineSuggestionChip 0x0
++int attr autofillInlineSuggestionEndIconStyle 0x0
++int attr autofillInlineSuggestionStartIconStyle 0x0
++int attr autofillInlineSuggestionSubtitle 0x0
++int attr autofillInlineSuggestionTitle 0x0
 +int attr background 0x0
 +int attr backgroundImage 0x0
 +int attr backgroundSplit 0x0
@@ -190,6 +250,7 @@ index 0000000..808b1be
 +int attr buttonBarNeutralButtonStyle 0x0
 +int attr buttonBarPositiveButtonStyle 0x0
 +int attr buttonBarStyle 0x0
++int attr buttonCompat 0x0
 +int attr buttonGravity 0x0
 +int attr buttonIconDimen 0x0
 +int attr buttonPanelSideLayout 0x0
@@ -197,6 +258,9 @@ index 0000000..808b1be
 +int attr buttonStyleSmall 0x0
 +int attr buttonTint 0x0
 +int attr buttonTintMode 0x0
++int attr checkMarkCompat 0x0
++int attr checkMarkTint 0x0
++int attr checkMarkTintMode 0x0
 +int attr checkboxStyle 0x0
 +int attr checkedTextViewStyle 0x0
 +int attr closeIcon 0x0
@@ -223,7 +287,6 @@ index 0000000..808b1be
 +int attr contentInsetStart 0x0
 +int attr contentInsetStartWithNavigation 0x0
 +int attr controlBackground 0x0
-+int attr coordinatorLayoutStyle 0x0
 +int attr customNavigationLayout 0x0
 +int attr defaultQueryHint 0x0
 +int attr dialogCornerRadius 0x0
@@ -234,7 +297,15 @@ index 0000000..808b1be
 +int attr dividerHorizontal 0x0
 +int attr dividerPadding 0x0
 +int attr dividerVertical 0x0
++int attr drawableBottomCompat 0x0
++int attr drawableEndCompat 0x0
++int attr drawableLeftCompat 0x0
++int attr drawableRightCompat 0x0
 +int attr drawableSize 0x0
++int attr drawableStartCompat 0x0
++int attr drawableTint 0x0
++int attr drawableTintMode 0x0
++int attr drawableTopCompat 0x0
 +int attr drawerArrowStyle 0x0
 +int attr dropDownListViewStyle 0x0
 +int attr dropdownListPreferredItemHeight 0x0
@@ -242,6 +313,7 @@ index 0000000..808b1be
 +int attr editTextColor 0x0
 +int attr editTextStyle 0x0
 +int attr elevation 0x0
++int attr emojiCompatEnabled 0x0
 +int attr expandActivityOverflowButtonDrawable 0x0
 +int attr fadeDuration 0x0
 +int attr failureImage 0x0
@@ -272,19 +344,16 @@ index 0000000..808b1be
 +int attr imageButtonStyle 0x0
 +int attr indeterminateProgressStyle 0x0
 +int attr initialActivityCount 0x0
++int attr isAutofillInlineSuggestionTheme 0x0
 +int attr isLightTheme 0x0
 +int attr itemPadding 0x0
-+int attr keylines 0x0
++int attr lStar 0x0
 +int attr lastBaselineToBottomHeight 0x0
 +int attr layout 0x0
-+int attr layout_anchor 0x0
-+int attr layout_anchorGravity 0x0
-+int attr layout_behavior 0x0
-+int attr layout_dodgeInsetEdges 0x0
-+int attr layout_insetEdge 0x0
-+int attr layout_keyline 0x0
 +int attr lineHeight 0x0
 +int attr listChoiceBackgroundIndicator 0x0
++int attr listChoiceIndicatorMultipleAnimated 0x0
++int attr listChoiceIndicatorSingleAnimated 0x0
 +int attr listDividerAlertDialog 0x0
 +int attr listItemLayout 0x0
 +int attr listLayout 0x0
@@ -293,12 +362,15 @@ index 0000000..808b1be
 +int attr listPreferredItemHeight 0x0
 +int attr listPreferredItemHeightLarge 0x0
 +int attr listPreferredItemHeightSmall 0x0
++int attr listPreferredItemPaddingEnd 0x0
 +int attr listPreferredItemPaddingLeft 0x0
 +int attr listPreferredItemPaddingRight 0x0
++int attr listPreferredItemPaddingStart 0x0
 +int attr logo 0x0
 +int attr logoDescription 0x0
 +int attr maxButtonHeight 0x0
 +int attr measureWithLargestChild 0x0
++int attr menu 0x0
 +int attr multiChoiceItemLayout 0x0
 +int attr navigationContentDescription 0x0
 +int attr navigationIcon 0x0
@@ -367,7 +439,6 @@ index 0000000..808b1be
 +int attr splitTrack 0x0
 +int attr srcCompat 0x0
 +int attr state_above_anchor 0x0
-+int attr statusBarBackground 0x0
 +int attr subMenuArrow 0x0
 +int attr submitBackground 0x0
 +int attr subtitle 0x0
@@ -390,6 +461,7 @@ index 0000000..808b1be
 +int attr textAppearanceSmallPopupMenu 0x0
 +int attr textColorAlertDialogListItem 0x0
 +int attr textColorSearchUrl 0x0
++int attr textLocale 0x0
 +int attr theme 0x0
 +int attr thickness 0x0
 +int attr thumbTextPadding 0x0
@@ -433,16 +505,16 @@ index 0000000..808b1be
 +int attr windowMinWidthMinor 0x0
 +int attr windowNoTitle 0x0
 +int bool abc_action_bar_embed_tabs 0x0
-+int bool abc_allow_stacked_button_bar 0x0
 +int bool abc_config_actionMenuItemAllCaps 0x0
 +int color abc_background_cache_hint_selector_material_dark 0x0
 +int color abc_background_cache_hint_selector_material_light 0x0
 +int color abc_btn_colored_borderless_text_material 0x0
 +int color abc_btn_colored_text_material 0x0
 +int color abc_color_highlight_material 0x0
++int color abc_decor_view_status_guard 0x0
++int color abc_decor_view_status_guard_light 0x0
 +int color abc_hint_foreground_material_dark 0x0
 +int color abc_hint_foreground_material_light 0x0
-+int color abc_input_method_navigation_guard 0x0
 +int color abc_primary_text_disable_only_material_dark 0x0
 +int color abc_primary_text_disable_only_material_light 0x0
 +int color abc_primary_text_material_dark 0x0
@@ -571,6 +643,9 @@ index 0000000..808b1be
 +int dimen abc_edit_text_inset_horizontal_material 0x0
 +int dimen abc_edit_text_inset_top_material 0x0
 +int dimen abc_floating_window_z 0x0
++int dimen abc_list_item_height_large_material 0x0
++int dimen abc_list_item_height_material 0x0
++int dimen abc_list_item_height_small_material 0x0
 +int dimen abc_list_item_padding_horizontal_material 0x0
 +int dimen abc_panel_menu_list_width 0x0
 +int dimen abc_progress_bar_height_material 0x0
@@ -579,6 +654,9 @@ index 0000000..808b1be
 +int dimen abc_seekbar_track_background_height_material 0x0
 +int dimen abc_seekbar_track_progress_height_material 0x0
 +int dimen abc_select_dialog_padding_start_material 0x0
++int dimen abc_star_big 0x0
++int dimen abc_star_medium 0x0
++int dimen abc_star_small 0x0
 +int dimen abc_switch_padding 0x0
 +int dimen abc_text_size_body_1_material 0x0
 +int dimen abc_text_size_body_2_material 0x0
@@ -598,6 +676,7 @@ index 0000000..808b1be
 +int dimen abc_text_size_subtitle_material_toolbar 0x0
 +int dimen abc_text_size_title_material 0x0
 +int dimen abc_text_size_title_material_toolbar 0x0
++int dimen autofill_inline_suggestion_icon_size 0x0
 +int dimen compat_button_inset_horizontal_material 0x0
 +int dimen compat_button_inset_vertical_material 0x0
 +int dimen compat_button_padding_horizontal_material 0x0
@@ -641,11 +720,13 @@ index 0000000..808b1be
 +int drawable abc_action_bar_item_background_material 0x0
 +int drawable abc_btn_borderless_material 0x0
 +int drawable abc_btn_check_material 0x0
++int drawable abc_btn_check_material_anim 0x0
 +int drawable abc_btn_check_to_on_mtrl_000 0x0
 +int drawable abc_btn_check_to_on_mtrl_015 0x0
 +int drawable abc_btn_colored_material 0x0
 +int drawable abc_btn_default_mtrl_shape 0x0
 +int drawable abc_btn_radio_material 0x0
++int drawable abc_btn_radio_material_anim 0x0
 +int drawable abc_btn_radio_to_on_mtrl_000 0x0
 +int drawable abc_btn_radio_to_on_mtrl_015 0x0
 +int drawable abc_btn_switch_to_on_mtrl_00001 0x0
@@ -668,12 +749,6 @@ index 0000000..808b1be
 +int drawable abc_ic_menu_selectall_mtrl_alpha 0x0
 +int drawable abc_ic_menu_share_mtrl_alpha 0x0
 +int drawable abc_ic_search_api_material 0x0
-+int drawable abc_ic_star_black_16dp 0x0
-+int drawable abc_ic_star_black_36dp 0x0
-+int drawable abc_ic_star_black_48dp 0x0
-+int drawable abc_ic_star_half_black_16dp 0x0
-+int drawable abc_ic_star_half_black_36dp 0x0
-+int drawable abc_ic_star_half_black_48dp 0x0
 +int drawable abc_ic_voice_search_api_material 0x0
 +int drawable abc_item_background_holo_dark 0x0
 +int drawable abc_item_background_holo_light 0x0
@@ -704,23 +779,31 @@ index 0000000..808b1be
 +int drawable abc_seekbar_track_material 0x0
 +int drawable abc_spinner_mtrl_am_alpha 0x0
 +int drawable abc_spinner_textfield_background_material 0x0
++int drawable abc_star_black_48dp 0x0
++int drawable abc_star_half_black_48dp 0x0
 +int drawable abc_switch_thumb_material 0x0
 +int drawable abc_switch_track_mtrl_alpha 0x0
 +int drawable abc_tab_indicator_material 0x0
 +int drawable abc_tab_indicator_mtrl_alpha 0x0
 +int drawable abc_text_cursor_material 0x0
-+int drawable abc_text_select_handle_left_mtrl_dark 0x0
-+int drawable abc_text_select_handle_left_mtrl_light 0x0
-+int drawable abc_text_select_handle_middle_mtrl_dark 0x0
-+int drawable abc_text_select_handle_middle_mtrl_light 0x0
-+int drawable abc_text_select_handle_right_mtrl_dark 0x0
-+int drawable abc_text_select_handle_right_mtrl_light 0x0
++int drawable abc_text_select_handle_left_mtrl 0x0
++int drawable abc_text_select_handle_middle_mtrl 0x0
++int drawable abc_text_select_handle_right_mtrl 0x0
 +int drawable abc_textfield_activated_mtrl_alpha 0x0
 +int drawable abc_textfield_default_mtrl_alpha 0x0
 +int drawable abc_textfield_search_activated_mtrl_alpha 0x0
 +int drawable abc_textfield_search_default_mtrl_alpha 0x0
 +int drawable abc_textfield_search_material 0x0
 +int drawable abc_vector_test 0x0
++int drawable autofill_inline_suggestion_chip_background 0x0
++int drawable btn_checkbox_checked_mtrl 0x0
++int drawable btn_checkbox_checked_to_unchecked_mtrl_animation 0x0
++int drawable btn_checkbox_unchecked_mtrl 0x0
++int drawable btn_checkbox_unchecked_to_checked_mtrl_animation 0x0
++int drawable btn_radio_off_mtrl 0x0
++int drawable btn_radio_off_to_on_mtrl_animation 0x0
++int drawable btn_radio_on_mtrl 0x0
++int drawable btn_radio_on_to_off_mtrl_animation 0x0
 +int drawable notification_action_background 0x0
 +int drawable notification_bg 0x0
 +int drawable notification_bg_low 0x0
@@ -734,10 +817,13 @@ index 0000000..808b1be
 +int drawable notification_tile_bg 0x0
 +int drawable notify_panel_notification_icon_bg 0x0
 +int drawable redbox_top_border_background 0x0
++int drawable test_level_drawable 0x0
 +int drawable tooltip_frame_dark 0x0
 +int drawable tooltip_frame_light 0x0
 +int id accessibility_action_clickable_span 0x0
 +int id accessibility_actions 0x0
++int id accessibility_collection 0x0
++int id accessibility_collection_item 0x0
 +int id accessibility_custom_action_0 0x0
 +int id accessibility_custom_action_1 0x0
 +int id accessibility_custom_action_10 0x0
@@ -772,8 +858,10 @@ index 0000000..808b1be
 +int id accessibility_custom_action_9 0x0
 +int id accessibility_hint 0x0
 +int id accessibility_label 0x0
++int id accessibility_links 0x0
 +int id accessibility_role 0x0
 +int id accessibility_state 0x0
++int id accessibility_state_expanded 0x0
 +int id accessibility_value 0x0
 +int id action_bar 0x0
 +int id action_bar_activity_content 0x0
@@ -797,14 +885,18 @@ index 0000000..808b1be
 +int id add 0x0
 +int id alertTitle 0x0
 +int id async 0x0
++int id autofill_inline_suggestion_end_icon 0x0
++int id autofill_inline_suggestion_start_icon 0x0
++int id autofill_inline_suggestion_subtitle 0x0
++int id autofill_inline_suggestion_title 0x0
 +int id blocking 0x0
-+int id bottom 0x0
 +int id buttonPanel 0x0
 +int id catalyst_redbox_title 0x0
 +int id center 0x0
 +int id centerCrop 0x0
 +int id centerInside 0x0
 +int id checkbox 0x0
++int id checked 0x0
 +int id chronometer 0x0
 +int id content 0x0
 +int id contentPanel 0x0
@@ -814,7 +906,6 @@ index 0000000..808b1be
 +int id default_activity_button 0x0
 +int id dialog_button 0x0
 +int id edit_query 0x0
-+int id end 0x0
 +int id expand_activities_button 0x0
 +int id expanded_menu 0x0
 +int id fitBottomStart 0x0
@@ -825,6 +916,7 @@ index 0000000..808b1be
 +int id focusCrop 0x0
 +int id forever 0x0
 +int id fps_text 0x0
++int id fragment_container_view_tag 0x0
 +int id group_divider 0x0
 +int id home 0x0
 +int id icon 0x0
@@ -832,7 +924,11 @@ index 0000000..808b1be
 +int id image 0x0
 +int id info 0x0
 +int id italic 0x0
-+int id left 0x0
++int id item1 0x0
++int id item2 0x0
++int id item3 0x0
++int id item4 0x0
++int id labelled_by 0x0
 +int id line1 0x0
 +int id line3 0x0
 +int id listMode 0x0
@@ -844,12 +940,14 @@ index 0000000..808b1be
 +int id notification_background 0x0
 +int id notification_main_column 0x0
 +int id notification_main_column_container 0x0
++int id off 0x0
++int id on 0x0
 +int id parentPanel 0x0
++int id pointer_events 0x0
 +int id progress_circular 0x0
 +int id progress_horizontal 0x0
 +int id radio 0x0
 +int id react_test_id 0x0
-+int id right 0x0
 +int id right_icon 0x0
 +int id right_side 0x0
 +int id rn_frame_file 0x0
@@ -878,11 +976,11 @@ index 0000000..808b1be
 +int id select_dialog_listview 0x0
 +int id shortcut 0x0
 +int id spacer 0x0
++int id special_effects_controller_view_tag 0x0
 +int id split_action_bar 0x0
 +int id src_atop 0x0
 +int id src_in 0x0
 +int id src_over 0x0
-+int id start 0x0
 +int id submenuarrow 0x0
 +int id submit_area 0x0
 +int id tabMode 0x0
@@ -907,12 +1005,16 @@ index 0000000..808b1be
 +int id title 0x0
 +int id titleDividerNoCustom 0x0
 +int id title_template 0x0
-+int id top 0x0
 +int id topPanel 0x0
++int id unchecked 0x0
 +int id uniform 0x0
 +int id up 0x0
 +int id view_tag_instance_handle 0x0
 +int id view_tag_native_id 0x0
++int id view_tree_lifecycle_owner 0x0
++int id view_tree_saved_state_registry_owner 0x0
++int id view_tree_view_model_store_owner 0x0
++int id visible_removing_fragment_view_tag 0x0
 +int id wrap_content 0x0
 +int integer abc_config_activityDefaultDur 0x0
 +int integer abc_config_activityShortDur 0x0
@@ -921,6 +1023,13 @@ index 0000000..808b1be
 +int integer react_native_dev_server_port 0x0
 +int integer react_native_inspector_proxy_port 0x0
 +int integer status_bar_notification_info_maxnum 0x0
++int interpolator btn_checkbox_checked_mtrl_animation_interpolator_0 0x0
++int interpolator btn_checkbox_checked_mtrl_animation_interpolator_1 0x0
++int interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_0 0x0
++int interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_1 0x0
++int interpolator btn_radio_to_off_mtrl_animation_interpolator_0 0x0
++int interpolator btn_radio_to_on_mtrl_animation_interpolator_0 0x0
++int interpolator fast_out_slow_in 0x0
 +int layout abc_action_bar_title_item 0x0
 +int layout abc_action_bar_up_container 0x0
 +int layout abc_action_menu_item_layout 0x0
@@ -949,6 +1058,7 @@ index 0000000..808b1be
 +int layout abc_search_view 0x0
 +int layout abc_select_dialog_material 0x0
 +int layout abc_tooltip 0x0
++int layout autofill_inline_suggestion 0x0
 +int layout custom_dialog 0x0
 +int layout dev_loading_view 0x0
 +int layout fps_view 0x0
@@ -965,6 +1075,8 @@ index 0000000..808b1be
 +int layout select_dialog_multichoice_material 0x0
 +int layout select_dialog_singlechoice_material 0x0
 +int layout support_simple_spinner_dropdown_item 0x0
++int menu example_menu 0x0
++int menu example_menu2 0x0
 +int string abc_action_bar_home_description 0x0
 +int string abc_action_bar_up_description 0x0
 +int string abc_action_menu_overflow_description 0x0
@@ -973,18 +1085,6 @@ index 0000000..808b1be
 +int string abc_activitychooserview_choose_application 0x0
 +int string abc_capital_off 0x0
 +int string abc_capital_on 0x0
-+int string abc_font_family_body_1_material 0x0
-+int string abc_font_family_body_2_material 0x0
-+int string abc_font_family_button_material 0x0
-+int string abc_font_family_caption_material 0x0
-+int string abc_font_family_display_1_material 0x0
-+int string abc_font_family_display_2_material 0x0
-+int string abc_font_family_display_3_material 0x0
-+int string abc_font_family_display_4_material 0x0
-+int string abc_font_family_headline_material 0x0
-+int string abc_font_family_menu_material 0x0
-+int string abc_font_family_subhead_material 0x0
-+int string abc_font_family_title_material 0x0
 +int string abc_menu_alt_shortcut_label 0x0
 +int string abc_menu_ctrl_shortcut_label 0x0
 +int string abc_menu_delete_shortcut_label 0x0
@@ -1005,7 +1105,6 @@ index 0000000..808b1be
 +int string abc_shareactionprovider_share_with_application 0x0
 +int string abc_toolbar_collapse_description 0x0
 +int string alert_description 0x0
-+int string button_description 0x0
 +int string catalyst_change_bundle_location 0x0
 +int string catalyst_copy_button 0x0
 +int string catalyst_debug 0x0
@@ -1023,6 +1122,7 @@ index 0000000..808b1be
 +int string catalyst_hot_reloading_auto_enable 0x0
 +int string catalyst_hot_reloading_stop 0x0
 +int string catalyst_inspector 0x0
++int string catalyst_inspector_stop 0x0
 +int string catalyst_loading_from_url 0x0
 +int string catalyst_open_flipper_error 0x0
 +int string catalyst_perf_monitor 0x0
@@ -1047,7 +1147,6 @@ index 0000000..808b1be
 +int string radiogroup_description 0x0
 +int string rn_tab_description 0x0
 +int string scrollbar_description 0x0
-+int string search_description 0x0
 +int string search_menu_title 0x0
 +int string spinbutton_description 0x0
 +int string state_busy_description 0x0
@@ -1056,6 +1155,7 @@ index 0000000..808b1be
 +int string state_mixed_description 0x0
 +int string state_off_description 0x0
 +int string state_on_description 0x0
++int string state_unselected_description 0x0
 +int string status_bar_notification_info_overflow 0x0
 +int string summary_description 0x0
 +int string tablist_description 0x0
@@ -1220,6 +1320,7 @@ index 0000000..808b1be
 +int style Base_Widget_AppCompat_SeekBar_Discrete 0x0
 +int style Base_Widget_AppCompat_Spinner 0x0
 +int style Base_Widget_AppCompat_Spinner_Underlined 0x0
++int style Base_Widget_AppCompat_TextView 0x0
 +int style Base_Widget_AppCompat_TextView_SpinnerItem 0x0
 +int style Base_Widget_AppCompat_Toolbar 0x0
 +int style Base_Widget_AppCompat_Toolbar_Button_Navigation 0x0
@@ -1317,6 +1418,8 @@ index 0000000..808b1be
 +int style ThemeOverlay_AppCompat_ActionBar 0x0
 +int style ThemeOverlay_AppCompat_Dark 0x0
 +int style ThemeOverlay_AppCompat_Dark_ActionBar 0x0
++int style ThemeOverlay_AppCompat_DayNight 0x0
++int style ThemeOverlay_AppCompat_DayNight_ActionBar 0x0
 +int style ThemeOverlay_AppCompat_Dialog 0x0
 +int style ThemeOverlay_AppCompat_Dialog_Alert 0x0
 +int style ThemeOverlay_AppCompat_Light 0x0
@@ -1333,6 +1436,7 @@ index 0000000..808b1be
 +int style Theme_AppCompat_DialogWhenLarge 0x0
 +int style Theme_AppCompat_Dialog_Alert 0x0
 +int style Theme_AppCompat_Dialog_MinWidth 0x0
++int style Theme_AppCompat_Empty 0x0
 +int style Theme_AppCompat_Light 0x0
 +int style Theme_AppCompat_Light_DarkActionBar 0x0
 +int style Theme_AppCompat_Light_Dialog 0x0
@@ -1341,6 +1445,7 @@ index 0000000..808b1be
 +int style Theme_AppCompat_Light_Dialog_MinWidth 0x0
 +int style Theme_AppCompat_Light_NoActionBar 0x0
 +int style Theme_AppCompat_NoActionBar 0x0
++int style Theme_AutofillInlineSuggestion 0x0
 +int style Theme_Catalyst 0x0
 +int style Theme_Catalyst_LogBox 0x0
 +int style Theme_Catalyst_RedBox 0x0
@@ -1418,12 +1523,18 @@ index 0000000..808b1be
 +int style Widget_AppCompat_Spinner_DropDown 0x0
 +int style Widget_AppCompat_Spinner_DropDown_ActionBar 0x0
 +int style Widget_AppCompat_Spinner_Underlined 0x0
++int style Widget_AppCompat_TextView 0x0
 +int style Widget_AppCompat_TextView_SpinnerItem 0x0
 +int style Widget_AppCompat_Toolbar 0x0
 +int style Widget_AppCompat_Toolbar_Button_Navigation 0x0
++int style Widget_Autofill 0x0
++int style Widget_Autofill_InlineSuggestionChip 0x0
++int style Widget_Autofill_InlineSuggestionEndIconStyle 0x0
++int style Widget_Autofill_InlineSuggestionStartIconStyle 0x0
++int style Widget_Autofill_InlineSuggestionSubtitle 0x0
++int style Widget_Autofill_InlineSuggestionTitle 0x0
 +int style Widget_Compat_NotificationActionContainer 0x0
 +int style Widget_Compat_NotificationActionText 0x0
-+int style Widget_Support_CoordinatorLayout 0x0
 +int style redboxButton 0x0
 +int[] styleable ActionBar { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable ActionBar_background 0
@@ -1494,6 +1605,7 @@ index 0000000..808b1be
 +int styleable AnimatedStateListDrawableTransition_android_fromId 1
 +int styleable AnimatedStateListDrawableTransition_android_reversible 2
 +int styleable AnimatedStateListDrawableTransition_android_toId 3
++int[] styleable AppCompatEmojiHelper {  }
 +int[] styleable AppCompatImageView { 0x1010119, 0x0, 0x0, 0x0 }
 +int styleable AppCompatImageView_android_src 0
 +int styleable AppCompatImageView_srcCompat 1
@@ -1512,19 +1624,30 @@ index 0000000..808b1be
 +int styleable AppCompatTextHelper_android_drawableStart 4
 +int styleable AppCompatTextHelper_android_drawableTop 5
 +int styleable AppCompatTextHelper_android_textAppearance 6
-+int[] styleable AppCompatTextView { 0x1010034, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int[] styleable AppCompatTextView { 0x1010034, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable AppCompatTextView_android_textAppearance 0
 +int styleable AppCompatTextView_autoSizeMaxTextSize 1
 +int styleable AppCompatTextView_autoSizeMinTextSize 2
 +int styleable AppCompatTextView_autoSizePresetSizes 3
 +int styleable AppCompatTextView_autoSizeStepGranularity 4
 +int styleable AppCompatTextView_autoSizeTextType 5
-+int styleable AppCompatTextView_firstBaselineToTopHeight 6
-+int styleable AppCompatTextView_fontFamily 7
-+int styleable AppCompatTextView_lastBaselineToBottomHeight 8
-+int styleable AppCompatTextView_lineHeight 9
-+int styleable AppCompatTextView_textAllCaps 10
-+int[] styleable AppCompatTheme { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10100ae, 0x1010057, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable AppCompatTextView_drawableBottomCompat 6
++int styleable AppCompatTextView_drawableEndCompat 7
++int styleable AppCompatTextView_drawableLeftCompat 8
++int styleable AppCompatTextView_drawableRightCompat 9
++int styleable AppCompatTextView_drawableStartCompat 10
++int styleable AppCompatTextView_drawableTint 11
++int styleable AppCompatTextView_drawableTintMode 12
++int styleable AppCompatTextView_drawableTopCompat 13
++int styleable AppCompatTextView_emojiCompatEnabled 14
++int styleable AppCompatTextView_firstBaselineToTopHeight 15
++int styleable AppCompatTextView_fontFamily 16
++int styleable AppCompatTextView_fontVariationSettings 17
++int styleable AppCompatTextView_lastBaselineToBottomHeight 18
++int styleable AppCompatTextView_lineHeight 19
++int styleable AppCompatTextView_textAllCaps 20
++int styleable AppCompatTextView_textLocale 21
++int[] styleable AppCompatTheme { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10100ae, 0x1010057, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable AppCompatTheme_actionBarDivider 0
 +int styleable AppCompatTheme_actionBarItemBackground 1
 +int styleable AppCompatTheme_actionBarPopupTheme 2
@@ -1542,134 +1665,144 @@ index 0000000..808b1be
 +int styleable AppCompatTheme_actionMenuTextColor 14
 +int styleable AppCompatTheme_actionModeBackground 15
 +int styleable AppCompatTheme_actionModeCloseButtonStyle 16
-+int styleable AppCompatTheme_actionModeCloseDrawable 17
-+int styleable AppCompatTheme_actionModeCopyDrawable 18
-+int styleable AppCompatTheme_actionModeCutDrawable 19
-+int styleable AppCompatTheme_actionModeFindDrawable 20
-+int styleable AppCompatTheme_actionModePasteDrawable 21
-+int styleable AppCompatTheme_actionModePopupWindowStyle 22
-+int styleable AppCompatTheme_actionModeSelectAllDrawable 23
-+int styleable AppCompatTheme_actionModeShareDrawable 24
-+int styleable AppCompatTheme_actionModeSplitBackground 25
-+int styleable AppCompatTheme_actionModeStyle 26
-+int styleable AppCompatTheme_actionModeWebSearchDrawable 27
-+int styleable AppCompatTheme_actionOverflowButtonStyle 28
-+int styleable AppCompatTheme_actionOverflowMenuStyle 29
-+int styleable AppCompatTheme_activityChooserViewStyle 30
-+int styleable AppCompatTheme_alertDialogButtonGroupStyle 31
-+int styleable AppCompatTheme_alertDialogCenterButtons 32
-+int styleable AppCompatTheme_alertDialogStyle 33
-+int styleable AppCompatTheme_alertDialogTheme 34
-+int styleable AppCompatTheme_android_windowAnimationStyle 35
-+int styleable AppCompatTheme_android_windowIsFloating 36
-+int styleable AppCompatTheme_autoCompleteTextViewStyle 37
-+int styleable AppCompatTheme_borderlessButtonStyle 38
-+int styleable AppCompatTheme_buttonBarButtonStyle 39
-+int styleable AppCompatTheme_buttonBarNegativeButtonStyle 40
-+int styleable AppCompatTheme_buttonBarNeutralButtonStyle 41
-+int styleable AppCompatTheme_buttonBarPositiveButtonStyle 42
-+int styleable AppCompatTheme_buttonBarStyle 43
-+int styleable AppCompatTheme_buttonStyle 44
-+int styleable AppCompatTheme_buttonStyleSmall 45
-+int styleable AppCompatTheme_checkboxStyle 46
-+int styleable AppCompatTheme_checkedTextViewStyle 47
-+int styleable AppCompatTheme_colorAccent 48
-+int styleable AppCompatTheme_colorBackgroundFloating 49
-+int styleable AppCompatTheme_colorButtonNormal 50
-+int styleable AppCompatTheme_colorControlActivated 51
-+int styleable AppCompatTheme_colorControlHighlight 52
-+int styleable AppCompatTheme_colorControlNormal 53
-+int styleable AppCompatTheme_colorError 54
-+int styleable AppCompatTheme_colorPrimary 55
-+int styleable AppCompatTheme_colorPrimaryDark 56
-+int styleable AppCompatTheme_colorSwitchThumbNormal 57
-+int styleable AppCompatTheme_controlBackground 58
-+int styleable AppCompatTheme_dialogCornerRadius 59
-+int styleable AppCompatTheme_dialogPreferredPadding 60
-+int styleable AppCompatTheme_dialogTheme 61
-+int styleable AppCompatTheme_dividerHorizontal 62
-+int styleable AppCompatTheme_dividerVertical 63
-+int styleable AppCompatTheme_dropDownListViewStyle 64
-+int styleable AppCompatTheme_dropdownListPreferredItemHeight 65
-+int styleable AppCompatTheme_editTextBackground 66
-+int styleable AppCompatTheme_editTextColor 67
-+int styleable AppCompatTheme_editTextStyle 68
-+int styleable AppCompatTheme_homeAsUpIndicator 69
-+int styleable AppCompatTheme_imageButtonStyle 70
-+int styleable AppCompatTheme_listChoiceBackgroundIndicator 71
-+int styleable AppCompatTheme_listDividerAlertDialog 72
-+int styleable AppCompatTheme_listMenuViewStyle 73
-+int styleable AppCompatTheme_listPopupWindowStyle 74
-+int styleable AppCompatTheme_listPreferredItemHeight 75
-+int styleable AppCompatTheme_listPreferredItemHeightLarge 76
-+int styleable AppCompatTheme_listPreferredItemHeightSmall 77
-+int styleable AppCompatTheme_listPreferredItemPaddingLeft 78
-+int styleable AppCompatTheme_listPreferredItemPaddingRight 79
-+int styleable AppCompatTheme_panelBackground 80
-+int styleable AppCompatTheme_panelMenuListTheme 81
-+int styleable AppCompatTheme_panelMenuListWidth 82
-+int styleable AppCompatTheme_popupMenuStyle 83
-+int styleable AppCompatTheme_popupWindowStyle 84
-+int styleable AppCompatTheme_radioButtonStyle 85
-+int styleable AppCompatTheme_ratingBarStyle 86
-+int styleable AppCompatTheme_ratingBarStyleIndicator 87
-+int styleable AppCompatTheme_ratingBarStyleSmall 88
-+int styleable AppCompatTheme_searchViewStyle 89
-+int styleable AppCompatTheme_seekBarStyle 90
-+int styleable AppCompatTheme_selectableItemBackground 91
-+int styleable AppCompatTheme_selectableItemBackgroundBorderless 92
-+int styleable AppCompatTheme_spinnerDropDownItemStyle 93
-+int styleable AppCompatTheme_spinnerStyle 94
-+int styleable AppCompatTheme_switchStyle 95
-+int styleable AppCompatTheme_textAppearanceLargePopupMenu 96
-+int styleable AppCompatTheme_textAppearanceListItem 97
-+int styleable AppCompatTheme_textAppearanceListItemSecondary 98
-+int styleable AppCompatTheme_textAppearanceListItemSmall 99
-+int styleable AppCompatTheme_textAppearancePopupMenuHeader 100
-+int styleable AppCompatTheme_textAppearanceSearchResultSubtitle 101
-+int styleable AppCompatTheme_textAppearanceSearchResultTitle 102
-+int styleable AppCompatTheme_textAppearanceSmallPopupMenu 103
-+int styleable AppCompatTheme_textColorAlertDialogListItem 104
-+int styleable AppCompatTheme_textColorSearchUrl 105
-+int styleable AppCompatTheme_toolbarNavigationButtonStyle 106
-+int styleable AppCompatTheme_toolbarStyle 107
-+int styleable AppCompatTheme_tooltipForegroundColor 108
-+int styleable AppCompatTheme_tooltipFrameBackground 109
-+int styleable AppCompatTheme_viewInflaterClass 110
-+int styleable AppCompatTheme_windowActionBar 111
-+int styleable AppCompatTheme_windowActionBarOverlay 112
-+int styleable AppCompatTheme_windowActionModeOverlay 113
-+int styleable AppCompatTheme_windowFixedHeightMajor 114
-+int styleable AppCompatTheme_windowFixedHeightMinor 115
-+int styleable AppCompatTheme_windowFixedWidthMajor 116
-+int styleable AppCompatTheme_windowFixedWidthMinor 117
-+int styleable AppCompatTheme_windowMinWidthMajor 118
-+int styleable AppCompatTheme_windowMinWidthMinor 119
-+int styleable AppCompatTheme_windowNoTitle 120
++int styleable AppCompatTheme_actionModeCloseContentDescription 17
++int styleable AppCompatTheme_actionModeCloseDrawable 18
++int styleable AppCompatTheme_actionModeCopyDrawable 19
++int styleable AppCompatTheme_actionModeCutDrawable 20
++int styleable AppCompatTheme_actionModeFindDrawable 21
++int styleable AppCompatTheme_actionModePasteDrawable 22
++int styleable AppCompatTheme_actionModePopupWindowStyle 23
++int styleable AppCompatTheme_actionModeSelectAllDrawable 24
++int styleable AppCompatTheme_actionModeShareDrawable 25
++int styleable AppCompatTheme_actionModeSplitBackground 26
++int styleable AppCompatTheme_actionModeStyle 27
++int styleable AppCompatTheme_actionModeTheme 28
++int styleable AppCompatTheme_actionModeWebSearchDrawable 29
++int styleable AppCompatTheme_actionOverflowButtonStyle 30
++int styleable AppCompatTheme_actionOverflowMenuStyle 31
++int styleable AppCompatTheme_activityChooserViewStyle 32
++int styleable AppCompatTheme_alertDialogButtonGroupStyle 33
++int styleable AppCompatTheme_alertDialogCenterButtons 34
++int styleable AppCompatTheme_alertDialogStyle 35
++int styleable AppCompatTheme_alertDialogTheme 36
++int styleable AppCompatTheme_android_windowAnimationStyle 37
++int styleable AppCompatTheme_android_windowIsFloating 38
++int styleable AppCompatTheme_autoCompleteTextViewStyle 39
++int styleable AppCompatTheme_borderlessButtonStyle 40
++int styleable AppCompatTheme_buttonBarButtonStyle 41
++int styleable AppCompatTheme_buttonBarNegativeButtonStyle 42
++int styleable AppCompatTheme_buttonBarNeutralButtonStyle 43
++int styleable AppCompatTheme_buttonBarPositiveButtonStyle 44
++int styleable AppCompatTheme_buttonBarStyle 45
++int styleable AppCompatTheme_buttonStyle 46
++int styleable AppCompatTheme_buttonStyleSmall 47
++int styleable AppCompatTheme_checkboxStyle 48
++int styleable AppCompatTheme_checkedTextViewStyle 49
++int styleable AppCompatTheme_colorAccent 50
++int styleable AppCompatTheme_colorBackgroundFloating 51
++int styleable AppCompatTheme_colorButtonNormal 52
++int styleable AppCompatTheme_colorControlActivated 53
++int styleable AppCompatTheme_colorControlHighlight 54
++int styleable AppCompatTheme_colorControlNormal 55
++int styleable AppCompatTheme_colorError 56
++int styleable AppCompatTheme_colorPrimary 57
++int styleable AppCompatTheme_colorPrimaryDark 58
++int styleable AppCompatTheme_colorSwitchThumbNormal 59
++int styleable AppCompatTheme_controlBackground 60
++int styleable AppCompatTheme_dialogCornerRadius 61
++int styleable AppCompatTheme_dialogPreferredPadding 62
++int styleable AppCompatTheme_dialogTheme 63
++int styleable AppCompatTheme_dividerHorizontal 64
++int styleable AppCompatTheme_dividerVertical 65
++int styleable AppCompatTheme_dropDownListViewStyle 66
++int styleable AppCompatTheme_dropdownListPreferredItemHeight 67
++int styleable AppCompatTheme_editTextBackground 68
++int styleable AppCompatTheme_editTextColor 69
++int styleable AppCompatTheme_editTextStyle 70
++int styleable AppCompatTheme_homeAsUpIndicator 71
++int styleable AppCompatTheme_imageButtonStyle 72
++int styleable AppCompatTheme_listChoiceBackgroundIndicator 73
++int styleable AppCompatTheme_listChoiceIndicatorMultipleAnimated 74
++int styleable AppCompatTheme_listChoiceIndicatorSingleAnimated 75
++int styleable AppCompatTheme_listDividerAlertDialog 76
++int styleable AppCompatTheme_listMenuViewStyle 77
++int styleable AppCompatTheme_listPopupWindowStyle 78
++int styleable AppCompatTheme_listPreferredItemHeight 79
++int styleable AppCompatTheme_listPreferredItemHeightLarge 80
++int styleable AppCompatTheme_listPreferredItemHeightSmall 81
++int styleable AppCompatTheme_listPreferredItemPaddingEnd 82
++int styleable AppCompatTheme_listPreferredItemPaddingLeft 83
++int styleable AppCompatTheme_listPreferredItemPaddingRight 84
++int styleable AppCompatTheme_listPreferredItemPaddingStart 85
++int styleable AppCompatTheme_panelBackground 86
++int styleable AppCompatTheme_panelMenuListTheme 87
++int styleable AppCompatTheme_panelMenuListWidth 88
++int styleable AppCompatTheme_popupMenuStyle 89
++int styleable AppCompatTheme_popupWindowStyle 90
++int styleable AppCompatTheme_radioButtonStyle 91
++int styleable AppCompatTheme_ratingBarStyle 92
++int styleable AppCompatTheme_ratingBarStyleIndicator 93
++int styleable AppCompatTheme_ratingBarStyleSmall 94
++int styleable AppCompatTheme_searchViewStyle 95
++int styleable AppCompatTheme_seekBarStyle 96
++int styleable AppCompatTheme_selectableItemBackground 97
++int styleable AppCompatTheme_selectableItemBackgroundBorderless 98
++int styleable AppCompatTheme_spinnerDropDownItemStyle 99
++int styleable AppCompatTheme_spinnerStyle 100
++int styleable AppCompatTheme_switchStyle 101
++int styleable AppCompatTheme_textAppearanceLargePopupMenu 102
++int styleable AppCompatTheme_textAppearanceListItem 103
++int styleable AppCompatTheme_textAppearanceListItemSecondary 104
++int styleable AppCompatTheme_textAppearanceListItemSmall 105
++int styleable AppCompatTheme_textAppearancePopupMenuHeader 106
++int styleable AppCompatTheme_textAppearanceSearchResultSubtitle 107
++int styleable AppCompatTheme_textAppearanceSearchResultTitle 108
++int styleable AppCompatTheme_textAppearanceSmallPopupMenu 109
++int styleable AppCompatTheme_textColorAlertDialogListItem 110
++int styleable AppCompatTheme_textColorSearchUrl 111
++int styleable AppCompatTheme_toolbarNavigationButtonStyle 112
++int styleable AppCompatTheme_toolbarStyle 113
++int styleable AppCompatTheme_tooltipForegroundColor 114
++int styleable AppCompatTheme_tooltipFrameBackground 115
++int styleable AppCompatTheme_viewInflaterClass 116
++int styleable AppCompatTheme_windowActionBar 117
++int styleable AppCompatTheme_windowActionBarOverlay 118
++int styleable AppCompatTheme_windowActionModeOverlay 119
++int styleable AppCompatTheme_windowFixedHeightMajor 120
++int styleable AppCompatTheme_windowFixedHeightMinor 121
++int styleable AppCompatTheme_windowFixedWidthMajor 122
++int styleable AppCompatTheme_windowFixedWidthMinor 123
++int styleable AppCompatTheme_windowMinWidthMajor 124
++int styleable AppCompatTheme_windowMinWidthMinor 125
++int styleable AppCompatTheme_windowNoTitle 126
++int[] styleable Autofill_InlineSuggestion { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionChip 0
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionEndIconStyle 1
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionStartIconStyle 2
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionSubtitle 3
++int styleable Autofill_InlineSuggestion_autofillInlineSuggestionTitle 4
++int styleable Autofill_InlineSuggestion_isAutofillInlineSuggestionTheme 5
 +int[] styleable ButtonBarLayout { 0x0 }
 +int styleable ButtonBarLayout_allowStacking 0
 +int[] styleable Capability { 0x0, 0x0 }
 +int styleable Capability_queryPatterns 0
 +int styleable Capability_shortcutMatchRequired 1
-+int[] styleable ColorStateListItem { 0x0, 0x101031f, 0x10101a5 }
++int[] styleable CheckedTextView { 0x1010108, 0x0, 0x0, 0x0 }
++int styleable CheckedTextView_android_checkMark 0
++int styleable CheckedTextView_checkMarkCompat 1
++int styleable CheckedTextView_checkMarkTint 2
++int styleable CheckedTextView_checkMarkTintMode 3
++int[] styleable ColorStateListItem { 0x0, 0x101031f, 0x10101a5, 0x1010647, 0x0 }
 +int styleable ColorStateListItem_alpha 0
 +int styleable ColorStateListItem_android_alpha 1
 +int styleable ColorStateListItem_android_color 2
-+int[] styleable CompoundButton { 0x1010107, 0x0, 0x0 }
++int styleable ColorStateListItem_android_lStar 3
++int styleable ColorStateListItem_lStar 4
++int[] styleable CompoundButton { 0x1010107, 0x0, 0x0, 0x0 }
 +int styleable CompoundButton_android_button 0
-+int styleable CompoundButton_buttonTint 1
-+int styleable CompoundButton_buttonTintMode 2
-+int[] styleable CoordinatorLayout { 0x0, 0x0 }
-+int styleable CoordinatorLayout_keylines 0
-+int styleable CoordinatorLayout_statusBarBackground 1
-+int[] styleable CoordinatorLayout_Layout { 0x10100b3, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
-+int styleable CoordinatorLayout_Layout_android_layout_gravity 0
-+int styleable CoordinatorLayout_Layout_layout_anchor 1
-+int styleable CoordinatorLayout_Layout_layout_anchorGravity 2
-+int styleable CoordinatorLayout_Layout_layout_behavior 3
-+int styleable CoordinatorLayout_Layout_layout_dodgeInsetEdges 4
-+int styleable CoordinatorLayout_Layout_layout_insetEdge 5
-+int styleable CoordinatorLayout_Layout_layout_keyline 6
++int styleable CompoundButton_buttonCompat 1
++int styleable CompoundButton_buttonTint 2
++int styleable CompoundButton_buttonTintMode 3
 +int[] styleable DrawerArrowToggle { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable DrawerArrowToggle_arrowHeadLength 0
 +int styleable DrawerArrowToggle_arrowShaftLength 1
@@ -1698,6 +1831,13 @@ index 0000000..808b1be
 +int styleable FontFamilyFont_fontVariationSettings 7
 +int styleable FontFamilyFont_fontWeight 8
 +int styleable FontFamilyFont_ttcIndex 9
++int[] styleable Fragment { 0x10100d0, 0x1010003, 0x10100d1 }
++int styleable Fragment_android_id 0
++int styleable Fragment_android_name 1
++int styleable Fragment_android_tag 2
++int[] styleable FragmentContainerView { 0x1010003, 0x10100d1 }
++int styleable FragmentContainerView_android_name 0
++int styleable FragmentContainerView_android_tag 1
 +int[] styleable GenericDraweeHierarchy { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable GenericDraweeHierarchy_actualImageScaleType 0
 +int styleable GenericDraweeHierarchy_backgroundImage 1
@@ -1892,7 +2032,7 @@ index 0000000..808b1be
 +int styleable SwitchCompat_track 11
 +int styleable SwitchCompat_trackTint 12
 +int styleable SwitchCompat_trackTintMode 13
-+int[] styleable TextAppearance { 0x10103ac, 0x1010161, 0x1010162, 0x1010163, 0x1010164, 0x1010098, 0x101009a, 0x101009b, 0x1010095, 0x1010097, 0x1010096, 0x0, 0x0 }
++int[] styleable TextAppearance { 0x10103ac, 0x1010161, 0x1010162, 0x1010163, 0x1010164, 0x1010098, 0x101009a, 0x101009b, 0x1010585, 0x1010095, 0x1010097, 0x1010096, 0x0, 0x0, 0x0, 0x0 }
 +int styleable TextAppearance_android_fontFamily 0
 +int styleable TextAppearance_android_shadowColor 1
 +int styleable TextAppearance_android_shadowDx 2
@@ -1901,12 +2041,15 @@ index 0000000..808b1be
 +int styleable TextAppearance_android_textColor 5
 +int styleable TextAppearance_android_textColorHint 6
 +int styleable TextAppearance_android_textColorLink 7
-+int styleable TextAppearance_android_textSize 8
-+int styleable TextAppearance_android_textStyle 9
-+int styleable TextAppearance_android_typeface 10
-+int styleable TextAppearance_fontFamily 11
-+int styleable TextAppearance_textAllCaps 12
-+int[] styleable Toolbar { 0x10100af, 0x1010140, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
++int styleable TextAppearance_android_textFontWeight 8
++int styleable TextAppearance_android_textSize 9
++int styleable TextAppearance_android_textStyle 10
++int styleable TextAppearance_android_typeface 11
++int styleable TextAppearance_fontFamily 12
++int styleable TextAppearance_fontVariationSettings 13
++int styleable TextAppearance_textAllCaps 14
++int styleable TextAppearance_textLocale 15
++int[] styleable Toolbar { 0x10100af, 0x1010140, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 }
 +int styleable Toolbar_android_gravity 0
 +int styleable Toolbar_android_minHeight 1
 +int styleable Toolbar_buttonGravity 2
@@ -1921,21 +2064,22 @@ index 0000000..808b1be
 +int styleable Toolbar_logo 11
 +int styleable Toolbar_logoDescription 12
 +int styleable Toolbar_maxButtonHeight 13
-+int styleable Toolbar_navigationContentDescription 14
-+int styleable Toolbar_navigationIcon 15
-+int styleable Toolbar_popupTheme 16
-+int styleable Toolbar_subtitle 17
-+int styleable Toolbar_subtitleTextAppearance 18
-+int styleable Toolbar_subtitleTextColor 19
-+int styleable Toolbar_title 20
-+int styleable Toolbar_titleMargin 21
-+int styleable Toolbar_titleMarginBottom 22
-+int styleable Toolbar_titleMarginEnd 23
-+int styleable Toolbar_titleMarginStart 24
-+int styleable Toolbar_titleMarginTop 25
-+int styleable Toolbar_titleMargins 26
-+int styleable Toolbar_titleTextAppearance 27
-+int styleable Toolbar_titleTextColor 28
++int styleable Toolbar_menu 14
++int styleable Toolbar_navigationContentDescription 15
++int styleable Toolbar_navigationIcon 16
++int styleable Toolbar_popupTheme 17
++int styleable Toolbar_subtitle 18
++int styleable Toolbar_subtitleTextAppearance 19
++int styleable Toolbar_subtitleTextColor 20
++int styleable Toolbar_title 21
++int styleable Toolbar_titleMargin 22
++int styleable Toolbar_titleMarginBottom 23
++int styleable Toolbar_titleMarginEnd 24
++int styleable Toolbar_titleMarginStart 25
++int styleable Toolbar_titleMarginTop 26
++int styleable Toolbar_titleMargins 27
++int styleable Toolbar_titleTextAppearance 28
++int styleable Toolbar_titleTextColor 29
 +int[] styleable View { 0x10100da, 0x1010000, 0x0, 0x0, 0x0 }
 +int styleable View_android_focusable 0
 +int styleable View_android_theme 1
@@ -1951,32 +2095,48 @@ index 0000000..808b1be
 +int styleable ViewStubCompat_android_inflatedId 1
 +int styleable ViewStubCompat_android_layout 2
 +int xml rn_dev_preferences 0x0
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..d5f12f0
+--- /dev/null
++++ b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Tue Nov 26 09:22:19 CET 2024
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..937cf22
+--- /dev/null
++++ b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/res"/><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/build/generated/res/rs/debug"/><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/res"/><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/build/generated/res/rs/debug"/><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><mergedItems/></merger>
+\ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..a1a9fe2
+index 0000000..73a43df
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/debug/jniLibs"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/debug/jniLibs"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..363b5d1
+index 0000000..8dcbfeb
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/debug/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/debug/shaders"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 new file mode 100644
-index 0000000..c55c9ca
+index 0000000..ab619ca
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/assets"/><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/debug/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/assets"/><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/debug/assets"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/react-native-screen-brightness/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 new file mode 100644
@@ -1996,19 +2156,19 @@ index 0000000..0961107
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/BuildConfig.class b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/BuildConfig.class
 new file mode 100644
-index 0000000..7588416
+index 0000000..7fe4fd3
 Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/BuildConfig.class differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.class b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.class
 new file mode 100644
-index 0000000..cc87bc2
+index 0000000..a93f4c5
 Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.class differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.class b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.class
 new file mode 100644
-index 0000000..e785911
+index 0000000..06e85e8
 Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.class differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.class b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.class
 new file mode 100644
-index 0000000..9c3978b
+index 0000000..8830a3c
 Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/javac/debug/classes/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.class differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/library_manifest/debug/AndroidManifest.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/library_manifest/debug/AndroidManifest.xml
 new file mode 100644
@@ -2038,23 +2198,32 @@ index 0000000..78ac5b8
 +local
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/node_modules/react-native-screen-brightness/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 new file mode 100644
-index 0000000..e6837a8
+index 0000000..833e979
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,8 @@
 +1<?xml version="1.0" encoding="utf-8"?>
 +2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+3    package="com.robinpowered.react.ScreenBrightness"
-+4    android:versionCode="1"
-+5    android:versionName="1.0" >
++3    package="com.robinpowered.react.ScreenBrightness" >
++4
++5    <uses-sdk android:minSdkVersion="25" />
++5-->/Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
 +6
-+7    <uses-sdk
-+8        android:minSdkVersion="21"
-+8-->/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+9        android:targetSdkVersion="29" />
-+9-->/Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+10
-+11</manifest>
++7</manifest>
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml b/node_modules/react-native-screen-brightness/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
+new file mode 100644
+index 0000000..27dae7e
+--- /dev/null
++++ b/node_modules/react-native-screen-brightness/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.robinpowered.react.ScreenBrightness" >
++
++    <uses-sdk android:minSdkVersion="25" />
++
++</manifest>
+\ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/navigation_json/debug/navigation.json b/node_modules/react-native-screen-brightness/android/build/intermediates/navigation_json/debug/navigation.json
 new file mode 100644
 index 0000000..0637a08
@@ -2065,12 +2234,12 @@ index 0000000..0637a08
 \ No newline at end of file
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/packaged_manifests/debug/output-metadata.json b/node_modules/react-native-screen-brightness/android/build/intermediates/packaged_manifests/debug/output-metadata.json
 new file mode 100644
-index 0000000..af577ce
+index 0000000..d240203
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/packaged_manifests/debug/output-metadata.json
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,18 @@
 +{
-+  "version": 2,
++  "version": 3,
 +  "artifactType": {
 +    "type": "PACKAGED_MANIFESTS",
 +    "kind": "Directory"
@@ -2081,21 +2250,38 @@ index 0000000..af577ce
 +    {
 +      "type": "SINGLE",
 +      "filters": [],
-+      "outputFile": "../../library_manifest/debug/AndroidManifest.xml"
++      "attributes": [],
++      "outputFile": "../../merged_manifest/debug/AndroidManifest.xml"
 +    }
-+  ]
++  ],
++  "elementType": "File"
 +}
 \ No newline at end of file
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.class b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.class
+new file mode 100644
+index 0000000..7fe4fd3
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/BuildConfig.class differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.class b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.class
+new file mode 100644
+index 0000000..a93f4c5
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule$1.class differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.class b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.class
+new file mode 100644
+index 0000000..06e85e8
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.class differ
+diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.class b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.class
+new file mode 100644
+index 0000000..8830a3c
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_dir/debug/com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.class differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar
 new file mode 100644
-index 0000000..af132f5
-Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/intermediates/runtime_library_classes_jar/debug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-screen-brightness/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt b/node_modules/react-native-screen-brightness/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
 new file mode 100644
-index 0000000..45dc3ec
+index 0000000..5feae28
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt
-@@ -0,0 +1,1367 @@
+@@ -0,0 +1,1447 @@
 +com.robinpowered.react.ScreenBrightness
 +anim abc_fade_in
 +anim abc_fade_out
@@ -2109,12 +2295,31 @@ index 0000000..45dc3ec
 +anim abc_slide_out_top
 +anim abc_tooltip_enter
 +anim abc_tooltip_exit
++anim btn_checkbox_to_checked_box_inner_merged_animation
++anim btn_checkbox_to_checked_box_outer_merged_animation
++anim btn_checkbox_to_checked_icon_null_animation
++anim btn_checkbox_to_unchecked_box_inner_merged_animation
++anim btn_checkbox_to_unchecked_check_path_merged_animation
++anim btn_checkbox_to_unchecked_icon_null_animation
++anim btn_radio_to_off_mtrl_dot_group_animation
++anim btn_radio_to_off_mtrl_ring_outer_animation
++anim btn_radio_to_off_mtrl_ring_outer_path_animation
++anim btn_radio_to_on_mtrl_dot_group_animation
++anim btn_radio_to_on_mtrl_ring_outer_animation
++anim btn_radio_to_on_mtrl_ring_outer_path_animation
 +anim catalyst_fade_in
 +anim catalyst_fade_out
 +anim catalyst_push_up_in
 +anim catalyst_push_up_out
 +anim catalyst_slide_down
 +anim catalyst_slide_up
++anim fragment_fast_out_extra_slow_in
++animator fragment_close_enter
++animator fragment_close_exit
++animator fragment_fade_enter
++animator fragment_fade_exit
++animator fragment_open_enter
++animator fragment_open_exit
 +attr actionBarDivider
 +attr actionBarItemBackground
 +attr actionBarPopupTheme
@@ -2133,6 +2338,7 @@ index 0000000..45dc3ec
 +attr actionMenuTextColor
 +attr actionModeBackground
 +attr actionModeCloseButtonStyle
++attr actionModeCloseContentDescription
 +attr actionModeCloseDrawable
 +attr actionModeCopyDrawable
 +attr actionModeCutDrawable
@@ -2143,6 +2349,7 @@ index 0000000..45dc3ec
 +attr actionModeShareDrawable
 +attr actionModeSplitBackground
 +attr actionModeStyle
++attr actionModeTheme
 +attr actionModeWebSearchDrawable
 +attr actionOverflowButtonStyle
 +attr actionOverflowMenuStyle
@@ -2167,6 +2374,11 @@ index 0000000..45dc3ec
 +attr autoSizePresetSizes
 +attr autoSizeStepGranularity
 +attr autoSizeTextType
++attr autofillInlineSuggestionChip
++attr autofillInlineSuggestionEndIconStyle
++attr autofillInlineSuggestionStartIconStyle
++attr autofillInlineSuggestionSubtitle
++attr autofillInlineSuggestionTitle
 +attr background
 +attr backgroundImage
 +attr backgroundSplit
@@ -2180,6 +2392,7 @@ index 0000000..45dc3ec
 +attr buttonBarNeutralButtonStyle
 +attr buttonBarPositiveButtonStyle
 +attr buttonBarStyle
++attr buttonCompat
 +attr buttonGravity
 +attr buttonIconDimen
 +attr buttonPanelSideLayout
@@ -2187,6 +2400,9 @@ index 0000000..45dc3ec
 +attr buttonStyleSmall
 +attr buttonTint
 +attr buttonTintMode
++attr checkMarkCompat
++attr checkMarkTint
++attr checkMarkTintMode
 +attr checkboxStyle
 +attr checkedTextViewStyle
 +attr closeIcon
@@ -2213,7 +2429,6 @@ index 0000000..45dc3ec
 +attr contentInsetStart
 +attr contentInsetStartWithNavigation
 +attr controlBackground
-+attr coordinatorLayoutStyle
 +attr customNavigationLayout
 +attr defaultQueryHint
 +attr dialogCornerRadius
@@ -2224,7 +2439,15 @@ index 0000000..45dc3ec
 +attr dividerHorizontal
 +attr dividerPadding
 +attr dividerVertical
++attr drawableBottomCompat
++attr drawableEndCompat
++attr drawableLeftCompat
++attr drawableRightCompat
 +attr drawableSize
++attr drawableStartCompat
++attr drawableTint
++attr drawableTintMode
++attr drawableTopCompat
 +attr drawerArrowStyle
 +attr dropDownListViewStyle
 +attr dropdownListPreferredItemHeight
@@ -2232,6 +2455,7 @@ index 0000000..45dc3ec
 +attr editTextColor
 +attr editTextStyle
 +attr elevation
++attr emojiCompatEnabled
 +attr expandActivityOverflowButtonDrawable
 +attr fadeDuration
 +attr failureImage
@@ -2262,19 +2486,16 @@ index 0000000..45dc3ec
 +attr imageButtonStyle
 +attr indeterminateProgressStyle
 +attr initialActivityCount
++attr isAutofillInlineSuggestionTheme
 +attr isLightTheme
 +attr itemPadding
-+attr keylines
++attr lStar
 +attr lastBaselineToBottomHeight
 +attr layout
-+attr layout_anchor
-+attr layout_anchorGravity
-+attr layout_behavior
-+attr layout_dodgeInsetEdges
-+attr layout_insetEdge
-+attr layout_keyline
 +attr lineHeight
 +attr listChoiceBackgroundIndicator
++attr listChoiceIndicatorMultipleAnimated
++attr listChoiceIndicatorSingleAnimated
 +attr listDividerAlertDialog
 +attr listItemLayout
 +attr listLayout
@@ -2283,12 +2504,15 @@ index 0000000..45dc3ec
 +attr listPreferredItemHeight
 +attr listPreferredItemHeightLarge
 +attr listPreferredItemHeightSmall
++attr listPreferredItemPaddingEnd
 +attr listPreferredItemPaddingLeft
 +attr listPreferredItemPaddingRight
++attr listPreferredItemPaddingStart
 +attr logo
 +attr logoDescription
 +attr maxButtonHeight
 +attr measureWithLargestChild
++attr menu
 +attr multiChoiceItemLayout
 +attr navigationContentDescription
 +attr navigationIcon
@@ -2357,7 +2581,6 @@ index 0000000..45dc3ec
 +attr splitTrack
 +attr srcCompat
 +attr state_above_anchor
-+attr statusBarBackground
 +attr subMenuArrow
 +attr submitBackground
 +attr subtitle
@@ -2380,6 +2603,7 @@ index 0000000..45dc3ec
 +attr textAppearanceSmallPopupMenu
 +attr textColorAlertDialogListItem
 +attr textColorSearchUrl
++attr textLocale
 +attr theme
 +attr thickness
 +attr thumbTextPadding
@@ -2423,16 +2647,16 @@ index 0000000..45dc3ec
 +attr windowMinWidthMinor
 +attr windowNoTitle
 +bool abc_action_bar_embed_tabs
-+bool abc_allow_stacked_button_bar
 +bool abc_config_actionMenuItemAllCaps
 +color abc_background_cache_hint_selector_material_dark
 +color abc_background_cache_hint_selector_material_light
 +color abc_btn_colored_borderless_text_material
 +color abc_btn_colored_text_material
 +color abc_color_highlight_material
++color abc_decor_view_status_guard
++color abc_decor_view_status_guard_light
 +color abc_hint_foreground_material_dark
 +color abc_hint_foreground_material_light
-+color abc_input_method_navigation_guard
 +color abc_primary_text_disable_only_material_dark
 +color abc_primary_text_disable_only_material_light
 +color abc_primary_text_material_dark
@@ -2561,6 +2785,9 @@ index 0000000..45dc3ec
 +dimen abc_edit_text_inset_horizontal_material
 +dimen abc_edit_text_inset_top_material
 +dimen abc_floating_window_z
++dimen abc_list_item_height_large_material
++dimen abc_list_item_height_material
++dimen abc_list_item_height_small_material
 +dimen abc_list_item_padding_horizontal_material
 +dimen abc_panel_menu_list_width
 +dimen abc_progress_bar_height_material
@@ -2569,6 +2796,9 @@ index 0000000..45dc3ec
 +dimen abc_seekbar_track_background_height_material
 +dimen abc_seekbar_track_progress_height_material
 +dimen abc_select_dialog_padding_start_material
++dimen abc_star_big
++dimen abc_star_medium
++dimen abc_star_small
 +dimen abc_switch_padding
 +dimen abc_text_size_body_1_material
 +dimen abc_text_size_body_2_material
@@ -2588,6 +2818,7 @@ index 0000000..45dc3ec
 +dimen abc_text_size_subtitle_material_toolbar
 +dimen abc_text_size_title_material
 +dimen abc_text_size_title_material_toolbar
++dimen autofill_inline_suggestion_icon_size
 +dimen compat_button_inset_horizontal_material
 +dimen compat_button_inset_vertical_material
 +dimen compat_button_padding_horizontal_material
@@ -2631,11 +2862,13 @@ index 0000000..45dc3ec
 +drawable abc_action_bar_item_background_material
 +drawable abc_btn_borderless_material
 +drawable abc_btn_check_material
++drawable abc_btn_check_material_anim
 +drawable abc_btn_check_to_on_mtrl_000
 +drawable abc_btn_check_to_on_mtrl_015
 +drawable abc_btn_colored_material
 +drawable abc_btn_default_mtrl_shape
 +drawable abc_btn_radio_material
++drawable abc_btn_radio_material_anim
 +drawable abc_btn_radio_to_on_mtrl_000
 +drawable abc_btn_radio_to_on_mtrl_015
 +drawable abc_btn_switch_to_on_mtrl_00001
@@ -2658,12 +2891,6 @@ index 0000000..45dc3ec
 +drawable abc_ic_menu_selectall_mtrl_alpha
 +drawable abc_ic_menu_share_mtrl_alpha
 +drawable abc_ic_search_api_material
-+drawable abc_ic_star_black_16dp
-+drawable abc_ic_star_black_36dp
-+drawable abc_ic_star_black_48dp
-+drawable abc_ic_star_half_black_16dp
-+drawable abc_ic_star_half_black_36dp
-+drawable abc_ic_star_half_black_48dp
 +drawable abc_ic_voice_search_api_material
 +drawable abc_item_background_holo_dark
 +drawable abc_item_background_holo_light
@@ -2694,23 +2921,31 @@ index 0000000..45dc3ec
 +drawable abc_seekbar_track_material
 +drawable abc_spinner_mtrl_am_alpha
 +drawable abc_spinner_textfield_background_material
++drawable abc_star_black_48dp
++drawable abc_star_half_black_48dp
 +drawable abc_switch_thumb_material
 +drawable abc_switch_track_mtrl_alpha
 +drawable abc_tab_indicator_material
 +drawable abc_tab_indicator_mtrl_alpha
 +drawable abc_text_cursor_material
-+drawable abc_text_select_handle_left_mtrl_dark
-+drawable abc_text_select_handle_left_mtrl_light
-+drawable abc_text_select_handle_middle_mtrl_dark
-+drawable abc_text_select_handle_middle_mtrl_light
-+drawable abc_text_select_handle_right_mtrl_dark
-+drawable abc_text_select_handle_right_mtrl_light
++drawable abc_text_select_handle_left_mtrl
++drawable abc_text_select_handle_middle_mtrl
++drawable abc_text_select_handle_right_mtrl
 +drawable abc_textfield_activated_mtrl_alpha
 +drawable abc_textfield_default_mtrl_alpha
 +drawable abc_textfield_search_activated_mtrl_alpha
 +drawable abc_textfield_search_default_mtrl_alpha
 +drawable abc_textfield_search_material
 +drawable abc_vector_test
++drawable autofill_inline_suggestion_chip_background
++drawable btn_checkbox_checked_mtrl
++drawable btn_checkbox_checked_to_unchecked_mtrl_animation
++drawable btn_checkbox_unchecked_mtrl
++drawable btn_checkbox_unchecked_to_checked_mtrl_animation
++drawable btn_radio_off_mtrl
++drawable btn_radio_off_to_on_mtrl_animation
++drawable btn_radio_on_mtrl
++drawable btn_radio_on_to_off_mtrl_animation
 +drawable notification_action_background
 +drawable notification_bg
 +drawable notification_bg_low
@@ -2724,10 +2959,13 @@ index 0000000..45dc3ec
 +drawable notification_tile_bg
 +drawable notify_panel_notification_icon_bg
 +drawable redbox_top_border_background
++drawable test_level_drawable
 +drawable tooltip_frame_dark
 +drawable tooltip_frame_light
 +id accessibility_action_clickable_span
 +id accessibility_actions
++id accessibility_collection
++id accessibility_collection_item
 +id accessibility_custom_action_0
 +id accessibility_custom_action_1
 +id accessibility_custom_action_10
@@ -2762,8 +3000,10 @@ index 0000000..45dc3ec
 +id accessibility_custom_action_9
 +id accessibility_hint
 +id accessibility_label
++id accessibility_links
 +id accessibility_role
 +id accessibility_state
++id accessibility_state_expanded
 +id accessibility_value
 +id action_bar
 +id action_bar_activity_content
@@ -2787,14 +3027,18 @@ index 0000000..45dc3ec
 +id add
 +id alertTitle
 +id async
++id autofill_inline_suggestion_end_icon
++id autofill_inline_suggestion_start_icon
++id autofill_inline_suggestion_subtitle
++id autofill_inline_suggestion_title
 +id blocking
-+id bottom
 +id buttonPanel
 +id catalyst_redbox_title
 +id center
 +id centerCrop
 +id centerInside
 +id checkbox
++id checked
 +id chronometer
 +id content
 +id contentPanel
@@ -2804,7 +3048,6 @@ index 0000000..45dc3ec
 +id default_activity_button
 +id dialog_button
 +id edit_query
-+id end
 +id expand_activities_button
 +id expanded_menu
 +id fitBottomStart
@@ -2815,6 +3058,7 @@ index 0000000..45dc3ec
 +id focusCrop
 +id forever
 +id fps_text
++id fragment_container_view_tag
 +id group_divider
 +id home
 +id icon
@@ -2822,7 +3066,11 @@ index 0000000..45dc3ec
 +id image
 +id info
 +id italic
-+id left
++id item1
++id item2
++id item3
++id item4
++id labelled_by
 +id line1
 +id line3
 +id listMode
@@ -2834,12 +3082,14 @@ index 0000000..45dc3ec
 +id notification_background
 +id notification_main_column
 +id notification_main_column_container
++id off
++id on
 +id parentPanel
++id pointer_events
 +id progress_circular
 +id progress_horizontal
 +id radio
 +id react_test_id
-+id right
 +id right_icon
 +id right_side
 +id rn_frame_file
@@ -2868,11 +3118,11 @@ index 0000000..45dc3ec
 +id select_dialog_listview
 +id shortcut
 +id spacer
++id special_effects_controller_view_tag
 +id split_action_bar
 +id src_atop
 +id src_in
 +id src_over
-+id start
 +id submenuarrow
 +id submit_area
 +id tabMode
@@ -2897,12 +3147,16 @@ index 0000000..45dc3ec
 +id title
 +id titleDividerNoCustom
 +id title_template
-+id top
 +id topPanel
++id unchecked
 +id uniform
 +id up
 +id view_tag_instance_handle
 +id view_tag_native_id
++id view_tree_lifecycle_owner
++id view_tree_saved_state_registry_owner
++id view_tree_view_model_store_owner
++id visible_removing_fragment_view_tag
 +id wrap_content
 +integer abc_config_activityDefaultDur
 +integer abc_config_activityShortDur
@@ -2911,6 +3165,13 @@ index 0000000..45dc3ec
 +integer react_native_dev_server_port
 +integer react_native_inspector_proxy_port
 +integer status_bar_notification_info_maxnum
++interpolator btn_checkbox_checked_mtrl_animation_interpolator_0
++interpolator btn_checkbox_checked_mtrl_animation_interpolator_1
++interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_0
++interpolator btn_checkbox_unchecked_mtrl_animation_interpolator_1
++interpolator btn_radio_to_off_mtrl_animation_interpolator_0
++interpolator btn_radio_to_on_mtrl_animation_interpolator_0
++interpolator fast_out_slow_in
 +layout abc_action_bar_title_item
 +layout abc_action_bar_up_container
 +layout abc_action_menu_item_layout
@@ -2939,6 +3200,7 @@ index 0000000..45dc3ec
 +layout abc_search_view
 +layout abc_select_dialog_material
 +layout abc_tooltip
++layout autofill_inline_suggestion
 +layout custom_dialog
 +layout dev_loading_view
 +layout fps_view
@@ -2955,6 +3217,8 @@ index 0000000..45dc3ec
 +layout select_dialog_multichoice_material
 +layout select_dialog_singlechoice_material
 +layout support_simple_spinner_dropdown_item
++menu example_menu
++menu example_menu2
 +string abc_action_bar_home_description
 +string abc_action_bar_up_description
 +string abc_action_menu_overflow_description
@@ -2963,18 +3227,6 @@ index 0000000..45dc3ec
 +string abc_activitychooserview_choose_application
 +string abc_capital_off
 +string abc_capital_on
-+string abc_font_family_body_1_material
-+string abc_font_family_body_2_material
-+string abc_font_family_button_material
-+string abc_font_family_caption_material
-+string abc_font_family_display_1_material
-+string abc_font_family_display_2_material
-+string abc_font_family_display_3_material
-+string abc_font_family_display_4_material
-+string abc_font_family_headline_material
-+string abc_font_family_menu_material
-+string abc_font_family_subhead_material
-+string abc_font_family_title_material
 +string abc_menu_alt_shortcut_label
 +string abc_menu_ctrl_shortcut_label
 +string abc_menu_delete_shortcut_label
@@ -2995,7 +3247,6 @@ index 0000000..45dc3ec
 +string abc_shareactionprovider_share_with_application
 +string abc_toolbar_collapse_description
 +string alert_description
-+string button_description
 +string catalyst_change_bundle_location
 +string catalyst_copy_button
 +string catalyst_debug
@@ -3013,6 +3264,7 @@ index 0000000..45dc3ec
 +string catalyst_hot_reloading_auto_enable
 +string catalyst_hot_reloading_stop
 +string catalyst_inspector
++string catalyst_inspector_stop
 +string catalyst_loading_from_url
 +string catalyst_open_flipper_error
 +string catalyst_perf_monitor
@@ -3037,7 +3289,6 @@ index 0000000..45dc3ec
 +string radiogroup_description
 +string rn_tab_description
 +string scrollbar_description
-+string search_description
 +string search_menu_title
 +string spinbutton_description
 +string state_busy_description
@@ -3046,6 +3297,7 @@ index 0000000..45dc3ec
 +string state_mixed_description
 +string state_off_description
 +string state_on_description
++string state_unselected_description
 +string status_bar_notification_info_overflow
 +string summary_description
 +string tablist_description
@@ -3210,6 +3462,7 @@ index 0000000..45dc3ec
 +style Base_Widget_AppCompat_SeekBar_Discrete
 +style Base_Widget_AppCompat_Spinner
 +style Base_Widget_AppCompat_Spinner_Underlined
++style Base_Widget_AppCompat_TextView
 +style Base_Widget_AppCompat_TextView_SpinnerItem
 +style Base_Widget_AppCompat_Toolbar
 +style Base_Widget_AppCompat_Toolbar_Button_Navigation
@@ -3307,6 +3560,8 @@ index 0000000..45dc3ec
 +style ThemeOverlay_AppCompat_ActionBar
 +style ThemeOverlay_AppCompat_Dark
 +style ThemeOverlay_AppCompat_Dark_ActionBar
++style ThemeOverlay_AppCompat_DayNight
++style ThemeOverlay_AppCompat_DayNight_ActionBar
 +style ThemeOverlay_AppCompat_Dialog
 +style ThemeOverlay_AppCompat_Dialog_Alert
 +style ThemeOverlay_AppCompat_Light
@@ -3323,6 +3578,7 @@ index 0000000..45dc3ec
 +style Theme_AppCompat_DialogWhenLarge
 +style Theme_AppCompat_Dialog_Alert
 +style Theme_AppCompat_Dialog_MinWidth
++style Theme_AppCompat_Empty
 +style Theme_AppCompat_Light
 +style Theme_AppCompat_Light_DarkActionBar
 +style Theme_AppCompat_Light_Dialog
@@ -3331,6 +3587,7 @@ index 0000000..45dc3ec
 +style Theme_AppCompat_Light_Dialog_MinWidth
 +style Theme_AppCompat_Light_NoActionBar
 +style Theme_AppCompat_NoActionBar
++style Theme_AutofillInlineSuggestion
 +style Theme_Catalyst
 +style Theme_Catalyst_LogBox
 +style Theme_Catalyst_RedBox
@@ -3408,12 +3665,18 @@ index 0000000..45dc3ec
 +style Widget_AppCompat_Spinner_DropDown
 +style Widget_AppCompat_Spinner_DropDown_ActionBar
 +style Widget_AppCompat_Spinner_Underlined
++style Widget_AppCompat_TextView
 +style Widget_AppCompat_TextView_SpinnerItem
 +style Widget_AppCompat_Toolbar
 +style Widget_AppCompat_Toolbar_Button_Navigation
++style Widget_Autofill
++style Widget_Autofill_InlineSuggestionChip
++style Widget_Autofill_InlineSuggestionEndIconStyle
++style Widget_Autofill_InlineSuggestionStartIconStyle
++style Widget_Autofill_InlineSuggestionSubtitle
++style Widget_Autofill_InlineSuggestionTitle
 +style Widget_Compat_NotificationActionContainer
 +style Widget_Compat_NotificationActionText
-+style Widget_Support_CoordinatorLayout
 +style redboxButton
 +styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 +styleable ActionBarLayout android_layout_gravity
@@ -3425,20 +3688,23 @@ index 0000000..45dc3ec
 +styleable AnimatedStateListDrawableCompat android_constantSize android_dither android_enterFadeDuration android_exitFadeDuration android_variablePadding android_visible
 +styleable AnimatedStateListDrawableItem android_drawable android_id
 +styleable AnimatedStateListDrawableTransition android_drawable android_fromId android_reversible android_toId
++styleable AppCompatEmojiHelper
 +styleable AppCompatImageView android_src srcCompat tint tintMode
 +styleable AppCompatSeekBar android_thumb tickMark tickMarkTint tickMarkTintMode
 +styleable AppCompatTextHelper android_drawableBottom android_drawableEnd android_drawableLeft android_drawableRight android_drawableStart android_drawableTop android_textAppearance
-+styleable AppCompatTextView android_textAppearance autoSizeMaxTextSize autoSizeMinTextSize autoSizePresetSizes autoSizeStepGranularity autoSizeTextType firstBaselineToTopHeight fontFamily lastBaselineToBottomHeight lineHeight textAllCaps
-+styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopupTheme actionBarSize actionBarSplitStyle actionBarStyle actionBarTabBarStyle actionBarTabStyle actionBarTabTextStyle actionBarTheme actionBarWidgetTheme actionButtonStyle actionDropDownStyle actionMenuTextAppearance actionMenuTextColor actionModeBackground actionModeCloseButtonStyle actionModeCloseDrawable actionModeCopyDrawable actionModeCutDrawable actionModeFindDrawable actionModePasteDrawable actionModePopupWindowStyle actionModeSelectAllDrawable actionModeShareDrawable actionModeSplitBackground actionModeStyle actionModeWebSearchDrawable actionOverflowButtonStyle actionOverflowMenuStyle activityChooserViewStyle alertDialogButtonGroupStyle alertDialogCenterButtons alertDialogStyle alertDialogTheme android_windowAnimationStyle android_windowIsFloating autoCompleteTextViewStyle borderlessButtonStyle buttonBarButtonStyle buttonBarNegativeButtonStyle buttonBarNeutralButtonStyle buttonBarPositiveButtonStyle buttonBarStyle buttonStyle buttonStyleSmall checkboxStyle checkedTextViewStyle colorAccent colorBackgroundFloating colorButtonNormal colorControlActivated colorControlHighlight colorControlNormal colorError colorPrimary colorPrimaryDark colorSwitchThumbNormal controlBackground dialogCornerRadius dialogPreferredPadding dialogTheme dividerHorizontal dividerVertical dropDownListViewStyle dropdownListPreferredItemHeight editTextBackground editTextColor editTextStyle homeAsUpIndicator imageButtonStyle listChoiceBackgroundIndicator listDividerAlertDialog listMenuViewStyle listPopupWindowStyle listPreferredItemHeight listPreferredItemHeightLarge listPreferredItemHeightSmall listPreferredItemPaddingLeft listPreferredItemPaddingRight panelBackground panelMenuListTheme panelMenuListWidth popupMenuStyle popupWindowStyle radioButtonStyle ratingBarStyle ratingBarStyleIndicator ratingBarStyleSmall searchViewStyle seekBarStyle selectableItemBackground selectableItemBackgroundBorderless spinnerDropDownItemStyle spinnerStyle switchStyle textAppearanceLargePopupMenu textAppearanceListItem textAppearanceListItemSecondary textAppearanceListItemSmall textAppearancePopupMenuHeader textAppearanceSearchResultSubtitle textAppearanceSearchResultTitle textAppearanceSmallPopupMenu textColorAlertDialogListItem textColorSearchUrl toolbarNavigationButtonStyle toolbarStyle tooltipForegroundColor tooltipFrameBackground viewInflaterClass windowActionBar windowActionBarOverlay windowActionModeOverlay windowFixedHeightMajor windowFixedHeightMinor windowFixedWidthMajor windowFixedWidthMinor windowMinWidthMajor windowMinWidthMinor windowNoTitle
++styleable AppCompatTextView android_textAppearance autoSizeMaxTextSize autoSizeMinTextSize autoSizePresetSizes autoSizeStepGranularity autoSizeTextType drawableBottomCompat drawableEndCompat drawableLeftCompat drawableRightCompat drawableStartCompat drawableTint drawableTintMode drawableTopCompat emojiCompatEnabled firstBaselineToTopHeight fontFamily fontVariationSettings lastBaselineToBottomHeight lineHeight textAllCaps textLocale
++styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopupTheme actionBarSize actionBarSplitStyle actionBarStyle actionBarTabBarStyle actionBarTabStyle actionBarTabTextStyle actionBarTheme actionBarWidgetTheme actionButtonStyle actionDropDownStyle actionMenuTextAppearance actionMenuTextColor actionModeBackground actionModeCloseButtonStyle actionModeCloseContentDescription actionModeCloseDrawable actionModeCopyDrawable actionModeCutDrawable actionModeFindDrawable actionModePasteDrawable actionModePopupWindowStyle actionModeSelectAllDrawable actionModeShareDrawable actionModeSplitBackground actionModeStyle actionModeTheme actionModeWebSearchDrawable actionOverflowButtonStyle actionOverflowMenuStyle activityChooserViewStyle alertDialogButtonGroupStyle alertDialogCenterButtons alertDialogStyle alertDialogTheme android_windowAnimationStyle android_windowIsFloating autoCompleteTextViewStyle borderlessButtonStyle buttonBarButtonStyle buttonBarNegativeButtonStyle buttonBarNeutralButtonStyle buttonBarPositiveButtonStyle buttonBarStyle buttonStyle buttonStyleSmall checkboxStyle checkedTextViewStyle colorAccent colorBackgroundFloating colorButtonNormal colorControlActivated colorControlHighlight colorControlNormal colorError colorPrimary colorPrimaryDark colorSwitchThumbNormal controlBackground dialogCornerRadius dialogPreferredPadding dialogTheme dividerHorizontal dividerVertical dropDownListViewStyle dropdownListPreferredItemHeight editTextBackground editTextColor editTextStyle homeAsUpIndicator imageButtonStyle listChoiceBackgroundIndicator listChoiceIndicatorMultipleAnimated listChoiceIndicatorSingleAnimated listDividerAlertDialog listMenuViewStyle listPopupWindowStyle listPreferredItemHeight listPreferredItemHeightLarge listPreferredItemHeightSmall listPreferredItemPaddingEnd listPreferredItemPaddingLeft listPreferredItemPaddingRight listPreferredItemPaddingStart panelBackground panelMenuListTheme panelMenuListWidth popupMenuStyle popupWindowStyle radioButtonStyle ratingBarStyle ratingBarStyleIndicator ratingBarStyleSmall searchViewStyle seekBarStyle selectableItemBackground selectableItemBackgroundBorderless spinnerDropDownItemStyle spinnerStyle switchStyle textAppearanceLargePopupMenu textAppearanceListItem textAppearanceListItemSecondary textAppearanceListItemSmall textAppearancePopupMenuHeader textAppearanceSearchResultSubtitle textAppearanceSearchResultTitle textAppearanceSmallPopupMenu textColorAlertDialogListItem textColorSearchUrl toolbarNavigationButtonStyle toolbarStyle tooltipForegroundColor tooltipFrameBackground viewInflaterClass windowActionBar windowActionBarOverlay windowActionModeOverlay windowFixedHeightMajor windowFixedHeightMinor windowFixedWidthMajor windowFixedWidthMinor windowMinWidthMajor windowMinWidthMinor windowNoTitle
++styleable Autofill_InlineSuggestion autofillInlineSuggestionChip autofillInlineSuggestionEndIconStyle autofillInlineSuggestionStartIconStyle autofillInlineSuggestionSubtitle autofillInlineSuggestionTitle isAutofillInlineSuggestionTheme
 +styleable ButtonBarLayout allowStacking
 +styleable Capability queryPatterns shortcutMatchRequired
-+styleable ColorStateListItem alpha android_alpha android_color
-+styleable CompoundButton android_button buttonTint buttonTintMode
-+styleable CoordinatorLayout keylines statusBarBackground
-+styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
++styleable CheckedTextView android_checkMark checkMarkCompat checkMarkTint checkMarkTintMode
++styleable ColorStateListItem alpha android_alpha android_color android_lStar lStar
++styleable CompoundButton android_button buttonCompat buttonTint buttonTintMode
 +styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
 +styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 +styleable FontFamilyFont android_font android_fontStyle android_fontVariationSettings android_fontWeight android_ttcIndex font fontStyle fontVariationSettings fontWeight ttcIndex
++styleable Fragment android_id android_name android_tag
++styleable FragmentContainerView android_name android_tag
 +styleable GenericDraweeHierarchy actualImageScaleType backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio
 +styleable GradientColor android_centerColor android_centerX android_centerY android_endColor android_endX android_endY android_gradientRadius android_startColor android_startX android_startY android_tileMode android_type
 +styleable GradientColorItem android_color android_offset
@@ -3457,55 +3723,47 @@ index 0000000..45dc3ec
 +styleable StateListDrawable android_constantSize android_dither android_enterFadeDuration android_exitFadeDuration android_variablePadding android_visible
 +styleable StateListDrawableItem android_drawable
 +styleable SwitchCompat android_textOff android_textOn android_thumb showText splitTrack switchMinWidth switchPadding switchTextAppearance thumbTextPadding thumbTint thumbTintMode track trackTint trackTintMode
-+styleable TextAppearance android_fontFamily android_shadowColor android_shadowDx android_shadowDy android_shadowRadius android_textColor android_textColorHint android_textColorLink android_textSize android_textStyle android_typeface fontFamily textAllCaps
-+styleable Toolbar android_gravity android_minHeight buttonGravity collapseContentDescription collapseIcon contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation logo logoDescription maxButtonHeight navigationContentDescription navigationIcon popupTheme subtitle subtitleTextAppearance subtitleTextColor title titleMargin titleMarginBottom titleMarginEnd titleMarginStart titleMarginTop titleMargins titleTextAppearance titleTextColor
++styleable TextAppearance android_fontFamily android_shadowColor android_shadowDx android_shadowDy android_shadowRadius android_textColor android_textColorHint android_textColorLink android_textFontWeight android_textSize android_textStyle android_typeface fontFamily fontVariationSettings textAllCaps textLocale
++styleable Toolbar android_gravity android_minHeight buttonGravity collapseContentDescription collapseIcon contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation logo logoDescription maxButtonHeight menu navigationContentDescription navigationIcon popupTheme subtitle subtitleTextAppearance subtitleTextColor title titleMargin titleMarginBottom titleMarginEnd titleMarginStart titleMarginTop titleMargins titleTextAppearance titleTextColor
 +styleable View android_focusable android_theme paddingEnd paddingStart theme
 +styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 +styleable ViewStubCompat android_id android_inflatedId android_layout
 +xml rn_dev_preferences
 diff --git a/node_modules/react-native-screen-brightness/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-screen-brightness/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
-index 0000000..c564924
+index 0000000..50374cd
 --- /dev/null
 +++ b/node_modules/react-native-screen-brightness/android/build/outputs/logs/manifest-merger-debug-report.txt
-@@ -0,0 +1,37 @@
+@@ -0,0 +1,25 @@
 +-- Merging decision tree log ---
 +manifest
-+ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
++ADDED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
 +	package
-+		ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:3:5-54
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+	android:versionName
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+	android:versionCode
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:1-4:12
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		ADDED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:3:5-54
++		INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
 +	xmlns:android
-+		ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml:2:11-69
 +uses-sdk
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
 +	android:targetSdkVersion
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		ADDED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
 +	android:minSdkVersion
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		ADDED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
-+		INJECTED from /Users/fabriziofilizola/Develop/rn-io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		ADDED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/federicomastrini/IO/io-app/node_modules/react-native-screen-brightness/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/react-native-screen-brightness/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/react-native-screen-brightness/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
+new file mode 100644
+index 0000000..f067ae2
+Binary files /dev/null and b/node_modules/react-native-screen-brightness/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
 diff --git a/node_modules/react-native-screen-brightness/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt b/node_modules/react-native-screen-brightness/android/build/tmp/compileDebugJavaWithJavac/source-classes-mapping.txt
 new file mode 100644
 index 0000000..ab60653
@@ -3519,3 +3777,18 @@ index 0000000..ab60653
 + com.robinpowered.react.ScreenBrightness.ScreenBrightnessModule$1
 +com/robinpowered/react/ScreenBrightness/ScreenBrightnessPackage.java
 + com.robinpowered.react.ScreenBrightness.ScreenBrightnessPackage
+diff --git a/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java b/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java
+index a0767e7..fb82774 100644
+--- a/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java
++++ b/node_modules/react-native-screen-brightness/android/src/main/java/com/robinpowered/react/ScreenBrightness/ScreenBrightnessModule.java
+@@ -214,8 +214,8 @@ public class ScreenBrightnessModule extends ReactContextBaseJavaModule
+     public void getAppBrightness(Promise promise) {
+         Activity activity = getCurrentActivity();
+         if (activity != null) {
+-            float brightness = getCurrentActivity().getWindow().getAttributes().screenBrightness;
+-            promise.resolve(brightness);
++            String brightness = Settings.System.getString(activity.getContentResolver(), "screen_brightness");
++            promise.resolve(Integer.parseInt(brightness)/255f);
+         } else {
+             promise.reject(new Error("Unable to access the current window"));
+         }
