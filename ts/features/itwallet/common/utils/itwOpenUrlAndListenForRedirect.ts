@@ -1,4 +1,7 @@
-import { Errors } from "@pagopa/io-react-native-wallet";
+import {
+  AuthorizationError,
+  OperationAbortedError
+} from "@pagopa/io-react-native-wallet/lib/typescript/credential/issuance/errors";
 import { Linking } from "react-native";
 
 export type OpenUrlAndListenForAuthRedirect = (
@@ -62,14 +65,12 @@ export const openUrlAndListenForAuthRedirect: OpenUrlAndListenForAuthRedirect =
       });
 
       if (winner === "OPERATION_ABORTED") {
-        throw new Errors.OperationAbortedError("DefaultQueryModeAuthorization");
+        throw new OperationAbortedError("DefaultQueryModeAuthorization");
       }
     }
 
     if (authRedirectUrl === undefined) {
-      throw new Errors.AuthorizationError(
-        "Invalid authentication redirect url"
-      );
+      throw new AuthorizationError("Invalid authentication redirect url");
     }
     return { authRedirectUrl };
   };
