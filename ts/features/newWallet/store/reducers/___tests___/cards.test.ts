@@ -81,10 +81,10 @@ describe("cards reducer", () => {
   it("should handle walletResetPlaceholders", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(walletResetPlaceholders([mockCard]));
-    expect(store.getState().features.wallet.cards).toEqual({
-      "1": mockCard
-    });
+    store.dispatch(
+      walletResetPlaceholders([{ ...mockCard, type: "placeholder" }])
+    );
+    expect(store.getState().features.wallet.cards).toEqual({});
   });
 
   it("should handle walletRemoveCardsByType", () => {
