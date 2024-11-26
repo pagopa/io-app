@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+      - id: setup
+        uses: ./.github/actions/setup-composite
       - id: store-current-version
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
@@ -27,7 +29,8 @@ jobs:
           echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
       - id: replace-version-with-canary
         run: |
-          node scripts/canary/replaceCanaryVersion.js ${{ vars.CANARY_VERSION }} ${{ vars.CANARY_BUILD_CODE }}
+          UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
+          node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
           bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios
