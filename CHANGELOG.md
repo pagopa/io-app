@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.4](https://github.com/pagopa/io-app/compare/2.78.0-rc.3...2.78.0-rc.4) (2024-11-25)
+
+## [2.78.0-rc.3](https://github.com/pagopa/io-app/compare/2.78.0-rc.2...2.78.0-rc.3) (2024-11-25)
+
+
+### Bug Fixes
+
+* version utility script ([d0a3707](https://github.com/pagopa/io-app/commit/d0a37076a1b6f41ac489f39d7c4993992f1bebc0))
+
+## [2.78.0-rc.2](https://github.com/pagopa/io-app/compare/2.78.0-rc.1...2.78.0-rc.2) (2024-11-25)
+
+## [2.78.0-rc.1](https://github.com/pagopa/io-app/compare/2.78.0-rc.0...2.78.0-rc.1) (2024-11-25)
+
+
+### Features
+
+* [[IOPLT-754](https://pagopa.atlassian.net/browse/IOPLT-754)] Nightly and canary release workflows ([#6392](https://github.com/pagopa/io-app/issues/6392)) ([fdf3d88](https://github.com/pagopa/io-app/commit/fdf3d8835cfc98b5568ca42112ab4034c7a0ab56))
+
+
+### Bug Fixes
+
+* [[IOBP-1022](https://pagopa.atlassian.net/browse/IOBP-1022)] Mixpanel analytics properties sent at app opening ([#6448](https://github.com/pagopa/io-app/issues/6448)) ([b50fd3b](https://github.com/pagopa/io-app/commit/b50fd3b99c4f04130130b919d8922720866a491c))
+* [[IOPID-2490](https://pagopa.atlassian.net/browse/IOPID-2490)] Add  correct check on whitelisted URLs ([#6449](https://github.com/pagopa/io-app/issues/6449)) ([a6872d7](https://github.com/pagopa/io-app/commit/a6872d7db5974cba933d169a7e4f2792dbeba356))
+* **IT Wallet:** [[SIW-1834](https://pagopa.atlassian.net/browse/SIW-1834)] Refactor date claim parser ([#6431](https://github.com/pagopa/io-app/issues/6431)) ([62a38b5](https://github.com/pagopa/io-app/commit/62a38b5e61cc0d28e1693021315ac58b7e0ba2dd))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-399](https://pagopa.atlassian.net/browse/IOAPPX-399)] Extend dark mode to other parts of the app ([#6285](https://github.com/pagopa/io-app/issues/6285)) ([14022a1](https://github.com/pagopa/io-app/commit/14022a19439629b59dddbfa279cf5876f1d23d38))
+* **Cross:** [[IOAPPX-434](https://pagopa.atlassian.net/browse/IOAPPX-434)] Update `IconApp` iOS assets to remove alpha channel and fix App Store issue ([#6451](https://github.com/pagopa/io-app/issues/6451)) ([32e451d](https://github.com/pagopa/io-app/commit/32e451dabd5c0c150a8c06f6af24e7bae1d7b32d))
+* **IT Wallet:** [[SIW-1851](https://pagopa.atlassian.net/browse/SIW-1851)] Add ephemeral credential Trustmark QR Code ([#6433](https://github.com/pagopa/io-app/issues/6433)) ([c10bf7a](https://github.com/pagopa/io-app/commit/c10bf7a4c6cc23a104a2ea85d64d6d747152ee23))
+* **IT Wallet:** [[SIW-1868](https://pagopa.atlassian.net/browse/SIW-1868)] Add full screen skeumorphic card modal ([#6447](https://github.com/pagopa/io-app/issues/6447)) ([102c584](https://github.com/pagopa/io-app/commit/102c58450f0b7c6a916cb46b510afe2115f003ad))
+
 ## [2.78.0-rc.0](https://github.com/pagopa/io-app/compare/2.77.0-rc.2...2.78.0-rc.0) (2024-11-22)
 
 
