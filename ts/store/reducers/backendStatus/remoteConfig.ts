@@ -428,3 +428,18 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+/**
+ * Return whether the Wallet activation is disabled.
+ * This is purely a "cosmetic" configuration to disable UI elements,
+ * it does not disable the entire IT Wallet feature.
+ */
+export const isItwActivationDisabledSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.wallet_activation_disabled),
+      O.getOrElse(() => false)
+    )
+);
