@@ -1,11 +1,9 @@
 name: Canary release
 on:
-  workflow_dispatch:
-  issue_comment:                                     
-    types: [created, edited, deleted]
+  - issue_comment
 jobs:
   run-static-checks:
-    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/release-canary') 
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
@@ -27,7 +25,7 @@ jobs:
           echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
       - id: replace-version-with-canary
         run: |
-          node scripts/canary/replaceCanaryVersion.js ${{ vars.CANARY_VERSION }} ${{ vars.CANARY_BUILD_CODE }}
+          node scripts/canary/replaceCanaryVersion.js ${{ env.CANARY_VERSION }} ${{ env.CANARY_BUILD_CODE }}
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
           bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios

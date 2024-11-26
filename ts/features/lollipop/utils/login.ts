@@ -4,8 +4,8 @@ import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { parseStringPromise } from "xml2js";
 import {
-  getRedirects,
-  isLoginUtilsError
+  LoginUtilsError,
+  getRedirects
 } from "@pagopa/io-react-native-login-utils";
 import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
@@ -94,6 +94,9 @@ export const verifyLollipopSamlRequestTask = (
       }
     );
   });
+
+export const isLoginUtilsError = (error: unknown): error is LoginUtilsError =>
+  (error as LoginUtilsError).userInfo !== undefined;
 
 export const regenerateKeyGetRedirectsAndVerifySaml = (
   loginUri: string,

@@ -612,7 +612,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -1561,7 +1560,6 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -2686,7 +2684,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -3666,7 +3663,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -4701,7 +4697,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -5552,7 +5547,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -6337,7 +6331,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }
@@ -7067,7 +7060,6 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         },
                                         {
                                           "flexGrow": 1,
-                                          "flexShrink": 1,
                                         },
                                       ]
                                     }

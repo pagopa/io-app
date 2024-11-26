@@ -1430,6 +1430,7 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -3534,9 +3535,8 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Nascosto"
-        fiscalCode:
-          label: Il tuo Codice Fiscale
-          action: Premi per ingrandire e visualizzare il codice a barre a tutto schermo
+        fiscalCode: Il tuo Codice Fiscale
+        fiscalCodeBarcode: Codice a barre del tuo Codice Fiscale
         status:
           valid: Valida
           invalid: Non valida

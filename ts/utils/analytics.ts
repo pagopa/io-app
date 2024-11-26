@@ -1,9 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
-import {
-  isLoginUtilsError,
-  LoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
@@ -12,6 +9,7 @@ import URLParse from "url-parse";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
+import { isLoginUtilsError } from "../features/lollipop/utils/login";
 import {
   clearKeychainError,
   getKeychainError,

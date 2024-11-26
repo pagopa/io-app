@@ -1,3 +1,5 @@
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import {
   Badge,
   H6,
@@ -12,11 +14,12 @@ import {
   VSpacer,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
+import { pipe } from "fp-ts/lib/function";
+import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
 import Animated, {
-  Extrapolation,
+  Extrapolate,
   interpolate,
   useAnimatedStyle,
   useDerivedValue,
@@ -24,10 +27,9 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import I18n from "../../../../../i18n";
+import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { getCategorySpecs } from "../../utils/filters";
-import { isValidDiscount, normalizedDiscountPercentage } from "./utils";
 
 type Props = {
   onPress: () => void;
@@ -87,7 +89,7 @@ export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
       scaleTraversed.value,
       [0, 1],
       [1, animationScaleValue],
-      Extrapolation.CLAMP
+      Extrapolate.CLAMP
     );
 
     return {
@@ -103,6 +105,11 @@ export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
     // eslint-disable-next-line functional/immutable-data
     isPressed.value = 0;
   }, [isPressed]);
+  const normalizedValue = pipe(
+    WithinRangeInteger(0, 100).decode(discount.discount),
+    E.map(v => v.toString()),
+    E.getOrElse(() => "-")
+  );
 
   return (
     <Pressable
@@ -139,13 +146,9 @@ export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
                   <HSpacer size={8} />
                 </>
               )}
-              {isValidDiscount(discount.discount) && (
-                <Badge
-                  variant="purple"
-                  outline
-                  text={`-${normalizedDiscountPercentage(discount.discount)}%`}
-                />
-              )}
+              {discount.discount ? (
+                <Badge variant="purple" outline text={`-${normalizedValue}%`} />
+              ) : null}
             </View>
             <VSpacer size={8} />
             <H6>{discount.name}</H6>

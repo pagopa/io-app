@@ -39,10 +39,9 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_ATTACHMENT]: ItwPresentationCredentialAttachmentNavigationParams;
   [ITW_ROUTES.PRESENTATION
-    .CREDENTIAL_TRUSTMARK]: ItwCredentialTrustmarkScreenNavigationParams;
-  [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
-  [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
+  [ITW_ROUTES.PRESENTATION
+    .CREDENTIAL_TRUSTMARK]: ItwCredentialTrustmarkScreenNavigationParams;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
