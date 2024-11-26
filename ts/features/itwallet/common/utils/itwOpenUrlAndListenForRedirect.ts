@@ -1,8 +1,5 @@
-import {
-  AuthorizationError,
-  OperationAbortedError
-} from "@pagopa/io-react-native-wallet/lib/typescript/credential/issuance/errors";
 import { Linking } from "react-native";
+import { Credential } from "@pagopa/io-react-native-wallet";
 
 export type OpenUrlAndListenForAuthRedirect = (
   redirectUri: string,
@@ -21,8 +18,8 @@ export type OpenUrlAndListenForAuthRedirect = (
  * @param authUrl The URL to which the end user should be redirected to start the authentication flow
  * @param signal An optional {@link AbortSignal} to abort the operation when using the default browser
  * @returns An object containing the authorization redirect URL
- * @throws {Errors.AuthorizationError} if an error occurs during the authorization process
- * @throws {Errors.OperationAbortedError} if the caller aborts the operation via the provided signal
+ * @throws {Credential.Issuance.Errors.AuthorizationError} if an error occurs during the authorization process
+ * @throws {Credential.Issuance.Errors.OperationAbortedError} if the caller aborts the operation via the provided signal
  */
 export const openUrlAndListenForAuthRedirect: OpenUrlAndListenForAuthRedirect =
   async (redirectUri, authUrl, signal) => {
@@ -65,12 +62,16 @@ export const openUrlAndListenForAuthRedirect: OpenUrlAndListenForAuthRedirect =
       });
 
       if (winner === "OPERATION_ABORTED") {
-        throw new OperationAbortedError("DefaultQueryModeAuthorization");
+        throw new Credential.Issuance.Errors.OperationAbortedError(
+          "DefaultQueryModeAuthorization"
+        );
       }
     }
 
     if (authRedirectUrl === undefined) {
-      throw new AuthorizationError("Invalid authentication redirect url");
+      throw new Credential.Issuance.Errors.AuthorizationError(
+        "Invalid authentication redirect url"
+      );
     }
     return { authRedirectUrl };
   };
