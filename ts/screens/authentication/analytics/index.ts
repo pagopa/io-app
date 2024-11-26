@@ -5,10 +5,16 @@ import { FlowType, buildEventProperties } from "../../../utils/analytics";
 import { IdpCIE, IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { LoginSessionDuration } from "../../../features/fastLogin/analytics/optinAnalytics";
 import { SpidLevel } from "../../../features/cieLogin/utils";
+import { SpidLevelEnum } from "../../../../definitions/backend/SpidLevel";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",
   SpidL3: "L3"
+};
+const SECURITY_LEVELENUM_MAP: Record<SpidLevelEnum, "L1" | "L2" | "L3"> = {
+  "https://www.spid.gov.it/SpidL1": "L1",
+  "https://www.spid.gov.it/SpidL2": "L2",
+  "https://www.spid.gov.it/SpidL3": "L3"
 };
 
 export function trackLoginFlowStarting() {
@@ -82,15 +88,16 @@ export function trackCieLoginSuccess(login_session: LoginSessionDuration) {
     })
   );
 }
-// As in the `trackCieIDLoginSelected` event, there should be a `security_level` property;
-// however, this value might differ from the one selected before,
-// and this information cannot be retrieved in the current implementation at the flow step where this event is dispatched.
-// TODO: Add the `security_level` property with the correct value.
-export function trackCieIDLoginSuccess(login_session: LoginSessionDuration) {
+
+export function trackCieIDLoginSuccess(
+  login_session: LoginSessionDuration,
+  spidLevel?: SpidLevelEnum
+) {
   void mixpanelTrack(
     "LOGIN_CIEID_UX_SUCCESS",
     buildEventProperties("UX", "confirm", {
-      login_session
+      login_session,
+      security_level: spidLevel ? SECURITY_LEVELENUM_MAP[spidLevel] : spidLevel
     })
   );
 }
