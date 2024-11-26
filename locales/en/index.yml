@@ -3199,6 +3199,7 @@ features:
         other: Altro
       badge:
         active: Già presente
+        unavailable: Non disponibile
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare

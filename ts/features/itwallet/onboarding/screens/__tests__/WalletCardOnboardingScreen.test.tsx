@@ -29,11 +29,8 @@ type RenderOptions = {
   isItwEnabled?: boolean;
   isItwTestEnabled?: boolean;
   itwLifecycle?: ItwLifecycleState;
+  remotelyDisabledCredentials?: Array<string>;
 };
-
-jest.mock("../../../../../config", () => ({
-  itwEnabled: true
-}));
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
@@ -46,6 +43,11 @@ describe("WalletCardOnboardingScreen", () => {
 
     expect(
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeTruthy();
+    expect(
+      queryByTestId(
+        `${CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}ModuleTestID`
+      )
     ).toBeTruthy();
     expect(
       queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
@@ -64,13 +66,30 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
+
+  test.each([
+    { remotelyDisabledCredentials: ["MDL"] },
+    { remotelyDisabledCredentials: ["MDL", "EuropeanHealthInsuranceCard"] }
+  ] as ReadonlyArray<RenderOptions>)(
+    "it should hide credential modules when $remotelyDisabledCredentials are remotely disabled",
+    options => {
+      const { queryByTestId } = renderComponent(options);
+      for (const type of options.remotelyDisabledCredentials!) {
+        // Currently ModuleCredential does not attach the testID if onPress is undefined.
+        // Since disabled credentials have undefined onPress, we can test for null.
+        expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
+      }
+      expect(queryByTestId("EuropeanDisabilityCardModuleTestID")).toBeTruthy();
+    }
+  );
 });
 
 const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
   itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
+  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID,
+  remotelyDisabledCredentials
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -100,7 +119,8 @@ const renderComponent = ({
           min_app_version: {
             android: "0.0.0.0",
             ios: "0.0.0.0"
-          }
+          },
+          disabled_credentials: remotelyDisabledCredentials
         },
         idPay: isIdPayEnabled && {
           min_app_version: {
