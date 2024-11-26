@@ -3534,8 +3534,9 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Hidden"
-        fiscalCode: Fiscal code
-        fiscalCodeBarcode: Barcode of your fiscal code
+        fiscalCode:
+          label: Your Fiscal Code
+          action: Press to enlarge and display the barcode on the entire screen
         status:
           valid: Valid
           invalid: Not valid
@@ -3561,12 +3562,11 @@ features:
         openPdf: "Show document"
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
-      trustmark:
-        cta: Mostra certificato di autenticità
-        title: Certificato di autenticità
-        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
-        certifiedLabel: Questo documento è certificato dall'ente emittente.
-        qrCode: QR code autenticità credenziale
+    trustmark:
+      cta: Mostra certificato di autenticità
+      description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
+      expiration: Il QR Code si rinnova tra
+      qrCode: QR code autenticità credenziale
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:

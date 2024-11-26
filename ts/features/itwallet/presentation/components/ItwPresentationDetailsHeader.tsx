@@ -15,10 +15,9 @@ import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard";
 type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
 
 /**
- * Credentials that should display a card
+ * Credentials that should display a skeumorphic card
  */
-const credentialsWithCard: ReadonlyArray<string> = [
-  CredentialType.PID,
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD
 ];
@@ -36,7 +35,7 @@ const ItwPresentationDetailsHeader = ({
     getThemeColorByCredentialType(credential.credentialType as CredentialType);
 
   const headerContent = React.useMemo(() => {
-    if (credentialsWithCard.includes(credential.credentialType)) {
+    if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
       return <ItwPresentationCredentialCard credential={credential} />;
     }
 
