@@ -3,6 +3,7 @@
 exports[`environment reducer initial state should match expected values 1`] = `
 {
   "applicationInitialized": false,
+  "engagementScreenShownThisSession": false,
   "onboardingInstructionsShown": false,
   "pushNotificationPermissionsRequestDuration": undefined,
   "systemNotificationsEnabled": false,

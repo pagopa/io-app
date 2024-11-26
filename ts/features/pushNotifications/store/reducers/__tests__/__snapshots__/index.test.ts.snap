@@ -4,6 +4,7 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
 {
   "environment": {
     "applicationInitialized": false,
+    "engagementScreenShownThisSession": false,
     "onboardingInstructionsShown": false,
     "pushNotificationPermissionsRequestDuration": undefined,
     "systemNotificationsEnabled": false,
@@ -23,6 +24,7 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
 {
   "environment": {
     "applicationInitialized": false,
+    "engagementScreenShownThisSession": false,
     "onboardingInstructionsShown": false,
     "pushNotificationPermissionsRequestDuration": undefined,
     "systemNotificationsEnabled": false,
