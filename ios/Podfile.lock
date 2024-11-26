@@ -1503,7 +1503,12 @@ PODS:
   - react-native-screen-brightness (2.0.0-alpha):
     - React
   - react-native-skia (1.5.10):
-    - RCT-Folly (= 2021.07.22.00)
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React
     - React-callinvoker
     - React-Core
@@ -1893,7 +1898,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated (3.16.1):
+  - RNReanimated (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1913,10 +1918,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.16.1)
-    - RNReanimated/worklets (= 3.16.1)
+    - RNReanimated/reanimated (= 3.16.3)
+    - RNReanimated/worklets (= 3.16.3)
     - Yoga
-  - RNReanimated/reanimated (3.16.1):
+  - RNReanimated/reanimated (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1936,9 +1941,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 3.16.1)
+    - RNReanimated/reanimated/apple (= 3.16.3)
     - Yoga
-  - RNReanimated/reanimated/apple (3.16.1):
+  - RNReanimated/reanimated/apple (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1959,7 +1964,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated/worklets (3.16.1):
+  - RNReanimated/worklets (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2463,7 +2468,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: 3ee0c20ccfcc9f6dbe7433d3aa66c31d66fe8ecd
   pagopa-io-react-native-integrity: 99a8772bd2d058442f08233fbfac93c367b758f6
   pagopa-io-react-native-jwt: d170ab1475627e0cf070e57fc59b73521dadd066
-  pagopa-io-react-native-login-utils: a445c97d7d7dc86b089079029a1340f4c682128c
+  pagopa-io-react-native-login-utils: 6ba1c399fda70e9f92a29244bea33b22958869af
   pagopa-react-native-zendesk: 6d2339df555ff3083faddeb8be96a7a03092d73c
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 726d24248aeab6d7180dac71a936bbca6a994ed1
@@ -2511,7 +2516,7 @@ SPEC CHECKSUMS:
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 5141f11858b033636f1788b14f32eaba92cee810
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
-  react-native-skia: 7bfe9c816d6ce75bcda1101ca0d53e221e5598f9
+  react-native-skia: 0a9518362a6433ef42d2b802ad6a5d5290799d07
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
@@ -2556,7 +2561,7 @@ SPEC CHECKSUMS:
   RNPermissions: b3d9d00889e37cc184d365ab04bb7a3f20811b1c
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 0d591ea1e150f36cb96d868d4e8d77272243d78a
-  RNReanimated: f42a5044d121d68e91680caacb0293f4274228eb
+  RNReanimated: 83a2baa5f4dc44ace7b5296ea1f3533d998dfb69
   RNScreens: 00e01e05e3cf66bd701148c2531965437e9583e4
   RNSentry: e280ee2f6d0aa58c8ac0eb9a45b7678b5840c1da
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
