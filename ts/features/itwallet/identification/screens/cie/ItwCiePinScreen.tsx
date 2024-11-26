@@ -20,7 +20,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import LegacyMarkdown from "../../../../../components/ui/Markdown/LegacyMarkdown";
+import IOMarkdown from "../../../../../components/IOMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
 import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -52,9 +52,7 @@ const onOpenForgotPinPage = () => {
 
 const ForgottenPin = () => (
   <View>
-    <LegacyMarkdown avoidTextSelection>
-      {I18n.t("bottomSheets.ciePin.content")}
-    </LegacyMarkdown>
+    <IOMarkdown content={I18n.t("bottomSheets.ciePin.content")} />
     <VSpacer size={24} />
     <Label asLink onPress={onOpenForgotPinPage}>
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
