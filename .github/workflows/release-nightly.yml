@@ -1,7 +1,7 @@
 name: Nightly release new app version
 on:
   schedule:
-    - cron: '59 23 * * 1,5'
+    - cron: '59 21 * * 1-5'
   workflow_dispatch:
 jobs:
   run-static-checks:
@@ -9,12 +9,15 @@ jobs:
   bump-app-version:
     needs: run-static-checks
     runs-on: ubuntu-latest
+    environment: prod
+    outputs:
+      currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: bump-version
@@ -24,10 +27,11 @@ jobs:
           yarn release-rc
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
+          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
           gh release create $APP_VERSION --latest --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,6 +44,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -115,6 +120,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
@@ -136,7 +142,7 @@ jobs:
           chmod 400 ~/.ssh/id_ed25519
           ssh-add ~/.ssh/id_ed25519
         env:
-          SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY}}
+          SSH_DEPLOY_KEY: ${{secrets.SSH_CERTS_DEPLOY_KEY}}
       - id: build-upload-app-store
         name: Build & submit to App store
         run: |

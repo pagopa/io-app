@@ -2,6 +2,87 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.7](https://github.com/pagopa/io-app/compare/2.78.0-rc.6...2.78.0-rc.7) (2024-11-26)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1800](https://pagopa.atlassian.net/browse/SIW-1800),[SIW-1801](https://pagopa.atlassian.net/browse/SIW-1801),[SIW-1808](https://pagopa.atlassian.net/browse/SIW-1808)] Alert for disabled authentication methods, IPZS and Wallet Provider down ([#6441](https://github.com/pagopa/io-app/issues/6441)) ([4e12b91](https://github.com/pagopa/io-app/commit/4e12b91f6c57be0c805c75bde1886d536157ff0b))
+
+
+### Bug Fixes
+
+* New workflows triggers and steps to be properly set ([#6457](https://github.com/pagopa/io-app/issues/6457)) ([8f5e18e](https://github.com/pagopa/io-app/commit/8f5e18ea141d397f3cad65be4af08e3710ffa973))
+* version on github is not aligned with version on store ([#6463](https://github.com/pagopa/io-app/issues/6463)) ([c1373e2](https://github.com/pagopa/io-app/commit/c1373e2079841bf4bc42d353039efb664ebb4623))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-439](https://pagopa.atlassian.net/browse/IOAPPX-439)] Enable the iridescent trust mark for all ([#6444](https://github.com/pagopa/io-app/issues/6444)) ([aa744cd](https://github.com/pagopa/io-app/commit/aa744cd92c7a6f4743f81121fe77f0cb1d326504))
+
+## [2.78.0-rc.6](https://github.com/pagopa/io-app/compare/2.78.0-rc.5...2.78.0-rc.6) (2024-11-26)
+
+
+### Features
+
+* [[IOCOM-1936](https://pagopa.atlassian.net/browse/IOCOM-1936)] Handling of InApp Browser opening failure for FIMS SSO ([#6450](https://github.com/pagopa/io-app/issues/6450)) ([785882d](https://github.com/pagopa/io-app/commit/785882d1112e68cb2e5d3d8ab1975fd82eb6bb89))
+
+
+### Bug Fixes
+
+* [[IOCOM-1955](https://pagopa.atlassian.net/browse/IOCOM-1955)] Fix message time going out of screen ([#6459](https://github.com/pagopa/io-app/issues/6459)) ([113d171](https://github.com/pagopa/io-app/commit/113d17130b27d6cbf948a759257ed0a0676e1e81))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1854](https://pagopa.atlassian.net/browse/SIW-1854)] Route every unsupported device error code ([#6452](https://github.com/pagopa/io-app/issues/6452)) ([9d8f0e1](https://github.com/pagopa/io-app/commit/9d8f0e119c83350d4c56a440d8464ecf3105a103))
+* **IT Wallet:** [[SIW-1869](https://pagopa.atlassian.net/browse/SIW-1869)] Add fiscal code full screen modal ([#6456](https://github.com/pagopa/io-app/issues/6456)) ([3293ed3](https://github.com/pagopa/io-app/commit/3293ed3198fe94c2e4363aba74178f7f4a86a5b6))
+
+## [2.78.0-rc.5](https://github.com/pagopa/io-app/compare/2.78.0-rc.4...2.78.0-rc.5) (2024-11-26)
+
+
+### Bug Fixes
+
+* [[PE-796](https://pagopa.atlassian.net/browse/PE-796)] CGN hide percentage badge if value not in range `1-100` ([#6454](https://github.com/pagopa/io-app/issues/6454)) ([b151329](https://github.com/pagopa/io-app/commit/b1513299122508f672ca61e2423319700ec8ec6e))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-434](https://pagopa.atlassian.net/browse/IOAPPX-434)] Remove dark mode app icon to fix build rejection ([#6458](https://github.com/pagopa/io-app/issues/6458)) ([6677fe5](https://github.com/pagopa/io-app/commit/6677fe504fa2acbace10dc0448f77b7a8f004fa7))
+
+## [2.78.0-rc.4](https://github.com/pagopa/io-app/compare/2.78.0-rc.3...2.78.0-rc.4) (2024-11-25)
+
+## [2.78.0-rc.3](https://github.com/pagopa/io-app/compare/2.78.0-rc.2...2.78.0-rc.3) (2024-11-25)
+
+
+### Bug Fixes
+
+* version utility script ([d0a3707](https://github.com/pagopa/io-app/commit/d0a37076a1b6f41ac489f39d7c4993992f1bebc0))
+
+## [2.78.0-rc.2](https://github.com/pagopa/io-app/compare/2.78.0-rc.1...2.78.0-rc.2) (2024-11-25)
+
+## [2.78.0-rc.1](https://github.com/pagopa/io-app/compare/2.78.0-rc.0...2.78.0-rc.1) (2024-11-25)
+
+
+### Features
+
+* [[IOPLT-754](https://pagopa.atlassian.net/browse/IOPLT-754)] Nightly and canary release workflows ([#6392](https://github.com/pagopa/io-app/issues/6392)) ([fdf3d88](https://github.com/pagopa/io-app/commit/fdf3d8835cfc98b5568ca42112ab4034c7a0ab56))
+
+
+### Bug Fixes
+
+* [[IOBP-1022](https://pagopa.atlassian.net/browse/IOBP-1022)] Mixpanel analytics properties sent at app opening ([#6448](https://github.com/pagopa/io-app/issues/6448)) ([b50fd3b](https://github.com/pagopa/io-app/commit/b50fd3b99c4f04130130b919d8922720866a491c))
+* [[IOPID-2490](https://pagopa.atlassian.net/browse/IOPID-2490)] Add  correct check on whitelisted URLs ([#6449](https://github.com/pagopa/io-app/issues/6449)) ([a6872d7](https://github.com/pagopa/io-app/commit/a6872d7db5974cba933d169a7e4f2792dbeba356))
+* **IT Wallet:** [[SIW-1834](https://pagopa.atlassian.net/browse/SIW-1834)] Refactor date claim parser ([#6431](https://github.com/pagopa/io-app/issues/6431)) ([62a38b5](https://github.com/pagopa/io-app/commit/62a38b5e61cc0d28e1693021315ac58b7e0ba2dd))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-399](https://pagopa.atlassian.net/browse/IOAPPX-399)] Extend dark mode to other parts of the app ([#6285](https://github.com/pagopa/io-app/issues/6285)) ([14022a1](https://github.com/pagopa/io-app/commit/14022a19439629b59dddbfa279cf5876f1d23d38))
+* **Cross:** [[IOAPPX-434](https://pagopa.atlassian.net/browse/IOAPPX-434)] Update `IconApp` iOS assets to remove alpha channel and fix App Store issue ([#6451](https://github.com/pagopa/io-app/issues/6451)) ([32e451d](https://github.com/pagopa/io-app/commit/32e451dabd5c0c150a8c06f6af24e7bae1d7b32d))
+* **IT Wallet:** [[SIW-1851](https://pagopa.atlassian.net/browse/SIW-1851)] Add ephemeral credential Trustmark QR Code ([#6433](https://github.com/pagopa/io-app/issues/6433)) ([c10bf7a](https://github.com/pagopa/io-app/commit/c10bf7a4c6cc23a104a2ea85d64d6d747152ee23))
+* **IT Wallet:** [[SIW-1868](https://pagopa.atlassian.net/browse/SIW-1868)] Add full screen skeumorphic card modal ([#6447](https://github.com/pagopa/io-app/issues/6447)) ([102c584](https://github.com/pagopa/io-app/commit/102c58450f0b7c6a916cb46b510afe2115f003ad))
+
 ## [2.78.0-rc.0](https://github.com/pagopa/io-app/compare/2.77.0-rc.2...2.78.0-rc.0) (2024-11-22)
 
 
