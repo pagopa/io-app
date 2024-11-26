@@ -3487,8 +3487,9 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Hidden"
-        fiscalCode: Fiscal code
-        fiscalCodeBarcode: Barcode of your fiscal code
+        fiscalCode:
+          label: Your Fiscal Code
+          action: Press to enlarge and display the barcode on the entire screen
         status:
           valid: Valid
           invalid: Not valid

@@ -1,13 +1,15 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import {
+  isLoginUtilsError,
+  LoginUtilsError
+} from "@pagopa/io-react-native-login-utils";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import { mixpanelTrack } from "../mixpanel";
-import { isLoginUtilsError } from "../features/lollipop/utils/login";
 import {
   clearKeychainError,
   getKeychainError,
