@@ -134,10 +134,14 @@ export const MessageListItem = ({
         </View>
         <View style={styles.textContainer}>
           <View style={styles.organizationContainer}>
+            {/* We use 'flexGrow: 1, flexShrink: 1' instead of 'flex: 1'
+                in order to keep a consistent styling approach between
+                react and react-native (on react-native, 'flex: 1' does
+                something similar to 'flex-grow') */}
             <H6
               numberOfLines={1}
               color={theme["textBody-default"]}
-              style={{ flexGrow: 1 }}
+              style={{ flexGrow: 1, flexShrink: 1 }}
             >
               {organizationName}
             </H6>
