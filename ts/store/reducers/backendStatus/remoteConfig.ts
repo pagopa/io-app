@@ -443,3 +443,16 @@ export const isItwActivationDisabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+/**
+ * Return IT Wallet credentials that have been disabled remotely.
+ */
+export const itwDisabledCredentialsSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_credentials),
+      O.getOrElse(() => emptyArray)
+    )
+);
