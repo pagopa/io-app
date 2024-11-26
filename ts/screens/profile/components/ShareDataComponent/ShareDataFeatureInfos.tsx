@@ -29,7 +29,7 @@ const MarkdownBody = () => {
   return (
     <View
       accessible
-      // Necessary because `LegacyMarkdown` component truncates the content into separate blocks.
+      // Necessary because `IOMarkdown` does not handle accessibility properly at the moment
       accessibilityLabel={
         I18n.t("profile.main.privacy.shareData.whyBottomSheet.body").replace(
           /\*/g,
