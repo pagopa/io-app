@@ -1,6 +1,8 @@
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { constNull, pipe } from "fp-ts/lib/function";
+import { sequenceS } from "fp-ts/lib/Apply";
+import * as O from "fp-ts/lib/Option";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -22,8 +24,10 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { trackWalletCreationFailed } from "../../analytics";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { useCredentialInvalidStatusDetails } from "../hooks/useCredentialInvalidStatusDetails";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -59,7 +63,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
     selectIssuerConfigurationOption
   );
 
-  const invalidStatusDetails = useCredentialInvalidStatusDetails(failure, {
+  const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
     credentialType,
     issuerConf
   });
@@ -156,3 +160,49 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const resultScreenProps = getOperationResultScreenContentProps();
   return <OperationResultScreenContent {...resultScreenProps} />;
 };
+
+type GetCredentialInvalidStatusDetailsParams = {
+  credentialType: O.Option<string>;
+  issuerConf: O.Option<IssuerConfiguration>;
+};
+
+/**
+ * Utility to safely extract details from an invalid status failure, including the localized message.
+ * **Note:** The message is dynamic and is extracted from the EC.
+ */
+const getCredentialInvalidStatusDetails = (
+  failure: CredentialIssuanceFailure,
+  { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
+) => {
+  const errorCodeOption = pipe(
+    failure,
+    O.fromPredicate(isInvalidStatusFailure),
+    O.chainEitherK(x => StatusAttestationError.decode(x.reason.reason)),
+    O.map(x => x.error)
+  );
+
+  const localizedMessage = pipe(
+    sequenceS(O.Monad)({
+      errorCode: errorCodeOption,
+      credentialType,
+      issuerConf
+    }),
+    O.map(({ errorCode, ...rest }) =>
+      Errors.extractErrorMessageFromIssuerConf(errorCode, rest)
+    ),
+    O.map(message => message?.[getClaimsFullLocale()]),
+    O.toUndefined
+  );
+
+  return {
+    message: localizedMessage,
+    errorCode: pipe(errorCodeOption, O.toUndefined)
+  };
+};
+
+const isInvalidStatusFailure = (
+  failure: CredentialIssuanceFailure
+): failure is Extract<
+  CredentialIssuanceFailure,
+  { type: CredentialIssuanceFailureType.INVALID_STATUS }
+> => failure.type === CredentialIssuanceFailureType.INVALID_STATUS;
