@@ -7,7 +7,6 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
-import com.reactnativecommunity.art.ARTPackage;
 import com.facebook.react.bridge.JSIModulePackage;
 
 import com.facebook.react.PackageList;
@@ -37,7 +36,6 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           packages.add(new CiePackage());
-          packages.add(new ARTPackage());
           return packages;
         }
 
