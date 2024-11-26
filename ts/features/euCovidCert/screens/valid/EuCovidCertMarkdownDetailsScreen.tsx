@@ -16,9 +16,9 @@ import {
   FlashAnimatedComponent,
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
-import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { EUCovidCertParamsList } from "../../navigation/params";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
   markdownDetails: string;
@@ -40,7 +40,6 @@ export const EuCovidCertMarkdownDetailsScreen = (
     "EUCOVIDCERT_MARKDOWN_DETAILS"
   >
 ): React.ReactElement => {
-  const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
   const [flashAnimationState, setFlashAnimationState] =
     useState<FlashAnimationState>();
@@ -74,7 +73,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
     });
   };
   // show button when markdown is loaded and it is not capturing the screenshot
-  const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;
+  const canShowButton = !isCapturingScreenShoot;
 
   useHeaderSecondLevel({
     title: I18n.t(
@@ -100,12 +99,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
           {/* add an extra top and bottom (as extra height in the markdown component)
             margin while capturing the screenshot  */}
           {isCapturingScreenShoot && <VSpacer size={24} />}
-          <MarkdownHandleCustomLink
-            extraBodyHeight={60}
-            onLoadEnd={() => setLoadMarkdownComplete(true)}
-          >
-            {props.route.params.markdownDetails}
-          </MarkdownHandleCustomLink>
+          <IOMarkdown content={props.route.params.markdownDetails} />
         </View>
       </ScrollView>
       {canShowButton && (

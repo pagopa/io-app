@@ -32,7 +32,6 @@ import {
   FlashAnimatedComponent,
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
-import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,
   navigateToEuCovidCertificateQrCodeFullScreen
@@ -43,6 +42,7 @@ import {
 } from "../../types/EUCovidCertificate";
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 type Props = {
   validCertificate: ValidCertificate;
@@ -118,12 +118,7 @@ const EuCovidCertValidComponent = (
     )}
     {props.validCertificate.markdownInfo && (
       <View style={props.markdownWebViewStyle}>
-        <MarkdownHandleCustomLink
-          testID={"markdownPreview"}
-          extraBodyHeight={60}
-        >
-          {props.validCertificate.markdownInfo}
-        </MarkdownHandleCustomLink>
+        <IOMarkdown content={props.validCertificate.markdownInfo} />
         <VSpacer size={16} />
       </View>
     )}

@@ -6,7 +6,7 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import I18n from "../../../i18n";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import { EuCovidCertLearnMoreLink } from "../components/EuCovidCertLearnMoreLink";
-import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
+import IOMarkdown from "../../../components/IOMarkdown";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
@@ -32,11 +32,7 @@ const EuCovidCertExpiredContentComponent = (props: Props) => (
       body={<EuCovidCertLearnMoreLink />}
     />
     <VSpacer size={16} />
-    {props.expiredInfo && (
-      <MarkdownHandleCustomLink extraBodyHeight={60}>
-        {props.expiredInfo}
-      </MarkdownHandleCustomLink>
-    )}
+    {props.expiredInfo && <IOMarkdown content={props.expiredInfo} />}
   </>
 );
 

@@ -11,7 +11,7 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import { EuCovidCertLearnMoreLink } from "../components/EuCovidCertLearnMoreLink";
-import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
+import IOMarkdown from "../../../components/IOMarkdown";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { useIOSelector } from "../../../store/hooks";
 import { EUCovidContext } from "../components/EUCovidContext";
@@ -61,9 +61,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => {
         </H3>
       </View>
       <VSpacer size={16} />
-      {props.revokeInfo && (
-        <MarkdownHandleCustomLink>{props.revokeInfo}</MarkdownHandleCustomLink>
-      )}
+      {props.revokeInfo && <IOMarkdown content={props.revokeInfo} />}
       <VSpacer size={32} />
       <EuCovidCertLearnMoreLink />
     </>
