@@ -15,7 +15,7 @@
     "paymentWithValidDueDateCount": 1,
     "paymentWithExpiredDueDateCount": 1,
     "withCTA": true,
-    "withEUCovidCert": true,
+    "generateLegacyGreenPassMessage": true,
     "withValidDueDateCount": 1,
     "withInValidDueDateCount": 1,
     "standardMessageCount": 1,
