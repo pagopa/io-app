@@ -71,10 +71,6 @@ export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// EU Covid Certificate feature flag
-export const euCovidCertificateEnabled: boolean =
-  Config.EU_COVID_CERT_ENABLED === "YES";
-
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
