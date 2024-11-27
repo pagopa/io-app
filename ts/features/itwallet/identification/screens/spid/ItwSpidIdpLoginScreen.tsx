@@ -26,6 +26,10 @@ const LoadingSpinner = (
   <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
 );
 
+// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
+const defaultUserAgent =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
+
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.
  * It handles the navigation state changes to detect when the authentication is completed
@@ -41,10 +45,6 @@ const ItwSpidIdpLoginScreen = () => {
   const onError = useCallback(() => {
     machineRef.send({ type: "error", scope: "spid-login" });
   }, [machineRef]);
-
-  // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
-  const defaultUserAgent =
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
