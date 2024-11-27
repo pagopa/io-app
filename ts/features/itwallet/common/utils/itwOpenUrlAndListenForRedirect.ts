@@ -62,7 +62,7 @@ export const openUrlAndListenForAuthRedirect: OpenUrlAndListenForAuthRedirect =
       });
 
       if (winner === "OPERATION_ABORTED") {
-        throw new IOOperationAbortedError("DefaultQueryModeAuthorization");
+        throw new ItwOperationAbortedError("DefaultQueryModeAuthorization");
       }
     }
 
@@ -129,7 +129,7 @@ const createAbortPromiseFromSignal = (signal: AbortSignal) => {
 
 const isDefined = <T>(x: T | undefined | null | ""): x is T => Boolean(x);
 
-export class IOOperationAbortedError extends Error {
+export class ItwOperationAbortedError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "OperationAbortedError";

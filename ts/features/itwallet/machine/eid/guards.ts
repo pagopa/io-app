@@ -9,7 +9,7 @@ import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
-import { IOOperationAbortedError } from "../../common/utils/itwOpenUrlAndListenForRedirect";
+import { ItwOperationAbortedError } from "../../common/utils/itwOpenUrlAndListenForRedirect";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -66,7 +66,7 @@ export const createEidIssuanceGuardsImplementation = (
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
   isOperationAborted: ({ event }: { event: EidIssuanceEvents }) =>
-    "error" in event && event.error instanceof IOOperationAbortedError,
+    "error" in event && event.error instanceof ItwOperationAbortedError,
 
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(

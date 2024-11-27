@@ -55,7 +55,6 @@ describe("itwEidIssuanceMachine", () => {
   const startAuthFlow = jest.fn();
   const getAuthRedirectUrl = jest.fn();
 
-  const isNativeAuthSessionClosed = jest.fn();
   const issuedEidMatchesAuthenticatedUser = jest.fn();
   const isSessionExpired = jest.fn();
   const isOperationAborted = jest.fn();
@@ -112,7 +111,6 @@ describe("itwEidIssuanceMachine", () => {
       >(startAuthFlow)
     },
     guards: {
-      isNativeAuthSessionClosed,
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
