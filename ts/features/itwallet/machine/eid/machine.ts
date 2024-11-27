@@ -132,7 +132,8 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
             actions: "setFailure",
