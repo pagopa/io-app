@@ -32,6 +32,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToIdpSelectionScreen = jest.fn();
   const navigateToEidPreviewScreen = jest.fn();
   const navigateToSpidLoginScreen = jest.fn();
+  const navigateToWalletRevocationScreen = jest.fn();
   const navigateToSuccessScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
@@ -72,6 +73,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToIdpSelectionScreen,
       navigateToEidPreviewScreen,
       navigateToSpidLoginScreen,
+      navigateToWalletRevocationScreen,
       navigateToSuccessScreen,
       navigateToFailureScreen,
       navigateToWallet,
@@ -868,5 +870,77 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(requestEid).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
+  });
+
+  it("Should handle 401 when creating wallet instance", async () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    /**
+     * Start eID issuance
+     */
+
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * Accept TOS and request WIA
+     */
+
+    createWalletInstance.mockImplementation(() => Promise.reject({}));
+    isSessionExpired.mockImplementation(() => true);
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
+    await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
+
+    // Wallet instance creation failed
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+  });
+
+  it("Should handle 401 when revoking wallet instance", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+      value: "Failure"
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    // Revoke Wallet Instance
+
+    revokeWalletInstance.mockImplementation(() => Promise.reject({}));
+    isSessionExpired.mockImplementation(() => true);
+
+    actor.send({ type: "revoke-wallet-instance" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceRevocation");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    await waitFor(() => expect(revokeWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 });
