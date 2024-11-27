@@ -123,7 +123,7 @@ const completeCieAuthFlow = async ({
   walletAttestation
 }: CompleteCieAuthFlowParams) => {
   const query = Object.fromEntries(new URL(callbackUrl).searchParams);
-  const { code } = Credential.Issuance.parseAuthroizationResponse(query);
+  const { code } = Credential.Issuance.parseAuthorizationResponse(query);
 
   await regenerateCryptoKey(DPOP_KEYTAG);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);

@@ -3,6 +3,7 @@ import {
   Credential
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
+import * as t from "io-ts";
 import { StoredCredential } from "./itwTypesUtils";
 
 export const getCredentialStatusAttestation = async (
@@ -54,3 +55,11 @@ export const shouldRequestStatusAttestation = ({
       throw new Error("Unexpected credential status");
   }
 };
+
+/**
+ * Shape of a credential status attestation response error.
+ */
+export const StatusAttestationError = t.intersection([
+  t.type({ error: t.string }),
+  t.partial({ error_description: t.string })
+]);
