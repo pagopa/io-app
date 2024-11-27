@@ -62,9 +62,7 @@ export const openUrlAndListenForAuthRedirect: OpenUrlAndListenForAuthRedirect =
       });
 
       if (winner === "OPERATION_ABORTED") {
-        throw new Credential.Issuance.Errors.OperationAbortedError(
-          "DefaultQueryModeAuthorization"
-        );
+        throw new OperationAbortedError("DefaultQueryModeAuthorization");
       }
     }
 
@@ -130,3 +128,10 @@ const createAbortPromiseFromSignal = (signal: AbortSignal) => {
 };
 
 const isDefined = <T>(x: T | undefined | null | ""): x is T => Boolean(x);
+
+class OperationAbortedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "OperationAbortedError";
+  }
+}
