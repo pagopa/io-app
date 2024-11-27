@@ -7,7 +7,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 
 type CgnRequestOtpPayload = {
-  onSuccess: () => void;
+  onSuccess?: () => void;
   onError: () => void;
 };
 
