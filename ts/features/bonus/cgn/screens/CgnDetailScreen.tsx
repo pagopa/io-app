@@ -122,12 +122,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         isHeaderVisible
         subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
         action={{
-          label: I18n.t("global.buttons.retry"),
-          onPress: loadCGN
-        }}
-        secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: navigation.goBack
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: loadCGN
         }}
       />
     );
