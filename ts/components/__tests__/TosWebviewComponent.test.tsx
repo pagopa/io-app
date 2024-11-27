@@ -13,7 +13,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import TosWebviewComponent from "../TosWebviewComponent";
 import { FlowType } from "../../utils/analytics";
 // import * as urlUtils from "../../../ts/utils/url";
-// import brokenLinkImage from "../../../img/broken-link.png";
 
 beforeAll(() => {
   jest.resetAllMocks();

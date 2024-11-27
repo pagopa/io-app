@@ -24,7 +24,6 @@ import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { euCovidCertificateEnabled } from "../../../config";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { trackPNPushOpened } from "../../pn/analytics";
 import { isTestEnv } from "../../../utils/environment";
@@ -319,11 +318,9 @@ function* dispatchSuccessAction(
     getMessageDataAction.success({
       containsAttachments: attachmentCount > 0,
       containsPayment,
-      euCovidCerficateAuthCode: euCovidCertificateEnabled
-        ? messageDetails.euCovidCertificate?.authCode
-        : undefined,
       firstTimeOpening: !paginatedMessage.isRead,
       hasRemoteContent: !!thirdPartyMessage,
+      isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
       isPNMessage: isPnEnabled && isPNMessageCategory,
       messageId: paginatedMessage.id,
       organizationFiscalCode: paginatedMessage.organizationFiscalCode,
