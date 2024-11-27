@@ -3,6 +3,7 @@ import {
   type IntegrityError,
   type IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
+import { CryptoErrorCodes } from "@pagopa/io-react-native-crypto";
 import { assert } from "../../../../utils/assert";
 import { EidIssuanceEvents } from "./events";
 
@@ -59,11 +60,16 @@ export const mapEventToFailure = (
  * Integrity errors thrown by the device.
  * These errors might occur locally before calling the Wallet Provider.
  */
-const localIntegrityErrors: Array<IntegrityErrorCodes> = [
+const localIntegrityErrors: Array<IntegrityErrorCodes | CryptoErrorCodes> = [
   "REQUEST_ATTESTATION_FAILED",
   "UNSUPPORTED_DEVICE",
   "UNSUPPORTED_IOS_VERSION",
-  "UNSUPPORTED_SERVICE"
+  "UNSUPPORTED_SERVICE",
+  "WRONG_KEY_CONFIGURATION",
+  "API_LEVEL_NOT_SUPPORTED",
+  "PREPARE_FAILED",
+  "KEY_IS_NOT_HARDWARE_BACKED",
+  "GENERATION_KEY_FAILED"
 ];
 
 const isLocalIntegrityError = (e: unknown): e is IntegrityError =>

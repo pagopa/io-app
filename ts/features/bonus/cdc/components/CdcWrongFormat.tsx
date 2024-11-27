@@ -1,11 +1,6 @@
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
-import image from "../../../../../img/wallet/errors/generic-error-icon.png";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -19,31 +14,21 @@ const CdcWrongFormat = () => {
     navigation.getParent()?.goBack();
   };
   return (
-    <>
-      <SafeAreaView style={IOStyles.flex} testID={"cdcWrongFormat"}>
-        <InfoScreenComponent
-          image={renderInfoRasterImage(image)}
-          title={I18n.t(
-            "bonus.cdc.bonusRequest.bonusRequested.ko.wrongFormat.title"
-          )}
-          body={I18n.t(
-            "bonus.cdc.bonusRequest.bonusRequested.ko.wrongFormat.body"
-          )}
-        />
-      </SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.close"),
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: onExitPress,
-            testID: "closeButton"
-          }
-        }}
-      />
-    </>
+    <OperationResultScreenContent
+      testID="cdcWrongFormat"
+      pictogram="umbrellaNew"
+      title={I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.ko.wrongFormat.title"
+      )}
+      subtitle={I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.ko.wrongFormat.body"
+      )}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        onPress: onExitPress,
+        testID: "closeButton"
+      }}
+    />
   );
 };
 

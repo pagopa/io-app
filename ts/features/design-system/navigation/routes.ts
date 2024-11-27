@@ -137,10 +137,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
-    PICTOGRAMS: {
-      route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
-      title: "Pictograms"
-    },
     BUTTONS: {
       route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
       title: "Buttons"
