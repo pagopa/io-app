@@ -107,7 +107,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - SwiftCBOR
-  - pagopa-io-react-native-jwt (1.2.0):
+  - pagopa-io-react-native-jwt (1.3.0):
     - JOSESwift (~> 2.3)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -612,7 +612,17 @@ PODS:
     - ZXingObjC
   - RNReactNativeHapticFeedback (2.0.2):
     - React-Core
-  - RNReanimated (3.12.0):
+  - RNReanimated (3.15.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+    - RNReanimated/reanimated (= 3.15.0)
+    - RNReanimated/worklets (= 3.15.0)
+  - RNReanimated/reanimated (3.15.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+  - RNReanimated/worklets (3.15.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ReactCommon/turbomodule/core
@@ -1113,7 +1123,7 @@ SPEC CHECKSUMS:
   RNPermissions: b3d9d00889e37cc184d365ab04bb7a3f20811b1c
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
-  RNReanimated: 108a53626a492df35db30b98fc922a7189d1c601
+  RNReanimated: c2027c397233801d4aceb7375e000ac87ec2e67d
   RNScreens: 2fc874a2605e88dedf43204a79fad1d2da4abfbe
   RNSentry: 3e667c2c6ea5d35ea292c7f262c6b44e43842cc1
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
