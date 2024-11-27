@@ -544,9 +544,6 @@ export const itwEidIssuanceMachine = setup({
             },
             onError: [
               {
-                target: "#itwEidIssuanceMachine.UserIdentification"
-              },
-              {
                 actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"
               }
