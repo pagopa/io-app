@@ -1,6 +1,4 @@
-import { Second } from "@pagopa/ts-commons/lib/units";
 import {
-  Body,
   H1,
   H2,
   Icon,
@@ -9,22 +7,23 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Second } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { cgnSelectedDiscountCodeSelector } from "../../store/reducers/merchants";
+import { Otp } from "../../../../../../definitions/cgn/Otp";
+import { isReady } from "../../../../../common/model/RemoteValue";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { FooterActions } from "../../../../../components/ui/FooterActions";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { IOScrollView } from "../../../../../components/ui/IOScrollView";
-import { FooterActions } from "../../../../../components/ui/FooterActions";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { CgnDiscountExpireProgressBar } from "../../components/merchants/discount/CgnDiscountExpireProgressBar";
-import { cgnOtpDataSelector } from "../../store/reducers/otp";
-import { isReady } from "../../../../../common/model/RemoteValue";
-import { Otp } from "../../../../../../definitions/cgn/Otp";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { cgnGenerateOtp } from "../../store/actions/otp";
 import CGN_ROUTES from "../../navigation/routes";
+import { cgnGenerateOtp } from "../../store/actions/otp";
+import { cgnSelectedDiscountCodeSelector } from "../../store/reducers/merchants";
+import { cgnOtpDataSelector } from "../../store/reducers/otp";
 
 const getOtpTTL = (otp: Otp): Second => {
   const now = new Date();
