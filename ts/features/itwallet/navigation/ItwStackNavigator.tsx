@@ -38,6 +38,7 @@ import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
+import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -82,6 +83,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
         component={ItwIpzsPrivacyScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
+        component={ItwAlreadyActiveScreen}
+        options={hiddenHeader}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
