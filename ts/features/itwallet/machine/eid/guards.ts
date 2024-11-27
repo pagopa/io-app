@@ -1,9 +1,5 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import * as J from "fp-ts/lib/Json";
 import * as O from "fp-ts/lib/Option";
-import * as t from "io-ts";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { ItwSessionExpiredError } from "../../api/client";
@@ -12,10 +8,6 @@ import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
 import { ItwOperationAbortedError } from "../../common/utils/itwOpenUrlAndListenForRedirect";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
-
-const NativeAuthSessionClosed = t.type({
-  error: t.literal("NativeAuthSessionClosed")
-});
 
 type GuardsImplementationOptions = Partial<{
   bypassIdentityMatch: boolean;
