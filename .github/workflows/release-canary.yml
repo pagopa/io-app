@@ -1,8 +1,7 @@
 name: Canary release
 on:
-  workflow_dispatch:
   issue_comment:                                     
-    types: [created, edited, deleted]
+    types: [created]
 jobs:
   run-static-checks:
     if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
@@ -12,8 +11,7 @@ jobs:
     environment: canary
     runs-on: ubuntu-latest
     outputs:
-      currentAppVersion: ${{ steps.store-current-version.outputs.CURRENT_APP_VERSION }}
-      currentAppBuildCode: ${{ steps.store-current-version.outputs.CURRENT_APP_BUILD_CODE }}
+      canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -21,12 +19,6 @@ jobs:
           fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
-      - id: store-current-version
-        run: |
-          APP_VERSION=$(node -p -e "require('./package.json').version")
-          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
-          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
-          echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
       - id: replace-version-with-canary
         run: |
           UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
@@ -41,14 +33,13 @@ jobs:
           yarn release-canary
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          git push --no-verify origin tag $APP_VERSION
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
           gh release create "(Canary) $APP_VERSION" --generate-notes
-          gh variable set CANARY_VERSION -b "$APP_VERSION" -e canary
-          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
-          gh variable set CANARY_BUILD_CODE -b "$BUILD_CODE" -e canary
+          echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
   release-android:
     needs: prepare-canary-release
     environment: canary
@@ -58,7 +49,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
+          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -134,7 +125,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
+          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
@@ -204,20 +195,9 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - id: revert-package-and-version
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          node scripts/canary/replaceCanaryVersion.js ${{ needs.prepare-canary-release.outputs.currentAppVersion }} ${{ needs.prepare-canary-release.outputs.currentAppBuildCode }}
-          bash ./.github/scripts/package-name-restore.sh it.pagopa.io.app.canary it.pagopa.io.app android
-          bash ./.github/scripts/package-name-restore.sh it.pagopa.app.io.canary it.pagopa.app.io ios
-          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-canary-certs.git" "git\@github.com:pagopa\/IO-App-certs.git" ios
-          git add .
-          git commit -m "revert: restoring repository to default package name and version" --no-verify
-          git push --no-verify origin HEAD:${{ github.head_ref }}
       - id: comment-process-end
         if: github.event.issue.number
         run: |
-          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, check it at the [release list](https://github.com/pagopa/io-app/releases)"
+          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, [${{ needs.prepare-canary-release.outputs.canaryVersion }}](https://github.com/pagopa/io-app/releases/tag/${{ needs.prepare-canary-release.outputs.canaryVersion }})"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
