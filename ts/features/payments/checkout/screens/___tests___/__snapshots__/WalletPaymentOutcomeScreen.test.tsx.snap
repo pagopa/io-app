@@ -47583,6 +47583,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
