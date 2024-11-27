@@ -25,6 +25,7 @@ import { Banner } from "../../../../definitions/content/Banner";
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
 const initialRemoteConfigState: RemoteConfigState = O.none;
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
 export default function remoteConfigReducer(
   state: RemoteConfigState = initialRemoteConfigState,
@@ -359,6 +360,20 @@ export const isItwEnabledSelector = createSelector(
 );
 
 /**
+ * Returns the authentication methods that are disabled.
+ * If there is no data, an empty array is returned as the default value.
+ */
+export const itwDisabledIdentificationMethodsSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): ReadonlyArray<string> =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_identification_methods),
+      O.getOrElse(() => emptyArray)
+    )
+);
+
+/**
  * Return the remote feature flag about the payment feedback banner enabled/disabled
  * that is shown after a successful payment.
  */
@@ -392,7 +407,6 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
-const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -412,5 +426,33 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
       remoteConfig,
       O.map(config => config.itw.feedback_banner_visible),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return whether the Wallet activation is disabled.
+ * This is purely a "cosmetic" configuration to disable UI elements,
+ * it does not disable the entire IT Wallet feature.
+ */
+export const isItwActivationDisabledSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.wallet_activation_disabled),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return IT Wallet credentials that have been disabled remotely.
+ */
+export const itwDisabledCredentialsSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_credentials),
+      O.getOrElse(() => emptyArray)
     )
 );
