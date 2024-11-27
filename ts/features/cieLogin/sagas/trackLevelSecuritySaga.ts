@@ -8,7 +8,7 @@ import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { trackCieIdSecurityLevelMismatch } from "../analytics";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 
-export function* shouldTrackLevelSecurityMismatch(
+export function* shouldTrackLevelSecurityMismatchSaga(
   maybeSessionInformation: O.Option<PublicSession>
 ) {
   const selectedSecurityLevel = yield* select(
