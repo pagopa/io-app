@@ -2794,6 +2794,7 @@ bonus:
         title: Ecco il codice sconto!
         expired: Il codice è scaduto
         copyButton: Copia codice sconto
+        error: In questo momento non è possibile generare un codice
     cta:
       activeBonus: Activate Carta Giovani Nazionale
       back: Not now
