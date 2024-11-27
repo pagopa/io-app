@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.8](https://github.com/pagopa/io-app/compare/2.78.0-rc.7...2.78.0-rc.8) (2024-11-26)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1802](https://pagopa.atlassian.net/browse/SIW-1802)] Handle remotely disabled credentials and alert ([#6442](https://github.com/pagopa/io-app/issues/6442)) ([bb7e753](https://github.com/pagopa/io-app/commit/bb7e7539301e8b0789741e8f4c820544d0d031d0))
+
 ## [2.78.0-rc.7](https://github.com/pagopa/io-app/compare/2.78.0-rc.6...2.78.0-rc.7) (2024-11-26)
 
 
