@@ -38,9 +38,9 @@ export type RequestGetMessageDataActionType = {
 export type SuccessGetMessageDataActionType = {
   containsAttachments: boolean;
   containsPayment?: boolean;
-  euCovidCerficateAuthCode?: string;
   firstTimeOpening: boolean;
   hasRemoteContent: boolean;
+  isLegacyGreenPass?: boolean;
   isPNMessage: boolean;
   messageId: UIMessageId;
   organizationFiscalCode: string;
