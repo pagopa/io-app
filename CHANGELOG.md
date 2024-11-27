@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.8](https://github.com/pagopa/io-app/compare/2.78.0-rc.7...2.78.0-rc.8) (2024-11-26)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1802](https://pagopa.atlassian.net/browse/SIW-1802)] Handle remotely disabled credentials and alert ([#6442](https://github.com/pagopa/io-app/issues/6442)) ([bb7e753](https://github.com/pagopa/io-app/commit/bb7e7539301e8b0789741e8f4c820544d0d031d0))
+
+## [2.78.0-rc.7](https://github.com/pagopa/io-app/compare/2.78.0-rc.6...2.78.0-rc.7) (2024-11-26)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1800](https://pagopa.atlassian.net/browse/SIW-1800),[SIW-1801](https://pagopa.atlassian.net/browse/SIW-1801),[SIW-1808](https://pagopa.atlassian.net/browse/SIW-1808)] Alert for disabled authentication methods, IPZS and Wallet Provider down ([#6441](https://github.com/pagopa/io-app/issues/6441)) ([4e12b91](https://github.com/pagopa/io-app/commit/4e12b91f6c57be0c805c75bde1886d536157ff0b))
+
+
+### Bug Fixes
+
+* New workflows triggers and steps to be properly set ([#6457](https://github.com/pagopa/io-app/issues/6457)) ([8f5e18e](https://github.com/pagopa/io-app/commit/8f5e18ea141d397f3cad65be4af08e3710ffa973))
+* version on github is not aligned with version on store ([#6463](https://github.com/pagopa/io-app/issues/6463)) ([c1373e2](https://github.com/pagopa/io-app/commit/c1373e2079841bf4bc42d353039efb664ebb4623))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-439](https://pagopa.atlassian.net/browse/IOAPPX-439)] Enable the iridescent trust mark for all ([#6444](https://github.com/pagopa/io-app/issues/6444)) ([aa744cd](https://github.com/pagopa/io-app/commit/aa744cd92c7a6f4743f81121fe77f0cb1d326504))
+
 ## [2.78.0-rc.6](https://github.com/pagopa/io-app/compare/2.78.0-rc.5...2.78.0-rc.6) (2024-11-26)
 
 
