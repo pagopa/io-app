@@ -5,9 +5,10 @@ import { ItwTags } from "../tags";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
-  StartCieAuthFlowActorParams
+  StartAuthFlowActorParams,
+  GetAuthRedirectUrlActorParam
 } from "./actors";
-import { CieAuthContext, Context, InitialContext } from "./context";
+import { AuthenticationContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
 
@@ -25,6 +26,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToIpzsPrivacyScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
+    navigateToSpidLoginScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -57,12 +59,14 @@ export const itwEidIssuanceMachine = setup({
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     ),
-    startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
+    startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
+      notImplemented
+    ),
+    getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
       notImplemented
     )
   },
   guards: {
-    isNativeAuthSessionClosed: notImplemented,
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
@@ -235,24 +239,178 @@ export const itwEidIssuanceMachine = setup({
                     abortController: new AbortController()
                   }
                 })),
-                target: "#itwEidIssuanceMachine.UserIdentification.Completed"
+                target: "CieID"
               }
             ],
             back: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
           }
         },
-        Spid: {
-          entry: "navigateToIdpSelectionScreen",
-          on: {
-            "select-spid-idp": {
-              target: "Completed",
-              actions: assign(({ event }) => ({
-                identification: { mode: "spid", idpId: event.idp.id }
-              }))
+        CieID: {
+          description:
+            "This state handles the entire CieID authentication flow",
+          initial: "StartingCieIDAuthFlow",
+          states: {
+            StartingCieIDAuthFlow: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })),
+                { type: "navigateToEidPreviewScreen" }
+              ],
+              invoke: {
+                src: "startAuthFlow",
+                input: ({ context }) => ({
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  identification: context.identification
+                }),
+                onDone: {
+                  actions: assign(({ event }) => ({
+                    authenticationContext: event.output
+                  })),
+                  target: "CieIDBuildAuthRedirectUrl"
+                },
+                onError: [
+                  {
+                    actions: "setFailure",
+                    target: "#itwEidIssuanceMachine.Failure"
+                  }
+                ]
+              },
+              on: {
+                abort: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
             },
-            back: {
-              target: "ModeSelection"
+            CieIDBuildAuthRedirectUrl: {
+              invoke: {
+                src: "getAuthRedirectUrl",
+                input: ({ context }) => ({
+                  redirectUri: context.authenticationContext?.redirectUri,
+                  authUrl: context.authenticationContext?.authUrl,
+                  identification: context.identification
+                }),
+                onDone: {
+                  actions: assign(({ context, event }) => {
+                    assert(
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
+                    );
+                    return {
+                      authenticationContext: {
+                        ...context.authenticationContext,
+                        callbackUrl: event.output
+                      }
+                    };
+                  }),
+                  target: "Completed"
+                },
+                onError: [
+                  {
+                    guard: or(["isOperationAborted"]),
+                    target: "#itwEidIssuanceMachine.UserIdentification"
+                  },
+                  {
+                    actions: "setFailure",
+                    target: "#itwEidIssuanceMachine.Failure"
+                  }
+                ]
+              },
+              on: {
+                abort: { actions: "abortIdentification" },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
+            },
+            Completed: {
+              type: "final"
             }
+          },
+          onDone: {
+            target: "#itwEidIssuanceMachine.UserIdentification.Completed"
+          }
+        },
+        Spid: {
+          description: "This state handles the entire SPID identification flow",
+          initial: "IdpSelection",
+          states: {
+            IdpSelection: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })),
+                { type: "navigateToIdpSelectionScreen" }
+              ],
+              on: {
+                "select-spid-idp": {
+                  target: "StartingSpidAuthFlow",
+                  actions: assign(({ event }) => ({
+                    identification: { mode: "spid", idpId: event.idp.id }
+                  }))
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
+            },
+            StartingSpidAuthFlow: {
+              entry: "navigateToSpidLoginScreen",
+              tags: [ItwTags.Loading],
+              invoke: {
+                src: "startAuthFlow",
+                input: ({ context }) => ({
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  identification: context.identification
+                }),
+                onDone: {
+                  actions: assign(({ event }) => ({
+                    authenticationContext: event.output
+                  })),
+                  target: "SpidLoginIdentificationCompleted"
+                },
+                onError: {
+                  actions: "setFailure",
+                  target: "#itwEidIssuanceMachine.Failure"
+                }
+              },
+              on: {
+                back: {
+                  target: "IdpSelection"
+                }
+              }
+            },
+            SpidLoginIdentificationCompleted: {
+              on: {
+                "spid-identification-completed": {
+                  target: "Completed",
+                  actions: assign(({ context, event }) => {
+                    assert(
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
+                    );
+                    return {
+                      authenticationContext: {
+                        ...context.authenticationContext,
+                        callbackUrl: event.authRedirectUrl
+                      }
+                    };
+                  })
+                },
+                back: {
+                  target: "IdpSelection"
+                }
+              }
+            },
+            Completed: {
+              type: "final"
+            }
+          },
+          onDone: {
+            target: "#itwEidIssuanceMachine.UserIdentification.Completed"
           }
         },
         CiePin: {
@@ -262,7 +420,7 @@ export const itwEidIssuanceMachine = setup({
           states: {
             InsertingCardPin: {
               entry: [
-                assign(() => ({ cieAuthContext: undefined })), // Reset the CIE context, otherwise retries will use stale data
+                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
                 { type: "navigateToCiePinScreen" }
               ],
               on: {
@@ -304,13 +462,14 @@ export const itwEidIssuanceMachine = setup({
               entry: "navigateToCieReadCardScreen",
               tags: [ItwTags.Loading],
               invoke: {
-                src: "startCieAuthFlow",
+                src: "startAuthFlow",
                 input: ({ context }) => ({
-                  walletInstanceAttestation: context.walletInstanceAttestation
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  identification: context.identification
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
-                    cieAuthContext: event.output
+                    authenticationContext: event.output
                   })),
                   target: "ReadingCieCard"
                 },
@@ -331,12 +490,12 @@ export const itwEidIssuanceMachine = setup({
                   target: "Completed",
                   actions: assign(({ context, event }) => {
                     assert(
-                      context.cieAuthContext,
-                      "cieAuthContext must be defined when completing CIE+pin flow"
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
                     );
                     return {
-                      cieAuthContext: {
-                        ...context.cieAuthContext,
+                      authenticationContext: {
+                        ...context.authenticationContext,
                         callbackUrl: event.url
                       }
                     };
@@ -371,15 +530,12 @@ export const itwEidIssuanceMachine = setup({
       initial: "RequestingEid",
       states: {
         RequestingEid: {
-          on: {
-            abort: { actions: "abortIdentification" }
-          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
               identification: context.identification,
-              cieAuthContext: context.cieAuthContext,
+              authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation
             }),
             onDone: {
@@ -387,10 +543,6 @@ export const itwEidIssuanceMachine = setup({
               target: "CheckingIdentityMatch"
             },
             onError: [
-              {
-                guard: or(["isNativeAuthSessionClosed", "isOperationAborted"]),
-                target: "#itwEidIssuanceMachine.UserIdentification"
-              },
               {
                 actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"
