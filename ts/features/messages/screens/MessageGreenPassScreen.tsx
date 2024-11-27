@@ -15,7 +15,6 @@ export const MessageGreenPassScreen = () => {
   return (
     <OperationResultScreenContent
       title={I18n.t("features.greenPass.title")}
-      subtitle={I18n.t("features.greenPass.description")}
       isHeaderVisible
       pictogram="attention"
       action={{
