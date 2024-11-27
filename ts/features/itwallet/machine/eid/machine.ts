@@ -67,7 +67,6 @@ export const itwEidIssuanceMachine = setup({
     )
   },
   guards: {
-    isNativeAuthSessionClosed: notImplemented,
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
@@ -545,7 +544,6 @@ export const itwEidIssuanceMachine = setup({
             },
             onError: [
               {
-                guard: or(["isNativeAuthSessionClosed"]),
                 target: "#itwEidIssuanceMachine.UserIdentification"
               },
               {
