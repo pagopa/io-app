@@ -116,6 +116,8 @@ import { handleApplicationStartupTransientError } from "../features/startup/saga
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
+import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
+import { shouldTrackLevelSecurityMismatch } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -377,6 +379,12 @@ export function* initializeApplicationSaga(
       yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
     }
+  }
+
+  const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
+
+  if (userFromSuccessLogin) {
+    yield* call(shouldTrackLevelSecurityMismatch, maybeSessionInformation);
   }
 
   const publicKey = yield* select(lollipopPublicKeySelector);
