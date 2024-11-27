@@ -26,25 +26,6 @@ export const createEidIssuanceGuardsImplementation = (
   options?: GuardsImplementationOptions
 ) => ({
   /**
-   * Guard to check whether a native authentication session
-   * opened with io-react-native-login-utils was closed by the user.
-   */
-  isNativeAuthSessionClosed: ({ event }: { event: EidIssuanceEvents }) => {
-    if (
-      "error" in event &&
-      event.error instanceof Credential.Issuance.Errors.AuthorizationError
-    ) {
-      return pipe(
-        event.error.message,
-        J.parse,
-        E.map(NativeAuthSessionClosed.is),
-        E.getOrElse(() => false)
-      );
-    }
-    return false;
-  },
-
-  /**
    * Guard to check whether the user for whom the eID was issued
    * is the same that is currently authenticated in app.
    */
