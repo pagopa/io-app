@@ -22,6 +22,13 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
 }));
 
+const WALLET_REVOKED_ERROR = new Errors.WalletProviderResponseError({
+  code: Errors.WalletProviderResponseErrorCodes.WalletInstanceRevoked,
+  message: "Revoked",
+  reason: {},
+  statusCode: 404
+});
+
 describe("checkWalletInstanceStateSaga", () => {
   // TODO: improve the mocked store's typing, do not use DeepPartial
   it("Does not check the wallet state when the wallet is INSTALLED", () => {
@@ -92,12 +99,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
-        [
-          matchers.call.fn(getAttestation),
-          throwError(
-            new Errors.WalletInstanceRevokedError("Revoked", "Revoked")
-          )
-        ],
+        [matchers.call.fn(getAttestation), throwError(WALLET_REVOKED_ERROR)],
         [matchers.call.fn(ensureIntegrityServiceIsReady), true]
       ])
       .call.fn(ensureIntegrityServiceIsReady)
@@ -154,12 +156,7 @@ describe("checkWalletInstanceStateSaga", () => {
       .provide([
         [matchers.select(sessionTokenSelector), "h94LhbfJCLGH1S3qHj"],
         [matchers.select(itwIsWalletInstanceAttestationValidSelector), false],
-        [
-          matchers.call.fn(getAttestation),
-          throwError(
-            new Errors.WalletInstanceRevokedError("Revoked", "Revoked")
-          )
-        ],
+        [matchers.call.fn(getAttestation), throwError(WALLET_REVOKED_ERROR)],
         [matchers.call.fn(ensureIntegrityServiceIsReady), true]
       ])
       .call.fn(ensureIntegrityServiceIsReady)
