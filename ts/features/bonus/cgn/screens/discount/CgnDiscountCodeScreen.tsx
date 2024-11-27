@@ -11,7 +11,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnSelectedDiscountCodeSelector } from "../../store/reducers/merchants";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -22,6 +22,9 @@ import { CgnDiscountExpireProgressBar } from "../../components/merchants/discoun
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { cgnGenerateOtp } from "../../store/actions/otp";
+import CGN_ROUTES from "../../navigation/routes";
 
 const getOtpTTL = (otp: Otp): Second => {
   const now = new Date();
@@ -42,14 +45,25 @@ const getOtpExpirationTotal = (otp: Otp): Second =>
   ) as Second;
 
 const CgnDiscountCodeScreen = () => {
+  const dispatch = useIODispatch();
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
   const discountOtp = useIOSelector(cgnOtpDataSelector);
   const [isDiscountCodeExpired, setIsDiscountCodeExpired] =
     React.useState(false);
-
   const navigation = useIONavigation();
   const theme = useIOTheme();
 
+  const generateNewDiscountCode = () => {
+    dispatch(
+      cgnGenerateOtp.request({
+        onSuccess: () => null,
+        onError: () =>
+          navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
+            screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE
+          })
+      })
+    );
+  };
   const onClose = () => {
     navigation.pop();
   };
@@ -66,6 +80,24 @@ const CgnDiscountCodeScreen = () => {
       setIsDiscountCodeExpired(getOtpExpirationTotal(discountOtp.value) <= 0);
     }
   }, [discountOtp]);
+
+  if (isDiscountCodeExpired) {
+    return (
+      <OperationResultScreenContent
+        pictogram="timing"
+        title={I18n.t("bonus.cgn.merchantDetail.discount.expired")}
+        isHeaderVisible
+        action={{
+          label: I18n.t("bonus.cgn.merchantDetail.discount.cta.createNew"),
+          onPress: generateNewDiscountCode
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.close"),
+          onPress: onClose
+        }}
+      />
+    );
+  }
 
   if (discountCode) {
     return (
@@ -91,12 +123,7 @@ const CgnDiscountCodeScreen = () => {
               <Icon name="tag" color="grey-300" />
             </View>
             <VSpacer size={4} />
-            <H1
-              textStyle={StyleSheet.flatten([
-                styles.labelCode,
-                isDiscountCodeExpired && { textDecorationLine: "line-through" }
-              ])}
-            >
+            <H1 textStyle={StyleSheet.flatten([styles.labelCode])}>
               {discountCode}
             </H1>
             {isReady(discountOtp) && !isDiscountCodeExpired && (
@@ -110,11 +137,6 @@ const CgnDiscountCodeScreen = () => {
                   setIsExpired={setIsDiscountCodeExpired}
                 />
               </>
-            )}
-            {isDiscountCodeExpired && (
-              <Body style={IOStyles.selfCenter}>
-                {I18n.t(`bonus.cgn.merchantDetail.discount.expired`)}
-              </Body>
             )}
           </View>
         </IOScrollView>

@@ -160,7 +160,10 @@ const CgnDiscountDetailScreen = () => {
         dispatch(
           cgnGenerateOtp.request({
             onSuccess: navigateToDiscountCode,
-            onError: showErrorToast
+            onError: () =>
+              navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
+                screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE
+              })
           })
         );
         break;
