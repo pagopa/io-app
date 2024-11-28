@@ -11,16 +11,19 @@ import { merge } from "lodash";
 import {
   cieIDDisableTourGuide,
   cieIDFeatureSetEnabled,
+  cieIDSetSelectedSecurityLevel,
   cieLoginDisableUat,
   cieLoginEnableUat
 } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { isDevEnv } from "../../../../utils/environment";
+import { SpidLevel } from "../../utils";
 
 export type CieLoginState = {
   useUat: boolean;
   isCieIDFeatureEnabled: boolean;
   isCieIDTourGuideEnabled: boolean;
+  cieIDSelectedSecurityLevel?: SpidLevel;
 };
 
 export const cieLoginInitialState = {
@@ -53,6 +56,11 @@ const cieLoginReducer = (
       return {
         ...state,
         isCieIDTourGuideEnabled: false
+      };
+    case getType(cieIDSetSelectedSecurityLevel):
+      return {
+        ...state,
+        cieIDSelectedSecurityLevel: action.payload
       };
     default:
       return state;

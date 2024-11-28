@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.10](https://github.com/pagopa/io-app/compare/2.78.0-rc.9...2.78.0-rc.10) (2024-11-27)
+
+
+### Chores
+
+* [[IOBP-981](https://pagopa.atlassian.net/browse/IOBP-981),[IOBP-1002](https://pagopa.atlassian.net/browse/IOBP-1002)] Add PSP_ERROR outcome screen into payment flow ([#6461](https://github.com/pagopa/io-app/issues/6461)) ([e8aa56b](https://github.com/pagopa/io-app/commit/e8aa56b9f1a72bdfe8a4cab050c5e7977ad81226))
+
+## [2.78.0-rc.9](https://github.com/pagopa/io-app/compare/2.78.0-rc.8...2.78.0-rc.9) (2024-11-27)
+
+
+### Features
+
+* [[IOCOM-1897](https://pagopa.atlassian.net/browse/IOCOM-1897)] Remove Green Pass ([#6427](https://github.com/pagopa/io-app/issues/6427)) ([101473a](https://github.com/pagopa/io-app/commit/101473a3f4d57c355cc08982cf3ee25795f899f3))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1795](https://pagopa.atlassian.net/browse/SIW-1795)] Problem with SPID Login Using Custom Tab ([#6409](https://github.com/pagopa/io-app/issues/6409)) ([c8626c3](https://github.com/pagopa/io-app/commit/c8626c35f83694a1e4563aee591484b77df5fc89))
+* **IT Wallet:** [[SIW-1873](https://pagopa.atlassian.net/browse/SIW-1873)] Fix `useMaxBrightness` flickering on iOS ([#6466](https://github.com/pagopa/io-app/issues/6466)) ([9c088d8](https://github.com/pagopa/io-app/commit/9c088d842b5e8fa17a485599156bdeaea103ffa6))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1830](https://pagopa.atlassian.net/browse/SIW-1830)] Wallet errors refactor ([#6455](https://github.com/pagopa/io-app/issues/6455)) ([681017f](https://github.com/pagopa/io-app/commit/681017f86c8704554052ece6432113464970f0dd))
+
 ## [2.78.0-rc.8](https://github.com/pagopa/io-app/compare/2.78.0-rc.7...2.78.0-rc.8) (2024-11-26)
 
 
