@@ -56,7 +56,7 @@ export const ItwCredentialCard = ({
             >
               {getCredentialNameFromType(credentialType, "").toUpperCase()}
             </Text>
-            {statusTagProps && <Tag {...statusTagProps} />}
+            {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
           </HStack>
         </View>
         <ItwDigitalVersionBadge
