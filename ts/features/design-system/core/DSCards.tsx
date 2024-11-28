@@ -21,7 +21,6 @@ import {
   ItwStoredCredentialsMocks
 } from "../../itwallet/common/utils/itwMocksUtils";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
-import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
 import {
   PaymentCardsCarousel,
@@ -205,49 +204,6 @@ const PaymentCards = () => (
                 isExpired={true}
               />
               <PaymentCard isLoading />
-            </HStack>
-          </ScrollView>
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={{ marginHorizontal: -IOVisualCostants.appMarginDefault }}
-            contentContainerStyle={{
-              paddingHorizontal: IOVisualCostants.appMarginDefault
-            }}
-          >
-            <HStack space={cardHorizontalScrollGap}>
-              <PaymentCardBig
-                cardType={"PAGOBANCOMAT"}
-                expirationDate={new Date()}
-                holderName="A very very very long citizen name"
-                abiCode="03069"
-              />
-              <PaymentCardBig
-                cardType={"PAYPAL"}
-                holderEmail="userPaypalEmail@email.com"
-              />
-              <PaymentCardBig
-                cardType={"COBADGE"}
-                holderName="Mario Rossi"
-                abiCode="08509"
-                expirationDate={new Date()}
-                cardIcon="visa"
-              />
-              <PaymentCardBig
-                cardType={"COBADGE"}
-                holderName="Mario Rossi"
-                abiCode="08508"
-                expirationDate={new Date()}
-                cardIcon="visa"
-              />
-              <PaymentCardBig
-                cardType={"BANCOMATPAY"}
-                holderName="Mario Rossi"
-                phoneNumber="+39 1234567890"
-              />
-              <PaymentCardBig isLoading={true} />
             </HStack>
           </ScrollView>
         </DSComponentViewerBox>
