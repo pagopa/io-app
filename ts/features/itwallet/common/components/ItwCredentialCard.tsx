@@ -1,11 +1,6 @@
-import {
-  HStack,
-  IOColors,
-  makeFontStyleObject,
-  Tag
-} from "@pagopa/io-app-design-system";
+import { HStack, IOColors, IOText, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
-import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import {
   borderColorByStatus,
@@ -48,14 +43,22 @@ export const ItwCredentialCard = ({
         </View>
         <View style={styles.header}>
           <HStack space={16}>
-            <Text
-              style={[
-                styles.label,
-                { color: theme.textColor, opacity: labelOpacity }
-              ]}
+            <IOText
+              size={16}
+              lineHeight={20}
+              font="TitilliumSansPro"
+              weight="Semibold"
+              maxFontSizeMultiplier={1.25}
+              style={{
+                letterSpacing: 0.5,
+                color: theme.textColor,
+                opacity: labelOpacity,
+                flex: 1,
+                flexShrink: 1
+              }}
             >
               {getCredentialNameFromType(credentialType, "").toUpperCase()}
-            </Text>
+            </IOText>
             {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
           </HStack>
         </View>
@@ -115,10 +118,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderRadius: 8,
     borderWidth: 2
-  },
-  label: {
-    flex: 1,
-    ...makeFontStyleObject(16, "TitilliumSansPro", 20, "Semibold")
   },
   header: {
     display: "flex",
