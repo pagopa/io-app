@@ -12,6 +12,7 @@ import { View } from "react-native";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import { fold } from "../../../../common/model/RemoteValue";
+import SectionStatusComponent from "../../../../components/SectionStatus";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -159,6 +160,7 @@ const CdcServiceCTAButton = () => {
 
 const CdcServiceCTA = () => (
   <View>
+    <SectionStatusComponent sectionKey={"cdc"} />
     <VSpacer size={16} />
     <CdcServiceCTAButton />
   </View>
