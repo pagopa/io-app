@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.11](https://github.com/pagopa/io-app/compare/2.78.0-rc.10...2.78.0-rc.11) (2024-11-28)
+
+
+### Chores
+
+* [[IOPID-2515](https://pagopa.atlassian.net/browse/IOPID-2515)] - Add SECURITY_LEVEL_MISMATCH event ([#6460](https://github.com/pagopa/io-app/issues/6460)) ([99f0f97](https://github.com/pagopa/io-app/commit/99f0f97a3ffded6ab729d305ece215ef2c257583))
+
 ## [2.78.0-rc.10](https://github.com/pagopa/io-app/compare/2.78.0-rc.9...2.78.0-rc.10) (2024-11-27)
 
 
