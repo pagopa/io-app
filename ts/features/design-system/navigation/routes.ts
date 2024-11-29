@@ -149,10 +149,6 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DESIGN_SYSTEM_LEGACY_LIST_ITEMS",
       title: "List Items"
     },
-    BADGES: {
-      route: "DESIGN_SYSTEM_LEGACY_BADGES",
-      title: "Badges"
-    },
     ADVICE: {
       route: "DESIGN_SYSTEM_LEGACY_ADVICE",
       title: "Advice & Banners"

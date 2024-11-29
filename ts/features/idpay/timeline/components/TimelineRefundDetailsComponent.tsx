@@ -1,5 +1,11 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
-import { Alert, Body, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  Badge,
+  Body,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
@@ -9,16 +15,15 @@ import { StyleSheet, View } from "react-native";
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import { IOBadge } from "../../../../components/core/IOBadge";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { idpayInitiativeIdSelector } from "../../details/store";
 import { getRefundPeriodDateString } from "../utils/strings";
-import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
   refund: RefundDetailDTO;
@@ -94,19 +99,15 @@ const TimelineRefundDetailsComponent = (props: Props) => {
           {I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
         </Body>
         {refund.operationType === OperationTypeEnum.REJECTED_REFUND ? (
-          <IOBadge
-            small
-            variant="outline"
-            color="red"
+          <Badge
+            variant="error"
             text={I18n.t(
               `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
             )}
           />
         ) : (
-          <IOBadge
-            small
-            variant="solid"
-            color="aqua"
+          <Badge
+            variant="turquoise"
             text={I18n.t(
               `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
             )}
