@@ -345,12 +345,6 @@ const ItwCards = () => (
   <VStack space={blockMargin}>
     <DesignSystemSection title="Driving License">
       <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard credentialType={CredentialType.DRIVING_LICENSE} />
         </DSComponentViewerBox>
@@ -398,12 +392,6 @@ const ItwCards = () => (
     </DesignSystemSection>
     <DesignSystemSection title="Disability Card">
       <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
@@ -435,12 +423,6 @@ const ItwCards = () => (
     </DesignSystemSection>
     <DesignSystemSection title="Health Insurance Card">
       <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}

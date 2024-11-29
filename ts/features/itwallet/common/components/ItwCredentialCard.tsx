@@ -16,13 +16,11 @@ import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
 export type ItwCredentialCard = {
   credentialType: string;
   status?: ItwCredentialStatus;
-  isPreview?: boolean;
 };
 
 export const ItwCredentialCard = ({
   status = "valid",
-  credentialType,
-  isPreview = false
+  credentialType
 }: ItwCredentialCard) => {
   const isValid = validCredentialStatuses.includes(status);
   const theme = getThemeColorByCredentialType(credentialType);
@@ -33,43 +31,41 @@ export const ItwCredentialCard = ({
   const statusTagProps = tagPropsByStatus[status];
 
   return (
-    <View style={isPreview && styles.previewContainer}>
-      <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <AnimatedImage
-            source={cardBackgroundSource}
-            style={styles.cardBackground}
-          />
-        </View>
-        <View style={styles.header}>
-          <HStack space={16}>
-            <IOText
-              size={16}
-              lineHeight={20}
-              font="TitilliumSansPro"
-              weight="Semibold"
-              maxFontSizeMultiplier={1.25}
-              style={{
-                letterSpacing: 0.5,
-                color: theme.textColor,
-                opacity: labelOpacity,
-                flex: 1,
-                flexShrink: 1
-              }}
-            >
-              {getCredentialNameFromType(credentialType, "").toUpperCase()}
-            </IOText>
-            {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-          </HStack>
-        </View>
-        <ItwDigitalVersionBadge
-          credentialType={credentialType}
-          isFaded={!isValid}
-        />
-        <View
-          style={[styles.border, { borderColor: borderColorByStatus[status] }]}
+    <View style={styles.cardContainer}>
+      <View style={styles.card}>
+        <AnimatedImage
+          source={cardBackgroundSource}
+          style={styles.cardBackground}
         />
       </View>
+      <View style={styles.header}>
+        <HStack space={16}>
+          <IOText
+            size={16}
+            lineHeight={20}
+            font="TitilliumSansPro"
+            weight="Semibold"
+            maxFontSizeMultiplier={1.25}
+            style={{
+              letterSpacing: 0.25,
+              color: theme.textColor,
+              opacity: labelOpacity,
+              flex: 1,
+              flexShrink: 1
+            }}
+          >
+            {getCredentialNameFromType(credentialType, "").toUpperCase()}
+          </IOText>
+          {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+        </HStack>
+      </View>
+      <ItwDigitalVersionBadge
+        credentialType={credentialType}
+        isFaded={!isValid}
+      />
+      <View
+        style={[styles.border, { borderColor: borderColorByStatus[status] }]}
+      />
     </View>
   );
 };
@@ -92,10 +88,6 @@ const credentialCardBackgrounds: {
 };
 
 const styles = StyleSheet.create({
-  previewContainer: {
-    aspectRatio: 9 / 2,
-    overflow: "hidden"
-  },
   cardContainer: {
     aspectRatio: 16 / 10,
     borderRadius: 8,

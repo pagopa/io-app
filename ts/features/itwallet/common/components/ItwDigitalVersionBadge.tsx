@@ -63,7 +63,7 @@ const ItwDigitalVersionBadge = ({
           lineHeight={16}
           numberOfLines={1}
           ellipsizeMode="tail"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.2}
           style={{
             color: foreground,
             alignSelf: "center",
