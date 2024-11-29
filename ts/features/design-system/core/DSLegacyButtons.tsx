@@ -6,8 +6,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert } from "react-native";
-import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
@@ -15,7 +13,6 @@ const onButtonPress = () => {
 };
 
 const componentInnerMargin = 16;
-const componentMargin = 24;
 const sectionTitleMargin = 16;
 const blockMargin = 40;
 
@@ -28,11 +25,6 @@ export const DSLegacyButtons = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Block Buttons</H4>
           {renderBlockButtons()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Specific buttons</H4>
-          {renderSpecificButtons()}
         </VStack>
       </VStack>
     </DesignSystemScreen>
@@ -116,13 +108,5 @@ const renderBlockButtons = () => (
         }
       }}
     />
-  </VStack>
-);
-
-const renderSpecificButtons = () => (
-  <VStack space={componentMargin}>
-    <DSComponentViewerBox name="CopyButtonComponent">
-      <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
-    </DSComponentViewerBox>
   </VStack>
 );

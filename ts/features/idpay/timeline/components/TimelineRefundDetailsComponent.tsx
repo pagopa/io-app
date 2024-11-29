@@ -3,7 +3,7 @@ import {
   Alert,
   Badge,
   Body,
-  HSpacer,
+  ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { CommonActions } from "@react-navigation/native";
@@ -14,12 +14,11 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
-import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { idpayInitiativeIdSelector } from "../../details/store";
@@ -124,22 +123,13 @@ const TimelineRefundDetailsComponent = (props: Props) => {
           {format(refund.operationDate, "DD MMM YYYY, HH:mm")}
         </Body>
       </View>
-      <View style={styles.detailRow}>
-        <Body>CRO</Body>
-        <HSpacer size={16} />
-        <View style={[IOStyles.flex, IOStyles.row]}>
-          <Body
-            weight="Semibold"
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={IOStyles.flex}
-          >
-            {refund.cro}
-          </Body>
-          <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={refund.cro || ""} />
-        </View>
-      </View>
+      <ListItemInfoCopy
+        label={"CRO"}
+        value={refund.cro}
+        onPress={() => {
+          clipboardSetStringWithFeedback(refund.cro || "");
+        }}
+      />
     </>
   );
 };
