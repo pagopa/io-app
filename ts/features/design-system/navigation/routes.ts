@@ -137,10 +137,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
-    BUTTONS: {
-      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
-      title: "Buttons"
-    },
     TEXT_FIELDS: {
       route: "DESIGN_SYSTEM_LEGACY_TEXT_FIELDS",
       title: "Text Fields"
