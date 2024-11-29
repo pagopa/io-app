@@ -52,7 +52,6 @@ import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyAlert } from "../core/DSLegacyAlert";
 import { DSLegacyBadges } from "../core/DSLegacyBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyListItems } from "../core/DSLegacyListItems";
@@ -615,14 +614,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyBadges}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.route}
-          component={DSLegacyAlert}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.title
           }}
         />
 
