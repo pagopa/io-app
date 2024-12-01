@@ -52,9 +52,6 @@ import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyAlert } from "../core/DSLegacyAlert";
-import { DSLegacyBadges } from "../core/DSLegacyBadges";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyListItems } from "../core/DSLegacyListItems";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSListItems } from "../core/DSListItems";
@@ -587,14 +584,6 @@ export const DesignSystemNavigator = () => {
         {/* LEGACY */}
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
-          component={DSLegacyButtons}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
-          }}
-        />
-
-        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route}
           component={DSLegacyTextFields}
           options={{
@@ -607,22 +596,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyListItems}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.route}
-          component={DSLegacyBadges}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.route}
-          component={DSLegacyAlert}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.title
           }}
         />
 
