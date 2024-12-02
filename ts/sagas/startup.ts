@@ -23,14 +23,12 @@ import { BackendClient } from "../api/backend";
 import {
   apiUrlPrefix,
   cdcEnabled,
-  euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   zendeskEnabled
 } from "../config";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import {
@@ -116,6 +114,8 @@ import { handleApplicationStartupTransientError } from "../features/startup/saga
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
+import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -379,6 +379,12 @@ export function* initializeApplicationSaga(
     }
   }
 
+  const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
+
+  if (userFromSuccessLogin) {
+    yield* call(shouldTrackLevelSecurityMismatchSaga, maybeSessionInformation);
+  }
+
   const publicKey = yield* select(lollipopPublicKeySelector);
 
   // #LOLLIPOP_CHECK_BLOCK2_START
@@ -566,11 +572,6 @@ export function* initializeApplicationSaga(
 
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
-
-  if (euCovidCertificateEnabled) {
-    // Start watching for EU Covid Certificate actions
-    yield* fork(watchEUCovidCertificateSaga, sessionToken);
-  }
 
   const pnEnabled: ReturnType<typeof isPnEnabledSelector> = yield* select(
     isPnEnabledSelector

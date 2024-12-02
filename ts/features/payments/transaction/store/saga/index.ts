@@ -14,11 +14,9 @@ import { isProfileEmailValidatedSelector } from "../../../../../store/reducers/p
 import {
   fetchPsp,
   fetchTransactionRequest,
-  fetchTransactionsFailure,
   fetchTransactionsRequest,
   fetchTransactionsRequestWithExpBackoff
 } from "../actions/legacyTransactionsActions";
-import { waitBackoffError } from "../../../../../utils/backoffError";
 import { fetchTransactionsRequestHandler } from "./fetchTransactionsRequestHandler";
 import { fetchTransactionRequestHandler } from "./fetchTransactionRequestHandler";
 import { fetchPspRequestHandler } from "./fetchPspRequestHandler";
@@ -78,7 +76,6 @@ export function* watchLegacyTransactionSaga(
     function* (
       action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
     ) {
-      yield* call(waitBackoffError, fetchTransactionsFailure);
       yield* put(fetchTransactionsRequest(action.payload));
     }
   );
