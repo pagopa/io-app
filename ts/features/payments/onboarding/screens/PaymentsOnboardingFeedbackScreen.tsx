@@ -78,10 +78,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
 
-    analytics.trackFailureOnboardingPaymentMethod(
-      outcome,
-      payment_method_selected
-    );
+    analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
   });
 
   React.useEffect(

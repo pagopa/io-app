@@ -52,7 +52,7 @@ const trackAddOnboardingPaymentMethodDuplicated = (
 //   );
 // };
 
-export const trackFailureOnboardingPaymentMethod = (
+export const trackAddOnboardingPaymentMethod = (
   outcome: WalletOnboardingOutcomeEnum,
   payment_method_selected: string | undefined
 ) => {
