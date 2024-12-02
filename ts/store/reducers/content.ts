@@ -1,13 +1,14 @@
 /**
  * Implements the reducers for static content.
  */
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
+import { IdpData } from "../../../definitions/content/IdpData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
@@ -22,7 +23,7 @@ import {
 } from "../../common/model/RemoteValue";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
-import { getRemoteLocale } from "../../features/messages/utils/messages";
+import { getCurrentLocale } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
@@ -30,7 +31,6 @@ import {
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
-import { IdpData } from "../../../definitions/content/IdpData";
 import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
@@ -102,7 +102,7 @@ export const idpContextualHelpDataFromIdSelector = (
           () =>
             pot.getOrElse(
               pot.map(contextualHelpData, data => {
-                const locale = getRemoteLocale();
+                const locale = getCurrentLocale();
                 return pipe(
                   data[locale],
                   O.fromNullable,
@@ -131,7 +131,7 @@ export const screenContextualHelpDataSelector = createSelector<
       if (currentRoute === undefined) {
         return O.none;
       }
-      const locale = getRemoteLocale();
+      const locale = getCurrentLocale();
       const screenData =
         data[locale] !== undefined
           ? data[locale].screens.find(
@@ -157,13 +157,14 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
       if (route === undefined) {
         return O.none;
       }
-      const locale = getRemoteLocale();
+      const locale = getCurrentLocale();
       const screenData =
         data[locale] !== undefined
           ? data[locale].screens.find(
               s => s.route_name.toLowerCase() === route.toLocaleLowerCase()
             )
           : undefined;
+
       return O.fromNullable(screenData);
     })
   );
