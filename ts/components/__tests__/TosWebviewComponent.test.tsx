@@ -62,8 +62,7 @@ describe("TosWebviewComponent", () => {
     it("The footer should not render", () => {
       const renderAPI = commonSetup({ shouldRenderFooter: false });
       // The footer should be rendered
-      const footerWithButtonsViewRTI =
-        renderAPI.queryByTestId("FooterWithButtons");
+      const footerWithButtonsViewRTI = renderAPI.queryByTestId("FooterActions");
       expect(footerWithButtonsViewRTI).toBeFalsy();
     });
   });
@@ -74,7 +73,7 @@ describe("TosWebviewComponent", () => {
         onRightButton: rightButtonHandlerMock
       });
       // Find the right button and press it
-      const footerDefined = renderAPI.queryByTestId("FooterWithButtons");
+      const footerDefined = renderAPI.queryByTestId("FooterActions");
       expect(footerDefined).toBeDefined();
       const footerWithButtonsViewRTI =
         renderAPI.queryByTestId("AcceptToSButton");

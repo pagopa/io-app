@@ -1,5 +1,5 @@
 import {
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   H6,
   HSpacer,
@@ -93,36 +93,29 @@ const CdcBonusRequestSelectResidence = () => {
           ))}
         </ScrollView>
       </SafeAreaView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.cancel"),
-            accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () => {
-              navigation.getParent()?.goBack();
-            }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => {
+            navigation.getParent()?.goBack();
           }
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              dispatch(
-                cdcSelectedBonusAction(
-                  cdcSelectedBonus?.map(b => ({
-                    year: b.year,
-                    residence: isResidentInItaly[b.year]
-                  }))
-                )
-              );
-              navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
-            },
-            disabled: cdcSelectedBonus.some(b => !isResidentInItaly[b.year])
-          }
+        endAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.continue"),
+          onPress: () => {
+            dispatch(
+              cdcSelectedBonusAction(
+                cdcSelectedBonus?.map(b => ({
+                  year: b.year,
+                  residence: isResidentInItaly[b.year]
+                }))
+              )
+            );
+            navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
+          },
+          disabled: cdcSelectedBonus.some(b => !isResidentInItaly[b.year])
         }}
       />
     </BaseScreenComponent>

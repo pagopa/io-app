@@ -1,4 +1,4 @@
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import { FooterActions } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
@@ -35,13 +35,11 @@ const WorkunitGenericFailure = (props: Props): React.ReactElement => {
           title={title}
         />
       </SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Outline",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: close,
-            accessibilityLabel: close,
             onPress: props.cancel
           }
         }}

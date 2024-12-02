@@ -1,4 +1,4 @@
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import { FooterActions } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -31,13 +31,11 @@ const CdcRequirementsError = () => {
           )}
         />
       </SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Outline",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: I18n.t("global.buttons.close"),
-            accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: onExitPress,
             testID: "closeButton"
           }

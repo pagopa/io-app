@@ -1,5 +1,5 @@
 import {
-  FooterWithButtons,
+  FooterActionsInline,
   H4,
   H6,
   VSpacer
@@ -101,26 +101,19 @@ const CdcBonusRequestInformationTos = () => {
           <VSpacer size={16} />
         </ScrollView>
       </SafeAreaView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.cancel"),
-            accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () => {
-              navigation.getParent()?.goBack();
-            }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => {
+            navigation.getParent()?.goBack();
           }
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              navigation.navigate(CDC_ROUTES.SELECT_BONUS_YEAR);
-            }
+        endAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.continue"),
+          onPress: () => {
+            navigation.navigate(CDC_ROUTES.SELECT_BONUS_YEAR);
           }
         }}
       />
