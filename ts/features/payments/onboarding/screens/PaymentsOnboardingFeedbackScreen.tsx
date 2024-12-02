@@ -1,9 +1,9 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOPictograms } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
 import * as O from "fp-ts/lib/Option";
+import * as React from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -13,24 +13,24 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
-import { PaymentsOnboardingParamsList } from "../navigation/params";
-import {
-  WalletOnboardingOutcome,
-  WalletOnboardingOutcomeEnum
-} from "../types/OnboardingOutcomeEnum";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
+import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import * as analytics from "../analytics";
+import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
+import { PaymentsOnboardingParamsList } from "../navigation/params";
+import { paymentsResetRptIdToResume } from "../store/actions";
 import {
   selectPaymentOnboardingMethods,
   selectPaymentOnboardingRptIdToResume,
   selectPaymentOnboardingSelectedMethod
 } from "../store/selectors";
-import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
-import { paymentsResetRptIdToResume } from "../store/actions";
-import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
-import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import * as analytics from "../analytics";
+import {
+  WalletOnboardingOutcome,
+  WalletOnboardingOutcomeEnum
+} from "../types/OnboardingOutcomeEnum";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -77,11 +77,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
     const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
-    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
-      analytics.trackSuccessOnboardingPaymentMethod({
-        payment_method_selected
-      });
-    }
+
+    analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
   });
 
   React.useEffect(
