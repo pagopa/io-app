@@ -1,4 +1,5 @@
 import {
+  FooterActions,
   H1,
   H2,
   Icon,
@@ -13,7 +14,6 @@ import { StyleSheet, View } from "react-native";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { FooterActions } from "../../../../../components/ui/FooterActions";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -21,6 +21,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { CgnDiscountExpireProgressBar } from "../../components/merchants/discount/CgnDiscountExpireProgressBar";
 import CGN_ROUTES from "../../navigation/routes";
+import { resetMerchantDiscountCode } from "../../store/actions/merchants";
 import { cgnGenerateOtp } from "../../store/actions/otp";
 import { cgnSelectedDiscountCodeSelector } from "../../store/reducers/merchants";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
@@ -81,6 +82,8 @@ const CgnDiscountCodeScreen = () => {
   }, [discountOtp]);
 
   if (isDiscountCodeExpired) {
+    // reset discount code if expired to avoid showing it again when server is down
+    dispatch(resetMerchantDiscountCode());
     return (
       <OperationResultScreenContent
         pictogram="timing"
