@@ -132,9 +132,11 @@ export const screenContextualHelpDataSelector = createSelector<
         return O.none;
       }
       const locale = getCurrentLocale();
+
+      const localeData = data[locale];
       const screenData =
-        data[locale] !== undefined
-          ? data[locale].screens.find(
+        localeData !== undefined
+          ? localeData.screens.find(
               s =>
                 s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
             )
@@ -158,9 +160,10 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
         return O.none;
       }
       const locale = getCurrentLocale();
+      const localeData = data[locale];
       const screenData =
-        data[locale] !== undefined
-          ? data[locale].screens.find(
+        localeData !== undefined
+          ? localeData.screens.find(
               s => s.route_name.toLowerCase() === route.toLocaleLowerCase()
             )
           : undefined;
