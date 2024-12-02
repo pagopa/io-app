@@ -21,6 +21,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../common/model/RemoteValue";
+import { getRemoteLocale } from "../../features/messages/utils/messages";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getCurrentLocale } from "../../utils/locale";
@@ -102,7 +103,7 @@ export const idpContextualHelpDataFromIdSelector = (
           () =>
             pot.getOrElse(
               pot.map(contextualHelpData, data => {
-                const locale = getCurrentLocale();
+                const locale = getRemoteLocale();
                 return pipe(
                   data[locale],
                   O.fromNullable,
