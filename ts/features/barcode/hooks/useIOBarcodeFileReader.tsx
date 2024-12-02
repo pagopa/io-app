@@ -13,8 +13,11 @@ import DocumentPicker, {
   DocumentPickerResponse,
   types
 } from "react-native-document-picker";
-import * as ImagePicker from "react-native-image-picker";
-import { ImageLibraryOptions } from "react-native-image-picker";
+import {
+  launchImageLibrary,
+  ImagePickerResponse,
+  ImageLibraryOptions
+} from "react-native-image-picker";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
@@ -130,7 +133,7 @@ const useIOBarcodeFileReader = ({
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
-  const onImageSelected = async (response: ImagePicker.ImagePickerResponse) => {
+  const onImageSelected = async (response: ImagePickerResponse) => {
     if (response.didCancel) {
       setIsLoading(false);
       return;
@@ -181,7 +184,7 @@ const useIOBarcodeFileReader = ({
 
     setIsLoading(true);
 
-    void ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
+    void launchImageLibrary(imageLibraryOptions, onImageSelected);
   };
 
   /**
