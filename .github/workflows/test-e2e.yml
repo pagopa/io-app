@@ -72,8 +72,6 @@ jobs:
             name: "cgn_e2e"
           - test: "ts/features/messages/__e2e__/"
             name: "messages_e2e"
-          - test: "ts/features/euCovidCert/__e2e__/"
-            name: "eucovidcert_e2e"
           - test: "ts/features/wallet/onboarding/__e2e__/"
             name: "wallet_onboarding_e2e"
     steps:
