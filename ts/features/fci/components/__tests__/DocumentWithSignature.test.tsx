@@ -46,7 +46,7 @@ describe("Test DocumentWithSignature", () => {
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
   });
-  it("with all props should render a FooterWithButtons correctly", () => {
+  it("with all props should render a FooterActions correctly", () => {
     const props = {
       attrs: { unique_name: "Signature1" as NonEmptyString },
       currentDoc: 0,

@@ -1,19 +1,16 @@
-import * as React from "react";
+import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
-import {
-  Body,
-  ButtonSolidProps,
-  FooterWithButtons
-} from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ComponentProps } from "react";
 import I18n from "../../../i18n";
-import { FCI_ROUTES } from "../navigation/routes";
-import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
-import { useIOSelector } from "../../../store/hooks";
-import { trackFciStartSignature } from "../analytics";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../store/hooks";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { trackFciStartSignature } from "../analytics";
+import { FCI_ROUTES } from "../navigation/routes";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 
 type Props = {
   currentDoc: number;
@@ -27,14 +24,21 @@ export const useFciNoSignatureFields = (props: Props) => {
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { currentDoc } = props;
-  const readButtonProps: ButtonSolidProps = {
+
+  const readButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    color: "primary",
     onPress: () => {
       dismiss();
     },
-    label: I18n.t("features.fci.noFields.leftButton"),
-    accessibilityLabel: I18n.t("features.fci.noFields.leftButton")
+    label: I18n.t("features.fci.noFields.leftButton")
   };
-  const confirmButtonProps: ButtonSolidProps = {
+
+  const confirmButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
+    color: "primary",
     onPress: () => {
       dismiss();
       if (currentDoc < documents.length - 1) {
@@ -51,9 +55,9 @@ export const useFciNoSignatureFields = (props: Props) => {
         });
       }
     },
-    label: I18n.t("features.fci.noFields.rightButton"),
-    accessibilityLabel: I18n.t("features.fci.noFields.rightButton")
+    label: I18n.t("features.fci.noFields.rightButton")
   };
+
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     component: (
       <Body weight={"Regular"}>{I18n.t("features.fci.noFields.content")}</Body>
@@ -61,16 +65,9 @@ export const useFciNoSignatureFields = (props: Props) => {
     title: I18n.t("features.fci.noFields.title"),
     snapPoint: [280],
     footer: (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        primary={{
-          type: "Outline",
-          buttonProps: readButtonProps
-        }}
-        secondary={{
-          type: "Solid",
-          buttonProps: confirmButtonProps
-        }}
+      <FooterActionsInline
+        startAction={readButtonProps}
+        endAction={confirmButtonProps}
       />
     )
   });
