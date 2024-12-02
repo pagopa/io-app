@@ -78,28 +78,10 @@ const PaymentsOnboardingFeedbackScreen = () => {
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
 
-    switch (outcome) {
-      case WalletOnboardingOutcomeEnum.SUCCESS:
-        analytics.trackSuccessOnboardingPaymentMethod({
-          payment_method_selected
-        });
-        break;
-      case WalletOnboardingOutcomeEnum.AUTH_ERROR:
-        analytics.trackOnboardingPaymentMethodDenied({
-          payment_method_selected
-        });
-        break;
-      case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
-        analytics.trackAddOnboardingPaymentMethodCanceled({
-          payment_method_selected
-        });
-        break;
-      case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
-        analytics.trackAddOnboardingPaymentMethodDuplicated({
-          payment_method_selected
-        });
-        break;
-    }
+    analytics.trackFailureOnboardingPaymentMethod(
+      outcome,
+      payment_method_selected
+    );
   });
 
   React.useEffect(

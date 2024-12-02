@@ -1,11 +1,12 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { WalletOnboardingOutcomeEnum } from "../types/OnboardingOutcomeEnum";
 
 export type PaymentOnboardingAnalyticsProps = {
   payment_method_selected: string;
 };
 
-export const trackSuccessOnboardingPaymentMethod = (
+const trackSuccessOnboardingPaymentMethod = (
   props: Partial<PaymentOnboardingAnalyticsProps>
 ) => {
   void mixpanelTrack(
@@ -14,7 +15,7 @@ export const trackSuccessOnboardingPaymentMethod = (
   );
 };
 
-export const trackOnboardingPaymentMethodDenied = (
+const trackOnboardingPaymentMethodDenied = (
   props: Partial<PaymentOnboardingAnalyticsProps>
 ) => {
   void mixpanelTrack(
@@ -23,7 +24,7 @@ export const trackOnboardingPaymentMethodDenied = (
   );
 };
 
-export const trackAddOnboardingPaymentMethodCanceled = (
+const trackAddOnboardingPaymentMethodCanceled = (
   props: Partial<PaymentOnboardingAnalyticsProps>
 ) => {
   void mixpanelTrack(
@@ -32,7 +33,7 @@ export const trackAddOnboardingPaymentMethodCanceled = (
   );
 };
 
-export const trackAddOnboardingPaymentMethodDuplicated = (
+const trackAddOnboardingPaymentMethodDuplicated = (
   props: Partial<PaymentOnboardingAnalyticsProps>
 ) => {
   void mixpanelTrack(
@@ -41,11 +42,40 @@ export const trackAddOnboardingPaymentMethodDuplicated = (
   );
 };
 
-export const trackOnboardingPaymentMethod3dsError = (
-  props: Partial<PaymentOnboardingAnalyticsProps>
+// This function will be used in the future when we will have 3DS
+// const trackOnboardingPaymentMethod3dsError = (
+//   props: Partial<PaymentOnboardingAnalyticsProps>
+// ) => {
+//   void mixpanelTrack(
+//     "PAYMENT_ADD_METHOD_3DS_ERROR",
+//     buildEventProperties("UX", "screen_view", props)
+//   );
+// };
+
+export const trackFailureOnboardingPaymentMethod = (
+  outcome: WalletOnboardingOutcomeEnum,
+  payment_method_selected: string | undefined
 ) => {
-  void mixpanelTrack(
-    "PAYMENT_ADD_METHOD_3DS_ERROR",
-    buildEventProperties("UX", "screen_view", props)
-  );
+  switch (outcome) {
+    case WalletOnboardingOutcomeEnum.SUCCESS:
+      trackSuccessOnboardingPaymentMethod({
+        payment_method_selected
+      });
+      break;
+    case WalletOnboardingOutcomeEnum.AUTH_ERROR:
+      trackOnboardingPaymentMethodDenied({
+        payment_method_selected
+      });
+      break;
+    case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
+      trackAddOnboardingPaymentMethodCanceled({
+        payment_method_selected
+      });
+      break;
+    case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
+      trackAddOnboardingPaymentMethodDuplicated({
+        payment_method_selected
+      });
+      break;
+  }
 };
