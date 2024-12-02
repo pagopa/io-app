@@ -1991,6 +1991,9 @@ wallet:
       BE_NODE_KO:
         title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
         subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
+      PSP_ERROR:
+        title: Il pagamento non è andato a buon fine
+        subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza

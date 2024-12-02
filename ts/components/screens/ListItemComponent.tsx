@@ -1,28 +1,28 @@
-import * as React from "react";
 import {
-  Text,
-  View,
-  AccessibilityRole,
-  StyleProp,
-  StyleSheet,
-  ViewStyle,
-  AccessibilityState,
-  Pressable
-} from "react-native";
-import {
+  Badge,
+  Body,
+  Divider,
+  HSpacer,
   Icon,
   IOColors,
   IOIcons,
   IOIconSizeScale,
-  HSpacer,
-  Divider,
-  VSpacer,
   NativeSwitch,
-  Body
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import {
+  AccessibilityRole,
+  AccessibilityState,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle
+} from "react-native";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
-import { IOBadge } from "../core/IOBadge";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -141,12 +141,7 @@ export default class ListItemComponent extends React.Component<Props> {
                     {/* Use marginTop to align the badge
                   to the text. TODO: Replace it with a
                   more robust approach. */}
-                    <IOBadge
-                      small
-                      text={this.props.titleBadge}
-                      variant="solid"
-                      color="blue"
-                    />
+                    <Badge variant="blue" text={this.props.titleBadge} />
                     <HSpacer size={4} />
                   </View>
                 )}

@@ -17,6 +17,7 @@ import {
   ChosenIdentifier,
   Identifier
 } from "../screens/authentication/OptInScreen";
+import { cieIDSetSelectedSecurityLevel } from "../features/cieLogin/store/actions";
 
 export const IdpCIE: SpidIdp = {
   id: "cie",
@@ -86,6 +87,7 @@ const useNavigateToLoginMethod = () => {
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {
       dispatch(idpSelected(IdpCIE_ID));
+      dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
 
       if (isCieIdAvailable(isCieUatEnabled) || cieFlowForDevServerEnabled) {
         const params = {

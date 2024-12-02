@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.78.0-rc.12](https://github.com/pagopa/io-app/compare/2.78.0-rc.11...2.78.0-rc.12) (2024-11-29)
+
+## [2.78.0-rc.11](https://github.com/pagopa/io-app/compare/2.78.0-rc.10...2.78.0-rc.11) (2024-11-28)
+
+
+### Chores
+
+* [[IOPID-2515](https://pagopa.atlassian.net/browse/IOPID-2515)] - Add SECURITY_LEVEL_MISMATCH event ([#6460](https://github.com/pagopa/io-app/issues/6460)) ([99f0f97](https://github.com/pagopa/io-app/commit/99f0f97a3ffded6ab729d305ece215ef2c257583))
+
+## [2.78.0-rc.10](https://github.com/pagopa/io-app/compare/2.78.0-rc.9...2.78.0-rc.10) (2024-11-27)
+
+
+### Chores
+
+* [[IOBP-981](https://pagopa.atlassian.net/browse/IOBP-981),[IOBP-1002](https://pagopa.atlassian.net/browse/IOBP-1002)] Add PSP_ERROR outcome screen into payment flow ([#6461](https://github.com/pagopa/io-app/issues/6461)) ([e8aa56b](https://github.com/pagopa/io-app/commit/e8aa56b9f1a72bdfe8a4cab050c5e7977ad81226))
+
 ## [2.78.0-rc.9](https://github.com/pagopa/io-app/compare/2.78.0-rc.8...2.78.0-rc.9) (2024-11-27)
 
 
