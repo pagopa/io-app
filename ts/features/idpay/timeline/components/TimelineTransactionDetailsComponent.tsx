@@ -1,23 +1,24 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { StyleSheet, View } from "react-native";
 import {
   Alert,
   Body,
   H6,
   HSpacer,
+  ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import {
   TransactionDetailDTO,
   OperationTypeEnum as TransactionTypeEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getLabelForCircuitType } from "../../common/labels";
@@ -118,42 +119,22 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
           {getLabelForCircuitType(transaction.circuitType)}
         </Body>
       </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.transaction.acquirerId")}
-        </Body>
-        <HSpacer size={16} />
-        <View style={[IOStyles.flex, IOStyles.row]}>
-          <Body
-            weight="Semibold"
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={IOStyles.flex}
-          >
-            {idTrxAcquirer}
-          </Body>
-          <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={idTrxAcquirer} />
-        </View>
-      </View>
-      <View style={styles.detailRow}>
-        <Body style={{ flex: 1 }}>
-          {I18n.t("idpay.initiative.operationDetails.transaction.issuerId")}
-        </Body>
-        <HSpacer size={16} />
-        <View style={[IOStyles.flex, IOStyles.row]}>
-          <Body
-            weight="Semibold"
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={IOStyles.flex}
-          >
-            {idTrxIssuer}
-          </Body>
-          <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={idTrxIssuer} />
-        </View>
-      </View>
+      <ListItemInfoCopy
+        label={I18n.t(
+          "idpay.initiative.operationDetails.transaction.acquirerId"
+        )}
+        value={idTrxAcquirer}
+        onPress={() => {
+          clipboardSetStringWithFeedback(idTrxAcquirer);
+        }}
+      />
+      <ListItemInfoCopy
+        label={I18n.t("idpay.initiative.operationDetails.transaction.issuerId")}
+        value={idTrxIssuer}
+        onPress={() => {
+          clipboardSetStringWithFeedback(idTrxIssuer);
+        }}
+      />
     </View>
   );
 };
