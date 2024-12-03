@@ -25,7 +25,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { WalletTransactionReceiptDivider } from "../../transaction/components/WalletTransactionReceiptDivider";
-import { getPayerInfoLabel, removeAsterisks } from "../utils";
+import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -110,15 +110,16 @@ const PaymentsBizEventsTransactionInfoSection = ({
                   <Divider />
                 </>
               )}
-              {transactionInfo.pspName && (
-                <>
-                  <ListItemInfo
-                    label={I18n.t("transaction.details.info.pspName")}
-                    value={transactionInfo.pspName}
-                  />
-                  <Divider />
-                </>
-              )}
+              {transactionInfo.pspName &&
+                isValidPspName(transactionInfo.pspName) && (
+                  <>
+                    <ListItemInfo
+                      label={I18n.t("transaction.details.info.pspName")}
+                      value={transactionInfo.pspName}
+                    />
+                    <Divider />
+                  </>
+                )}
               {transactionInfo.noticeDate && (
                 <>
                   <ListItemInfo
