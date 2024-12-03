@@ -83,6 +83,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
               {transactionInfo.payer && (
                 <>
                   <ListItemInfo
+                    testID="payer-info"
                     label={I18n.t("transaction.details.info.executedBy")}
                     value={getPayerInfoLabel(transactionInfo.payer)}
                   />
@@ -224,7 +225,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
 };
 
 const SkeletonItem = () => (
-  <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
+  <View style={[IOStyles.flex, { paddingVertical: 12 }]} testID="skeleton-item">
     <Placeholder.Box height={16} width="80%" radius={4} />
     <VSpacer size={8} />
     <Placeholder.Box height={16} width="25%" radius={4} />
