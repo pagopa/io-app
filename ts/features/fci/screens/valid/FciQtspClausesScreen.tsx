@@ -1,45 +1,45 @@
-import * as React from "react";
-import { FlatList, View, ScrollView } from "react-native";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Body,
-  ButtonSolidProps,
   Divider,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as React from "react";
+import { ComponentProps } from "react";
+import { FlatList, ScrollView, View } from "react-native";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
+import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
+import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
+import { trackFciUxConversion } from "../../analytics";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
+import LinkedText from "../../components/LinkedText";
+import LoadingComponent from "../../components/LoadingComponent";
+import QtspClauseListItem from "../../components/QtspClauseListItem";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { useFciCheckService } from "../../hooks/useFciCheckService";
+import { FCI_ROUTES } from "../../navigation/routes";
+import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
+import {
+  fciPollFilledDocumentErrorSelector,
+  fciPollFilledDocumentReadySelector
+} from "../../store/reducers/fciPollFilledDocument";
 import {
   fciQtspClausesSelector,
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import customVariables from "../../../../theme/variables";
-import QtspClauseListItem from "../../components/QtspClauseListItem";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
-import {
-  fciPollFilledDocumentErrorSelector,
-  fciPollFilledDocumentReadySelector
-} from "../../store/reducers/fciPollFilledDocument";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
-import LinkedText from "../../components/LinkedText";
-import { servicePreferencePotSelector } from "../../../services/details/store/reducers";
-import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { useFciCheckService } from "../../hooks/useFciCheckService";
-import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
-import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
-import { trackFciUxConversion } from "../../analytics";
-import LoadingComponent from "../../components/LoadingComponent";
-import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -147,14 +147,20 @@ const FciQtspClausesScreen = () => {
     </View>
   );
 
-  const cancelButtonProps: ButtonSolidProps = {
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    color: "primary",
     onPress: showAbort,
-    label: I18n.t("global.buttons.cancel"),
-    accessibilityLabel: I18n.t("global.buttons.cancel")
+    label: I18n.t("global.buttons.cancel")
   };
 
-  const continueButtonProps: ButtonSolidProps = {
+  const continueButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
+    color: "primary",
     disabled: clausesChecked !== qtspClausesSelector.length,
+    label: I18n.t("global.buttons.continue"),
     onPress: () => {
       if (isServiceActive) {
         trackFciUxConversion(fciEnvironment);
@@ -162,9 +168,7 @@ const FciQtspClausesScreen = () => {
       } else {
         showCheckService();
       }
-    },
-    label: I18n.t("global.buttons.continue"),
-    accessibilityLabel: I18n.t("global.buttons.continue")
+    }
   };
 
   return (
@@ -176,10 +180,9 @@ const FciQtspClausesScreen = () => {
           <Body>{I18n.t("features.fci.qtspTos.subTitle")}</Body>
           {renderClausesFields()}
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
+        <FooterActionsInline
+          startAction={cancelButtonProps}
+          endAction={continueButtonProps}
         />
       </View>
       {fciAbortSignature}

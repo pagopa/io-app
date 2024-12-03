@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   Divider,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   H6,
   HSpacer,
@@ -22,6 +22,7 @@ import { identificationRequest } from "../../../../store/actions/identification"
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../common/components/Skeleton";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   formatDateOrDefault,
   formatNumberCurrencyCents,
@@ -34,7 +35,6 @@ import {
   transactionDataSelector
 } from "../machine/selectors";
 import { IdPayPaymentParamsList } from "../navigation/params";
-import { isLoadingSelector } from "../../common/machine/selectors";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
   trxCode?: string;
@@ -107,24 +107,19 @@ const IDPayPaymentAuthorizationScreen = () => {
           </ContentWrapper>
         </View>
       </SafeAreaView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: isCancelling ? "" : I18n.t("global.buttons.deny"),
-            onPress: handleCancel,
-            disabled: isLoading
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: isCancelling ? "" : I18n.t("global.buttons.deny"),
+          onPress: handleCancel,
+          disabled: isLoading
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.confirm"),
-            onPress: handleConfirm,
-            loading: isAuthorizing,
-            disabled: isLoading
-          }
+        endAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.confirm"),
+          onPress: handleConfirm,
+          loading: isAuthorizing,
+          disabled: isLoading
         }}
       />
     </BaseScreenComponent>

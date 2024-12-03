@@ -1,24 +1,24 @@
-import * as React from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   ButtonSolidProps,
-  FooterWithButtons,
+  FooterActions,
   IOStyles,
   Pictogram
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as React from "react";
 import { View } from "react-native";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fciSignatureSelector } from "../../store/reducers/fciSignature";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
-import I18n from "../../../../i18n";
-import { fciEndRequest, fciStartRequest } from "../../store/actions";
-import { trackFciUxSuccess } from "../../analytics";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
-import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { getClausesCountByTypes } from "../../utils/signatureFields";
-import LoadingComponent from "../../components/LoadingComponent";
+import I18n from "../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { trackFciUxSuccess } from "../../analytics";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
 import { InfoScreenComponent } from "../../components/InfoScreenComponent";
+import LoadingComponent from "../../components/LoadingComponent";
+import { fciEndRequest, fciStartRequest } from "../../store/actions";
+import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { fciSignatureSelector } from "../../store/reducers/fciSignature";
+import { getClausesCountByTypes } from "../../utils/signatureFields";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
@@ -45,9 +45,9 @@ const FciThankyouScreen = () => {
     const continueButtonProps: ButtonSolidProps = {
       onPress: () => dispatch(fciEndRequest()),
       label: I18n.t("features.fci.thankYouPage.cta"),
-      accessibilityLabel: I18n.t("features.fci.thankYouPage.cta"),
       testID: "FciTypCloseButton"
     };
+
     return (
       <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
         <InfoScreenComponent
@@ -55,9 +55,11 @@ const FciThankyouScreen = () => {
           title={I18n.t("features.fci.thankYouPage.title")}
           body={I18n.t("features.fci.thankYouPage.content")}
         />
-        <FooterWithButtons
-          type={"SingleButton"}
-          primary={{ type: "Solid", buttonProps: continueButtonProps }}
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: continueButtonProps
+          }}
         />
       </View>
     );

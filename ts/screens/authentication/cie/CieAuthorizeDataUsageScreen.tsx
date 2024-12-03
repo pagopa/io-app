@@ -3,7 +3,7 @@
  */
 import {
   ContentWrapper,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -49,23 +49,14 @@ class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
           </ContentWrapper>
         </ScrollView>
         {this.state.isLoadingCompleted && (
-          <FooterWithButtons
-            type="TwoButtonsInlineThird"
-            primary={{
-              type: "Outline",
-              buttonProps: {
-                label: I18n.t("global.buttons.cancel"),
-                accessibilityLabel: I18n.t("global.buttons.cancel"),
-                onPress: this.props.navigation.goBack
-              }
+          <FooterActionsInline
+            startAction={{
+              label: I18n.t("global.buttons.cancel"),
+              onPress: this.props.navigation.goBack
             }}
-            secondary={{
-              type: "Solid",
-              buttonProps: {
-                label: I18n.t("global.buttons.retry"),
-                accessibilityLabel: I18n.t("global.buttons.retry"),
-                onPress: () => Alert.alert(I18n.t("global.notImplemented"))
-              }
+            endAction={{
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => Alert.alert(I18n.t("global.notImplemented"))
             }}
           />
         )}

@@ -1,6 +1,6 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActions,
   H2,
   HSpacer,
   Icon,
@@ -97,11 +97,10 @@ export const IbanOnboardingScreen = () => {
           </LabelSmall>
         </View>
       </ScrollView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: I18n.t("global.buttons.continue"),
             loading: isLoading,
             disabled: isLoading || !isInputValid,
