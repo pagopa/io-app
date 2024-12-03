@@ -18,20 +18,21 @@ export type IdentificationContext =
  * We need to resume the authentication flow after reading the card,
  * so here we save the auth params obtained in the first step.
  */
-export type CieAuthContext = {
+export type AuthenticationContext = {
   authUrl: string;
   clientId: string;
   codeVerifier: string;
   issuerConf: Parameters<Credential.Issuance.ObtainCredential>[0];
   credentialDefinition: AuthorizationDetail;
   callbackUrl: string;
+  redirectUri: string;
 };
 
 export type Context = {
   walletInstanceAttestation: string | undefined;
   integrityKeyTag: string | undefined;
   identification: IdentificationContext | undefined;
-  cieAuthContext: CieAuthContext | undefined;
+  authenticationContext: AuthenticationContext | undefined;
   eid: StoredCredential | undefined;
   failure: IssuanceFailure | undefined;
 };
@@ -40,7 +41,7 @@ export const InitialContext: Context = {
   walletInstanceAttestation: undefined,
   integrityKeyTag: undefined,
   identification: undefined,
-  cieAuthContext: undefined,
+  authenticationContext: undefined,
   eid: undefined,
   failure: undefined
 };

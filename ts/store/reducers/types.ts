@@ -9,7 +9,6 @@ import { PersistedNotificationsState } from "../../features/pushNotifications/st
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
-import { BackoffErrorState } from "./backoffError";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
@@ -41,7 +40,6 @@ export type GlobalState = Readonly<{
   backendInfo: BackedInfoState;
   versionInfo: VersionInfoState;
   entities: PersistedEntitiesState;
-  backoffError: BackoffErrorState;
   notifications: PersistedNotificationsState;
   onboarding: OnboardingState;
   profile: ProfileState;
