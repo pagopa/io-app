@@ -153,7 +153,8 @@ const WalletPaymentOutcomeScreen = () => {
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
-    onPress: handleClose
+    onPress: handleClose,
+    testID: "wallet-payment-outcome-success-button"
   };
 
   const closeFailureAction: OperationResultScreenContentProps["action"] = {
