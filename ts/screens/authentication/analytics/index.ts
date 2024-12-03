@@ -33,16 +33,16 @@ export async function trackCieIDLoginSelected(
   state: GlobalState,
   spidLevel: SpidLevel
 ) {
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE_ID.id
-  });
   mixpanelTrack(
     "LOGIN_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
       security_level: SECURITY_LEVEL_MAP[spidLevel]
     })
   );
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: IdpCIE_ID.id
+  });
 }
 export async function trackCieBottomSheetScreenView() {
   mixpanelTrack(
