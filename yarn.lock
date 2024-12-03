@@ -13809,6 +13809,11 @@ react-native-splash-screen@^3.2.0:
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
   integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
 
+react-native-store-review@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-store-review/-/react-native-store-review-0.4.3.tgz#a524374b1a897b1de1b05d6257640296f1693e3c"
+  integrity sha512-RSQ6vx2j4p41GwTqNv2VV7yold62j5qDbGEBAjFi6gkXMrMpxFMg+82FPjbh6012tqv6Ebzwfqw6S4m4d7sddw==
+
 react-native-svg-transformer@^0.14.3:
   version "0.14.3"
   resolved "https://registry.yarnpkg.com/react-native-svg-transformer/-/react-native-svg-transformer-0.14.3.tgz#43c8e176f5a11f16f39b87a64018e0ac090ffbdb"
