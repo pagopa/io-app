@@ -31,14 +31,16 @@ const mockCategory: ZendeskCategory = {
   value: "mock_value",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 const mockSubcategory: ZendeskSubCategory = {
   value: "mock_value",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 
