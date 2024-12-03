@@ -141,3 +141,6 @@ export const restoreTransactionAtIndex = (
     restoreItem,
     ...transactions.slice(index)
   ]);
+
+export const removeAsterisks = (text: string): string =>
+  text.replace(/\*/g, "");
