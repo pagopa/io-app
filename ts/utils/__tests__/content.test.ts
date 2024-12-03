@@ -4,7 +4,8 @@ import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import {
   idpContextualHelpDataFromIdSelector,
-  screenContextualHelpDataSelector
+  screenContextualHelpDataSelector,
+  getContextualHelpDataFromRouteSelector
 } from "../../store/reducers/content";
 
 const chData = {
@@ -197,6 +198,47 @@ describe("screenContextualHelpDataSelector", () => {
       pot.some(chData),
       "NO_KEY"
     );
+    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
+  });
+});
+
+describe("getContextualHelpDataFromRouteSelector", () => {
+  it("should return no data if route is empty", async () => {
+    const screenData = getContextualHelpDataFromRouteSelector("").resultFunc(
+      pot.some(chData)
+    );
+    expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
+  });
+
+  it("should return data (italian) if the route is present as key", async () => {
+    setLocale("it" as Locales);
+    assertRouteValues("title IT", "**content IT**");
+  });
+
+  it("should return data (english) if the route is present as key", async () => {
+    setLocale("en" as Locales);
+    assertRouteValues("title EN", "**content EN**");
+  });
+
+  it("should return data (italian) if the route is present as key and the set language is not supported", async () => {
+    setLocale("br" as Locales);
+    assertRouteValues("title IT", "**content IT**");
+  });
+
+  const assertRouteValues = (title: string, content: string) => {
+    const screenData = getContextualHelpDataFromRouteSelector(
+      "AUTHENTICATION_IDP_LOGIN"
+    ).resultFunc(pot.some(chData));
+    if (pot.isSome(screenData) && O.isSome(screenData.value)) {
+      expect(screenData.value.value.title).toEqual(title);
+      expect(screenData.value.value.content).toEqual(content);
+    }
+  };
+
+  it("should return no data if the route is not present as key", async () => {
+    const screenData = getContextualHelpDataFromRouteSelector(
+      "NO_KEY"
+    ).resultFunc(pot.some(chData));
     expect(pot.isSome(screenData) && O.isNone(screenData.value)).toBeTruthy();
   });
 });
