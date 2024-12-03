@@ -73,6 +73,7 @@ import {
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   authenticationStateSelector,
+  authenticationStateSelector2,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -275,6 +276,11 @@ export function* initializeApplicationSaga(
   const authState = yield* select(authenticationStateSelector);
   mixpanelTrack("GET_AUTHENTICATION_FULL_STATE", {
     authState: JSON.stringify(authState)
+  });
+
+  const authState2 = yield* select(authenticationStateSelector2);
+  mixpanelTrack("GET_AUTHENTICATION_FULL_STATE_NOT_ENCRYPTED", {
+    authState: JSON.stringify(authState2)
   });
 
   mixpanelTrack("GET_PREVIOUS_SESSION_TOKEN");

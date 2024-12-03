@@ -80,6 +80,8 @@ type AuthenticationStateWithIdp =
 
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
 export type PersistedAuthenticationState = AuthenticationState & PersistPartial;
+export type PersistedAuthenticationState2 = AuthenticationState &
+  PersistPartial;
 
 // Initially the user is logged out and hasn't selected an IDP
 export const INITIAL_STATE: LoggedOutWithoutIdp = {
@@ -125,6 +127,10 @@ export function isSessionExpired(
 export const authenticationStateSelector = (
   state: GlobalState
 ): AuthenticationState => state.authentication;
+
+export const authenticationStateSelector2 = (
+  state: GlobalState
+): AuthenticationState => state.authentication2;
 
 export const loggedOutWithIdpAuthSelector = createSelector(
   authenticationStateSelector,

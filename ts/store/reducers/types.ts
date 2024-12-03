@@ -8,7 +8,10 @@ import { TrialSystemState } from "../../features/trialSystem/store/reducers";
 import { PersistedNotificationsState } from "../../features/pushNotifications/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
-import { PersistedAuthenticationState } from "./authentication";
+import {
+  PersistedAuthenticationState,
+  PersistedAuthenticationState2
+} from "./authentication";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
@@ -34,6 +37,7 @@ export type GlobalState = Readonly<{
   appState: AppState;
   navigation: NavigationState;
   authentication: PersistedAuthenticationState;
+  authentication2: PersistedAuthenticationState2;
   remoteConfig: RemoteConfigState;
   statusMessages: StatusMessagesState;
   sectionStatus: SectionStatusState;

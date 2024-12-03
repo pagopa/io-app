@@ -81,6 +81,12 @@ export const authenticationPersistConfig: PersistConfig = {
   blacklist: ["deepLink"]
 };
 
+export const authenticationPersistConfig2: PersistConfig = {
+  key: "authentication2",
+  storage: AsyncStorage,
+  blacklist: ["deepLink"]
+};
+
 export const IDENTIFICATION_STATE_MIGRATION_VERSION = 0;
 export const identificationStateMigration: MigrationManifest = {
   // version 0
@@ -146,6 +152,12 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
     authenticationReducer
   ),
 
+  // persistor with AsyncStorage
+  authentication2: persistReducer<AuthenticationState, Action>(
+    authenticationPersistConfig2,
+    authenticationReducer
+  ),
+
   // standard persistor, see configureStoreAndPersistor.ts
 
   identification: persistReducer<IdentificationState, Action>(
@@ -200,6 +212,11 @@ export function createRootReducer(
               ...authenticationInitialState,
 
               _persist: state.authentication._persist
+            },
+            authentication2: {
+              ...authenticationInitialState,
+
+              _persist: state.authentication2._persist
             },
             // backend status must be kept
             backendInfo: state.backendInfo,
