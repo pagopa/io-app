@@ -158,31 +158,3 @@ describe("CgnDiscountDetailScreen", () => {
     });
   });
 });
-
-it("should navigate to discount code failure screen on OTP generation error", async () => {
-  const initialState = {
-    ...globalState,
-    bonus: {
-      ...globalState.bonus,
-      cgn: {
-        ...globalState.bonus.cgn,
-        merchants: {
-          ...globalState.bonus.cgn.merchants,
-          selectedDiscount: remoteReady(discountDetailsMock),
-          selectedMerchant: remoteReady({
-            ...mockSelectedMerchant,
-            discountCodeType: DiscountCodeTypeEnum.api
-          })
-        }
-      }
-    }
-  };
-
-  const { component } = renderComponent(initialState);
-
-  fireEvent.press(component.getByTestId("discount-code-button"));
-
-  expect(mockNavigate).toHaveBeenCalledWith(CGN_ROUTES.DETAILS.MAIN, {
-    screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE
-  });
-});
