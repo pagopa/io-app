@@ -53,7 +53,6 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import I18n from "../i18n";
-import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import {
   applicationInitialized,
@@ -116,6 +115,7 @@ import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
+import { mixpanelTrack } from "./../mixpanel";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -174,6 +174,9 @@ export function* initializeApplicationSaga(
   );
   const showIdentificationModal =
     startupAction?.payload?.showIdentificationModalAtStartup ?? true;
+  yield* call(initMixpanel);
+  yield* delay(500 as Millisecond); // wait for mixpanel to be initialized
+  mixpanelTrack("APPLICATION_STARTUP");
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -185,54 +188,75 @@ export function* initializeApplicationSaga(
 
   // store the app version in the history, if the current version is not present
   yield* call(checkAppHistoryVersionSaga);
+  mixpanelTrack("APP_VERSION_HISTORY");
   // check if mixpanel could be initialized
-  yield* call(initMixpanel);
+  // yield* call(initMixpanel);
+  mixpanelTrack("WAIT_FOR_NAVIGATOR_SERVICE_INITIALIZATION");
   yield* call(waitForNavigatorServiceInitialization);
+  mixpanelTrack("NAVIGATOR_SERVICE_INITIALIZATION_COMPLETED");
 
   // remove all local notifications (see function comment)
+  mixpanelTrack("CANCEL_ALL_LOCAL_NOTIFICATIONS");
   yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga);
   yield* put(previousInstallationDataDeleteSuccess());
+  mixpanelTrack("PREVIOUS_INSTALLATION_DATA_DELETE_SUCCESS");
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
+  mixpanelTrack("SETUP_MIXPANEL_ENABLED_LISTENER");
 
   // clear cached downloads when the logged user changes
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
+  mixpanelTrack("SETUP_DIFFERENT_PROFILE_LOGGED_IN_LISTENER");
 
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
+  mixpanelTrack("SETUP_NOTIFICATION_PERMISSIONS_LISTENER");
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
     yield* select(profileSelector);
+  mixpanelTrack("GET_LAST_LOGGED_IN_PROFILE_STATE", {
+    profile: JSON.stringify(lastLoggedInProfileState)
+  });
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
     ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
     : O.none;
+  mixpanelTrack("GET_LAST_EMAIL_VALIDATED", {
+    lastEmailValidated: JSON.stringify(lastEmailValidated)
+  });
 
   // Watch for profile changes
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
+  mixpanelTrack("WATCH_PROFILE_EMAIL_VALIDATION_CHANGED");
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   if (!handleSessionExpiration) {
     yield* put(resetProfileState());
+    mixpanelTrack("RESET_PROFILE_STATE");
   }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
-
+  mixpanelTrack("GENERATE_LOLLIPOP_KEY");
   yield* call(generateLollipopKeySaga);
+  mixpanelTrack("GENERATE_LOLLIPOP_KEY_COMPLETED");
 
   // This saga must retrieve the publicKey by its own,
   // since it must make sure to have the latest in-memory value
   // (as an example, during the authentication saga the key may have been regenerated multiple times)
   // #LOLLIPOP_CHECK_BLOCK1_START
   const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
+  mixpanelTrack("CHECK_PUBLIC_KEY_AND_BLOCK_IF_NEEDED", {
+    unsupportedDevice
+  });
   if (unsupportedDevice) {
+    mixpanelTrack("UNSUPPORTED_DEVICE");
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
@@ -240,58 +264,81 @@ export function* initializeApplicationSaga(
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF
   // before using them.
+  mixpanelTrack("WAIT_FOR_BACKEND_STATUS_LOAD_SUCCESS");
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+    mixpanelTrack("WAIT_FOR_BACKEND_STATUS_LOAD_SUCCESS_COMPLETED");
   }
 
+  mixpanelTrack("GET_PREVIOUS_SESSION_TOKEN");
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
+  mixpanelTrack("GET_PREVIOUS_SESSION_TOKEN_COMPLETED", {
+    previousSessionToken
+  });
 
   // workaround to send keychainError
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
   yield* call(trackKeychainFailures);
+  mixpanelTrack("TRACK_KEYCHAIN_FAILURES");
 
   // Unless we have a valid session token already, login until we have one.
+  mixpanelTrack("GET_SESSION_TOKEN");
   const sessionToken: SagaCallReturnType<typeof authenticationSaga> =
     previousSessionToken
       ? previousSessionToken
       : yield* call(authenticationSaga);
+  mixpanelTrack("GET_SESSION_TOKEN_DONE", {
+    sessionToken
+  });
 
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
-
+  mixpanelTrack("GET_KEY_INFO");
   const keyInfo = yield* call(getKeyInfo);
+  mixpanelTrack("GET_KEY_INFO_DONE", {
+    keyInfo: JSON.stringify(keyInfo)
+  });
 
   // Handles the expiration of the session token
+  mixpanelTrack("WATCH_SESSION_EXPIRED_SAGA");
   yield* fork(watchSessionExpiredSaga);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
+  mixpanelTrack("INITIALIZE_BACKEND_CLIENT");
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
     sessionToken,
     keyInfo
   );
+  mixpanelTrack("INITIALIZE_BACKEND_CLIENT_DONE");
 
   // Watch for requests to logout
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
+  mixpanelTrack("WATCH_LOGOUT_SAGA_SETUP");
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+    mixpanelTrack("WATCH_ZENDESK_GET_SESSION_SAGA_SETUP");
   }
 
   // check if the current session is still valid
+  mixpanelTrack("CHECK_SESSION");
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(
       checkSession,
       backendClient.getSession,
       formatRequestedTokenString()
     );
+  mixpanelTrack("CHECK_SESSION_DONE", {
+    checkSessionResponse: JSON.stringify(checkSessionResponse)
+  });
 
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
@@ -323,6 +370,7 @@ export function* initializeApplicationSaga(
     backendClient.postUserDataProcessingRequest,
     backendClient.deleteUserDataProcessingRequest
   );
+  mixpanelTrack("WATCH_USER_DATA_PROCESSING_SAGA_SETUP");
 
   // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
@@ -338,6 +386,9 @@ export function* initializeApplicationSaga(
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
+  mixpanelTrack("IS_SESSION_REFRESHED", {
+    isSessionRefreshed
+  });
 
   // Let's see if have to load the session info, either because
   // we don't have one for the current session or because we
@@ -348,6 +399,9 @@ export function* initializeApplicationSaga(
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
+  mixpanelTrack("GET_SESSION_INFORMATION", {
+    maybeSessionInformation: JSON.stringify(maybeSessionInformation)
+  });
   // In the check below we had also isSessionRefreshed, but it is not needed
   // since the actual checkSession made above is enough to ensure that the
   // session tokens are retrieved correctly.
@@ -374,57 +428,81 @@ export function* initializeApplicationSaga(
         (maybeSessionInformation.value.bpdToken === undefined ||
           maybeSessionInformation.value.walletToken === undefined))
     ) {
+      mixpanelTrack("GET_SESSION_INFORMATION_DOWN", {
+        maybeSessionInformation: JSON.stringify(maybeSessionInformation)
+      });
       yield* call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
       return;
     }
   }
 
+  mixpanelTrack("GET_SESSION_INFORMATION_DONE", {
+    maybeSessionInformation: JSON.stringify(maybeSessionInformation)
+  });
   const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
 
   if (userFromSuccessLogin) {
     yield* call(shouldTrackLevelSecurityMismatchSaga, maybeSessionInformation);
   }
 
+  mixpanelTrack("GET_USER_PUBLIC_key");
   const publicKey = yield* select(lollipopPublicKeySelector);
+  mixpanelTrack("GET_USER_PUBLIC_KEY_DONE", {
+    publicKey: JSON.stringify(publicKey)
+  });
 
   // #LOLLIPOP_CHECK_BLOCK2_START
+  mixpanelTrack("CHECK_LOLLIPOP_SESSION_ASSERTION");
   const isAssertionRefValid = yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
     maybeSessionInformation
   );
   if (!isAssertionRefValid) {
+    mixpanelTrack("LOLLIPOP_SESSION_ASSERTION_INVALID");
     return;
   }
   // #LOLLIPOP_CHECK_BLOCK2_END
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
+  mixpanelTrack("WATCH_PROFILE_UPSERT_REQUESTS_SAGA");
   yield* fork(
     watchProfileUpsertRequestsSaga,
     backendClient.createOrUpdateProfile
   );
+  mixpanelTrack("WATCH_PROFILE_UPSERT_REQUESTS_SAGA_DONE");
 
   // Start watching when profile is successfully loaded
   yield* fork(watchProfile, backendClient.startEmailValidationProcess);
+  mixpanelTrack("WATCH_PROFILE_SAGA_SETUP");
 
   // If we are here the user is logged in and the session info is
   // loaded and valid
 
   // Load the profile info
+  mixpanelTrack("LOAD_PROFILE");
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfile,
     backendClient.getProfile
   );
+  mixpanelTrack("LOAD_PROFILE_DONE", {
+    maybeUserProfile: JSON.stringify(maybeUserProfile)
+  });
 
   if (O.isNone(maybeUserProfile)) {
+    mixpanelTrack("GET_PROFILE_DOWN");
     yield* call(handleApplicationStartupTransientError, "GET_PROFILE_DOWN");
     return;
   }
   yield* put(startupTransientError(startupTransientErrorInitialState));
+  mixpanelTrack("NO_TRANSIENT_ERRORS");
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
+  mixpanelTrack("GET_USER_PROFILE", {
+    userProfile: JSON.stringify(userProfile)
+  });
 
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
@@ -433,6 +511,10 @@ export function* initializeApplicationSaga(
     pot.isSome(lastLoggedInProfileState) &&
     lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
   ) {
+    mixpanelTrack("CROSS_SESSIONS", {
+      lastProfile: JSON.stringify(lastLoggedInProfileState.value),
+      profile: JSON.stringify(userProfile)
+    });
     // Delete all data while keeping current session:
     // Delete the current unlock code from the Keychain
     yield* call(deletePin);
@@ -442,10 +524,13 @@ export function* initializeApplicationSaga(
   }
 
   // Retrieve the configured unlock code from the keychain
+  mixpanelTrack("GET_PIN_FROM_KEYCHAIN");
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
+  mixpanelTrack("GET_PIN_FROM_KEYCHAIN_DONE");
 
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+  mixpanelTrack("WATCH_PROFILE_REFRESH_REQUESTS_SAGA_SETUP");
 
   // Start watching for requests about session and support token
   yield* fork(
@@ -453,29 +538,43 @@ export function* initializeApplicationSaga(
     backendClient.getSession,
     formatRequestedTokenString()
   );
+  mixpanelTrack("WATCH_CHECK_SESSION_SAGA_SETUP");
   // Start watching for requests of abort the onboarding
 
   yield* fork(watchGetZendeskTokenSaga, backendClient.getSession);
+  mixpanelTrack("WATCH_GET_ZENDESK_TOKEN_SAGA_SETUP");
 
+  mixpanelTrack("WATCH_ABORT_ONBOARDING_SAGA");
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
+  mixpanelTrack("WATCH_ABORT_ONBOARDING_SAGA_SETUP");
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   if (!handleSessionExpiration) {
+    mixpanelTrack("WAIT_FOR_MAIN_NAVIGATOR");
     yield* call(waitForMainNavigator);
   }
+  mixpanelTrack("NAVIGATOR_ONBOARDING_STATE_READY");
 
   // yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
+  mixpanelTrack("HAS_PREVIOUS_SESSION_AND_PIN", {
+    hasPreviousSessionAndPin
+  });
   if (hasPreviousSessionAndPin && showIdentificationModal) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
+    mixpanelTrack("START_AND_RETURN_IDENTIFICATION_RESULT");
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
     > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
+    mixpanelTrack("IDENTIFICATION_RESULT", {
+      identificationResult: JSON.stringify(identificationResult)
+    });
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
+      mixpanelTrack("PIN_RESET");
       yield* put(startApplicationInitialization());
       return;
     }
@@ -502,7 +601,10 @@ export function* initializeApplicationSaga(
         return;
       }
     }
+  } else {
+    mixpanelTrack("IDENTIFICATION_MODAL_SKIPPED");
   }
+  mixpanelTrack("IDENTIFICATION_MODAL_DONE");
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);

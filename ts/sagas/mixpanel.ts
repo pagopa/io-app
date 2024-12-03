@@ -1,6 +1,14 @@
-import { call, select, take, takeLatest, put } from "typed-redux-saga/macro";
+import {
+  call,
+  select,
+  take,
+  takeLatest,
+  put,
+  delay
+} from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { ActionType, getType } from "typesafe-actions";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
   identifyMixpanel,
   initializeMixPanel,
@@ -19,6 +27,7 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import { updateMixpanelProfileProperties } from "../mixpanelConfig/profileProperties";
 import { setIsMixpanelInitialized } from "../features/mixpanel/store/actions";
+import { mixpanelToken } from "../config";
 
 function* initializeMixpanelAndUpdateState() {
   const state = (yield* select()) as GlobalState;
@@ -50,12 +59,20 @@ export function* resetMixpanelSaga(): Generator<
 }
 
 export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
-  const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
-    yield* select(isMixpanelEnabled);
+  const isMixpanelEnabledResult =
+    mixpanelToken === "2011fd74ad53d1151217797478406145"; // Force mixpanel opt-in for testing
+  // eslint-disable-next-line no-console
+  console.log(
+    "isMixpanelEnabledResult",
+    isMixpanelEnabledResult,
+    mixpanelToken
+  );
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
     yield* call(initializeMixpanelAndUpdateState);
+    yield* delay(1000 as Millisecond);
+    yield* call(identifyMixpanelSaga); // Force mixpanel identify for testing
   }
 }
 

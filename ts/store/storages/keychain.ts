@@ -2,6 +2,7 @@ import * as Keychain from "react-native-keychain";
 import { Storage } from "redux-persist";
 import * as Sentry from "@sentry/react-native";
 import { setGenericPasswordWithDefaultAccessibleOption } from "../../utils/keychain";
+import { mixpanelTrack } from "../../mixpanel";
 
 /**
  * A storage to save/restore values from/to the Keychain.
@@ -49,6 +50,9 @@ export default function createSecureStorage(): Storage {
         // workaround to send keychainError for Pixel devices
         // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
         getKeychainError = JSON.stringify(err);
+        mixpanelTrack("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE_IMMEDIATE", {
+          reason: getKeychainError
+        });
         return undefined;
       }
     },
@@ -65,6 +69,9 @@ export default function createSecureStorage(): Storage {
       } catch (err) {
         trackExceptionOnSentry("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", err);
         setKeychainError = JSON.stringify(err);
+        mixpanelTrack("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE_IMMEDIATE", {
+          reason: setKeychainError
+        });
         return false;
       }
     },
@@ -78,6 +85,9 @@ export default function createSecureStorage(): Storage {
           err
         );
         removeKeychainError = JSON.stringify(err);
+        mixpanelTrack("KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE_IMMEDIATE", {
+          reason: removeKeychainError
+        });
         return false;
       }
     }

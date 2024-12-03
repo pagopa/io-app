@@ -13,7 +13,10 @@ import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../actions/analytics";
-import { applicationChangeState } from "../actions/application";
+import {
+  applicationChangeState,
+  startApplicationInitialization
+} from "../actions/application";
 import {
   idpLoginUrlChanged,
   idpSelected,
@@ -125,6 +128,7 @@ const trackAction =
         return mp.track(action.type, {
           idp: action.payload.idp
         });
+      case getType(startApplicationInitialization):
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
       case getType(sessionInformationLoadSuccess):

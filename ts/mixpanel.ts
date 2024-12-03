@@ -34,6 +34,8 @@ const setupMixpanel = async (mp: Mixpanel, state: GlobalState) => {
 export const identifyMixpanel = async () => {
   // Identify the user using the device uniqueId
   await mixpanel?.identify(getDeviceId());
+  // eslint-disable-next-line no-console
+  console.log("Mixpanel identified with deviceId: ", mixpanel, getDeviceId());
 };
 
 export const resetMixpanel = () => {

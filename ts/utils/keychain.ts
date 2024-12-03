@@ -10,6 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import * as Keychain from "react-native-keychain";
 
 import { PinString } from "../types/PinString";
+import { mixpanelTrack } from "../mixpanel";
 
 const PIN_KEY = "PIN";
 
@@ -38,14 +39,24 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
  * Saves the provided unlock code in the Keychain
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  return await setGenericPasswordWithDefaultAccessibleOption(PIN_KEY, pin);
+  try {
+    return await setGenericPasswordWithDefaultAccessibleOption(PIN_KEY, pin);
+  } catch (error) {
+    mixpanelTrack("SET_PIN_ERROR", { error: JSON.stringify(error) });
+    return false;
+  }
 }
 
 /**
  * Removes the unlock code from the Keychain
  */
 export async function deletePin(): Promise<boolean> {
-  return await Keychain.resetGenericPassword();
+  try {
+    return await Keychain.resetGenericPassword();
+  } catch (error) {
+    mixpanelTrack("DELETE_PIN_ERROR", { error: JSON.stringify(error) });
+    return false;
+  }
 }
 
 /**
@@ -54,10 +65,18 @@ export async function deletePin(): Promise<boolean> {
  * The promise fails when there is no valid unlock code stored.
  */
 export async function getPin(): Promise<O.Option<PinString>> {
-  const credentials = await Keychain.getGenericPassword();
-  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
-    return O.fromEither(PinString.decode(credentials.password));
-  } else {
+  try {
+    mixpanelTrack("GET_PIN");
+    const credentials = await Keychain.getGenericPassword();
+    if (typeof credentials !== "boolean" && credentials.password.length > 0) {
+      mixpanelTrack("GET_PIN_SUCCESS");
+      return O.fromEither(PinString.decode(credentials.password));
+    } else {
+      mixpanelTrack("GET_PIN_EMPTY");
+      return O.none;
+    }
+  } catch (error) {
+    mixpanelTrack("GET_PIN_ERROR", { error: JSON.stringify(error) });
     return O.none;
   }
 }

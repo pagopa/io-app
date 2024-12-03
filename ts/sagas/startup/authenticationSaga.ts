@@ -20,6 +20,7 @@ import {
 import { idpSelector } from "../../store/reducers/authentication";
 import { IdpCIE, IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { mixpanelTrack } from "../../mixpanel";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -30,6 +31,7 @@ export function* authenticationSaga(): Generator<
   SessionToken,
   any
 > {
+  mixpanelTrack("AUTHENTICATION_STARTED");
   yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
   yield* put(analyticsAuthenticationStarted());
 
