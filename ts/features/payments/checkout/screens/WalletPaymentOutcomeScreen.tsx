@@ -129,11 +129,11 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
+    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
     ) {
-      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
       // Currently we do support only navigation to the wallet
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
