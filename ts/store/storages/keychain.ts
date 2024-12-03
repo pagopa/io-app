@@ -46,6 +46,11 @@ export default function createSecureStorage(): Storage {
           return result.password;
         }
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(
+          "KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE",
+          JSON.stringify(err)
+        );
         trackExceptionOnSentry("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", err);
         // workaround to send keychainError for Pixel devices
         // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
@@ -67,6 +72,11 @@ export default function createSecureStorage(): Storage {
           }
         );
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(
+          "KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE",
+          JSON.stringify(err)
+        );
         trackExceptionOnSentry("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", err);
         setKeychainError = JSON.stringify(err);
         mixpanelTrack("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE_IMMEDIATE", {
@@ -80,6 +90,11 @@ export default function createSecureStorage(): Storage {
       try {
         return await Keychain.resetGenericPassword({ service: key });
       } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(
+          "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE",
+          JSON.stringify(err)
+        );
         trackExceptionOnSentry(
           "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE",
           err

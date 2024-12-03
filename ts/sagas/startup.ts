@@ -72,6 +72,7 @@ import {
 } from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
+  authenticationStateSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
@@ -270,6 +271,11 @@ export function* initializeApplicationSaga(
     yield* take(backendStatusLoadSuccess);
     mixpanelTrack("WAIT_FOR_BACKEND_STATUS_LOAD_SUCCESS_COMPLETED");
   }
+
+  const authState = yield* select(authenticationStateSelector);
+  mixpanelTrack("GET_AUTHENTICATION_FULL_STATE", {
+    authState: JSON.stringify(authState)
+  });
 
   mixpanelTrack("GET_PREVIOUS_SESSION_TOKEN");
   // Whether the user is currently logged in.
