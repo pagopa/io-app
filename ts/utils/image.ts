@@ -5,11 +5,6 @@ import * as T from "io-ts";
 import * as E from "fp-ts/Either";
 import { toAndroidCacheTimestamp } from "./dates";
 
-export const withBase64Uri = (
-  imageBase64: string,
-  format: "png" | "jpg" = "png"
-) => `data:image/${format};base64,${imageBase64}`;
-
 /**
  * Adds a locale timestamp to the image URI to invalidate cache on the following day if the current platform is Android.
  * Useful to bypass React Native Image component aggressive cache on Android.

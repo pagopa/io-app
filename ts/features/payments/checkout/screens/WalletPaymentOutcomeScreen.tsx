@@ -465,6 +465,14 @@ const WalletPaymentOutcomeScreen = () => {
           action: closeFailureAction,
           secondaryAction: contactSupportAction
         };
+      case WalletPaymentOutcomeEnum.PSP_ERROR:
+        return {
+          pictogram: "attention",
+          title: I18n.t("wallet.payment.outcome.PSP_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.PSP_ERROR.subtitle"),
+          action: closeFailureAction,
+          secondaryAction: contactSupportAction
+        };
     }
   };
 

@@ -137,14 +137,6 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   LEGACY: {
-    PICTOGRAMS: {
-      route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
-      title: "Pictograms"
-    },
-    BUTTONS: {
-      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
-      title: "Buttons"
-    },
     TEXT_FIELDS: {
       route: "DESIGN_SYSTEM_LEGACY_TEXT_FIELDS",
       title: "Text Fields"
@@ -152,14 +144,6 @@ const DESIGN_SYSTEM_ROUTES = {
     LIST_ITEMS: {
       route: "DESIGN_SYSTEM_LEGACY_LIST_ITEMS",
       title: "List Items"
-    },
-    BADGES: {
-      route: "DESIGN_SYSTEM_LEGACY_BADGES",
-      title: "Badges"
-    },
-    ALERT: {
-      route: "DESIGN_SYSTEM_LEGACY_ALERT",
-      title: "Alert"
     },
     ADVICE: {
       route: "DESIGN_SYSTEM_LEGACY_ADVICE",

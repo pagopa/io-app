@@ -1,4 +1,5 @@
 import _ from "lodash";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -89,6 +90,11 @@ const renderComponent = (
           preferences: {},
           placeholders: {
             isLoading
+          }
+        },
+        payments: {
+          wallet: {
+            userMethods: pot.some([])
           }
         }
       }

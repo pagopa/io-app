@@ -1,20 +1,117 @@
-import React, { ReactNode, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Tag } from "@pagopa/io-app-design-system";
+import React, { ReactNode, useMemo } from "react";
+import {
+  AccessibilityProps,
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle
+} from "react-native";
+import Animated from "react-native-reanimated";
+import { useScaleAnimation } from "../../../../../components/ui/utils/hooks/useScaleAnimation";
+import I18n from "../../../../../i18n";
+import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
+import {
+  borderColorByStatus,
+  getCredentialNameFromType,
+  tagPropsByStatus,
+  validCredentialStatuses
+} from "../../utils/itwCredentialUtils";
 import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../utils/itwTypesUtils";
-import {
-  borderColorByStatus,
-  tagPropsByStatus,
-  validCredentialStatuses
-} from "../../utils/itwCredentialUtils";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
+
+export type ItwSkeumorphicCardProps = {
+  credential: StoredCredential;
+  status: ItwCredentialStatus;
+  isFlipped?: boolean;
+  onPress?: () => void;
+};
+
+const ItwSkeumorphicCard = ({
+  credential,
+  status,
+  isFlipped = false,
+  onPress
+}: ItwSkeumorphicCardProps) => {
+  const FrontSide = useMemo(
+    () => (
+      <CardSideBase status={status}>
+        <CardBackground
+          credentialType={credential.credentialType}
+          side="front"
+        />
+        <CardData credential={credential} side="front" />
+      </CardSideBase>
+    ),
+    [credential, status]
+  );
+
+  const BackSide = useMemo(
+    () => (
+      <CardSideBase status={status}>
+        <CardBackground
+          credentialType={credential.credentialType}
+          side="back"
+        />
+        <CardData credential={credential} side="back" />
+      </CardSideBase>
+    ),
+    [credential, status]
+  );
+
+  const accessibilityProps = React.useMemo(
+    () =>
+      ({
+        accessible: true,
+        accessibilityLabel: `${getCredentialNameFromType(
+          credential.credentialType
+        )}, ${I18n.t(
+          isFlipped
+            ? "features.itWallet.presentation.credentialDetails.card.back"
+            : "features.itWallet.presentation.credentialDetails.card.front"
+        )}`,
+        accessibilityValue: { text: accessibilityLabelByStatus[status] }
+      } as AccessibilityProps),
+    [credential.credentialType, isFlipped, status]
+  );
+
+  const card = (
+    <FlippableCard
+      containerStyle={[styles.card]}
+      FrontComponent={FrontSide}
+      BackComponent={BackSide}
+      isFlipped={isFlipped}
+    />
+  );
+
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
+
+  if (onPress) {
+    return (
+      <Pressable
+        onPress={onPress}
+        {...accessibilityProps}
+        accessibilityRole="button"
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+      >
+        <Animated.View style={scaleAnimatedStyle}>{card}</Animated.View>
+      </Pressable>
+    );
+  }
+
+  return (
+    <View {...accessibilityProps} accessibilityRole="image">
+      {card}
+    </View>
+  );
+};
 
 type CardSideBaseProps = {
   status: ItwCredentialStatus;
@@ -45,58 +142,13 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
   );
 };
 
-export type ItwSkeumorphicCardProps = {
-  credential: StoredCredential;
-  isFlipped?: boolean;
-};
-
-const ItwSkeumorphicCard = ({
-  credential,
-  isFlipped = false
-}: ItwSkeumorphicCardProps) => {
-  const { status = "valid" } = useIOSelector(state =>
-    itwCredentialStatusSelector(state, credential.credentialType)
-  );
-
-  const FrontSide = useMemo(
-    () => (
-      <CardSideBase status={status}>
-        <CardBackground
-          credentialType={credential.credentialType}
-          side="front"
-        />
-        <CardData credential={credential} side="front" />
-      </CardSideBase>
-    ),
-    [credential, status]
-  );
-
-  const BackSide = useMemo(
-    () => (
-      <CardSideBase status={status}>
-        <CardBackground
-          credentialType={credential.credentialType}
-          side="back"
-        />
-        <CardData credential={credential} side="back" />
-      </CardSideBase>
-    ),
-    [credential, status]
-  );
-
-  return (
-    <FlippableCard
-      containerStyle={styles.card}
-      FrontComponent={FrontSide}
-      BackComponent={BackSide}
-      isFlipped={isFlipped}
-    />
-  );
-};
+// Magic number for the aspect ratio of the card
+// extracted from the design
+export const SKEUMORPHIC_CARD_ASPECT_RATIO = 16 / 10.09;
 
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: 16 / 10.09
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",

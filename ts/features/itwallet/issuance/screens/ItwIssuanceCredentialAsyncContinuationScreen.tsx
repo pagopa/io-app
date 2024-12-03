@@ -16,7 +16,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";

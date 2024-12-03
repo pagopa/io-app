@@ -1,13 +1,10 @@
 import {
   ContentWrapper,
-  IOVisualCostants,
   makeFontStyleObject,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AnimatedImage } from "../../../../components/AnimatedImage";
+import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
@@ -18,20 +15,12 @@ import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard";
 type ItwPresentationDetailsHeaderProps = { credential: StoredCredential };
 
 /**
- * Credentials that should display a card
+ * Credentials that should display a skeumorphic card
  */
-const credentialsWithCard: ReadonlyArray<string> = [
-  CredentialType.PID,
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD
 ];
-
-/**
- * Images for the header
- */
-const credentialsHeader: Record<string, ImageSourcePropType> = {
-  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../img/features/itWallet/header/ts_header.png")
-};
 
 /**
  * This component renders the header for the presentation details screen of a credential
@@ -40,33 +29,18 @@ const credentialsHeader: Record<string, ImageSourcePropType> = {
 const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
-  const safeAreaInsets = useSafeAreaInsets();
   const { isExperimental } = useIOExperimentalDesign();
 
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(credential.credentialType as CredentialType);
 
-  const headerHeight = safeAreaInsets.top + IOVisualCostants.headerHeight;
-
   const headerContent = React.useMemo(() => {
-    if (credentialsWithCard.includes(credential.credentialType)) {
+    if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
       return <ItwPresentationCredentialCard credential={credential} />;
     }
 
     return (
-      <View
-        style={{
-          backgroundColor,
-          marginTop: -(headerHeight + 300),
-          paddingTop: headerHeight + 300,
-          justifyContent: "flex-end",
-          paddingBottom: 24
-        }}
-      >
-        <AnimatedImage
-          source={credentialsHeader[credential.credentialType]}
-          style={styles.headerImage}
-        />
+      <View style={[styles.header, { backgroundColor }]}>
         <ContentWrapper>
           <Text
             style={[
@@ -75,20 +49,17 @@ const ItwPresentationDetailsHeader = ({
                 : styles.headerLabel,
               { color: textColor }
             ]}
+            accessibilityRole="header"
           >
             {getCredentialNameFromType(credential.credentialType)}
           </Text>
         </ContentWrapper>
       </View>
     );
-  }, [credential, backgroundColor, textColor, headerHeight, isExperimental]);
+  }, [credential, backgroundColor, textColor, isExperimental]);
 
   return (
-    <View
-      style={{
-        paddingTop: headerHeight
-      }}
-    >
+    <View>
       <FocusAwareStatusBar
         backgroundColor={backgroundColor}
         barStyle={statusBarStyle}
@@ -99,9 +70,11 @@ const ItwPresentationDetailsHeader = ({
 };
 
 const styles = StyleSheet.create({
-  headerImage: {
-    width: "100%",
-    position: "absolute"
+  header: {
+    marginTop: -300,
+    paddingTop: 300,
+    justifyContent: "flex-end",
+    paddingBottom: 24
   },
   headerLabel: {
     ...makeFontStyleObject(26, "TitilliumSansPro", 30, "Semibold")

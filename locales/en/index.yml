@@ -663,10 +663,13 @@ authentication:
     tour_guide:
       title: New
       content: Now you can use CieID to log in IO!
+  cieidUrlErrorScreen:
+    title: We can't authenticate you with the CieID app
+    description: Log in to the app using a different method
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
-      description: If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
+      description: "If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.\n\nTo enter the IO app without physically using the Electronic Identity Card,you must first enable Level 1 and Level 2 access in the CieID application."
       actions:
         primary:
           label: Yes, log in with CieID
@@ -1988,6 +1991,9 @@ wallet:
       BE_NODE_KO:
         title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
         subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
+      PSP_ERROR:
+        title: Il pagamento non è andato a buon fine
+        subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2711,7 +2717,7 @@ bonus:
           titleWithoutCount: Search among Carta Giovani Nazionale partners
         noResults:
           title: Nothing found
-          subtitle: |- 
+          subtitle: |-
             Search with different words.
             If you can't find it, it might be that your partner hasn't joined or there aren't any active opportunities.
       input:
@@ -2786,10 +2792,12 @@ bonus:
           static: Vai al codice sconto
           bucket: Vai al codice sconto
           landingpage: Vai all'opportunità
+          createNew: Usa un nuovo codice
         secondaryCta: Vai all'opportunità
         title: Ecco il codice sconto!
-        expired: Codice sconto scaduto!
+        expired: Il codice è scaduto
         copyButton: Copia codice sconto
+        error: In questo momento non è possibile generare un codice
     cta:
       activeBonus: Activate Carta Giovani Nazionale
       back: Not now
@@ -2951,57 +2959,9 @@ features:
       title: "pagoPA notices"
       noticeCode: "Notice code"
       pay: "Pay"
-  euCovidCertificate:
-    save:
-      album: "IO"
-      noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
-      ok: "Image saved in your device gallery"
-      bottomSheet:
-        title: "Save the certificate"
-        subTitle: "You will be able to show the QR code of the certificate without opening IO app, even when you're offline."
-        saveAsImage:
-          title: "Save as an image in the gallery"
-          subTitle: "You will find the QR code in your device gallery"
-    listItem:
-      cta: "View"
-    common:
-      title: "Certificazione verde COVID-19"
-      subtitle: "EU Digital COVID Certificate"
-      learnMore: "Learn more"
-      authorizationCode: "Authorization code"
-      messageIdentifier: "Message identifier"
-    loading:
-      title: "We are loading your certificate data from the National Platform of the Ministry of Health"
-      subtitle: "Please wait"
-    valid:
-      accessibility:
-        qrCode: "QR Code"
-        hint: "Display the QR Code in full screen"
-      markdownDetails:
-        headerTitle: "Certificate Details"
-        save: "Save details"
-    revoked:
-      title: "This certificate is not valid"
-    expired:
-      title: "This certificate has expired"
-    ko:
-      genericError:
-        title: "Your certificate data could not be retrieved: please try again"
-        subtitle: "This could be due to a temporary problem."
-      notFound:
-        title: "It seems that the certificate does not \nexist: contact support"
-        subtitle: "Details to receive support:"
-        cta: "Get support"
-      notOperational:
-        title: "The EU Digital COVID Certificate is not currently operational"
-        subtitle: "TMP"
-      temporarilyNotAvailable:
-        title: "The service is temporarily unavailable"
-        subtitle: "Please try again later"
-      wrongFormat:
-        title: "This certificate cannot be retrieved"
-        subtitle: "Details to receive support:"
-        cta: "Get support"
+  greenPass:
+    button: "Indietro"
+    title: "Questo servizio non è più attivo su IO"
   pn:
     service:
       activate: "Attiva il servizio"
@@ -3196,6 +3156,7 @@ features:
         other: Altro
       badge:
         active: Già presente
+        unavailable: Non disponibile
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3519,8 +3480,11 @@ features:
             title: "Carta europea della disabilità su IO: documento in scadenza"
             content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
       credentialDetails:
-        flipCardFront: "Show back"
-        flipCardBack: "Show front"
+        card:
+          front: "Front"
+          back: "Back"
+          showFront: "Show front"
+          showBack: "Show back"
         personalDataTitle: "Personal data"
         documentDataTitle: "Document data"
         lastUpdated: "Last updated on {{lastUpdateTime}}"
@@ -3528,7 +3492,9 @@ features:
           true: Sì
           false: No
         hiddenClaim: "Hidden"
-        fiscalCode: Fiscal code
+        fiscalCode:
+          label: Your Fiscal Code
+          action: Press to enlarge and display the barcode on the entire screen
         status:
           valid: Valid
           invalid: Not valid
@@ -3554,11 +3520,11 @@ features:
         openPdf: "Show document"
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
-      trustmark:
-        cta: Mostra certificato di autenticità
-        title: Certificato di autenticità
-        usageDescription: Quando ti viene richiesto, mostra il QR Code per attestare l'autenticità del documento.
-        certifiedLabel: Questo documento è certificato dall'ente emittente.
+    trustmark:
+      cta: Mostra certificato di autenticità
+      description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
+      expiration: Il QR Code si rinnova tra
+      qrCode: QR code autenticità credenziale
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
