@@ -36,7 +36,8 @@ const mockedZendeskCategory = {
   value: "mockedValue",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 

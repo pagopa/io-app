@@ -3,6 +3,7 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
@@ -32,6 +33,8 @@ import {
   selectWalletOtherCards
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
+import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
+import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -43,18 +46,23 @@ const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
   const cards = useIOSelector(selectSortedWalletCards);
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
+  const paymentMethodsStatus = useIOSelector(paymentsWalletUserMethodsSelector);
+  const cgnStatus = useIOSelector(cgnDetailSelector);
 
   if (isLoading && cards.length === 0) {
     return (
       <>
         <WalletCardSkeleton testID="walletCardSkeletonTestID" cardProps={{}} />
         <VSpacer size={16} />
-        <WalletCardsCategoryRetryErrorBanner />
       </>
     );
   }
 
-  if (cards.length === 0) {
+  if (
+    cards.length === 0 &&
+    pot.isSome(paymentMethodsStatus) &&
+    !pot.isError(cgnStatus)
+  ) {
     // In this case we can display the empty state: we do not have cards to display and
     // the wallet is not in a loading state anymore
     return (
@@ -161,10 +169,6 @@ const OtherCardsContainer = () => {
   const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-
-  if (cards.length === 0) {
-    return null;
-  }
 
   const displayHeader = isItwTrialEnabled && isItwEnabled && isItwValid;
 
