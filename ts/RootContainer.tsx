@@ -8,7 +8,6 @@ import {
   Platform,
   StatusBar
 } from "react-native";
-import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
@@ -29,6 +28,7 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
+import { ReactNavigationInstrumentation } from "./App";
 
 type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & {
