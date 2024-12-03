@@ -204,6 +204,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -677,6 +678,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1245,6 +1247,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
