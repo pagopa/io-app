@@ -33,7 +33,8 @@ const mockedCategory: ZendeskCategory = {
   value: "mockedValue",
   description: {
     "it-IT": "mockedDescription",
-    "en-EN": "mockedDescription"
+    "en-EN": "mockedDescription",
+    "de-DE": "mockedDescription"
   }
 };
 
@@ -44,7 +45,8 @@ const mockedZendeskSubcategories: ZendeskSubCategories = {
       value: "mockedSubcategoryValue",
       description: {
         "it-IT": "mockedSubcategorydescription",
-        "en-EN": "mockedSubcategorydescription"
+        "en-EN": "mockedSubcategorydescription",
+        "de-DE": "mockedSubcategorydescription"
       }
     }
   ]
@@ -54,7 +56,8 @@ const mockedCategoryWithSubcategory: ZendeskCategory = {
   value: "mockedValue",
   description: {
     "it-IT": "mockedDescription",
-    "en-EN": "mockedDescription"
+    "en-EN": "mockedDescription",
+    "de-DE": "mockedDescription"
   },
   zendeskSubCategories: mockedZendeskSubcategories
 };
