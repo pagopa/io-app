@@ -477,6 +477,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       "alignSelf": "flex-start",
                                     }
                                   }
+                                  testID="wallet-payment-outcome-success-button"
                                 >
                                   <View
                                     style={
