@@ -7,3 +7,10 @@ export const trackCieIdNoWhitelistUrl = (url: string) => {
     buildEventProperties("KO", undefined, { url })
   );
 };
+
+export const trackCieIdSecurityLevelMismatch = () => {
+  void mixpanelTrack(
+    "SECURITY_LEVEL_MISMATCH",
+    buildEventProperties("TECH", undefined)
+  );
+};

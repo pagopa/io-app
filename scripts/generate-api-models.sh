@@ -34,8 +34,6 @@ declare -a apis=(
   # CGN APIs
   "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn.yaml"
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
-  # Green Pass APIs
-  "./definitions/eu_covid_cert https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_eucovidcert.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
   # CDC APIs

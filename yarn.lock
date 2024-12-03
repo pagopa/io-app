@@ -3912,9 +3912,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^0.24.1":
-  version: 0.24.1
-  resolution: "@pagopa/io-react-native-wallet@npm:0.24.1"
+"@pagopa/io-react-native-wallet@npm:^0.26.0":
+  version: 0.26.0
+  resolution: "@pagopa/io-react-native-wallet@npm:0.26.0"
   dependencies:
     js-base64: ^3.7.7
     js-sha256: ^0.9.0
@@ -3929,7 +3929,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-webview: "*"
-  checksum: 30c4b6cc3c7a3099c58cf64e5ed0642091b1ac3bb93bb02e9fe7c6b1613cf37a48dd42e8d3b9b18bbebd9a3d681a336419b22960aac1402bfd94d2f497440264
+  checksum: c1d077c902b8ac6931ca4cfabd3099a9dc5f1895f726071d01ed024907c682a29504fefbc743d8e317c2967a6ff916a6ee00432d4cc53a0702e596f8e52e5c43
   languageName: node
   linkType: hard
 
@@ -4025,15 +4025,6 @@ __metadata:
   peerDependencies:
     react-native: ^0.0.0-0 || >=0.65 <1.0
   checksum: 7007a411f13988594a3f9b5ebb29f1554ab65ff2bd90814fa8b125fa68b69c431bdfcd38769ae2dcb6505aec2bad9296f0a0fa1ac8f123007eda49c826f2d138
-  languageName: node
-  linkType: hard
-
-"@react-native-camera-roll/camera-roll@npm:7.8.3":
-  version: 7.8.3
-  resolution: "@react-native-camera-roll/camera-roll@npm:7.8.3"
-  peerDependencies:
-    react-native: ">=0.59"
-  checksum: 1465566ed52b6e1478debcebc1bcaecbd6752611064d7fd5a0c4ed06deb702626ebd945c7ca664d5d070f822a4d3338e5dbb447a9acb27adb35dd77f8bfba2f9
   languageName: node
   linkType: hard
 
@@ -14007,13 +13998,12 @@ __metadata:
     "@pagopa/io-react-native-integrity": ^0.3.0
     "@pagopa/io-react-native-jwt": ^1.4.0
     "@pagopa/io-react-native-login-utils": ^1.0.7
-    "@pagopa/io-react-native-wallet": ^0.24.1
+    "@pagopa/io-react-native-wallet": ^0.26.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^14.0.0
     "@pagopa/react-native-cie": ^1.4.0
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
-    "@react-native-camera-roll/camera-roll": 7.8.3
     "@react-native-clipboard/clipboard": ^1.14.0
     "@react-native-community/eslint-config": ^3.2.0
     "@react-native-community/netinfo": 11.4.1
@@ -14160,7 +14150,6 @@ __metadata:
     react-native-svg-transformer: ^0.14.3
     react-native-tab-view: 3.5.2
     react-native-url-polyfill: ^2.0.0
-    react-native-view-shot: 3.1.2
     react-native-vision-camera: ^4.5.3
     react-native-webview: ^13.10.5
     react-native-xml2js: ^1.0.3
@@ -20091,16 +20080,6 @@ __metadata:
   version: 2.0.2
   resolution: "react-native-uuid@npm:2.0.2"
   checksum: 149f65549132a240ac237f4db34063fd08473e4b3a9b5958e3d0d6722cf10754efb222b1c6085a3dc42e0718ca9575b38cd5535ae83a96534dde0f54d343e915
-  languageName: node
-  linkType: hard
-
-"react-native-view-shot@npm:3.1.2":
-  version: 3.1.2
-  resolution: "react-native-view-shot@npm:3.1.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 8f5e148830bd27887736310805c4f385c6a2df0f53827fb727fbe7f5cdb35dae951b90139cee752a14133bc8b32795434d4f9dbf33f9d9b56f007b99caa661f0
   languageName: node
   linkType: hard
 
