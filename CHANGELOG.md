@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.1](https://github.com/pagopa/io-app/compare/2.79.0-rc.0...2.79.0-rc.1) (2024-12-03)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-414](https://pagopa.atlassian.net/browse/IOAPPX-414)] Add `NativeStackNavigator` to the Design System section ([#6340](https://github.com/pagopa/io-app/issues/6340)) ([ac9c2bd](https://github.com/pagopa/io-app/commit/ac9c2bd53c6ade076f2e0b490a495e84fc8228f8))
+* [[IOBP-1040](https://pagopa.atlassian.net/browse/IOBP-1040)] Update the latest receipt list everytime the user closes the success outcome ([#6485](https://github.com/pagopa/io-app/issues/6485)) ([446cabc](https://github.com/pagopa/io-app/commit/446cabce84ff97569dbe8b705f650f61583c0b6d))
+* [[IOPLT-778](https://pagopa.atlassian.net/browse/IOPLT-778)] Adds possible webUrl action on StatusMessage component ([#6453](https://github.com/pagopa/io-app/issues/6453)) ([0b3b8e3](https://github.com/pagopa/io-app/commit/0b3b8e396b27870e51a28ae3b8ad0e7307b9845b))
+* [[IOPLT-780](https://pagopa.atlassian.net/browse/IOPLT-780)] Adds `react-native-store-review` library to request on demand review ([#6486](https://github.com/pagopa/io-app/issues/6486)) ([6b11464](https://github.com/pagopa/io-app/commit/6b114641879503c0cc315610c077b02214d07c7b))
+
 ## [2.79.0-rc.0](https://github.com/pagopa/io-app/compare/2.78.0-rc.12...2.79.0-rc.0) (2024-12-03)
 
 
