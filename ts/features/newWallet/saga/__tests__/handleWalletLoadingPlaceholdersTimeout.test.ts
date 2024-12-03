@@ -50,6 +50,7 @@ describe("handleWalletLoadingPlaceholdersTimeout", () => {
       .next(T_CARDS)
       .put(walletResetPlaceholders(T_CARDS))
       .next()
+      .next()
       .isDone();
   });
 });

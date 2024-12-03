@@ -32,19 +32,23 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          if [[ ${{github.event.inputs.releaseLevel}} == "major" ]]; then
+          
+          if [[ ${{ github.event.inputs.releaseLevel }} == "major" ]]; then
             echo "Bumping the major version"
             yarn start-breaking-cycle
-          else if [[ ${{github.event.inputs.releaseLevel}} == "minor" ]]; then
+          elif [[ ${{ github.event.inputs.releaseLevel }} == "minor" ]]; then
             echo "Bumping the minor version"
             yarn start-release-cycle
-          else if [[ ${{github.event.inputs.releaseLevel}} == "patch" ]]; then
+          elif [[ ${{ github.event.inputs.releaseLevel }} == "patch" ]]; then
             echo "Bumping the patch version"
             yarn start-fix-cycle
+          else
+            echo "Unknown release level: ${{ github.event.inputs.releaseLevel }}"
+            exit 1
           fi
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
