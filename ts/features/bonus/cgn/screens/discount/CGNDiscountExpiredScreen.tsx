@@ -13,7 +13,8 @@ const CGNDiscountExpiredScreen = () => {
       isHeaderVisible={false}
       action={{
         label: I18n.t("global.buttons.close"),
-        onPress
+        onPress,
+        testID: "close-button"
       }}
     />
   );

@@ -86,16 +86,19 @@ const CgnDiscountCodeScreen = () => {
     dispatch(resetMerchantDiscountCode());
     return (
       <OperationResultScreenContent
+        testID="expired-screen"
         pictogram="timing"
         title={I18n.t("bonus.cgn.merchantDetail.discount.expired")}
         isHeaderVisible
         action={{
           label: I18n.t("bonus.cgn.merchantDetail.discount.cta.createNew"),
-          onPress: generateNewDiscountCode
+          onPress: generateNewDiscountCode,
+          testID: "generate-button"
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
-          onPress: onClose
+          onPress: onClose,
+          testID: "close-button"
         }}
       />
     );
@@ -112,7 +115,8 @@ const CgnDiscountCodeScreen = () => {
             firstAction: {
               icon: "closeLarge",
               accessibilityLabel: I18n.t("global.buttons.close"),
-              onPress: onClose
+              onPress: onClose,
+              testID: "close-button"
             }
           }}
         >
@@ -143,6 +147,7 @@ const CgnDiscountCodeScreen = () => {
           </View>
         </IOScrollView>
         <FooterActions
+          testID="copy-button"
           actions={{
             type: "SingleButton",
             primary: {

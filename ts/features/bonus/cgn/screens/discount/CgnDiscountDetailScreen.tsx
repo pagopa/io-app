@@ -216,7 +216,8 @@ const CgnDiscountDetailScreen = () => {
             ),
             onPress: onPressDiscountCode,
             disabled: loading,
-            loading
+            loading,
+            testID: "discount-code-button"
           }
         : undefined;
     const secondaryAction: GradientBottomActions["secondaryActionProps"] =
@@ -224,7 +225,8 @@ const CgnDiscountDetailScreen = () => {
       merchantDetails?.discountCodeType !== DiscountCodeTypeEnum.landingpage
         ? {
             label: I18n.t(`bonus.cgn.merchantDetail.discount.secondaryCta`),
-            onPress: onNavigateToDiscountUrl
+            onPress: onNavigateToDiscountUrl,
+            testID: "discount-url-button"
           }
         : undefined;
 
