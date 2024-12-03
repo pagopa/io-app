@@ -1980,7 +1980,7 @@ wallet:
         title: Hai interrotto il pagamento
         subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
       INSUFFICIENT_AVAILABILITY_ERROR:
-        title: Il saldo è insufficiente
+        title: Il saldo della tua carta è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
       CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
