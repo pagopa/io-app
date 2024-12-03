@@ -24,7 +24,6 @@ import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpc
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
-import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
   selectIsWalletCardsLoading,
   selectSortedWalletCards,
@@ -93,7 +92,6 @@ const WalletCardsContainer = () => {
 const ItwCardsContainer = () => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -117,7 +115,7 @@ const ItwCardsContainer = () => {
     )
   );
 
-  if (!isItwTrialEnabled || !isItwEnabled) {
+  if (!isItwEnabled) {
     return null;
   }
 
@@ -166,11 +164,10 @@ const ItwCardsContainer = () => {
 
 const OtherCardsContainer = () => {
   const cards = useIOSelector(selectWalletOtherCards);
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  const displayHeader = isItwTrialEnabled && isItwEnabled && isItwValid;
+  const displayHeader = isItwEnabled && isItwValid;
 
   return (
     <WalletCardsCategoryContainer

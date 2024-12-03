@@ -1,11 +1,9 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../definitions/content/Config";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -18,12 +16,10 @@ import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
 import { WalletCard } from "../../types";
 import { WalletCardsContainer } from "../WalletCardsContainer";
-import { itwTrialId } from "../../../../config";
 
 type RenderOptions = {
   cards?: WalletCardsState;
   isLoading?: WalletPlaceholdersState["isLoading"];
-  isItwTrial?: boolean;
   isItwEnabled?: boolean;
   isItwValid?: boolean;
   isWalletEmpty?: boolean;
@@ -140,29 +136,21 @@ describe("WalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
   });
 
-  test.each([
-    { isItwEnabled: false },
-    { isItwTrial: false }
-  ] as ReadonlyArray<RenderOptions>)(
-    "should not render ITW section if %p",
-    options => {
-      const { queryByTestId } = renderComponent({
-        ...options,
-        cards: T_CARDS
-      });
+  it("should not render ITW section if ITW is disabled", options => {
+    const { queryByTestId } = renderComponent({
+      ...options,
+      cards: T_CARDS
+    });
 
-      expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
-      expect(queryByTestId(`walletCardsCategoryTestID_itw`)).toBeNull();
-      expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
+    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
+    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).toBeNull();
+    expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
 
-      expect(
-        queryByTestId(`walletCardTestID_payment_payment_1`)
-      ).not.toBeNull();
-      expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
-      expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
-      expect(queryByTestId(`walletCardTestID_itw_itw_4`)).toBeNull();
-    }
-  );
+    expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_4`)).toBeNull();
+  });
 
   it("should render the wallet ready banner when the wallet instance is valid and the wallet is empty", () => {
     const { queryByTestId } = renderComponent({
@@ -190,7 +178,6 @@ describe("WalletCardsContainer", () => {
 const renderComponent = ({
   cards = {},
   isItwEnabled = true,
-  isItwTrial = true,
   isItwValid = true,
   isLoading = false,
   isWalletEmpty = true
@@ -200,11 +187,6 @@ const renderComponent = ({
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
     _.merge(undefined, globalState, {
-      trialSystem: isItwTrial
-        ? {
-            [itwTrialId]: pot.some(SubscriptionStateEnum.ACTIVE)
-          }
-        : {},
       features: {
         wallet: {
           cards,

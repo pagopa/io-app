@@ -3,7 +3,6 @@ import {
   isItwFeedbackBannerEnabledSelector
 } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { isItwTrialActiveSelector } from "../../../../trialSystem/store/reducers";
 import { itwIsWalletEmptySelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { itwIsFeedbackBannerHiddenSelector } from "./preferences";
@@ -17,9 +16,7 @@ import { itwIsFeedbackBannerHiddenSelector } from "./preferences";
  * @returns true if the banner should be rendered, false otherwise
  */
 export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
-  isItwTrialActiveSelector(state) &&
-  !itwLifecycleIsValidSelector(state) &&
-  isItwEnabledSelector(state);
+  !itwLifecycleIsValidSelector(state) && isItwEnabledSelector(state);
 
 /**
  * Returns if the feedback banner should be visible. The banner is visible if:

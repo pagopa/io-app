@@ -1,35 +1,30 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Linking, View } from "react-native";
-import { SubscriptionStateEnum } from "../../../../../definitions/trial_system/SubscriptionState";
-import { itwDocumentsOnIOUrl, itwTrialId } from "../../../../config";
+import { StyleSheet, View } from "react-native";
+import { itwDocumentsOnIOUrl } from "../../../../config";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { trialStatusSelector } from "../../../trialSystem/store/reducers";
+import { openWebUrl } from "../../../../utils/url";
 
-export const ItwUpcomingWalletBanner = () => {
-  const itwTrialStatus = useIOSelector(trialStatusSelector(itwTrialId));
+export const ItwUpcomingWalletBanner = () => (
+  <View style={style.banner}>
+    <Banner
+      testID="itwUpcomingWalletBannerTestID"
+      color="neutral"
+      size="big"
+      pictogramName="notification"
+      title={I18n.t("features.itWallet.discovery.upcomingWalletBanner.title")}
+      content={I18n.t(
+        "features.itWallet.discovery.upcomingWalletBanner.content"
+      )}
+      action={I18n.t("features.itWallet.discovery.upcomingWalletBanner.action")}
+      onPress={() => openWebUrl(itwDocumentsOnIOUrl)}
+    />
+  </View>
+);
 
-  if (itwTrialStatus === SubscriptionStateEnum.ACTIVE) {
-    return null;
+const style = StyleSheet.create({
+  banner: {
+    marginTop: 16,
+    marginBottom: 8
   }
-
-  return (
-    <View style={{ marginTop: 16, marginBottom: 8 }}>
-      <Banner
-        testID="itwUpcomingWalletBannerTestID"
-        color="neutral"
-        size="big"
-        pictogramName="notification"
-        title={I18n.t("features.itWallet.discovery.upcomingWalletBanner.title")}
-        content={I18n.t(
-          "features.itWallet.discovery.upcomingWalletBanner.content"
-        )}
-        action={I18n.t(
-          "features.itWallet.discovery.upcomingWalletBanner.action"
-        )}
-        onPress={() => Linking.openURL(itwDocumentsOnIOUrl)}
-      />
-    </View>
-  );
-};
+});
