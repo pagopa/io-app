@@ -3,7 +3,6 @@ import _ from "lodash";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../../definitions/content/Config";
-import { SubscriptionStateEnum } from "../../../../../../definitions/trial_system/SubscriptionState";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -13,7 +12,6 @@ import { ItwUpcomingWalletBanner } from "../ItwUpcomingWalletBanner";
 
 type RenderOptions = {
   isItwEnabled?: boolean;
-  itwTrialStatus?: SubscriptionStateEnum;
 };
 
 jest.mock("../../../../../config", () => ({

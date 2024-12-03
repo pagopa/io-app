@@ -45,7 +45,7 @@ describe("itwDiscoveryBannerSelector", () => {
     ${false}   | ${true}        | ${false}
     ${false}   | ${false}       | ${false}
   `(
-    "should return $expected when isItwEnabled is $itwEnabled, trialActive is $trialActive, and lifecycleValid is $lifecycleValid",
+    "should return $expected when isItwEnabled is $itwEnabled, and lifecycleValid is $lifecycleValid",
     ({ itwEnabled, lifecycleValid, expected }) => {
       (isItwEnabledSelector as unknown as JestMock).mockReturnValue(itwEnabled);
       (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(

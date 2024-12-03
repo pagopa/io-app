@@ -9,7 +9,6 @@ import { itwIsFeedbackBannerHiddenSelector } from "./preferences";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
- * - The user's ITW trial subscription is ACTIVE
  * - The Wallet is not already activated and valid
  * - The IT Wallet feature flag is enabled
  * @param state the application global state

@@ -7,7 +7,7 @@ import { ITW_ROUTES } from "./routes";
 
 /**
  * Hook which returns the linking options for internal navigation routes for the IT Wallet.
- * They are disabled if the IT Wallet is not enabled, the trial is not active, or the lifecycle is valid.
+ * They are disabled if the IT Wallet is not enabled or the lifecycle is valid.
  */
 export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
