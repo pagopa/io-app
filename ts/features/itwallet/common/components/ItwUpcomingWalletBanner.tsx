@@ -25,6 +25,6 @@ export const ItwUpcomingWalletBanner = () => (
 const style = StyleSheet.create({
   banner: {
     marginTop: 16,
-    marginBottom: 8
+    marginBottom: 24
   }
 });
