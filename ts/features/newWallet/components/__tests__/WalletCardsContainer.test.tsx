@@ -136,9 +136,9 @@ describe("WalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
   });
 
-  it("should not render ITW section if ITW is disabled", options => {
+  it("should not render ITW section if ITW is disabled", () => {
     const { queryByTestId } = renderComponent({
-      ...options,
+      isItwEnabled: false,
       cards: T_CARDS
     });
 
