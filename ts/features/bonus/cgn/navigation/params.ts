@@ -26,6 +26,7 @@ export type CgnDetailsParamsList = {
     .LANDING_WEBVIEW]: CgnMerchantLandingWebviewNavigationParams;
   [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE]: undefined;
+  [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS.SEARCH]: undefined;
 };
 

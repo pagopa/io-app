@@ -17,34 +17,42 @@ jobs:
   bump-app-version:
     needs: run-static-checks
     runs-on: ubuntu-latest
+    environment: prod
+    outputs:
+      currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          if [[ ${{github.event.inputs.releaseLevel}} == "major" ]]; then
+          
+          if [[ ${{ github.event.inputs.releaseLevel }} == "major" ]]; then
             echo "Bumping the major version"
             yarn start-breaking-cycle
-          else if [[ ${{github.event.inputs.releaseLevel}} == "minor" ]]; then
+          elif [[ ${{ github.event.inputs.releaseLevel }} == "minor" ]]; then
             echo "Bumping the minor version"
             yarn start-release-cycle
-          else if [[ ${{github.event.inputs.releaseLevel}} == "patch" ]]; then
+          elif [[ ${{ github.event.inputs.releaseLevel }} == "patch" ]]; then
             echo "Bumping the patch version"
             yarn start-fix-cycle
+          else
+            echo "Unknown release level: ${{ github.event.inputs.releaseLevel }}"
+            exit 1
           fi
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
+          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
           gh release create $APP_VERSION --latest --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,6 +65,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -132,6 +141,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
