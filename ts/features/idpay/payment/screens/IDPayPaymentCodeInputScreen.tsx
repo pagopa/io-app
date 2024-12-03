@@ -1,7 +1,6 @@
 import {
   Body,
   FooterActions,
-  FooterWithButtons,
   H2,
   IOColors,
   IOStyles,
