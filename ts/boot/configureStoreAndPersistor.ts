@@ -8,7 +8,8 @@ import {
   createStore,
   Middleware,
   Reducer,
-  Store
+  Store,
+  StoreEnhancer
 } from "redux";
 import {
   createMigrate,
@@ -19,6 +20,7 @@ import {
   persistReducer,
   persistStore
 } from "redux-persist";
+import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../common/model/RemoteValue";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
@@ -48,6 +50,7 @@ import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv } from "../utils/environment";
+import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
@@ -455,6 +458,8 @@ const migrations: MigrationManifest = {
   "38": (state: PersistedState) => omit(state, "payments")
 };
 
+const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
+
 const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
@@ -490,21 +495,37 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   ])
 );
 
+const logger = createLogger({
+  predicate: (): boolean => isDebuggingInChrome,
+  collapsed: true,
+  duration: true
+});
+
+// configure Reactotron if the app is running in dev mode
+export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
   store: Store<GlobalState, Action>;
   persistor: Persistor;
 } {
+  const composeEnhancers =
+    // eslint-disable-next-line no-underscore-dangle
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
   const baseMiddlewares: ReadonlyArray<Middleware> = [
     sagaMiddleware,
+    logger,
     analytics.actionTracking // generic tracker for selected redux actions
   ];
 
-  const middlewares = applyMiddleware(...[...baseMiddlewares]);
-  // add Reactotron enhancer if the app is running in dev mode
+  const middlewares = applyMiddleware(...baseMiddlewares);
 
-  const enhancer = compose(middlewares);
+  // add Reactotron enhancer if the app is running in dev mode
+  const enhancer: StoreEnhancer =
+    RTron && RTron.createEnhancer
+      ? composeEnhancers(middlewares, RTron.createEnhancer())
+      : composeEnhancers(middlewares);
 
   const store: Store = createStore<
     PersistedGlobalState,
