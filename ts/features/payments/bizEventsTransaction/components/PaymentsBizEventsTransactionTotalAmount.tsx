@@ -24,11 +24,13 @@ export const PaymentsBizEventsTransactionTotalAmount = ({
         {I18n.t("transaction.details.totalAmount")}
       </H6>
       {loading && (
-        <View>
+        <View testID="loader">
           <Placeholder.Box width={72} height={34} animate="fade" radius={8} />
         </View>
       )}
-      {!loading && totalAmount && <H3>{formatAmountText(totalAmount)}</H3>}
+      {!loading && totalAmount && (
+        <H3 testID="total-amount">{formatAmountText(totalAmount)}</H3>
+      )}
     </View>
   );
 };
