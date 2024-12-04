@@ -76,3 +76,18 @@ export const isWalletInstanceAttestationValid = (
   const now = new Date();
   return now < expiryDate;
 };
+
+/**
+ * Get the wallet instance status from the Wallet Provider.
+ * This operation is more lightweight than getting a new attestation to check the status.
+ * @param hardwareKeyTag The hardware key tag used to create the wallet instance
+ */
+export const getWalletInstanceStatus = (
+  hardwareKeyTag: string,
+  sessionToken: SessionToken
+) =>
+  WalletInstance.getWalletInstanceStatus({
+    id: hardwareKeyTag,
+    walletProviderBaseUrl: itwWalletProviderBaseUrl,
+    appFetch: createItWalletFetch(itwWalletProviderBaseUrl, sessionToken)
+  });
