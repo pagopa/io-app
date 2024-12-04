@@ -20,11 +20,9 @@ import {
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
-import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
-import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
   selectIsWalletCardsLoading,
   selectSortedWalletCards,
@@ -67,7 +65,7 @@ const WalletCardsContainer = () => {
     // the wallet is not in a loading state anymore
     return (
       <View style={IOStyles.flex}>
-        <ItwBanners />
+        <ItwDiscoveryBannerStandalone closable={false} />
         <WalletEmptyScreenContent />
       </View>
     );
@@ -82,7 +80,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwBanners />
+        <ItwDiscoveryBannerStandalone closable={false} />
         {shouldRender("itw") && <ItwCardsContainer />}
         {shouldRender("other") && <OtherCardsContainer />}
       </View>
@@ -93,7 +91,6 @@ const WalletCardsContainer = () => {
 const ItwCardsContainer = () => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -117,7 +114,7 @@ const ItwCardsContainer = () => {
     )
   );
 
-  if (!isItwTrialEnabled || !isItwEnabled) {
+  if (!isItwEnabled) {
     return null;
   }
 
@@ -166,11 +163,10 @@ const ItwCardsContainer = () => {
 
 const OtherCardsContainer = () => {
   const cards = useIOSelector(selectWalletOtherCards);
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  const displayHeader = isItwTrialEnabled && isItwEnabled && isItwValid;
+  const displayHeader = isItwEnabled && isItwValid;
 
   return (
     <WalletCardsCategoryContainer
@@ -188,15 +184,5 @@ const OtherCardsContainer = () => {
     />
   );
 };
-
-/**
- * Wrapper components for ITW banners.
- */
-const ItwBanners = () => (
-  <>
-    <ItwUpcomingWalletBanner />
-    <ItwDiscoveryBannerStandalone closable={false} />
-  </>
-);
 
 export { WalletCardsContainer };

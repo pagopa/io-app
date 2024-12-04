@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { IOColors } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../definitions/content/Config";
 import {
@@ -15,9 +14,6 @@ import { SectionStatusKey } from "../../../store/reducers/backendStatus/sectionS
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";
-import { SubscriptionStateEnum } from "../../../../definitions/trial_system/SubscriptionState";
-import { itwTrialId } from "../../../config";
-import { TrialSystemState } from "../../../features/trialSystem/store/reducers";
 import { PersistedFeaturesState } from "../../../features/common/store/reducers";
 import { ItwLifecycleState } from "../../../features/itwallet/lifecycle/store/reducers";
 import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
@@ -67,10 +63,7 @@ const mockSectionStatusState = (
       itWallet: {
         lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
       } as ItWalletState
-    } as PersistedFeaturesState,
-    trialSystem: {
-      [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
-    } as TrialSystemState
+    } as PersistedFeaturesState
   } as unknown as GlobalState);
 
 const mockStore = configureMockStore();
@@ -185,9 +178,6 @@ describe("Section Status Component should return null", () => {
       mockStore({
         remoteConfig: O.none,
         sectionStatus: O.none,
-        trialSystem: {
-          [itwTrialId]: pot.some(SubscriptionStateEnum.UNSUBSCRIBED)
-        } as TrialSystemState,
         features: {
           itWallet: {
             lifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED
