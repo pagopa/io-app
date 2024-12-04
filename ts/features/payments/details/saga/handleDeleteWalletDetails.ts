@@ -10,11 +10,6 @@ import {
   paymentsGetMethodDetailsAction
 } from "../store/actions";
 
-/**
- * Handle the remote call to start Wallet onboarding payment methods list
- * @param getPaymentMethods
- * @param action
- */
 export function* handleDeleteWalletDetails(
   deleteWalletById: WalletClient["deleteIOPaymentWalletById"],
   action: ActionType<(typeof paymentsDeleteMethodAction)["request"]>
