@@ -27,29 +27,31 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      - id: setup
-        uses: ./.github/actions/setup-composite
+      - id: setup-node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: download-locales
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: locales.ts
+          path: locales/locales.ts
+      - id: download-api-client
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: api-client
       - id: run-test
-        run: yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }} --coverage
-      - id: rename-coverage-file
-        run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
-      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
-        with:
-          name: coverage-artifacts
-          path: coverage/
-  coverage:
-    runs-on: ubuntu-latest
-    environment: dev
-    needs: unit-test
-    steps:
-      - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      - uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935
-        with:
-          name: coverage-artifacts
-          path: coverage
-      - id: merge-coverage
-        run: npx nyc merge coverage/ coverage/coverage-final.json
+        run: yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - id: codecov-script        
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:

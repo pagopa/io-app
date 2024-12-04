@@ -1,12 +1,12 @@
 name: Actions to setup environment for all workflows
-description: 'This action collects the steps to setup any job'
+description: "This action collects the steps to setup any job"
 runs:
   using: "composite"
   steps:
     - id: setup-node
       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
       with:
-        node-version-file: '.node-version'
+        node-version-file: ".node-version"
     - id: yarn-cache-dir-path
       run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       shell: bash
@@ -24,3 +24,13 @@ runs:
     - id: generate-api-client
       run: yarn generate
       shell: bash
+    - id: upload-locales-artifact
+      uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+      with:
+        name: locales.ts
+        path: locales/locales.ts
+    - id: upload-clients-artifact
+      uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+      with:
+        name: api-client
+        path: definitions/
