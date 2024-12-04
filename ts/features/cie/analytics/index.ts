@@ -41,26 +41,26 @@ export const trackWizardCieIdSelected = async (
   state: GlobalState,
   spidLevel: SpidLevel
 ) => {
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE_ID.id
-  });
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
       security_level: SECURITY_LEVEL_MAP[spidLevel]
     })
   );
-};
-export const trackWizardCiePinSelected = async (state: GlobalState) => {
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
-    value: IdpCIE.id
+    value: IdpCIE_ID.id
   });
+};
+export const trackWizardCiePinSelected = async (state: GlobalState) => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_PIN_SELECTED",
     buildEventProperties("UX", "action")
   );
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: IdpCIE.id
+  });
 };
 export const trackWizardCiePinInfoSelected = async () => {
   void mixpanelTrack(

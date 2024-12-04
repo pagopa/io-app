@@ -6,7 +6,7 @@ import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { idPayWalletGet } from "../../store/actions";
 import { handleGetIDPayWallet } from "../handleGetWallet";
-import { walletAddCards } from "../../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
 
 const mockedWallet: WalletDTO = { initiativeList: [] };
 
