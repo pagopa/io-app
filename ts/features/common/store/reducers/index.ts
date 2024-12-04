@@ -24,7 +24,7 @@ import {
   NativeLoginState,
   nativeLoginReducer
 } from "../../../nativeLogin/store/reducers";
-import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
+import walletReducer, { WalletState } from "../../../wallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
