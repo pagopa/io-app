@@ -27,8 +27,8 @@ runs:
     - id: upload-locales-artifact
       uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
       with:
-        name: locales.ts
-        path: locales/locales.ts
+        name: locales
+        path: locales/
     - id: upload-clients-artifact
       uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
       with:
