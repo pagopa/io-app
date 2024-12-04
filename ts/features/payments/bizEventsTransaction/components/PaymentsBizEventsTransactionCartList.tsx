@@ -53,7 +53,10 @@ export const PaymentsBizEventsTransactionCartList = ({
 };
 
 const SkeletonTransactionDetailsList = () => (
-  <View style={[IOStyles.flex, IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+  <View
+    style={[IOStyles.flex, IOStyles.rowSpaceBetween, IOStyles.alignCenter]}
+    testID="skeleton-transaction-details-list"
+  >
     <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
       <Placeholder.Box height={16} width="90%" radius={4} />
       <VSpacer size={8} />
