@@ -36,8 +36,6 @@ type UsePagoPaPayment = {
     data: PaymentData,
     params?: PagoPaPaymentParams
   ) => void;
-  // This is a temporary flag to tell that the new payment flow is enabled and can be used
-  // Will be removed once the new wallet section is released
 };
 
 /**
@@ -48,8 +46,6 @@ type UsePagoPaPayment = {
 const usePagoPaPayment = (): UsePagoPaPayment => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-
-  // Checks if the new wallet section is enabled
 
   /**
    * Initializes the payment state based on the provided parameters.
