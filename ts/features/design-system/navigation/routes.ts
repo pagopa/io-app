@@ -95,7 +95,7 @@ const DESIGN_SYSTEM_ROUTES = {
     },
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
-      title: "Full screen modal"
+      title: "Full screen modal (native)"
     },
     SCREEN_END_MARGIN: {
       route: "DS_SCREEN_END_MARGIN",

@@ -1,8 +1,8 @@
 import { Banner, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
-import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
-import { WalletCard, WalletCardCategory } from "../../newWallet/types";
+import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
+import { WalletCard, WalletCardCategory } from "../../wallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 
