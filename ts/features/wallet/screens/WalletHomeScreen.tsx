@@ -1,8 +1,9 @@
 import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import { ScrollView } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
+import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -10,19 +11,19 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
+import {
+  trackOpenWalletScreen,
+  trackWalletAdd
+} from "../../itwallet/analytics";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
-import {
-  trackOpenWalletScreen,
-  trackWalletAdd
-} from "../../itwallet/analytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -70,6 +71,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 };
 
 const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 
@@ -80,21 +82,30 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
     });
   };
 
+  useTabItemPressWhenScreenActive(
+    React.useCallback(() => {
+      animatedScrollViewRef.current?.scrollTo({ y: 0, animated: true });
+    }, [animatedScrollViewRef]),
+    false
+  );
+
   if (cards.length === 0) {
     return (
-      <ScrollView
+      <Animated.ScrollView
+        ref={animatedScrollViewRef}
         contentContainerStyle={[
           IOStyles.flex,
           IOStyles.horizontalContentPadding
         ]}
       >
         {children}
-      </ScrollView>
+      </Animated.ScrollView>
     );
   }
 
   return (
     <IOScrollView
+      animatedRef={animatedScrollViewRef}
       actions={{
         type: "SingleButton",
         primary: {

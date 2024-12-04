@@ -1,21 +1,22 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   fimsAuthenticationErrorTagSelector,
   fimsDebugDataSelector
 } from "../store/selectors";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import { fimsCancelOrAbortAction } from "../store/actions";
 
 export const FimsSSOFullScreenError = () => {
-  const navigation = useNavigation();
+  const dispatch = useIODispatch();
   const errorTag = useIOSelector(fimsAuthenticationErrorTagSelector);
   const debugData = useIOSelector(fimsDebugDataSelector);
+
   const debugInfo = React.useMemo(
     () => ({
       fimsFailure: `${errorTag}: ${debugData}`
@@ -23,6 +24,12 @@ export const FimsSSOFullScreenError = () => {
     [debugData, errorTag]
   );
   useDebugInfo(debugInfo);
+
+  const handleClose = React.useCallback(
+    () => dispatch(fimsCancelOrAbortAction()),
+    [dispatch]
+  );
+
   const getErrorComponentProps = (): OperationResultScreenContentProps => {
     switch (errorTag) {
       case "AUTHENTICATION":
@@ -35,7 +42,7 @@ export const FimsSSOFullScreenError = () => {
           pictogram: "umbrellaNew",
           action: {
             label: I18n.t("global.buttons.close"),
-            onPress: navigation.goBack
+            onPress: handleClose
           }
         };
       case "MISSING_INAPP_BROWSER":
@@ -50,7 +57,7 @@ export const FimsSSOFullScreenError = () => {
           pictogram: "updateOS",
           action: {
             label: I18n.t("global.buttons.close"),
-            onPress: navigation.goBack
+            onPress: handleClose
           }
         };
       default:
@@ -61,7 +68,7 @@ export const FimsSSOFullScreenError = () => {
           pictogram: "umbrellaNew",
           action: {
             label: I18n.t("global.buttons.close"),
-            onPress: navigation.goBack
+            onPress: handleClose
           }
         };
     }
