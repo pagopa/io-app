@@ -131,7 +131,10 @@ const ItwSpidIdpLoginScreen = () => {
   );
 
   return (
-    <LoadingSpinnerOverlay isLoading={isWebViewLoading || isMachineLoading}>
+    <LoadingSpinnerOverlay
+      isLoading={isWebViewLoading || isMachineLoading}
+      loadingOpacity={1.0}
+    >
       <View style={styles.webViewWrapper}>{content}</View>
     </LoadingSpinnerOverlay>
   );
