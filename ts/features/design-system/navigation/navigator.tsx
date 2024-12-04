@@ -1,18 +1,15 @@
 import {
-  IOVisualCostants,
+  IOColors,
   IconButton,
   makeFontStyleObject,
   useIOExperimentalDesign,
+  useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
-import {
-  StackNavigationOptions,
-  TransitionPresets,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Alert, Platform, View } from "react-native";
+import { Alert, Platform } from "react-native";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import {
   IONavigationDarkTheme,
@@ -75,43 +72,21 @@ import { DSWallet } from "../core/DSWallet";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
-const Stack = createStackNavigator<DesignSystemParamsList>();
-
-// BackButton managed through React Navigation
-const RNNBackButton = () => {
-  const navigation = useNavigation();
-  const { themeType } = useIOThemeContext();
-  return (
-    <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon={Platform.select({
-          android: "backAndroid",
-          default: "backiOS"
-        })}
-        color={themeType === "dark" ? "contrast" : "neutral"}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
-  );
-};
+const Stack = createNativeStackNavigator<DesignSystemParamsList>();
 
 const RNNCloseButton = () => {
   const navigation = useNavigation();
+  const { themeType } = useIOThemeContext();
 
   return (
-    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon="closeMedium"
-        color="neutral"
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
+    <IconButton
+      icon="closeMedium"
+      color={themeType === "dark" ? "contrast" : "neutral"}
+      onPress={() => {
+        navigation.goBack();
+      }}
+      accessibilityLabel={""}
+    />
   );
 };
 
@@ -139,27 +114,25 @@ const HeaderFirstLevelComponent = () => (
   />
 );
 
-const customModalHeaderConf: StackNavigationOptions = {
-  headerLeft: () => null,
-  headerTitle: () => null,
-  headerRight: RNNCloseButton,
-  headerStyle: { height: IOVisualCostants.headerHeight },
-  headerStatusBarHeight: 0
-};
-
 export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
+  const theme = useIOTheme();
 
-  const customHeaderConf: StackNavigationOptions = {
-    headerTitleStyle: makeFontStyleObject(
-      14,
-      isExperimental ? "Titillio" : "TitilliumSansPro",
-      14,
-      "Semibold"
-    ),
-    headerTitleAlign: "center",
-    headerLeft: RNNBackButton
+  const customModalHeaderConf = {
+    headerRight: RNNCloseButton,
+    title: DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.title,
+    sheetCornerRadius: 24,
+    headerTitleStyle: {
+      ...makeFontStyleObject(
+        14,
+        isExperimental ? "Titillio" : "TitilliumSansPro",
+        18,
+        isExperimental ? "Regular" : "Semibold",
+        undefined
+      ),
+      color: IOColors[theme["textHeading-default"]]
+    }
   };
 
   return (
@@ -170,13 +143,29 @@ export const DesignSystemNavigator = () => {
     >
       <Stack.Navigator
         initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-        screenOptions={customHeaderConf}
+        screenOptions={{
+          headerTintColor: IOColors[theme["interactiveElem-default"]],
+          headerTitleStyle: {
+            ...makeFontStyleObject(
+              14,
+              isExperimental ? "Titillio" : "TitilliumSansPro",
+              18,
+              isExperimental ? "Regular" : "Semibold",
+              undefined
+            ),
+            color: IOColors[theme["textHeading-default"]]
+          },
+          headerTitleAlign: "center",
+          headerBackTitleVisible: false,
+          headerShown: true,
+          autoHideHomeIndicator: true
+        }}
       >
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.MAIN.route}
           component={DesignSystem}
           options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title
+            title: DESIGN_SYSTEM_ROUTES.MAIN.title
           }}
         />
 
@@ -563,13 +552,10 @@ export const DesignSystemNavigator = () => {
 
         <Stack.Group
           screenOptions={{
-            headerMode: "screen",
-            presentation: "modal",
+            presentation: "formSheet",
             ...(Platform.OS === "ios"
               ? {
-                  gestureEnabled: isGestureEnabled,
-                  cardOverlayEnabled: true,
-                  ...TransitionPresets.ModalPresentationIOS
+                  gestureEnabled: isGestureEnabled
                 }
               : null)
           }}

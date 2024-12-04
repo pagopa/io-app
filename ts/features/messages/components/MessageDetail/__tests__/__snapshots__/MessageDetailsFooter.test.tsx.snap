@@ -204,6 +204,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -739,6 +740,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1274,6 +1276,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1809,6 +1812,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2344,6 +2348,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3046,6 +3051,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3748,6 +3754,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4450,6 +4457,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

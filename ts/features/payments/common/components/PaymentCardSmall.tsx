@@ -10,7 +10,7 @@ import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { WithTestID } from "../../../../types/WithTestID";
-import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
+import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { PaymentCardProps } from "./PaymentCard";
 
 export type PaymentCardSmallProps = WithTestID<

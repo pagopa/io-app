@@ -63,6 +63,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2747,6 +2748,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
