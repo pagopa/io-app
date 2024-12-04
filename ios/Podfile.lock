@@ -1962,7 +1962,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.34.1):
+  - RNScreens (3.35.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2008,6 +2008,8 @@ PODS:
     - Sentry/HybridSDK (= 8.36.0)
     - Yoga
   - RNShare (10.2.1):
+    - React-Core
+  - RNStoreReview (0.4.3):
     - React-Core
   - RNSVG (15.8.0):
     - React-Core
@@ -2161,6 +2163,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
+  - RNStoreReview (from `../node_modules/react-native-store-review`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -2411,6 +2414,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNStoreReview:
+    :path: "../node_modules/react-native-store-review"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   VisionCamera:
@@ -2531,9 +2536,10 @@ SPEC CHECKSUMS:
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 0d591ea1e150f36cb96d868d4e8d77272243d78a
   RNReanimated: 83a2baa5f4dc44ace7b5296ea1f3533d998dfb69
-  RNScreens: 00e01e05e3cf66bd701148c2531965437e9583e4
+  RNScreens: c7ceced6a8384cb9be5e7a5e88e9e714401fd958
   RNSentry: e280ee2f6d0aa58c8ac0eb9a45b7678b5840c1da
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
+  RNStoreReview: 31dbfd0dac2eea9675f0b84f1dd3261c2110c337
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d

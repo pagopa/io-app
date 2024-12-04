@@ -63,6 +63,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -922,6 +923,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1781,6 +1783,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2854,6 +2857,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3713,6 +3717,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
