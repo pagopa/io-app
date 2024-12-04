@@ -7,7 +7,6 @@ import {
 import React from "react";
 import I18n from "../../../i18n";
 import { usePreviewMoreInfo } from "../hooks/usePreviewMoreInfo";
-import useContentWithFF from "../../../screens/profile/useContentWithFF";
 import { NotificationsPreferencesPreview } from "./NotificationsPreferencesPreview";
 
 type ProfileNotificationSettingsProps = {
@@ -33,9 +32,6 @@ export const ProfileNotificationSettings = ({
   remindersSwitchValue,
   showSettingsPath
 }: ProfileNotificationSettingsProps) => {
-  const content = useContentWithFF(
-    "profile.main.privacy.shareData.screen.profileSettings"
-  );
   const { present, bottomSheet } = usePreviewMoreInfo();
   return (
     <>
@@ -76,7 +72,9 @@ export const ProfileNotificationSettings = ({
       {showSettingsPath && (
         <Banner
           pictogramName="settings"
-          content={content}
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.profileSettings"
+          )}
           size="small"
           color="neutral"
         />

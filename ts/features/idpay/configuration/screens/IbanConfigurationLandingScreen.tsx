@@ -12,8 +12,6 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
@@ -21,9 +19,6 @@ import { IdPayConfigurationMachineContext } from "../machine/provider";
 export const IbanConfigurationLanding = () => {
   const { useActorRef } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const customGoBack = () => machine.send({ type: "back" });
 
@@ -31,11 +26,7 @@ export const IbanConfigurationLanding = () => {
     {
       title: I18n.t("idpay.configuration.iban.landing.modal.title"),
       component: (
-        <Body>
-          {isSettingsVisibleAndHideProfile
-            ? I18n.t("idpay.configuration.iban.landing.modal.content")
-            : I18n.t("idpay.configuration.iban.landing.modal.legacyContent")}
-        </Body>
+        <Body>{I18n.t("idpay.configuration.iban.landing.modal.content")}</Body>
       ),
       footer: (
         <ContentWrapper>
