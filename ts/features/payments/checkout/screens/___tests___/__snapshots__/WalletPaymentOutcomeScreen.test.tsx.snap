@@ -50106,7 +50106,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Il saldo è insufficiente
+                              Il saldo della tua carta è insufficiente
                             </Text>
                             <View
                               style={
