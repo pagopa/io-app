@@ -1,12 +1,14 @@
+import _ from "lodash";
 import { assign, fromPromise, not, or, setup } from "xstate";
 import { assert } from "../../../../utils/assert";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
+  CheckCIECapabilitiesActorOutput,
+  GetAuthRedirectUrlActorParam,
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams,
-  GetAuthRedirectUrlActorParam
+  StartAuthFlowActorParams
 } from "./actors";
 import { AuthenticationContext, Context, InitialContext } from "./context";
 import { EidIssuanceEvents } from "./events";
@@ -56,6 +58,8 @@ export const itwEidIssuanceMachine = setup({
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
       notImplemented
     ),
+    checkCIECapabilities:
+      fromPromise<CheckCIECapabilitiesActorOutput>(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     ),
@@ -70,7 +74,9 @@ export const itwEidIssuanceMachine = setup({
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented
+    hasValidWalletInstanceAttestation: notImplemented,
+    isNFCEnabled: ({ context }) =>
+      context.cieCapabilities?.isNFCEnabled || false
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -221,6 +227,18 @@ export const itwEidIssuanceMachine = setup({
       states: {
         ModeSelection: {
           entry: "navigateToIdentificationModeScreen",
+          invoke: {
+            src: "checkCIECapabilities",
+            onDone: {
+              actions: assign(({ event }) => ({
+                cieCapabilities: event.output
+              }))
+            },
+            onError: {
+              // Any failure during the CIE/NFC capabilities check will not be handled and treates as a negative result
+              // We still need an empty onError to avoid uncaught promise rejection
+            }
+          },
           on: {
             "select-identification-mode": [
               {
@@ -426,14 +444,15 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "cie-pin-entered": [
                   {
-                    guard: ({ event }) => event.isNfcEnabled,
+                    guard: "isNFCEnabled",
                     target: "StartingCieAuthFlow",
                     actions: assign(({ event }) => ({
                       identification: { mode: "ciePin", pin: event.pin }
                     }))
                   },
                   {
-                    target: "ActivateNfc",
+                    target:
+                      "#itwEidIssuanceMachine.UserIdentification.CiePin.RequestingNfcActivation",
                     actions: assign(({ event }) => ({
                       identification: { mode: "ciePin", pin: event.pin }
                     }))
@@ -445,14 +464,20 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             },
-            ActivateNfc: {
+            RequestingNfcActivation: {
               entry: "navigateToNfcInstructionsScreen",
               on: {
                 "nfc-enabled": {
+                  actions: assign(({ context }) => ({
+                    cieCapabilities: _.merge(context.cieCapabilities, {
+                      isNFCEnabled: true
+                    })
+                  })),
                   target: "StartingCieAuthFlow"
                 },
                 back: {
-                  target: "InsertingCardPin"
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
                 }
               }
             },

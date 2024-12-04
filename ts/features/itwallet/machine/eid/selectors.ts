@@ -13,6 +13,13 @@ export const selectEidOption = (snapshot: MachineSnapshot) =>
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
 
+export const isNFCEnabledSelector = (snapshot: MachineSnapshot) =>
+  snapshot.context.cieCapabilities?.isNFCEnabled || false;
+
+export const isCIEAuthenticationSupportedSelector = (
+  snapshot: MachineSnapshot
+) => snapshot.context.cieCapabilities?.isCIEAuthenticationSupported || false;
+
 export const selectIdentification = (snapshot: MachineSnapshot) =>
   snapshot.context.identification;
 

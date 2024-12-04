@@ -1,25 +1,31 @@
+import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
+import * as cieUtils from "../../../../utils/cie";
 import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
+import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
+import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
+import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceReadySelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
-import type { AuthenticationContext, IdentificationContext } from "./context";
+import type {
+  AuthenticationContext,
+  CIECapabilities,
+  IdentificationContext
+} from "./context";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
@@ -40,6 +46,8 @@ export type CompleteAuthFlowActorParams = {
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
 };
+
+export type CheckCIECapabilitiesActorOutput = CIECapabilities;
 
 export type GetAuthRedirectUrlActorParam = {
   redirectUri: string | undefined;
@@ -93,6 +101,16 @@ export const createEidIssuanceActorsImplementation = (
       assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
       return getAttestation(input.integrityKeyTag, sessionToken);
+    }
+  ),
+
+  checkCIECapabilities: fromPromise<CheckCIECapabilitiesActorOutput>(
+    async () => {
+      const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
+        cieUtils.isNfcEnabled(),
+        cieManager.isCIEAuthenticationSupported()
+      ]);
+      return { isNFCEnabled, isCIEAuthenticationSupported };
     }
   ),
 
