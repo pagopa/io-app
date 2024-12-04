@@ -1,6 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ReactotronReactNative from "reactotron-react-native";
-import { reactotronRedux } from "reactotron-redux";
+
+// using require import instead of static import due to library issue
+// https://github.com/infinitered/reactotron/issues/1430#issuecomment-2180872830
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ReactotronReactNative = require("reactotron-react-native").default;
+// import ReactotronReactNative from "reactotron-react-native";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { reactotronRedux } = require("reactotron-redux");
 
 // add a regex to avoid tracing specific urls in Reactotron timeline
 const ignoredUrls: RegExp | undefined = /symbolicate/;
