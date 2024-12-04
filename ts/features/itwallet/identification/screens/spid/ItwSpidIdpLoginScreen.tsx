@@ -37,10 +37,10 @@ const ItwSpidIdpLoginScreen = () => {
   const spidAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isWebViewLoading, setWebViewLoading] = useState(true);
 
   const onLoadEnd = useCallback(() => {
-    setIsLoading(false);
+    setWebViewLoading(false);
   }, []);
 
   const onError = useCallback(() => {
@@ -98,30 +98,31 @@ const ItwSpidIdpLoginScreen = () => {
 
   const content = useMemo(
     () =>
-      !isMachineLoading && O.isSome(spidAuthUrl) ? (
-        <WebView
-          cacheEnabled={false}
-          androidCameraAccessDisabled
-          androidMicrophoneAccessDisabled
-          javaScriptEnabled
-          textZoom={100}
-          originWhitelist={originSchemasWhiteList}
-          source={{ uri: spidAuthUrl.value }}
-          onError={onError}
-          onHttpError={onError}
-          onNavigationStateChange={handleNavigationStateChange}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-          allowsInlineMediaPlayback
-          mediaPlaybackRequiresUserAction
-          userAgent={defaultUserAgent}
-          onLoadEnd={onLoadEnd}
-        />
-      ) : (
-        <></>
-      ),
+      O.fold(
+        () => null,
+        (url: string) => (
+          <WebView
+            key={"spid_webview"}
+            cacheEnabled={false}
+            androidCameraAccessDisabled
+            androidMicrophoneAccessDisabled
+            javaScriptEnabled
+            textZoom={100}
+            originWhitelist={originSchemasWhiteList}
+            source={{ uri: url }}
+            onError={onError}
+            onHttpError={onError}
+            onNavigationStateChange={handleNavigationStateChange}
+            onShouldStartLoadWithRequest={handleShouldStartLoading}
+            allowsInlineMediaPlayback
+            mediaPlaybackRequiresUserAction
+            userAgent={defaultUserAgent}
+            onLoadEnd={onLoadEnd}
+          />
+        )
+      )(spidAuthUrl),
     [
       spidAuthUrl,
-      isMachineLoading,
       handleNavigationStateChange,
       handleShouldStartLoading,
       onError,
@@ -130,7 +131,7 @@ const ItwSpidIdpLoginScreen = () => {
   );
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
+    <LoadingSpinnerOverlay isLoading={isWebViewLoading || isMachineLoading}>
       <View style={styles.webViewWrapper}>{content}</View>
     </LoadingSpinnerOverlay>
   );
