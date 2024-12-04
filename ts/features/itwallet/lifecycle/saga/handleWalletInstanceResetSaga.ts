@@ -5,7 +5,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
-import { walletRemoveCardsByType } from "../../../newWallet/store/actions/cards";
+import { walletRemoveCardsByType } from "../../../wallet/store/actions/cards";
 import { isIos } from "../../../../utils/platform";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
