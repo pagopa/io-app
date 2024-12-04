@@ -204,6 +204,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
