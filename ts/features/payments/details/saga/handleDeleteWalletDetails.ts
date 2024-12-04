@@ -8,7 +8,7 @@ import {
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { walletRemoveCards } from "../../../newWallet/store/actions/cards";
+import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import { mapWalletIdToCardKey } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
