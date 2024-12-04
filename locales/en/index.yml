@@ -4193,7 +4193,7 @@ FIMS:
         title: "C’è un problema temporaneo"
         body: "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       toast: C’è un problema nel caricamento della lista. Riprova
-    emptyBody: "Qui troverai la lista degli accessi ogni volta che usi un servizio di terza parte tramite IO."
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"
