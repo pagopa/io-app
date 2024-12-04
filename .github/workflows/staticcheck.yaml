@@ -5,7 +5,7 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}-${{ matrix.shard }}
       cancel-in-progress: true
     strategy:
       matrix:
