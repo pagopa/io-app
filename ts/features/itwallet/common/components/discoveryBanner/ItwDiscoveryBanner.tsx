@@ -59,9 +59,7 @@ export const ItwDiscoveryBanner = ({
   const handleClose = () => {
     trackItWalletBannerClosure(trackBannerProperties);
     handleOnClose?.();
-    if (closable) {
-      dispatch(itwCloseDiscoveryBanner());
-    }
+    dispatch(itwCloseDiscoveryBanner());
   };
 
   return (
