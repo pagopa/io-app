@@ -11,7 +11,7 @@ type Props = {
   transactionInfo?: InfoNotice;
 };
 
-const FeeAmountSection = (props: Props) => {
+const PaymentsBizEventsTransactionFeeAmountSection = (props: Props) => {
   const { loading, transactionInfo } = props;
 
   if (loading) {
@@ -54,4 +54,4 @@ const FeeAmountSection = (props: Props) => {
   );
 };
 
-export default FeeAmountSection;
+export default PaymentsBizEventsTransactionFeeAmountSection;

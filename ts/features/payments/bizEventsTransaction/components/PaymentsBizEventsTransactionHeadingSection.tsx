@@ -13,8 +13,8 @@ import { Psp } from "../../../../types/pagopa";
 import { PaymentsTransactionBizEventsStackNavigation } from "../navigation/navigator";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
 import { calculateTotalAmount } from "../utils";
-import FeeAmountSection from "./FeeAmountSection";
 import { PaymentsBizEventsTransactionCartList } from "./PaymentsBizEventsTransactionCartList";
+import PaymentsBizEventsTransactionFeeAmountSection from "./PaymentsBizEventsTransactionFeeAmountSection";
 import { PaymentsBizEventsTransactionTotalAmount } from "./PaymentsBizEventsTransactionTotalAmount";
 
 type Props = {
@@ -62,7 +62,7 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
             totalAmount={totalAmount}
           />
         )}
-        <FeeAmountSection
+        <PaymentsBizEventsTransactionFeeAmountSection
           loading={isLoading}
           transactionInfo={transactionInfo}
         />

@@ -5,11 +5,13 @@ import {
   OriginEnum
 } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
 import I18n from "../../../../../i18n";
-import FeeAmountSection from "../FeeAmountSection";
+import PaymentsBizEventsTransactionFeeAmountSection from "../PaymentsBizEventsTransactionFeeAmountSection";
 
-describe("FeeAmountSection", () => {
+describe("PaymentsBizEventsTransactionFeeAmountSection", () => {
   it("renders loading state correctly", () => {
-    const { getByTestId } = render(<FeeAmountSection loading />);
+    const { getByTestId } = render(
+      <PaymentsBizEventsTransactionFeeAmountSection loading />
+    );
     expect(getByTestId("loading-placeholder")).toBeTruthy();
   });
 
@@ -23,7 +25,10 @@ describe("FeeAmountSection", () => {
       origin: OriginEnum.UNKNOWN
     };
     const { getByText } = render(
-      <FeeAmountSection loading={false} transactionInfo={transactionInfo} />
+      <PaymentsBizEventsTransactionFeeAmountSection
+        loading={false}
+        transactionInfo={transactionInfo}
+      />
     );
     expect(
       getByText(
@@ -35,7 +40,9 @@ describe("FeeAmountSection", () => {
   });
 
   it("renders unknown fee message when fee and pspName are not provided", () => {
-    const { getByText } = render(<FeeAmountSection loading={false} />);
+    const { getByText } = render(
+      <PaymentsBizEventsTransactionFeeAmountSection loading={false} />
+    );
     expect(
       getByText(
         I18n.t("features.payments.transactions.details.totalFeeUnknownPsp")
