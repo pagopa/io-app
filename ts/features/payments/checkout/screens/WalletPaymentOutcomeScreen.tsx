@@ -44,6 +44,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
+import { requestAppReview } from "../../../../utils/storeReview";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -237,6 +238,10 @@ const WalletPaymentOutcomeScreen = () => {
         ? "DUPLICATED"
         : undefined;
     const rptId = paymentOngoingHistory?.rptId;
+
+    if (kind === "COMPLETED") {
+      requestAppReview();
+    }
 
     if (kind && rptId) {
       dispatch(paymentCompletedSuccess({ rptId, kind }));
