@@ -5,7 +5,7 @@ import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { mapWalletsToCards } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 

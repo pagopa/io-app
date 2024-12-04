@@ -129,11 +129,11 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
+    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
     ) {
-      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
       // Currently we do support only navigation to the wallet
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
@@ -153,7 +153,8 @@ const WalletPaymentOutcomeScreen = () => {
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
-    onPress: handleClose
+    onPress: handleClose,
+    testID: "wallet-payment-outcome-success-button"
   };
 
   const closeFailureAction: OperationResultScreenContentProps["action"] = {
@@ -462,6 +463,14 @@ const WalletPaymentOutcomeScreen = () => {
           pictogram: "umbrellaNew",
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
+          action: closeFailureAction,
+          secondaryAction: contactSupportAction
+        };
+      case WalletPaymentOutcomeEnum.PSP_ERROR:
+        return {
+          pictogram: "attention",
+          title: I18n.t("wallet.payment.outcome.PSP_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.PSP_ERROR.subtitle"),
           action: closeFailureAction,
           secondaryAction: contactSupportAction
         };

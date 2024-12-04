@@ -101,7 +101,7 @@ import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
-import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
+import { watchWalletSaga } from "../features/wallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
@@ -114,6 +114,8 @@ import { handleApplicationStartupTransientError } from "../features/startup/saga
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
+import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -377,6 +379,12 @@ export function* initializeApplicationSaga(
     }
   }
 
+  const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
+
+  if (userFromSuccessLogin) {
+    yield* call(shouldTrackLevelSecurityMismatchSaga, maybeSessionInformation);
+  }
+
   const publicKey = yield* select(lollipopPublicKeySelector);
 
   // #LOLLIPOP_CHECK_BLOCK2_START
@@ -553,7 +561,7 @@ export function* initializeApplicationSaga(
   //
 
   // Start wathing new wallet sagas
-  yield* fork(watchNewWalletSaga);
+  yield* fork(watchWalletSaga);
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;

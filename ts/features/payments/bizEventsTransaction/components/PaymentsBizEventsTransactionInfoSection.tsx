@@ -25,7 +25,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { WalletTransactionReceiptDivider } from "../../transaction/components/WalletTransactionReceiptDivider";
-import { getPayerInfoLabel } from "../utils";
+import { getPayerInfoLabel, removeAsterisks } from "../utils";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -196,13 +196,15 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
     return (
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
-        value={`${capitalize(walletInfo.brand)} •••• ${
+        value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
           walletInfo.blurredNumber
-        }`}
+        )}`}
         accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
           circuit: walletInfo.brand,
           // we space the hpan to make the screen reader read it digit by digit
-          spacedHpan: walletInfo.blurredNumber.split("").join(" ")
+          spacedHpan: removeAsterisks(walletInfo.blurredNumber)
+            .split("")
+            .join(" ")
         })}
         paymentLogoIcon={walletInfo.brand as IOLogoPaymentType}
       />
