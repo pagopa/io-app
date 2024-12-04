@@ -8,6 +8,9 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
+    strategy:
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
@@ -20,7 +23,26 @@ jobs:
       - id: run-prettier
         run: yarn prettier:check
       - id: run-test
-        run: yarn test:ci
+        run: yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      - id: move-coverage-file
+        run: mv coverage/coverage-final.json coverage/${{matrix.shard}}.json
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        with:
+          name: coverage-artifacts
+          path: coverage/
+  coverage:
+    runs-on: ubuntu-latest
+    environment: dev
+    needs: checks
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935
+        with:
+          name: coverage-artifacts
+          path: coverage
+      - id: merge-coverage
+        run: npx nyc merge coverage/ coverage/coverage-final.json
       - id: codecov-script        
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
