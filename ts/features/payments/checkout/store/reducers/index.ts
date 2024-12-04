@@ -266,20 +266,6 @@ const reducer = (
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
       };
-    case getType(paymentsDeleteTransactionAction.failure):
-      return {
-        ...state,
-        transaction: pot.toError(
-          state.transaction,
-          action.payload.kind === "generic"
-            ? {
-                faultCodeCategory:
-                  FaultCodeCategoryEnum.PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION,
-                faultCodeDetail: ""
-              }
-            : action.payload
-        )
-      };
 
     // Authorization url
     case getType(paymentsStartPaymentAuthorizationAction.request):
