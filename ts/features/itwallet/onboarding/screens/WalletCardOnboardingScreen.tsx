@@ -25,7 +25,6 @@ import {
 } from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
-import { isItwTrialActiveSelector } from "../../../trialSystem/store/reducers";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -54,7 +53,6 @@ const activeBadge: Badge = {
 };
 
 const WalletCardOnboardingScreen = () => {
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
 
@@ -63,10 +61,9 @@ const WalletCardOnboardingScreen = () => {
   const isItwSectionVisible = React.useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
-      isItwTrialEnabled && // User is part of the trial
       isItwValid && // An eID has ben obtained and wallet is valid
       isItwEnabled, // Remote FF is enabled
-    [isItwTrialEnabled, isItwValid, isItwEnabled]
+    [isItwValid, isItwEnabled]
   );
 
   return (
