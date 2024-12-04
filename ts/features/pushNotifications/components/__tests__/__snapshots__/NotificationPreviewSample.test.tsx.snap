@@ -204,6 +204,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -744,6 +745,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1284,6 +1286,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1824,6 +1827,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

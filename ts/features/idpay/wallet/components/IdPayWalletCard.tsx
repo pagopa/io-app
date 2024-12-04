@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
+import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayCard, IdPayCardProps } from "./IdPayCard";
 
