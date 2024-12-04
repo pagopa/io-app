@@ -204,6 +204,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1153,6 +1154,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2157,6 +2159,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3137,6 +3140,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4172,6 +4176,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5023,6 +5028,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5929,6 +5935,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6659,6 +6666,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
