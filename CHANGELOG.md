@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.1](https://github.com/pagopa/io-app/compare/2.79.0-rc.0...2.79.0-rc.1) (2024-12-03)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-414](https://pagopa.atlassian.net/browse/IOAPPX-414)] Add `NativeStackNavigator` to the Design System section ([#6340](https://github.com/pagopa/io-app/issues/6340)) ([ac9c2bd](https://github.com/pagopa/io-app/commit/ac9c2bd53c6ade076f2e0b490a495e84fc8228f8))
+* [[IOBP-1040](https://pagopa.atlassian.net/browse/IOBP-1040)] Update the latest receipt list everytime the user closes the success outcome ([#6485](https://github.com/pagopa/io-app/issues/6485)) ([446cabc](https://github.com/pagopa/io-app/commit/446cabce84ff97569dbe8b705f650f61583c0b6d))
+* [[IOPLT-778](https://pagopa.atlassian.net/browse/IOPLT-778)] Adds possible webUrl action on StatusMessage component ([#6453](https://github.com/pagopa/io-app/issues/6453)) ([0b3b8e3](https://github.com/pagopa/io-app/commit/0b3b8e396b27870e51a28ae3b8ad0e7307b9845b))
+* [[IOPLT-780](https://pagopa.atlassian.net/browse/IOPLT-780)] Adds `react-native-store-review` library to request on demand review ([#6486](https://github.com/pagopa/io-app/issues/6486)) ([6b11464](https://github.com/pagopa/io-app/commit/6b114641879503c0cc315610c077b02214d07c7b))
+
+## [2.79.0-rc.0](https://github.com/pagopa/io-app/compare/2.78.0-rc.12...2.79.0-rc.0) (2024-12-03)
+
+
+### Bug Fixes
+
+* [[IOBP-1021](https://pagopa.atlassian.net/browse/IOBP-1021)] Show retry banner when all the other cards fetch fails ([#6478](https://github.com/pagopa/io-app/issues/6478)) ([e005566](https://github.com/pagopa/io-app/commit/e005566756d4bd1804ade8050c357627a0442c99))
+* [[IOBP-1037](https://pagopa.atlassian.net/browse/IOBP-1037)] Remove asterisks from card transaction info ([#6484](https://github.com/pagopa/io-app/issues/6484)) ([4713bd2](https://github.com/pagopa/io-app/commit/4713bd2487e7b4d37362cb46f4c60ad8aa5c82d9))
+* [[IOBP-1039](https://pagopa.atlassian.net/browse/IOBP-1039)] Payments home screen loading UI glitch ([#6480](https://github.com/pagopa/io-app/issues/6480)) ([d81d26d](https://github.com/pagopa/io-app/commit/d81d26d9756e415f65dc999b57c2163d48e13158))
+* [[IOBP-961](https://pagopa.atlassian.net/browse/IOBP-961)] Missing German key for FAQ ([#6479](https://github.com/pagopa/io-app/issues/6479)) ([d7ae804](https://github.com/pagopa/io-app/commit/d7ae8040f6b13d47184fd74be522e701961de417))
+* [[PE-845](https://pagopa.atlassian.net/browse/PE-845)] CGN Replace legacy error screen ([#6469](https://github.com/pagopa/io-app/issues/6469)) ([1b268af](https://github.com/pagopa/io-app/commit/1b268aff13a97ba9b661367e4812470dfb60b3a8))
+
+
+### Chores
+
+* [[IOBP-1028](https://pagopa.atlassian.net/browse/IOBP-1028)] Mixpanel tracking onboarding card methods events on failure ([#6465](https://github.com/pagopa/io-app/issues/6465)) ([e64f8a3](https://github.com/pagopa/io-app/commit/e64f8a322be520ce3e8acc81d589c5e4fa44bd25))
+* [[PE-803](https://pagopa.atlassian.net/browse/PE-803)] CGN discount outcome screen ([#6470](https://github.com/pagopa/io-app/issues/6470)) ([876403a](https://github.com/pagopa/io-app/commit/876403aa411ce090a5e14fb634896bd2e4cab6c8))
+* **Cross:** [[IOAPPX-444](https://pagopa.atlassian.net/browse/IOAPPX-444)] Remove legacy components from the DS ([#6475](https://github.com/pagopa/io-app/issues/6475)) ([d3660d3](https://github.com/pagopa/io-app/commit/d3660d33fe4e44d7bd1c70b42b6f8bd4677f7aac))
+
 ## [2.78.0-rc.12](https://github.com/pagopa/io-app/compare/2.78.0-rc.11...2.78.0-rc.12) (2024-11-29)
 
 ## [2.78.0-rc.11](https://github.com/pagopa/io-app/compare/2.78.0-rc.10...2.78.0-rc.11) (2024-11-28)

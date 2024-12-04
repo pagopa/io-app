@@ -15,5 +15,6 @@ export function* handleWalletPlaceholdersTimeout(
     yield* delay(timeoutMs);
     const cards = yield* select(selectWalletCards);
     yield* put(walletResetPlaceholders(cards));
+    yield* put(walletToggleLoadingState(false));
   }
 }

@@ -14,7 +14,7 @@ import { FciActions } from "../../features/fci/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { MessagesActions } from "../../features/messages/store/actions";
-import { WalletActions as NewWalletActions } from "../../features/newWallet/store/actions";
+import { WalletActions } from "../../features/wallet/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { ServicesActions } from "../../features/services/common/store/actions";
@@ -97,7 +97,7 @@ export type Action =
   | FastLoginActions
   | WhatsNewActions
   | PaymentsFeatureActions
-  | NewWalletActions
+  | WalletActions
   | CieLoginConfigActions
   | FimsActions
   | ItwActions
