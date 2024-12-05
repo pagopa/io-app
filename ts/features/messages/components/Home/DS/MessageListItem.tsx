@@ -1,14 +1,12 @@
 import {
   AnimatedMessageCheckbox,
   Avatar,
-  Body,
   H6,
   HSpacer,
   IOColors,
   IOStyles,
   IOVisualCostants,
-  Label,
-  LabelSmall,
+  BodySmall,
   Tag,
   useIOTheme,
   WithTestID
@@ -147,19 +145,19 @@ export const MessageListItem = ({
             >
               {organizationName}
             </H6>
-            <LabelSmall
+            <BodySmall
               color={theme["textBody-tertiary"]}
               weight="Regular"
               style={{ marginLeft: 8 }}
             >
               {formattedDate}
-            </LabelSmall>
+            </BodySmall>
           </View>
           <View style={styles.serviceNameAndMessageTitleContainer}>
-            <Body numberOfLines={2} style={IOStyles.flex}>
-              <Label weight="Semibold">{`${serviceName} · `}</Label>
-              <Label weight="Regular">{messageTitle}</Label>
-            </Body>
+            <BodySmall numberOfLines={2} style={IOStyles.flex}>
+              <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
+              <BodySmall weight="Regular">{messageTitle}</BodySmall>
+            </BodySmall>
             {!isRead && (
               <View style={styles.messageReadContainer}>
                 <BadgeComponent />

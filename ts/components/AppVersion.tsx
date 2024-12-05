@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { LabelSmall } from "@pagopa/io-app-design-system";
+import { BodySmall } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { WithTestID } from "../types/WithTestID";
 import { getAppVersion } from "../utils/appVersion";
@@ -33,9 +33,9 @@ const AppVersion = ({ onPress, testID }: AppVersion) => {
       accessibilityLabel={appVersionText}
     >
       <View style={[styles.versionButton, IOStyles.row, IOStyles.alignCenter]}>
-        <LabelSmall numberOfLines={1} weight="Semibold" color="grey-650">
+        <BodySmall numberOfLines={1} weight="Semibold" color="grey-650">
           {appVersionText}
-        </LabelSmall>
+        </BodySmall>
       </View>
     </Pressable>
   );

@@ -3,7 +3,7 @@ import {
   ButtonOutline,
   ContentWrapper,
   H3,
-  LabelSmall,
+  BodySmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -57,13 +57,13 @@ const RootedDeviceModal = () => {
           </View>
           <VSpacer size={8} />
           <View accessible style={IOStyles.alignCenter}>
-            <LabelSmall
+            <BodySmall
               style={styles.textCenter}
               color="grey-650"
               weight="Regular"
             >
               {I18n.t("rooted.body")}
-            </LabelSmall>
+            </BodySmall>
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>

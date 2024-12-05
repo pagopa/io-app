@@ -3,7 +3,6 @@ import {
   BodyMonospace,
   ButtonText,
   Caption,
-  Chip,
   Divider,
   H1,
   H2,
@@ -14,9 +13,8 @@ import {
   HStack,
   Hero,
   IOColors,
-  Label,
   LabelMini,
-  LabelSmall,
+  BodySmall,
   MdH1,
   MdH2,
   MdH3,
@@ -45,12 +43,10 @@ export const DSTypography = () => (
       <H6Row />
       <ButtonTextRow />
       <CaptionRow />
-      <ChipRow />
       <BodyRow />
       <VStack space={typographicStyleMargin}>
-        <LabelSmallRow />
+        <BodySmallRow />
         <LabelMiniRow />
-        <LabelRow />
       </VStack>
     </VStack>
     <VSpacer size={blockMargin} />
@@ -93,7 +89,7 @@ const H3Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H3>Header H3</H3>
       <H3 color={theme["interactiveElem-default"]}>Header H3</H3>
       <View
@@ -101,6 +97,7 @@ const H3Row = () => {
       >
         <H3 color={"white"}>Header H3</H3>
       </View>
+      <H3 color={theme["interactiveElem-default"]}>Header H3 Bold</H3>
     </HStack>
   );
 };
@@ -175,18 +172,6 @@ const CaptionRow = () => {
   );
 };
 
-const ChipRow = () => {
-  const theme = useIOTheme();
-
-  return (
-    <HStack space={16}>
-      <Chip>Chip</Chip>
-      <Chip color={theme["textBody-tertiary"]}>Chip</Chip>
-      <Chip color={theme["interactiveElem-default"]}>Chip</Chip>
-    </HStack>
-  );
-};
-
 const BodyRow = () => (
   <VStack space={16}>
     <Body>Body</Body>
@@ -198,7 +183,6 @@ const BodyRow = () => (
       eget pharetra mauris posuere semper.
     </Body>
     <Body weight="Semibold">Body Semibold</Body>
-    <Body weight="Bold">Body Bold</Body>
     <Body asLink onPress={linkOnPress}>
       Body asLink
     </Body>
@@ -206,53 +190,53 @@ const BodyRow = () => (
   </VStack>
 );
 
-export const LabelSmallRow = () => {
+export const BodySmallRow = () => {
   const theme = useIOTheme();
   return (
     <>
-      <HStack space={typographicStyleMargin}>
-        <LabelSmall>Label small</LabelSmall>
-        <LabelSmall color={"red"}>Label small</LabelSmall>
+      <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
+        <BodySmall>Body small</BodySmall>
+        <BodySmall color={"red"}>Body small</BodySmall>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
-          <LabelSmall color={"white"}>Label small</LabelSmall>
+          <BodySmall color={"white"}>Body small</BodySmall>
         </View>
-        <LabelSmall asLink onPress={linkOnPress}>
-          Label small asLink
-        </LabelSmall>
+        <BodySmall asLink onPress={linkOnPress}>
+          Body small asLink
+        </BodySmall>
+      </HStack>
+      <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
+        <BodySmall weight="Semibold">Body small SB</BodySmall>
+        <BodySmall weight="Semibold" color={"red"}>
+          Body small SB
+        </BodySmall>
+        <View
+          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
+        >
+          <BodySmall weight="Semibold" color={"white"}>
+            Body small SB
+          </BodySmall>
+        </View>
+        <BodySmall asLink onPress={linkOnPress} weight="Semibold">
+          Body small SB asLink
+        </BodySmall>
       </HStack>
       <HStack space={typographicStyleMargin}>
-        <LabelSmall weight="Semibold">Label small SB</LabelSmall>
-        <LabelSmall weight="Semibold" color={"red"}>
-          Label small SB
-        </LabelSmall>
+        <BodySmall weight="Regular">Body small Regular</BodySmall>
+        <BodySmall weight="Regular" color={"red"}>
+          Body small Regular
+        </BodySmall>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
-          <LabelSmall weight="Semibold" color={"white"}>
-            Label small SB
-          </LabelSmall>
+          <BodySmall weight="Regular" color={"white"}>
+            Body small Regular
+          </BodySmall>
         </View>
-        <LabelSmall asLink onPress={linkOnPress} weight="Semibold">
-          Label small SB asLink
-        </LabelSmall>
-      </HStack>
-      <HStack space={typographicStyleMargin}>
-        <LabelSmall weight="Regular">Label small Regular</LabelSmall>
-        <LabelSmall weight="Regular" color={"red"}>
-          Label small Regular
-        </LabelSmall>
-        <View
-          style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
-        >
-          <LabelSmall weight="Regular" color={"white"}>
-            Label small Regular
-          </LabelSmall>
-        </View>
-        <LabelSmall asLink onPress={linkOnPress} weight="Regular">
-          Label small Regular asLink
-        </LabelSmall>
+        <BodySmall asLink onPress={linkOnPress} weight="Regular">
+          Body small Regular asLink
+        </BodySmall>
       </HStack>
     </>
   );
@@ -263,7 +247,7 @@ export const LabelMiniRow = () => {
 
   return (
     <>
-      <HStack space={typographicStyleMargin}>
+      <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini>Label mini</LabelMini>
         <LabelMini color={"red"}>Label mini</LabelMini>
         <View
@@ -285,7 +269,7 @@ export const LabelMiniRow = () => {
           </LabelMini>
         </View>
       </HStack>
-      <HStack space={typographicStyleMargin}>
+      <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini weight="Regular">Label mini Regular</LabelMini>
         <LabelMini weight="Regular" color={"red"}>
           Label mini Regular
@@ -299,27 +283,6 @@ export const LabelMiniRow = () => {
         </View>
       </HStack>
     </>
-  );
-};
-
-export const LabelRow = () => {
-  const theme = useIOTheme();
-
-  return (
-    <HStack space={typographicStyleMargin}>
-      <Label>Label</Label>
-      <View
-        style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
-      >
-        <Label color={"white"}>Label</Label>
-      </View>
-      <Label asLink onPress={linkOnPress}>
-        Label asLink
-      </Label>
-      <Label weight="Regular" asLink onPress={linkOnPress}>
-        Label Regular asLink
-      </Label>
-    </HStack>
   );
 };
 
