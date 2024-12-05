@@ -21,7 +21,7 @@ const renderComponent = () => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       ProfileMainScreen,
-      ROUTES.PROFILE_MAIN,
+      ROUTES.SETTINGS_MAIN,
       {},
       store
     ),
