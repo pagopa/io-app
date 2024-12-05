@@ -11,7 +11,6 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { trackPinEducationalScreen } from "./analytics";
@@ -28,15 +27,10 @@ const MissingDevicePinScreen = () => {
   const dispatch = useIODispatch();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { showAlert } = useOnboardingAbortAlert();
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
     title: "onboarding.contextualHelpTitle",
-    body: isSettingsVisibleAndHideProfile
-      ? "onboarding.contextualHelpContent"
-      : "onboarding.legacyContextualHelpContent"
+    body: "onboarding.contextualHelpContent"
   };
 
   useOnFirstRender(() => {
