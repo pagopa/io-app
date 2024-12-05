@@ -21,7 +21,8 @@ export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
   !itwLifecycleIsValidSelector(state) && isItwEnabledSelector(state);
 
 /**
- * Returns the renderable state of the feedback banner with the persisted user's preference.
+ * Returns the renderable state of the discovery banner with the persisted user's preference:
+ * after being closed by the user it should stay hidden for 6 months.
  */
 export const isItwPersistedDiscoveryBannerRenderableSelector = (
   state: GlobalState
