@@ -15,8 +15,6 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
-import useContentWithFF from "../../profile/useContentWithFF";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,
@@ -37,15 +35,10 @@ const FingerprintScreen = () => {
   const dispatch = useIODispatch();
   const { showAlert } = useOnboardingAbortAlert();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
     title: "onboarding.contextualHelpTitle",
-    body: isSettingsVisibleAndHideProfile
-      ? "onboarding.contextualHelpContent"
-      : "onboarding.legacyContextualHelpContent"
+    body: "onboarding.contextualHelpContent"
   };
 
   useOnFirstRender(() => {
@@ -61,8 +54,6 @@ const FingerprintScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown
   });
-
-  const content = useContentWithFF("onboarding.biometric.available.settings");
 
   const actions = useMemo<IOScrollViewActions>(
     () => ({
@@ -121,7 +112,7 @@ const FingerprintScreen = () => {
       <Body>{I18n.t("onboarding.biometric.available.body.text")}</Body>
       <VSpacer size={24} />
       <Banner
-        content={content}
+        content={I18n.t("onboarding.biometric.available.settings")}
         color="neutral"
         size="small"
         pictogramName="settings"
