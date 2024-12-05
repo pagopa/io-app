@@ -132,18 +132,16 @@ export const useHeaderSecondLevel = ({
     const enableDiscreteTransitionProps =
       enableDiscreteTransition && animatedRef
         ? {
-            ignoreSafeAreaMargin: !!alertProps,
             enableDiscreteTransition,
             animatedRef
           }
-        : {
-            ignoreSafeAreaMargin: !!alertProps
-          };
+        : {};
 
     return {
       scrollValues,
       variant,
       backgroundColor,
+      ignoreSafeAreaMargin: !!alertProps,
       ...enableDiscreteTransitionProps
     };
   }, [
