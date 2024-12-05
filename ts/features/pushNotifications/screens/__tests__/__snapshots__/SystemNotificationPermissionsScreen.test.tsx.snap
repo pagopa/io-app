@@ -219,6 +219,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -359,7 +361,6 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View

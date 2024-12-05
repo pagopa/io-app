@@ -78,6 +78,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -140,6 +141,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={16}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -212,7 +214,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -392,6 +393,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -426,6 +428,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -1099,6 +1102,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1280,6 +1284,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1413,6 +1418,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1475,6 +1481,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={15}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1547,7 +1554,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -1727,6 +1733,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1761,6 +1768,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -2434,6 +2442,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2615,6 +2624,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2748,6 +2758,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2810,6 +2821,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={18}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2882,7 +2894,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -3062,6 +3073,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3096,6 +3108,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -3769,6 +3782,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3950,6 +3964,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -4083,6 +4098,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4145,6 +4161,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={17}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4217,7 +4234,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -4397,6 +4413,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4431,6 +4448,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -5104,6 +5122,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5285,6 +5304,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -5418,6 +5438,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5480,6 +5501,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={14}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5552,7 +5574,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -5732,6 +5753,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5766,6 +5788,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -6439,6 +6462,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6620,6 +6644,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -6753,6 +6778,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6815,6 +6841,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={13}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6887,7 +6914,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -7067,6 +7093,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7101,6 +7128,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -7774,6 +7802,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7955,6 +7984,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -8088,6 +8118,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8150,6 +8181,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={22}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8222,7 +8254,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -8402,6 +8433,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8436,6 +8468,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -9109,6 +9142,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9290,6 +9324,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -9423,6 +9458,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9485,6 +9521,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={21}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9557,7 +9594,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -9737,6 +9773,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9771,6 +9808,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -10444,6 +10482,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -10625,6 +10664,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -10758,6 +10798,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10820,6 +10861,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={24}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -10892,7 +10934,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -11072,6 +11113,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11106,6 +11148,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -11779,6 +11822,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11960,6 +12004,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -12093,6 +12138,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -12155,6 +12201,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={23}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -12227,7 +12274,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -12407,6 +12453,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -12441,6 +12488,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -13114,6 +13162,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -13295,6 +13344,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -13428,6 +13478,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -13490,6 +13541,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={20}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -13562,7 +13614,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -13742,6 +13793,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -13776,6 +13828,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -14449,6 +14502,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -14630,6 +14684,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -14763,6 +14818,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -14825,6 +14881,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={19}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -14897,7 +14954,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -15077,6 +15133,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -15111,6 +15168,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -15784,6 +15842,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -15965,6 +16024,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -16098,6 +16158,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -16160,6 +16221,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -16232,7 +16294,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -16412,6 +16473,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -16446,6 +16508,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -17119,6 +17182,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -17300,6 +17364,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -17433,6 +17498,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -17495,6 +17561,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -17567,7 +17634,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -17747,6 +17813,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -17781,6 +17848,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -18454,6 +18522,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -18635,6 +18704,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -18768,6 +18838,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -18830,6 +18901,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -18902,7 +18974,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -19082,6 +19153,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -19116,6 +19188,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -19789,6 +19862,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -19970,6 +20044,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -20103,6 +20178,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -20165,6 +20241,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={11}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -20237,7 +20314,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -20417,6 +20493,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -20451,6 +20528,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -21124,6 +21202,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -21305,6 +21384,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -21438,6 +21518,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -21500,6 +21581,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -21572,7 +21654,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -21752,6 +21833,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -21786,6 +21868,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -22459,6 +22542,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -22640,6 +22724,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -22773,6 +22858,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -22835,6 +22921,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -22907,7 +22994,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -23087,6 +23173,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -23121,6 +23208,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       }
                                       height={24}
                                       maskContentUnits={1}
+                                      maskType={0}
                                       maskUnits={0}
                                       name="a"
                                       width={24}
@@ -23794,6 +23882,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -23975,6 +24064,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

@@ -21,25 +21,67 @@ exports[`TosWebviewComponent The snapshot for the TosWebviewComponent Should ren
     testID="toSWebViewContainer"
   >
     <View
-      androidCameraAccessDisabled={true}
-      androidMicrophoneAccessDisabled={true}
-      injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);function findParent(tagname, el) {while (el) {if ((el.nodeName || el.tagName).toLowerCase() === tagname.toLowerCase()) {return el;}el = el.parentNode;}return null;}document.body.onclick = function(e) {e = e || event;const from = findParent("a", e.target || e.srcElement);if (from) {const href = from.href;const message = {type: "LINK_MESSAGE",payload: {href}};window.ReactNativeWebView.postMessage(JSON.stringify(message));return false;}};true;"
-      onError={[Function]}
-      onHttpError={[Function]}
-      onLoadEnd={[Function]}
-      onMessage={[Function]}
-      source={
-        {
-          "html": "<html><head></head><body></body></html>",
-        }
-      }
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "flex": 1,
+            "overflow": "hidden",
+          },
+          undefined,
+        ]
       }
-      textZoom={100}
-    />
+    >
+      <RNCWebView
+        allowsPictureInPictureMediaPlayback={true}
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
+        cacheEnabled={true}
+        fraudulentWebsiteWarningEnabled={true}
+        hasOnFileDownload={false}
+        hasOnOpenWindowEvent={false}
+        injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);function findParent(tagname, el) {while (el) {if ((el.nodeName || el.tagName).toLowerCase() === tagname.toLowerCase()) {return el;}el = el.parentNode;}return null;}document.body.onclick = function(e) {e = e || event;const from = findParent("a", e.target || e.srcElement);if (from) {const href = from.href;const message = {type: "LINK_MESSAGE",payload: {href}};window.ReactNativeWebView.postMessage(JSON.stringify(message));return false;}};true;"
+        injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+        injectedJavaScriptForMainFrameOnly={true}
+        javaScriptEnabled={true}
+        messagingEnabled={true}
+        messagingModuleName=""
+        newSource={
+          {
+            "html": "<html><head></head><body></body></html>",
+          }
+        }
+        onContentProcessDidTerminate={[Function]}
+        onHttpError={[Function]}
+        onLoadingError={[Function]}
+        onLoadingFinish={[Function]}
+        onLoadingProgress={[Function]}
+        onLoadingStart={[Function]}
+        onMessage={[Function]}
+        onShouldStartLoadWithRequest={[Function]}
+        source={
+          {
+            "html": "<html><head></head><body></body></html>",
+          }
+        }
+        style={
+          [
+            {
+              "flex": 1,
+              "overflow": "hidden",
+            },
+            {
+              "backgroundColor": "#ffffff",
+            },
+            {
+              "flex": 1,
+            },
+          ]
+        }
+        textInteractionEnabled={true}
+        textZoom={100}
+        useSharedProcessPool={true}
+      />
+    </View>
   </View>
 </RNCSafeAreaProvider>
 `;

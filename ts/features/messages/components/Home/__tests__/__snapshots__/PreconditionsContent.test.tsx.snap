@@ -219,6 +219,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -571,6 +573,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -633,6 +636,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -915,6 +919,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -977,6 +982,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1472,6 +1478,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1534,6 +1541,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2088,6 +2096,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2150,6 +2159,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2675,6 +2685,7 @@ exports[`PreconditionsContent should match snapshot when content category is und
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2737,6 +2748,7 @@ exports[`PreconditionsContent should match snapshot when content category is und
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

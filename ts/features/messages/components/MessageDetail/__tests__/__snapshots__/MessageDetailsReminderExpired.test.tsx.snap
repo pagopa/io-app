@@ -219,6 +219,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -592,6 +594,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -654,6 +657,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -770,6 +774,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,

@@ -219,6 +219,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -388,6 +390,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           width={24}
                         >
                           <RNSVGGroup
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -422,6 +425,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}
@@ -760,6 +764,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -822,6 +827,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -929,6 +935,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           width={24}
                         >
                           <RNSVGGroup
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -963,6 +970,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}
@@ -1301,6 +1309,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1363,6 +1372,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1470,6 +1480,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           width={24}
                         >
                           <RNSVGGroup
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -1504,6 +1515,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}
@@ -1842,6 +1854,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1904,6 +1917,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2011,6 +2025,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           width={24}
                         >
                           <RNSVGGroup
+                            color="#475A6D"
                             fill={
                               {
                                 "payload": 4278190080,
@@ -2045,6 +2060,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               }
                               height={24}
                               maskContentUnits={1}
+                              maskType={0}
                               maskUnits={0}
                               name="a"
                               width={24}

@@ -8,10 +8,9 @@ import {
   createStore,
   Middleware,
   Reducer,
-  Store
+  Store,
+  StoreEnhancer
 } from "redux";
-import createDebugger from "redux-flipper";
-import { createLogger } from "redux-logger";
 import {
   createMigrate,
   MigrationManifest,
@@ -21,6 +20,7 @@ import {
   persistReducer,
   persistStore
 } from "redux-persist";
+import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../common/model/RemoteValue";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
@@ -29,7 +29,7 @@ import {
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
 import rootSaga from "../sagas";
-import { Action, StoreEnhancer } from "../store/actions/types";
+import { Action } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import {
   authenticationPersistConfig,
@@ -51,7 +51,6 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv } from "../utils/environment";
 import { configureReactotron } from "./configureRectotron";
-
 /**
  * Redux persist will migrate the store to the current version
  */
@@ -504,20 +503,12 @@ const logger = createLogger({
 
 // configure Reactotron if the app is running in dev mode
 export const RTron = isDevEnv ? configureReactotron() : undefined;
-const sagaMiddleware = createSagaMiddleware(
-  // cast to any due to a type lacking
-  RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
-);
+const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
   store: Store<GlobalState, Action>;
   persistor: Persistor;
 } {
-  /**
-   * If available use redux-devtool version of the compose function that allow
-   * the inspection of the store from the devtool.
-   */
-
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -528,15 +519,9 @@ function configureStoreAndPersistor(): {
     analytics.actionTracking // generic tracker for selected redux actions
   ];
 
-  const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
-    ? [createDebugger()]
-    : [];
+  const middlewares = applyMiddleware(...baseMiddlewares);
 
-  const middlewares = applyMiddleware(
-    ...[...baseMiddlewares, ...devMiddleware]
-  );
   // add Reactotron enhancer if the app is running in dev mode
-
   const enhancer: StoreEnhancer =
     RTron && RTron.createEnhancer
       ? composeEnhancers(middlewares, RTron.createEnhancer())
@@ -549,11 +534,6 @@ function configureStoreAndPersistor(): {
     Record<string, unknown>
   >(persistedReducer, enhancer);
   const persistor = persistStore(store);
-
-  if (isDebuggingInChrome) {
-    // eslint-disable-next-line functional/immutable-data
-    (window as any).store = store;
-  }
 
   // Run the main saga
   sagaMiddleware.run(rootSaga);

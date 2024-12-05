@@ -23,7 +23,6 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -606,7 +605,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -1532,7 +1530,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -1761,6 +1758,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0B3EE3"
                     fill={
                       {
                         "payload": 4278190080,
@@ -1928,6 +1926,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0B3EE3"
                     fill={
                       {
                         "payload": 4278190080,
@@ -2137,6 +2136,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0B3EE3"
                     fill={
                       {
                         "payload": 4278190080,
@@ -2468,7 +2468,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
