@@ -13,9 +13,10 @@ export const selectWalletPlaceholders = createSelector(
     )
 );
 
-export const selectWalletCards = createSelector(selectWalletFeature, wallet =>
-  Object.values(wallet.cards)
-);
+export const selectWalletCards = createSelector(selectWalletFeature, wallet => {
+  const { deletedCard, ...cards } = wallet.cards;
+  return Object.values(cards);
+});
 
 /**
  * Gets the cards sorted by their category order, specified in the {@see walletCardCategories} array
