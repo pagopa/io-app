@@ -38,11 +38,6 @@ export type StartAuthFlowActorParams = {
   identification: IdentificationContext | undefined;
 };
 
-export type CompleteAuthFlowActorParams = {
-  authenticationContext: AuthenticationContext | undefined;
-  walletInstanceAttestation: string | undefined;
-};
-
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
 };
