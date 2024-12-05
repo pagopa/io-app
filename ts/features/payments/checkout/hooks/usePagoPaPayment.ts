@@ -10,8 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIODispatch } from "../../../../store/hooks";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   PaymentInitStateParams,
@@ -37,9 +36,6 @@ type UsePagoPaPayment = {
     data: PaymentData,
     params?: PagoPaPaymentParams
   ) => void;
-  // This is a temporary flag to tell that the new payment flow is enabled and can be used
-  // Will be removed once the new wallet section is released
-  isNewWalletSectionEnabled: boolean;
 };
 
 /**
@@ -50,11 +46,6 @@ type UsePagoPaPayment = {
 const usePagoPaPayment = (): UsePagoPaPayment => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-
-  // Checks if the new wallet section is enabled
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
 
   /**
    * Initializes the payment state based on the provided parameters.
@@ -129,8 +120,7 @@ const usePagoPaPayment = (): UsePagoPaPayment => {
   return {
     startPaymentFlow,
     startPaymentFlowWithRptId,
-    startPaymentFlowWithData,
-    isNewWalletSectionEnabled
+    startPaymentFlowWithData
   };
 };
 

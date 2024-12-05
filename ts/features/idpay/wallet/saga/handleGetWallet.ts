@@ -8,7 +8,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayWalletGet } from "../store/actions";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../wallet/store/actions/cards";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
