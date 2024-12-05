@@ -5,13 +5,11 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
 import { FAQsCategoriesType } from "../../../utils/faq";
 import { useOnboardingAbortAlert } from "../../../utils/hooks/useOnboardingAbortAlert";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import useContentWithFF from "../../profile/useContentWithFF";
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
@@ -29,15 +27,9 @@ const MissingDeviceBiometricScreen = () => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const { showAlert } = useOnboardingAbortAlert();
 
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
-
   const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
     title: "onboarding.contextualHelpTitle",
-    body: isSettingsVisibleAndHideProfile
-      ? "onboarding.contextualHelpContent"
-      : "onboarding.legacyContextualHelpContent"
+    body: "onboarding.contextualHelpContent"
   };
 
   useOnFirstRender(() => {
@@ -53,10 +45,6 @@ const MissingDeviceBiometricScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown
   });
-
-  const content = useContentWithFF(
-    "onboarding.biometric.available.body.notEnrolled.step3.value"
-  );
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -82,11 +70,13 @@ const MissingDeviceBiometricScreen = () => {
         label: I18n.t(
           "onboarding.biometric.available.body.notEnrolled.step3.label"
         ),
-        value: content,
+        value: I18n.t(
+          "onboarding.biometric.available.body.notEnrolled.step3.value"
+        ),
         icon: "systemToggleInstructions"
       }
     ],
-    [content]
+    []
   );
 
   const actions: IOScrollViewActions = {
