@@ -147,6 +147,11 @@ const WalletPaymentOutcomeScreen = () => {
     navigation.pop();
   };
 
+  const handleSuccessClose = () => {
+    requestAppReview();
+    handleClose();
+  };
+
   const handleShowMoreOnReversedPayment = () => {
     reversedPaymentModal.present();
   };
@@ -154,7 +159,7 @@ const WalletPaymentOutcomeScreen = () => {
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
-    onPress: handleClose,
+    onPress: handleSuccessClose,
     testID: "wallet-payment-outcome-success-button"
   };
 
@@ -238,10 +243,6 @@ const WalletPaymentOutcomeScreen = () => {
         ? "DUPLICATED"
         : undefined;
     const rptId = paymentOngoingHistory?.rptId;
-
-    if (kind === "COMPLETED") {
-      requestAppReview();
-    }
 
     if (kind && rptId) {
       dispatch(paymentCompletedSuccess({ rptId, kind }));
