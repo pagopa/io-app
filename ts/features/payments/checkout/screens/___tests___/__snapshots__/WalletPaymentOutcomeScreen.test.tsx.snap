@@ -539,7 +539,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -812,7 +812,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -979,7 +979,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -1831,7 +1831,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -1842,6 +1842,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -1893,7 +1894,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -1932,7 +1933,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -2688,7 +2689,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -2961,7 +2962,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -3128,7 +3129,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -3980,7 +3981,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -3991,6 +3992,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -4042,7 +4044,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -4081,7 +4083,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -4818,7 +4820,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -5091,7 +5093,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -5258,7 +5260,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -6110,7 +6112,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -6121,6 +6123,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -6172,7 +6175,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -6211,7 +6214,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -6933,7 +6936,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -7206,7 +7209,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -7373,7 +7376,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -8225,7 +8228,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -8236,6 +8239,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -8287,7 +8291,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -8326,7 +8330,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -9062,7 +9066,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -9335,7 +9339,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -9502,7 +9506,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -10354,7 +10358,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -10365,6 +10369,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -10416,7 +10421,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -10455,7 +10460,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -11147,7 +11152,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -11263,7 +11268,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -11535,7 +11540,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -11702,7 +11707,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -12554,7 +12559,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -12565,6 +12570,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -12616,7 +12622,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -12655,7 +12661,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -13319,7 +13325,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -13435,7 +13441,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -13707,7 +13713,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -13874,7 +13880,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -14726,7 +14732,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -14737,6 +14743,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -14788,7 +14795,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -14827,7 +14834,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -15549,7 +15556,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -15822,7 +15829,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -15989,7 +15996,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -16841,7 +16848,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -16852,6 +16859,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -16903,7 +16911,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -16942,7 +16950,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -17614,7 +17622,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -17887,7 +17895,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -18054,7 +18062,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -18906,7 +18914,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -18917,6 +18925,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -18968,7 +18977,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -19007,7 +19016,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -19763,7 +19772,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -20036,7 +20045,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -20203,7 +20212,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -21055,7 +21064,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -21066,6 +21075,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -21117,7 +21127,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -21156,7 +21166,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -21892,7 +21902,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -22165,7 +22175,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -22332,7 +22342,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -23184,7 +23194,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -23195,6 +23205,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -23246,7 +23257,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -23285,7 +23296,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -24041,7 +24052,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -24314,7 +24325,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -24481,7 +24492,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -25333,7 +25344,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -25344,6 +25355,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -25395,7 +25407,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -25434,7 +25446,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -26126,7 +26138,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -26242,7 +26254,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -26514,7 +26526,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -26681,7 +26693,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -27533,7 +27545,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -27544,6 +27556,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -27595,7 +27608,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -27634,7 +27647,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -28390,7 +28403,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -28663,7 +28676,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -28830,7 +28843,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -29682,7 +29695,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -29693,6 +29706,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -29744,7 +29758,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -29783,7 +29797,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -30539,7 +30553,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -30812,7 +30826,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -30979,7 +30993,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -31831,7 +31845,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -31842,6 +31856,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -31893,7 +31908,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -31932,7 +31947,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -32696,7 +32711,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -32969,7 +32984,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -33136,7 +33151,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -33988,7 +34003,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -33999,6 +34014,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -34050,7 +34066,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -34089,7 +34105,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -34825,7 +34841,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -35098,7 +35114,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -35265,7 +35281,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -36117,7 +36133,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -36128,6 +36144,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -36179,7 +36196,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -36218,7 +36235,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -36912,7 +36929,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -37028,7 +37045,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -37300,7 +37317,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -37467,7 +37484,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -38319,7 +38336,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -38330,6 +38347,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -38381,7 +38399,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -38420,7 +38438,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -39156,7 +39174,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -39429,7 +39447,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -39596,7 +39614,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -40448,7 +40466,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -40459,6 +40477,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -40510,7 +40529,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -40549,7 +40568,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -41291,7 +41310,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -41407,7 +41426,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -41679,7 +41698,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -41846,7 +41865,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -42698,7 +42717,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -42709,6 +42728,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -42760,7 +42780,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -42799,7 +42819,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -43694,7 +43714,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -43967,7 +43987,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -44134,7 +44154,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -44986,7 +45006,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -44997,6 +45017,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -45048,7 +45069,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -45087,7 +45108,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -45782,7 +45803,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -45898,7 +45919,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -46170,7 +46191,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -46337,7 +46358,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -47189,7 +47210,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -47200,6 +47221,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -47251,7 +47273,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -47290,7 +47312,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -48046,7 +48068,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -48162,7 +48184,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -48434,7 +48456,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -48601,7 +48623,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -49453,7 +49475,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -49464,6 +49486,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -49515,7 +49538,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -49554,7 +49577,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -50130,7 +50153,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Il saldo è insufficiente
+                              Il saldo della tua carta è insufficiente
                             </Text>
                             <View
                               style={
@@ -50276,7 +50299,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -50549,7 +50572,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -50716,7 +50739,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -51568,7 +51591,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -51579,6 +51602,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -51630,7 +51654,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -51669,7 +51693,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -52433,7 +52457,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -52706,7 +52730,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -52873,7 +52897,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -53725,7 +53749,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -53736,6 +53760,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -53787,7 +53812,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -53826,7 +53851,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -54562,7 +54587,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -54835,7 +54860,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                           ]
@@ -55002,7 +55027,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontFamily": "Titillium Sans Pro",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
-                                                "fontWeight": "700",
+                                                "fontWeight": "600",
                                                 "lineHeight": undefined,
                                               },
                                               {
@@ -55854,7 +55879,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -55865,6 +55890,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     accessibilityRole="link"
                                     allowFontScaling={false}
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.25}
                                     onPress={[Function]}
                                     style={
@@ -55916,7 +55942,7 @@ Ricorda di pagare l'avviso entro le scadenze previste dall'ente. Se non riesci t
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >
@@ -55955,7 +55981,7 @@ Di solito l’importo viene riaccreditato entro pochi minuti. In altri casi, il 
                                   <Text
                                     style={
                                       {
-                                        "fontWeight": "800",
+                                        "fontWeight": "600",
                                       }
                                     }
                                   >

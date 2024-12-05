@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
-import { Divider, H3, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -38,12 +38,12 @@ const MessageDetailsHeaderContent = ({
   <>
     <H3 testID="message-header-subject">{subject}</H3>
     <VSpacer size={8} />
-    <LabelSmall weight="Regular" color="grey-700">
+    <BodySmall weight="Regular" color="grey-700">
       {localeDateFormat(
         createdAt,
         I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
       )}
-    </LabelSmall>
+    </BodySmall>
   </>
 );
 

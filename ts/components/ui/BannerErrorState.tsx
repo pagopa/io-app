@@ -1,4 +1,5 @@
 import {
+  Body,
   ButtonLink,
   Icon,
   IOBannerBigSpacing,
@@ -8,7 +9,6 @@ import {
   IOScaleValues,
   IOSpringValues,
   IOStyles,
-  Label,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -135,9 +135,7 @@ export const BannerErrorState = ({
         )}
         {label && (
           <>
-            <Label color={colorContent} weight={"Regular"}>
-              {label}
-            </Label>
+            <Body color={colorContent}>{label}</Body>
             {actionText && <VSpacer size={8} />}
           </>
         )}

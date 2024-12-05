@@ -1,4 +1,4 @@
-import { Body, Label, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
 import { tosConfigSelector } from "../../../../features/tos/store/selectors";
 import I18n from "../../../../i18n";
@@ -41,11 +41,16 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <Label asLink onPress={handleOnPress} testID="additionalInformation">
+        <Body
+          weight="Semibold"
+          asLink
+          onPress={handleOnPress}
+          testID="additionalInformation"
+        >
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}
-        </Label>
+        </Body>
       </Body>
     </>
   );

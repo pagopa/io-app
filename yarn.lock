@@ -2215,10 +2215,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-3.1.0.tgz#6766851f53e11c06b0bcfee4786ed5dfbd79d950"
-  integrity sha512-bsncsKZ5Pm8P31E1IHObBzx9ptSAkODewnmtB/drVAwNwMnSjbUJ2/M2RKcAs0rl+Fq3nKnFzbh1giyZ1CgEOg==
+"@pagopa/io-app-design-system@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-4.0.1.tgz#1f939232e3662fa519eba9d2334b33a597643ebb"
+  integrity sha512-CSaWgbkZ9Tjzz7qdCKz6wnRQ1c3/rej6ordgDeDH0faIlMwCkzNqpduwUWF3j91dIirLpSRCJPhKMfnOkhQsAA==
   dependencies:
     "@testing-library/jest-native" "^5.4.2"
     "@types/react-test-renderer" "^18.0.0"
@@ -2272,10 +2272,10 @@
     js-base64 "^3.7.7"
     zod "^3.22.4"
 
-"@pagopa/io-react-native-login-utils@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.7.tgz#b92f9e04e15f724743367ff1bfd33a9ceddcd308"
-  integrity sha512-+I8uT3w/4XkuPC4+Gmy/6LvR3CpUpjjHL6B4qgZQ15EVHtfI97zo3blC4ETPpWdx1T8e37AKu9ZEJIHjOexm/w==
+"@pagopa/io-react-native-login-utils@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.8.tgz#dc5911f756cbf9fa76529041c1422aaecd85c8b2"
+  integrity sha512-gQY3Bkqtov0i9bZ3CV9ukPQYn9kOP6CaxUfbIyf1ZPOvXqAvDSqcbiM/Bdzkp3DneCrfvPMl9mkZ23af4Tu0fQ==
 
 "@pagopa/io-react-native-wallet@^0.26.0":
   version "0.26.0"
