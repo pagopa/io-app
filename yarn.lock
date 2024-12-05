@@ -2272,10 +2272,10 @@
     js-base64 "^3.7.7"
     zod "^3.22.4"
 
-"@pagopa/io-react-native-login-utils@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.7.tgz#b92f9e04e15f724743367ff1bfd33a9ceddcd308"
-  integrity sha512-+I8uT3w/4XkuPC4+Gmy/6LvR3CpUpjjHL6B4qgZQ15EVHtfI97zo3blC4ETPpWdx1T8e37AKu9ZEJIHjOexm/w==
+"@pagopa/io-react-native-login-utils@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.8.tgz#dc5911f756cbf9fa76529041c1422aaecd85c8b2"
+  integrity sha512-gQY3Bkqtov0i9bZ3CV9ukPQYn9kOP6CaxUfbIyf1ZPOvXqAvDSqcbiM/Bdzkp3DneCrfvPMl9mkZ23af4Tu0fQ==
 
 "@pagopa/io-react-native-wallet@^0.26.0":
   version "0.26.0"

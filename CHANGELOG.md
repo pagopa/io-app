@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.2](https://github.com/pagopa/io-app/compare/2.79.0-rc.1...2.79.0-rc.2) (2024-12-04)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1789](https://pagopa.atlassian.net/browse/SIW-1789),[SIW-1790](https://pagopa.atlassian.net/browse/SIW-1790)] Always fetch the latest wallet instance status at app startup ([#6474](https://github.com/pagopa/io-app/issues/6474)) ([2a7cd4d](https://github.com/pagopa/io-app/commit/2a7cd4d78183171dee0440a9cdf0c5adf06d38cf))
+
+
+### Bug Fixes
+
+* [[IOCOM-1994](https://pagopa.atlassian.net/browse/IOCOM-1994),[IOCOM-1995](https://pagopa.atlassian.net/browse/IOCOM-1995)] Fix for back behaviours on FIMS Auth ([#6481](https://github.com/pagopa/io-app/issues/6481)) ([e05a6a3](https://github.com/pagopa/io-app/commit/e05a6a3de164028641a99d8e21d60ac309bc493d))
+* **IT Wallet:** [[SIW-1734](https://pagopa.atlassian.net/browse/SIW-1734)] Add "back to top" in the wallet home screen ([#6491](https://github.com/pagopa/io-app/issues/6491)) ([2fbaa6c](https://github.com/pagopa/io-app/commit/2fbaa6c0f49be85811ae912938342cb3a0b392b3))
+* [[IOBP-1038](https://pagopa.atlassian.net/browse/IOBP-1038)] Update default transaction header on different psp/fee cases ([#6489](https://github.com/pagopa/io-app/issues/6489)) ([2767743](https://github.com/pagopa/io-app/commit/276774389028613863798b77a05eaf56472a932a))
+
+
+### Chores
+
+* [[IOCOM-2001](https://pagopa.atlassian.net/browse/IOCOM-2001)] Revert label content for empty FIMS history ([#6497](https://github.com/pagopa/io-app/issues/6497)) ([74fc6eb](https://github.com/pagopa/io-app/commit/74fc6ebc9a030ab0aa302e4751962db917899a78))
+* **IT Wallet:** [[SIW-1848](https://pagopa.atlassian.net/browse/SIW-1848)] Remove IT Wallet trial system ([#6487](https://github.com/pagopa/io-app/issues/6487)) ([5edf322](https://github.com/pagopa/io-app/commit/5edf3220781ceb6c2e81634f73358a3e7cc96787))
+* [[IOBP-1049](https://pagopa.atlassian.net/browse/IOBP-1049)] Edit insufficient availability error outcome title ([#6488](https://github.com/pagopa/io-app/issues/6488)) ([10b56d6](https://github.com/pagopa/io-app/commit/10b56d632ae539d2ee89e092e92b9ac4f10a7201))
+* [[IOPID-2538](https://pagopa.atlassian.net/browse/IOPID-2538)] Fix `LOGIN_CIEID_SELECTED` event delay ([#6483](https://github.com/pagopa/io-app/issues/6483)) ([fcca9d5](https://github.com/pagopa/io-app/commit/fcca9d541cf2c3c2b1e34abce4ad652067bdf5ff))
+* **IT Wallet:** [[SIW-1889](https://pagopa.atlassian.net/browse/SIW-1889)] Rename `newWallet` feature to `wallet` ([#6490](https://github.com/pagopa/io-app/issues/6490)) ([25bb1c1](https://github.com/pagopa/io-app/commit/25bb1c184d848484ed73eb5022e605b1350e55d0))
+
 ## [2.79.0-rc.1](https://github.com/pagopa/io-app/compare/2.79.0-rc.0...2.79.0-rc.1) (2024-12-03)
 
 
