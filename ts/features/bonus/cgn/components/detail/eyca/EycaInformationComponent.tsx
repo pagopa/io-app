@@ -2,7 +2,7 @@ import * as React from "react";
 import { ButtonOutline, VSpacer, IOToast } from "@pagopa/io-app-design-system";
 import LegacyMarkdown from "../../../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
 
@@ -39,7 +39,7 @@ const EycaInformationComponent: React.FunctionComponent = () => {
 };
 
 export const useEycaInformationBottomSheet = () =>
-  useIOBottomSheetAutoresizableModal({
+  useIOBottomSheetModal({
     component: <EycaInformationComponent />,
     title: I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle")
   });

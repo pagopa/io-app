@@ -21,7 +21,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import LinearGradient from "react-native-linear-gradient";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import IOMarkdown from "../../../components/IOMarkdown";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import IOMarkdownSuggestions from "./IOMarkdownSuggestions";
 
 const ALL = `# Lorem Ipsum
@@ -131,7 +131,7 @@ export const IOMarkdownPlayground = () => {
   const { bottom } = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
 
-  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     title: "Components",
     component: (
       <IOMarkdownSuggestions

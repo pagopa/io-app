@@ -1700,9 +1700,9 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                             />
                           </View>
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
@@ -2585,6 +2585,13 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                   }
                                 />
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                         </View>
@@ -4552,9 +4559,9 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                             />
                           </View>
                           <RCTScrollView
+                            overScrollMode="never"
                             style={
                               {
-                                "flex": 1,
                                 "paddingHorizontal": 24,
                               }
                             }
@@ -5437,6 +5444,13 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                   }
                                 />
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
                             </View>
                           </RCTScrollView>
                         </View>

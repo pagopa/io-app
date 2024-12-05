@@ -33,6 +33,7 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";

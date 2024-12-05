@@ -17,7 +17,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
@@ -114,57 +114,53 @@ export const InstrumentsEnrollmentScreen = () => {
     }
   };
 
-  const enrollmentBottomSheetModal = useIOBottomSheetAutoresizableModal(
-    {
-      component: (
-        <Body>
-          {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
-          <Body weight="Semibold">
-            {I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.bodyBold"
-            ) + "\n"}
-          </Body>
-          {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyLast")}
+  const enrollmentBottomSheetModal = useIOBottomSheetModal({
+    component: (
+      <Body>
+        {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
+        <Body weight="Semibold">
+          {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyBold") +
+            "\n"}
         </Body>
-      ),
-      title: I18n.t("idpay.configuration.instruments.enrollmentSheet.header"),
-      footer: (
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          primary={{
-            type: "Solid",
-            buttonProps: {
-              label: I18n.t(
-                "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
-              ),
-              accessibilityLabel: I18n.t(
-                "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
-              ),
-              onPress: handleEnrollConfirm
+        {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyLast")}
+      </Body>
+    ),
+    title: I18n.t("idpay.configuration.instruments.enrollmentSheet.header"),
+    footer: (
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t(
+              "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
+            ),
+            accessibilityLabel: I18n.t(
+              "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
+            ),
+            onPress: handleEnrollConfirm
+          }
+        }}
+        secondary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t(
+              "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
+            ),
+            accessibilityLabel: I18n.t(
+              "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
+            ),
+            onPress: () => {
+              enrollmentBottomSheetModal.dismiss();
             }
-          }}
-          secondary={{
-            type: "Outline",
-            buttonProps: {
-              label: I18n.t(
-                "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
-              ),
-              accessibilityLabel: I18n.t(
-                "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
-              ),
-              onPress: () => {
-                enrollmentBottomSheetModal.dismiss();
-              }
-            }
-          }}
-        />
-      ),
-      onDismiss: () => {
-        setStagedWalletId(undefined);
-      }
-    },
-    175
-  );
+          }
+        }}
+      />
+    ),
+    onDismiss: () => {
+      setStagedWalletId(undefined);
+    }
+  });
 
   React.useEffect(() => {
     if (stagedWalletId) {
