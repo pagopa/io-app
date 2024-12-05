@@ -204,6 +204,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -942,6 +943,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

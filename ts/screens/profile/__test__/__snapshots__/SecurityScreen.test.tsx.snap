@@ -204,6 +204,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

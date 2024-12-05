@@ -204,6 +204,7 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -807,6 +808,7 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

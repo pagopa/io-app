@@ -316,6 +316,7 @@ profile:
     clearAsyncStorage: Cancella contenuto di AsyncStorage
     dumpAsyncStorage: Scarica contenuto di AsyncStorage
     sentryTestEvent: Invia Exception a Sentry
+    storeReview: Richiedi una recensione sullo store
     contextualHelpTitle: Cosa puoi fare nella sezione {{pageName}}
     legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
     contextualHelpContent: !include profile/profile_account_main.md
@@ -1980,7 +1981,7 @@ wallet:
         title: Hai interrotto il pagamento
         subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
       INSUFFICIENT_AVAILABILITY_ERROR:
-        title: Il saldo è insufficiente
+        title: Il saldo della tua carta è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
       CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
@@ -2792,10 +2793,12 @@ bonus:
           static: Vai al codice sconto
           bucket: Vai al codice sconto
           landingpage: Vai all'opportunità
+          createNew: Usa un nuovo codice
         secondaryCta: Vai all'opportunità
         title: Ecco il codice sconto!
-        expired: Codice sconto scaduto!
+        expired: Il codice è scaduto
         copyButton: Copia codice sconto
+        error: In questo momento non è possibile generare un codice
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
@@ -4190,7 +4193,7 @@ FIMS:
         title: "C’è un problema temporaneo"
         body: "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       toast: C’è un problema nel caricamento della lista. Riprova
-    emptyBody: "Qui troverai la lista degli accessi ogni volta che usi un servizio di terza parte tramite IO."
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"

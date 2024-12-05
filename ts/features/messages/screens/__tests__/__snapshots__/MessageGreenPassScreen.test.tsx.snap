@@ -204,6 +204,7 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
