@@ -20,7 +20,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
@@ -50,7 +49,6 @@ const IdPayCodeDisplayScreen = () => {
   const isGeneratingCode = useIOSelector(isIdPayCodeLoadingSelector);
   const isFailure = useIOSelector(isIdPayCodeFailureSelector);
   const idPayCode = useIOSelector(idPayCodeSelector);
-  const content = useContentWithFF("idpay.code.onboarding.banner.body");
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
@@ -103,7 +101,7 @@ const IdPayCodeDisplayScreen = () => {
               size="big"
               viewRef={bannerRef}
               title={I18n.t("idpay.code.onboarding.banner.header")}
-              content={content}
+              content={I18n.t("idpay.code.onboarding.banner.body")}
             />
           </ContentWrapper>
         </TopScreenComponent>

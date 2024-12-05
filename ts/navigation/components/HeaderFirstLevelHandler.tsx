@@ -12,12 +12,11 @@ import {
   useStartSupportRequest
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
+import { useIODispatch, useIOStore } from "../../store/hooks";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 import { useIONavigation } from "../params/AppParamsList";
-import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import * as analytics from "../../features/services/common/analytics";
 import {
   isArchivingInProcessingModeSelector,
@@ -35,15 +34,6 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
     contextualHelpMarkdown: {
       title: "messages.contextualHelpTitle",
       body: "messages.contextualHelpContent"
-    }
-  },
-  // TODO: delete this route when the showBarcodeScanSection
-  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
-  [ROUTES.PROFILE_MAIN]: {
-    faqCategories: ["profile"],
-    contextualHelpMarkdown: {
-      title: "profile.main.contextualHelpTitle",
-      body: "profile.main.contextualHelpContent"
     }
   },
   [SERVICES_ROUTES.SERVICES_HOME]: {
@@ -85,10 +75,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const navigation = useIONavigation();
   const store = useIOStore();
 
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
-
   const {
     bottomSheet: ServicesHomeBottomSheet,
     present: presentServicesHomeBottomSheet
@@ -126,21 +112,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     navigation.navigate(SERVICES_ROUTES.SEARCH);
   }, [navigation]);
 
-  const navigateToSettingsOrServicesPreferences = useCallback(() => {
-    if (isSettingsVisibleAndHideProfile) {
-      presentServicesHomeBottomSheet();
-      return;
-    }
-
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-    });
-  }, [
-    isSettingsVisibleAndHideProfile,
-    navigation,
-    presentServicesHomeBottomSheet
-  ]);
-
   const navigateToSettingMainScreen = useCallback(() => {
     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
       screen: ROUTES.SETTINGS_MAIN
@@ -175,9 +146,9 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: navigateToSettingsOrServicesPreferences
+      onPress: presentServicesHomeBottomSheet
     }),
-    [navigateToSettingsOrServicesPreferences]
+    [presentServicesHomeBottomSheet]
   );
 
   const requestParams = useMemo(
@@ -233,38 +204,21 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           secondAction: settingsActionInServicesSection,
           thirdAction: searchInstitutionAction
         };
-      // TODO: delete this route when the showBarcodeScanSection
-      // and isSettingsVisibleAndHideProfileSelector FF will be deleted
-      case ROUTES.PROFILE_MAIN:
-        return {
-          ...commonProp,
-          title: I18n.t("profile.main.title"),
-          type: "singleAction",
-          firstAction: helpAction
-        };
       case ROUTES.WALLET_HOME:
         return {
           title: I18n.t("wallet.wallet"),
           firstAction: helpAction,
           testID: "wallet-home-header-title",
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "twoActions",
-                secondAction: settingsAction
-              }
-            : { type: "singleAction" })
+          type: "twoActions",
+          secondAction: settingsAction
         };
       case ROUTES.PAYMENTS_HOME:
         return {
           ...commonProp,
           title: I18n.t("features.payments.title"),
           firstAction: helpAction,
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "twoActions",
-                secondAction: settingsAction
-              }
-            : { type: "singleAction" })
+          type: "twoActions",
+          secondAction: settingsAction
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
@@ -273,16 +227,9 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           skipHeaderAutofocus: true,
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "threeActions",
-                secondAction: settingsActionInMessageSection,
-                thirdAction: searchMessageAction
-              }
-            : {
-                type: "twoActions",
-                secondAction: searchMessageAction
-              })
+          type: "threeActions",
+          secondAction: settingsActionInMessageSection,
+          thirdAction: searchMessageAction
         };
     }
   }, [
@@ -291,7 +238,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     helpAction,
     settingsActionInServicesSection,
     searchInstitutionAction,
-    isSettingsVisibleAndHideProfile,
     settingsAction,
     settingsActionInMessageSection,
     searchMessageAction

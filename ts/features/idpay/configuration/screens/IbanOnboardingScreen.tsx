@@ -16,8 +16,6 @@ import { LabelledItem } from "../../../../components/LabelledItem";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
@@ -34,9 +32,6 @@ export const IbanOnboardingScreen = () => {
   const [ibanName, setIbanName] = React.useState<string>("");
   const isLoading =
     IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
 
@@ -91,9 +86,7 @@ export const IbanOnboardingScreen = () => {
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <BodySmall color="bluegrey" weight="Regular">
-            {isSettingsVisibleAndHideProfile
-              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabel")
-              : I18n.t("idpay.configuration.iban.onboarding.legacyBottomLabel")}
+            {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
           </BodySmall>
         </View>
       </ScrollView>
