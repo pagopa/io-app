@@ -17,6 +17,11 @@ jest.mock("../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
+// Mock the useStatusAlertProps hook
+jest.mock("../../../hooks/useStatusAlertProps", () => ({
+  useStatusAlertProps: jest.fn()
+}));
+
 describe("LanguagesPreferencesScreen", () => {
   beforeAll(() => {
     jest.spyOn(Alert, "alert");
