@@ -204,6 +204,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -589,6 +590,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

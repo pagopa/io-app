@@ -204,6 +204,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -473,8 +474,57 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Learn more
-                              </Text>
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "textAlignVertical": "center",
+                                      },
+                                      false,
+                                      {},
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <Text
+                                    accessibilityElementsHidden={true}
+                                    accessible={false}
+                                    allowFontScaling={false}
+                                    ellipsizeMode="tail"
+                                    importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.25}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": undefined,
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Learn more
+                                  </Text>
+                                </View>
+                              </View>
                             </View>
                           </View>
                           <View

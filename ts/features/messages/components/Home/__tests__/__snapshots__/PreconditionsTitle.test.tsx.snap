@@ -204,6 +204,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -549,6 +550,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -921,6 +923,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1264,6 +1267,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1639,6 +1643,7 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

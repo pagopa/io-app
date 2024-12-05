@@ -63,6 +63,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -475,6 +476,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                       "alignSelf": "flex-start",
                                     }
                                   }
+                                  testID="wallet-payment-outcome-success-button"
                                 >
                                   <View
                                     style={
@@ -2164,6 +2166,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4313,6 +4316,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6443,6 +6447,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -8558,6 +8563,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -10687,6 +10693,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -12887,6 +12894,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -15059,6 +15067,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -17174,6 +17183,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -19239,6 +19249,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -21388,6 +21399,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -23517,6 +23529,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -25666,6 +25679,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -27866,6 +27880,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -30015,6 +30030,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -32164,6 +32180,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -34321,6 +34338,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -36450,6 +36468,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -38652,6 +38671,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -40781,6 +40801,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -43148,6 +43169,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -45319,6 +45341,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -47522,6 +47545,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -49786,6 +49810,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -50128,7 +50153,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Il saldo è insufficiente
+                              Il saldo della tua carta è insufficiente
                             </Text>
                             <View
                               style={
@@ -51901,6 +51926,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -54058,6 +54084,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
