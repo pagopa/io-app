@@ -1,6 +1,6 @@
 import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
 import { View } from "react-native";
@@ -64,10 +64,12 @@ export const FimsFlowHandlerScreen = (
     goBack: handleCancelOrAbort
   });
 
-  useHardwareBackButton(() => {
-    handleCancelOrAbort();
-    return true;
-  });
+  // Force users on Android to use UI buttons to go back, since
+  // there are cases where a modal may be displayed on top of
+  // the screen (like the assistance one) and the hardware back
+  // button event is not stopped by such screen but is instead
+  // propagated to this UI, causing a back loop
+  useHardwareBackButton(constTrue);
 
   React.useEffect(() => {
     if (ctaUrl && !requiresAppUpdate) {
