@@ -15,7 +15,6 @@ import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets"
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentStepEnum } from "../../types";
-import { FaultCodeCategoryEnum } from "../../types/PaymentGenericErrorAfterUserCancellationProblemJson";
 import { FaultCodeCategoryEnum as PaymentMethodNotAvailableEnum } from "../../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
@@ -266,20 +265,6 @@ const reducer = (
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
-      };
-    case getType(paymentsDeleteTransactionAction.failure):
-      return {
-        ...state,
-        transaction: pot.toError(
-          state.transaction,
-          action.payload.kind === "generic"
-            ? {
-                faultCodeCategory:
-                  FaultCodeCategoryEnum.PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION,
-                faultCodeDetail: ""
-              }
-            : action.payload
-        )
       };
 
     // Authorization url
