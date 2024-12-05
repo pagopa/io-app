@@ -204,6 +204,7 @@ exports[`FeaturedServiceCard should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -721,6 +722,7 @@ exports[`FeaturedServiceCard should match the snapshot when isNew is true 1`] = 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

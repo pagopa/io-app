@@ -78,8 +78,7 @@ import {
 } from "../store/reducers/authentication";
 import {
   remoteConfigSelector,
-  isPnEnabledSelector,
-  isSettingsVisibleAndHideProfileSelector
+  isPnEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
@@ -101,7 +100,7 @@ import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
-import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
+import { watchWalletSaga } from "../features/wallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
@@ -561,7 +560,7 @@ export function* initializeApplicationSaga(
   //
 
   // Start wathing new wallet sagas
-  yield* fork(watchNewWalletSaga);
+  yield* fork(watchWalletSaga);
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
@@ -634,20 +633,14 @@ export function* initializeApplicationSaga(
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
-        const isSettingsVisibleAndHideProfile = yield* select(
-          isSettingsVisibleAndHideProfileSelector
-        );
+
         if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
-            isSettingsVisibleAndHideProfile
-              ? I18n.t("startup.userDeletePendingAlert.message")
-              : I18n.t("startup.userDeletePendingAlert.messageLegacy"),
+            I18n.t("startup.userDeletePendingAlert.message"),
             [
               {
-                text: isSettingsVisibleAndHideProfile
-                  ? I18n.t("startup.userDeletePendingAlert.cta_1")
-                  : I18n.t("startup.userDeletePendingAlert.cta_1_legacy"),
+                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
                 style: "cancel",
                 onPress: () => {
                   alertChoiceChannel.put("left");
