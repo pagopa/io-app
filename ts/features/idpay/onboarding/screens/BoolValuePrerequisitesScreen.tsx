@@ -2,7 +2,6 @@ import {
   Body,
   FooterActionsInline,
   H2,
-  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -64,9 +63,13 @@ const InitiativeSelfDeclarationsScreen = () => {
           <H2>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-          <Label asLink onPress={() => openWebUrl(dpr28Dec2000Url)}>
+          <Body
+            weight="Semibold"
+            asLink
+            onPress={() => openWebUrl(dpr28Dec2000Url)}
+          >
             {I18n.t("idpay.onboarding.boolPrerequisites.link")}
-          </Label>
+          </Body>
           <VSpacer size={24} />
           {selfCriteriaBool.map((criteria, index) => (
             <View key={criteria.code}>

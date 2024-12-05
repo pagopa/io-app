@@ -5,7 +5,7 @@ import {
   Divider,
   H6,
   HSpacer,
-  LabelSmall
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import { SignatureRequestListView } from "../../../../definitions/fci/SignatureRequestListView";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
@@ -66,13 +66,13 @@ const SignatureRequestItem = (props: Props) => {
       >
         <View style={{ flexDirection: "column", flex: 1 }}>
           <H6>{item.dossier_title}</H6>
-          <LabelSmall weight={"Regular"} color={"bluegrey"} numberOfLines={1}>
+          <BodySmall weight={"Regular"} color={"bluegrey"} numberOfLines={1}>
             {I18n.t("features.fci.requests.itemSubtitle", {
               date: item.created_at.toLocaleDateString(),
               time: item.created_at.toLocaleTimeString(),
               id: item.id
             })}
-          </LabelSmall>
+          </BodySmall>
         </View>
         <HSpacer />
         <View style={styles.badge}>{renderStatusLabel()}</View>

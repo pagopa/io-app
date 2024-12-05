@@ -7,7 +7,6 @@ import {
   IOColors,
   IOStyles,
   Icon,
-  Label,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -101,9 +100,9 @@ const MultiValuePrerequisiteItemScreenContent = ({
           {/* TODO: Add a proper `onPress` function to the following link.
           It was a `<Link>` without anything else before */}
           {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-          <Label asLink onPress={() => {}}>
+          <Body weight="Semibold" asLink onPress={() => {}}>
             {I18n.t("idpay.onboarding.multiPrerequisites.link")}
-          </Label>
+          </Body>
           <VSpacer size={24} />
           <H6>{selfDeclaration.description}</H6>
           <ScrollView>

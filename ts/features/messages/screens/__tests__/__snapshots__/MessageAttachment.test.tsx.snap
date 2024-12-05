@@ -619,8 +619,47 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     ]
                                   }
                                 >
-                                  Save or share
-                                </Text>
+                                  <View
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        false,
+                                      ]
+                                    }
+                                  >
+                                    <Text
+                                      accessibilityElementsHidden={true}
+                                      accessible={false}
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      importantForAccessibility="no-hide-descendants"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#FFFFFF",
+                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 20,
+                                          },
+                                          {
+                                            "alignSelf": "center",
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Save or share
+                                    </Text>
+                                  </View>
+                                </View>
                               </View>
                             </View>
                           </View>

@@ -7,7 +7,7 @@ import {
   IOColors,
   IOStyles,
   IOVisualCostants,
-  LabelSmall,
+  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -146,12 +146,12 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
         <VSpacer size={24} />
         <View style={styles.barcodeContainer}>
           <View style={[IOStyles.row, { alignSelf: "center" }]}>
-            <LabelSmall weight="Regular" color="black">
+            <BodySmall weight="Regular" color="black">
               {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
-            </LabelSmall>
-            <LabelSmall weight="Semibold" color="black">
+            </BodySmall>
+            <BodySmall weight="Semibold" color="black">
               {formatNumberCurrencyCents(barcode.residualBudgetCents)}
-            </LabelSmall>
+            </BodySmall>
           </View>
           <VSpacer size={4} />
           <Barcode format="CODE128" value={trx} />

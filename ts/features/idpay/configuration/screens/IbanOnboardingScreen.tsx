@@ -4,7 +4,7 @@ import {
   H2,
   HSpacer,
   Icon,
-  LabelSmall,
+  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -85,9 +85,9 @@ export const IbanOnboardingScreen = () => {
         >
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
-          <LabelSmall color="bluegrey" weight="Regular">
+          <BodySmall color="bluegrey" weight="Regular">
             {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
-          </LabelSmall>
+          </BodySmall>
         </View>
       </ScrollView>
       <FooterActions
