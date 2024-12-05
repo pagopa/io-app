@@ -1,6 +1,6 @@
 import {
-  createStackNavigator,
-  TransitionPresets
+  TransitionPresets,
+  createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -31,9 +31,13 @@ import {
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
+import { ItwPresentationCredentialCardModal } from "../presentation/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
+import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
+import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
+import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
@@ -93,6 +97,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
         component={ItwIdentificationIdpSelectionScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.SPID.LOGIN}
+        component={ItwSpidIdpLoginScreen}
       />
       {/* IDENTIFICATION CIE + PIN */}
       <Stack.Screen
@@ -183,15 +191,30 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
         component={ItwPresentationCredentialAttachmentScreen}
       />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}
+        component={ItwPresentationCredentialCardModal}
+        options={{
+          gestureEnabled: false,
+          presentation: "transparentModal"
+        }}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK}
+        component={ItwCredentialTrustmarkScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
+        component={ItwPresentationCredentialFiscalCodeModal}
+      />
       {/* PLAYGROUNDS */}
       <Stack.Screen name={ITW_ROUTES.PLAYGROUNDS} component={ItwPlayground} />
-
+      {/* LIFECYCLE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         component={ItwIdentityNotMatchingScreen}
         options={{ headerShown: false, gestureEnabled: false }}
       />
-
       <Stack.Screen
         name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
         component={ItwLifecycleWalletRevocationScreen}

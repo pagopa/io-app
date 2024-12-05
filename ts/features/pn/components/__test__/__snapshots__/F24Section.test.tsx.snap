@@ -204,6 +204,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1301,6 +1302,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1644,6 +1646,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1987,6 +1990,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2330,6 +2334,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3050,6 +3055,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

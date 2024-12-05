@@ -204,6 +204,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -762,6 +763,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1378,6 +1380,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2181,6 +2184,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3052,6 +3056,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4050,6 +4055,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5184,6 +5190,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -7198,6 +7205,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

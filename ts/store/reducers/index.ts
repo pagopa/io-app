@@ -41,7 +41,6 @@ import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
 } from "./authentication";
-import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
 import contentReducer, {
   initialContentState as contentInitialContentState
@@ -126,7 +125,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   appState: appStateReducer,
   navigation: navigationReducer,
-  backoffError: backoffErrorReducer,
   versionInfo: versionInfoReducer,
   remoteConfig: remoteConfigReducer,
   statusMessages: statusMessagesReducer,

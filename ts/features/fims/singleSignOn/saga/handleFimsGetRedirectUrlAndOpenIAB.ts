@@ -6,7 +6,10 @@ import {
   isCancelledFailure,
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import {
+  isLoginUtilsError,
+  openAuthenticationSession
+} from "@pagopa/io-react-native-login-utils";
 import * as E from "fp-ts/lib/Either";
 import { Parser as HTMLParser2 } from "htmlparser2";
 import {
@@ -15,6 +18,7 @@ import {
 } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
@@ -28,6 +32,7 @@ import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { fimsCtaTextSelector } from "../store/selectors";
 import { trackInAppBrowserOpening } from "../../common/analytics";
+import I18n from "../../../../i18n";
 import {
   deallocateFimsAndRenewFastLoginSession,
   deallocateFimsResourcesAndNavigateBack
@@ -144,12 +149,14 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   yield* call(computeAndTrackInAppBrowserOpening, action);
 
   try {
-    yield* call(openAuthenticationSession, inAppBrowserRedirectUrl, "", true);
+    yield* call(
+      openAuthenticationSession,
+      inAppBrowserRedirectUrl,
+      "iossoapi",
+      true
+    );
   } catch (error: unknown) {
-    // At the time of writing, openAuthenticationSession returns
-    // different kind of structures for error's instances so we
-    // are not able to distinguish between normal closing of the
-    // InApp Browser on both systems and other kind of errors.
+    yield* call(handleInAppBrowserErrorIfNeeded, error);
   }
 }
 
@@ -488,3 +495,24 @@ function* computeAndTrackInAppBrowserOpening(
     ctaText
   );
 }
+
+function* handleInAppBrowserErrorIfNeeded(error: unknown) {
+  if (!isInAppBrowserClosedError(error)) {
+    const debugMessage = `IAB opening failed: ${inAppBrowserErrorToHumanReadable(
+      error
+    )}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
+    yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
+  }
+}
+
+const isInAppBrowserClosedError = (error: unknown) =>
+  isLoginUtilsError(error) &&
+  error.userInfo.error === "NativeAuthSessionClosed";
+
+const inAppBrowserErrorToHumanReadable = (error: unknown) => {
+  if (isLoginUtilsError(error)) {
+    return `${error.code} ${error.userInfo.error}`;
+  }
+  return JSON.stringify(error);
+};

@@ -1,5 +1,4 @@
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
-import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -7,7 +6,6 @@ import React, { useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { localeDateFormat } from "../../../../utils/locale";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import {
   BoolClaim,
@@ -17,15 +15,17 @@ import {
   DrivingPrivilegesClaim,
   EmptyStringClaim,
   EvidenceClaim,
+  extractFiscalCode,
   FiscalCodeClaim,
+  getSafeText,
   ImageClaim,
+  isExpirationDateClaim,
   PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  StringClaim,
-  extractFiscalCode,
-  isExpirationDateClaim,
-  getSafeText
+  SimpleDate,
+  SimpleDateClaim,
+  StringClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 
@@ -108,15 +108,12 @@ const DateClaimItem = ({
   status
 }: {
   label: string;
-  claim: Date;
+  claim: SimpleDate;
   status?: ItwCredentialStatus;
 }) => {
   // Remove the timezone offset to display the date in its original format
 
-  const value = localeDateFormat(
-    claim,
-    I18n.t("global.dateFormats.shortFormat")
-  );
+  const value = claim.toString("DD/MM/YYYY");
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
     const ns = "features.itWallet.presentation.credentialDetails.status";
@@ -270,14 +267,8 @@ const DrivingPrivilegesClaimItem = ({
   claim: DrivingPrivilegeClaimType;
   detailsButtonVisible?: boolean;
 }) => {
-  const localExpiryDate = localeDateFormat(
-    claim.expiry_date,
-    I18n.t("global.dateFormats.shortFormat")
-  );
-  const localIssueDate = localeDateFormat(
-    claim.issue_date,
-    I18n.t("global.dateFormats.shortFormat")
-  );
+  const localExpiryDate = claim.expiry_date.toString("DD/MM/YYYY");
+  const localIssueDate = claim.issue_date.toString("DD/MM/YYYY");
   const privilegeBottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
@@ -371,7 +362,7 @@ export const ItwCredentialClaim = ({
         const decoded = hidden ? HIDDEN_CLAIM : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
-        } else if (DateFromString.is(decoded)) {
+        } else if (SimpleDateClaim.is(decoded)) {
           return (
             <DateClaimItem
               label={claim.label}

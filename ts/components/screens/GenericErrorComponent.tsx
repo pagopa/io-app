@@ -2,6 +2,7 @@ import {
   Body,
   FooterWithButtons,
   H4,
+  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -110,13 +111,11 @@ const GenericErrorComponent = (props: Props) => {
       >
         <View style={IOStyles.alignCenter}>
           <VSpacer size={40} />
-          <Image
-            accessibilityIgnoresInvertColors
-            source={
-              props.image ||
-              require("../../../img/wallet/errors/generic-error-icon.png")
-            }
-          />
+          {props.image ? (
+            <Image accessibilityIgnoresInvertColors source={props.image} />
+          ) : (
+            <Pictogram name="umbrellaNew" />
+          )}
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>
             <H4 ref={ref}>

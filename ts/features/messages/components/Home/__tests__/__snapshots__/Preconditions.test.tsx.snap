@@ -204,6 +204,7 @@ exports[`Preconditions should match snapshot with mocked components 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
