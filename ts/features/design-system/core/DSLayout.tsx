@@ -8,7 +8,7 @@ import {
   IOAppMargin,
   IOColors,
   IOSpacer,
-  LabelSmall,
+  BodySmall,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -59,13 +59,13 @@ const Grid = () => {
                 }}
               >
                 <Body color={theme["textBody-secondary"]}>Content example</Body>
-                <LabelSmall
+                <BodySmall
                   style={{ position: "absolute", right: 4, top: 4 }}
                   weight="Regular"
                   color={theme["textBody-tertiary"]}
                 >
                   {value}
-                </LabelSmall>
+                </BodySmall>
               </View>
             </ContentWrapper>
           </View>
@@ -204,10 +204,10 @@ const VStackBlocks = () => {
             backgroundColor: IOColors[theme["appBackground-tertiary"]]
           }}
         >
-          <LabelSmall
+          <BodySmall
             weight="Regular"
             color={theme["textBody-tertiary"]}
-          >{`Block n.${i + 1}`}</LabelSmall>
+          >{`Block n.${i + 1}`}</BodySmall>
         </View>
       ))}
       <View
@@ -219,9 +219,9 @@ const VStackBlocks = () => {
           backgroundColor: IOColors[theme["appBackground-tertiary"]]
         }}
       >
-        <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           Different height
-        </LabelSmall>
+        </BodySmall>
       </View>
     </>
   );
@@ -243,9 +243,9 @@ const HStackBlocks = () => {
             backgroundColor: IOColors[theme["appBackground-tertiary"]]
           }}
         >
-          <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>{`${
+          <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>{`${
             i + 1
-          }`}</LabelSmall>
+          }`}</BodySmall>
         </View>
       ))}
       <View
@@ -257,9 +257,9 @@ const HStackBlocks = () => {
           backgroundColor: IOColors[theme["appBackground-tertiary"]]
         }}
       >
-        <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           Growing block
-        </LabelSmall>
+        </BodySmall>
       </View>
     </>
   );

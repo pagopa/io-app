@@ -2,7 +2,7 @@ import {
   H6,
   HSpacer,
   IOColors,
-  LabelSmall,
+  BodySmall,
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
@@ -83,9 +83,9 @@ const IDPayCardPreviewComponent = (props: Props) => {
               {initiativeName}
             </H6>
             <HSpacer size={8} />
-            <LabelSmall weight="Semibold" color="black" ellipsizeMode={"tail"}>
+            <BodySmall weight="Semibold" color="black" ellipsizeMode={"tail"}>
               {availableAmount}
-            </LabelSmall>
+            </BodySmall>
           </View>
           {logoComponent}
         </TouchableDefaultOpacity>

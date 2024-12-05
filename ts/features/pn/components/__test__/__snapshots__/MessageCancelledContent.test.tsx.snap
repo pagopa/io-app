@@ -443,6 +443,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -919,6 +920,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -1395,6 +1397,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -1871,6 +1874,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -2347,6 +2351,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -2823,6 +2828,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -3299,6 +3305,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -3775,6 +3782,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={
@@ -4251,6 +4259,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={

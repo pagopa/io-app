@@ -1,6 +1,7 @@
 import {
   Avatar,
   Badge,
+  BodySmall,
   H4,
   IOColors,
   IOSpacingScale,
@@ -15,7 +16,6 @@ import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { logoForService } from "../utils";
-import OrganizationNameLabel from "./OrganizationNameLabel";
 
 export type FeaturedServiceCardProps = WithTestID<{
   id: string;
@@ -96,7 +96,14 @@ const FeaturedServiceCard = ({
         {organizationName && (
           <>
             <VSpacer size={4} />
-            <OrganizationNameLabel>{organizationName}</OrganizationNameLabel>
+            <BodySmall
+              weight="Regular"
+              color="grey-650"
+              lineBreakMode="head"
+              numberOfLines={1}
+            >
+              {organizationName}
+            </BodySmall>
           </>
         )}
       </View>

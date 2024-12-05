@@ -1,11 +1,12 @@
 import {
+  Body,
   ContentWrapper,
   H2,
   IOStyles,
-  Label,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -53,9 +54,9 @@ const ForgottenPin = () => (
       {I18n.t("bottomSheets.ciePin.content")}
     </LegacyMarkdown>
     <VSpacer size={24} />
-    <Label asLink onPress={onOpenForgotPinPage}>
+    <Body weight="Semibold" asLink onPress={onOpenForgotPinPage}>
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
-    </Label>
+    </Body>
     <VSpacer size={24} />
   </View>
 );
@@ -119,7 +120,8 @@ export const ItwCiePinScreen = () => {
           <ContentWrapper>
             <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
             <VSpacer size={8} />
-            <Label
+            <Body
+              weight="Semibold"
               asLink
               onPress={() => {
                 trackItWalletCiePinInfo();
@@ -127,7 +129,7 @@ export const ItwCiePinScreen = () => {
               }}
             >
               {I18n.t("authentication.cie.pin.subtitleCTA")}
-            </Label>
+            </Body>
             <VSpacer size={24} />
             <View style={IOStyles.flex}>
               <OTPInput
