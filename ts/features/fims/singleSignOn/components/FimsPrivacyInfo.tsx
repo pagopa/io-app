@@ -1,6 +1,6 @@
 import { Label } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
+import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 

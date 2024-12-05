@@ -29,10 +29,9 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import TosBonusComponent from "./TosBonusComponent";
@@ -53,24 +52,6 @@ type Props = OwnProps &
     ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
-
-const CSS_STYLE = `
-body {
-  font-size: ${customVariables.fontSizeBase}px;
-  color: ${customVariables.textColorDark}
-}
-
-h4 {
-  font-size: ${customVariables.fontSize2}px;
-}
-
-img {
-  width: 100%;
-}
-`;
-
-// for long content markdown computed height should be not enough
-const extraMarkdownBodyHeight = 20;
 
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
@@ -106,16 +87,13 @@ const getTosFooter = (
             // if tos and regulation url is defined
             // return a markdown footer including both links reference (BPD)
             rU => (
-              <Markdown
-                cssStyle={CSS_STYLE}
-                extraBodyHeight={extraMarkdownBodyHeight}
-              >
-                {I18n.t("bonus.termsAndConditionFooter", {
+              <IOMarkdown
+                content={I18n.t("bonus.termsAndConditionFooter", {
                   ctaText,
                   regulationLink: rU.url,
                   tosUrl: bT
                 })}
-              </Markdown>
+              />
             )
           )
         )
@@ -262,14 +240,13 @@ const BonusInformationComponent = (props: Props) => {
         <ContentWrapper>
           <H2 accessibilityRole="header">{bonusTypeLocalizedContent.title}</H2>
           <VSpacer size={16} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-          >
-            {bonusTypeLocalizedContent.subtitle +
+          <IOMarkdown
+            content={
+              bonusTypeLocalizedContent.subtitle +
               "\n" +
-              bonusTypeLocalizedContent.content}
-          </Markdown>
+              bonusTypeLocalizedContent.content
+            }
+          />
           <VSpacer size={40} />
           {getTosFooter(
             maybeBonusTos,
