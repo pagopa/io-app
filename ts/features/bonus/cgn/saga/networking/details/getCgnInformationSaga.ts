@@ -6,7 +6,7 @@ import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletAddCards } from "../../../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../../../wallet/store/actions/cards";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnDetails } from "../../../store/actions/details";
 

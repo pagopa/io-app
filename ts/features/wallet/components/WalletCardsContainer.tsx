@@ -3,6 +3,7 @@ import {
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
@@ -19,11 +20,9 @@ import {
 } from "../../itwallet/common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
-import { ItwUpcomingWalletBanner } from "../../itwallet/common/components/ItwUpcomingWalletBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
-import { isItwTrialActiveSelector } from "../../trialSystem/store/reducers";
 import {
   selectIsWalletCardsLoading,
   selectSortedWalletCards,
@@ -32,6 +31,8 @@ import {
   selectWalletOtherCards
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
+import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
+import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -43,23 +44,28 @@ const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
   const cards = useIOSelector(selectSortedWalletCards);
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
+  const paymentMethodsStatus = useIOSelector(paymentsWalletUserMethodsSelector);
+  const cgnStatus = useIOSelector(cgnDetailSelector);
 
   if (isLoading && cards.length === 0) {
     return (
       <>
         <WalletCardSkeleton testID="walletCardSkeletonTestID" cardProps={{}} />
         <VSpacer size={16} />
-        <WalletCardsCategoryRetryErrorBanner />
       </>
     );
   }
 
-  if (cards.length === 0) {
+  if (
+    cards.length === 0 &&
+    pot.isSome(paymentMethodsStatus) &&
+    !pot.isError(cgnStatus)
+  ) {
     // In this case we can display the empty state: we do not have cards to display and
     // the wallet is not in a loading state anymore
     return (
       <View style={IOStyles.flex}>
-        <ItwBanners />
+        <ItwDiscoveryBannerStandalone closable={false} />
         <WalletEmptyScreenContent />
       </View>
     );
@@ -74,7 +80,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwBanners />
+        <ItwDiscoveryBannerStandalone closable={false} />
         {shouldRender("itw") && <ItwCardsContainer />}
         {shouldRender("other") && <OtherCardsContainer />}
       </View>
@@ -85,7 +91,6 @@ const WalletCardsContainer = () => {
 const ItwCardsContainer = () => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletItwCards);
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -109,7 +114,7 @@ const ItwCardsContainer = () => {
     )
   );
 
-  if (!isItwTrialEnabled || !isItwEnabled) {
+  if (!isItwEnabled) {
     return null;
   }
 
@@ -158,15 +163,10 @@ const ItwCardsContainer = () => {
 
 const OtherCardsContainer = () => {
   const cards = useIOSelector(selectWalletOtherCards);
-  const isItwTrialEnabled = useIOSelector(isItwTrialActiveSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  if (cards.length === 0) {
-    return null;
-  }
-
-  const displayHeader = isItwTrialEnabled && isItwEnabled && isItwValid;
+  const displayHeader = isItwEnabled && isItwValid;
 
   return (
     <WalletCardsCategoryContainer
@@ -184,15 +184,5 @@ const OtherCardsContainer = () => {
     />
   );
 };
-
-/**
- * Wrapper components for ITW banners.
- */
-const ItwBanners = () => (
-  <>
-    <ItwUpcomingWalletBanner />
-    <ItwDiscoveryBannerStandalone closable={false} />
-  </>
-);
 
 export { WalletCardsContainer };

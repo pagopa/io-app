@@ -17,7 +17,7 @@ import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { WalletCard } from "../../../newWallet/types";
+import { WalletCard } from "../../../wallet/types";
 import { contentRepoUrl } from "../../../../config";
 import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
 import { AlertVariant, ListItemTransactionStatus } from "./types";
