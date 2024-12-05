@@ -156,7 +156,7 @@ const FciDocumentsScreen = () => {
     label: I18n.t("global.buttons.continue")
   };
 
-  const secondaryButtonProps: ComponentProps<
+  const endActionButtonProps: ComponentProps<
     typeof FooterActionsInline
   >["endAction"] =
     currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
@@ -250,7 +250,7 @@ const FciDocumentsScreen = () => {
             {renderPager()}
             <FooterActionsInline
               startAction={cancelButtonProps}
-              endAction={secondaryButtonProps}
+              endAction={endActionButtonProps}
             />
           </>
         )}
