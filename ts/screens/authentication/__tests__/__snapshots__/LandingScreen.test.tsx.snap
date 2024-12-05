@@ -2365,57 +2365,8 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          <View
-                                            style={
-                                              [
-                                                {
-                                                  "alignItems": "center",
-                                                  "elevation": 0,
-                                                  "flexDirection": "row",
-                                                  "justifyContent": "center",
-                                                  "textAlignVertical": "center",
-                                                },
-                                                false,
-                                                {},
-                                                {
-                                                  "transform": [
-                                                    {
-                                                      "scale": undefined,
-                                                    },
-                                                  ],
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            <Text
-                                              accessibilityElementsHidden={true}
-                                              accessible={false}
-                                              allowFontScaling={false}
-                                              ellipsizeMode="tail"
-                                              importantForAccessibility="no-hide-descendants"
-                                              maxFontSizeMultiplier={1.25}
-                                              numberOfLines={1}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#0E0F13",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 16,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": undefined,
-                                                  },
-                                                  {
-                                                    "color": undefined,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              We give you a hand
-                                            </Text>
-                                          </View>
-                                        </View>
+                                          We give you a hand
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
@@ -5195,57 +5146,8 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                             ]
                                           }
                                         >
-                                          <View
-                                            style={
-                                              [
-                                                {
-                                                  "alignItems": "center",
-                                                  "elevation": 0,
-                                                  "flexDirection": "row",
-                                                  "justifyContent": "center",
-                                                  "textAlignVertical": "center",
-                                                },
-                                                false,
-                                                {},
-                                                {
-                                                  "transform": [
-                                                    {
-                                                      "scale": undefined,
-                                                    },
-                                                  ],
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            <Text
-                                              accessibilityElementsHidden={true}
-                                              accessible={false}
-                                              allowFontScaling={false}
-                                              ellipsizeMode="tail"
-                                              importantForAccessibility="no-hide-descendants"
-                                              maxFontSizeMultiplier={1.25}
-                                              numberOfLines={1}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#0E0F13",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 16,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": undefined,
-                                                  },
-                                                  {
-                                                    "color": undefined,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              We give you a hand
-                                            </Text>
-                                          </View>
-                                        </View>
+                                          We give you a hand
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
