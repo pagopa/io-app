@@ -82,21 +82,6 @@ const renderFooter = (url: string, filePath: string) => {
     accessibilityLabel: I18n.t("messagePDFPreview.save")
   };
 
-  // const openButtonProps: ButtonSolidProps = {
-  //   onPress: () => {
-  //     ReactNativeBlobUtil.android
-  //       .actionViewIntent(
-  //         FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url),
-  //         "application/pdf"
-  //       )
-  //       .catch(_ => {
-  //         IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
-  //       });
-  //   },
-  //   label: I18n.t("messagePDFPreview.open"),
-  //   accessibilityLabel: I18n.t("messagePDFPreview.open")
-  // };
-
   return isIos ? (
     <FooterActions
       actions={{
