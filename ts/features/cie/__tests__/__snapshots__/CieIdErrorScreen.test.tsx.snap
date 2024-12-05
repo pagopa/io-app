@@ -349,7 +349,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                       {
@@ -466,7 +466,7 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       "fontFamily": "Titillium Sans Pro",
                       "fontSize": 16,
                       "fontStyle": "normal",
-                      "fontWeight": "700",
+                      "fontWeight": "600",
                       "lineHeight": undefined,
                     },
                     {
@@ -837,7 +837,7 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                       {
@@ -954,7 +954,7 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       "fontFamily": "Titillium Sans Pro",
                       "fontSize": 16,
                       "fontStyle": "normal",
-                      "fontWeight": "700",
+                      "fontWeight": "600",
                       "lineHeight": undefined,
                     },
                     {
