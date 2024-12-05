@@ -1,9 +1,4 @@
-import {
-  Body,
-  FeatureInfo,
-  Label,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
@@ -70,9 +65,9 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
     () => (
       <Body ref={bodyRef}>
         {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
-        <Label weight="Semibold">
+        <Body weight="Semibold">
           {I18n.t("profile.main.privacy.shareData.screen.why.description.two")}
-        </Label>
+        </Body>
         {`${I18n.t(
           "profile.main.privacy.shareData.screen.why.description.three"
         )}`}
@@ -115,11 +110,11 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
           )}
-          <Label weight="Semibold">
+          <Body weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.security.description.two"
             )}
-          </Label>
+          </Body>
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.three"
           )}
@@ -145,11 +140,11 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
       body={
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
-          <Label weight="Semibold">
+          <Body weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.gdpr.description.two"
             )}
-          </Label>
+          </Body>
         </Body>
       }
       action={{

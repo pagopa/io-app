@@ -3,7 +3,7 @@ import {
   H2,
   HSpacer,
   IOColors,
-  LabelSmall,
+  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -72,12 +72,12 @@ const BonusCardContent = (props: BonusCard) => {
         {name}
       </H2>
       <VSpacer size={4} />
-      <LabelSmall
+      <BodySmall
         weight="Regular"
         style={{ textAlign: "center", marginHorizontal: 16 }}
       >
         {organizationName}
-      </LabelSmall>
+      </BodySmall>
       <VSpacer size={16} />
       <BonusCardStatus>{status}</BonusCardStatus>
       <VSpacer size={16} />

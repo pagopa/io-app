@@ -1,12 +1,5 @@
 import { TxtHeaderNode, TxtLinkNode } from "@textlint/ast-node-types";
-import {
-  Body,
-  IOToast,
-  Label,
-  MdH1,
-  MdH2,
-  MdH3
-} from "@pagopa/io-app-design-system";
+import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { isIoInternalLink } from "../ui/Markdown/handlers/link";
 import { handleInternalLink } from "../../utils/internalLink";
@@ -48,9 +41,14 @@ export const generateMessagesAndServicesRules = (
     };
 
     return (
-      <Label asLink key={getTxtNodeKey(link)} onPress={handlePress}>
+      <Body
+        weight="Semibold"
+        asLink
+        key={getTxtNodeKey(link)}
+        onPress={handlePress}
+      >
         {link.children.map(render)}
-      </Label>
+      </Body>
     );
   }
 });

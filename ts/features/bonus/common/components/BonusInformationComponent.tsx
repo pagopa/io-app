@@ -1,9 +1,3 @@
-import * as AR from "fp-ts/lib/Array";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
-import { Image } from "react-native";
 import {
   Body,
   ButtonSolidProps,
@@ -13,11 +7,15 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  Label,
   VSpacer,
   buttonSolidHeight
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as AR from "fp-ts/lib/Array";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { ComponentProps } from "react";
+import { Image } from "react-native";
 import Animated, {
   Easing,
   useAnimatedScrollHandler,
@@ -25,15 +23,16 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -74,14 +73,14 @@ const getTosFooter = (
                 <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
-                <Label
+                <Body
                   asLink
                   weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
                   {I18n.t("bonus.tos.title")}
-                </Label>
+                </Body>
               </>
             ),
             // if tos and regulation url is defined
