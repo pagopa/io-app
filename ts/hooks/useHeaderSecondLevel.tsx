@@ -136,7 +136,9 @@ export const useHeaderSecondLevel = ({
             enableDiscreteTransition,
             animatedRef
           }
-        : {};
+        : {
+            ignoreSafeAreaMargin: !!alertProps
+          };
 
     return {
       scrollValues,
