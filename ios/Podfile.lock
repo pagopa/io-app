@@ -171,7 +171,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-login-utils (1.0.7):
+  - pagopa-io-react-native-login-utils (1.0.8):
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - DoubleConversion
@@ -2444,7 +2444,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: 3ee0c20ccfcc9f6dbe7433d3aa66c31d66fe8ecd
   pagopa-io-react-native-integrity: 99a8772bd2d058442f08233fbfac93c367b758f6
   pagopa-io-react-native-jwt: d170ab1475627e0cf070e57fc59b73521dadd066
-  pagopa-io-react-native-login-utils: 6ba1c399fda70e9f92a29244bea33b22958869af
+  pagopa-io-react-native-login-utils: 090a98354cdbbf176059a1aa4163120468ee4356
   pagopa-react-native-zendesk: 6d2339df555ff3083faddeb8be96a7a03092d73c
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 726d24248aeab6d7180dac71a936bbca6a994ed1
