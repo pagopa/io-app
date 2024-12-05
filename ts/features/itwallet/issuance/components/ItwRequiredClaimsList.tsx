@@ -3,7 +3,7 @@ import {
   H6,
   Icon,
   IOColors,
-  LabelSmall
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -50,11 +50,11 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
           <View style={styles.dataItem}>
             <View>
               <ClaimText claim={claim} />
-              <LabelSmall weight="Regular" color="grey-700">
+              <BodySmall weight="Regular" color="grey-700">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
                 })}
-              </LabelSmall>
+              </BodySmall>
             </View>
             <Icon name="checkTickBig" size={24} color="grey-300" />
           </View>

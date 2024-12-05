@@ -5,7 +5,7 @@ import { View, Modal, StyleSheet, SafeAreaView } from "react-native";
 import {
   ContentWrapper,
   H4,
-  LabelSmall,
+  BodySmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -56,10 +56,12 @@ const Countdown = (props: CountdownProps) => {
       <ProgressIndicator progress={loaderValue} />
       <VSpacer size={8} />
       <View style={IOStyles.row}>
-        <LabelSmall color="black" weight="Regular">
+        <BodySmall color="black" weight="Regular">
           {waitMessageText}
-        </LabelSmall>
-        <LabelSmall color="black"> {timerCount}s</LabelSmall>
+        </BodySmall>
+        <BodySmall weight="Semibold" color="black">
+          {` ${timerCount}s`}
+        </BodySmall>
       </View>
     </>
   );
