@@ -3488,7 +3488,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessibilityLabel="test"
+                                accessibilityLabel="Maggiori info"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

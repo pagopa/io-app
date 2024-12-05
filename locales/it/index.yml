@@ -3292,6 +3292,7 @@ features:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
+      moreInfo: Maggiori info
     verifiableCredentials:
       claims:
         uniqueId: "ID univoco"
