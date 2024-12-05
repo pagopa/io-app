@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import * as O from "fp-ts/lib/Option";
@@ -8,7 +8,6 @@ import {
   selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import I18n from "../../../../../i18n";
 import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
 import { itWalletIssuanceRedirectUri } from "../../../../../config";
@@ -17,14 +16,11 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
-
-const LoadingSpinner = (
-  <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-);
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
 const defaultUserAgent =
@@ -41,6 +37,11 @@ const ItwSpidIdpLoginScreen = () => {
   const spidAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const [isWebViewLoading, setWebViewLoading] = useState(true);
+
+  const onLoadEnd = useCallback(() => {
+    setWebViewLoading(false);
+  }, []);
 
   const onError = useCallback(() => {
     machineRef.send({ type: "error", scope: "spid-login" });
@@ -98,9 +99,10 @@ const ItwSpidIdpLoginScreen = () => {
   const content = useMemo(
     () =>
       O.fold(
-        () => LoadingSpinner,
+        () => null,
         (url: string) => (
           <WebView
+            key={"spid_webview"}
             cacheEnabled={false}
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
@@ -115,6 +117,7 @@ const ItwSpidIdpLoginScreen = () => {
             allowsInlineMediaPlayback
             mediaPlaybackRequiresUserAction
             userAgent={defaultUserAgent}
+            onLoadEnd={onLoadEnd}
           />
         )
       )(spidAuthUrl),
@@ -122,15 +125,19 @@ const ItwSpidIdpLoginScreen = () => {
       spidAuthUrl,
       handleNavigationStateChange,
       handleShouldStartLoading,
-      onError
+      onError,
+      onLoadEnd
     ]
   );
 
-  if (isMachineLoading) {
-    return LoadingSpinner;
-  }
-
-  return <View style={styles.webViewWrapper}>{content}</View>;
+  return (
+    <LoadingSpinnerOverlay
+      isLoading={isWebViewLoading || isMachineLoading}
+      loadingOpacity={1.0}
+    >
+      <View style={styles.webViewWrapper}>{content}</View>
+    </LoadingSpinnerOverlay>
+  );
 };
 
 export default memo(ItwSpidIdpLoginScreen);
