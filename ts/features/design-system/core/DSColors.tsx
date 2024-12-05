@@ -10,7 +10,7 @@ import {
   IOColorsTints,
   IOThemeDark,
   IOThemeLight,
-  LabelSmall,
+  BodySmall,
   VStack,
   hexToRgba,
   themeStatusColorsDarkMode,
@@ -300,10 +300,10 @@ export const DSColors = () => {
         <VStack space={sectionTitleMargin}>
           <View>
             <H3 color={theme["textHeading-default"]}>Legacy palette (†2023)</H3>
-            <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
+            <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
               Not moved to the &ldquo;Legacy&rdquo; category yet, because
               it&apos;s currently used everywhere
-            </LabelSmall>
+            </BodySmall>
           </View>
 
           <VStack space={colorItemMargin}>

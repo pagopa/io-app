@@ -20,7 +20,7 @@ import {
   IOSpringValues,
   IOStyles,
   Icon,
-  LabelSmall,
+  BodySmall,
   WithTestID,
   hexToRgba,
   useIOExperimentalDesign,
@@ -71,9 +71,9 @@ export const ListItemSearchInstitution = memo(
         {description && (
           <>
             {typeof description === "string" ? (
-              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+              <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
                 {description}
-              </LabelSmall>
+              </BodySmall>
             ) : (
               description
             )}

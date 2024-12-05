@@ -4,7 +4,7 @@ import {
   IOColors,
   IOLogoPaymentExtType,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   LogoPaymentExt,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -45,7 +45,7 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
     case "BANCOMATPAY":
       return (
         <View style={IOStyles.column}>
-          <LabelSmall
+          <BodySmall
             accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
               // we do this to make the screen reader read the number digit by digit,
               phoneNumber: props.phoneNumber.split("").join(" ")
@@ -54,7 +54,7 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
             weight="Regular"
           >
             {props.phoneNumber}
-          </LabelSmall>
+          </BodySmall>
           <VSpacer size={8} />
           <BottomSectionText
             a11yLabel={I18n.t("wallet.methodDetails.a11y.bpay.owner", {
@@ -187,11 +187,11 @@ const ExpDateComponent = ({ expDate }: { expDate?: Date }) => {
     return (
       <>
         <VSpacer size={8} />
-        <LabelSmall color="grey-650" weight="Regular">
+        <BodySmall color="grey-650" weight="Regular">
           {I18n.t("wallet.creditCard.validUntil", {
             expDate: format(expDate, "MM/YY")
           })}
-        </LabelSmall>
+        </BodySmall>
       </>
     );
   }
