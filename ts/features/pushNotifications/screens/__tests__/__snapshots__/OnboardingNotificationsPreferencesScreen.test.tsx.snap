@@ -866,7 +866,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="You can change this choice anytime in [missing {{pageName}} value] > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -897,7 +897,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -2331,7 +2331,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="You can change this choice anytime in [missing {{pageName}} value] > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -2362,7 +2362,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -3797,7 +3797,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="You can change this choice anytime in [missing {{pageName}} value] > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -3828,7 +3828,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -5263,7 +5263,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="You can change this choice anytime in [missing {{pageName}} value] > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -5294,7 +5294,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
@@ -7021,7 +7021,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="You can change this choice anytime in [missing {{pageName}} value] > Privacy Policy and Terms of Service"
                                 accessible={true}
                                 style={
                                   [
@@ -7052,7 +7052,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  You can change this choice anytime in [missing {{pageName}} value] &gt; Privacy Policy and Terms of Service
                                 </Text>
                               </View>
                               <View
