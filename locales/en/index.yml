@@ -1429,7 +1429,7 @@ wallet:
         primaryAction: Chiudi
       PSP_ERROR_ONBOARDING:
         title: Il salvataggio non è andato a buon fine
-        subtitle: "Non è stato aggiunto nessun metodo."
+        subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
         primaryAction: Chiudi
       BE_KO:
         title: "Stiamo riscontrando alcuni problemi sui sistemi pagoPA"
