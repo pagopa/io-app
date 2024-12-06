@@ -1,6 +1,6 @@
 import {
-  TransitionPresets,
-  createStackNavigator
+  createStackNavigator,
+  TransitionPresets
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -39,6 +39,7 @@ import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLogi
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
+import { ItwIssuanceCredentialNotFoundScreen } from "../issuance/screens/ItwIssuanceCredentialNotFoundScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -180,6 +181,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
         component={ItwIssuanceCredentialAsyncContinuationScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_NOT_FOUND}
+        component={ItwIssuanceCredentialNotFoundScreen}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
