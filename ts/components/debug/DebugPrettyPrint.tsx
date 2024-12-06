@@ -3,12 +3,12 @@ WARNING: This component is not referenced anywhere, but is used
 for development purposes. Please, Don't REMOVE it, thank you!
 */
 import {
+  BodySmall,
   HStack,
   IOColors,
+  IOText,
   IconButton,
-  LabelSmall,
-  useIOToast,
-  useTypographyFactory
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -53,9 +53,15 @@ export const DebugPrettyPrint = withDebugEnabled(
 
       return (
         <View style={styles.content} pointerEvents="box-only">
-          <CustomBodyMonospace>
+          <IOText
+            font="DMMono"
+            size={12}
+            lineHeight={18}
+            color="bluegrey"
+            weight="Medium"
+          >
             {JSON.stringify(truncateObjectStrings(data), null, 2)}
-          </CustomBodyMonospace>
+          </IOText>
         </View>
       );
     }, [data, expandable, expanded]);
@@ -82,9 +88,9 @@ export const DebugPrettyPrint = withDebugEnabled(
     return (
       <View testID="DebugPrettyPrintTestID" style={styles.container}>
         <View style={styles.header}>
-          <LabelSmall weight="Bold" color="white">
+          <BodySmall weight="Semibold" color="white">
             {title}
-          </LabelSmall>
+          </BodySmall>
           <HStack space={16}>
             <IconButton
               icon={"shareiOs"}
@@ -118,15 +124,6 @@ export const DebugPrettyPrint = withDebugEnabled(
     );
   }
 );
-
-const CustomBodyMonospace = (props: { children?: React.ReactNode }) =>
-  useTypographyFactory({
-    ...props,
-    defaultWeight: "Medium",
-    defaultColor: "bluegrey",
-    font: "DMMono",
-    fontStyle: { fontSize: 12, lineHeight: 18 }
-  });
 
 const styles = StyleSheet.create({
   container: {
