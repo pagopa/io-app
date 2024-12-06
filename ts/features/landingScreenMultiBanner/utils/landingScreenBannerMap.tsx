@@ -2,7 +2,7 @@ import * as React from "react";
 import { SettingsDiscoveryBanner } from "../../../screens/profile/components/SettingsDiscoveryBanner";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
-import { isItwDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
+import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
 import { hasUserAcknowledgedSettingsBannerSelector } from "../../profileSettings/store/selectors";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
@@ -38,7 +38,7 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <ItwDiscoveryBanner closable handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: isItwDiscoveryBannerRenderableSelector
+    isRenderableSelector: isItwPersistedDiscoveryBannerRenderableSelector
   },
   SETTINGS_DISCOVERY: {
     component: closeHandler => (
