@@ -51,7 +51,8 @@ function* zendeskGetSessionPollingLoop(
     const checkSessionResponse = yield* call(
       checkSession,
       getSession,
-      formatRequestedTokenString()
+      formatRequestedTokenString(),
+      true
     );
     if (checkSessionResponse === 401) {
       break;
