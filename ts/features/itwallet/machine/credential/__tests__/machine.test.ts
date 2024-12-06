@@ -9,7 +9,6 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
-import { truncateSync } from "fs-extra";
 import {
   ItwStatusAttestationMocks,
   ItwStoredCredentialsMocks
