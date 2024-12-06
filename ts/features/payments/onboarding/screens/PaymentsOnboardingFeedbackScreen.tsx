@@ -162,7 +162,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
           accessibilityLabel: I18n.t(
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
-          onPress: present
+          onPress: present,
+          testID: "wallet-onboarding-secondary-action-button"
         };
       case WalletOnboardingOutcomeEnum.BE_KO:
         return {
@@ -170,7 +171,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
           accessibilityLabel: I18n.t(
             `wallet.onboarding.outcome.BE_KO.secondaryAction`
           ),
-          onPress: handleContactSupport
+          onPress: handleContactSupport,
+          testID: "wallet-onboarding-secondary-action-button"
         };
     }
     return undefined;
@@ -196,7 +198,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
         action={{
           label: actionButtonLabel,
           accessibilityLabel: actionButtonLabel,
-          onPress: handleContinueButton
+          onPress: handleContinueButton,
+          testID: "wallet-onboarding-continue-button"
         }}
         secondaryAction={renderSecondaryAction()}
       />
