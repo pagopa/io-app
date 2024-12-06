@@ -44,6 +44,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { WithTestID } from "../../types/WithTestID";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 export type IOScrollViewActions =
   | {
@@ -160,6 +161,7 @@ export const IOScrollView = ({
   contentContainerStyle,
   testID
 }: IOScrollView) => {
+  const alertProps = useStatusAlertProps();
   const theme = useIOTheme();
 
   /* Navigation */
@@ -255,12 +257,22 @@ export const IOScrollView = ({
     if (headerConfig) {
       navigation.setOptions({
         header: () => (
-          <HeaderSecondLevel {...headerConfig} scrollValues={scrollValues} />
+          <HeaderSecondLevel
+            {...headerConfig}
+            ignoreSafeAreaMargin={!!alertProps}
+            scrollValues={scrollValues}
+          />
         ),
         headerTransparent: headerConfig.transparent
       });
     }
-  }, [headerConfig, navigation, scrollPositionAbsolute, snapOffset]);
+  }, [
+    headerConfig,
+    navigation,
+    scrollPositionAbsolute,
+    snapOffset,
+    alertProps
+  ]);
 
   const RefreshControlComponent = refreshControlProps ? (
     <RefreshControl {...refreshControlProps} />
