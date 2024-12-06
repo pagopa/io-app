@@ -1432,7 +1432,7 @@ wallet:
         subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
         primaryAction: Chiudi
       BE_KO:
-        title: "Stiamo riscontrando alcuni problemi durante l'aggiunta del metodo"
+        title: "Stiamo riscontrando alcuni problemi con l'aggiunta del metodo"
         subtitle: "Riprova più tardi."
         primaryAction: Chiudi
         secondaryAction: Contatta l'assistenza
