@@ -1428,7 +1428,7 @@ wallet:
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
       PSP_ERROR_ONBOARDING:
-        title: Il salvataggio non è andato a buon fine
+        title: L’aggiunta del metodo non è andata a buon fine
         subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
         primaryAction: Chiudi
       BE_KO:
