@@ -31,6 +31,7 @@ import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
+import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -51,7 +52,9 @@ export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
     [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
     [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew",
     [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
-    [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention"
+    [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
+    [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
+    [WalletOnboardingOutcomeEnum.BE_KO]: "umbrellaNew"
   };
 
 const PaymentsOnboardingFeedbackScreen = () => {
@@ -68,6 +71,11 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
   const { startPaymentFlow } = usePagoPaPayment();
   const { bottomSheet, present } = usePaymentOnboardingAuthErrorBottomSheet();
+  const supportModal = usePaymentFailureSupportModal({
+    outcome,
+    isOnboarding: true
+  });
+  const paymentMethodSelectedRef = React.useRef<string | undefined>();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
@@ -77,7 +85,8 @@ const PaymentsOnboardingFeedbackScreen = () => {
     const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
-
+    // eslint-disable-next-line functional/immutable-data
+    paymentMethodSelectedRef.current = payment_method_selected;
     analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
   });
 
@@ -124,6 +133,14 @@ const PaymentsOnboardingFeedbackScreen = () => {
     }
   };
 
+  const handleContactSupport = () => {
+    analytics.trackPaymentOnboardingErrorHelp({
+      error: outcome,
+      payment_method_selected: paymentMethodSelectedRef.current
+    });
+    supportModal.present();
+  };
+
   const renderSecondaryAction = () => {
     switch (outcome) {
       case WalletOnboardingOutcomeEnum.AUTH_ERROR:
@@ -133,6 +150,14 @@ const PaymentsOnboardingFeedbackScreen = () => {
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
           onPress: present
+        };
+      case WalletOnboardingOutcomeEnum.BE_KO:
+        return {
+          label: I18n.t(`wallet.onboarding.outcome.BE_KO.secondaryAction`),
+          accessibilityLabel: I18n.t(
+            `wallet.onboarding.outcome.BE_KO.secondaryAction`
+          ),
+          onPress: handleContactSupport
         };
     }
     return undefined;
@@ -163,6 +188,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
         secondaryAction={renderSecondaryAction()}
       />
       {bottomSheet}
+      {supportModal.bottomSheet}
     </View>
   );
 };
