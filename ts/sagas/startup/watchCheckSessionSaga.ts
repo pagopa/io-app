@@ -42,9 +42,10 @@ export function* checkSession(
           isSessionValid: response.right.status !== 401
         })
       );
-      const currentSessionInfo = yield* select(sessionInfoSelector);
 
       if (response.right.status === 200) {
+        const currentSessionInfo = yield* select(sessionInfoSelector);
+
         yield* put(
           sessionInformationLoadSuccess(
             mergeOldAndNewValues && O.isSome(currentSessionInfo)
