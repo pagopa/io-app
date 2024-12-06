@@ -11,7 +11,7 @@ import {
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { mapEventToFailure } from "./failure";
+import { CredentialIssuanceFailureType, mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -23,16 +23,19 @@ export const itwCredentialIssuanceMachine = setup({
     events: {} as CredentialIssuanceEvents
   },
   actions: {
+    onInit: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
+    closeIssuance: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
-    closeIssuance: notImplemented,
+    flagCredentialAsRequested: notImplemented,
+    unflagCredentialAsRequested: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     handleSessionExpired: notImplemented,
-    onInit: notImplemented,
+    trackStartAddCredential: notImplemented,
     trackAddCredential: notImplemented
   },
   actors: {
@@ -53,6 +56,7 @@ export const itwCredentialIssuanceMachine = setup({
   },
   guards: {
     isSessionExpired: notImplemented,
+    isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented
   }
 }).createMachine({
@@ -67,20 +71,36 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": [
           {
-            guard: ({ event }) => !event.skipNavigation,
+            guard: ({ event }) => event.isRequested === true,
+            target: "Failure",
+            actions: [
+              assign({
+                credentialType: ({ event }) => event.credentialType,
+                failure: {
+                  type: CredentialIssuanceFailureType.ASYNC_ISSUANCE
+                }
+              })
+            ]
+          },
+          {
+            guard: ({ event }) => event.skipNavigation === true,
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
                 credentialType: event.credentialType
               })),
-              "navigateToTrustIssuerScreen"
+              "trackStartAddCredential"
             ]
           },
           {
             target: "CheckingWalletInstanceAttestation",
-            actions: assign(({ event }) => ({
-              credentialType: event.credentialType
-            }))
+            actions: [
+              assign(({ event }) => ({
+                credentialType: event.credentialType
+              })),
+              "navigateToTrustIssuerScreen",
+              "trackStartAddCredential"
+            ]
           }
         ]
       }
@@ -223,7 +243,12 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
+          actions: [
+            "storeCredential",
+            "navigateToWallet",
+            "trackAddCredential",
+            "unflagCredentialAsRequested"
+          ]
         },
         close: {
           actions: ["closeIssuance"]
@@ -232,6 +257,12 @@ export const itwCredentialIssuanceMachine = setup({
     },
     Failure: {
       entry: ["navigateToFailureScreen"],
+      always: [
+        {
+          guard: "isDeferredIssuance",
+          actions: "flagCredentialAsRequested"
+        }
+      ],
       on: {
         close: {
           actions: ["closeIssuance"]

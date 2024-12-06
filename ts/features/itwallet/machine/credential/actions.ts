@@ -1,20 +1,25 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assertEvent, assign } from "xstate";
+import { ActionArgs, assign } from "xstate";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import {
+  CREDENTIALS_MAP,
+  trackAddCredentialProfileAndSuperProperties,
+  trackSaveCredentialSuccess,
+  trackStartAddNewCredential
+} from "../../analytics";
+import {
+  itwFlagCredentialAsRequested,
+  itwUnflagCredentialAsRequested
+} from "../../common/store/actions/preferences";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
-import {
-  CREDENTIALS_MAP,
-  trackAddCredentialProfileAndSuperProperties,
-  trackSaveCredentialSuccess
-} from "../../analytics";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -23,6 +28,18 @@ export default (
   store: ReturnType<typeof useIOStore>,
   toast: IOToast
 ) => ({
+  onInit: assign<
+    Context,
+    CredentialIssuanceEvents,
+    unknown,
+    CredentialIssuanceEvents,
+    any
+  >(() => ({
+    walletInstanceAttestation: itwWalletInstanceAttestationSelector(
+      store.getState()
+    )
+  })),
+
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
@@ -56,6 +73,10 @@ export default (
     });
   },
 
+  closeIssuance: () => {
+    navigation.popToTop();
+  },
+
   storeWalletInstanceAttestation: ({
     context
   }: ActionArgs<
@@ -83,19 +104,38 @@ export default (
     store.dispatch(itwCredentialsStore([context.credential]));
   },
 
-  closeIssuance: ({
-    event
+  flagCredentialAsRequested: ({
+    context
   }: ActionArgs<
     Context,
     CredentialIssuanceEvents,
     CredentialIssuanceEvents
   >) => {
-    assertEvent(event, "close");
+    assert(context.credentialType, "credentialType is undefined");
+    store.dispatch(itwFlagCredentialAsRequested(context.credentialType));
+  },
 
-    if (event.navigateTo) {
-      navigation.replace(...event.navigateTo);
-    } else {
-      navigation.popToTop();
+  unflagCredentialAsRequested: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    assert(context.credentialType, "credentialType is undefined");
+    store.dispatch(itwUnflagCredentialAsRequested(context.credentialType));
+  },
+
+  trackStartAddCredential: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    if (context.credentialType) {
+      const credential = CREDENTIALS_MAP[context.credentialType];
+      trackStartAddNewCredential(credential);
     }
   },
 
@@ -114,17 +154,5 @@ export default (
   },
 
   handleSessionExpired: () =>
-    store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
-
-  onInit: assign<
-    Context,
-    CredentialIssuanceEvents,
-    unknown,
-    CredentialIssuanceEvents,
-    any
-  >(() => ({
-    walletInstanceAttestation: itwWalletInstanceAttestationSelector(
-      store.getState()
-    )
-  }))
+    store.dispatch(checkCurrentSession.success({ isSessionValid: false }))
 });

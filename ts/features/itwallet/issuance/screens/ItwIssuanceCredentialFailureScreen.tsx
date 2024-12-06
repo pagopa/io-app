@@ -1,14 +1,20 @@
-import React from "react";
-import { constNull, pipe } from "fp-ts/lib/function";
-import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
+import { sequenceS } from "fp-ts/lib/Apply";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { trackWalletCreationFailed } from "../../analytics";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
+import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -19,15 +25,7 @@ import {
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { trackWalletCreationFailed } from "../../analytics";
-import ROUTES from "../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
-import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
-import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -78,8 +76,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
   const closeAsyncIssuance = () => {
     machineRef.send({
-      type: "close",
-      navigateTo: [ROUTES.MAIN, { screen: MESSAGES_ROUTES.MESSAGES_HOME }]
+      type: "close"
     });
   };
 
@@ -177,7 +174,7 @@ const getCredentialInvalidStatusDetails = (
   const errorCodeOption = pipe(
     failure,
     O.fromPredicate(isInvalidStatusFailure),
-    O.chainEitherK(x => StatusAttestationError.decode(x.reason.reason)),
+    O.chainEitherK(x => StatusAttestationError.decode(x.reason?.reason)),
     O.map(x => x.error)
   );
 

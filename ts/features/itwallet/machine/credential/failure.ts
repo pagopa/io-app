@@ -29,7 +29,7 @@ export type ReasonTypeByFailure = {
 type TypedCredentialIssuanceFailures = {
   [K in CredentialIssuanceFailureType]: {
     type: K;
-    reason: ReasonTypeByFailure[K];
+    reason?: ReasonTypeByFailure[K];
   };
 };
 
