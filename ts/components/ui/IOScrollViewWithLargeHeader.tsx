@@ -64,6 +64,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelp,
       contextualHelpMarkdown,
       faqCategories,
+      ignoreSafeAreaMargin = false,
       includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
@@ -90,6 +91,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
     };
 
     const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
+      ignoreSafeAreaMargin,
       ...useHeaderProps(
         canGoback
           ? {
