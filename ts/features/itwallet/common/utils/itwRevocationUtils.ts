@@ -8,12 +8,14 @@ import { createItWalletFetch } from "../../api/client";
  * @param sessionToken
  */
 export const revokeCurrentWalletInstance = async (
-  sessionToken: SessionToken
+  sessionToken: SessionToken,
+  integrityKeyTag: string
 ): Promise<void> => {
   const appFetch = createItWalletFetch(itwWalletProviderBaseUrl, sessionToken);
 
-  await WalletInstance.revokeCurrentWalletInstance({
+  await WalletInstance.revokeWalletInstance({
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
+    id: integrityKeyTag,
     appFetch
   });
 };

@@ -1,4 +1,4 @@
-import { LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
@@ -42,12 +42,12 @@ export const IdPayBarcodeExpireProgressBar = ({
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
       <VSpacer size={8} />
       <View style={styles.centeredRow}>
-        <LabelSmall weight="Regular" color="black">
+        <BodySmall weight="Regular" color="black">
           {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
-        </LabelSmall>
-        <LabelSmall weight="Semibold" color="black">
+        </BodySmall>
+        <BodySmall weight="Semibold" color="black">
           {formattedSecondsToExpiration}
-        </LabelSmall>
+        </BodySmall>
       </View>
     </View>
   );

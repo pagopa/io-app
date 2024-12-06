@@ -204,6 +204,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -431,6 +432,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         >
                           <Text
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
@@ -461,7 +463,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                   "lineHeight": 21,
                                 },
                               ]

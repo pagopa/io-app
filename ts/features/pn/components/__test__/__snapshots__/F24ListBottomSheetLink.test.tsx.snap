@@ -204,6 +204,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -424,7 +425,7 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   {
@@ -546,9 +547,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -560,12 +561,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -769,9 +771,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -783,12 +785,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -992,9 +995,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1006,12 +1009,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1215,9 +1219,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1229,12 +1233,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1438,9 +1443,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1452,12 +1457,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1661,9 +1667,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1675,12 +1681,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -1884,9 +1891,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -1898,12 +1905,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2107,9 +2115,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2121,12 +2129,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2330,9 +2339,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2344,12 +2353,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2553,9 +2563,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -2567,12 +2577,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={
@@ -2924,6 +2935,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3144,7 +3156,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   {
@@ -3420,6 +3432,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3640,7 +3653,7 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   {
@@ -3762,9 +3775,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                       style={
                                         {
                                           "alignItems": "center",
-                                          "columnGap": 8,
                                           "display": "flex",
                                           "flexDirection": "row",
+                                          "gap": 8,
                                         }
                                       }
                                     >
@@ -3776,12 +3789,13 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                             "flexDirection": "column",
                                             "flexGrow": 1,
                                             "flexShrink": 1,
-                                            "rowGap": 4,
+                                            "gap": 4,
                                           }
                                         }
                                       >
                                         <Text
                                           allowFontScaling={false}
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.25}
                                           numberOfLines={2}
                                           style={

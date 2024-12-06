@@ -254,9 +254,7 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
-    messageLegacy: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz deines Profils löschen."
     message: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz in den Einstellungen löschen."
-    cta_1_legacy: "Geh zum Profil"
     cta_1: "Geh zu den Einstellungen"
     cta_2: "Ignorieren"
   contextualHelp:
@@ -423,7 +421,7 @@ profile:
           additionalInformation:
             description: "Für weitere Informationen lies bitte die "
             cta: "Datenschutzerklärung und die Nutzungsbedingungen"
-          profileSettings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Datenschutz und Nutzungsbedingungen ändern"
+          profileSettings: "Du kannst deine Wahl jederzeit unter Einstellungen > Datenschutz und Nutzungsbedingungen ändern"
           cta:
             shareData: "Daten freigeben"
             dontShareData: "Daten nicht freigeben"
@@ -968,7 +966,7 @@ onboarding:
     headerTitle: "IO einrichten"
     available:
       title: "Biometrische Erkennung aktiveren"
-      settings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Sicherheit ändern"
+      settings: "Du kannst deine Wahl jederzeit unter Einstellungen > Sicherheit ändern"
       body:
         text: "Du kannst dein Gesicht oder deinen Fingerabdruck anstelle des Entsperrcodes verwenden. Damit kannst du schneller und sicherer auf die App zugreifen und Transaktionen und Zahlungen autorisieren."
         infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
@@ -986,7 +984,7 @@ onboarding:
             value: "Konfiguriere dein Gesicht oder deinen Fingerabdruck"
           step3:
             label: "Schritt 3"
-            value: "Aktiviere sie in IO unter {{pageName}} > Sicherheit"
+            value: "Aktiviere sie in IO unter Einstellungen > Sicherheit"
     unavailable:
       title: "Schütze dein Gerät"
       subtitle: "IO sendet dir Mitteilungen, die dich persönlich betreffen. Stelle sicher, dass nur du auf die App zugreifen kannst, indem du einen Code oder ein Zeichen zum Entsperren des Geräts festlegst."
@@ -2060,7 +2058,7 @@ services:
         title: "Einstellungen gespeichert!"
         body: "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen."
         cta: "Verfügbare Dienste anzeigen"
-      banner: "Du kannst deine Wahl jederzeit unter {{pageName}} > Einstellungen ändern"
+      banner: "Du kannst deine Wahl jederzeit unter Einstellungen > Einstellungen ändern"
       oldUsersBadge: "Aktuelle Einstellungen"
       choiceLabel: "Deine Wahl:"
       unavailable: "Nicht ausgewählt"
@@ -2410,56 +2408,6 @@ features:
       title: "pagoPA Zahlungsaufforderungen"
       noticeCode: "Zahlungskodex"
       pay: "Zahlen"
-  euCovidCertificate:
-    save:
-      album: "IO"
-      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfe deine Geräteeinstellungen."
-      ok: "Das Bild wurde auf deinem Smartphone gespeichert"
-      bottomSheet:
-        title: "Speichere das Zertifikat"
-        subTitle: "Auch ohne der IO-App und Internetverbindung kann das Zertifikat angezeigt werden."
-        saveAsImage:
-          title: "Bild in Galerie speichern"
-          subTitle: "Du findest den QR-Code auch als Bild auf deinem Smartphone."
-    listItem:
-      cta: "Anzeigen"
-    common:
-      title: "Grünes COVID-19-Zertifikat"
-      subtitle: "EU Digital COVID Certificate"
-      learnMore: "Erfahre mehr"
-      authorizationCode: "Autorisierungscode"
-      messageIdentifier: "Identifizierung der Nachricht"
-    loading:
-      title: "Herunterladen der Zertifikatsdaten von der nationalen Plattform des Gesundheitsministeriums"
-      subtitle: "Bitte warten"
-    valid:
-      accessibility:
-        qrCode: "QR-Code"
-        hint: "QR-Code als Vollbild anzeigen"
-      markdownDetails:
-        headerTitle: "Zertifikats-Details"
-        save: "Details speichern"
-    revoked:
-      title: "Dieses Zertifikat ist nicht mehr gültig"
-    expired:
-      title: "Dieses Zertifikat ist abgelaufen"
-    ko:
-      genericError:
-        title: "Deine Zertifikatsdaten konnten nicht abgerufen werden: Bitte versuche es erneut"
-        subtitle: "Dies kann ein vorübergehendes Problem sein."
-      notFound:
-        title: "Das Zertifikat existiert anscheinend nicht: Kontaktiere den Support"
-        subtitle: "Nützliche Informationen für den Support:"
-        cta: "Support kontaktieren"
-      notOperational:
-        title: "Das Grüne COVID-19-Zertifikat funktioniert derzeit nicht"
-      temporarilyNotAvailable:
-        title: "Der Dienst ist vorübergehend nicht verfügbar"
-        subtitle: "Bitte versuche es später erneut"
-      wrongFormat:
-        title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktiere den Support"
-        subtitle: "Nützliche Informationen um Support zu erhalten:"
-        cta: "Support kontaktieren"
   pn:
     service:
       activate: "Aktiviere den Dienst"

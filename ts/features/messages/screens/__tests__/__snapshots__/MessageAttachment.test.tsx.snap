@@ -63,6 +63,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -611,7 +612,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                           {
@@ -1072,6 +1073,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

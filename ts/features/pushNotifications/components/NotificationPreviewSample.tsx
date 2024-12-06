@@ -5,7 +5,7 @@ import {
   IOSpacingScale,
   IOStyles,
   Icon,
-  LabelSmall,
+  BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -88,7 +88,7 @@ export const NotificationPreviewSample = ({
       <HSpacer />
       <View style={IOStyles.flex}>
         <H6>{I18n.t(titleKey)}</H6>
-        <LabelSmall weight="Regular">{I18n.t(messageKey)}</LabelSmall>
+        <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
       </View>
     </View>
   );

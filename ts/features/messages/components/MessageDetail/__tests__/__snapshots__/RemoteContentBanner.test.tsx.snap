@@ -204,6 +204,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -533,7 +534,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                                           "fontFamily": "Titillium Sans Pro",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
-                                          "fontWeight": "700",
+                                          "fontWeight": "600",
                                           "lineHeight": undefined,
                                         },
                                         {
