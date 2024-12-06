@@ -180,7 +180,7 @@ const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
           type: "iconButton",
           componentProps: {
             icon: "info",
-            accessibilityLabel: "test",
+            accessibilityLabel: I18n.t("features.itWallet.generic.moreInfo"),
             onPress: () => issuedByBottomSheet.present()
           }
         }}
