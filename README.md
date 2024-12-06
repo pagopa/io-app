@@ -4,9 +4,12 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
-        <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
+    <a href="https://github.com/pagopa/io-app/actions/workflows/release-nightly.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/release-nightly.yml/badge.svg?branch=master" />
     </a>
+    <!-- <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
+    </a> -->
     <a href="https://codecov.io/gh/pagopa/io-app">
         <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
     </a>
