@@ -32,6 +32,7 @@ import {
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -96,6 +97,18 @@ const PaymentsOnboardingFeedbackScreen = () => {
     },
     [dispatch]
   );
+
+  // Disables the hardware back button on Android devices
+  useAvoidHardwareBackButton();
+
+  // Disables the swipe back gesture on iOS to the parent stack navigator
+  React.useEffect(() => {
+    navigation.getParent()?.setOptions({ gestureEnabled: false });
+    // Re-enable swipe after going back
+    return () => {
+      navigation.getParent()?.setOptions({ gestureEnabled: true });
+    };
+  }, [navigation, outcome]);
 
   const handleContinueButton = () => {
     navigation.popToTop();
