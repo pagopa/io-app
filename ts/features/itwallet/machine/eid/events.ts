@@ -44,7 +44,6 @@ export type SelectSpidIdp = {
 export type CiePinEntered = {
   type: "cie-pin-entered";
   pin: string;
-  isNfcEnabled: boolean;
 };
 
 export type CieIdentificationCompleted = {

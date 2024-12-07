@@ -17,7 +17,12 @@ import {
   RequestEidActorParams,
   StartAuthFlowActorParams
 } from "../actors";
-import { AuthenticationContext, Context, InitialContext } from "../context";
+import {
+  AuthenticationContext,
+  CieContext,
+  Context,
+  InitialContext
+} from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
@@ -51,6 +56,7 @@ describe("itwEidIssuanceMachine", () => {
   const onInit = jest.fn();
 
   const createWalletInstance = jest.fn();
+  const getCieStatus = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
   const startAuthFlow = jest.fn();
@@ -101,6 +107,7 @@ describe("itwEidIssuanceMachine", () => {
         string,
         GetWalletAttestationActorParams
       >(getWalletAttestation),
+      getCieStatus: fromPromise<CieContext>(getCieStatus),
       requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
         requestEid
       ),
@@ -118,14 +125,6 @@ describe("itwEidIssuanceMachine", () => {
       isOperationAborted,
       hasValidWalletInstanceAttestation
     }
-  });
-
-  beforeEach(() => {
-    onInit.mockImplementation(() => ({
-      integrityKeyTag: undefined,
-      walletInstanceAttestation: undefined
-    }));
-    hasValidWalletInstanceAttestation.mockImplementation(() => false);
   });
 
   afterEach(() => {
@@ -320,7 +319,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
@@ -357,8 +356,8 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
-    const cieIDBuildAuthRedirectUrlState = await waitForActor(actor, snapshot =>
-      snapshot.matches({
+    const cieIDBuildAuthRedirectUrlState = await waitForActor(actor, snap =>
+      snap.matches({
         UserIdentification: { CieID: "CieIDBuildAuthRedirectUrl" }
       })
     );
@@ -368,8 +367,8 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(getAuthRedirectUrl).toHaveBeenCalledTimes(1);
 
-    const requestingEidState = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "RequestingEid" })
+    const requestingEidState = await waitForActor(actor, snap =>
+      snap.matches({ Issuance: "RequestingEid" })
     );
     expect(requestingEidState.value).toStrictEqual({
       Issuance: "RequestingEid"
@@ -387,11 +386,15 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: T_WIA,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
       }
     } as MachineSnapshot);
 
@@ -416,7 +419,11 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      identification: undefined
+      identification: undefined,
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true
+      }
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
 
@@ -428,8 +435,7 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({
       type: "cie-pin-entered",
-      pin: "12345678",
-      isNfcEnabled: true
+      pin: "12345678"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -444,6 +450,10 @@ describe("itwEidIssuanceMachine", () => {
       identification: {
         mode: "ciePin",
         pin: "12345678"
+      },
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -488,7 +498,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: {
         UserIdentification: {
           CiePin: "InsertingCardPin"
@@ -496,7 +506,11 @@ describe("itwEidIssuanceMachine", () => {
       },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: T_WIA,
+        cieContext: {
+          isNFCEnabled: false,
+          isCIEAuthenticationSupported: true
+        }
       }
     } as MachineSnapshot);
 
@@ -511,13 +525,12 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({
       type: "cie-pin-entered",
-      pin: "12345678",
-      isNfcEnabled: false
+      pin: "12345678"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "ActivateNfc"
+        CiePin: "RequestingNfcActivation"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -528,6 +541,10 @@ describe("itwEidIssuanceMachine", () => {
       identification: {
         mode: "ciePin",
         pin: "12345678"
+      },
+      cieContext: {
+        isNFCEnabled: false,
+        isCIEAuthenticationSupported: true
       }
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
@@ -545,6 +562,19 @@ describe("itwEidIssuanceMachine", () => {
         CiePin: "StartingCieAuthFlow"
       }
     });
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: T_WIA,
+      identification: {
+        mode: "ciePin",
+        pin: "12345678"
+      },
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true
+      }
+    });
 
     /** Last part is the same as the previous test */
   });
@@ -554,7 +584,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY
       }
@@ -603,7 +633,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: T_WIA
@@ -655,7 +685,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Success"
     } as MachineSnapshot);
 
@@ -846,7 +876,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" }
     } as MachineSnapshot);
 
@@ -917,7 +947,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure"
     } as MachineSnapshot);
 

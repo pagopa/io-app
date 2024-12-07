@@ -8,14 +8,6 @@ exports[`itWalletReducer should match snapshot 1`] = `
       "_tag": "None",
     },
   },
-  "identification": {
-    "isCieSupported": {
-      "kind": "PotNone",
-    },
-    "isNfcEnabled": {
-      "kind": "PotNone",
-    },
-  },
   "issuance": {
     "integrityKeyTag": {
       "_tag": "None",
