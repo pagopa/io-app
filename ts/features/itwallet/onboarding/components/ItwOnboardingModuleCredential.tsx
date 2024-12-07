@@ -10,6 +10,7 @@ type Props = {
   isActive: boolean;
   isDisabled: boolean;
   isCredentialIssuancePending: boolean;
+  isRequested: boolean;
   isSelectedCredential: boolean;
 };
 
@@ -29,11 +30,17 @@ const disabledBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.unavailable")
 };
 
+const requestedBadge: Badge = {
+  variant: "info",
+  text: I18n.t("features.wallet.onboarding.badge.requested")
+};
+
 const ItwOnboardingModuleCredential = ({
   type,
   onPress,
   isActive,
   isDisabled,
+  isRequested,
   isSelectedCredential,
   isCredentialIssuancePending
 }: Props) => {
@@ -44,14 +51,17 @@ const ItwOnboardingModuleCredential = ({
     if (isDisabled) {
       return disabledBadge;
     }
+    if (isRequested) {
+      return requestedBadge;
+    }
     return undefined;
-  }, [isActive, isDisabled]);
+  }, [isActive, isDisabled, isRequested]);
 
   const handleOnPress = () => {
     onPress(type);
   };
 
-  const isPressable = !(isActive || isDisabled || isCredentialIssuancePending);
+  const isPressable = !(isActive || isDisabled);
 
   return (
     <ModuleCredential

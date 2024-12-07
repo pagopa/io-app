@@ -1,5 +1,4 @@
 import { ErrorActorEvent } from "xstate";
-import { type useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 export type Reset = {
   type: "reset";
@@ -8,7 +7,8 @@ export type Reset = {
 export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
-  skipNavigation: boolean;
+  skipNavigation?: boolean;
+  isRequested?: boolean;
 };
 
 export type ConfirmTrustData = {
@@ -29,7 +29,6 @@ export type Back = {
 
 export type Close = {
   type: "close";
-  navigateTo?: Parameters<ReturnType<typeof useIONavigation>["replace"]>;
 };
 
 export type CredentialIssuanceEvents =
