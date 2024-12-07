@@ -11,10 +11,6 @@ export type NPSError = {
 export type NPSIdle = {
   nextStatus: "idle";
 };
-export type NPSLoadingContent = {
-  nextStatus: "loadingContent";
-  content: ThirdPartyMessagePrecondition;
-};
 export type NPSRetrievingData = {
   nextStatus: "retrievingData";
 };
@@ -24,6 +20,7 @@ export type NPSScheduled = {
   categoryTag: MessageCategory["tag"];
 };
 export type NPSShown = {
+  content: ThirdPartyMessagePrecondition;
   nextStatus: "shown";
 };
 export type NPSUpdateRequired = {
@@ -37,12 +34,6 @@ export const toErrorPayload = (reason: string): NPSError => ({
 export const toIdlePayload = (): NPSIdle => ({
   nextStatus: "idle"
 });
-export const toLoadingContentPayload = (
-  content: ThirdPartyMessagePrecondition
-): NPSLoadingContent => ({
-  nextStatus: "loadingContent",
-  content
-});
 export const toRetrievingDataPayload = (): NPSRetrievingData => ({
   nextStatus: "retrievingData"
 });
@@ -54,7 +45,10 @@ export const toScheduledPayload = (
   messageId,
   categoryTag
 });
-export const toShownPayload = (): NPSShown => ({
+export const toShownPayload = (
+  content: ThirdPartyMessagePrecondition
+): NPSShown => ({
+  content,
   nextStatus: "shown"
 });
 export const toUpdateRequiredPayload = (): NPSUpdateRequired => ({
@@ -67,9 +61,6 @@ export const errorPreconditionStatusAction = createStandardAction(
 export const idlePreconditionStatusAction = createStandardAction(
   "TO_IDLE_PRECONDITION_STATUS"
 )<NPSIdle>();
-export const loadingContentPreconditionStatusAction = createStandardAction(
-  "TO_LOADING_CONTENT_PRECONDITION_STATUS"
-)<NPSLoadingContent>();
 export const retrievingDataPreconditionStatusAction = createStandardAction(
   "TO_RETRIEVING_DATA_PRECONDITION_STATUS"
 )<NPSRetrievingData>();
