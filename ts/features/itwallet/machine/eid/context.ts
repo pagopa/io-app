@@ -28,7 +28,7 @@ export type AuthenticationContext = {
   redirectUri: string;
 };
 
-export type CIECapabilities = {
+export type CieContext = {
   isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
 };
@@ -36,7 +36,7 @@ export type CIECapabilities = {
 export type Context = {
   walletInstanceAttestation: string | undefined;
   integrityKeyTag: string | undefined;
-  cieCapabilities: CIECapabilities | undefined;
+  cieContext: CieContext | undefined;
   identification: IdentificationContext | undefined;
   authenticationContext: AuthenticationContext | undefined;
   eid: StoredCredential | undefined;
@@ -46,7 +46,7 @@ export type Context = {
 export const InitialContext: Context = {
   walletInstanceAttestation: undefined,
   integrityKeyTag: undefined,
-  cieCapabilities: undefined,
+  cieContext: undefined,
   identification: undefined,
   authenticationContext: undefined,
   eid: undefined,

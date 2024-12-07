@@ -14,11 +14,11 @@ export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
 
 export const isNFCEnabledSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.cieCapabilities?.isNFCEnabled || false;
+  snapshot.context.cieContext?.isNFCEnabled || false;
 
 export const isCIEAuthenticationSupportedSelector = (
   snapshot: MachineSnapshot
-) => snapshot.context.cieCapabilities?.isCIEAuthenticationSupported || false;
+) => snapshot.context.cieContext?.isCIEAuthenticationSupported || false;
 
 export const selectIdentification = (snapshot: MachineSnapshot) =>
   snapshot.context.identification;

@@ -4,13 +4,17 @@ import { assert } from "../../../../utils/assert";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
-  CheckCIECapabilitiesActorOutput,
   GetAuthRedirectUrlActorParam,
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams
 } from "./actors";
-import { AuthenticationContext, Context, InitialContext } from "./context";
+import {
+  AuthenticationContext,
+  CieContext,
+  Context,
+  InitialContext
+} from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
 
@@ -58,8 +62,7 @@ export const itwEidIssuanceMachine = setup({
     getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
       notImplemented
     ),
-    checkCIECapabilities:
-      fromPromise<CheckCIECapabilitiesActorOutput>(notImplemented),
+    getCieStatus: fromPromise<CieContext>(notImplemented),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     ),
@@ -75,14 +78,23 @@ export const itwEidIssuanceMachine = setup({
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isNFCEnabled: ({ context }) =>
-      context.cieCapabilities?.isNFCEnabled || false
+    isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
   context: { ...InitialContext },
   initial: "Idle",
   entry: "onInit",
+  invoke: {
+    src: "getCieStatus",
+    onDone: {
+      actions: assign(({ event }) => ({ cieContext: event.output }))
+    },
+    onError: {
+      // Any failure during the CIE/NFC status check will not be handled or treated as a negative result
+      // We still need an empty onError to avoid uncaught promise rejection
+    }
+  },
   states: {
     Idle: {
       description: "The machine is in idle, ready to start the issuance flow",
@@ -227,18 +239,6 @@ export const itwEidIssuanceMachine = setup({
       states: {
         ModeSelection: {
           entry: "navigateToIdentificationModeScreen",
-          invoke: {
-            src: "checkCIECapabilities",
-            onDone: {
-              actions: assign(({ event }) => ({
-                cieCapabilities: event.output
-              }))
-            },
-            onError: {
-              // Any failure during the CIE/NFC capabilities check will not be handled and treates as a negative result
-              // We still need an empty onError to avoid uncaught promise rejection
-            }
-          },
           on: {
             "select-identification-mode": [
               {
@@ -469,7 +469,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "nfc-enabled": {
                   actions: assign(({ context }) => ({
-                    cieCapabilities: _.merge(context.cieCapabilities, {
+                    cieContext: _.merge(context.cieContext, {
                       isNFCEnabled: true
                     })
                   })),

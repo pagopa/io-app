@@ -12,13 +12,17 @@ import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
-  CheckCIECapabilitiesActorOutput,
   GetAuthRedirectUrlActorParam,
   GetWalletAttestationActorParams,
   RequestEidActorParams,
   StartAuthFlowActorParams
 } from "../actors";
-import { AuthenticationContext, Context, InitialContext } from "../context";
+import {
+  AuthenticationContext,
+  CieContext,
+  Context,
+  InitialContext
+} from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
@@ -52,7 +56,7 @@ describe("itwEidIssuanceMachine", () => {
   const onInit = jest.fn();
 
   const createWalletInstance = jest.fn();
-  const checkCIECapabilities = jest.fn();
+  const getCieStatus = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
   const startAuthFlow = jest.fn();
@@ -103,8 +107,7 @@ describe("itwEidIssuanceMachine", () => {
         string,
         GetWalletAttestationActorParams
       >(getWalletAttestation),
-      checkCIECapabilities:
-        fromPromise<CheckCIECapabilitiesActorOutput>(checkCIECapabilities),
+      getCieStatus: fromPromise<CieContext>(getCieStatus),
       requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
         requestEid
       ),
@@ -353,8 +356,8 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
-    const cieIDBuildAuthRedirectUrlState = await waitForActor(actor, snapshot =>
-      snapshot.matches({
+    const cieIDBuildAuthRedirectUrlState = await waitForActor(actor, snap =>
+      snap.matches({
         UserIdentification: { CieID: "CieIDBuildAuthRedirectUrl" }
       })
     );
@@ -364,8 +367,8 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(getAuthRedirectUrl).toHaveBeenCalledTimes(1);
 
-    const requestingEidState = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "RequestingEid" })
+    const requestingEidState = await waitForActor(actor, snap =>
+      snap.matches({ Issuance: "RequestingEid" })
     );
     expect(requestingEidState.value).toStrictEqual({
       Issuance: "RequestingEid"
@@ -388,7 +391,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: T_WIA,
-        cieCapabilities: {
+        cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
         }
@@ -417,7 +420,7 @@ describe("itwEidIssuanceMachine", () => {
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
       identification: undefined,
-      cieCapabilities: {
+      cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true
       }
@@ -448,7 +451,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "ciePin",
         pin: "12345678"
       },
-      cieCapabilities: {
+      cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true
       }
@@ -504,7 +507,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: T_WIA,
-        cieCapabilities: {
+        cieContext: {
           isNFCEnabled: false,
           isCIEAuthenticationSupported: true
         }
@@ -539,7 +542,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "ciePin",
         pin: "12345678"
       },
-      cieCapabilities: {
+      cieContext: {
         isNFCEnabled: false,
         isCIEAuthenticationSupported: true
       }
@@ -567,7 +570,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "ciePin",
         pin: "12345678"
       },
-      cieCapabilities: {
+      cieContext: {
         isNFCEnabled: true,
         isCIEAuthenticationSupported: true
       }

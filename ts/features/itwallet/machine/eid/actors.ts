@@ -23,7 +23,7 @@ import {
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import type {
   AuthenticationContext,
-  CIECapabilities,
+  CieContext,
   IdentificationContext
 } from "./context";
 
@@ -41,8 +41,6 @@ export type StartAuthFlowActorParams = {
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
 };
-
-export type CheckCIECapabilitiesActorOutput = CIECapabilities;
 
 export type GetAuthRedirectUrlActorParam = {
   redirectUri: string | undefined;
@@ -99,15 +97,13 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
-  checkCIECapabilities: fromPromise<CheckCIECapabilitiesActorOutput>(
-    async () => {
-      const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
-        cieUtils.isNfcEnabled(),
-        cieManager.isCIEAuthenticationSupported()
-      ]);
-      return { isNFCEnabled, isCIEAuthenticationSupported };
-    }
-  ),
+  getCieStatus: fromPromise<CieContext>(async () => {
+    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
+      cieUtils.isNfcEnabled(),
+      cieManager.isCIEAuthenticationSupported()
+    ]);
+    return { isNFCEnabled, isCIEAuthenticationSupported };
+  }),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
