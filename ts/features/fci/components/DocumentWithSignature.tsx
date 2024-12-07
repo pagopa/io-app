@@ -1,12 +1,6 @@
-import * as React from "react";
-import Pdf from "react-native-pdf";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { StyleSheet, View } from "react-native";
 import {
   ButtonSolidProps,
-  FooterWithButtons,
+  FooterActions,
   H5,
   HSpacer,
   IconButton,
@@ -14,16 +8,22 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import Pdf from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
-import I18n from "../../../i18n";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
-import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
+import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
+import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 import LoadingComponent from "./LoadingComponent";
 
@@ -62,12 +62,10 @@ const DocumentWithSignature = (props: Props) => {
   const { attrs, currentDoc } = props;
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
+
   const continueButtonProps: ButtonSolidProps = {
     onPress: onContinuePress,
-    label: I18n.t("features.fci.documents.footer.backToSignFieldsList"),
-    accessibilityLabel: I18n.t(
-      "features.fci.documents.footer.backToSignFieldsList"
-    )
+    label: I18n.t("features.fci.documents.footer.backToSignFieldsList")
   };
 
   /**
@@ -220,9 +218,11 @@ const DocumentWithSignature = (props: Props) => {
         testID={"FciDocumentsNavBarTestID"}
       />
       <RenderMask />
-      <FooterWithButtons
-        type={"SingleButton"}
-        primary={{ type: "Solid", buttonProps: continueButtonProps }}
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: continueButtonProps
+        }}
       />
     </SafeAreaView>
   );

@@ -1,8 +1,9 @@
 import {
-  H2,
   Body,
   FeatureInfo,
-  FooterWithButtons,
+  FooterActions,
+  FooterActionsInline,
+  H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -101,11 +102,10 @@ export const IbanEnrollmentScreen = () => {
   const renderFooter = () => {
     if (isIbanOnly) {
       return (
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t("idpay.configuration.iban.button.addNew"),
               disabled: isUpsertingIban,
               onPress: handleAddNewIbanPress,
@@ -117,26 +117,20 @@ export const IbanEnrollmentScreen = () => {
     }
 
     return (
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("idpay.configuration.iban.button.addNew"),
-            disabled: isUpsertingIban,
-            onPress: handleAddNewIbanPress,
-            testID: "addIbanButtonTestID"
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("idpay.configuration.iban.button.addNew"),
+          disabled: isUpsertingIban,
+          onPress: handleAddNewIbanPress,
+          testID: "addIbanButtonTestID"
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            disabled: !selectedIban || isUpsertingIban,
-            loading: isUpsertingIban,
-            onPress: handleContinuePress,
-            testID: "continueButtonTestID"
-          }
+        endAction={{
+          label: I18n.t("global.buttons.continue"),
+          disabled: !selectedIban || isUpsertingIban,
+          loading: isUpsertingIban,
+          onPress: handleContinuePress,
+          testID: "continueButtonTestID"
         }}
       />
     );

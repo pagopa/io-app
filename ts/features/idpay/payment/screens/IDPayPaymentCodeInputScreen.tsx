@@ -1,6 +1,6 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActions,
   H2,
   IOColors,
   IOStyles,
@@ -82,13 +82,11 @@ const IDPayPaymentCodeInputScreen = () => {
             counterLimit={8}
           />
         </View>
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t("idpay.payment.manualInput.button"),
-              accessibilityLabel: I18n.t("idpay.payment.manualInput.button"),
               disabled: !isInputValid || isLoading,
               onPress: navigateToPaymentAuthorization,
               loading: isLoading

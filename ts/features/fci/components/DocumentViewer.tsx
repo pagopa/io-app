@@ -1,6 +1,7 @@
 import {
   ButtonSolidProps,
-  FooterWithButtons,
+  FooterActions,
+  FooterActionsInline,
   IOColors,
   IOToast
 } from "@pagopa/io-app-design-system";
@@ -81,35 +82,17 @@ const renderFooter = (url: string, filePath: string) => {
     accessibilityLabel: I18n.t("messagePDFPreview.save")
   };
 
-  const openButtonProps: ButtonSolidProps = {
-    onPress: () => {
-      ReactNativeBlobUtil.android
-        .actionViewIntent(
-          FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url),
-          "application/pdf"
-        )
-        .catch(_ => {
-          IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
-        });
-    },
-    label: I18n.t("messagePDFPreview.open"),
-    accessibilityLabel: I18n.t("messagePDFPreview.open")
-  };
-
   return isIos ? (
-    <FooterWithButtons
-      type={"SingleButton"}
-      primary={{ type: "Solid", buttonProps: confirmButtonProps }}
+    <FooterActions
+      actions={{
+        type: "SingleButton",
+        primary: confirmButtonProps
+      }}
     />
   ) : (
-    <FooterWithButtons
-      type={"ThreeButtonsInLine"}
-      primary={{
-        type: "Solid",
-        buttonProps: shareButtonProps
-      }}
-      secondary={{ type: "Outline", buttonProps: saveButtonProps }}
-      third={{ type: "Outline", buttonProps: openButtonProps }}
+    <FooterActionsInline
+      startAction={saveButtonProps}
+      endAction={shareButtonProps}
     />
   );
 };

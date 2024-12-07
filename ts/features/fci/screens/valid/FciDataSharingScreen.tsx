@@ -1,7 +1,6 @@
 import {
   Body,
-  ButtonSolidProps,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   H6,
   HSpacer,
@@ -14,6 +13,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
+import { ComponentProps } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -69,21 +69,24 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
-  const cancelButtonProps: ButtonSolidProps = {
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    color: "primary",
     onPress: () => present(),
-    label: I18n.t("features.fci.shareDataScreen.cancel"),
-    accessibilityLabel: I18n.t("features.fci.shareDataScreen.cancel")
+    label: I18n.t("features.fci.shareDataScreen.cancel")
   };
 
-  const confirmButtonProps: ButtonSolidProps = {
+  const confirmButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
     onPress: () => {
       trackFciUserDataConfirmed(fciEnvironment);
       navigation.navigate(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.QTSP_TOS
       });
     },
-    label: I18n.t("features.fci.shareDataScreen.confirm"),
-    accessibilityLabel: I18n.t("features.fci.shareDataScreen.confirm")
+    label: I18n.t("features.fci.shareDataScreen.confirm")
   };
 
   const AlertTextComponent = () => (
@@ -192,13 +195,11 @@ const FciDataSharingScreen = (): React.ReactElement => {
           </>
         )}
       </ScrollView>
-      <View testID="FciDataSharingScreenFooterTestID">
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          secondary={{ type: "Solid", buttonProps: confirmButtonProps }}
-          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-        />
-      </View>
+      <FooterActionsInline
+        testID="FciDataSharingScreenFooterTestID"
+        startAction={cancelButtonProps}
+        endAction={confirmButtonProps}
+      />
 
       {fciAbortSignature}
     </>

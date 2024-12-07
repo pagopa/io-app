@@ -1,6 +1,6 @@
 import {
   CheckboxLabel,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   H6,
   VSpacer
@@ -89,30 +89,23 @@ const CdcBonusRequestSelectYear = () => {
           ))}
         </ScrollView>
       </SafeAreaView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.cancel"),
-            accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () => {
-              navigation.getParent()?.goBack();
-            }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => {
+            navigation.getParent()?.goBack();
           }
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              dispatch(cdcSelectedBonus(years.map(y => ({ year: y }))));
-              navigation.navigate(CDC_ROUTES.SELECT_RESIDENCE);
-            },
-            disabled: years.length === 0,
-            testID: "continueButton"
-          }
+        endAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.continue"),
+          onPress: () => {
+            dispatch(cdcSelectedBonus(years.map(y => ({ year: y }))));
+            navigation.navigate(CDC_ROUTES.SELECT_RESIDENCE);
+          },
+          disabled: years.length === 0,
+          testID: "continueButton"
         }}
       />
     </BaseScreenComponent>

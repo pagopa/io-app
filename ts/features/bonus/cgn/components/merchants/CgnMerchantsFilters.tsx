@@ -1,5 +1,5 @@
 import {
-  FooterWithButtons,
+  FooterActionsInline,
   H4,
   HeaderSecondLevel,
   VSpacer
@@ -189,25 +189,16 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("bonus.cgn.merchantsList.filter.cta.cancel"),
-            accessibilityLabel: I18n.t(
-              "bonus.cgn.merchantsList.filter.cta.cancel"
-            ),
-            onPress: onRemoveButton
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("bonus.cgn.merchantsList.filter.cta.cancel"),
+          onPress: onRemoveButton
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: confirmButtonLabel,
-            accessibilityLabel: confirmButtonLabel,
-            onPress: props.onConfirm
-          }
+        endAction={{
+          color: "primary",
+          label: confirmButtonLabel,
+          onPress: props.onConfirm
         }}
       />
     </>
