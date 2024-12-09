@@ -129,6 +129,9 @@ const ItwCardsContainer = () => {
       endElement: {
         type: "buttonLink",
         componentProps: {
+          accessibilityLabel: I18n.t(
+            "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+          ),
           label: I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
           ),
