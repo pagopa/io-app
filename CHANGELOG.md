@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.4](https://github.com/pagopa/io-app/compare/2.79.0-rc.3...2.79.0-rc.4) (2024-12-06)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1852](https://pagopa.atlassian.net/browse/SIW-1852)] Hide discovery banner after close ([#6499](https://github.com/pagopa/io-app/issues/6499)) ([6d87026](https://github.com/pagopa/io-app/commit/6d870260f3cdf9ba3a3098f760b572486613d126))
+
+
+### Bug Fixes
+
+* [[IOPID-2543](https://pagopa.atlassian.net/browse/IOPID-2543)] Add logic to merge data during zendesk polling ([#6515](https://github.com/pagopa/io-app/issues/6515)) ([7e60a3c](https://github.com/pagopa/io-app/commit/7e60a3c6ab92665cc64837ddcdd178d19fd051fd))
+* assistance flow actionsheet contains extra space on header ([#6513](https://github.com/pagopa/io-app/issues/6513)) ([3591b9a](https://github.com/pagopa/io-app/commit/3591b9ab0a31959e9dfd7733b04c35c4f89f342a))
+
 ## [2.79.0-rc.3](https://github.com/pagopa/io-app/compare/2.79.0-rc.2...2.79.0-rc.3) (2024-12-05)
 
 
