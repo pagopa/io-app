@@ -3,5 +3,9 @@
 exports[`userBehaviourReducer Should match snapshot 1`] = `
 {
   "engagementScreenShown": false,
+  "pushNotificationsBanner": {
+    "forceDismissionDate": undefined,
+    "timesDismissed": 0,
+  },
 }
 `;
