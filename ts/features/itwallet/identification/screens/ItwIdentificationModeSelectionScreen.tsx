@@ -4,24 +4,25 @@ import {
   ModuleNavigation,
   VStack
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useCallback, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
-import { itwIsCieSupportedSelector } from "../store/selectors";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
 import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isCieSupportedPot = useIOSelector(itwIsCieSupportedSelector);
+  const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
+    isCIEAuthenticationSupportedSelector
+  );
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
@@ -40,8 +41,8 @@ export const ItwIdentificationModeSelectionScreen = () => {
   );
 
   const isCieSupported = useMemo(
-    () => cieFlowForDevServerEnabled || pot.getOrElse(isCieSupportedPot, false),
-    [isCieSupportedPot]
+    () => cieFlowForDevServerEnabled || isCieAuthenticationSupported,
+    [isCieAuthenticationSupported]
   );
 
   useFocusEffect(trackItWalletIDMethod);
