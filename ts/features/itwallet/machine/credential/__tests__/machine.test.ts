@@ -103,15 +103,19 @@ const T_STORED_STATUS_ATTESTATION: StoredCredential["storedStatusAttestation"] =
   };
 
 describe("itwCredentialIssuanceMachine", () => {
+  const onInit = jest.fn();
   const navigateToTrustIssuerScreen = jest.fn();
   const navigateToCredentialPreviewScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
+  const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
-  const closeIssuance = jest.fn();
+  const flagCredentialAsRequested = jest.fn();
+  const unflagCredentialAsRequested = jest.fn();
   const handleSessionExpired = jest.fn();
-  const onInit = jest.fn();
+  const trackStartAddCredential = jest.fn();
+  const trackAddCredential = jest.fn();
 
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
@@ -119,21 +123,24 @@ describe("itwCredentialIssuanceMachine", () => {
   const obtainStatusAttestation = jest.fn();
 
   const isSessionExpired = jest.fn();
+  const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
 
-  const trackAddCredential = jest.fn();
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
-      navigateToCredentialPreviewScreen,
+      onInit: assign(onInit),
       navigateToTrustIssuerScreen,
+      navigateToCredentialPreviewScreen,
       navigateToFailureScreen,
       navigateToWallet,
+      closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
-      closeIssuance,
+      flagCredentialAsRequested,
+      unflagCredentialAsRequested,
       handleSessionExpired,
-      trackAddCredential,
-      onInit: assign(onInit)
+      trackStartAddCredential,
+      trackAddCredential
     },
     actors: {
       getWalletAttestation:
@@ -153,6 +160,7 @@ describe("itwCredentialIssuanceMachine", () => {
     },
     guards: {
       isSessionExpired,
+      isDeferredIssuance,
       hasValidWalletInstanceAttestation
     }
   });
@@ -580,7 +588,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
 
-  it("Should navigate to the next screen if skipNavigation is false", async () => {
+  it("Should navigate to the next screen if skipNavigation is omitted", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -598,8 +606,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
     actor.send({
       type: "select-credential",
-      credentialType: "MDL",
-      skipNavigation: false
+      credentialType: "MDL"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual(

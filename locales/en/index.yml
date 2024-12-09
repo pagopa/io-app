@@ -3163,6 +3163,7 @@ features:
       badge:
         active: Già presente
         unavailable: Non disponibile
+        requested: In corso
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
