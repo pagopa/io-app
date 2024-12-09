@@ -152,7 +152,7 @@ type GetZendeskPaymentConfigT = IGetApiRequestType<
 // TODO: update with new definition from related PR
 const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
   method: "get",
-  url: () => "/assistanceTools/paymentMap.json",
+  url: () => "/assistanceTools/payment/zendeskOutcomeMapping.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(unknown)
