@@ -38,6 +38,10 @@ import {
 import { zendeskMapSelector } from "../../../zendesk/store/reducers";
 import { formatPaymentNoticeNumber } from "../../common/utils";
 import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import {
+  WalletOnboardingOutcome,
+  getWalletOnboardingOutcomeEnumByValue
+} from "../../onboarding/types/OnboardingOutcomeEnum";
 import { walletPaymentRptIdSelector } from "../store/selectors";
 import {
   WalletPaymentOutcome,
@@ -48,7 +52,8 @@ import { getSubCategoryFromFaultCode } from "../utils";
 
 type PaymentFailureSupportModalParams = {
   failure?: WalletPaymentFailure;
-  outcome?: WalletPaymentOutcome;
+  outcome?: WalletPaymentOutcome | WalletOnboardingOutcome;
+  isOnboarding?: boolean;
   withPhoneAssistance?: boolean;
 };
 
@@ -60,6 +65,7 @@ type PaymentFailureSupportModal = {
 const usePaymentFailureSupportModal = ({
   failure,
   outcome,
+  isOnboarding = false,
   withPhoneAssistance = false
 }: PaymentFailureSupportModalParams): PaymentFailureSupportModal => {
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -76,7 +82,10 @@ const usePaymentFailureSupportModal = ({
 
   const faultCodeDetail =
     failure?.faultCodeDetail ||
-    (outcome && getWalletPaymentOutcomeEnumByValue(outcome)) ||
+    (outcome &&
+      (!isOnboarding
+        ? getWalletPaymentOutcomeEnumByValue(outcome)
+        : getWalletOnboardingOutcomeEnumByValue(outcome))) ||
     "";
 
   const zendeskAssistanceLogAndStart = () => {
@@ -194,20 +203,26 @@ const usePaymentFailureSupportModal = ({
           value={faultCodeDetail}
           onPress={() => clipboardSetStringWithFeedback(faultCodeDetail)}
         />
-        <ListItemInfoCopy
-          label={I18n.t("wallet.payment.support.noticeNumber")}
-          accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
-          icon="docPaymentCode"
-          value={formattedPaymentNoticeNumber}
-          onPress={() => clipboardSetStringWithFeedback(paymentNoticeNumber)}
-        />
-        <ListItemInfoCopy
-          label={I18n.t("wallet.payment.support.entityCode")}
-          accessibilityLabel={I18n.t("wallet.payment.support.entityCode")}
-          icon="entityCode"
-          value={organizationFiscalCode}
-          onPress={() => clipboardSetStringWithFeedback(organizationFiscalCode)}
-        />
+        {!isOnboarding && (
+          <ListItemInfoCopy
+            label={I18n.t("wallet.payment.support.noticeNumber")}
+            accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
+            icon="docPaymentCode"
+            value={formattedPaymentNoticeNumber}
+            onPress={() => clipboardSetStringWithFeedback(paymentNoticeNumber)}
+          />
+        )}
+        {!isOnboarding && (
+          <ListItemInfoCopy
+            label={I18n.t("wallet.payment.support.entityCode")}
+            accessibilityLabel={I18n.t("wallet.payment.support.entityCode")}
+            icon="entityCode"
+            value={organizationFiscalCode}
+            onPress={() =>
+              clipboardSetStringWithFeedback(organizationFiscalCode)
+            }
+          />
+        )}
         <VSpacer size={24} />
       </>
     ),
