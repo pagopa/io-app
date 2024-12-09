@@ -3292,7 +3292,6 @@ features:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
-      moreInfo: Maggiori info
     verifiableCredentials:
       claims:
         uniqueId: "ID univoco"
@@ -3304,7 +3303,6 @@ features:
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
         info: "Ulteriori info su questi dati"
-        issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
         authenticSource: Origine dei dati

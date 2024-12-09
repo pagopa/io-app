@@ -282,23 +282,6 @@ export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
 );
 
 /**
- * io-ts decoder for the evidence claim field of the credential.
- */
-export const EvidenceClaim = t.array(
-  t.type({
-    type: t.string,
-    record: t.type({
-      type: t.string,
-      source: t.type({
-        organization_name: t.string,
-        organization_id: t.string,
-        country_code: t.string
-      })
-    })
-  })
-);
-
-/**
  * io-ts decoder for the place of birth claim field of the credential.
  */
 export const PlaceOfBirthClaim = t.type({
@@ -378,8 +361,6 @@ export const ClaimValue = t.union([
   PlaceOfBirthClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
-  // Parse an object representing the claim evidence
-  EvidenceClaim,
   // Otherwise parse a date as string
   SimpleDateClaim,
   // Otherwise parse an image

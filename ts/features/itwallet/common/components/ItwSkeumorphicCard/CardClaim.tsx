@@ -8,7 +8,6 @@ import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
-  EvidenceClaim,
   ImageClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
@@ -73,10 +72,6 @@ const CardClaim = ({
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
-          } else if (EvidenceClaim.is(decoded)) {
-            return (
-              <ClaimLabel {...labelProps}>{JSON.stringify(decoded)}</ClaimLabel>
-            );
           } else if (ImageClaim.is(decoded)) {
             return (
               <Image
