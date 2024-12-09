@@ -314,24 +314,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                         >
                           <View
                             style={
-                              [
-                                {
-                                  "backgroundColor": "#D2D6E3",
-                                  "bottom": 0,
-                                  "height": 0.5,
-                                  "left": 0,
-                                  "position": "absolute",
-                                  "right": 0,
-                                  "width": "100%",
-                                },
-                                {
-                                  "opacity": 0,
-                                },
-                              ]
-                            }
-                          />
-                          <View
-                            style={
                               {
                                 "alignItems": "center",
                                 "flexDirection": "row",

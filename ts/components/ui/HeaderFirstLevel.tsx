@@ -148,15 +148,17 @@ export const HeaderFirstLevel = ({
       testID={testID}
     >
       {/* Divider */}
-      <Animated.View
-        style={[
-          {
-            ...styles.headerDivider,
-            backgroundColor: IOColors[theme["divider-default"]]
-          },
-          animatedDivider
-        ]}
-      />
+      {(animatedRef || animatedFlatListRef) && (
+        <Animated.View
+          style={[
+            {
+              ...styles.headerDivider,
+              backgroundColor: IOColors[theme["divider-default"]]
+            },
+            animatedDivider
+          ]}
+        />
+      )}
 
       <View style={styles.headerInner}>
         <View ref={titleRef} accessible accessibilityRole="header">
