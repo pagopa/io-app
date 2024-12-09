@@ -1,21 +1,18 @@
-import * as React from "react";
+import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  Body,
-  ButtonSolidProps,
-  FooterWithButtons
-} from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ComponentProps } from "react";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { fciStartSigningRequest } from "../store/actions";
-import { upsertServicePreference } from "../../services/details/store/actions/preference";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
-import { servicePreferencePotSelector } from "../../services/details/store/reducers";
-import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
-import { trackFciUxConversion } from "../analytics";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { upsertServicePreference } from "../../services/details/store/actions/preference";
+import { servicePreferencePotSelector } from "../../services/details/store/reducers";
+import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
+import { trackFciUxConversion } from "../analytics";
+import { fciStartSigningRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -26,15 +23,21 @@ export const useFciCheckService = () => {
   const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
-  const cancelButtonProps: ButtonSolidProps = {
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    color: "primary",
     onPress: () => {
       dispatch(fciStartSigningRequest());
       dismiss();
     },
-    label: I18n.t("features.fci.checkService.cancel"),
-    accessibilityLabel: I18n.t("features.fci.checkService.cancel")
+    label: I18n.t("features.fci.checkService.cancel")
   };
-  const confirmButtonProps: ButtonSolidProps = {
+
+  const confirmButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
+    color: "primary",
     onPress: () => {
       if (
         fciServiceId &&
@@ -53,8 +56,7 @@ export const useFciCheckService = () => {
       dispatch(fciStartSigningRequest());
       dismiss();
     },
-    label: I18n.t("features.fci.checkService.confirm"),
-    accessibilityLabel: I18n.t("features.fci.checkService.confirm")
+    label: I18n.t("features.fci.checkService.confirm")
   };
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     component: (
@@ -65,13 +67,9 @@ export const useFciCheckService = () => {
     title: I18n.t("features.fci.checkService.title"),
     snapPoint: [320],
     footer: (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        primary={{
-          type: "Outline",
-          buttonProps: cancelButtonProps
-        }}
-        secondary={{ type: "Solid", buttonProps: confirmButtonProps }}
+      <FooterActionsInline
+        startAction={cancelButtonProps}
+        endAction={confirmButtonProps}
       />
     )
   });

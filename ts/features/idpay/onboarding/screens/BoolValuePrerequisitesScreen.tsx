@@ -1,6 +1,6 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -89,24 +89,16 @@ const InitiativeSelfDeclarationsScreen = () => {
           ))}
         </View>
       </ScrollView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.back"),
-            accessibilityLabel: I18n.t("global.buttons.back"),
-            onPress: goBackOnPress
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.back"),
+          onPress: goBackOnPress
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: continueOnPress,
-            disabled: !areAllSelfCriteriaBoolAccepted
-          }
+        endAction={{
+          label: I18n.t("global.buttons.continue"),
+          onPress: continueOnPress,
+          disabled: !areAllSelfCriteriaBoolAccepted
         }}
       />
     </LoadingSpinnerOverlay>

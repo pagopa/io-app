@@ -1,36 +1,34 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { AppState, FlatList, View, Platform, StyleSheet } from "react-native";
 import {
   Body,
   Divider,
-  FooterWithButtons,
+  FooterActions,
   H2,
   H6,
-  IOStyles,
   IOVisualCostants,
   IconButton,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React, { useCallback, useEffect, useMemo } from "react";
+import { AppState, FlatList, Platform, StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  checkNotificationPermissions,
-  openSystemNotificationSettingsScreen
-} from "../utils";
 import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
 } from "../../../store/reducers/profile";
-import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../analytics";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
+import {
+  checkNotificationPermissions,
+  openSystemNotificationSettingsScreen
+} from "../utils";
 
 const styles = StyleSheet.create({
-  footer: { paddingBottom: IOStyles.footer.paddingBottom },
   header: {
     alignSelf: "flex-end",
     flexDirection: "row",
@@ -199,19 +197,16 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
         ItemSeparatorComponent={() => <Divider />}
         ListHeaderComponent={ListHeader}
       />
-      <View style={styles.footer}>
-        <FooterWithButtons
-          primary={{
-            type: "Solid",
-            buttonProps: {
-              label: I18n.t("onboarding.infoConsent.openSettings"),
-              onPress: openSettings,
-              testID: "settings-btn"
-            }
-          }}
-          type="SingleButton"
-        />
-      </View>
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("onboarding.infoConsent.openSettings"),
+            onPress: openSettings,
+            testID: "settings-btn"
+          }
+        }}
+      />
     </>
   );
 };

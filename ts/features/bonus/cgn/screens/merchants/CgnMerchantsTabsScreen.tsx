@@ -111,14 +111,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
               <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>
             </View>
           </Tab>
-        </Tabs>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={confirmButtonProps(
-            openFiltersModal,
-            I18n.t("bonus.cgn.merchantsList.cta.filter")
-          )}
-        /> */}
+        </Tabs> */}
       </SafeAreaView>
     </BaseScreenComponent>
   );
