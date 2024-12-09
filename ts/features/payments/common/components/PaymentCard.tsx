@@ -26,6 +26,8 @@ export type PaymentCardProps = {
   isExpired?: boolean;
 };
 
+const SECONDARY_INFO_TEXT_COLOR: IOColors = "grey-700";
+
 export type PaymentCardComponentProps = WithTestID<
   | ({
       isLoading?: false;
@@ -46,6 +48,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const holderNameText = props.holderName && (
     <BodySmall
+      color={SECONDARY_INFO_TEXT_COLOR}
       weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.owner", {
         fullOwnerName: props.holderName
@@ -56,7 +59,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   );
 
   const expireDateText = props.expireDate && (
-    <BodySmall weight="Semibold">
+    <BodySmall weight="Semibold" color={SECONDARY_INFO_TEXT_COLOR}>
       {I18n.t("wallet.creditCard.validUntil", {
         expDate: format(props.expireDate, "MM/YY")
       })}
@@ -65,6 +68,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const maskedEmailText = props.holderEmail && (
     <BodySmall
+      color={SECONDARY_INFO_TEXT_COLOR}
       weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.paypal.owner", {
         email: props.holderEmail
@@ -76,6 +80,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const maskedPhoneText = props.holderPhone && (
     <BodySmall
+      color={SECONDARY_INFO_TEXT_COLOR}
       weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
         // we do this to make the screen reader read the number digit by digit,
@@ -117,11 +122,15 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
       return (
         <H6
+          color="black"
           accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
             circuit: circuitName,
             // we space the hpan to make the screen reader read it digit by digit
             spacedHpan: props.hpan.split("").join(" ")
           })}
+          numberOfLines={1}
+          ellipsizeMode="middle"
+          style={{ flexShrink: 1 }}
         >
           {capitalize(circuitName)} •••• {props.hpan}
         </H6>
@@ -134,6 +143,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   const expiredTag = (
     <View testID={`${props.testID}-expired`}>
       <Tag
+        forceLightMode
         variant="error"
         text={I18n.t("features.payments.methods.status.expired")}
       />
