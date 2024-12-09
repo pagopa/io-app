@@ -74,10 +74,12 @@ const PaymentsHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
+  const currentRoute = ROUTES.PAYMENTS_HOME;
+
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
 
-  const alertProps = useStatusAlertProps(ROUTES.PAYMENTS_HOME);
-  const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.PAYMENTS_HOME);
+  const alertProps = useStatusAlertProps(currentRoute);
+  const helpAction = useHeaderFirstLevelActionPropHelp(currentRoute);
   const settingsAction = useHeaderFirstLevelActionPropSettings();
 
   useLayoutEffect(() => {
@@ -85,8 +87,8 @@ const PaymentsHomeScreen = () => {
       title: I18n.t("features.payments.title"),
       ignoreSafeAreaMargin: !!alertProps,
       animatedRef: scrollViewContentRef,
-      firstAction: helpAction,
       type: "twoActions",
+      firstAction: helpAction,
       secondAction: settingsAction
     };
 
