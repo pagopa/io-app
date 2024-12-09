@@ -94,7 +94,7 @@ const TrustmarkExpirationTimer = () => {
   // Format the expiration time to mm:ss and show a placeholder if the expiration time is undefined
   const formattedExpirationTime =
     expirationSeconds !== undefined ? (
-      <Body weight="Bold">
+      <Body weight="Semibold">
         {format(new Date(expirationSeconds * 1000), "mm:ss")}
       </Body>
     ) : (

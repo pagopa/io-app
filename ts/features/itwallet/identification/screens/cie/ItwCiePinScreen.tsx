@@ -1,11 +1,12 @@
 import {
+  Body,
   ContentWrapper,
   H2,
   IOStyles,
-  Label,
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
@@ -18,7 +19,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import LegacyMarkdown from "../../../../../components/ui/Markdown/LegacyMarkdown";
 import { pinPukHelpUrl } from "../../../../../config";
@@ -30,14 +30,14 @@ import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
-import { itwNfcIsEnabled } from "../../store/actions";
-import { itwIsNfcEnabledSelector } from "../../store/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import {
   trackItWalletCiePinEnter,
   trackItWalletCiePinForgotten,
   trackItWalletCiePinInfo
 } from "../../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
+import { itwNfcIsEnabled } from "../../store/actions";
+import { itwIsNfcEnabledSelector } from "../../store/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -56,9 +56,9 @@ const ForgottenPin = () => (
       {I18n.t("bottomSheets.ciePin.content")}
     </LegacyMarkdown>
     <VSpacer size={24} />
-    <Label asLink onPress={onOpenForgotPinPage}>
+    <Body weight="Semibold" asLink onPress={onOpenForgotPinPage}>
       {I18n.t("authentication.cie.pin.bottomSheetCTA")}
-    </Label>
+    </Body>
     <VSpacer size={24} />
   </View>
 );
@@ -132,7 +132,8 @@ export const ItwCiePinScreen = () => {
           <ContentWrapper>
             <H2>{I18n.t("authentication.cie.pin.pinCardTitle")}</H2>
             <VSpacer size={8} />
-            <Label
+            <Body
+              weight="Semibold"
               asLink
               onPress={() => {
                 trackItWalletCiePinInfo();
@@ -140,7 +141,7 @@ export const ItwCiePinScreen = () => {
               }}
             >
               {I18n.t("authentication.cie.pin.subtitleCTA")}
-            </Label>
+            </Body>
             <VSpacer size={24} />
             <View style={IOStyles.flex}>
               <OTPInput
