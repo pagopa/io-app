@@ -1427,6 +1427,15 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+      PSP_ERROR_ONBOARDING:
+        title: L’aggiunta del metodo non è andata a buon fine
+        subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
+        primaryAction: Chiudi
+      BE_KO:
+        title: "Stiamo riscontrando alcuni problemi con l'aggiunta del metodo"
+        subtitle: "Riprova più tardi."
+        primaryAction: Chiudi
+        secondaryAction: Contatta l'assistenza
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
