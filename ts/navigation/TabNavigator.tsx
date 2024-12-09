@@ -18,7 +18,6 @@ import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
@@ -45,11 +44,6 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          header: ({ route }) => (
-            <HeaderFirstLevelHandler
-              currentRouteName={route.name as keyof MainTabParamsList}
-            />
-          ),
           tabBarLabelStyle: makeFontStyleObject(
             11,
             isDesignSystemEnabled ? "Titillio" : "TitilliumSansPro",

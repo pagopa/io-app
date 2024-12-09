@@ -12,7 +12,6 @@ import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevelActionPropHelp } from "../../../hooks/useHeaderFirstLevelActionPropHelp";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
-import { useHeaderFirstLevelActionPropSettings } from "../../../navigation/components/HeaderFirstLevelHandler";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
@@ -33,6 +32,7 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
+import { useHeaderFirstLevelActionPropSettings } from "../../../hooks/useHeaderFirstLevelActionPropSettings";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;

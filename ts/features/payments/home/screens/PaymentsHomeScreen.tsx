@@ -12,7 +12,6 @@ import {
 } from "../../../../components/ui/IOScrollView";
 import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
 import I18n from "../../../../i18n";
-import { useHeaderFirstLevelActionPropSettings } from "../../../../navigation/components/HeaderFirstLevelHandler";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -35,6 +34,7 @@ import {
 } from "../store/selectors";
 import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
 import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
+import { useHeaderFirstLevelActionPropSettings } from "../../../../hooks/useHeaderFirstLevelActionPropSettings";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
