@@ -204,6 +204,7 @@ exports[`MessageDetailsReminder should match snapshot when the due date is missi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -547,6 +548,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is hidde
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -890,6 +892,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is loadi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1269,6 +1272,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1539,6 +1543,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             <Text
                               accessibilityRole="text"
                               allowFontScaling={false}
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               onTextLayout={[Function]}
                               style={
@@ -1577,7 +1582,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": 20,
                                   },
                                 ]
@@ -1812,6 +1817,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2044,6 +2050,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={

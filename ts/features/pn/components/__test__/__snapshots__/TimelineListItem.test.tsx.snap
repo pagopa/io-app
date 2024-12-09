@@ -204,6 +204,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -485,7 +486,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -2510,6 +2511,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2791,7 +2793,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -4816,6 +4818,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5097,7 +5100,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -5367,6 +5370,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5648,7 +5652,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]

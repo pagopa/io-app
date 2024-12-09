@@ -92,7 +92,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         >
           If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
 
-To enter the IO app without physically using the Electronic Identity Card,you must first enable Level 1 and Level 2 access in the CieID application.
+To enter the IO app without physically using the Electronic Identity Card, you must first enable Level 1 and Level 2 access in the CieID application.
         </Text>
       </View>
       <View
@@ -202,7 +202,7 @@ To enter the IO app without physically using the Electronic Identity Card,you mu
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -449,7 +449,7 @@ To enter the IO app without physically using the Electronic Identity Card,you mu
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -564,7 +564,7 @@ To enter the IO app without physically using the Electronic Identity Card,you mu
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -783,7 +783,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -1127,7 +1127,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       "fontFamily": "Titillium Sans Pro",
                       "fontSize": 16,
                       "fontStyle": "normal",
-                      "fontWeight": "700",
+                      "fontWeight": "600",
                       "lineHeight": undefined,
                     },
                     {
@@ -1375,7 +1375,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -1490,7 +1490,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -1805,7 +1805,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                     ]
@@ -2014,7 +2014,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                     ]
@@ -2181,7 +2181,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                     ]
@@ -2426,7 +2426,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -2771,7 +2771,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -2886,7 +2886,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {

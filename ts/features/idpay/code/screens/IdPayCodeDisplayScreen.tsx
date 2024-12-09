@@ -7,7 +7,6 @@ import {
   H3,
   IOColors,
   IOStyles,
-  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -31,7 +30,6 @@ import {
   isIdPayCodeFailureSelector,
   isIdPayCodeLoadingSelector
 } from "../store/selectors";
-import useContentWithFF from "../../../../screens/profile/useContentWithFF";
 
 type IdPayCodeDisplayRouteParams = {
   isOnboarding?: boolean;
@@ -51,7 +49,6 @@ const IdPayCodeDisplayScreen = () => {
   const isGeneratingCode = useIOSelector(isIdPayCodeLoadingSelector);
   const isFailure = useIOSelector(isIdPayCodeFailureSelector);
   const idPayCode = useIOSelector(idPayCodeSelector);
-  const content = useContentWithFF("idpay.code.onboarding.banner.body");
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
@@ -89,12 +86,12 @@ const IdPayCodeDisplayScreen = () => {
             <Body color="grey-700" weight="Regular">
               {I18n.t("idpay.code.onboarding.body1")}
             </Body>
-            <Body color="grey-700" weight="Bold">
+            <Body color="grey-700" weight="Semibold">
               {I18n.t("idpay.code.onboarding.bodyBold")}
             </Body>
-            <Label asLink onPress={presentCieBottomSheet}>
+            <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
               {I18n.t("idpay.code.onboarding.bodyCta")}
-            </Label>
+            </Body>
             <VSpacer size={24} />
             <CodeDisplayComponent code={idPayCode} />
             <VSpacer size={24} />
@@ -104,7 +101,7 @@ const IdPayCodeDisplayScreen = () => {
               size="big"
               viewRef={bannerRef}
               title={I18n.t("idpay.code.onboarding.banner.header")}
-              content={content}
+              content={I18n.t("idpay.code.onboarding.banner.body")}
             />
           </ContentWrapper>
         </TopScreenComponent>
