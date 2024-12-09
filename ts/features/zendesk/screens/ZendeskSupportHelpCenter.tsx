@@ -63,6 +63,7 @@ import ZENDESK_ROUTES from "../navigation/routes";
 import {
   ZendeskStartPayload,
   getZendeskConfig,
+  getZendeskPaymentConfig,
   getZendeskToken,
   zendeskSupportCancel
 } from "../store/actions";
@@ -330,6 +331,7 @@ const ZendeskSupportHelpCenter = () => {
    */
   useEffect(() => {
     dispatch(getZendeskConfig.request());
+    dispatch(getZendeskPaymentConfig.request());
   }, [dispatch]);
 
   // add the signatureRequestId to the ticket custom fields

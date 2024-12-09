@@ -95,6 +95,15 @@ export const getZendeskConfig = createAsyncAction(
   "ZENDESK_CONFIG_FAILURE"
 )<void, Zendesk, NetworkError>();
 
+/**
+ * Request the zendesk payment config
+ */
+export const getZendeskPaymentConfig = createAsyncAction(
+  "ZENDESK_PAYMENT_CONFIG_REQUEST",
+  "ZENDESK_PAYMENT_CONFIG_SUCCESS",
+  "ZENDESK_PAYMENT_CONFIG_FAILURE"
+)<void, any, NetworkError>();
+
 // user selected a category
 export const zendeskSelectedCategory = createStandardAction(
   "ZENDESK_SELECTED_CATEGORY"
@@ -127,4 +136,5 @@ export type ZendeskSupportActions =
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>
   | ActionType<typeof zendeskRequestTicketNumber>
-  | ActionType<typeof zendeskSelectedSubcategory>;
+  | ActionType<typeof zendeskSelectedSubcategory>
+  | ActionType<typeof getZendeskPaymentConfig>;
