@@ -142,11 +142,18 @@ const getZendeskConfigT: GetZendeskConfigT = {
   response_decoder: basicResponseDecoder(Zendesk)
 };
 
+type GetZendeskPaymentConfigT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<any>
+>;
+
 // TODO: update with new definition from related PR
-const getZendeskPaymentConfig: any = {
+const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
   method: "get",
   url: () => "/assistanceTools/paymentMap.json",
-  query: (_: any) => ({}),
+  query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(unknown)
 };
