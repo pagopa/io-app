@@ -11,7 +11,7 @@ import {
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useEffect } from "react";
 import { Linking } from "react-native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import I18n from "../../../../i18n";
@@ -25,17 +25,18 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
-  zendeskCategoryId,
-  zendeskPaymentCategory,
   zendeskPaymentFailure,
   zendeskPaymentNav,
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../../utils/supportAssistance";
 import {
+  getZendeskPaymentConfig,
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
+import { zendeskMapSelector } from "../../../zendesk/store/reducers";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 import { selectOngoingPaymentHistory } from "../../history/store/selectors";
 import { walletPaymentRptIdSelector } from "../store/selectors";
 import {
@@ -43,7 +44,7 @@ import {
   getWalletPaymentOutcomeEnumByValue
 } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { formatPaymentNoticeNumber } from "../../common/utils";
+import { getSubCategoryFromFaultCode } from "../utils";
 
 type PaymentFailureSupportModalParams = {
   failure?: WalletPaymentFailure;
@@ -65,7 +66,13 @@ const usePaymentFailureSupportModal = ({
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const rptId = useIOSelector(walletPaymentRptIdSelector);
   const paymentHistory = useIOSelector(selectOngoingPaymentHistory);
+  const zendeskPaymentCategory = useIOSelector(zendeskMapSelector);
+
   const dispatch = useIODispatch();
+
+  useEffect(() => {
+    dispatch(getZendeskPaymentConfig.request());
+  }, [dispatch]);
 
   const faultCodeDetail =
     failure?.faultCodeDetail ||
@@ -73,8 +80,12 @@ const usePaymentFailureSupportModal = ({
     "";
 
   const zendeskAssistanceLogAndStart = () => {
+    const { value, zendeskCategoryId } = getSubCategoryFromFaultCode(
+      zendeskPaymentCategory,
+      faultCodeDetail
+    );
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+    addTicketCustomField(zendeskCategoryId, value);
     addTicketCustomField(zendeskPaymentOrgFiscalCode, organizationFiscalCode);
     addTicketCustomField(zendeskPaymentNav, paymentNoticeNumber);
     addTicketCustomField(zendeskPaymentFailure, faultCodeDetail);
