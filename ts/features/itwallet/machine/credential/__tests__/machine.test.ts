@@ -614,25 +614,4 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
   });
-
-  it("Should navigate to the async issuance failure screen if isRequested is true", async () => {
-    isDeferredIssuance.mockReturnValue(false);
-
-    const actor = createActor(mockedMachine);
-    actor.start();
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
-    actor.send({
-      type: "select-credential",
-      credentialType: "MDL",
-      isRequested: true
-    });
-
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
-    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
-    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
-    expect(isDeferredIssuance).toHaveBeenCalledTimes(1);
-    expect(flagCredentialAsRequested).toHaveBeenCalledTimes(0);
-  });
 });

@@ -102,11 +102,10 @@ const ItwCredentialOnboardingSection = () => {
       machineRef.send({
         type: "select-credential",
         credentialType: type,
-        skipNavigation: true,
-        isRequested: requestedCredentials.includes(type)
+        skipNavigation: true
       });
     },
-    [machineRef, requestedCredentials]
+    [machineRef]
   );
 
   return (

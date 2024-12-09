@@ -8,7 +8,6 @@ export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
   skipNavigation?: boolean;
-  isRequested?: boolean;
 };
 
 export type ConfirmTrustData = {

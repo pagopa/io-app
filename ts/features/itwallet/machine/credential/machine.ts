@@ -11,7 +11,7 @@ import {
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
-import { CredentialIssuanceFailureType, mapEventToFailure } from "./failure";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -70,18 +70,6 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       on: {
         "select-credential": [
-          {
-            guard: ({ event }) => event.isRequested === true,
-            target: "Failure",
-            actions: [
-              assign({
-                credentialType: ({ event }) => event.credentialType,
-                failure: {
-                  type: CredentialIssuanceFailureType.ASYNC_ISSUANCE
-                }
-              })
-            ]
-          },
           {
             guard: ({ event }) => event.skipNavigation === true,
             target: "CheckingWalletInstanceAttestation",
