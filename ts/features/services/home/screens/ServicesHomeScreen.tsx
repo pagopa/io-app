@@ -1,7 +1,7 @@
 import {
-  ActionProp,
   ButtonLink,
   Divider,
+  HeaderActionProps,
   IOStyles,
   IOToast,
   ListItemHeader,
@@ -10,7 +10,13 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useLayoutEffect, useMemo } from "react";
+import React, {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo
+} from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
@@ -20,9 +26,7 @@ import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFi
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
+import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import * as analytics from "../../common/analytics";
 import { InstitutionListSkeleton } from "../../common/components/InstitutionListSkeleton";
@@ -200,23 +204,9 @@ export const ServicesHomeScreen = () => {
     [navigateToInstitution]
   );
 
-  /* Code related to the header */
+  /* CODE RELATED TO THE HEADER -- START */
 
   const scrollViewContentRef = useAnimatedRef<Animated.FlatList<Institution>>();
-
-  /* Scroll to top when the active tab is tapped */
-  useTabItemPressWhenScreenActive(
-    () =>
-      scrollViewContentRef.current?.scrollToOffset({
-        offset: 0,
-        animated: true
-      }),
-    false
-  );
-
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const { bottomSheet, present } = useServicesHomeBottomSheet();
 
@@ -225,31 +215,20 @@ export const ServicesHomeScreen = () => {
     navigation.navigate(SERVICES_ROUTES.SEARCH);
   }, [navigation]);
 
-  const handleSettings = useCallback(() => {
-    if (isSettingsVisibleAndHideProfile) {
-      present();
-      return;
-    }
-
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PROFILE_PREFERENCES_SERVICES
-    });
-  }, [isSettingsVisibleAndHideProfile, navigation, present]);
-
   const helpAction = useHeaderFirstLevelActionPropHelp(
     SERVICES_ROUTES.SERVICES_HOME
   );
 
-  const settingsAction: ActionProp = useMemo(
+  const settingsAction: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
-      onPress: handleSettings
+      onPress: present
     }),
-    [handleSettings]
+    [present]
   );
 
-  const searchAction: ActionProp = useMemo(
+  const searchAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),
@@ -259,10 +238,10 @@ export const ServicesHomeScreen = () => {
   );
 
   useLayoutEffect(() => {
-    const headerFirstLevelProps: HeaderFirstLevel = {
+    const headerFirstLevelProps: ComponentProps<typeof HeaderFirstLevel> = {
       title: I18n.t("services.title"),
-      type: "threeActions",
       animatedFlatListRef: scrollViewContentRef,
+      type: "threeActions",
       firstAction: helpAction,
       secondAction: settingsAction,
       thirdAction: searchAction
@@ -273,12 +252,25 @@ export const ServicesHomeScreen = () => {
     });
   }, [
     SearchInputComponent,
+    handleSearch,
     helpAction,
     navigation,
     scrollViewContentRef,
     searchAction,
     settingsAction
   ]);
+
+  /* CODE RELATED TO THE HEADER -- START */
+
+  /* Scroll to top when the active tab is tapped */
+  useTabItemPressWhenScreenActive(
+    () =>
+      scrollViewContentRef.current?.scrollToOffset({
+        offset: 0,
+        animated: true
+      }),
+    false
+  );
 
   return (
     <>

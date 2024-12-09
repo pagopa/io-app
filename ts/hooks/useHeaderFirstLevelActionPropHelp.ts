@@ -1,4 +1,4 @@
-import { ActionProp } from "@pagopa/io-app-design-system";
+import { HeaderActionProps } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -20,15 +20,6 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
     contextualHelpMarkdown: {
       title: "messages.contextualHelpTitle",
       body: "messages.contextualHelpContent"
-    }
-  },
-  // TODO: delete this route when the showBarcodeScanSection
-  // and isSettingsVisibleAndHideProfileSelector FF will be deleted
-  [ROUTES.PROFILE_MAIN]: {
-    faqCategories: ["profile"],
-    contextualHelpMarkdown: {
-      title: "profile.main.contextualHelpTitle",
-      body: "profile.main.contextualHelpContent"
     }
   },
   [SERVICES_ROUTES.SERVICES_HOME]: {
@@ -60,7 +51,7 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
  */
 export const useHeaderFirstLevelActionPropHelp = (
   currentRouteName: TabRoutes
-): ActionProp => {
+): HeaderActionProps => {
   const requestParams = useMemo(
     () =>
       pipe(

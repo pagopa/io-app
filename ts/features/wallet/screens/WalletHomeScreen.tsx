@@ -62,7 +62,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   // Handles the "New element added" toast display once the user returns to this screen
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data
@@ -80,7 +80,6 @@ const WalletHomeScreen = ({ route }: Props) => {
 };
 
 const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
-  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 
@@ -101,6 +100,7 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
     const headerFirstLevelProps: HeaderFirstLevel = {
       testID: "wallet-home-header-title",
       title: I18n.t("wallet.wallet"),
+      animatedRef: scrollViewContentRef,
       firstAction: helpAction,
       type: "twoActions",
       secondAction: settingsAction
@@ -113,15 +113,15 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
 
   useTabItemPressWhenScreenActive(
     useCallback(() => {
-      animatedScrollViewRef.current?.scrollTo({ y: 0, animated: true });
-    }, [animatedScrollViewRef]),
+      scrollViewContentRef.current?.scrollTo({ y: 0, animated: true });
+    }, [scrollViewContentRef]),
     false
   );
 
   if (cards.length === 0) {
     return (
       <Animated.ScrollView
-        ref={animatedScrollViewRef}
+        ref={scrollViewContentRef}
         contentContainerStyle={[
           IOStyles.flex,
           IOStyles.horizontalContentPadding
@@ -134,7 +134,7 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
 
   return (
     <IOScrollView
-      animatedRef={animatedScrollViewRef}
+      animatedRef={scrollViewContentRef}
       actions={{
         type: "SingleButton",
         primary: {
