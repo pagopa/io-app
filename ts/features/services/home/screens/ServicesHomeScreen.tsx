@@ -264,11 +264,14 @@ export const ServicesHomeScreen = () => {
 
   /* Scroll to top when the active tab is tapped */
   useTabItemPressWhenScreenActive(
-    () =>
-      scrollViewContentRef.current?.scrollToOffset({
-        offset: 0,
-        animated: true
-      }),
+    useCallback(
+      () =>
+        scrollViewContentRef.current?.scrollToOffset({
+          offset: 0,
+          animated: true
+        }),
+      [scrollViewContentRef]
+    ),
     false
   );
 

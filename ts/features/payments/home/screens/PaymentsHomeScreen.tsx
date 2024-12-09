@@ -154,6 +154,7 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
+      excludeSafeAreaMargins={true}
       animatedRef={scrollViewContentRef}
       refreshControlProps={{
         refreshing: isRefreshing,

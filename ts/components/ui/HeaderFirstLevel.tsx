@@ -11,6 +11,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { createRef, useLayoutEffect } from "react";
 import {
   AccessibilityInfo,
   StyleSheet,
@@ -98,11 +99,11 @@ export const HeaderFirstLevel = ({
   animatedRef,
   animatedFlatListRef
 }: HeaderFirstLevel) => {
-  const titleRef = React.createRef<View>();
+  const titleRef = createRef<View>();
   const insets = useSafeAreaInsets();
   const theme = useIOTheme();
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const reactNode = findNodeHandle(titleRef.current);
     if (reactNode !== null) {
       AccessibilityInfo.setAccessibilityFocus(reactNode);
