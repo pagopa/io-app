@@ -34,6 +34,7 @@ import {
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
 import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
+import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -75,12 +76,14 @@ const PaymentsHomeScreen = () => {
 
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
 
+  const alertProps = useStatusAlertProps(ROUTES.PAYMENTS_HOME);
   const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.PAYMENTS_HOME);
   const settingsAction = useHeaderFirstLevelActionPropSettings();
 
   useLayoutEffect(() => {
     const headerFirstLevelProps: HeaderFirstLevel = {
       title: I18n.t("features.payments.title"),
+      ignoreSafeAreaMargin: !!alertProps,
       animatedRef: scrollViewContentRef,
       firstAction: helpAction,
       type: "twoActions",
@@ -90,7 +93,13 @@ const PaymentsHomeScreen = () => {
     navigation.setOptions({
       header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
     });
-  }, [scrollViewContentRef, settingsAction, helpAction, navigation]);
+  }, [
+    scrollViewContentRef,
+    settingsAction,
+    helpAction,
+    navigation,
+    alertProps
+  ]);
 
   /* CODE RELATED TO THE HEADER -- END */
 

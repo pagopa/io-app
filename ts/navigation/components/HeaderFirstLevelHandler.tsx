@@ -113,22 +113,6 @@ export const HeaderFirstLevelHandler = ({
       ignoreSafeAreaMargin: !!alertProps
     };
     switch (currentRouteName) {
-      case ROUTES.WALLET_HOME:
-        return {
-          title: I18n.t("wallet.wallet"),
-          firstAction: helpAction,
-          testID: "wallet-home-header-title",
-          type: "twoActions",
-          secondAction: settingsAction
-        };
-      case ROUTES.PAYMENTS_HOME:
-        return {
-          ...commonProp,
-          title: I18n.t("features.payments.title"),
-          firstAction: helpAction,
-          type: "twoActions",
-          secondAction: settingsAction
-        };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
@@ -146,7 +130,6 @@ export const HeaderFirstLevelHandler = ({
     currentRouteName,
     helpAction,
     settingsActionInMessageSection,
-    settingsAction,
     searchMessageAction
   ]);
 

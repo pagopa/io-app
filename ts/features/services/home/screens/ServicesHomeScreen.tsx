@@ -23,6 +23,7 @@ import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
 import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
+import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -49,6 +50,8 @@ export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstRender = useFirstRender();
+
+  const alertProps = useStatusAlertProps(SERVICES_ROUTES.SERVICES_HOME);
 
   const {
     currentPage,
@@ -241,6 +244,7 @@ export const ServicesHomeScreen = () => {
     const headerFirstLevelProps: ComponentProps<typeof HeaderFirstLevel> = {
       title: I18n.t("services.title"),
       animatedFlatListRef: scrollViewContentRef,
+      ignoreSafeAreaMargin: !!alertProps,
       type: "threeActions",
       firstAction: helpAction,
       secondAction: settingsAction,
@@ -252,6 +256,7 @@ export const ServicesHomeScreen = () => {
     });
   }, [
     SearchInputComponent,
+    alertProps,
     handleSearch,
     helpAction,
     navigation,

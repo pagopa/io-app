@@ -1,17 +1,17 @@
 import {
-  HeaderActionProps,
   H3,
   HSpacer,
+  HeaderActionProps,
   IOColors,
   IOStyles,
   IOVisualCostants,
   IconButton,
-  VSpacer,
   WithTestID,
+  alertEdgeToEdgeInsetTransitionConfig,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { createRef, useLayoutEffect } from "react";
+import { createRef, useEffect, useLayoutEffect } from "react";
 import {
   AccessibilityInfo,
   StyleSheet,
@@ -22,18 +22,18 @@ import Animated, {
   AnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
+  useSharedValue,
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-// import { HeaderActionProps } from "../../hooks/useHeaderProps";
 
 type CommonProps = WithTestID<{
   title: string;
   // This Prop will be removed once all the screens on the first level routing will be refactored
   backgroundColor?: "light" | "dark";
+  ignoreSafeAreaMargin?: boolean;
   animatedRef?: AnimatedRef<Animated.ScrollView>;
   animatedFlatListRef?: AnimatedRef<Animated.FlatList<any>>;
-  endBlock?: React.ReactNode;
 }>;
 
 interface Base extends CommonProps {
@@ -95,13 +95,14 @@ export const HeaderFirstLevel = ({
   firstAction,
   secondAction,
   thirdAction,
-  endBlock,
+  ignoreSafeAreaMargin = false,
   animatedRef,
   animatedFlatListRef
 }: HeaderFirstLevel) => {
   const titleRef = createRef<View>();
   const insets = useSafeAreaInsets();
   const theme = useIOTheme();
+  const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
 
   useLayoutEffect(() => {
     const reactNode = findNodeHandle(titleRef.current);
@@ -116,19 +117,33 @@ export const HeaderFirstLevel = ({
       (animatedFlatListRef as AnimatedRef<Animated.FlatList<any>>)
   );
 
+  useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    paddingTop.value = withTiming(
+      ignoreSafeAreaMargin ? 0 : insets.top,
+      alertEdgeToEdgeInsetTransitionConfig
+    );
+  }, [ignoreSafeAreaMargin, insets.top, paddingTop]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    paddingTop: paddingTop.value
+  }));
+
   const animatedDivider = useAnimatedStyle(() => ({
     opacity: withTiming(offset.value > 0 ? 1 : 0, { duration: 200 })
   }));
 
   return (
-    <View
-      style={{
-        paddingTop: insets.top,
-        backgroundColor:
-          backgroundColor === "light"
-            ? IOColors[theme["appBackground-primary"]]
-            : IOColors[HEADER_BG_COLOR_DARK]
-      }}
+    <Animated.View
+      style={[
+        {
+          backgroundColor:
+            backgroundColor === "light"
+              ? IOColors[theme["appBackground-primary"]]
+              : IOColors[HEADER_BG_COLOR_DARK]
+        },
+        animatedStyle
+      ]}
       accessibilityRole="header"
       testID={testID}
     >
@@ -146,6 +161,7 @@ export const HeaderFirstLevel = ({
       <View style={styles.headerInner}>
         <View ref={titleRef} accessible accessibilityRole="header">
           <H3
+            weight="Bold"
             style={{ flexShrink: 1 }}
             numberOfLines={1}
             color={
@@ -185,13 +201,7 @@ export const HeaderFirstLevel = ({
           )}
         </View>
       </View>
-      {endBlock && (
-        <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
-          {endBlock}
-          <VSpacer size={12} />
-        </View>
-      )}
-    </View>
+    </Animated.View>
   );
 };
 
