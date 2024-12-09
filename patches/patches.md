@@ -6,10 +6,6 @@ Created on 03/05/2024
 - Apply [fix/ios-17-regression](https://github.com/wix/Detox/pull/4171).
 - Remove this patch once bumped `detox` to `v20`.
 
-### react-native-reanimated
-Created on **18/03/2024**
-This patch resolves [react-native-reanimated/issues/3286](https://github.com/software-mansion/react-native-reanimated/issues/3286) by applying [react-native-reanimated/pull/3298](https://github.com/software-mansion/react-native-reanimated/pull/3298). Remove this patch once bumped `react-native-reanimated` from `v2` to `v3` and checked the issue is gone.
-
 ### react-native-pdf+6.4.0
 Created on **16/03/2024**
 
@@ -174,3 +170,12 @@ Created on **29/08/2024**
 #### Reason:
 
 - Patch to fix an error occurring during Android gradle build (see https://github.com/hieuvp/react-native-fingerprint-scanner/issues/192)
+
+### react-native+0.72.14.patch
+
+Created on **04/10/2024**
+
+#### Reason:
+
+- Patch to fix this jest error: `TypeError: _reactNative.AccessibilityInfo.announceForAccessibilityWithOptions is not a function`.  
+In the `react-native/jest/setup.js` the `announceForAccessibilityWithOptions` method mock was missing (see [this issue](https://github.com/facebook/react-native/issues/44014)), this patch adds it.  

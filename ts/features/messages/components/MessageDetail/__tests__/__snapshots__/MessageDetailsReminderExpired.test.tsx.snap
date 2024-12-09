@@ -204,6 +204,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -576,6 +577,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -728,6 +730,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                         <View
                           style={
                             {
+                              "alignSelf": "flex-start",
                               "marginRight": 12,
                             }
                           }
@@ -796,12 +799,10 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                         <View
                           style={
                             [
-                              {
-                                "marginTop": -10,
-                              },
+                              false,
+                              false,
                               {
                                 "flex": 1,
-                                "marginBottom": -6,
                               },
                             ]
                           }
@@ -809,33 +810,22 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
-                            color="warning-850"
-                            defaultColor="black"
-                            defaultWeight="Bold"
-                            dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 24,
-                              }
-                            }
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
+                            onTextLayout={[Function]}
                             style={
                               [
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                },
+                                {},
                                 {
                                   "color": "#614C15",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Regular"
                           >
                             Expired on 21 Mar at 10:33
                           </Text>

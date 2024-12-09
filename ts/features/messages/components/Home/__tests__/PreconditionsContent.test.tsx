@@ -8,7 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PreconditionsContent } from "../PreconditionsContent";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePreconditions from "../../../store/reducers/messagePrecondition";
-import * as backendStatus from "../../../../../store/reducers/backendStatus";
+import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { MarkdownProps } from "../../../../../components/ui/Markdown/Markdown";
 import {
   errorPreconditionStatusAction,
@@ -18,6 +18,7 @@ import {
 } from "../../../store/actions/preconditions";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import * as analytics from "../../../analytics";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 jest.mock("../../MessageDetail/MessageMarkdown");
 
@@ -31,6 +32,7 @@ describe("PreconditionsContent", () => {
   afterEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
   it("should match snapshot when content category is 'content' but markdown is undefined", () => {
     jest

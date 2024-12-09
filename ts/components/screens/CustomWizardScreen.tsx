@@ -1,9 +1,11 @@
 import {
   Body,
+  BodyProps,
   ButtonLink,
   ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H3,
   IOPictograms,
@@ -14,10 +16,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
+
 export type CustomWizardScreenProps = {
   title: string;
   description?: string | Array<BodyProps>;
@@ -38,6 +37,7 @@ export type CustomWizardScreenProps = {
 
 /**
  * A common screen used in a wizard flow to show a pictogram, a title, a description and one or two buttons.
+ * @deprecated This component is deprecated. Use `IOScrollViewCentredContent` instead.
  */
 const CustomWizardScreen = ({
   title,

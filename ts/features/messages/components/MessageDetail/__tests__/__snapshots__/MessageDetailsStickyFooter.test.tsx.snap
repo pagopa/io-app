@@ -204,6 +204,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -443,36 +444,26 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 CTA 1
                               </Text>
@@ -570,18 +561,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
-                                    },
-                                    {
-                                      "color": "#0073E6",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
                                     {
                                       "color": undefined,
@@ -812,6 +803,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1051,36 +1043,26 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Pay
                               </Text>
@@ -1170,24 +1152,27 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               allowFontScaling={false}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.3}
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
+                                  {},
                                   {
+                                    "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
+                                    "lineHeight": undefined,
                                   },
-                                  {
-                                    "alignSelf": "center",
-                                  },
-                                  {
-                                    "color": "#0073E6",
-                                  },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "alignSelf": "center",
+                                    },
+                                    {
+                                      "color": undefined,
+                                    },
+                                  ],
                                 ]
                               }
                             >
@@ -1286,18 +1271,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
-                                    },
-                                    {
-                                      "color": "#0073E6",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
                                     {
                                       "color": undefined,
@@ -1528,6 +1513,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1871,6 +1857,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2110,36 +2097,26 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Pay
                               </Text>
@@ -2364,6 +2341,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2707,6 +2685,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3338,6 +3317,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3577,36 +3557,26 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 CTA 1
                               </Text>
@@ -3831,6 +3801,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4070,36 +4041,26 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={false}
-                                color="white"
-                                defaultColor="white"
-                                defaultWeight="Bold"
                                 ellipsizeMode="tail"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                  }
-                                }
                                 importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "alignSelf": "center",
-                                    },
-                                    {
-                                      "fontSize": 16,
-                                    },
+                                    {},
                                     {
                                       "color": "#FFFFFF",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
+                                      "lineHeight": 20,
+                                    },
+                                    {
+                                      "alignSelf": "center",
                                     },
                                   ]
                                 }
-                                weight="Bold"
                               >
                                 Pay
                               </Text>
@@ -4197,18 +4158,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0E0F13",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
-                                    },
-                                    {
-                                      "color": "#0073E6",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
                                     {
                                       "color": undefined,

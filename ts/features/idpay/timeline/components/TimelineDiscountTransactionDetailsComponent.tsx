@@ -1,4 +1,11 @@
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  Body,
+  H6,
+  HSpacer,
+  ListItemInfoCopy,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -7,14 +14,12 @@ import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { Body } from "../../../../components/core/typography/Body";
-import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
   transaction: TransactionDetailDTO;
@@ -50,7 +55,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
   const formattedAmount = pipe(
     transaction.amountCents,
     O.fromNullable,
-    O.map(amount => formatNumberAmount(amount, true)),
+    O.map(amount => formatNumberCentsToAmount(amount, true)),
     O.getOrElse(() => "-")
   );
 
@@ -79,14 +84,14 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           )}
         </Body>
         <Body weight="Semibold">
-          {formatNumberAmount(transaction.accruedCents, true)}
+          {formatNumberCentsToAmount(transaction.accruedCents, true)}
         </Body>
       </View>
       <ItemSeparatorComponent noPadded={true} />
       <VSpacer size={24} />
-      <H4>
+      <H6>
         {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
-      </H4>
+      </H6>
       <VSpacer size={4} />
       <View style={styles.detailRow}>
         <Body>
@@ -123,26 +128,15 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
           {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
         </Body>
       </View>
-      <View style={styles.detailRow}>
-        <Body style={{ flex: 1 }}>
-          {I18n.t(
-            "idpay.initiative.operationDetails.discount.details.labels.transactionID"
-          )}
-        </Body>
-        <HSpacer size={16} />
-        <View style={[IOStyles.flex, IOStyles.row]}>
-          <Body
-            weight="Semibold"
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={IOStyles.flex}
-          >
-            {transaction.operationId}
-          </Body>
-          <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={transaction.operationId} />
-        </View>
-      </View>
+      <ListItemInfoCopy
+        label={I18n.t(
+          "idpay.initiative.operationDetails.discount.details.labels.transactionID"
+        )}
+        value={transaction.operationId}
+        onPress={() => {
+          clipboardSetStringWithFeedback(transaction.operationId);
+        }}
+      />
     </View>
   );
 };

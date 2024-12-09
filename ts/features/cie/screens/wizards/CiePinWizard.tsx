@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
+  ButtonLink,
   ContentWrapper,
-  LabelLink,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -17,12 +17,19 @@ import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../../utils/url";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import {
+  trackCiePinWizardScreen,
+  trackWizardCiePinInfoSelected,
+  trackWizardCiePinSelected
+} from "../../analytics";
+import { useIOStore } from "../../../../store/hooks";
 
-const CIE_PIN_LINK =
+export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
 
 const CiePinWizard = () => {
   const buttonRef = useRef<View>(null);
+  const store = useIOStore();
   const { navigate } = useIONavigation();
   const { error } = useIOToast();
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
@@ -38,15 +45,17 @@ const CiePinWizard = () => {
           )}
         />
         <VSpacer size={24} />
-        <LabelLink
+        <ButtonLink
+          testID="cie-pin-wizard-open-cie-pin-link"
+          label={I18n.t(
+            "authentication.wizards.cie_pin_wizard.bottom_sheet.link"
+          )}
           onPress={() => {
             openWebUrl(CIE_PIN_LINK, () => {
               error(I18n.t("global.jserror.title"));
             });
           }}
-        >
-          {I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.link")}
-        </LabelLink>
+        />
       </>
     ),
     snapPoint: [350],
@@ -55,6 +64,10 @@ const CiePinWizard = () => {
     }
   });
 
+  useEffect(() => {
+    void trackCiePinWizardScreen();
+  }, []);
+
   // eslint-disable-next-line arrow-body-style
   useFocusEffect(() => {
     return () => {
@@ -62,50 +75,52 @@ const CiePinWizard = () => {
     };
   });
 
-  const getActions = (): IOScrollViewActions => {
-    const primaryLabel = I18n.t(
-      "authentication.wizards.cie_pin_wizard.actions.primary.label"
-    );
-    const secondaryLabel = I18n.t(
-      "authentication.wizards.cie_pin_wizard.actions.secondary.label"
-    );
-    return {
-      type: "TwoButtons",
-      primary: {
-        label: primaryLabel,
-        accessibilityLabel: primaryLabel,
-        onPress: navigateToCiePinInsertion
-      },
-      secondary: {
-        label: secondaryLabel,
-        accessibilityLabel: secondaryLabel,
-        onPress: () => {
-          navigate(ROUTES.AUTHENTICATION, {
-            screen: ROUTES.AUTHENTICATION_SPID_WIZARD
-          });
-        }
+  const screenActions = (): IOScrollViewActions => ({
+    type: "TwoButtons",
+    primary: {
+      testID: "cie-pin-wizard-navigate-to-cie-pin-screen",
+      label: I18n.t(
+        "authentication.wizards.cie_pin_wizard.actions.primary.label"
+      ),
+      onPress: () => {
+        void trackWizardCiePinSelected(store.getState());
+        navigateToCiePinInsertion();
       }
-    };
+    },
+    secondary: {
+      testID: "cie-pin-wizard-navigate-to-spid-wizard",
+      label: I18n.t(
+        "authentication.wizards.cie_pin_wizard.actions.secondary.label"
+      ),
+      onPress: () => {
+        navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_SPID_WIZARD
+        });
+      }
+    }
+  });
+
+  const handlePresent = () => {
+    void trackWizardCiePinInfoSelected();
+    present();
   };
 
   return (
     <IOScrollViewWithLargeHeader
       title={{ label, accessibilityLabel: label }}
       description={I18n.t("authentication.wizards.cie_pin_wizard.description")}
-      actions={getActions()}
+      actions={screenActions()}
     >
       <ContentWrapper>
         <VSpacer size={12} />
-        <LabelLink
-          ref={buttonRef}
-          role="button"
-          accessibilityRole="button"
-          onPress={present}
-        >
-          {I18n.t(
+        <ButtonLink
+          testID="cie-pin-wizard-open-bottom-sheet"
+          label={I18n.t(
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}
-        </LabelLink>
+          ref={buttonRef}
+          onPress={handlePresent}
+        />
       </ContentWrapper>
       {bottomSheet}
     </IOScrollViewWithLargeHeader>

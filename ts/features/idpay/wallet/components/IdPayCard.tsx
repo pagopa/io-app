@@ -1,16 +1,10 @@
-import {
-  Avatar,
-  H3,
-  H6,
-  LabelSmallAlt,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Avatar, Body, H3, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import I18n from "../../../../i18n";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 export type IdPayCardProps = {
   name: string;
@@ -43,16 +37,18 @@ export const IdPayCard = (props: IdPayCardProps) => (
           <Avatar size="small" logoUri={props.avatarSource} />
         </View>
         <VSpacer size={16} />
-        <LabelSmallAlt>Disponibile</LabelSmallAlt>
+        <Body weight="Semibold" color="black">
+          Disponibile
+        </Body>
         <H3 color="blueItalia-500">
-          {formatNumberAmount(props.amount, true, "right")}
+          {formatNumberCentsToAmount(props.amount, true, "right")}
         </H3>
       </View>
-      <LabelSmallAlt color="blueItalia-850">
+      <Body weight="Semibold" color="blueItalia-850">
         {I18n.t("bonusCard.validUntil", {
           endDate: format(props.expireDate, "MM/YY")
         })}
-      </LabelSmallAlt>
+      </Body>
     </View>
   </View>
 );

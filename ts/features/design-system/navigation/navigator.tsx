@@ -1,18 +1,15 @@
 import {
-  IOVisualCostants,
+  IOColors,
   IconButton,
+  makeFontStyleObject,
   useIOExperimentalDesign,
+  useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
-import {
-  StackNavigationOptions,
-  TransitionPresets,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Alert, Platform, View } from "react-native";
-import { makeFontStyleObject } from "../../../components/core/fonts";
+import { Alert, Platform } from "react-native";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import {
   IONavigationDarkTheme,
@@ -23,14 +20,18 @@ import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
+import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
 import { DSBadges } from "../core/DSBadges";
 import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
 import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
+import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFooterActions } from "../core/DSFooterActions";
+import { DSFooterActionsInline } from "../core/DSFooterActionsInline";
+import { DSFooterActionsInlineNotFixed } from "../core/DSFooterActionsInlineNotFixed";
 import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
@@ -40,21 +41,16 @@ import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSIOMarkdown } from "../core/DSIOMarkdown";
 import { DSIOScrollView } from "../core/DSIOScrollView";
+import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredContent";
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
+import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
 import { DSIcons } from "../core/DSIcons";
+import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyAccordion } from "../core/DSLegacyAccordion";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyAlert } from "../core/DSLegacyAlert";
-import { DSLegacyBadges } from "../core/DSLegacyBadges";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyListItems } from "../core/DSLegacyListItems";
-import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
-import { DSLegacySelection } from "../core/DSLegacySelection";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
-import { DSLegacyTypography } from "../core/DSLegacyTypography";
-import DSListItemScreen from "../core/DSListItemScreen";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
@@ -73,47 +69,24 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
-import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
-const Stack = createStackNavigator<DesignSystemParamsList>();
-
-// BackButton managed through React Navigation
-const RNNBackButton = () => {
-  const navigation = useNavigation();
-  const { themeType } = useIOThemeContext();
-  return (
-    <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon={Platform.select({
-          android: "backAndroid",
-          default: "backiOS"
-        })}
-        color={themeType === "dark" ? "contrast" : "neutral"}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
-  );
-};
+const Stack = createNativeStackNavigator<DesignSystemParamsList>();
 
 const RNNCloseButton = () => {
   const navigation = useNavigation();
+  const { themeType } = useIOThemeContext();
 
   return (
-    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon="closeMedium"
-        color="neutral"
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
+    <IconButton
+      icon="closeMedium"
+      color={themeType === "dark" ? "contrast" : "neutral"}
+      onPress={() => {
+        navigation.goBack();
+      }}
+      accessibilityLabel={""}
+    />
   );
 };
 
@@ -138,27 +111,25 @@ const HeaderFirstLevelComponent = () => (
   />
 );
 
-const customModalHeaderConf: StackNavigationOptions = {
-  headerLeft: () => null,
-  headerTitle: () => null,
-  headerRight: RNNCloseButton,
-  headerStyle: { height: IOVisualCostants.headerHeight },
-  headerStatusBarHeight: 0
-};
-
 export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
+  const theme = useIOTheme();
 
-  const customHeaderConf: StackNavigationOptions = {
+  const customModalHeaderConf = {
+    headerRight: RNNCloseButton,
+    title: DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.title,
+    sheetCornerRadius: 24,
     headerTitleStyle: {
-      ...(isExperimental
-        ? makeFontStyleObject("Regular", false, "ReadexPro")
-        : makeFontStyleObject("Semibold", false, "TitilliumSansPro")),
-      fontSize: 14
-    },
-    headerTitleAlign: "center",
-    headerLeft: RNNBackButton
+      ...makeFontStyleObject(
+        14,
+        isExperimental ? "Titillio" : "TitilliumSansPro",
+        18,
+        isExperimental ? "Regular" : "Semibold",
+        undefined
+      ),
+      color: IOColors[theme["textHeading-default"]]
+    }
   };
 
   return (
@@ -169,13 +140,29 @@ export const DesignSystemNavigator = () => {
     >
       <Stack.Navigator
         initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-        screenOptions={customHeaderConf}
+        screenOptions={{
+          headerTintColor: IOColors[theme["interactiveElem-default"]],
+          headerTitleStyle: {
+            ...makeFontStyleObject(
+              14,
+              isExperimental ? "Titillio" : "TitilliumSansPro",
+              18,
+              isExperimental ? "Regular" : "Semibold",
+              undefined
+            ),
+            color: IOColors[theme["textHeading-default"]]
+          },
+          headerTitleAlign: "center",
+          headerBackTitleVisible: false,
+          headerShown: true,
+          autoHideHomeIndicator: true
+        }}
       >
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.MAIN.route}
           component={DesignSystem}
           options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title
+            title: DESIGN_SYSTEM_ROUTES.MAIN.title
           }}
         />
 
@@ -379,6 +366,38 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        {/* EXPERIMENTAL LAB */}
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.route}
+          component={DSAnimatedPictograms}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ANIMATED_PICTOGRAMS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.route}
+          component={DSDynamicBackground}
+          options={{
+            headerShown: false,
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.DYNAMIC_BACKGROUND.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.route
+          }
+          component={DSIridescentTrustmark}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.title
+          }}
+        />
+
         {/* HEADERS */}
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
@@ -409,14 +428,40 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
-          component={DSWizardScreen}
-          options={{ headerShown: false }}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.route}
+          component={DSIOScrollView}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW.title
+          }}
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.SCREENS.LIST_ITEM_SCREEN.route}
-          component={DSListItemScreen}
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.route}
+          component={DSIOScrollViewWithoutActions}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WO_ACTIONS.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.route}
+          component={DSIOScrollViewScreenWithLargeHeader}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_LARGEHEADER.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_CENTRED_CONTENT.route}
+          component={DSIOScrollViewCentredContent}
+          options={{ headerShown: true }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.IOSCROLLVIEW_WITH_LIST_ITEMS.route}
+          component={DSIOScrollViewWithListItems}
           options={{ headerShown: true }}
         />
 
@@ -459,32 +504,6 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW.route}
-          component={DSIOScrollView}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_WO_ACTIONS.route}
-          component={DSIOScrollViewWithoutActions}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_WO_ACTIONS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_LARGEHEADER.route}
-          component={DSIOScrollViewScreenWithLargeHeader}
-          options={{
-            headerTitle:
-              DESIGN_SYSTEM_ROUTES.DEBUG.IOSCROLLVIEW_LARGEHEADER.title
-          }}
-        />
-
-        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS.route}
           component={DSFooterActions}
           options={{
@@ -509,15 +528,31 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.route}
+          component={DSFooterActionsInline}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.route
+          }
+          component={DSFooterActionsInlineNotFixed}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.DEBUG.FOOTER_ACTIONS_INLINE_NOT_FIXED.title
+          }}
+        />
+
         <Stack.Group
           screenOptions={{
-            headerMode: "screen",
-            presentation: "modal",
+            presentation: "formSheet",
             ...(Platform.OS === "ios"
               ? {
-                  gestureEnabled: isGestureEnabled,
-                  cardOverlayEnabled: true,
-                  ...TransitionPresets.ModalPresentationIOS
+                  gestureEnabled: isGestureEnabled
                 }
               : null)
           }}
@@ -530,29 +565,6 @@ export const DesignSystemNavigator = () => {
         </Stack.Group>
 
         {/* LEGACY */}
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.route}
-          component={DSLegacyTypography}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.TYPOGRAPHY.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
-          component={DSLegacyPictograms}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
-          component={DSLegacyButtons}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
-          }}
-        />
 
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route}
@@ -567,38 +579,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyListItems}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.route}
-          component={DSLegacyBadges}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.route}
-          component={DSLegacySelection}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.SELECTION.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.route}
-          component={DSLegacyAccordion}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ACCORDION.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.route}
-          component={DSLegacyAlert}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.title
           }}
         />
 

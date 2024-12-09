@@ -36,6 +36,7 @@ import { IdPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navi
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -48,8 +49,6 @@ import { PaymentsTransactionNavigator } from "../features/payments/transaction/n
 import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
-import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
@@ -61,20 +60,20 @@ import {
   isCGNEnabledSelector,
   isFciEnabledSelector,
   isIdPayEnabledSelector
-} from "../store/reducers/backendStatus";
+} from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { SearchScreen } from "../features/services/search/screens/SearchScreen";
 import { FIMS_ROUTES, FimsNavigator } from "../features/fims/common/navigation";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
+import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
-import WalletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -126,6 +125,16 @@ const AuthenticatedStackNavigator = () => {
         component={MessagesStackNavigator}
       />
       {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
+
+      <Stack.Screen
+        name={NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS}
+        component={SystemNotificationPermissionsScreen}
+        options={{
+          gestureEnabled: true,
+          headerShown: true,
+          presentation: "modal"
+        }}
+      />
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_SEARCH}
         component={MessagesSearchScreen}
@@ -139,11 +148,6 @@ const AuthenticatedStackNavigator = () => {
             default: undefined
           })
         }}
-      />
-      <Stack.Screen
-        name={ROUTES.WALLET_NAVIGATOR}
-        options={hideHeaderOptions}
-        component={WalletNavigator}
       />
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
@@ -205,7 +209,7 @@ const AuthenticatedStackNavigator = () => {
       {cgnEnabled && (
         <Stack.Screen
           name={CGN_ROUTES.DETAILS.MAIN}
-          options={hideHeaderOptions}
+          options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
           component={CgnDetailsNavigator}
         />
       )}
@@ -236,11 +240,6 @@ const AuthenticatedStackNavigator = () => {
         />
       </Stack.Group>
 
-      <Stack.Screen
-        name={UADONATION_ROUTES.WEBVIEW}
-        options={hideHeaderOptions}
-        component={UAWebViewScreen}
-      />
       <Stack.Screen
         name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
@@ -273,7 +272,10 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
-            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
           />
           <Stack.Screen
             name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}

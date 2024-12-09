@@ -8,7 +8,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import Config from "react-native-config";
-import { TrialId } from "../definitions/trial_system/TrialId";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
@@ -71,18 +70,11 @@ export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// EU Covid Certificate feature flag
-export const euCovidCertificateEnabled: boolean =
-  Config.EU_COVID_CERT_ENABLED === "YES";
-
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
-
-// Ukraine donation
-export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
 
 // CdC (Carta della cultura) Feature Flag
 export const cdcEnabled = Config.CDC_ENABLED === "YES";
@@ -245,7 +237,6 @@ export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 export const defaultPin = "162534";
 
 // IT Wallet
-export const itwTrialId = Config.ITW_TRIAL_ID as TrialId;
 export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
 export const itwGoogleCloudProjectNumber =
   Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;
@@ -258,3 +249,13 @@ export const itwEaaVerifierBaseUrl = Config.ITW_EAA_VERIFIER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
 export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";
+export const itwIpzsPrivacyUrl: string = pipe(
+  Config.ITW_IPZS_PRIVACY_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/informativa-ipzs")
+);
+export const itwDocumentsOnIOUrl: string = pipe(
+  Config.ITW_DOCUMENTS_ON_IO_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/documenti-su-io")
+);

@@ -1,9 +1,3 @@
-import * as AR from "fp-ts/lib/Array";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
-import { Image } from "react-native";
 import {
   Body,
   ButtonSolidProps,
@@ -13,11 +7,15 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  LabelLink,
   VSpacer,
   buttonSolidHeight
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as AR from "fp-ts/lib/Array";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { ComponentProps } from "react";
+import { Image } from "react-native";
 import Animated, {
   Easing,
   useAnimatedScrollHandler,
@@ -25,16 +23,17 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
+import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
-import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -50,7 +49,7 @@ type SecondaryAction = { type: "back"; text: string };
 
 type Props = OwnProps &
   Pick<
-    ComponentProps<typeof RNavScreenWithLargeHeader>,
+    ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
@@ -62,6 +61,10 @@ body {
 
 h4 {
   font-size: ${customVariables.fontSize2}px;
+}
+
+img {
+  width: 100%;
 }
 `;
 
@@ -89,13 +92,14 @@ const getTosFooter = (
                 <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
-                <LabelLink
+                <Body
+                  asLink
                   weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
                   {I18n.t("bonus.tos.title")}
-                </LabelLink>
+                </Body>
               </>
             ),
             // if tos and regulation url is defined

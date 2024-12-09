@@ -22,14 +22,10 @@ import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
-import {
-  isAutomaticSessionRefreshToggleActiveSelector,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -56,9 +52,9 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { setAutomaticSessionRefresh } from "../../features/fastLogin/store/actions/sessionRefreshActions";
 import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
+import { requestAppReview } from "../../utils/storeReview";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -163,6 +159,12 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.sentryTestEvent"),
       onPress: sendSentryTestEvent
+    },
+    {
+      condition: true,
+      color: "primary",
+      label: I18n.t("profile.main.storeReview"),
+      onPress: requestAppReview
     }
   ];
 
@@ -300,18 +302,6 @@ const DeveloperDataSection = () => {
 const DesignSystemSection = () => {
   const navigation = useIONavigation();
   const { themeType, setTheme } = useIOThemeContext();
-  const dispatch = useIODispatch();
-
-  const isAutomaticSessionRefreshToggleActive = useIOSelector(
-    isAutomaticSessionRefreshToggleActiveSelector
-  );
-
-  const dispatchAutomaticSessionRefresh = React.useCallback(
-    (enabled: boolean) => {
-      dispatch(setAutomaticSessionRefresh({ enabled }));
-    },
-    [dispatch]
-  );
 
   return (
     <ContentWrapper>
@@ -336,25 +326,13 @@ const DesignSystemSection = () => {
           setTheme(themeType === "dark" ? "light" : "dark")
         }
       />
-      <Divider />
-      <ListItemSwitch
-        label={I18n.t("profile.main.sessionRefresh")}
-        value={isAutomaticSessionRefreshToggleActive}
-        onSwitchValueChange={dispatchAutomaticSessionRefresh}
-      />
     </ContentWrapper>
   );
 };
 
 const PlaygroundsSection = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-
-  const onAddTestCard = () => {
-    dispatch(walletAddCoBadgeStart(undefined));
-  };
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -414,11 +392,6 @@ const PlaygroundsSection = () => {
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
         })
-    },
-    {
-      condition: isPagoPATestEnabled,
-      value: I18n.t("profile.main.addTestCard.title"),
-      onPress: onAddTestCard
     }
   ];
 

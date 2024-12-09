@@ -248,8 +248,32 @@ platform :ios do
     pilot(
       api_key: api_key,
       changelog: changelog,
+      # max wait for App Store Connect processing (30 min)
+      wait_processing_timeout_duration: 1800
+    )
+  end
+
+  desc "Distribute previously uploaded beta to TestFlight, using GA"
+  lane :distribute_beta_testflight do |options|
+
+    # Setup the CI environment
+    setup_ci()
+
+    # use the App Store API Key to authenticate
+    api_key = app_store_connect_api_key(
+      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
+      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
+      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
+      duration: 1200,
+    )
+
+    # upload to App store
+    pilot(
+      api_key: api_key,
+      distribute_only: true,
       distribute_external: true,
       notify_external_testers: true,
+      app_platform: "ios",
       groups: ["Amici&Familiari", "PagoPa"],
       # max wait for App Store Connect processing (30 min)
       wait_processing_timeout_duration: 1800

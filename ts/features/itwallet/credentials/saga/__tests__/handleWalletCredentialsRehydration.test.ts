@@ -4,12 +4,13 @@ import { expectSaga } from "redux-saga-test-plan";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
-import { walletAddCards } from "../../../../newWallet/store/actions/cards";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
+  const jwtExpiration = "2100-09-04T00:00:00.000Z";
   const mockedEid: StoredCredential = {
     credential: "",
     credentialType: CredentialType.PID,
@@ -18,10 +19,14 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     },
     format: "vc+sd-jwt",
     keyTag: "1",
-    issuerConf: {} as StoredCredential["issuerConf"]
+    issuerConf: {} as StoredCredential["issuerConf"],
+    jwt: {
+      issuedAt: "2024-09-30T07:32:49.000Z",
+      expiration: jwtExpiration
+    }
   };
 
-  it("rehydrates the eID when the wallet is valid", () => {
+  it("should not rehydrate the eID when the wallet is valid", () => {
     const store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -37,7 +42,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
 
     return expectSaga(handleWalletCredentialsRehydration)
       .withState(store)
-      .put(
+      .not.put(
         walletAddCards([
           {
             key: `ITW_${CredentialType.PID}`,
@@ -64,6 +69,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
+                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
@@ -71,6 +77,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "3",
                 credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
@@ -85,13 +92,6 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
       .withState(store)
       .put(
         walletAddCards([
-          {
-            key: `ITW_${CredentialType.PID}`,
-            type: "itw",
-            category: "itw",
-            credentialType: CredentialType.PID,
-            status: "valid"
-          },
           {
             key: `ITW_${CredentialType.DRIVING_LICENSE}`,
             type: "itw",
@@ -123,6 +123,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
+                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }

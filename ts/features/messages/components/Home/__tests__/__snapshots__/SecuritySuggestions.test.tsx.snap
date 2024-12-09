@@ -204,6 +204,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -348,7 +349,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -465,34 +466,22 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
                                       testID="infoScreenBody"
-                                      weight="Regular"
                                     >
                                       Do not share your unlock code or biometric recognition with anyone.
                                     </Text>
@@ -593,34 +582,22 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
                                       testID="infoScreenBody"
-                                      weight="Regular"
                                     >
                                       If you lose your device, log out from the web.
                                     </Text>
@@ -636,38 +613,25 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={false}
-                                      color="blue"
-                                      defaultColor="blue"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontSize="regular"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                          "textDecorationLine": "underline",
-                                        }
-                                      }
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
                                       style={
                                         [
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
                                             "textDecorationLine": "underline",
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Go to website
                                     </Text>
@@ -771,34 +735,22 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
                                       testID="infoScreenBody"
-                                      weight="Regular"
                                     >
                                       If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
                                     </Text>
@@ -814,38 +766,25 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={false}
-                                      color="blue"
-                                      defaultColor="blue"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="footnote"
-                                      font="TitilliumSansPro"
-                                      fontSize="regular"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                          "textDecorationLine": "underline",
-                                        }
-                                      }
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
                                       style={
                                         [
                                           {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
                                             "textDecorationLine": "underline",
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Go to website
                                     </Text>
@@ -946,34 +885,22 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="grey-700"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
+                                          {},
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
                                       testID="infoScreenBody"
-                                      weight="Regular"
                                     >
                                       If you access IO with someone else's device, remember to log out when you are finished.
                                     </Text>

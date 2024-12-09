@@ -12,6 +12,7 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
   ComponentProps,
@@ -27,7 +28,8 @@ import {
   RefreshControl,
   RefreshControlProps,
   StyleSheet,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import { easeGradient } from "react-native-easing-gradient";
 import LinearGradient from "react-native-linear-gradient";
@@ -41,8 +43,8 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import { WithTestID } from "../../types/WithTestID";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 export type IOScrollViewActions =
   | {
@@ -84,7 +86,10 @@ type IOScrollView = WithTestID<
     excludeEndContentMargin?: boolean;
     /* Include page margins */
     includeContentMargins?: boolean;
+    /* Center content in iOS without inertial scrolling */
+    centerContent?: boolean;
     refreshControlProps?: RefreshControlProps;
+    contentContainerStyle?: ViewStyle;
   }>
 >;
 
@@ -117,6 +122,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flexShrink: 0
+  },
+  centerContentWrapper: {
+    flexGrow: 1,
+    alignItems: "stretch",
+    justifyContent: "center",
+    alignContent: "center"
   }
 });
 
@@ -145,9 +156,12 @@ export const IOScrollView = ({
   includeContentMargins = true,
   debugMode = false,
   animatedRef,
+  centerContent,
   refreshControlProps,
+  contentContainerStyle,
   testID
 }: IOScrollView) => {
+  const alertProps = useStatusAlertProps();
   const theme = useIOTheme();
 
   /* Navigation */
@@ -231,6 +245,13 @@ export const IOScrollView = ({
     )
   }));
 
+  const ignoreSafeAreaMargin = React.useMemo(() => {
+    if (alertProps !== undefined) {
+      return true;
+    }
+    return headerConfig?.ignoreSafeAreaMargin;
+  }, [headerConfig?.ignoreSafeAreaMargin, alertProps]);
+
   /* Set custom header with `react-navigation` library using
      `useLayoutEffect` hook */
 
@@ -243,12 +264,22 @@ export const IOScrollView = ({
     if (headerConfig) {
       navigation.setOptions({
         header: () => (
-          <HeaderSecondLevel {...headerConfig} scrollValues={scrollValues} />
+          <HeaderSecondLevel
+            {...headerConfig}
+            ignoreSafeAreaMargin={ignoreSafeAreaMargin}
+            scrollValues={scrollValues}
+          />
         ),
         headerTransparent: headerConfig.transparent
       });
     }
-  }, [headerConfig, navigation, scrollPositionAbsolute, snapOffset]);
+  }, [
+    headerConfig,
+    navigation,
+    scrollPositionAbsolute,
+    snapOffset,
+    ignoreSafeAreaMargin
+  ]);
 
   const RefreshControlComponent = refreshControlProps ? (
     <RefreshControl {...refreshControlProps} />
@@ -265,16 +296,23 @@ export const IOScrollView = ({
         snapToEnd={false}
         decelerationRate="normal"
         refreshControl={RefreshControlComponent}
-        contentContainerStyle={{
-          paddingBottom: excludeEndContentMargin
-            ? 0
-            : actions
-            ? safeBottomAreaHeight
-            : bottomMargin + contentEndMargin,
-          paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
-            : 0
-        }}
+        centerContent={centerContent}
+        contentContainerStyle={[
+          {
+            paddingBottom: excludeEndContentMargin
+              ? 0
+              : actions
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin,
+            paddingHorizontal: includeContentMargins
+              ? IOVisualCostants.appMarginDefault
+              : 0,
+            ...contentContainerStyle
+          },
+          /* Apply the same logic used in the
+          `OperationResultScreenContent` component */
+          centerContent ? styles.centerContentWrapper : {}
+        ]}
       >
         {children}
       </Animated.ScrollView>

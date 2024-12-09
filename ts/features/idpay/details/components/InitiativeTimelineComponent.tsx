@@ -1,11 +1,14 @@
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  Divider,
+  H6,
+  BodySmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {
@@ -80,11 +83,11 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
 
 const TimelineHeaderComponent = (props: { onShowMorePress?: () => void }) => (
   <View style={[IOStyles.row, IOStyles.rowSpaceBetween]}>
-    <H3>
+    <H6>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
-    </H3>
+    </H6>
     <Body weight="Semibold" color="blue" onPress={props.onShowMorePress}>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
@@ -105,7 +108,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 );
 
 const EmptyTimelineComponent = () => (
-  <LabelSmall
+  <BodySmall
     weight="Regular"
     color="bluegreyDark"
     testID="IDPayEmptyTimelineTestID"
@@ -113,7 +116,7 @@ const EmptyTimelineComponent = () => (
     {I18n.t(
       "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
     )}
-  </LabelSmall>
+  </BodySmall>
 );
 
 const InitiativeTimelineComponentSkeleton = ({

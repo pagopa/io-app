@@ -2,7 +2,7 @@ import {
   IOBadgeHSpacing,
   IOBadgeRadius,
   IOBadgeVSpacing,
-  IOVisualCostants,
+  IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -11,6 +11,7 @@ import I18n from "../../../../i18n";
 
 type DigitalVersionBadgeProps = {
   credentialType: string;
+  isFaded?: boolean;
 };
 
 type CredentialTypesProps = {
@@ -19,7 +20,8 @@ type CredentialTypesProps = {
 };
 
 const ItwDigitalVersionBadge = ({
-  credentialType
+  credentialType,
+  isFaded = false
 }: DigitalVersionBadgeProps) => {
   const mapCredentialTypes: Record<
     NonNullable<string>,
@@ -50,13 +52,13 @@ const ItwDigitalVersionBadge = ({
   return (
     <View style={styles.wrapper}>
       <View style={[styles.badge, { backgroundColor: background }]}>
+        {isFaded && <View style={styles.faded} />}
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"
-          maxFontSizeMultiplier={IOVisualCostants.maxFontSizeMultiplier}
+          allowFontScaling={false}
           style={[
             styles.label,
-            styles.labelFont,
             {
               color: foreground
             }
@@ -73,9 +75,10 @@ const styles = StyleSheet.create({
   wrapper: {
     position: "absolute",
     bottom: 16,
-    right: 0
+    right: 2
   },
   badge: {
+    overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -90,15 +93,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: IOBadgeHSpacing,
     paddingVertical: IOBadgeVSpacing
   },
+  faded: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: IOColors.white,
+    opacity: 0.6,
+    zIndex: 10
+  },
   label: {
-    fontSize: 12,
-    lineHeight: 16,
     alignSelf: "center",
     textTransform: "uppercase",
-    flexShrink: 1
-  },
-  labelFont: {
-    ...makeFontStyleObject("Regular", false, "ReadexPro")
+    flexShrink: 1,
+    ...makeFontStyleObject(12, "Titillio", 16, "Regular")
   }
 });
 

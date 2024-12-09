@@ -1,30 +1,16 @@
-import {
-  ButtonLink,
-  IOSpacingScale,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  Directions,
-  Gesture,
-  GestureDetector
-} from "react-native-gesture-handler";
-import { runOnJS } from "react-native-reanimated";
-import I18n from "../../../../i18n";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { CREDENTIALS_MAP, trackWalletShowBack } from "../../analytics";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getThemeColorByCredentialType } from "../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-
-/**
- * Credentials that should display a skeumorphic card
- */
-const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
-  CredentialType.DRIVING_LICENSE
-];
+import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton";
 
 type Props = {
   credential: StoredCredential;
@@ -35,50 +21,49 @@ type Props = {
  * If the credential supports the skeumorphic card, it also renders it with the flip button.
  */
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
+  const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = React.useState(false);
+
+  const { status = "valid" } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
+  );
+
+  const handleFlipButtonPress = React.useCallback(() => {
+    trackWalletShowBack(CREDENTIALS_MAP[credential.credentialType]);
+    setIsFlipped(_ => !_);
+  }, [credential.credentialType]);
+
+  const handleCardPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+      params: {
+        credential,
+        status
+      }
+    });
+  };
 
   const { backgroundColor } = getThemeColorByCredentialType(
     credential.credentialType
   );
-  const credentialStatus = getCredentialStatus(credential);
-
-  const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
-    credential.credentialType
-  );
-
-  if (hasSkeumorphicCard) {
-    const flipGesture = Gesture.Fling()
-      .direction(Directions.LEFT + Directions.RIGHT)
-      .onEnd(() => runOnJS(setIsFlipped)(!isFlipped));
-
-    return (
-      <VStack space={8}>
-        <GestureDetector gesture={flipGesture}>
-          <CardContainer backgroundColor={backgroundColor}>
-            <ItwSkeumorphicCard credential={credential} isFlipped={isFlipped} />
-          </CardContainer>
-        </GestureDetector>
-        <View style={styles.flipButton}>
-          <ButtonLink
-            label={I18n.t(
-              "features.itWallet.presentation.credentialDetails.flipCard"
-            )}
-            onPress={() => setIsFlipped(_ => !_)}
-            icon="switchCard"
-            iconPosition="end"
-          />
-        </View>
-      </VStack>
-    );
-  }
 
   return (
-    <CardContainer backgroundColor={backgroundColor}>
-      <ItwCredentialCard
-        credentialType={credential.credentialType}
-        status={credentialStatus}
+    <VStack space={8}>
+      <CardContainer backgroundColor={backgroundColor}>
+        <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setIsFlipped}>
+          <ItwSkeumorphicCard
+            credential={credential}
+            isFlipped={isFlipped}
+            status={status}
+            onPress={handleCardPress}
+          />
+        </FlipGestureDetector>
+      </CardContainer>
+      <ItwPresentationCredentialCardFlipButton
+        isFlipped={isFlipped}
+        handleOnPress={handleFlipButtonPress}
       />
-    </CardContainer>
+    </VStack>
   );
 };
 
@@ -101,7 +86,8 @@ const cardPaddingHorizontal: IOSpacingScale = 16;
 const styles = StyleSheet.create({
   cardContainer: {
     position: "relative",
-    paddingHorizontal: cardPaddingHorizontal
+    paddingHorizontal: cardPaddingHorizontal,
+    paddingTop: 8 // Add top padding to prevent card clipping during flip animation
   },
   cardBackdrop: {
     height: "200%", // Twice the card in order to avoid the white background when the scrollview bounces
@@ -110,9 +96,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     zIndex: -1
-  },
-  flipButton: {
-    alignSelf: "center"
   }
 });
 

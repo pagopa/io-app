@@ -1,11 +1,11 @@
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
 import {
+  Body,
   IOColors,
   IOStyles,
-  LabelLink,
   ListItemCheckbox
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 
 type Props = {
@@ -49,19 +49,20 @@ const SignatureFieldItem = (props: Props) => {
         accessibilityLabel={props.title}
       />
       <View style={[IOStyles.row, styles.details]}>
-        <LabelLink
+        <Body
+          weight="Semibold"
+          asLink
           accessibilityLabel={I18n.t(
             "features.fci.signatureFields.showOnDocument"
           )}
-          accessibilityRole="link"
           accessibilityHint={I18n.t(
             "features.fci.signatureFields.accessibility.fieldDetailHint"
           )}
-          testID="SignatureFieldItemDetailTestID"
           onPress={props.onPressDetail}
+          testID="SignatureFieldItemDetailTestID"
         >
           {I18n.t("features.fci.signatureFields.showOnDocument")}
-        </LabelLink>
+        </Body>
       </View>
     </View>
   );

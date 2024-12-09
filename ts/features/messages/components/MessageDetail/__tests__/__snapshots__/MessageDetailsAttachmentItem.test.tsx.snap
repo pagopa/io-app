@@ -204,6 +204,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -357,9 +358,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           style={
                             {
                               "alignItems": "center",
-                              "columnGap": 8,
                               "display": "flex",
                               "flexDirection": "row",
+                              "gap": 8,
                             }
                           }
                         >
@@ -371,40 +372,28 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                 "flexDirection": "column",
                                 "flexGrow": 1,
                                 "flexShrink": 1,
-                                "rowGap": 4,
+                                "gap": 4,
                               }
                             }
                           >
                             <Text
                               allowFontScaling={false}
-                              color="blueIO-500"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
-                              dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
-                                }
-                              }
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
                                 [
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 21,
-                                  },
+                                  {},
                                   {
                                     "color": "#0B3EE3",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               1
                             </Text>
@@ -428,29 +417,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               }
                             >
                               <Text
-                                accessibilityLabel="PDF"
-                                accessibilityRole="text"
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
-                                importantForAccessibility="yes"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 16,
+                                    },
                                     {
                                       "alignSelf": "center",
                                       "flexShrink": 1,
-                                      "fontSize": 12,
-                                      "lineHeight": 16,
+                                      "letterSpacing": 0.5,
                                       "textTransform": "uppercase",
-                                    },
-                                    {
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                    },
-                                    {
-                                      "color": "#555C70",
                                     },
                                   ]
                                 }
@@ -855,6 +841,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1049,9 +1036,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -1063,40 +1050,28 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="blueIO-500"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
-                                dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 21,
-                                  }
-                                }
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 1
                               </Text>
@@ -1120,29 +1095,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="PDF"
-                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
-                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 16,
+                                      },
                                       {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#555C70",
                                       },
                                     ]
                                   }
@@ -1431,6 +1403,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1584,9 +1557,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           style={
                             {
                               "alignItems": "center",
-                              "columnGap": 8,
                               "display": "flex",
                               "flexDirection": "row",
+                              "gap": 8,
                             }
                           }
                         >
@@ -1598,40 +1571,28 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 "flexDirection": "column",
                                 "flexGrow": 1,
                                 "flexShrink": 1,
-                                "rowGap": 4,
+                                "gap": 4,
                               }
                             }
                           >
                             <Text
                               allowFontScaling={false}
-                              color="blueIO-500"
-                              defaultColor="black"
-                              defaultWeight="Semibold"
-                              dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
-                                }
-                              }
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
                                 [
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 21,
-                                  },
+                                  {},
                                   {
                                     "color": "#0B3EE3",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               A PDF File
                             </Text>
@@ -1655,29 +1616,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               }
                             >
                               <Text
-                                accessibilityLabel="PDF"
-                                accessibilityRole="text"
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
-                                importantForAccessibility="yes"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 12,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 16,
+                                    },
                                     {
                                       "alignSelf": "center",
                                       "flexShrink": 1,
-                                      "fontSize": 12,
-                                      "lineHeight": 16,
+                                      "letterSpacing": 0.5,
                                       "textTransform": "uppercase",
-                                    },
-                                    {
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                    },
-                                    {
-                                      "color": "#555C70",
                                     },
                                   ]
                                 }
@@ -1972,6 +1930,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2166,9 +2125,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -2180,40 +2139,28 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="blueIO-500"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
-                                dynamicTypeRamp="footnote"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 21,
-                                  }
-                                }
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 16,
-                                      "lineHeight": 21,
-                                    },
+                                    {},
                                     {
                                       "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 A PDF File
                               </Text>
@@ -2237,29 +2184,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="PDF"
-                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
-                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 16,
+                                      },
                                       {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#555C70",
                                       },
                                     ]
                                   }

@@ -1,43 +1,50 @@
-import { fromPromise } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { fromPromise } from "xstate";
+import { useIOStore } from "../../../../store/hooks";
+import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
-import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUtils";
+import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
-  registerWalletInstance,
-  WalletAttestationResult
+  registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { useIOStore } from "../../../../store/hooks";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { sessionTokenSelector } from "../../../../store/reducers/authentication";
+import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
+import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  itwIntegrityKeyTagSelector,
+  itwIntegrityServiceReadySelector
+} from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { trackItwRequest } from "../../analytics";
-import type {
-  WalletAttestationContext,
-  IdentificationContext,
-  CieAuthContext
-} from "./context";
+import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
+import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
+import type { AuthenticationContext, IdentificationContext } from "./context";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
-  walletAttestationContext: WalletAttestationContext | undefined;
-  cieAuthContext: CieAuthContext | undefined;
+  walletInstanceAttestation: string | undefined;
+  authenticationContext: AuthenticationContext | undefined;
 };
 
-export type StartCieAuthFlowActorParams = {
-  walletAttestationContext: WalletAttestationContext | undefined;
+export type StartAuthFlowActorParams = {
+  walletInstanceAttestation: string | undefined;
+  identification: IdentificationContext | undefined;
 };
 
-export type CompleteCieAuthFlowActorParams = {
-  cieAuthContext: CieAuthContext | undefined;
-  walletAttestationContext: WalletAttestationContext | undefined;
+export type CompleteAuthFlowActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
+  walletInstanceAttestation: string | undefined;
 };
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+};
+
+export type GetAuthRedirectUrlActorParam = {
+  redirectUri: string | undefined;
+  authUrl: string | undefined;
+  identification: IdentificationContext | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = (
@@ -51,82 +58,121 @@ export const createEidIssuanceActorsImplementation = (
     // If there is a stored key tag we assume the wallet instance was already created
     // so we just need to prepare the integrity service and return the existing key tag.
     if (O.isSome(storedIntegrityKeyTag)) {
-      await ensureIntegrityServiceIsReady();
       return storedIntegrityKeyTag.value;
     }
 
     // Reset the wallet store to prevent having dirty state before registering a new wallet instance
     store.dispatch(itwLifecycleStoresReset());
+    // Await the integrity preparation before requesting the integrity key tag
+    const isIntegrityServiceReady = await pollForStoreValue({
+      getState: store.getState,
+      selector: itwIntegrityServiceReadySelector,
+      condition: value => value !== undefined
+    });
+    // If the integrity service preparation is not ready (still undefined) after 10 seconds the user will be prompted with an error,
+    // he will need to retry.
+    // TODO: Create a personalized error message for this case informing the user that the integrity service is not ready yet.
+    assert(
+      isIntegrityServiceReady !== undefined,
+      "Integrity service not ready after 10 seconds"
+    );
+    // If the integrity service preparation is ready, but it is failed, the user will be prompted with an error
+    // and the wallet instance creation will be aborted.
+    // TODO: Create a personalized error message for this case informing the user that the integrity service is not available on his device.
+    assert(isIntegrityServiceReady, "Integrity service not available");
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(hardwareKeyTag, sessionToken);
 
     return hardwareKeyTag;
   }),
 
-  getWalletAttestation: fromPromise<
-    WalletAttestationResult,
-    GetWalletAttestationActorParams
-  >(({ input }) => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
-    assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+  getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
+    ({ input }) => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
+      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(input.integrityKeyTag, sessionToken);
-  }),
+      return getAttestation(input.integrityKeyTag, sessionToken);
+    }
+  ),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
       assert(
-        input.walletAttestationContext,
-        "walletAttestationContext is undefined"
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
       );
 
-      // When using CIE + PIN the authorization flow was already started, we just need to complete it
-      if (input.identification.mode === "ciePin") {
-        assert(
-          input.cieAuthContext,
-          "cieAuthContext must exist when the identification mode is ciePin"
-        );
+      // At this point, the authorization flow has already started and just needs to be completed
+      assert(
+        input.authenticationContext,
+        "authenticationContext must exist when the identification mode is ciePin"
+      );
 
-        const authParams = await issuanceUtils.completeCieAuthFlow({
-          ...input.cieAuthContext,
-          ...input.walletAttestationContext
-        });
-        trackItwRequest("ciePin");
-        return issuanceUtils.getPid({
-          ...authParams,
-          ...input.cieAuthContext
-        });
-      }
-
-      // SPID & CieID flow
-      const authParams = await issuanceUtils.startAndCompleteFullAuthFlow({
-        identification: input.identification,
-        ...input.walletAttestationContext
+      const authParams = await issuanceUtils.completeAuthFlow({
+        ...input.authenticationContext,
+        walletAttestation: input.walletInstanceAttestation
       });
 
       trackItwRequest(input.identification.mode);
 
-      return issuanceUtils.getPid(authParams);
+      return issuanceUtils.getPid({
+        ...authParams,
+        ...input.authenticationContext
+      });
     }
   ),
 
-  startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
+  startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
     async ({ input }) => {
       assert(
-        input.walletAttestationContext,
-        "walletAttestationContext is undefined"
+        input.walletInstanceAttestation,
+        "walletInstanceAttestation is undefined"
       );
+      assert(input.identification, "identification is undefined");
 
-      const cieAuthContext = await issuanceUtils.startCieAuthFlow(
-        input.walletAttestationContext
-      );
+      const authenticationContext = await issuanceUtils.startAuthFlow({
+        walletAttestation: input.walletInstanceAttestation,
+        identification: input.identification
+      });
 
       return {
-        ...cieAuthContext,
-        callbackUrl: "" // This is not important in this phase, it will be set after completing the CIE auth flow
+        ...authenticationContext,
+        callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
       };
     }
-  )
+  ),
+
+  getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
+    async ({ input }) => {
+      assert(
+        input.redirectUri,
+        "redirectUri must be defined to get authRedirectUrl"
+      );
+      assert(input.authUrl, "authUrl must be defined to get authRedirectUrl");
+      assert(input.identification, "identification is undefined");
+
+      const { authRedirectUrl } = await openUrlAndListenForAuthRedirect(
+        input.redirectUri,
+        input.authUrl,
+        input.identification.abortController?.signal
+      );
+
+      return authRedirectUrl;
+    }
+  ),
+
+  revokeWalletInstance: fromPromise(async () => {
+    const state = store.getState();
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+
+    if (O.isNone(integrityKeyTag)) {
+      return;
+    }
+    assert(sessionToken, "sessionToken is undefined");
+
+    await revokeCurrentWalletInstance(sessionToken, integrityKeyTag.value);
+  })
 });

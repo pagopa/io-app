@@ -8,7 +8,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
-  AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -31,9 +30,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
-import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
-import { useIODispatch } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -62,11 +58,9 @@ type InputState = {
 
 const WalletPaymentInputFiscalCodeScreen = () => {
   const { params } = useRoute<WalletPaymentInputFiscalCodeRouteProps>();
-  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
-    usePagoPaPayment();
+  const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
   const [inputState, setInputState] = React.useState<InputState>({
     fiscalCodeText: "",
@@ -90,23 +84,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         navigation.popToTop();
         navigation.pop();
         // Navigate to the payment details screen (payment verification)
-        if (isNewWalletSectionEnabled) {
-          startPaymentFlowWithRptId(rptId, {
-            onSuccess: "showTransaction",
-            startOrigin: "manual_insertion"
-          });
-        } else {
-          dispatch(paymentInitializeState());
-          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-            params: {
-              // Set the initial amount to a fixed value (1) because it is not used
-              initialAmount: "1" as AmountInEuroCents,
-              rptId,
-              paymentStartOrigin: "manual_insertion"
-            }
-          });
-        }
+        startPaymentFlowWithRptId(rptId, {
+          onSuccess: "showTransaction",
+          startOrigin: "manual_insertion"
+        });
       })
     );
   };

@@ -204,6 +204,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -342,159 +343,158 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Document data
                           </Text>
                           <View
-                            accessibilityLabel="Show claim values"
-                            accessibilityRole="button"
+                            accessibilityLabel="Hide claim values"
+                            accessibilityRole="switch"
                             accessibilityState={
                               {
-                                "busy": undefined,
-                                "checked": undefined,
-                                "disabled": false,
-                                "expanded": undefined,
-                                "selected": undefined,
-                              }
-                            }
-                            accessibilityValue={
-                              {
-                                "max": undefined,
-                                "min": undefined,
-                                "now": undefined,
-                                "text": undefined,
+                                "checked": true,
                               }
                             }
                             accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            hitSlop={8}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            testID="toggle-claim-visibility"
                           >
                             <View
-                              style={
-                                [
-                                  {
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                  {
-                                    "alignItems": "center",
-                                  },
-                                  {
-                                    "justifyContent": "center",
-                                  },
-                                  {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
-                                  },
-                                ]
-                              }
-                            >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                animatedProps={
-                                  {
-                                    "color": undefined,
-                                  }
+                              accessibilityLabel="Hide claim values"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
                                 }
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={8}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              testID="toggle-claim-visibility"
+                            >
+                              <View
                                 style={
                                   [
                                     {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0073E6",
-                                    },
-                                    {
-                                      "flex": 0,
                                       "height": 24,
                                       "width": 24,
                                     },
+                                    {
+                                      "alignItems": "center",
+                                    },
+                                    {
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": undefined,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
-                                tintColor="#0073E6"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
                               >
-                                <RNSVGGroup
-                                  fill={
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  animatedProps={
                                     {
-                                      "payload": 4278190080,
-                                      "type": 0,
+                                      "color": undefined,
                                     }
                                   }
+                                  bbHeight={24}
+                                  bbWidth={24}
+                                  focusable={false}
+                                  height={24}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "color": "#0073E6",
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  tintColor="#0073E6"
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={24}
                                 >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M1.707.293A1 1 0 0 0 .293 1.707l4.483 4.484A13.063 13.063 0 0 0 .63 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c1.931 0 3.763-.42 5.41-1.176l4.883 4.883a1 1 0 0 0 1.414-1.414l-22-22Zm19.099 16.27c1.02-.939 1.888-2.039 2.566-3.259.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4c-1.15 0-2.266.15-3.329.43l1.691 1.691a10.997 10.997 0 0 1 11.26 5.545.686.686 0 0 1 0 .667 11.05 11.05 0 0 1-2.233 2.815l1.416 1.416Zm-3.856-3.855a5 5 0 0 0-5.658-5.658l2.804 2.803.05.051 2.804 2.804Zm-14.573-1.04a11.055 11.055 0 0 1 3.846-4.03l1.605 1.605a5 5 0 0 0 6.929 6.929l1.125 1.124A10.977 10.977 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667ZM9 12c0-.463.105-.902.292-1.293l4.001 4A3 3 0 0 1 9 12Z"
+                                  <RNSVGGroup
                                     fill={
                                       {
-                                        "type": 2,
+                                        "payload": 4278190080,
+                                        "type": 0,
                                       }
                                     }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M1.707.293A1 1 0 0 0 .293 1.707l4.483 4.484A13.063 13.063 0 0 0 .63 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c1.931 0 3.763-.42 5.41-1.176l4.883 4.883a1 1 0 0 0 1.414-1.414l-22-22Zm19.099 16.27c1.02-.939 1.888-2.039 2.566-3.259.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4c-1.15 0-2.266.15-3.329.43l1.691 1.691a10.997 10.997 0 0 1 11.26 5.545.686.686 0 0 1 0 .667 11.05 11.05 0 0 1-2.233 2.815l1.416 1.416Zm-3.856-3.855a5 5 0 0 0-5.658-5.658l2.804 2.803.05.051 2.804 2.804Zm-14.573-1.04a11.055 11.055 0 0 1 3.846-4.03l1.605 1.605a5 5 0 0 0 6.929 6.929l1.125 1.124A10.977 10.977 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667ZM9 12c0-.463.105-.902.292-1.293l4.001 4A3 3 0 0 1 9 12Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -530,66 +530,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Place of Birth
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -637,66 +613,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Institution Number (TEAM)
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -744,66 +696,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Date of Birth
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -851,66 +779,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Province
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -958,66 +862,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Nation
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1065,66 +945,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Sex
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1172,66 +1028,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Expiry Date
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1279,66 +1111,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Document Number (TEAM)
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1386,66 +1194,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   First Name
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1493,66 +1277,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Fiscal Code
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1600,66 +1360,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Family Name
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1707,66 +1443,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   evidence
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   ******
                                 </Text>
@@ -1783,7 +1495,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
+                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -1814,66 +1526,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
-                                  Rilasciata da
+                                  Emissione versione digitale
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Istituto Poligrafico e Zecca di Stato
                                 </Text>
@@ -1887,7 +1575,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessibilityLabel="test"
+                                accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2030,7 +1718,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
@@ -2065,33 +1753,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   <View>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          },
+                                          {},
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Chi è?
                                     </Text>
@@ -2102,45 +1778,143 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       }
                                     />
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
-                                    </Text>
                                     <View
-                                      style={
-                                        {
-                                          "height": 16,
+                                      style={{}}
+                                    >
+                                      <Text
+                                        allowFontScaling={false}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.25}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
                                         }
-                                      }
-                                    />
+                                      >
+                                        <Text
+                                          style={{}}
+                                        >
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
+                                          </Text>
+                                        </Text>
+                                      </Text>
+                                      <View
+                                        style={
+                                          {
+                                            "height": 24,
+                                          }
+                                        }
+                                      />
+                                      <Text
+                                        allowFontScaling={false}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.25}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          style={{}}
+                                        >
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            Per sapere come tratta i tuoi dati consulta l’
+                                          </Text>
+                                          <Text
+                                            accessibilityRole="link"
+                                            allowFontScaling={false}
+                                            dynamicTypeRamp="body"
+                                            maxFontSizeMultiplier={1.25}
+                                            numberOfLines={1}
+                                            onPress={[Function]}
+                                            style={
+                                              [
+                                                {
+                                                  "textDecorationLine": "underline",
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            <Text
+                                              style={
+                                                [
+                                                  {
+                                                    "fontSize": 16,
+                                                    "textDecorationLine": "underline",
+                                                  },
+                                                  {},
+                                                ]
+                                              }
+                                            >
+                                              Informativa Privacy
+                                            </Text>
+                                          </Text>
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            .
+                                          </Text>
+                                        </Text>
+                                      </Text>
+                                      <View
+                                        style={
+                                          {
+                                            "height": 24,
+                                          }
+                                        }
+                                      />
+                                    </View>
                                   </View>
                                   <View
                                     style={
@@ -2372,6 +2146,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2510,159 +2285,158 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
                             dynamicTypeRamp="headline"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 18,
-                                  "lineHeight": 25,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             Document data
                           </Text>
                           <View
                             accessibilityLabel="Hide claim values"
-                            accessibilityRole="button"
+                            accessibilityRole="switch"
                             accessibilityState={
                               {
-                                "busy": undefined,
-                                "checked": undefined,
-                                "disabled": false,
-                                "expanded": undefined,
-                                "selected": undefined,
-                              }
-                            }
-                            accessibilityValue={
-                              {
-                                "max": undefined,
-                                "min": undefined,
-                                "now": undefined,
-                                "text": undefined,
+                                "checked": false,
                               }
                             }
                             accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            hitSlop={8}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            testID="toggle-claim-visibility"
                           >
                             <View
-                              style={
-                                [
-                                  {
-                                    "height": 24,
-                                    "width": 24,
-                                  },
-                                  {
-                                    "alignItems": "center",
-                                  },
-                                  {
-                                    "justifyContent": "center",
-                                  },
-                                  {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
-                                  },
-                                ]
-                              }
-                            >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                animatedProps={
-                                  {
-                                    "color": undefined,
-                                  }
+                              accessibilityLabel="Hide claim values"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
                                 }
-                                bbHeight={24}
-                                bbWidth={24}
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={8}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              testID="toggle-claim-visibility"
+                            >
+                              <View
                                 style={
                                   [
                                     {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "color": "#0073E6",
-                                    },
-                                    {
-                                      "flex": 0,
                                       "height": 24,
                                       "width": 24,
                                     },
+                                    {
+                                      "alignItems": "center",
+                                    },
+                                    {
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": undefined,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
-                                tintColor="#0073E6"
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
                               >
-                                <RNSVGGroup
-                                  fill={
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  animatedProps={
                                     {
-                                      "payload": 4278190080,
-                                      "type": 0,
+                                      "color": undefined,
                                     }
                                   }
+                                  bbHeight={24}
+                                  bbWidth={24}
+                                  focusable={false}
+                                  height={24}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "color": "#0073E6",
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  tintColor="#0073E6"
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={24}
                                 >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
+                                  <RNSVGGroup
                                     fill={
                                       {
-                                        "type": 2,
+                                        "payload": 4278190080,
+                                        "type": 0,
                                       }
                                     }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -2698,66 +2472,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Place of Birth
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Rome (IT)
                                 </Text>
@@ -2805,66 +2555,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Institution Number (TEAM)
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   500001
                                 </Text>
@@ -2912,66 +2638,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Date of Birth
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   06/01/1991
                                 </Text>
@@ -3019,66 +2721,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Province
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Rome
                                 </Text>
@@ -3126,66 +2804,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Nation
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   IT
                                 </Text>
@@ -3233,66 +2887,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Sex
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   M
                                 </Text>
@@ -3340,66 +2970,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Expiry Date
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   22/02/2025
                                 </Text>
@@ -3432,29 +3038,26 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="Valid"
-                                  accessibilityRole="text"
                                   allowFontScaling={false}
                                   ellipsizeMode="tail"
-                                  importantForAccessibility="yes"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={1}
                                   style={
                                     [
+                                      {},
+                                      {
+                                        "color": "#224021",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 16,
+                                      },
                                       {
                                         "alignSelf": "center",
                                         "flexShrink": 1,
-                                        "fontSize": 12,
-                                        "lineHeight": 16,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
-                                      },
-                                      {
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                      },
-                                      {
-                                        "color": "#224021",
                                       },
                                     ]
                                   }
@@ -3505,66 +3108,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Document Number (TEAM)
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   80380000000000000001
                                 </Text>
@@ -3612,66 +3191,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   First Name
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Casimira
                                 </Text>
@@ -3719,66 +3274,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Fiscal Code
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   RSSMRA80A10H501A
                                 </Text>
@@ -3826,66 +3357,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Family Name
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Savoia
                                 </Text>
@@ -3933,66 +3440,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Emessa da
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Ragioneria Generale dello Stato
                                 </Text>
@@ -4149,7 +3632,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
@@ -4184,33 +3667,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   <View>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          },
+                                          {},
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Chi è?
                                     </Text>
@@ -4221,45 +3692,94 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       }
                                     />
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
-                                    </Text>
                                     <View
-                                      style={
-                                        {
-                                          "height": 16,
+                                      style={{}}
+                                    >
+                                      <Text
+                                        allowFontScaling={false}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.25}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
                                         }
-                                      }
-                                    />
+                                      >
+                                        <Text
+                                          style={{}}
+                                        >
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
+                                          </Text>
+                                        </Text>
+                                      </Text>
+                                      <View
+                                        style={
+                                          {
+                                            "height": 24,
+                                          }
+                                        }
+                                      />
+                                      <Text
+                                        allowFontScaling={false}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.25}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          style={{}}
+                                        >
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]([missing {{privacyUrl}} value]).
+                                          </Text>
+                                        </Text>
+                                      </Text>
+                                      <View
+                                        style={
+                                          {
+                                            "height": 24,
+                                          }
+                                        }
+                                      />
+                                    </View>
                                   </View>
                                   <View
                                     style={
@@ -4282,7 +3802,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Rilasciata da Istituto Poligrafico e Zecca di Stato"
+                          accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
                           accessible={false}
                           style={
                             {
@@ -4313,66 +3833,42 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="blue"
-                                  defaultWeight="Bold"
                                   dynamicTypeRamp="footnote"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 14,
-                                      "lineHeight": 21,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 14,
-                                        "lineHeight": 21,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": 21,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
-                                  Rilasciata da
+                                  Emissione versione digitale
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="black"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Istituto Poligrafico e Zecca di Stato
                                 </Text>
@@ -4386,7 +3882,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
-                                accessibilityLabel="test"
+                                accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -4529,7 +4025,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           onDismiss={[Function]}
                           snapPoints={
                             [
-                              1,
+                              10,
                             ]
                           }
                           style={
@@ -4564,33 +4060,21 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   <View>
                                     <Text
                                       allowFontScaling={false}
-                                      color="black"
-                                      defaultColor="black"
-                                      defaultWeight="Semibold"
                                       dynamicTypeRamp="headline"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 18,
-                                          "lineHeight": 25,
-                                        }
-                                      }
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          },
+                                          {},
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
-                                      weight="Semibold"
                                     >
                                       Chi è?
                                     </Text>
@@ -4601,45 +4085,143 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       }
                                     />
-                                    <Text
-                                      allowFontScaling={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      dynamicTypeRamp="body"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
-                                      maxFontSizeMultiplier={1.25}
-                                      style={
-                                        [
-                                          {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti. IO ti chiede di autorizzarne l'aggiunta sul tuo dispositivo.
-                                    </Text>
                                     <View
-                                      style={
-                                        {
-                                          "height": 16,
+                                      style={{}}
+                                    >
+                                      <Text
+                                        allowFontScaling={false}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.25}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
                                         }
-                                      }
-                                    />
+                                      >
+                                        <Text
+                                          style={{}}
+                                        >
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.
+                                          </Text>
+                                        </Text>
+                                      </Text>
+                                      <View
+                                        style={
+                                          {
+                                            "height": 24,
+                                          }
+                                        }
+                                      />
+                                      <Text
+                                        allowFontScaling={false}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.25}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          style={{}}
+                                        >
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            Per sapere come tratta i tuoi dati consulta l’
+                                          </Text>
+                                          <Text
+                                            accessibilityRole="link"
+                                            allowFontScaling={false}
+                                            dynamicTypeRamp="body"
+                                            maxFontSizeMultiplier={1.25}
+                                            numberOfLines={1}
+                                            onPress={[Function]}
+                                            style={
+                                              [
+                                                {
+                                                  "textDecorationLine": "underline",
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            <Text
+                                              style={
+                                                [
+                                                  {
+                                                    "fontSize": 16,
+                                                    "textDecorationLine": "underline",
+                                                  },
+                                                  {},
+                                                ]
+                                              }
+                                            >
+                                              Informativa Privacy
+                                            </Text>
+                                          </Text>
+                                          <Text
+                                            style={
+                                              [
+                                                {
+                                                  "fontSize": 16,
+                                                },
+                                                {},
+                                              ]
+                                            }
+                                          >
+                                            .
+                                          </Text>
+                                        </Text>
+                                      </Text>
+                                      <View
+                                        style={
+                                          {
+                                            "height": 24,
+                                          }
+                                        }
+                                      />
+                                    </View>
                                   </View>
                                   <View
                                     style={

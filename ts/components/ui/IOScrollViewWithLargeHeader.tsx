@@ -1,10 +1,12 @@
 import {
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H2,
   HeaderSecondLevel,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -13,16 +15,12 @@ import React, { ComponentProps, forwardRef, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import {
   BackProps,
-  HeaderActionProps,
+  HeaderActionsProps,
   useHeaderProps
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
-import {
-  BodyProps,
-  ComposedBodyFromArray
-} from "../core/typography/ComposedBodyFromArray";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
@@ -42,7 +40,8 @@ type Props = WithTestID<
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreSafeAreaMargin"];
-    headerActionsProp?: HeaderActionProps;
+    includeContentMargins?: boolean;
+    headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
   } & SupportRequestParams
@@ -66,6 +65,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelpMarkdown,
       faqCategories,
       ignoreSafeAreaMargin = false,
+      includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
       testID
@@ -119,9 +119,9 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           onLayout={getTitleHeight}
         >
           {title.section && (
-            <LabelSmall weight="Semibold" color={theme["textBody-tertiary"]}>
+            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
               {title.section}
-            </LabelSmall>
+            </BodySmall>
           )}
           <H2
             color={theme["textHeading-default"]}
@@ -146,7 +146,11 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         {children && (
           <>
             <VSpacer size={16} />
-            {children}
+            {includeContentMargins ? (
+              <ContentWrapper>{children}</ContentWrapper>
+            ) : (
+              children
+            )}
           </>
         )}
       </IOScrollView>

@@ -1,5 +1,5 @@
 import {
-  ActionProp,
+  HeaderActionProps,
   HeaderSecondLevel,
   Stepper,
   VSpacer
@@ -79,7 +79,7 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
         goBack={handleGoBack}
         backAccessibilityLabel={I18n.t("global.buttons.back")}
         firstAction={{
-          icon: "help" as ActionProp["icon"],
+          icon: "help" as HeaderActionProps["icon"],
           onPress: startSupportRequest,
           accessibilityLabel: I18n.t(
             "global.accessibility.contextualHelp.open.label"

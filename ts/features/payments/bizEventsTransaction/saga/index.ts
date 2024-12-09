@@ -3,15 +3,17 @@ import { takeLatest } from "typed-redux-saga/macro";
 
 import { TransactionClient } from "../../common/api/client";
 import {
-  getPaymentsLatestBizEventsTransactionsAction,
+  getPaymentsBizEventsReceiptAction,
   getPaymentsBizEventsTransactionDetailsAction,
   getPaymentsBizEventsTransactionsAction,
-  getPaymentsBizEventsReceiptAction
+  getPaymentsLatestBizEventsTransactionsAction,
+  hidePaymentsBizEventsReceiptAction
 } from "../store/actions";
-import { handleGetLatestBizEventsTransactions } from "./handleGetLatestBizEventsTransactions";
-import { handleGetBizEventsTransactions } from "./handleGetBizEventsTransactions";
 import { handleGetBizEventsTransactionDetails } from "./handleGetBizEventsTransactionDetails";
 import { handleGetBizEventsTransactionReceipt } from "./handleGetBizEventsTransactionReceipt";
+import { handleGetBizEventsTransactions } from "./handleGetBizEventsTransactions";
+import { handleGetLatestBizEventsTransactions } from "./handleGetLatestBizEventsTransactions";
+import { handleDisableBizEventsTransactionReceipt } from "./handleDisableBizEventsTransactionReceipt";
 
 /**
  * Handle Wallet transaction requests
@@ -23,24 +25,30 @@ export function* watchPaymentsBizEventsTransactionSaga(
   yield* takeLatest(
     getPaymentsBizEventsTransactionsAction.request,
     handleGetBizEventsTransactions,
-    transactionClient.getTransactionList
+    transactionClient.getPaidNotices
   );
 
   yield* takeLatest(
     getPaymentsLatestBizEventsTransactionsAction.request,
     handleGetLatestBizEventsTransactions,
-    transactionClient.getTransactionList
+    transactionClient.getPaidNotices
   );
 
   yield* takeLatest(
     getPaymentsBizEventsTransactionDetailsAction.request,
     handleGetBizEventsTransactionDetails,
-    transactionClient.getTransactionDetails
+    transactionClient.getPaidNoticeDetail
   );
 
   yield* takeLatest(
     getPaymentsBizEventsReceiptAction.request,
     handleGetBizEventsTransactionReceipt,
-    transactionClient.getPDFReceipt
+    transactionClient.generatePDF
+  );
+
+  yield* takeLatest(
+    hidePaymentsBizEventsReceiptAction.request,
+    handleDisableBizEventsTransactionReceipt,
+    transactionClient.disablePaidNotice
   );
 }

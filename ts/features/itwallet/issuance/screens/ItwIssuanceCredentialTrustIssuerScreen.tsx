@@ -12,7 +12,7 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";
@@ -46,12 +46,15 @@ import {
 } from "../components/ItwRequiredClaimsList";
 import {
   CREDENTIALS_MAP,
+  trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackOpenItwTos,
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { itwIpzsPrivacyUrl } from "../../../../config";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -99,7 +102,12 @@ type ContentViewProps = {
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
 
-  useFocusEffect(() => trackWalletDataShare(CREDENTIALS_MAP[credentialType]));
+  useFocusEffect(
+    useCallback(() => {
+      trackWalletDataShare(CREDENTIALS_MAP[credentialType]);
+    }, [credentialType])
+  );
+
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
@@ -134,8 +142,17 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
       } as RequiredClaim)
   );
 
+  const trackScrollToBottom = (crossed: boolean) => {
+    if (crossed) {
+      trackIssuanceCredentialScrollToBottom(
+        CREDENTIALS_MAP[credentialType],
+        ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
+      );
+    }
+  };
+
   return (
-    <ForceScrollDownView>
+    <ForceScrollDownView onThresholdCrossed={trackScrollToBottom}>
       <ContentWrapper>
         <VSpacer size={24} />
         <View style={styles.header}>
@@ -190,7 +207,9 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           styles={{ body: { fontSize: 14 } }}
           onLinkOpen={trackOpenItwTos}
         >
-          {I18n.t("features.itWallet.issuance.credentialAuth.tos")}
+          {I18n.t("features.itWallet.issuance.credentialAuth.tos", {
+            privacyUrl: itwIpzsPrivacyUrl
+          })}
         </ItwMarkdown>
       </ContentWrapper>
       <FooterActions

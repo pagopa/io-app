@@ -1,6 +1,8 @@
 import {
+  H6,
   HSpacer,
   IOColors,
+  BodySmall,
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
@@ -17,10 +19,8 @@ import {
 } from "react-native";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { H4 } from "../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
   initiativeName?: string;
@@ -30,7 +30,7 @@ type Props = {
 };
 
 const formatNumberRightSign = (amount: number) =>
-  `${formatNumberAmount(amount, false)} €`;
+  `${formatNumberCentsToAmount(amount, false)} €`;
 
 const IDPayCardPreviewComponent = (props: Props) => {
   const { initiativeName, logoUrl, onPress } = props;
@@ -79,18 +79,13 @@ const IDPayCardPreviewComponent = (props: Props) => {
           accessibilityRole={"button"}
         >
           <View style={[IOStyles.flex, IOStyles.row]}>
-            <H4 style={IOStyles.flex} ellipsizeMode="tail" numberOfLines={1}>
+            <H6 style={IOStyles.flex} ellipsizeMode="tail" numberOfLines={1}>
               {initiativeName}
-            </H4>
+            </H6>
             <HSpacer size={8} />
-            <LabelSmall
-              weight="Semibold"
-              fontSize="regular"
-              color="black"
-              ellipsizeMode={"tail"}
-            >
+            <BodySmall weight="Semibold" color="black" ellipsizeMode={"tail"}>
               {availableAmount}
-            </LabelSmall>
+            </BodySmall>
           </View>
           {logoComponent}
         </TouchableDefaultOpacity>

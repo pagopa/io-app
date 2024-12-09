@@ -204,6 +204,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -427,7 +428,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -436,7 +437,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -471,22 +472,23 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -514,7 +516,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -759,6 +761,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -982,7 +985,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -991,7 +994,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -1026,22 +1029,23 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -1069,7 +1073,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -1129,34 +1133,22 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -1385,6 +1377,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1608,7 +1601,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -1617,7 +1610,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -1652,22 +1645,23 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -1695,7 +1689,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -1755,34 +1749,22 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -1866,66 +1848,42 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -2222,6 +2180,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2445,7 +2404,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -2454,7 +2413,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -2489,22 +2448,23 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -2532,7 +2492,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -2592,34 +2552,22 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -2771,66 +2719,42 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -3127,6 +3051,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3350,7 +3275,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -3359,7 +3284,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -3394,22 +3319,23 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -3437,7 +3363,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -3497,34 +3423,22 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -3608,66 +3522,42 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -3827,66 +3717,42 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 2
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -4183,6 +4049,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4406,7 +4273,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -4415,7 +4282,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -4450,22 +4317,23 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -4493,7 +4361,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -4553,34 +4421,22 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -4732,66 +4588,42 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -5019,66 +4851,42 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 2
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -5375,6 +5183,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5598,7 +5407,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -5607,7 +5416,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -5642,22 +5451,23 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -5685,7 +5495,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -5745,34 +5555,22 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -5856,66 +5654,42 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -6026,34 +5800,22 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 2 title
                                       </Text>
@@ -6137,66 +5899,42 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 2
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -6424,66 +6162,42 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 3
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 3
                                       </Text>
@@ -6594,34 +6308,22 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 3 title
                                       </Text>
@@ -6705,66 +6407,42 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 4
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 4
                                       </Text>
@@ -6992,66 +6670,42 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 5
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 5
                                       </Text>
@@ -7211,66 +6865,42 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 6
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 6
                                       </Text>
@@ -7567,6 +7197,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -7790,7 +7421,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -7799,7 +7430,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -7834,22 +7465,23 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -7877,7 +7509,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            1,
+                            10,
                           ]
                         }
                         style={
@@ -7937,34 +7569,22 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 1 title
                                       </Text>
@@ -8048,66 +7668,42 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 1
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 1
                                       </Text>
@@ -8218,34 +7814,22 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         role="heading"
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         Section 2 title
                                       </Text>
@@ -8329,66 +7913,42 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 2
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 2
                                       </Text>
@@ -8616,66 +8176,42 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     >
                                       <Text
                                         allowFontScaling={false}
-                                        color="grey-700"
-                                        defaultColor="blue"
-                                        defaultWeight="Bold"
                                         dynamicTypeRamp="footnote"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 14,
-                                            "lineHeight": 21,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 14,
-                                              "lineHeight": 21,
-                                            },
+                                            {},
                                             {
                                               "color": "#555C70",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 14,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
+                                              "lineHeight": 21,
                                             },
                                           ]
                                         }
-                                        weight="Regular"
                                       >
                                         label 3
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
-                                        color="blue"
-                                        defaultColor="black"
-                                        defaultWeight="Semibold"
                                         dynamicTypeRamp="headline"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 18,
-                                            "lineHeight": 25,
-                                          }
-                                        }
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
                                           [
-                                            {
-                                              "fontSize": 18,
-                                              "lineHeight": 25,
-                                            },
+                                            {},
                                             {
                                               "color": "#0073E6",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 18,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
+                                              "lineHeight": 24,
                                             },
                                           ]
                                         }
-                                        weight="Semibold"
                                       >
                                         value 3
                                       </Text>

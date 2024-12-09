@@ -1,20 +1,20 @@
 import { Body, IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import * as React from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus";
+import { fimsRequiresAppUpdateSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { trackAuthenticationError } from "../../common/analytics";
 import { FimsUpdateAppAlert } from "../../common/components/FimsUpdateAppAlert";
 import { FimsParamsList } from "../../common/navigation";
+import { FimsSSOFullScreenError } from "../components/FimsFullScreenErrors";
 import { FimsFlowSuccessBody } from "../components/FimsSuccessBody";
 import {
   fimsCancelOrAbortAction,
@@ -22,7 +22,7 @@ import {
 } from "../store/actions/";
 import {
   fimsConsentsDataSelector,
-  fimsErrorStateSelector,
+  fimsAuthenticationFailedSelector,
   fimsLoadingStateSelector
 } from "../store/selectors";
 
@@ -45,7 +45,7 @@ export const FimsFlowHandlerScreen = (
   const requiresAppUpdate = useIOSelector(fimsRequiresAppUpdateSelector);
   const loadingState = useIOSelector(fimsLoadingStateSelector);
   const consentsPot = useIOSelector(fimsConsentsDataSelector);
-  const errorState = useIOSelector(fimsErrorStateSelector);
+  const authenticationFailed = useIOSelector(fimsAuthenticationFailedSelector);
 
   const handleCancelOrAbort = React.useCallback(() => {
     if (loadingState !== "abort") {
@@ -53,16 +53,23 @@ export const FimsFlowHandlerScreen = (
     }
   }, [dispatch, loadingState]);
 
+  const consentsMaybe = pot.toOption(consentsPot);
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
+    canGoBack:
+      !authenticationFailed &&
+      !requiresAppUpdate &&
+      (loadingState !== undefined || O.isSome(consentsMaybe)),
     goBack: handleCancelOrAbort
   });
 
-  useHardwareBackButton(() => {
-    handleCancelOrAbort();
-    return true;
-  });
+  // Force users on Android to use UI buttons to go back, since
+  // there are cases where a modal may be displayed on top of
+  // the screen (like the assistance one) and the hardware back
+  // button event is not stopped by such screen but is instead
+  // propagated to this UI, causing a back loop
+  useHardwareBackButton(constTrue);
 
   React.useEffect(() => {
     if (ctaUrl && !requiresAppUpdate) {
@@ -82,8 +89,8 @@ export const FimsFlowHandlerScreen = (
     return <FimsUpdateAppAlert />;
   }
 
-  if (errorState !== undefined) {
-    return <FimsErrorBody title={errorState} />;
+  if (authenticationFailed) {
+    return <FimsSSOFullScreenError />;
   }
   if (loadingState !== undefined) {
     const subtitle =
@@ -104,10 +111,9 @@ export const FimsFlowHandlerScreen = (
   }
 
   return pipe(
-    consentsPot,
-    pot.toOption,
+    consentsMaybe,
     O.fold(
-      () => <FimsErrorBody title={I18n.t("global.genericError")} />,
+      () => <FimsSSOFullScreenError />,
       consents => (
         <FimsFlowSuccessBody
           consents={consents}
@@ -117,12 +123,3 @@ export const FimsFlowHandlerScreen = (
     )
   );
 };
-
-type FimsErrorBodyProps = { title: string };
-const FimsErrorBody = ({ title }: FimsErrorBodyProps) => (
-  <OperationResultScreenContent
-    pictogram="umbrellaNew"
-    title={title}
-    isHeaderVisible={true}
-  />
-);

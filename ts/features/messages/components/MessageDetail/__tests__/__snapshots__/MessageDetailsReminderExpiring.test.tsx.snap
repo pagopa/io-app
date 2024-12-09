@@ -204,6 +204,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -394,6 +395,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           <View
                             style={
                               {
+                                "alignSelf": "flex-start",
                                 "marginRight": 12,
                               }
                             }
@@ -462,12 +464,10 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           <View
                             style={
                               [
-                                {
-                                  "marginTop": -10,
-                                },
+                                false,
+                                false,
                                 {
                                   "flex": 1,
-                                  "marginBottom": -6,
                                 },
                               ]
                             }
@@ -475,33 +475,22 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                             <Text
                               accessibilityRole="text"
                               allowFontScaling={false}
-                              color="warning-850"
-                              defaultColor="black"
-                              defaultWeight="Bold"
-                              dynamicTypeRamp="footnote"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
+                              onTextLayout={[Function]}
                               style={
                                 [
-                                  {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
+                                  {},
                                   {
                                     "color": "#614C15",
                                     "fontFamily": "Titillium Sans Pro",
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               Expires on 21/03/2024 at 10:33
                             </Text>
@@ -513,18 +502,20 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               }
                             />
                             <Text
+                              allowFontScaling={false}
                               ellipsizeMode="tail"
+                              maxFontSizeMultiplier={1.25}
                               numberOfLines={1}
                               style={
                                 [
+                                  {},
                                   {
+                                    "color": "#614C15",
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
-                                  },
-                                  {
-                                    "color": "#614C15",
+                                    "fontWeight": "600",
+                                    "lineHeight": 20,
                                   },
                                 ]
                               }

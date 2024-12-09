@@ -7,13 +7,16 @@ import {
 import React from "react";
 import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
-import I18n from "../../../../i18n";
-import { getCredentialNameFromType } from "../utils/itwCredentialUtils";
+import {
+  borderColorByStatus,
+  getCredentialNameFromType,
+  tagPropsByStatus,
+  validCredentialStatuses
+} from "../utils/itwCredentialUtils";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
-
-export type ItwCredentialStatus = "valid" | "pending" | "expiring" | "expired";
 
 export type ItwCredentialCard = {
   credentialType: string;
@@ -26,9 +29,9 @@ export const ItwCredentialCard = ({
   credentialType,
   isPreview = false
 }: ItwCredentialCard) => {
-  const isValid = status === "valid";
+  const isValid = validCredentialStatuses.includes(status);
   const theme = getThemeColorByCredentialType(credentialType);
-  const labelColor = isValid ? theme.textColor : IOColors["grey-700"];
+  const labelOpacity = isValid ? 1 : 0.5;
 
   const cardBackgroundSource =
     credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
@@ -45,13 +48,21 @@ export const ItwCredentialCard = ({
         </View>
         <View style={styles.header}>
           <HStack space={16}>
-            <Text style={[styles.label, { color: labelColor }]}>
+            <Text
+              style={[
+                styles.label,
+                { color: theme.textColor, opacity: labelOpacity }
+              ]}
+            >
               {getCredentialNameFromType(credentialType, "").toUpperCase()}
             </Text>
             {statusTagProps && <Tag {...statusTagProps} />}
           </HStack>
         </View>
-        <ItwDigitalVersionBadge credentialType={credentialType} />
+        <ItwDigitalVersionBadge
+          credentialType={credentialType}
+          isFaded={!isValid}
+        />
         <View
           style={[styles.border, { borderColor: borderColorByStatus[status] }]}
         />
@@ -74,36 +85,7 @@ const credentialCardBackgrounds: {
   [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
     require("../../../../../img/features/itWallet/cards/mdl_off.png")
-  ],
-  [CredentialType.PID]: [
-    require("../../../../../img/features/itWallet/cards/eid.png"),
-    require("../../../../../img/features/itWallet/cards/eid_off.png")
   ]
-};
-
-const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
-  expired: {
-    variant: "error",
-    text: I18n.t("features.itWallet.card.status.expired")
-  },
-  expiring: {
-    variant: "warning",
-    text: I18n.t("features.itWallet.card.status.expiring")
-  },
-  pending: {
-    variant: "customIcon",
-    text: I18n.t("features.itWallet.card.status.pending"),
-    customIconProps: { iconColor: "info-700", iconName: "infoFilled" }
-  }
-};
-
-const transparentBorderColor = "transparent";
-
-const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
-  valid: transparentBorderColor,
-  expired: IOColors["error-600"],
-  expiring: IOColors["warning-700"],
-  pending: IOColors["info-700"]
 };
 
 const styles = StyleSheet.create({
@@ -132,14 +114,11 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     borderRadius: 8,
-    borderWidth: 1,
-    borderLeftWidth: 9,
-    borderColor: transparentBorderColor
+    borderWidth: 2
   },
   label: {
     flex: 1,
-    ...makeFontStyleObject("Semibold", false, "TitilliumSansPro"),
-    fontSize: 16
+    ...makeFontStyleObject(16, "TitilliumSansPro", 20, "Semibold")
   },
   header: {
     display: "flex",

@@ -31,6 +31,9 @@ import CiePinWizard from "../features/cie/screens/wizards/CiePinWizard";
 import SpidWizard from "../features/cie/screens/wizards/SpidWizard";
 import IDActivationWizard from "../features/cie/screens/wizards/IDActivationWizard";
 import CieIdErrorScreen from "../features/cie/screens/errors/CieIdErrorScreen";
+import CieIdLoginScreen from "../features/cieLogin/components/screens/CieIdLoginScreen";
+import CieIdNotInstalledScreen from "../features/cie/screens/CieIdNotInstalledScreen";
+import CieIdAuthUrlError from "../features/cieLogin/components/screens/CieIdAuthUrlError";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -112,6 +115,12 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
+      name={ROUTES.AUTHENTICATION_CIE_ID_LOGIN}
+      component={CieIdLoginScreen}
+      options={{ headerShown: false }}
+    />
+
+    <Stack.Screen
       name={ROUTES.CIE_LOGIN_CONFIG_SCREEN}
       component={CieLoginConfigScreen}
     />
@@ -173,6 +182,14 @@ const AuthenticationStackNavigator = () => (
       <Stack.Screen
         name={ROUTES.AUTHENTICATION_CIE_ID_ERROR}
         component={CieIdErrorScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_CIE_ID_INCORRECT_URL}
+        component={CieIdAuthUrlError}
+      />
+      <Stack.Screen
+        name={ROUTES.CIE_NOT_INSTALLED}
+        component={CieIdNotInstalledScreen}
       />
     </Stack.Group>
 

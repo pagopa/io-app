@@ -3,541 +3,337 @@
 exports[`Test LinkedText component should render a LinkedText component with props correctly 1`] = `
 <Text
   allowFontScaling={false}
-  color="bluegreyDark"
-  defaultColor="bluegreyDark"
-  defaultWeight="Semibold"
   dynamicTypeRamp="title3"
-  font="TitilliumSansPro"
-  fontStyle={
-    {
-      "fontSize": 20,
-      "lineHeight": 24,
-    }
-  }
   maxFontSizeMultiplier={1.25}
   style={
     [
+      {},
       {
-        "fontSize": 20,
-        "lineHeight": 24,
-      },
-      {
-        "color": "#17324D",
+        "color": "#0E0F13",
         "fontFamily": "Titillium Sans Pro",
+        "fontSize": 20,
         "fontStyle": "normal",
         "fontWeight": "600",
+        "lineHeight": 24,
       },
     ]
   }
-  weight="Semibold"
 >
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   />
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     C
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     l
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     a
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     u
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     s
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     e
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
      
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     t
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     i
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     t
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     l
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     e
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
      
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   >
     1
   </Text>
   <Text
     allowFontScaling={false}
-    color="bluegreyDark"
-    defaultColor="black"
-    defaultWeight="Semibold"
     dynamicTypeRamp="headline"
-    font="TitilliumSansPro"
-    fontStyle={
-      {
-        "fontSize": 18,
-        "lineHeight": 25,
-      }
-    }
     maxFontSizeMultiplier={1.25}
     style={
       [
+        {},
         {
-          "fontSize": 18,
-          "lineHeight": 25,
-        },
-        {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18,
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
   />
 </Text>
 `;

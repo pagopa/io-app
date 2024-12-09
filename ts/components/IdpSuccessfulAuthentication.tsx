@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 import { profileNameSelector } from "../store/reducers/profile";
 import I18n from "../i18n";
@@ -29,10 +29,13 @@ export const IdpSuccessfulAuthentication = () => {
       AccessibilityInfo.announceForAccessibility(contentTitle);
     }
   }, [contentTitle, name]);
-  return OperationResultScreenContent({
-    pictogram: "success",
-    title: contentTitle,
-    testID: "idp-successful-authentication",
-    isHeaderVisible: true
-  });
+
+  return (
+    <OperationResultScreenContent
+      testID="idp-successful-authentication"
+      pictogram="success"
+      title={contentTitle}
+      isHeaderVisible
+    />
+  );
 };

@@ -28,7 +28,9 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
       Parameter: undefined
     },
     code: "409"
-  })
+  }),
+  isLoginUtilsError: (e: unknown) =>
+    (e as LoginUtilsError).userInfo !== undefined
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {

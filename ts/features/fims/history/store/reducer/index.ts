@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
+import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
 import {
   remoteError,
   remoteLoading,
@@ -20,10 +20,10 @@ export type FimsExportSuccessStates = "SUCCESS" | "ALREADY_EXPORTING";
 
 export type FimsHistoryState = {
   historyExportState: RemoteValue<FimsExportSuccessStates, null>;
-  consentsList: pot.Pot<ConsentsResponseDTO, string>;
+  consentsList: pot.Pot<AccessHistoryPage, string>;
 };
 
-const INITIAL_STATE: FimsHistoryState = {
+export const INITIAL_STATE: FimsHistoryState = {
   historyExportState: remoteUndefined,
   consentsList: pot.none
 };
@@ -45,12 +45,12 @@ const reducer = (
           };
     case getType(fimsHistoryGet.success):
       const currentHistoryItems =
-        pot.toUndefined(state.consentsList)?.items ?? [];
+        pot.toUndefined(state.consentsList)?.data ?? [];
       return {
         ...state,
         consentsList: pot.some({
-          continuationToken: action.payload.continuationToken,
-          items: [...currentHistoryItems, ...action.payload.items]
+          next: action.payload.next,
+          data: [...currentHistoryItems, ...action.payload.data]
         })
       };
     case getType(fimsHistoryGet.failure):

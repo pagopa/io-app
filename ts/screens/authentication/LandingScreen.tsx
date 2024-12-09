@@ -8,8 +8,8 @@ import {
   ButtonSolid,
   ContentWrapper,
   ModuleNavigation,
-  useIOToast,
-  VSpacer
+  VSpacer,
+  Tooltip
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
@@ -33,6 +33,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import {
   isCieIDFFEnabledSelector,
+  isCieIDTourGuideEnabledSelector,
   isCieLoginUatEnabledSelector
 } from "../../features/cieLogin/store/selectors";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -41,7 +42,7 @@ import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { resetAuthenticationState } from "../../store/actions/authentication";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -51,7 +52,17 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
-import { trackMethodInfo } from "./analytics";
+import { cieIDDisableTourGuide } from "../../features/cieLogin/store/actions";
+import { SpidLevel } from "../../features/cieLogin/utils";
+import {
+  loginCieWizardSelected,
+  trackCieBottomSheetScreenView,
+  trackCieIDLoginSelected,
+  trackCieLoginSelected,
+  trackCiePinLoginSelected,
+  trackMethodInfo,
+  trackSpidLoginSelected
+} from "./analytics";
 import { Carousel } from "./carousel/Carousel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -61,14 +72,33 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
+const SPID_LEVEL: SpidLevel = "SpidL2";
 
 export const LandingScreen = () => {
+  const store = useIOStore();
+  const insets = useSafeAreaInsets();
+  const isCieIDTourGuideEnabled = useIOSelector(
+    isCieIDTourGuideEnabledSelector
+  );
   const isCieIDFFEnabled = useIOSelector(isCieIDFFEnabledSelector);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
-  const { navigateToIdpSelection, navigateToCiePinInsertion, isCieSupported } =
-    useNavigateToLoginMethod();
-  const toast = useIOToast();
-  const insets = useSafeAreaInsets();
+  const {
+    navigateToIdpSelection,
+    navigateToCiePinInsertion,
+    navigateToCieIdLoginScreen,
+    isCieSupported
+  } = useNavigateToLoginMethod();
+
+  const handleNavigateToCiePinScreen = useCallback(() => {
+    void trackCiePinLoginSelected(store.getState());
+    navigateToCiePinInsertion();
+  }, [store, navigateToCiePinInsertion]);
+
+  const handleNavigateToCieIdLoginScreen = useCallback(() => {
+    void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
+    navigateToCieIdLoginScreen(SPID_LEVEL);
+  }, [store, navigateToCieIdLoginScreen]);
+
   const {
     present,
     dismiss: dismissBottomSheet,
@@ -85,7 +115,8 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
           )}
           icon="fiscalCodeIndividual"
-          onPress={navigateToCiePinInsertion}
+          testID="bottom-sheet-login-with-cie-pin"
+          onPress={handleNavigateToCiePinScreen}
         />
         <VSpacer size={8} />
         <ModuleNavigation
@@ -96,18 +127,25 @@ export const LandingScreen = () => {
             "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
           )}
           icon="device"
-          onPress={() => {
-            // TODO: depends on https://pagopa.atlassian.net/browse/IOPID-2134
-            toast.info("Not implemented yet...");
+          testID="bottom-sheet-login-with-cie-id"
+          badge={{
+            variant: "turquoise",
+            text: I18n.t(
+              "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
+            )
           }}
+          onPress={handleNavigateToCieIdLoginScreen}
         />
         <VSpacer size={24} />
         <Banner
-          onPress={() =>
+          onPress={() => {
+            void loginCieWizardSelected();
+
             navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.AUTHENTICATION_CIE_ID_WIZARD
-            })
-          }
+            });
+          }}
+          testID="bottom-sheet-login-wizards"
           pictogramName="help"
           color="turquoise"
           title={I18n.t(
@@ -200,27 +238,33 @@ export const LandingScreen = () => {
 
   const handleLegacyCieLogin = useCallback(() => {
     if (isCieSupported) {
-      navigateToCiePinInsertion();
+      handleNavigateToCiePinScreen();
     } else {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.CIE_NOT_SUPPORTED
       });
     }
-  }, [isCieSupported, navigation, navigateToCiePinInsertion]);
+  }, [isCieSupported, navigation, handleNavigateToCiePinScreen]);
 
   const navigateToCiePinScreen = useCallback(() => {
+    void trackCieLoginSelected();
     if (isCieIDFFEnabled) {
       if (isCieSupported) {
+        void trackCieBottomSheetScreenView();
         present();
       } else {
-        // Depends on https://pagopa.atlassian.net/browse/IOPID-2134
-        // TODO: should navigate to CieID login
-        toast.info("Not implemented yet...");
+        handleNavigateToCieIdLoginScreen();
       }
     } else {
       handleLegacyCieLogin();
     }
-  }, [present, toast, isCieSupported, isCieIDFFEnabled, handleLegacyCieLogin]);
+  }, [
+    present,
+    isCieSupported,
+    isCieIDFFEnabled,
+    handleLegacyCieLogin,
+    handleNavigateToCieIdLoginScreen
+  ]);
 
   const navigateToPrivacyUrl = useCallback(() => {
     trackMethodInfo();
@@ -235,21 +279,32 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const getLoginButtons = useCallback((): [JSX.Element, JSX.Element] => {
+  const [firstButton, secondButton] = useMemo((): [
+    JSX.Element,
+    JSX.Element
+  ] => {
     const loginCieButton = (
-      <ButtonSolid
-        testID={"landing-button-login-cie"}
-        accessibilityLabel={I18n.t("authentication.landing.loginCie")}
-        fullWidth
-        color={isCieUatEnabled ? "danger" : "primary"}
-        label={I18n.t("authentication.landing.loginCie")}
-        icon={"cie"}
-        onPress={navigateToCiePinScreen}
-      />
+      <Tooltip
+        closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
+        isVisible={isCieIDTourGuideEnabled}
+        onClose={() => dispatch(cieIDDisableTourGuide())}
+        title={I18n.t("authentication.landing.tour_guide.title")}
+        content={I18n.t("authentication.landing.tour_guide.content")}
+      >
+        <ButtonSolid
+          testID="landing-button-login-cie"
+          accessibilityLabel={I18n.t("authentication.landing.loginCie")}
+          fullWidth
+          color={isCieUatEnabled ? "danger" : "primary"}
+          label={I18n.t("authentication.landing.loginCie")}
+          icon="cieLetter"
+          onPress={navigateToCiePinScreen}
+        />
+      </Tooltip>
     );
     const loginSpidButton = (
       <ButtonSolid
-        testID={"landing-button-login-spid"}
+        testID="landing-button-login-spid"
         fullWidth
         accessibilityLabel={I18n.t("authentication.landing.loginSpid")}
         color="primary"
@@ -258,7 +313,10 @@ export const LandingScreen = () => {
         // but we navigate to the CIE unsupported info screen.
         label={I18n.t("authentication.landing.loginSpid")}
         icon="spid"
-        onPress={navigateToIdpSelection}
+        onPress={() => {
+          void trackSpidLoginSelected();
+          navigateToIdpSelection();
+        }}
       />
     );
 
@@ -268,11 +326,13 @@ export const LandingScreen = () => {
 
     return [loginSpidButton, loginCieButton];
   }, [
-    isCieIDFFEnabled,
-    isCieSupported,
+    isCieIDTourGuideEnabled,
     isCieUatEnabled,
     navigateToCiePinScreen,
-    navigateToIdpSelection
+    navigateToIdpSelection,
+    isCieIDFFEnabled,
+    isCieSupported,
+    dispatch
   ]);
 
   const LandingScreenComponent = () => {
@@ -338,8 +398,6 @@ export const LandingScreen = () => {
       ],
       []
     );
-
-    const [firstButton, secondButton] = getLoginButtons();
 
     return (
       <View style={IOStyles.flex}>

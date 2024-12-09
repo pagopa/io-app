@@ -1,8 +1,11 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { useLayoutEffect } from "react";
-import Animated, { Layout, useAnimatedRef } from "react-native-reanimated";
-import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
+import { useCallback, useEffect, useLayoutEffect } from "react";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -13,11 +16,12 @@ import { useHeaderFirstLevelActionPropSettings } from "../../../../navigation/co
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import * as analytics from "../analytics";
 import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
@@ -29,6 +33,7 @@ import {
   isPaymentsSectionLoadingFirstTimeSelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
+import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -36,14 +41,24 @@ const PaymentsHomeScreen = () => {
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+
   const isLoadingFirstTime = useIOSelector(
     isPaymentsSectionLoadingFirstTimeSelector
   );
   const isTransactionsEmpty = useIOSelector(
     isPaymentsLatestTransactionsEmptySelector
   );
+  const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
+  const latestTransactionsPot = useIOSelector(
+    walletLatestTransactionsBizEventsListPotSelector
+  );
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const cannotRefresh =
+    pot.isError(paymentMethodsPot) &&
+    pot.isNone(paymentMethodsPot) &&
+    pot.isError(latestTransactionsPot) &&
+    pot.isNone(latestTransactionsPot);
 
   const handleOnPayNoticedPress = () => {
     analytics.trackPaymentStartDataEntry({
@@ -56,12 +71,9 @@ const PaymentsHomeScreen = () => {
     });
   };
 
-  /* CODE RELATED TO THE HEADER */
-  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+  /* CODE RELATED TO THE HEADER -- START */
 
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
 
   const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.PAYMENTS_HOME);
   const settingsAction = useHeaderFirstLevelActionPropSettings();
@@ -71,35 +83,18 @@ const PaymentsHomeScreen = () => {
       title: I18n.t("features.payments.title"),
       animatedRef: scrollViewContentRef,
       firstAction: helpAction,
-      ...(isSettingsVisibleAndHideProfile
-        ? {
-            type: "twoActions",
-            secondAction: settingsAction
-          }
-        : { type: "singleAction" })
+      type: "twoActions",
+      secondAction: settingsAction
     };
 
     navigation.setOptions({
       header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
     });
-  }, [
-    scrollViewContentRef,
-    settingsAction,
-    helpAction,
-    isSettingsVisibleAndHideProfile,
-    navigation
-  ]);
+  }, [scrollViewContentRef, settingsAction, helpAction, navigation]);
 
-  const AnimatedPaymentsHomeScreenContent = React.useCallback(
-    () => (
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
-        <PaymentsHomeScreenContent />
-      </Animated.View>
-    ),
-    []
-  );
+  /* CODE RELATED TO THE HEADER -- END */
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isLoading) {
       setIsRefreshing(false);
       analytics.trackPaymentsHome({
@@ -111,23 +106,41 @@ const PaymentsHomeScreen = () => {
   }, [isLoading, paymentAnalyticsData]);
 
   const handleRefreshPaymentsHome = () => {
+    if (isRefreshing || isLoading || cannotRefresh) {
+      return;
+    }
     setIsRefreshing(true);
     dispatch(getPaymentsWalletUserMethods.request());
     dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
   };
 
+  const AnimatedPaymentsHomeScreenContent = useCallback(
+    () => (
+      <Animated.View
+        style={IOStyles.flex}
+        layout={LinearTransition.duration(200)}
+      >
+        <PaymentsHomeScreenContent />
+      </Animated.View>
+    ),
+    []
+  );
+
   if (isTransactionsEmpty) {
     return (
-      <Animated.ScrollView
-        ref={scrollViewContentRef}
+      <IOScrollView
+        animatedRef={scrollViewContentRef}
         contentContainerStyle={{
-          paddingHorizontal: 24,
           flexGrow: 1
+        }}
+        refreshControlProps={{
+          refreshing: isRefreshing,
+          onRefresh: handleRefreshPaymentsHome
         }}
       >
         <PaymentsAlertStatus />
         <AnimatedPaymentsHomeScreenContent />
-      </Animated.ScrollView>
+      </IOScrollView>
     );
   }
 
@@ -166,8 +179,16 @@ const PaymentsHomeScreenContent = () => {
     isPaymentsSectionLoadingFirstTimeSelector
   );
   const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
+  const userMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
+  const latestTransactionsPot = useIOSelector(
+    walletLatestTransactionsBizEventsListPotSelector
+  );
 
-  if (isEmpty) {
+  if (
+    isEmpty &&
+    !pot.isError(userMethodsPot) &&
+    !pot.isError(latestTransactionsPot)
+  ) {
     return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
   }
 

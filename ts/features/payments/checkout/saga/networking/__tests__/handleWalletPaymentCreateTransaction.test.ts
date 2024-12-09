@@ -10,7 +10,6 @@ import {
   WalletPaymentCreateTransactionPayload
 } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
-import { paymentAnalyticsDataSelector } from "../../../../history/store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const newTransactionPayload: WalletPaymentCreateTransactionPayload = {
@@ -48,9 +47,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 200, value: newTransactionResponse }))
-      .select(paymentAnalyticsDataSelector)
       .next()
-      .put(paymentsCreateTransactionAction.success(newTransactionResponse))
       .next()
       .isDone();
   });
@@ -68,7 +65,6 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 400, value: undefined }))
-      .select(paymentAnalyticsDataSelector)
       .next({})
       .next()
       .isDone();
@@ -87,7 +83,6 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .next()
       .next(T_SESSION_TOKEN)
       .next(E.left([]))
-      .select(paymentAnalyticsDataSelector)
       .next({})
       .next()
       .isDone();

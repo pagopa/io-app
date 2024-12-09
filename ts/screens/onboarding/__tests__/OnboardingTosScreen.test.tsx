@@ -18,6 +18,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 // import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { mockAccessibilityInfo } from "../../../utils/testAccessibility";
 
 const CurrentTestToSVersion = 2.0;
 
@@ -25,6 +26,7 @@ const CurrentTestToSVersion = 2.0;
 beforeAll(() => {
   jest.resetAllMocks();
   jest.mock("./../../../config");
+  mockAccessibilityInfo(false);
 });
 
 afterAll(() => {
@@ -313,33 +315,35 @@ const commonSetup = ({
       : pot.some(testProfile);
   const testState = {
     ...globalState,
-    backendStatus: {
-      ...globalState.backendStatus,
-      status: O.some({
-        config: {
-          assistanceTool: {
-            tool: ToolEnum.zendesk
-          },
-          cgn: {
-            enabled: false
-          },
-          newPaymentSection: {
-            enabled: false,
-            min_app_version: {
-              android: "0.0.0.0",
-              ios: "0.0.0.0"
-            }
-          },
-          fims: {
-            enabled: false
-          },
-          tos: {
-            tos_version: CurrentTestToSVersion,
-            tos_url: "https://www.example.com"
-          }
+    remoteConfig: O.some({
+      assistanceTool: {
+        tool: ToolEnum.zendesk
+      },
+      cgn: {
+        enabled: false
+      },
+      newPaymentSection: {
+        enabled: false,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
         }
-      })
-    },
+      },
+      fims: {
+        enabled: false
+      },
+      tos: {
+        tos_version: CurrentTestToSVersion,
+        tos_url: "https://www.example.com"
+      },
+      itw: {
+        enabled: true,
+        min_app_version: {
+          android: "0.0.0.0",
+          ios: "0.0.0.0"
+        }
+      }
+    }),
     profile: testProfilePot
   } as GlobalState;
 

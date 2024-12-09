@@ -16,20 +16,15 @@ import {
   identificationSuccess
 } from "../store/actions/identification";
 import {
-  paymentDeletePayment,
-  runDeleteActivePaymentSaga
-} from "../store/actions/wallet/payment";
-import {
   IdentificationCancelData,
   IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
-import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { handlePendingMessageStateIfAllowedSaga } from "../features/pushNotifications/sagas/notifications";
+import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
 
 type ResultAction =
@@ -55,18 +50,6 @@ function* waitIdentificationResult(): Generator<
       return IdentificationResult.cancel;
 
     case getType(identificationPinReset): {
-      // If a payment is occurring, delete the active payment from pagoPA
-      const paymentState: ReturnType<typeof paymentsCurrentStateSelector> =
-        yield* select(paymentsCurrentStateSelector);
-      if (paymentState.kind === "ACTIVATED") {
-        yield* put(runDeleteActivePaymentSaga());
-        // we try to wait until the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
-        yield* take([
-          paymentDeletePayment.failure,
-          paymentDeletePayment.success
-        ]);
-      }
-
       // Invalidate the session
       yield* put(sessionInvalid());
 
@@ -158,7 +141,7 @@ function* startAndHandleIdentificationResult(
     yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    yield* call(handlePendingMessageStateIfAllowedSaga);
+    yield* call(handlePendingMessageStateIfAllowed);
   }
 }
 

@@ -1,18 +1,18 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
-import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Image, StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
-import { localeDateFormat } from "../../../../../utils/locale";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
   EvidenceClaim,
   ImageClaim,
-  PlaceOfBirthClaim
+  PlaceOfBirthClaim,
+  SimpleDateClaim,
+  SimpleDateFormat
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential } from "../../utils/itwTypesUtils";
 import { ClaimLabel, ClaimLabelProps } from "./ClaimLabel";
@@ -41,13 +41,14 @@ export type ClaimDimensions = Prettify<
 export type CardClaimProps = Prettify<
   {
     // A claim that will be used to render its component
-    claim: ParsedCredential[number];
+    // Since we are passing this value by accessing the claims object by key, the value could be undefined
+    claim?: ParsedCredential[number];
     // Absolute position expressed in percentages from top-left corner
     position?: ClaimPosition;
     // Claim dimensions
     dimensions?: ClaimDimensions;
     // Optional format for dates contained in the claim component
-    dateFormat?: string;
+    dateFormat?: SimpleDateFormat;
   } & ClaimLabelProps
 >;
 
@@ -60,17 +61,17 @@ const CardClaim = ({
   position,
   dimensions,
   testID,
-  dateFormat = "%d/%m/%Y",
+  dateFormat = "DD/MM/YY",
   ...labelProps
 }: WithTestID<CardClaimProps>) => {
   const claimContent = React.useMemo(
     () =>
       pipe(
-        claim.value,
+        claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
-          if (DateFromString.is(decoded)) {
-            const formattedDate = localeDateFormat(decoded, dateFormat);
+          if (SimpleDateClaim.is(decoded)) {
+            const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
           } else if (EvidenceClaim.is(decoded)) {
             return (
@@ -118,7 +119,8 @@ const CardClaim = ({
 
 export type CardClaimRendererProps<T> = {
   // A claim that will be used to render a component
-  claim: ParsedCredential[number];
+  // Since we are passing this value by accessing the claims object by key, the value could be undefined
+  claim?: ParsedCredential[number];
   // Function that check that the proviced claim is of the correct type
   is: (value: unknown) => value is T;
   // Function that renders a component with the decoded provided claim
@@ -135,7 +137,7 @@ const CardClaimRenderer = <T,>({
   component
 }: CardClaimRendererProps<T>) =>
   pipe(
-    claim.value,
+    claim?.value,
     ClaimValue.decode,
     O.fromEither,
     O.filter(is),

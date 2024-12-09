@@ -7,10 +7,10 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
-import { NativeModules } from "react-native";
+import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
-import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
+
 import "react-native-get-random-values";
 
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
@@ -19,10 +19,14 @@ jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
-jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
 
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
+
+  // The mock misses the `addWhitelistedUIProps` implementation
+  // So we override it with a no-op
+  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
+  Reanimated.default.addWhitelistedUIProps = () => { };
 
   return {
     ...Reanimated,
@@ -150,4 +154,24 @@ jest.mock("react-native-vision-camera", () => ({
     codeTypes: ["qr", "data-matrix"],
     onCodeScanned: jest.fn()
   }))
+}));
+
+/* Force the useBoldTextEnabled to return false to resolve tests */
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  return {
+    ...actual,
+    useBoldTextEnabled: jest.fn(() => Promise.resolve(false))
+  };
+});
+
+jest
+  .spyOn(AccessibilityInfo, "isBoldTextEnabled")
+  .mockImplementation(() => Promise.resolve(false));
+
+/**
+ * NefInfo's `fetch` method mock
+ */
+jest.mock("@react-native-community/netinfo", () => ({
+  fetch: jest.fn().mockResolvedValue({ isConnected: true })
 }));

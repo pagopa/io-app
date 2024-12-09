@@ -25,9 +25,9 @@ export const selectCiePin = (snapshot: MachineSnapshot) =>
     O.getOrElse(() => "")
   );
 
-export const selectCieAuthUrlOption = (snapshot: MachineSnapshot) =>
+export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
   pipe(
-    snapshot.context.cieAuthContext,
+    snapshot.context.authenticationContext,
     O.fromNullable,
     O.map(x => x.authUrl)
   );
@@ -36,8 +36,4 @@ export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
 
 export const selectIsCieIdEidRequest = (snapshot: MachineSnapshot) =>
-  snapshot.context.identification?.mode === "cieId" &&
-  snapshot.matches({ Issuance: "RequestingEid" });
-
-export const selectIsDisplayingPreview = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Issuance: "DisplayingPreview" });
+  snapshot.context.identification?.mode === "cieId";

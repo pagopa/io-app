@@ -41,7 +41,6 @@ import {
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
-import { isNewPaymentSectionEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { computeAndTrackPaymentStart } from "./detailsUtils";
@@ -97,7 +96,9 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
     title={""}
     subtitle={""}
     onPress={_ => undefined}
-    paymentNoticeStatus={"error"}
+    paymentNotice={{
+      status: "error"
+    }}
     badgeText={""}
   />
 );
@@ -139,8 +140,11 @@ const modulePaymentNoticeFromPaymentStatus = (
         <ModulePaymentNotice
           title={dueDateOrUndefined}
           subtitle={description}
-          paymentNoticeStatus="default"
-          paymentNoticeAmount={formattedAmount}
+          paymentNotice={{
+            status: "default",
+            amount: formattedAmount,
+            amountAccessibilityLabel: formattedAmount
+          }}
           onPress={paymentCallback}
         />
       );
@@ -155,7 +159,9 @@ const modulePaymentNoticeFromPaymentStatus = (
           title={I18n.t("features.messages.payments.noticeCode")}
           subtitle={formattedPaymentNoticeNumber}
           onPress={paymentCallback}
-          paymentNoticeStatus={paymentNoticeStatus}
+          paymentNotice={{
+            status: paymentNoticeStatus
+          }}
           badgeText={badgeText}
         />
       );
@@ -169,7 +175,6 @@ export const MessagePaymentItem = ({
   messageId,
   noSpaceOnTop = false,
   noticeNumber,
-  paymentAmount = undefined,
   rptId,
   serviceId,
   willNavigateToPayment = undefined
@@ -191,17 +196,10 @@ export const MessagePaymentItem = ({
     canNavigateToPaymentFromMessageSelector(state)
   );
 
-  // Checks if the new wallet section is enabled
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
-      isNewWalletSectionEnabled,
-      messageId,
       rptId,
       isError(paymentStatusForUI),
-      paymentAmount,
       canNavigateToPayment,
       dispatch,
       () => {
@@ -217,10 +215,7 @@ export const MessagePaymentItem = ({
   }, [
     canNavigateToPayment,
     dispatch,
-    isNewWalletSectionEnabled,
     isPNPayment,
-    messageId,
-    paymentAmount,
     paymentStatusForUI,
     rptId,
     serviceId,

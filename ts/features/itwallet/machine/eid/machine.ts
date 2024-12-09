@@ -1,26 +1,20 @@
-import { assign, fromPromise, setup, or } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { WalletAttestationResult } from "../../common/utils/itwAttestationUtils";
+import { assign, fromPromise, not, or, setup } from "xstate";
 import { assert } from "../../../../utils/assert";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
-import { CieAuthContext, Context, InitialContext } from "./context";
-import { EidIssuanceEvents } from "./events";
 import {
   GetWalletAttestationActorParams,
-  StartCieAuthFlowActorParams,
-  type RequestEidActorParams
+  type RequestEidActorParams,
+  StartAuthFlowActorParams,
+  GetAuthRedirectUrlActorParam
 } from "./actors";
-import { IssuanceFailureType } from "./failure";
+import { AuthenticationContext, Context, InitialContext } from "./context";
+import { EidIssuanceEvents } from "./events";
+import { IssuanceFailureType, mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
 };
-
-const setFailure =
-  (type: IssuanceFailureType) =>
-  ({ event }: { event: EidIssuanceEvents }): Partial<Context> => ({
-    failure: { type, reason: "error" in event ? event.error : undefined }
-  });
 
 export const itwEidIssuanceMachine = setup({
   types: {
@@ -29,8 +23,10 @@ export const itwEidIssuanceMachine = setup({
   },
   actions: {
     navigateToTosScreen: notImplemented,
+    navigateToIpzsPrivacyScreen: notImplemented,
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
+    navigateToSpidLoginScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -39,45 +35,60 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
-    storeIntegrityKeyTag: (_ctx, _params: { keyTag: string }) =>
-      notImplemented(),
+    navigateToWalletRevocationScreen: notImplemented,
+    storeIntegrityKeyTag: notImplemented,
+    storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
     setWalletInstanceToOperational: notImplemented,
     setWalletInstanceToValid: notImplemented,
     handleSessionExpired: notImplemented,
-    abortIdentification: notImplemented
+    abortIdentification: notImplemented,
+    resetWalletInstance: notImplemented,
+    trackWalletInstanceCreation: notImplemented,
+    trackWalletInstanceRevocation: notImplemented,
+    setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    onInit: notImplemented
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
-    getWalletAttestation: fromPromise<
-      WalletAttestationResult,
-      GetWalletAttestationActorParams
-    >(notImplemented),
+    revokeWalletInstance: fromPromise<void>(notImplemented),
+    getWalletAttestation: fromPromise<string, GetWalletAttestationActorParams>(
+      notImplemented
+    ),
     requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
       notImplemented
     ),
-    startCieAuthFlow: fromPromise<CieAuthContext, StartCieAuthFlowActorParams>(
+    startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
+      notImplemented
+    ),
+    getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
       notImplemented
     )
   },
   guards: {
-    isNativeAuthSessionClosed: notImplemented,
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
-    isOperationAborted: notImplemented
+    isOperationAborted: notImplemented,
+    hasValidWalletInstanceAttestation: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
-  context: InitialContext,
+  context: { ...InitialContext },
   initial: "Idle",
+  entry: "onInit",
   states: {
     Idle: {
-      entry: assign(() => InitialContext),
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
           target: "TosAcceptance"
+        },
+        close: {
+          actions: "closeIssuance"
+        },
+        "revoke-wallet-instance": {
+          target: "WalletInstanceRevocation"
         }
       }
     },
@@ -92,11 +103,11 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceCreation"
           },
           {
-            guard: ({ context }) => !context.walletAttestationContext,
+            guard: not("hasValidWalletInstanceAttestation"),
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            target: "UserIdentification"
+            target: "IpzsPrivacyAcceptance"
           }
         ]
       }
@@ -112,10 +123,7 @@ export const itwEidIssuanceMachine = setup({
             assign(({ event }) => ({
               integrityKeyTag: event.output
             })),
-            {
-              type: "storeIntegrityKeyTag",
-              params: ({ event }) => ({ keyTag: event.output })
-            },
+            { type: "storeIntegrityKeyTag" },
             { type: "setWalletInstanceToOperational" }
           ],
           target: "WalletInstanceAttestationObtainment"
@@ -123,10 +131,40 @@ export const itwEidIssuanceMachine = setup({
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
-            actions: assign(setFailure(IssuanceFailureType.GENERIC)), // TODO: [SIW-1390] Use unsupported device from io-rn-wallet
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
+      }
+    },
+    WalletInstanceRevocation: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "revokeWalletInstance",
+        onDone: {
+          actions: [
+            "resetWalletInstance",
+            "closeIssuance",
+            "trackWalletInstanceRevocation"
+          ]
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.Idle"
+          },
+          {
+            actions: assign({
+              failure: ({ event }) => ({
+                type: IssuanceFailureType.WALLET_REVOCATION_ERROR,
+                reason: event.error
+              })
+            }),
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
@@ -140,21 +178,40 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({ integrityKeyTag: context.integrityKeyTag }),
         onDone: {
-          actions: assign(({ event }) => ({
-            walletAttestationContext: event.output
-          })),
-          target: "UserIdentification"
+          actions: [
+            assign(({ event }) => ({
+              walletInstanceAttestation: event.output
+            })),
+            { type: "storeWalletInstanceAttestation" }
+          ],
+          target: "IpzsPrivacyAcceptance"
         },
         onError: [
           {
             guard: "isSessionExpired",
-            target: "SessionExpired"
+            actions: "handleSessionExpired",
+            target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
-            actions: assign(setFailure(IssuanceFailureType.GENERIC)),
+            actions: "setFailure",
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      }
+    },
+    IpzsPrivacyAcceptance: {
+      description:
+        "This state handles the acceptance of the IPZS privacy policy",
+      entry: "navigateToIpzsPrivacyScreen",
+      on: {
+        "accept-ipzs-privacy": {
+          target: "UserIdentification"
+        },
+        error: {
+          actions: "setFailure",
+          target: "#itwEidIssuanceMachine.Failure"
+        },
+        back: "#itwEidIssuanceMachine.TosAcceptance"
       }
     },
     UserIdentification: {
@@ -182,24 +239,178 @@ export const itwEidIssuanceMachine = setup({
                     abortController: new AbortController()
                   }
                 })),
-                target: "#itwEidIssuanceMachine.UserIdentification.Completed"
+                target: "CieID"
               }
             ],
-            back: "#itwEidIssuanceMachine.TosAcceptance"
+            back: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
+          }
+        },
+        CieID: {
+          description:
+            "This state handles the entire CieID authentication flow",
+          initial: "StartingCieIDAuthFlow",
+          states: {
+            StartingCieIDAuthFlow: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })),
+                { type: "navigateToEidPreviewScreen" }
+              ],
+              invoke: {
+                src: "startAuthFlow",
+                input: ({ context }) => ({
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  identification: context.identification
+                }),
+                onDone: {
+                  actions: assign(({ event }) => ({
+                    authenticationContext: event.output
+                  })),
+                  target: "CieIDBuildAuthRedirectUrl"
+                },
+                onError: [
+                  {
+                    actions: "setFailure",
+                    target: "#itwEidIssuanceMachine.Failure"
+                  }
+                ]
+              },
+              on: {
+                abort: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
+            },
+            CieIDBuildAuthRedirectUrl: {
+              invoke: {
+                src: "getAuthRedirectUrl",
+                input: ({ context }) => ({
+                  redirectUri: context.authenticationContext?.redirectUri,
+                  authUrl: context.authenticationContext?.authUrl,
+                  identification: context.identification
+                }),
+                onDone: {
+                  actions: assign(({ context, event }) => {
+                    assert(
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
+                    );
+                    return {
+                      authenticationContext: {
+                        ...context.authenticationContext,
+                        callbackUrl: event.output
+                      }
+                    };
+                  }),
+                  target: "Completed"
+                },
+                onError: [
+                  {
+                    guard: or(["isOperationAborted"]),
+                    target: "#itwEidIssuanceMachine.UserIdentification"
+                  },
+                  {
+                    actions: "setFailure",
+                    target: "#itwEidIssuanceMachine.Failure"
+                  }
+                ]
+              },
+              on: {
+                abort: { actions: "abortIdentification" },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
+            },
+            Completed: {
+              type: "final"
+            }
+          },
+          onDone: {
+            target: "#itwEidIssuanceMachine.UserIdentification.Completed"
           }
         },
         Spid: {
-          entry: "navigateToIdpSelectionScreen",
-          on: {
-            "select-spid-idp": {
-              target: "Completed",
-              actions: assign(({ event }) => ({
-                identification: { mode: "spid", idpId: event.idp.id }
-              }))
+          description: "This state handles the entire SPID identification flow",
+          initial: "IdpSelection",
+          states: {
+            IdpSelection: {
+              entry: [
+                assign(() => ({ authenticationContext: undefined })),
+                { type: "navigateToIdpSelectionScreen" }
+              ],
+              on: {
+                "select-spid-idp": {
+                  target: "StartingSpidAuthFlow",
+                  actions: assign(({ event }) => ({
+                    identification: { mode: "spid", idpId: event.idp.id }
+                  }))
+                },
+                back: {
+                  target:
+                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
+                }
+              }
             },
-            back: {
-              target: "ModeSelection"
+            StartingSpidAuthFlow: {
+              entry: "navigateToSpidLoginScreen",
+              tags: [ItwTags.Loading],
+              invoke: {
+                src: "startAuthFlow",
+                input: ({ context }) => ({
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  identification: context.identification
+                }),
+                onDone: {
+                  actions: assign(({ event }) => ({
+                    authenticationContext: event.output
+                  })),
+                  target: "SpidLoginIdentificationCompleted"
+                },
+                onError: {
+                  actions: "setFailure",
+                  target: "#itwEidIssuanceMachine.Failure"
+                }
+              },
+              on: {
+                back: {
+                  target: "IdpSelection"
+                }
+              }
+            },
+            SpidLoginIdentificationCompleted: {
+              on: {
+                "spid-identification-completed": {
+                  target: "Completed",
+                  actions: assign(({ context, event }) => {
+                    assert(
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
+                    );
+                    return {
+                      authenticationContext: {
+                        ...context.authenticationContext,
+                        callbackUrl: event.authRedirectUrl
+                      }
+                    };
+                  })
+                },
+                back: {
+                  target: "IdpSelection"
+                }
+              }
+            },
+            Completed: {
+              type: "final"
             }
+          },
+          onDone: {
+            target: "#itwEidIssuanceMachine.UserIdentification.Completed"
           }
         },
         CiePin: {
@@ -209,7 +420,7 @@ export const itwEidIssuanceMachine = setup({
           states: {
             InsertingCardPin: {
               entry: [
-                assign(() => ({ cieAuthContext: undefined })), // Reset the CIE context, otherwise retries will use stale data
+                assign(() => ({ authenticationContext: undefined })), // Reset the authentication context, otherwise retries will use stale data
                 { type: "navigateToCiePinScreen" }
               ],
               on: {
@@ -251,20 +462,19 @@ export const itwEidIssuanceMachine = setup({
               entry: "navigateToCieReadCardScreen",
               tags: [ItwTags.Loading],
               invoke: {
-                src: "startCieAuthFlow",
+                src: "startAuthFlow",
                 input: ({ context }) => ({
-                  walletAttestationContext: context.walletAttestationContext
+                  walletInstanceAttestation: context.walletInstanceAttestation,
+                  identification: context.identification
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
-                    cieAuthContext: event.output
+                    authenticationContext: event.output
                   })),
                   target: "ReadingCieCard"
                 },
                 onError: {
-                  actions: assign(
-                    setFailure(IssuanceFailureType.ISSUER_GENERIC)
-                  ),
+                  actions: "setFailure",
                   target: "#itwEidIssuanceMachine.Failure"
                 }
               },
@@ -280,12 +490,12 @@ export const itwEidIssuanceMachine = setup({
                   target: "Completed",
                   actions: assign(({ context, event }) => {
                     assert(
-                      context.cieAuthContext,
-                      "cieAuthContext must be defined when completing CIE+pin flow"
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
                     );
                     return {
-                      cieAuthContext: {
-                        ...context.cieAuthContext,
+                      authenticationContext: {
+                        ...context.authenticationContext,
                         callbackUrl: event.url
                       }
                     };
@@ -320,16 +530,13 @@ export const itwEidIssuanceMachine = setup({
       initial: "RequestingEid",
       states: {
         RequestingEid: {
-          on: {
-            abort: { actions: "abortIdentification" }
-          },
           tags: [ItwTags.Loading],
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
               identification: context.identification,
-              cieAuthContext: context.cieAuthContext,
-              walletAttestationContext: context.walletAttestationContext
+              authenticationContext: context.authenticationContext,
+              walletInstanceAttestation: context.walletInstanceAttestation
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
@@ -337,11 +544,7 @@ export const itwEidIssuanceMachine = setup({
             },
             onError: [
               {
-                guard: or(["isNativeAuthSessionClosed", "isOperationAborted"]),
-                target: "#itwEidIssuanceMachine.UserIdentification"
-              },
-              {
-                actions: assign(setFailure(IssuanceFailureType.ISSUER_GENERIC)),
+                actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"
               }
             ]
@@ -357,9 +560,12 @@ export const itwEidIssuanceMachine = setup({
               target: "DisplayingPreview"
             },
             {
-              actions: assign(
-                setFailure(IssuanceFailureType.NOT_MATCHING_IDENTITY)
-              ),
+              actions: assign({
+                failure: {
+                  type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
+                  reason: "IT Wallet identity does not match IO identity"
+                }
+              }),
               target: "#itwEidIssuanceMachine.Failure"
             }
           ]
@@ -367,7 +573,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "setWalletInstanceToValid"],
+              actions: [
+                "storeEidCredential",
+                "setWalletInstanceToValid",
+                "trackWalletInstanceCreation"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             close: {
@@ -397,15 +607,17 @@ export const itwEidIssuanceMachine = setup({
         close: {
           actions: ["closeIssuance"]
         },
+        retry: {
+          target: "UserIdentification"
+        },
         reset: {
           target: "Idle"
+        },
+        "revoke-wallet-instance": {
+          actions: "navigateToWalletRevocationScreen",
+          target: "WalletInstanceRevocation"
         }
       }
-    },
-    SessionExpired: {
-      entry: ["handleSessionExpired"],
-      // Since the refresh token request does not change the current screen, restart the machine
-      always: { target: "TosAcceptance" }
     }
   }
 });

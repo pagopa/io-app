@@ -94,31 +94,33 @@ const renderComponent = (
   );
   const finalState: GlobalState = {
     ...dsEnabledState,
-    backendStatus: {
-      ...dsEnabledState.backendStatus,
-      status: frontendUrlDefined
-        ? O.some({
-            config: {
-              cgn: {
-                enabled: false
-              },
-              newPaymentSection: {
-                enabled: false,
-                min_app_version: {
-                  android: "0.0.0.0",
-                  ios: "0.0.0.0"
-                }
-              },
-              fims: {
-                enabled: false
-              },
-              pn: {
-                frontend_url: "https://www.domain.com/sendUrl"
-              }
+    remoteConfig: frontendUrlDefined
+      ? O.some({
+          cgn: {
+            enabled: false
+          },
+          newPaymentSection: {
+            enabled: false,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
             }
-          } as BackendStatus)
-        : O.none
-    }
+          },
+          fims: {
+            enabled: false
+          },
+          pn: {
+            frontend_url: "https://www.domain.com/sendUrl"
+          },
+          itw: {
+            enabled: true,
+            min_app_version: {
+              android: "0.0.0.0",
+              ios: "0.0.0.0"
+            }
+          }
+        } as BackendStatus["config"])
+      : O.none
   };
   const store = createStore(appReducer, finalState as any);
   return renderScreenWithNavigationStoreContext(

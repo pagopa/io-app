@@ -7,9 +7,9 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import ROUTES from "../../../navigation/routes";
 import * as cieSelectors from "../../../features/cieLogin/store/selectors";
 
-const mockPresent = jest.fn();
 const mockNavigateToCiePinInsertion = jest.fn();
 const mockNavigateToIdpSelection = jest.fn();
+const mockNavigateToCieIdLoginScreen = jest.fn();
 const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -27,15 +27,9 @@ jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
   default: () => ({
     navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
     navigateToIdpSelection: mockNavigateToIdpSelection,
+    navigateToCieIdLoginScreen: mockNavigateToCieIdLoginScreen,
     isCieSupported: true
   })
-}));
-jest.mock("../../../utils/hooks/bottomSheet", () => ({
-  useIOBottomSheetModal() {
-    return {
-      present: mockPresent
-    };
-  }
 }));
 
 jest.mock("../../../features/cieLogin/store/selectors", () => ({
@@ -44,13 +38,17 @@ jest.mock("../../../features/cieLogin/store/selectors", () => ({
   isCieIDFFEnabledSelector: jest.fn()
 }));
 
+jest.mock("@gorhom/bottom-sheet", () =>
+  jest.requireActual("../../../__mocks__/@gorhom/bottom-sheet.ts")
+);
+jest.mock("../analytics");
+
 const navigateToIdpSelection = () => {
   const { getByTestId } = renderComponent();
 
   const loginWithSpid = getByTestId("landing-button-login-spid");
   fireEvent.press(loginWithSpid);
 
-  expect(mockPresent).not.toHaveBeenCalled();
   expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
   expect(mockNavigateToIdpSelection).toHaveBeenCalled();
 };
@@ -76,7 +74,6 @@ describe("LandingScreen with both local and remote CieID FF disabled", () => {
     const loginWithCie = getByTestId("landing-button-login-cie");
     fireEvent.press(loginWithCie);
 
-    expect(mockPresent).not.toHaveBeenCalled();
     expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
   });
@@ -99,9 +96,63 @@ describe("LandingScreen with CieID FF enabled", () => {
     const loginWithCie = getByTestId("landing-button-login-cie");
     fireEvent.press(loginWithCie);
 
-    expect(mockPresent).toHaveBeenCalled();
     expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
     expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
+  });
+  it("Should call navigateToCiePinInsertion", () => {
+    const { getByTestId } = renderComponent();
+
+    const loginWithCie = getByTestId("landing-button-login-cie");
+    fireEvent.press(loginWithCie);
+
+    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
+
+    const loginWithCiePin = getByTestId("bottom-sheet-login-with-cie-pin");
+    fireEvent.press(loginWithCiePin);
+
+    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
+    expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
+  });
+  it("Should call navigateToCieIdLoginScreen", () => {
+    const { getByTestId } = renderComponent();
+
+    const loginWithCie = getByTestId("landing-button-login-cie");
+    fireEvent.press(loginWithCie);
+
+    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
+
+    const loginWithCieID = getByTestId("bottom-sheet-login-with-cie-id");
+    fireEvent.press(loginWithCieID);
+
+    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).toHaveBeenCalledWith("SpidL2");
+  });
+  it("Should navigate to the wizards screens", () => {
+    const { getByTestId } = renderComponent();
+
+    const loginWithCie = getByTestId("landing-button-login-cie");
+    fireEvent.press(loginWithCie);
+
+    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
+
+    const wizardsBanner = getByTestId("bottom-sheet-login-wizards");
+    fireEvent.press(wizardsBanner);
+
+    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
+    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
+    expect(mockNavigateToCieIdLoginScreen).not.toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_CIE_ID_WIZARD
+    });
   });
   it("Should navigate to the idp selection", navigateToIdpSelection);
 });

@@ -13,7 +13,6 @@ import {
   ListItemNavAlert,
   ListItemTransaction,
   ListItemTransactionLogo,
-  ListItemTransactionStatusWithBadge,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -22,10 +21,10 @@ import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
-import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-import { getBadgeTextByTransactionStatus } from "../../payments/common/utils";
-import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
+import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
+import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -78,17 +77,6 @@ export const DSListItems = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Specific</H4>
           <VStack space={24}>
-            <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
-              <BankPreviewItem
-                onPress={onButtonPress}
-                bank={{
-                  abi: "03069",
-                  logoUrl:
-                    "https://assets.cdn.io.pagopa.it/logos/abi/03069.png",
-                  name: "Intesa Sanpaolo"
-                }}
-              />
-            </DSComponentViewerBox>
             <DSComponentViewerBox name="CgnMerchantDiscountItem">
               <CgnMerchantDiscountItem
                 discount={{
@@ -104,8 +92,6 @@ export const DSListItems = () => {
                   ],
                   startDate: new Date()
                 }}
-                operatorName={"Operator name"}
-                merchantType={undefined}
               />
             </DSComponentViewerBox>
           </VStack>
@@ -415,7 +401,7 @@ const organizationLogoURI = {
 };
 
 type mockTransactionStatusData = {
-  status: ListItemTransactionStatusWithBadge;
+  status: ListItemTransactionStatus;
   asset: ListItemTransactionLogo;
 };
 
@@ -444,8 +430,10 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="Title"
         subtitle="subtitle"
-        transactionStatus="success"
-        transactionAmount="€ 1.000,00"
+        transaction={{
+          amount: "€ 1.000,00",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         isLoading={true}
         onPress={onButtonPress}
       />
@@ -459,8 +447,9 @@ const renderListItemTransaction = () => (
               title="Title"
               subtitle="subtitle"
               paymentLogoIcon={asset}
-              transactionStatus={status}
-              badgeText={getBadgeTextByTransactionStatus(status)}
+              transaction={{
+                badge: getBadgePropsByTransactionStatus(status)
+              }}
               onPress={onButtonPress}
             />
             {i < transactionStatusArray.length - 1 && <Divider />}
@@ -473,8 +462,10 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="Title"
         subtitle="subtitle"
-        transactionStatus="success"
-        transactionAmount="€ 1.000,00"
+        transaction={{
+          amount: "€ 1.000,00",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         onPress={onButtonPress}
       />
 
@@ -483,8 +474,10 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="Title"
         subtitle="subtitle"
-        transactionStatus="success"
-        transactionAmount="€ 1.000,00"
+        transaction={{
+          amount: "€ 1.000,00",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         paymentLogoIcon={"mastercard"}
         onPress={onButtonPress}
       />
@@ -494,9 +487,11 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="Title"
         subtitle="subtitle"
-        transactionStatus="success"
-        transactionAmount="€ 1.000,00"
-        hasChevronRight={true}
+        transaction={{
+          amount: "€ 1.000,00",
+          amountAccessibilityLabel: "1000 euro"
+        }}
+        showChevron
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
@@ -505,9 +500,10 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="Refunded transaction"
         subtitle="This one has a custom icon and transaction amount with a green color"
-        transactionStatus="refunded"
+        transaction={{
+          badge: getBadgePropsByTransactionStatus("refunded")
+        }}
         paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
-        transactionAmount="€ 100"
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
@@ -516,8 +512,9 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="This one is not clickable"
         subtitle="subtitle"
-        transactionStatus="failure"
-        badgeText={getBadgeTextByTransactionStatus("failure")}
+        transaction={{
+          badge: getBadgePropsByTransactionStatus("failure")
+        }}
         paymentLogoIcon={"postepay"}
       />
 
@@ -526,10 +523,12 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="This one is clickable but has a very long title"
         subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
-        transactionAmount="€ 1.000,00"
+        transaction={{
+          amount: "€ 1.000,00",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         paymentLogoIcon={"postepay"}
         onPress={onButtonPress}
-        transactionStatus="success"
       />
     </DSComponentViewerBox>
 
@@ -537,9 +536,11 @@ const renderListItemTransaction = () => (
       <ListItemTransaction
         title="Custom icon"
         subtitle="This one has a custom icon on the left"
-        transactionStatus="success"
+        transaction={{
+          amount: "",
+          amountAccessibilityLabel: ""
+        }}
         paymentLogoIcon={<Icon name="notice" color="red" />}
-        transactionAmount=""
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>

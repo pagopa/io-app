@@ -1,12 +1,15 @@
 <p align="center">
-  <img src="img/app-logo.svg" width="100" style="display: block" /></br>
+  <img src="img/io-app-icon.png" width="100" style="display: block" /></br>
   <h3 align="center">IO - The public services app</h3>
 </p>
 
 <p align="center">
-    <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
-        <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
+    <a href="https://github.com/pagopa/io-app/actions/workflows/release-nightly.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/release-nightly.yml/badge.svg?branch=master" />
     </a>
+    <!-- <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
+    </a> -->
     <a href="https://codecov.io/gh/pagopa/io-app">
         <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
     </a>
@@ -399,7 +402,7 @@ $ cp .env.production .env
 > The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or fully working. Check the comments in the file for more informations about environment variables.
 
 ### io-dev-api-server
-You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes by coyping the included `.env.local` file to `.env`:
+You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes by copying the included `.env.local` file to `.env`:
 
 ```bash
 $ cp .env.local .env
@@ -408,6 +411,23 @@ $ cp .env.local .env
 ## Run the app
 ### Android Emulator
 An Android Emulator must be [created and launched manually](https://developer.android.com/studio/run/managing-avds).
+
+An additional step is necessary because the Android emulator doesn't support the hardware-backed keystore. We've included a script in our `package.json` to comment out this check:
+```bash
+# Disable hardware-backed keystore check before running the emulator
+yarn lollipop_checks:comment
+```
+
+>[!CAUTION] 
+> Always remember to run `yarn lollipop_checks:uncomment` or discard the changes before opening a PR.
+> To automatically revert the changes, run the following command:
+> ```bash
+> # Re-enable hardware-backed keystore check before committing
+> yarn lollipop_checks:uncomment
+> ```
+> This is an important check that must be kept enabled.
+> A double check is done by tests in the CI pipeline.
+
 Then, from your command line, run these commands:
 ```bash
 # Perform the port forwarding

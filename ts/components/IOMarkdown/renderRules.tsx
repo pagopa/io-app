@@ -1,39 +1,39 @@
 import {
-  IOToast,
-  LabelLink,
-  IOStyles,
-  HSpacer,
-  VSpacer,
+  Banner,
   Body,
+  BodyMonospace,
+  Divider,
   H1,
   H2,
   H3,
   H4,
   H5,
   H6,
-  Banner,
+  HSpacer,
   IOPictogramsBleed,
-  Divider,
-  Nullable
+  IOStyles,
+  IOToast,
+  Nullable,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import {
-  TxtHeaderNode,
-  TxtListNode,
-  TxtListItemNode,
-  TxtParagraphNode,
-  TxtStrNode,
-  TxtStrongNode,
-  TxtEmphasisNode,
-  TxtLinkNode,
-  TxtImageNode,
+  AnyTxtNode,
   TxtBlockQuoteNode,
-  TxtParentNode,
+  TxtBreakNode,
   TxtCodeBlockNode,
   TxtCodeNode,
-  TxtHtmlNode,
+  TxtEmphasisNode,
+  TxtHeaderNode,
   TxtHorizontalRuleNode,
-  TxtBreakNode,
-  AnyTxtNode
+  TxtHtmlNode,
+  TxtImageNode,
+  TxtLinkNode,
+  TxtListItemNode,
+  TxtListNode,
+  TxtParagraphNode,
+  TxtParentNode,
+  TxtStrNode,
+  TxtStrongNode
 } from "@textlint/ast-node-types";
 import React, { Fragment, useLayoutEffect, useState } from "react";
 import { Dimensions, Image, Text, View } from "react-native";
@@ -159,7 +159,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    */
   Strong(strong: TxtStrongNode, render: Renderer) {
     return (
-      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "800" }}>
+      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "600" }}>
         {strong.children.map(render)}
       </Text>
     );
@@ -185,9 +185,14 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     };
 
     return (
-      <LabelLink key={getTxtNodeKey(link)} onPress={handleOpenLink}>
+      <Body
+        weight="Semibold"
+        asLink
+        key={getTxtNodeKey(link)}
+        onPress={handleOpenLink}
+      >
         {link.children.map(render)}
-      </LabelLink>
+      </Body>
     );
   },
   /**
@@ -331,9 +336,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns A `Body` containing the `value` content.
    */
   Code: (code: TxtCodeNode) => (
-    <Body key={getTxtNodeKey(code)} weight="Light">
-      {code.value.replace(/\s+/g, "   ")}
-    </Body>
+    <BodyMonospace key={getTxtNodeKey(code)}>{code.value}</BodyMonospace>
   ),
   /**
    * @param breakNode The `Break` node.

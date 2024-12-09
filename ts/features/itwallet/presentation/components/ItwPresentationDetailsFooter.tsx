@@ -9,11 +9,16 @@ import { Alert } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialDeleteProperties,
+  trackItwCredentialDelete,
+  trackWalletCredentialSupport
+} from "../../analytics";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -23,6 +28,8 @@ const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
   const dispatch = useIODispatch();
+  const store = useIOStore();
+
   const navigation = useIONavigation();
   const toast = useIOToast();
 
@@ -33,15 +40,19 @@ const ItwPresentationDetailsFooter = ({
   const handleRemoveCredential = () => {
     dispatch(itwCredentialsRemove(credential));
     toast.success(
-      I18n.t("features.itWallet.presentation.credentialDetails.toast.removed", {
-        credentialName: getCredentialNameFromType(credential.credentialType)
-      })
+      I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );
+    void trackCredentialDeleteProperties(
+      CREDENTIALS_MAP[credential.credentialType],
+      store.getState()
+    );
+
     navigation.pop();
   };
 
-  const showRemoveCredentialDialog = () =>
-    Alert.alert(
+  const showRemoveCredentialDialog = () => {
+    trackItwCredentialDelete(CREDENTIALS_MAP[credential.credentialType]);
+    return Alert.alert(
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
       ),
@@ -62,6 +73,12 @@ const ItwPresentationDetailsFooter = ({
         }
       ]
     );
+  };
+
+  const startAndTrackSupportRequest = () => {
+    trackWalletCredentialSupport(CREDENTIALS_MAP[credential.credentialType]);
+    startSupportRequest();
+  };
 
   return (
     <ContentWrapper>
@@ -75,7 +92,7 @@ const ItwPresentationDetailsFooter = ({
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        onPress={() => startSupportRequest()}
+        onPress={startAndTrackSupportRequest}
       />
       {credential.credentialType !== CredentialType.PID ? (
         <ListItemAction

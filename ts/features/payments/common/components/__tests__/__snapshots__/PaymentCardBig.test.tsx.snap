@@ -204,6 +204,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -676,6 +677,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -847,38 +849,26 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                           accessibilityLabel="account: someEmail@test.com"
                           accessible={true}
                           allowFontScaling={false}
-                          color="black"
-                          defaultColor="black"
-                          defaultWeight="Semibold"
                           dynamicTypeRamp="headline"
                           ellipsizeMode="tail"
-                          font="TitilliumSansPro"
-                          fontStyle={
-                            {
-                              "fontSize": 18,
-                              "lineHeight": 25,
-                            }
-                          }
                           maxFontSizeMultiplier={1.25}
                           numberOfLines={1}
                           style={
                             [
-                              {
-                                "width": "75%",
-                              },
-                              {
-                                "fontSize": 18,
-                                "lineHeight": 25,
-                              },
+                              {},
                               {
                                 "color": "#0E0F13",
                                 "fontFamily": "Titillium Sans Pro",
+                                "fontSize": 18,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",
+                                "lineHeight": 24,
+                              },
+                              {
+                                "width": "75%",
                               },
                             ]
                           }
-                          weight="Semibold"
                         >
                           someEmail@test.com
                         </Text>

@@ -1,19 +1,17 @@
 import {
+  Body,
   ButtonSolid,
   ContentWrapper,
-  FooterWithButtons,
+  FooterActions,
+  H6,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
@@ -21,9 +19,6 @@ import { IdPayConfigurationMachineContext } from "../machine/provider";
 export const IbanConfigurationLanding = () => {
   const { useActorRef } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const customGoBack = () => machine.send({ type: "back" });
 
@@ -31,11 +26,7 @@ export const IbanConfigurationLanding = () => {
     {
       title: I18n.t("idpay.configuration.iban.landing.modal.title"),
       component: (
-        <Body>
-          {isSettingsVisibleAndHideProfile
-            ? I18n.t("idpay.configuration.iban.landing.modal.content")
-            : I18n.t("idpay.configuration.iban.landing.modal.legacyContent")}
-        </Body>
+        <Body>{I18n.t("idpay.configuration.iban.landing.modal.content")}</Body>
       ),
       footer: (
         <ContentWrapper>
@@ -70,7 +61,7 @@ export const IbanConfigurationLanding = () => {
         <Pictogram name="ibanCard" size={180} />
         <VSpacer size={32} />
         <View style={[IOStyles.horizontalContentPadding, styles.textContainer]}>
-          <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>
+          <H6>{I18n.t("idpay.configuration.iban.landing.header")}</H6>
           <VSpacer size={16} />
           <Body style={styles.textCenter}>
             {I18n.t("idpay.configuration.iban.landing.body")}
@@ -82,11 +73,10 @@ export const IbanConfigurationLanding = () => {
       </View>
 
       <SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t("global.buttons.continue"),
               onPress: () => machine.send({ type: "next" })
             }

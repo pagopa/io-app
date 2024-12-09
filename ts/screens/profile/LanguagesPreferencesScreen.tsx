@@ -1,6 +1,5 @@
 import {
   Banner,
-  ContentWrapper,
   RadioGroup,
   RadioItem,
   useIOToast,
@@ -35,7 +34,7 @@ import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPrefe
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../utils/url";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { sectionStatusSelector } from "../../store/reducers/backendStatus";
+import { sectionStatusByKeySelector } from "../../store/reducers/backendStatus/sectionStatus";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { AlertModal } from "../../components/ui/AlertModal";
 
@@ -58,7 +57,7 @@ const LanguagesPreferencesScreen = () => {
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const bannerInfoSelector = useIOSelector(
-    sectionStatusSelector("favourite_language")
+    sectionStatusByKeySelector("favourite_language")
   );
   const isBannerVisible = bannerInfoSelector && bannerInfoSelector.is_visible;
   const preferredLanguageSelect = useIOSelector(
@@ -197,6 +196,7 @@ const LanguagesPreferencesScreen = () => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
+        includeContentMargins
         title={{
           label: I18n.t("profile.preferences.list.preferred_language.title")
         }}
@@ -207,31 +207,29 @@ const LanguagesPreferencesScreen = () => {
         headerActionsProp={{ showHelp: true }}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <RadioGroup<string>
-            type="radioListItem"
-            items={renderedItem}
-            selectedItem={selectedItem}
-            onPress={onLanguageSelected}
+        <VSpacer size={16} />
+        <RadioGroup<string>
+          type="radioListItem"
+          items={renderedItem}
+          selectedItem={selectedItem}
+          onPress={onLanguageSelected}
+        />
+        <VSpacer size={16} />
+        {isBannerVisible && (
+          <Banner
+            viewRef={viewRef}
+            color="neutral"
+            size="big"
+            content={bannerInfoSelector.message[getFullLocale()]}
+            pictogramName="charity"
+            action={I18n.t(
+              "profile.preferences.list.preferred_language.banner.button"
+            )}
+            onPress={() =>
+              openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
+            }
           />
-          <VSpacer size={16} />
-          {isBannerVisible && (
-            <Banner
-              viewRef={viewRef}
-              color="neutral"
-              size="big"
-              content={bannerInfoSelector.message[getFullLocale()]}
-              pictogramName="charity"
-              action={I18n.t(
-                "profile.preferences.list.preferred_language.banner.button"
-              )}
-              onPress={() =>
-                openWebUrl(bannerInfoSelector.web_url?.[getFullLocale()] || "")
-              }
-            />
-          )}
-        </ContentWrapper>
+        )}
       </IOScrollViewWithLargeHeader>
     </LoadingSpinnerOverlay>
   );

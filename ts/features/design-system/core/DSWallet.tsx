@@ -1,19 +1,12 @@
-import {
-  Banner,
-  ListItemSwitch,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Banner, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
-import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
-import { WalletCard, WalletCardCategory } from "../../newWallet/types";
+import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
+import { WalletCard, WalletCardCategory } from "../../wallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 
 export const DSWallet = () => {
-  const [isStacked, setStacked] = React.useState(true);
-
   const cards: ReadonlyArray<WalletCard> = [
     {
       key: "1",
@@ -71,19 +64,22 @@ export const DSWallet = () => {
       key: "6",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      status: "valid"
     },
     {
       key: "7",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.DRIVING_LICENSE
+      credentialType: CredentialType.DRIVING_LICENSE,
+      status: "valid"
     },
     {
       key: "8",
       type: "itw",
       category: "itw",
-      credentialType: CredentialType.PID
+      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+      status: "valid"
     },
     {
       key: "9",
@@ -105,46 +101,36 @@ export const DSWallet = () => {
 
   return (
     <DesignSystemScreen title={"Wallet"}>
-      <ListItemSwitch
-        label="Show stacked cards"
-        value={isStacked}
-        onSwitchValueChange={setStacked}
-      />
       <VStack space={blockMargin}>
         <DesignSystemSection title="With Documenti su IO">
           <WalletCardsCategoryContainer
             cards={cardsByCategory.itw}
             header={{
               label: "Documenti",
-              iconName: "fiscalCodeIndividual"
+              iconName: "legalValue",
+              iconColor: "blueIO-500"
             }}
-            isStacked={isStacked}
           />
           <WalletCardsCategoryContainer
-            cards={cardsByCategory.payment}
+            cards={[
+              ...cardsByCategory.payment,
+              ...cardsByCategory.cgn,
+              ...cardsByCategory.bonus
+            ]}
             header={{
-              label: "Metodi di pagamento",
-              iconName: "creditCard"
+              label: "Altro"
             }}
-            isStacked={isStacked}
-            footer={
+            topElement={
               <>
-                <VSpacer size={16} />
                 <Banner
                   color="turquoise"
                   pictogramName="idea"
                   size="small"
-                  content="Categories can have footers!"
+                  content="Categories can have a top element!"
                 />
+                <VSpacer size={16} />
               </>
             }
-          />
-          <WalletCardsCategoryContainer
-            cards={[...cardsByCategory.cgn, ...cardsByCategory.bonus]}
-            header={{
-              label: "Altro"
-            }}
-            isStacked={isStacked}
           />
         </DesignSystemSection>
 
@@ -155,7 +141,6 @@ export const DSWallet = () => {
               ...cardsByCategory.cgn,
               ...cardsByCategory.bonus
             ]}
-            isStacked={isStacked}
           />
         </DesignSystemSection>
       </VStack>

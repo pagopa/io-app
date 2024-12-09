@@ -1,25 +1,21 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import {
+  isLoginUtilsError,
+  LoginUtilsError
+} from "@pagopa/io-react-native-login-utils";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
-import { euCovidCertificateEnabled } from "../config";
 import { mixpanelTrack } from "../mixpanel";
-import { isLoginUtilsError } from "../features/lollipop/utils/login";
-
-const blackListRoutes: ReadonlyArray<string> = [];
-
-// the routes contained in this set won't be tracked in SCREEN_CHANGE_V2 event
-export const noAnalyticsRoutes = new Set<string>(
-  // eslint-disable-next-line sonarjs/no-empty-collection
-  blackListRoutes.concat(
-    euCovidCertificateEnabled ? Object.values(EUCOVIDCERT_ROUTES) : []
-  )
-);
+import {
+  clearKeychainError,
+  getKeychainError,
+  removeKeychainError,
+  setKeychainError
+} from "../store/storages/keychain";
 
 export type FlowType =
   | "firstOnboarding"
@@ -181,12 +177,26 @@ export function trackSpidLoginError(
 // Keychain
 // workaround to send keychainError for Pixel devices
 // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-export function trackKeychainGetFailure(reason: string | undefined) {
-  if (reason) {
+export function trackKeychainFailures() {
+  if (getKeychainError) {
     void mixpanelTrack("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", {
-      reason
+      reason: getKeychainError,
+      ...buildEventProperties("TECH", undefined)
     });
   }
+  if (setKeychainError) {
+    void mixpanelTrack("KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE", {
+      reason: setKeychainError,
+      ...buildEventProperties("TECH", undefined)
+    });
+  }
+  if (removeKeychainError) {
+    void mixpanelTrack("KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE", {
+      reason: removeKeychainError,
+      ...buildEventProperties("TECH", undefined)
+    });
+  }
+  clearKeychainError();
 }
 
 function toUrlWithoutQueryParams(url: string) {

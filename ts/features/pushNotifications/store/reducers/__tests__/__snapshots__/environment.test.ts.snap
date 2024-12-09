@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`environment reducer initial state should match expected values 1`] = `
+{
+  "applicationInitialized": false,
+  "onboardingInstructionsShown": false,
+  "pushNotificationPermissionsRequestDuration": undefined,
+  "systemNotificationsEnabled": false,
+}
+`;

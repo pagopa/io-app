@@ -1,16 +1,17 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
 import {
-  IOColors,
-  Icon,
+  H6,
   HSpacer,
+  IOColors,
   IOSpacingScale,
-  Label,
   IOStyles,
-  H6
+  Icon,
+  BodySmall,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { TranslationKeys } from "../../../../locales/locales";
+import I18n from "../../../i18n";
 
 const notificationMarginVertical: IOSpacingScale = 4;
 const notificationPaddingVertical: IOSpacingScale = 8;
@@ -20,10 +21,9 @@ const styles = StyleSheet.create({
   notification: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: IOColors.white,
     borderWidth: 1,
-    borderColor: IOColors.bluegreyLight,
-    borderRadius: 8,
+    borderRadius: 16,
+    borderCurve: "continuous",
     minHeight: 90,
     marginVertical: notificationMarginVertical,
     paddingVertical: notificationPaddingVertical,
@@ -72,15 +72,23 @@ export const NotificationPreviewSample = ({
     remindersEnabled
   );
 
+  const theme = useIOTheme();
+
   return (
-    <View style={styles.notification}>
-      <Icon color="blueIO-450" name="productIOApp" />
+    <View
+      style={[
+        styles.notification,
+        {
+          backgroundColor: IOColors[theme["appBackground-primary"]],
+          borderColor: IOColors[theme["cardBorder-default"]]
+        }
+      ]}
+    >
+      <Icon size={24} name="productIOAppBlueBg" />
       <HSpacer />
       <View style={IOStyles.flex}>
-        <H6 weight="Semibold">{I18n.t(titleKey)}</H6>
-        <Label fontSize="small" weight="Regular">
-          {I18n.t(messageKey)}
-        </Label>
+        <H6>{I18n.t(titleKey)}</H6>
+        <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
       </View>
     </View>
   );

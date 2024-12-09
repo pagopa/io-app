@@ -204,6 +204,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -350,66 +351,42 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
-                            color="grey-700"
-                            defaultColor="black"
-                            defaultWeight="Semibold"
-                            dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 16,
-                                "lineHeight": 21,
-                              }
-                            }
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 21,
-                                },
+                                {},
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
-                            weight="Semibold"
                           >
                             #### organization_name ####
                           </Text>
                           <Text
                             allowFontScaling={false}
-                            color="blueIO-500"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
                             dynamicTypeRamp="footnote"
-                            font="TitilliumSansPro"
-                            fontStyle={
-                              {
-                                "fontSize": 14,
-                                "lineHeight": 21,
-                              }
-                            }
                             maxFontSizeMultiplier={1.25}
                             onPress={[Function]}
                             style={
                               [
-                                {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
-                                },
+                                {},
                                 {
                                   "color": "#0B3EE3",
                                   "fontFamily": "Titillium Sans Pro",
+                                  "fontSize": 14,
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
+                                  "lineHeight": 21,
                                 },
                               ]
                             }
-                            weight="Bold"
                           >
                             #### service name ####
                           </Text>

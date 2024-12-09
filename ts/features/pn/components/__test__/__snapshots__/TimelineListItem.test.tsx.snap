@@ -204,6 +204,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -426,7 +427,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -435,7 +436,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -470,22 +471,23 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -558,65 +560,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   28
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Nov
                                 </Text>
@@ -683,33 +664,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Pagata
                                 </Text>
@@ -722,33 +691,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   19:55
                                 </Text>
@@ -777,65 +737,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   25
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Oct
                                 </Text>
@@ -900,33 +839,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Consegnata
                                 </Text>
@@ -939,33 +866,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   17:50
                                 </Text>
@@ -994,65 +912,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   23
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Sep
                                 </Text>
@@ -1117,33 +1014,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Invio in corso
                                 </Text>
@@ -1156,33 +1041,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   15:45
                                 </Text>
@@ -1211,65 +1087,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   20
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Aug
                                 </Text>
@@ -1334,33 +1189,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   REFUSED
                                 </Text>
@@ -1373,33 +1216,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   13:40
                                 </Text>
@@ -1428,65 +1262,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   18
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Jul
                                 </Text>
@@ -1551,33 +1364,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Depositata
                                 </Text>
@@ -1590,33 +1391,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   11:35
                                 </Text>
@@ -1645,65 +1437,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   13
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Jun
                                 </Text>
@@ -1768,33 +1539,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   IN VALIDATION
                                 </Text>
@@ -1807,33 +1566,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   09:30
                                 </Text>
@@ -1862,65 +1612,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   10
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   May
                                 </Text>
@@ -1985,33 +1714,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Annullata
                                 </Text>
@@ -2024,33 +1741,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   07:25
                                 </Text>
@@ -2079,65 +1787,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   07
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Apr
                                 </Text>
@@ -2202,33 +1889,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Destinatario irreperibile
                                 </Text>
@@ -2241,33 +1916,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   05:20
                                 </Text>
@@ -2296,65 +1962,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   03
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Mar
                                 </Text>
@@ -2419,33 +2064,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Perfezionata per decorrenza termini
                                 </Text>
@@ -2458,33 +2091,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   03:15
                                 </Text>
@@ -2513,65 +2137,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   01
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Feb
                                 </Text>
@@ -2638,33 +2241,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Avvenuto accesso
                                 </Text>
@@ -2677,33 +2268,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   01:10
                                 </Text>
@@ -2929,6 +2511,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3151,7 +2734,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -3160,7 +2743,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -3195,22 +2778,23 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -3283,65 +2867,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   28
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Nov
                                 </Text>
@@ -3408,33 +2971,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Pagata
                                 </Text>
@@ -3447,33 +2998,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   19:55
                                 </Text>
@@ -3502,65 +3044,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   25
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Oct
                                 </Text>
@@ -3625,33 +3146,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Consegnata
                                 </Text>
@@ -3664,33 +3173,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   17:50
                                 </Text>
@@ -3719,65 +3219,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   23
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Sep
                                 </Text>
@@ -3842,33 +3321,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Invio in corso
                                 </Text>
@@ -3881,33 +3348,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   15:45
                                 </Text>
@@ -3936,65 +3394,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   20
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Aug
                                 </Text>
@@ -4059,33 +3496,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   REFUSED
                                 </Text>
@@ -4098,33 +3523,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   13:40
                                 </Text>
@@ -4153,65 +3569,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   18
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Jul
                                 </Text>
@@ -4276,33 +3671,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Depositata
                                 </Text>
@@ -4315,33 +3698,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   11:35
                                 </Text>
@@ -4370,65 +3744,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   13
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Jun
                                 </Text>
@@ -4493,33 +3846,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   IN VALIDATION
                                 </Text>
@@ -4532,33 +3873,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   09:30
                                 </Text>
@@ -4587,65 +3919,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   10
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   May
                                 </Text>
@@ -4710,33 +4021,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Annullata
                                 </Text>
@@ -4749,33 +4048,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   07:25
                                 </Text>
@@ -4804,65 +4094,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   07
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Apr
                                 </Text>
@@ -4927,33 +4196,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Destinatario irreperibile
                                 </Text>
@@ -4966,33 +4223,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   05:20
                                 </Text>
@@ -5021,65 +4269,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   03
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Mar
                                 </Text>
@@ -5144,33 +4371,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Perfezionata per decorrenza termini
                                 </Text>
@@ -5183,33 +4398,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   03:15
                                 </Text>
@@ -5238,65 +4444,44 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   01
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   Feb
                                 </Text>
@@ -5363,33 +4548,21 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-700"
-                                  defaultColor="black"
-                                  defaultWeight="Semibold"
                                   dynamicTypeRamp="headline"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
-                                      {
-                                        "fontSize": 18,
-                                        "lineHeight": 25,
-                                      },
+                                      {},
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 18,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
-                                  weight="Semibold"
                                 >
                                   Avvenuto accesso
                                 </Text>
@@ -5402,33 +4575,24 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 />
                                 <Text
                                   allowFontScaling={false}
-                                  color="grey-450"
-                                  defaultColor="black"
-                                  defaultWeight="Regular"
                                   dynamicTypeRamp="caption1"
-                                  font="TitilliumSansPro"
-                                  fontStyle={
-                                    {
-                                      "fontSize": 12,
-                                      "textTransform": "uppercase",
-                                    }
-                                  }
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
                                       {
-                                        "fontSize": 12,
+                                        "letterSpacing": 0.5,
                                         "textTransform": "uppercase",
                                       },
                                       {
                                         "color": "#99A3C1",
                                         "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
+                                        "lineHeight": undefined,
                                       },
                                     ]
                                   }
-                                  weight="Regular"
                                 >
                                   01:10
                                 </Text>
@@ -5654,6 +4818,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5876,7 +5041,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -5885,7 +5050,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -5920,22 +5085,23 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }
@@ -6204,6 +5370,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -6426,7 +5593,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                       "borderWidth": 0,
                                     },
                                     {
-                                      "color": "#0073E6",
+                                      "color": "#0B3EE3",
                                     },
                                     {
                                       "flex": 0,
@@ -6435,7 +5602,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#0073E6"
+                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -6470,22 +5637,23 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                             <View
                               style={
                                 {
-                                  "flex": 1,
+                                  "flexGrow": 1,
                                 }
                               }
                             >
                               <Text
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
+                                      "color": "#0B3EE3",
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 20,
-                                    },
-                                    {
-                                      "color": "#0073E6",
                                     },
                                   ]
                                 }

@@ -1,16 +1,25 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { createSelector } from "reselect";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
+import { fastLoginOptInSelector } from "../features/fastLogin/store/selectors";
+import {
+  selectBonusCards,
+  selectWalletCgnCard
+} from "../features/wallet/store/selectors";
+import { WalletCardBonus } from "../features/wallet/types";
+import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType,
   getNotificationPreferenceConfiguration
 } from "../screens/profile/analytics";
-import { GlobalState } from "../store/reducers/types";
 import {
   profileNotificationSettingsSelector,
   profileServicePreferencesModeSelector
 } from "../store/reducers/profile";
-import { fastLoginOptInSelector } from "../features/fastLogin/store/selectors";
-import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { GlobalState } from "../store/reducers/types";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
 export type Property<K, T extends keyof K> = {
@@ -71,4 +80,28 @@ export const mixpanelOptInHandler = (
     : isMixpanelEnabledResult
     ? "accepted"
     : "declined";
+};
+
+export const paymentsWalletUserMethodsNumberFromPotSelector = createSelector(
+  paymentsWalletUserMethodsSelector,
+  walletPot => pot.getOrElse(walletPot, undefined)
+);
+
+export const paymentMethodsHandler = (state: GlobalState): number | undefined =>
+  paymentsWalletUserMethodsNumberFromPotSelector(state)?.length;
+
+export const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
+  const cgnCard = selectWalletCgnCard(state);
+  return cgnCard.length > 0 ? "active" : "not_active";
+};
+
+export const welfareStatusHandler = (
+  state: GlobalState
+): ReadonlyArray<string> => {
+  const bonusCards = selectBonusCards(state);
+  const idPayCards = bonusCards.filter(
+    card => card.type === "idPay"
+  ) as Array<WalletCardBonus>;
+
+  return idPayCards.map(card => card.name);
 };

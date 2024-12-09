@@ -2,16 +2,15 @@
  * Utility functions for working with credential claims.
  */
 
-import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { ItwCredentialStatus } from "../components/ItwCredentialCard";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
@@ -46,7 +45,23 @@ export enum WellKnownClaim {
   /**
    * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
-  content = "content"
+  content = "content",
+  /**
+   * Claim that contains the fiscal code, used for checks based on the user's identity.
+   */
+  tax_id_code = "tax_id_code",
+  /**
+   * Claims that contains the document number, if applicable for the credential
+   */
+  document_number = "document_number",
+  /**
+   * Claim that contains the first name, if applicable for the credential
+   */
+  given_name = "given_name",
+  /**
+   * Claim that contains the family name, if applicable for the credential
+   */
+  family_name = "family_name"
 }
 
 /**
@@ -96,6 +111,81 @@ export const parseClaims = (
  *
  *
  */
+
+export const SimpleDateFormat = {
+  DDMMYYYY: "DD/MM/YYYY",
+  DDMMYY: "DD/MM/YY"
+} as const;
+
+export type SimpleDateFormat =
+  (typeof SimpleDateFormat)[keyof typeof SimpleDateFormat];
+
+/**
+ * A simpler Date class with day, month and year properties
+ * It simplifies dates handling by removing Date overhead
+ * @property year - the year
+ * @property month - the month (0-11)
+ * @property day - the day (1-31)
+ * @function toDate - returns a Date object
+ * @function toString - returns a string in the format "DD/MM/YYYY"
+ */
+export class SimpleDate {
+  private year: number;
+  private month: number;
+  private day: number;
+
+  constructor(year: number, month: number, day: number) {
+    this.year = year;
+    this.month = month;
+    this.day = day;
+  }
+
+  /**
+   * Returns a string in the format specified by the format parameter
+   */
+  toString(format: SimpleDateFormat = "DD/MM/YYYY"): string {
+    const dayString = this.day.toString().padStart(2, "0");
+    const monthString = (this.month + 1).toString().padStart(2, "0");
+    const yearString = this.year.toString();
+    return format
+      .replace("DD", dayString)
+      .replace("MM", monthString)
+      .replace("YYYY", yearString)
+      .replace("YY", yearString.slice(-2));
+  }
+
+  /**
+   * Returns a Date object
+   */
+  toDate(): Date {
+    return new Date(this.year, this.month, this.day);
+  }
+
+  toDateWithoutTimezone(): Date {
+    return new Date(Date.UTC(this.year, this.month, this.day));
+  }
+
+  /**
+   * Returns the year
+   */
+  getFullYear(): number {
+    return this.year;
+  }
+
+  /**
+   * Returns the month (0-11)
+   */
+  getMonth(): number {
+    return this.month;
+  }
+
+  /**
+   * Returns the day (1-31)
+   */
+  getDate(): number {
+    return this.day;
+  }
+}
 
 /**
  * Enum for the claims locales.
@@ -164,8 +254,32 @@ const FISCAL_CODE_WITH_PREFIX =
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
  * This is needed because a generic date decoder would accept invalid dates like numbers,
  * thus decoding properly and returning a wrong claim item to be displayed.
+ * The returned date is a SimpleDate object, which is a simpler date class with day, month and year properties.
  */
-export const DateClaim = patternDateFromString(DATE_FORMAT_REGEX, "DateClaim");
+export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
+  "SimpleDateClaim",
+  (input: unknown): input is SimpleDate => input instanceof SimpleDate,
+  (input, context) =>
+    pipe(
+      PatternString(DATE_FORMAT_REGEX).validate(input, context),
+      E.fold(
+        () => t.failure(input, context, "Date is not in the correct format"),
+        str => {
+          const date = new SimpleDate(
+            +str.slice(0, 4),
+            +str.slice(5, 7) - 1,
+            +str.slice(8, 10)
+          );
+          return t.success(date);
+        }
+      )
+    ),
+  (date: SimpleDate) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`
+);
 
 /**
  * io-ts decoder for the evidence claim field of the credential.
@@ -198,8 +312,8 @@ export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
  */
 const DrivingPrivilegeClaim = t.type({
   driving_privilege: t.string,
-  issue_date: t.string,
-  expiry_date: t.string,
+  issue_date: SimpleDateClaim,
+  expiry_date: SimpleDateClaim,
   restrictions_conditions: t.union([t.string, t.null])
 });
 
@@ -266,8 +380,8 @@ export const ClaimValue = t.union([
   DrivingPrivilegesClaim,
   // Parse an object representing the claim evidence
   EvidenceClaim,
-  // Otherwise parse a date
-  DateClaim,
+  // Otherwise parse a date as string
+  SimpleDateClaim,
   // Otherwise parse an image
   ImageClaim,
   // Otherwise parse a PDF
@@ -328,43 +442,6 @@ export const getCredentialExpireDays = (
   return differenceInCalendarDays(expireDate, Date.now());
 };
 
-/**
- * Returns the expire status of a {@link ParsedCredential}, taking into account the **expiration date only**.
- * Use {@link getCredentialStatus} to also check the status attestation.
- * @param credential the parsed credential claims
- * @param expiringDays the number of days required to mark a credential as "EXPIRING"
- * @returns "VALID" if the credential is valid, "EXPIRING" if there are less than {expiringDays} days left until the expiry day, "EXPIRED" if the expiry date has passed
- */
-export const getCredentialExpireStatus = (
-  credential: ParsedCredential,
-  expiringDays: number = 14
-): ItwCredentialStatus | undefined => {
-  const expireDays = getCredentialExpireDays(credential);
-
-  if (expireDays === undefined) {
-    return undefined;
-  }
-
-  return expireDays > expiringDays
-    ? "valid"
-    : expireDays > 0
-    ? "expiring"
-    : "expired";
-};
-
-/**
- * Get the overall status of the credential, taking into account
- * the status attestation if present and the credential's own expiration date.
- */
-export const getCredentialStatus = (
-  credential: StoredCredential
-): ItwCredentialStatus | undefined => {
-  if (credential.storedStatusAttestation?.credentialStatus === "invalid") {
-    return "expired";
-  }
-  return getCredentialExpireStatus(credential.parsedCredential);
-};
-
 const FISCAL_CODE_REGEX =
   /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
 
@@ -376,21 +453,6 @@ const FISCAL_CODE_REGEX =
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-const EID_FISCAL_CODE_KEY = "tax_id_code";
-
-export const getFiscalCodeFromCredential = (
-  credential: StoredCredential | undefined
-) =>
-  pipe(
-    credential?.parsedCredential,
-    O.fromNullable,
-    O.chain(x => O.fromNullable(x[EID_FISCAL_CODE_KEY]?.value)),
-    O.map(t.string.decode),
-    O.chain(O.fromEither),
-    O.chain(extractFiscalCode),
-    O.getOrElse(() => "")
-  );
-
 /**
  * Truncate long strings to avoid performance issues when rendering claims.
  */
@@ -398,3 +460,76 @@ export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
   claim.id === WellKnownClaim.expiry_date;
+
+/**
+ *
+ *
+ * Claim extractors
+ *
+ *
+ */
+
+/**
+ * Function that extracts a claim from a credential.
+ * @param claimId - the claim id / name to extract
+ * @param decoder - optional decoder for the claim value, defaults to decoding a string
+ * @returns a function that extracts a claim from a credential
+ */
+export const extractClaim =
+  <T = string>(
+    claimId: string,
+    decoder: (i: unknown) => t.Validation<T> = t.string.decode as (
+      i: unknown
+    ) => t.Validation<T>
+  ) =>
+  (credential: ParsedCredential): O.Option<T> =>
+    pipe(
+      credential,
+      O.fromNullable,
+      O.chainNullableK(x => x[claimId]?.value),
+      O.map(decoder),
+      O.chain(O.fromEither)
+    );
+
+/**
+ * Returns the fiscal code from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the fiscal code
+ */
+export const getFiscalCodeFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.tax_id_code)),
+    O.chain(extractFiscalCode),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Returns the first name from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the first name
+ */
+export const getFirstNameFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.given_name)),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Returns the family name from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the family name
+ */
+export const getFamilyNameFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.family_name)),
+    O.getOrElse(() => "")
+  );

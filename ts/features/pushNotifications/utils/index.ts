@@ -1,111 +1,79 @@
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import * as E from "fp-ts/lib/Either";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
+import { captureException, captureMessage } from "@sentry/react-native";
 import { v4 as uuid } from "uuid";
-import { Platform, PermissionsAndroid } from "react-native";
+import { PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
+import NotificationsUtils from "react-native-notifications-utils";
 import { isIos } from "../../../utils/platform";
-
-// DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-const UUID_VERSION_PREFIX = "001";
 
 export enum AuthorizationStatus {
   NotDetermined = 0,
   StatusDenied = 1,
   Authorized = 2,
-  Provisional = 3
+  Provisional = 3,
+  Ephemeral = 4 // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
 }
 
-const isAndroid7NougatAPI24OrMore = (Platform.Version as number) >= 24;
-const successfulBooleanTaskEither = () => TE.fromEither(E.right(true));
-
-const checkPermissionAndroid = () =>
-  pipe(
-    isAndroid7NougatAPI24OrMore,
-    B.fold(successfulBooleanTaskEither, () =>
-      TE.tryCatch(
-        () =>
-          PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-          ),
-        E.toError
-      )
-    )
-  );
-
-const checkPermissioniOS = () =>
-  pipe(
-    () =>
-      new Promise<boolean>((resolve, _) => {
+export const checkNotificationPermissions = () =>
+  new Promise<boolean>(resolve => {
+    try {
+      if (isIos) {
         PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
+          // On iOS, 'authorizationStatus' is the parameter that
+          // reflects the notification permission status ('alert'
+          // is just one of the presentation's options)
           resolve(
-            authorizationStatus === AuthorizationStatus.Authorized ||
-              authorizationStatus === AuthorizationStatus.Provisional
+            authorizationStatus !== undefined &&
+              authorizationStatus !== AuthorizationStatus.NotDetermined &&
+              authorizationStatus !== AuthorizationStatus.StatusDenied
           );
         });
-      }),
-    TE.fromTask
-  );
+      } else {
+        PushNotification.checkPermissions(data => {
+          // On Android, only 'alert' has a value
+          resolve(!!data.alert);
+        });
+      }
+    } catch (e) {
+      captureException(e);
+      captureMessage(
+        `[PushNotifications] 'checkNotificationPermissions' has thrown an exception on ${
+          isIos ? "iOS" : "Android"
+        }`
+      );
+      resolve(false);
+    }
+  });
 
-export const checkNotificationPermissions = () =>
-  pipe(
-    isIos,
-    B.fold(
-      () => checkPermissionAndroid(),
-      () => checkPermissioniOS()
-    ),
-    TE.getOrElse(() => T.of(false))
-  )();
-
-const requestPermissioniOS = () =>
-  pipe(
-    TE.tryCatch(
-      () =>
-        PushNotificationIOS.requestPermissions({
+export const requestNotificationPermissions = async () => {
+  try {
+    if (isIos) {
+      const pushNotificationPermissions =
+        await PushNotificationIOS.requestPermissions({
           alert: true,
           badge: true,
           sound: true
-        }),
-      E.toError
-    ),
-    TE.map(
-      ({ authorizationStatus }) =>
-        authorizationStatus === AuthorizationStatus.Authorized
-    )
-  );
-
-const requestPermissionAndroid = () =>
-  pipe(
-    isAndroid7NougatAPI24OrMore,
-    B.fold(successfulBooleanTaskEither, () =>
-      pipe(
-        TE.tryCatch(
-          () =>
-            PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-            ),
-          E.toError
-        ),
-        TE.map(
-          permissionStatus =>
-            permissionStatus === PermissionsAndroid.RESULTS.GRANTED
-        )
-      )
-    )
-  );
-
-export const requestNotificationPermissions = () =>
-  pipe(
-    isIos,
-    B.fold(
-      () => requestPermissionAndroid(),
-      () => requestPermissioniOS()
-    ),
-    TE.getOrElse(() => T.of(false))
-  )();
+        });
+      return (
+        pushNotificationPermissions.authorizationStatus ===
+        AuthorizationStatus.Authorized
+      );
+    } else {
+      const permissionStatus = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      );
+      return permissionStatus === PermissionsAndroid.RESULTS.GRANTED;
+    }
+  } catch (e) {
+    captureException(e);
+    captureMessage(
+      `[PushNotifications] 'requestNotificationPermissions' has thrown an exception on ${
+        isIos ? "iOS" : "Android"
+      }`
+    );
+    return false;
+  }
+};
 
 /**
  * Remove all the local notifications related to authentication with spid.
@@ -121,14 +89,14 @@ export const cancellAllLocalNotifications = () =>
   PushNotification.cancelAllLocalNotifications();
 
 /**
- * Generates a new random installation ID with the following format:
- *
- * <VERSION_PREFIX><UUID>
- *
- * Where:
- *   VERSION_PREFIX is \d{3}
- *   UUID is [a-z0-9]{32}
+ * This is a legacy code that was used to generate a unique Id
+ * from client side. It is still used because the backend API
+ * requires it as part of the URL's path but it is later not
+ * used in any way.
+ * When the backend API spec will remove it, it can also be
+ * unlinked and deleted here
  */
-export function generateInstallationId(): string {
-  return `${UUID_VERSION_PREFIX}${uuid().replace(/-/g, "")}`;
-}
+export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
+
+export const openSystemNotificationSettingsScreen = () =>
+  NotificationsUtils.openSettings();

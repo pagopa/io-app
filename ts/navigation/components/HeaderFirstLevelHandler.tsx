@@ -1,8 +1,8 @@
-import { ActionProp } from "@pagopa/io-app-design-system";
-
+import {
+  HeaderActionProps,
+  HeaderFirstLevel
+} from "@pagopa/io-app-design-system";
 import React, { ComponentProps, useCallback, useMemo } from "react";
-import HeaderFirstLevel from "../../components/ui/HeaderFirstLevel";
-import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
 import {
@@ -10,12 +10,9 @@ import {
   isArchivingInSchedulingModeSelector
 } from "../../features/messages/store/reducers/archiving";
 import { useHeaderFirstLevelActionPropHelp } from "../../hooks/useHeaderFirstLevelActionPropHelp";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 import I18n from "../../i18n";
-import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
-import {
-  isNewPaymentSectionEnabledSelector,
-  isSettingsVisibleAndHideProfileSelector
-} from "../../store/reducers/backendStatus";
+import { useIODispatch, useIOStore } from "../../store/hooks";
 import { useIONavigation } from "../params/AppParamsList";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
@@ -36,7 +33,7 @@ const useNavigateToSettingMainScreen = () => {
   }, [navigation]);
 };
 
-export const useHeaderFirstLevelActionPropSettings = (): ActionProp => ({
+export const useHeaderFirstLevelActionPropSettings = (): HeaderActionProps => ({
   icon: "coggle",
   accessibilityLabel: I18n.t("global.buttons.settings"),
   onPress: useNavigateToSettingMainScreen()
@@ -51,17 +48,10 @@ export const useHeaderFirstLevelActionPropSettings = (): ActionProp => ({
 export const HeaderFirstLevelHandler = ({
   currentRouteName
 }: HeaderFirstLevelHandlerProps) => {
+  const alertProps = useStatusAlertProps(currentRouteName);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
-
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
-
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const canNavigateIfIsArchivingCallback = useCallback(() => {
     const state = store.getState();
@@ -101,7 +91,7 @@ export const HeaderFirstLevelHandler = ({
   const settingsAction = useHeaderFirstLevelActionPropSettings();
   const helpAction = useHeaderFirstLevelActionPropHelp(currentRouteName);
 
-  const settingsActionInMessageSection = useMemo(
+  const settingsActionInMessageSection: HeaderActionProps = useMemo(
     () => ({
       ...settingsAction,
       onPress: navigateToSettingMainScreenFromMessageSection
@@ -109,22 +99,7 @@ export const HeaderFirstLevelHandler = ({
     [navigateToSettingMainScreenFromMessageSection, settingsAction]
   );
 
-  const {
-    bottomSheet: WalletHomeHeaderBottomSheet,
-    present: presentWalletHomeHeaderBottomsheet
-  } = useWalletHomeHeaderBottomSheet();
-
-  const walletAction: ActionProp = useMemo(
-    () => ({
-      icon: "add",
-      accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-      onPress: presentWalletHomeHeaderBottomsheet,
-      testID: "walletAddNewPaymentMethodTestId"
-    }),
-    [presentWalletHomeHeaderBottomsheet]
-  );
-
-  const searchMessageAction: ActionProp = useMemo(
+  const searchMessageAction: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),
@@ -134,70 +109,46 @@ export const HeaderFirstLevelHandler = ({
   );
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
+    const commonProp = {
+      ignoreSafeAreaMargin: !!alertProps
+    };
     switch (currentRouteName) {
       case ROUTES.WALLET_HOME:
-        if (isNewWalletSectionEnabled) {
-          return {
-            title: I18n.t("wallet.wallet"),
-            firstAction: helpAction,
-            testID: "wallet-home-header-title",
-            ...(isSettingsVisibleAndHideProfile
-              ? {
-                  type: "twoActions",
-                  secondAction: settingsAction
-                }
-              : { type: "singleAction" })
-          };
-        }
         return {
           title: I18n.t("wallet.wallet"),
           firstAction: helpAction,
-          backgroundColor: "dark",
           testID: "wallet-home-header-title",
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "threeActions",
-                secondAction: settingsAction,
-                thirdAction: walletAction
-              }
-            : {
-                type: "twoActions",
-                secondAction: walletAction
-              })
+          type: "twoActions",
+          secondAction: settingsAction
+        };
+      case ROUTES.PAYMENTS_HOME:
+        return {
+          ...commonProp,
+          title: I18n.t("features.payments.title"),
+          firstAction: helpAction,
+          type: "twoActions",
+          secondAction: settingsAction
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
         return {
+          ...commonProp,
           skipHeaderAutofocus: true,
           title: I18n.t("messages.contentTitle"),
           firstAction: helpAction,
-          ...(isSettingsVisibleAndHideProfile
-            ? {
-                type: "threeActions",
-                secondAction: settingsActionInMessageSection,
-                thirdAction: searchMessageAction
-              }
-            : {
-                type: "twoActions",
-                secondAction: searchMessageAction
-              })
+          type: "threeActions",
+          secondAction: settingsActionInMessageSection,
+          thirdAction: searchMessageAction
         };
     }
   }, [
+    alertProps,
     currentRouteName,
     helpAction,
-    isNewWalletSectionEnabled,
-    isSettingsVisibleAndHideProfile,
-    searchMessageAction,
-    settingsAction,
     settingsActionInMessageSection,
-    walletAction
+    settingsAction,
+    searchMessageAction
   ]);
 
-  return (
-    <>
-      <HeaderFirstLevel {...headerProps} />
-      {WalletHomeHeaderBottomSheet}
-    </>
-  );
+  return <HeaderFirstLevel {...headerProps} />;
 };

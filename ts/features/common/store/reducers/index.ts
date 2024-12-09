@@ -11,10 +11,6 @@ import {
   cieLoginPersistor
 } from "../../../cieLogin/store/reducers";
 import {
-  EuCovidCertState,
-  euCovidCertReducer
-} from "../../../euCovidCert/store/reducers";
-import {
   FastLoginState,
   fastLoginReducer
 } from "../../../fastLogin/store/reducers";
@@ -28,7 +24,7 @@ import {
   NativeLoginState,
   nativeLoginReducer
 } from "../../../nativeLogin/store/reducers";
-import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
+import walletReducer, { WalletState } from "../../../wallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
@@ -44,16 +40,32 @@ import {
   WhatsNewState,
   whatsNewPersistor
 } from "../../../whatsnew/store/reducers";
+import {
+  mixpanelReducer,
+  MixpanelState
+} from "../../../mixpanel/store/reducer";
+import {
+  ingressScreenReducer,
+  IngressScreenState
+} from "../../../ingress/store/reducer";
+import {
+  loginInfoReducer,
+  LoginInfoState
+} from "../../../login/info/store/reducers";
+import {
+  landingScreenBannersReducer,
+  LandingScreenBannerState
+} from "../../../landingScreenMultiBanner/store/reducer";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
   nativeLogin: NativeLoginState;
   fastLogin: FastLoginState;
   cieLogin: CieLoginState & PersistPartial;
+  loginInfo: LoginInfoState;
 };
 
 export type FeaturesState = {
-  euCovidCert: EuCovidCertState;
   pn: PnState;
   fci: FciState;
   idPay: IDPayState;
@@ -65,12 +77,14 @@ export type FeaturesState = {
   fims: FimsState;
   itWallet: PersistedItWalletState;
   profileSettings: ProfileSettingsState & PersistPartial;
+  mixpanel: MixpanelState;
+  ingress: IngressScreenState;
+  landingBanners: LandingScreenBannerState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
 
 const rootReducer = combineReducers<FeaturesState, Action>({
-  euCovidCert: euCovidCertReducer,
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,
@@ -81,12 +95,16 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
-    cieLogin: cieLoginPersistor
+    cieLogin: cieLoginPersistor,
+    loginInfo: loginInfoReducer
   }),
   wallet: walletReducer,
   fims: fimsReducer,
   itWallet: itWalletReducer,
-  profileSettings: profileSettingsReducerPersistor
+  profileSettings: profileSettingsReducerPersistor,
+  mixpanel: mixpanelReducer,
+  ingress: ingressScreenReducer,
+  landingBanners: landingScreenBannersReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

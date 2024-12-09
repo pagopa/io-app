@@ -12,8 +12,7 @@ module.exports = {
   },
   assets: [
     "./assets/fonts/TitilliumSansPro",
-    "./assets/fonts/ReadexPro",
-    "./assets/fonts/RobotoMono",
+    "./assets/fonts/Titillio",
     "./assets/fonts/DMMono"
   ]
 };

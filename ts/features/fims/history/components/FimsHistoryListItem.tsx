@@ -5,7 +5,7 @@ import {
   Icon,
   IOListItemStyles,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,11 +13,11 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { Consent } from "../../../../../definitions/fims/Consent";
+import { Access } from "../../../../../definitions/fims_history/Access";
 import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { potFoldWithDefault } from "../../../../utils/pot";
-import { useAutoFetchingServiceByIdPot } from "../../common/utils/hooks";
+import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
 import { FimsHistorySharedStyles } from "../utils/styles";
 import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 
@@ -25,10 +25,10 @@ import { LoadingFimsHistoryListItem } from "./FimsHistoryLoaders";
 
 type SuccessListItemProps = {
   serviceData: ServicePublic;
-  consent: Consent;
+  consent: Access;
 };
 type BaseHistoryListItemProps = {
-  item: Consent;
+  item: Access;
 };
 
 // --------- LISTITEMS
@@ -52,9 +52,9 @@ const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
       <VSpacer size={8} />
 
       <H6>{serviceData.organization_name}</H6>
-      <LabelSmall weight="Regular" color="grey-700">
+      <BodySmall weight="Regular" color="grey-700">
         {consent.redirect?.display_name}
-      </LabelSmall>
+      </BodySmall>
     </View>
   );
 };
@@ -82,9 +82,9 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
           </Caption>
         </View>
         <VSpacer size={4} />
-        <LabelSmall weight="Semibold" color="error-600">
+        <BodySmall weight="Semibold" color="error-600">
           {I18n.t("FIMS.history.errorStates.dataUnavailable")}
-        </LabelSmall>
+        </BodySmall>
       </View>
       <Icon name="errorFilled" color="error-600" />
     </View>

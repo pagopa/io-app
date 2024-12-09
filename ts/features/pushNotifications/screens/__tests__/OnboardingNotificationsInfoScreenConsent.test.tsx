@@ -1,29 +1,42 @@
+import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
-import { AppState } from "react-native";
+import { AppState, AppStateStatus } from "react-native";
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
-import * as notificationsActions from "../../store/actions/notifications";
 import * as notification from "../../utils";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
+import * as analytics from "../../analytics";
+import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
+
+const mockDispatch = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual<typeof import("react-redux")>("react-redux"),
+  useDispatch: () => mockDispatch
+}));
 
 const checkNotificationPermissions = jest.spyOn(
   notification,
   "checkNotificationPermissions"
 );
 
-const notificationsInfoScreenConsentSpy = jest.spyOn(
-  notificationsActions,
-  "notificationsInfoScreenConsent"
-);
+const analyticsOpenSettingsSpy = jest
+  .spyOn(analytics, "trackNotificationsOptInOpenSettings")
+  .mockImplementation(constUndefined);
+
+const openSystemNotificationSettingsScreenSpy = jest
+  .spyOn(notification, "openSystemNotificationSettingsScreen")
+  .mockImplementation(constUndefined);
 
 describe("OnboardingNotificationsInfoScreenConsent", () => {
   beforeEach(() => {
-    checkNotificationPermissions.mockClear();
-    notificationsInfoScreenConsentSpy.mockClear();
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+    mockAccessibilityInfo(false);
   });
 
   it("Click on the button continue check that the NOTIFICATIONS_INFO_SCREEN_CONSENT action is triggered", () => {
@@ -34,7 +47,24 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
 
     if (continueButton) {
       fireEvent(continueButton, "onPress");
-      expect(notificationsInfoScreenConsentSpy).toBeCalled();
+      expect(mockDispatch.mock.calls.length).toBe(1);
+      expect(mockDispatch.mock.calls[0].length).toBe(1);
+      expect(mockDispatch.mock.calls[0][0]).toEqual(
+        notificationsInfoScreenConsent()
+      );
+    }
+  });
+
+  it("Settings button should be there and its tap should call 'trackNotificationsOptInOpenSettings' and 'openSystemNotificationSettingsScreen'", () => {
+    const screen = renderScreen();
+
+    const settingsButton = screen.queryByTestId("settings-btn");
+    expect(settingsButton).not.toBeUndefined();
+
+    if (settingsButton) {
+      fireEvent(settingsButton, "onPress");
+      expect(analyticsOpenSettingsSpy).toHaveBeenCalledTimes(1);
+      expect(openSystemNotificationSettingsScreenSpy).toHaveBeenCalledTimes(1);
     }
   });
 
@@ -51,7 +81,11 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
 
     await waitFor(() => {
       expect(checkNotificationPermissions).toHaveBeenCalledTimes(1);
-      expect(notificationsInfoScreenConsentSpy).toBeCalled();
+      expect(mockDispatch.mock.calls.length).toBe(1);
+      expect(mockDispatch.mock.calls[0].length).toBe(1);
+      expect(mockDispatch.mock.calls[0][0]).toEqual(
+        notificationsInfoScreenConsent()
+      );
     });
   });
 
@@ -68,31 +102,24 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
 
     await waitFor(() => {
       expect(checkNotificationPermissions).toHaveBeenCalledTimes(1);
-      expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
+      expect(mockDispatch.mock.calls.length).toBe(0);
     });
   });
 
-  it("If AppState is not active doesn't trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action", () => {
-    const appStateSpy = jest.spyOn(AppState, "addEventListener");
+  const appStateStatuses: ReadonlyArray<AppStateStatus> = [
+    "background",
+    "inactive",
+    "unknown",
+    "extension"
+  ];
+  appStateStatuses.forEach(appStateStatus => {
+    it(`AppState '${appStateStatus}' does not trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action`, () => {
+      const screen = renderScreen(appStateStatus);
+      expect(screen).not.toBeNull();
 
-    const screen = renderScreen();
-    expect(screen).not.toBeNull();
-
-    appStateSpy.mock.calls[0][1]("background");
-    expect(checkNotificationPermissions).not.toBeCalled();
-    expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
-
-    appStateSpy.mock.calls[0][1]("inactive");
-    expect(checkNotificationPermissions).not.toBeCalled();
-    expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
-
-    appStateSpy.mock.calls[0][1]("unknown");
-    expect(checkNotificationPermissions).not.toBeCalled();
-    expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
-
-    appStateSpy.mock.calls[0][1]("extension");
-    expect(checkNotificationPermissions).not.toBeCalled();
-    expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
+      expect(checkNotificationPermissions).not.toHaveBeenCalled();
+      expect(mockDispatch.mock.calls.length).toBe(0);
+    });
   });
 
   it("should match snapshot", () => {
@@ -101,8 +128,11 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   });
 });
 
-const renderScreen = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderScreen = (appStateStatus: AppStateStatus = "active") => {
+  const globalState = appReducer(
+    undefined,
+    applicationChangeState(appStateStatus)
+  );
   const dsEnabledState = appReducer(
     globalState,
     preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })

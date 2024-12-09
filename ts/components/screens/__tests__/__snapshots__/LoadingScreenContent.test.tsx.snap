@@ -204,6 +204,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -341,11 +342,15 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -359,6 +364,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -547,46 +555,27 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>
@@ -813,6 +802,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -950,11 +940,15 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -968,6 +962,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -1156,46 +1153,27 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>
@@ -1422,6 +1400,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1559,11 +1538,15 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -1577,6 +1560,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -1765,46 +1751,27 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>
@@ -2028,6 +1995,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2165,11 +2133,15 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -2183,6 +2155,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -2371,46 +2346,27 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#2B2E38",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Test Content Title
                             </Text>

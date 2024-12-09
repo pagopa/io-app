@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import React, { useEffect } from "react";
+import { constNull, pipe } from "fp-ts/lib/function";
+import React from "react";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -15,163 +16,176 @@ import {
   selectFailureOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import {
-  ItwCredentialIssuanceMachineContext,
-  ItwEidIssuanceMachineContext
-} from "../../machine/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  CREDENTIALS_MAP,
-  KoState,
-  trackAddCredentialTimeout,
-  trackIdNotMatch,
-  trackItwUnsupportedDevice,
-  trackWalletCreationFailed
-} from "../../analytics";
-import { selectCredential } from "../../machine/credential/selectors";
+import { KoState, trackWalletCreationFailed } from "../../analytics";
+import { openWebUrl } from "../../../../utils/url";
+import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
+
+const FAQ_URL = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
 export const ItwIssuanceEidFailureScreen = () => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
-  const identification =
-    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
-  const storedCredential =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredential);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  const closeIssuance = (errorConfig?: KoState) => {
+  return pipe(
+    failureOption,
+    O.fold(constNull, failure => <ContentView failure={failure} />)
+  );
+};
+
+type ContentViewProps = { failure: IssuanceFailure };
+
+const ContentView = ({ failure }: ContentViewProps) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const toast = useIOToast();
+
+  useDebugInfo({
+    failure
+  });
+
+  const closeIssuance = (errorConfig: KoState) => {
     machineRef.send({ type: "close" });
-    if (errorConfig) {
-      trackWalletCreationFailed(errorConfig);
-    }
+    trackWalletCreationFailed(errorConfig);
   };
 
-  const ContentView = ({ failure }: { failure: IssuanceFailure }) => {
-    useDebugInfo({
-      failure
-    });
+  const retryIssuance = (errorConfig: KoState) => {
+    machineRef.send({ type: "retry" });
+    trackWalletCreationFailed(errorConfig);
+  };
 
-    const resultScreensMap: Record<
-      IssuanceFailureType,
-      OperationResultScreenContentProps
-    > = {
-      [IssuanceFailureType.GENERIC]: {
-        title: I18n.t("features.itWallet.generic.error.title"),
-        subtitle: I18n.t("features.itWallet.generic.error.body"),
-        pictogram: "workInProgress",
-        action: {
-          label: I18n.t("global.buttons.close"),
-          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        }
-      },
-      [IssuanceFailureType.ISSUER_GENERIC]: {
-        title: I18n.t("features.itWallet.issuance.genericError.title"),
-        subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-        pictogram: "workInProgress",
-        action: {
-          label: I18n.t(
-            "features.itWallet.issuance.genericError.primaryAction"
-          ),
-          onPress: () =>
-            closeIssuance({
-              reason: failure.type,
-              cta_category: "custom_1",
-              cta_id: I18n.t(
+  const getOperationResultScreenContentProps =
+    (): OperationResultScreenContentProps => {
+      switch (failure.type) {
+        case IssuanceFailureType.UNEXPECTED: // Map unexpected errors with the previous GENERIC message
+        case IssuanceFailureType.WALLET_PROVIDER_GENERIC:
+          return {
+            title: I18n.t("features.itWallet.generic.error.title"),
+            subtitle: I18n.t("features.itWallet.generic.error.body"),
+            pictogram: "workInProgress",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t("global.buttons.close")
+                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            }
+          };
+        case IssuanceFailureType.ISSUER_GENERIC:
+          return {
+            title: I18n.t("features.itWallet.issuance.genericError.title"),
+            subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+            pictogram: "umbrellaNew",
+            action: {
+              label: I18n.t(
                 "features.itWallet.issuance.genericError.primaryAction"
-              )
-            }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
-            "features.itWallet.issuance.genericError.secondaryAction"
-          ),
-          onPress: () =>
-            closeIssuance({
-              reason: failure.type,
-              cta_category: "custom_2",
-              cta_id: I18n.t(
-                "features.itWallet.issuance.genericError.secondaryAction"
-              )
-            }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        }
-      },
-      [IssuanceFailureType.UNSUPPORTED_DEVICE]: {
-        title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-        subtitle: I18n.t("features.itWallet.unsupportedDevice.error.body"),
-        pictogram: "workInProgress",
-        action: {
-          label: I18n.t(
-            "features.itWallet.unsupportedDevice.error.primaryAction"
-          ),
-          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
-            "features.itWallet.unsupportedDevice.error.secondaryAction"
-          ),
-          onPress: () => undefined
-        }
-      },
-      [IssuanceFailureType.NOT_MATCHING_IDENTITY]: {
-        title: I18n.t(
-          "features.itWallet.issuance.notMatchingIdentityError.title"
-        ),
-        subtitle: I18n.t(
-          "features.itWallet.issuance.notMatchingIdentityError.body"
-        ),
-        pictogram: "accessDenied",
-        action: {
-          label: I18n.t(
-            "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
-          ),
-          onPress: () => closeIssuance() // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
-        },
-        secondaryAction: {
-          label: I18n.t(
-            "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
-          ),
-          onPress: () => undefined
-        }
+              ),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.genericError.primaryAction"
+                  )
+                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            }
+          };
+        case IssuanceFailureType.UNSUPPORTED_DEVICE:
+          return {
+            title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
+            subtitle: I18n.t("features.itWallet.unsupportedDevice.error.body"),
+            pictogram: "workInProgress",
+            action: {
+              label: I18n.t(
+                "features.itWallet.unsupportedDevice.error.primaryAction"
+              ),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.unsupportedDevice.error.primaryAction"
+                  )
+                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.unsupportedDevice.error.secondaryAction"
+              ),
+              onPress: () =>
+                openWebUrl(FAQ_URL, () =>
+                  toast.error(I18n.t("global.jserror.title"))
+                )
+            }
+          };
+        case IssuanceFailureType.NOT_MATCHING_IDENTITY:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.notMatchingIdentityError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.notMatchingIdentityError.body"
+            ),
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
+              ),
+              onPress: () =>
+                retryIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.notMatchingIdentityError.primaryAction"
+                  )
+                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            },
+            secondaryAction: {
+              label: I18n.t(
+                "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
+              ),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.notMatchingIdentityError.secondaryAction"
+                  )
+                }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            }
+          };
+        case IssuanceFailureType.WALLET_REVOCATION_ERROR:
+          return {
+            title: I18n.t(
+              "features.itWallet.walletRevocation.failureScreen.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.walletRevocation.failureScreen.subtitle"
+            ),
+            pictogram: "umbrellaNew",
+            action: {
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "close" })
+            }
+          };
       }
     };
 
-    useEffect(() => {
-      if (
-        failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
-        identification
-      ) {
-        trackIdNotMatch(identification.mode);
-      }
-      if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
-        trackItwUnsupportedDevice();
-      }
-      if (
-        failure.type === IssuanceFailureType.ISSUER_GENERIC &&
-        storedCredential
-      ) {
-        trackAddCredentialTimeout({
-          reason: failure.reason,
-          type: failure.type,
-          credential: CREDENTIALS_MAP[storedCredential.credentialType]
-        });
-      }
-    }, [failure]);
+  useEidEventsTracking({ failure, identification });
 
-    const resultScreenProps =
-      resultScreensMap[failure.type] ?? resultScreensMap.GENERIC;
+  const resultScreenProps = getOperationResultScreenContentProps();
 
-    return <OperationResultScreenContent {...resultScreenProps} />;
-  };
-
-  return pipe(
-    failureOption,
-    O.fold(
-      () => <ContentView failure={{ type: IssuanceFailureType.GENERIC }} />,
-      failure => <ContentView failure={failure} />
-    )
-  );
+  return <OperationResultScreenContent {...resultScreenProps} />;
 };

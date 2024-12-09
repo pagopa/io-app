@@ -1,15 +1,5 @@
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useMemo } from "react";
 import {
-  View,
-  LayoutChangeEvent,
-  RefreshControl,
-  Platform
-} from "react-native";
-import {
+  Divider,
   H3,
   HSpacer,
   IOColors,
@@ -18,22 +8,39 @@ import {
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { useMemo } from "react";
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  Platform,
+  RefreshControl,
+  View
+} from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
   getValueOrElse,
   isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -46,16 +53,13 @@ import {
 } from "../../store/reducers/merchants";
 import { getCategorySpecs } from "../../utils/filters";
 import { mixAndSortMerchants } from "../../utils/merchants";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
 }>;
 
 const CgnMerchantsListByCategory = () => {
+  const screenHeight = Dimensions.get("window").height;
   const [titleHeight, setTitleHeight] = React.useState(0);
   const translationY = useSharedValue(0);
 
@@ -70,6 +74,7 @@ const CgnMerchantsListByCategory = () => {
     // eslint-disable-next-line functional/immutable-data
     translationY.value = event.contentOffset.y;
   });
+
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const route =
@@ -87,7 +92,7 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
-  const navigation =
+  const { navigate } =
     useNavigation<
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
     >();
@@ -102,9 +107,12 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
+  const [isPullRefresh, setIsPullRefresh] = React.useState(false);
+
   const initLoadingLists = () => {
     dispatch(cgnOfflineMerchants.request(categoryFilter));
     dispatch(cgnOnlineMerchants.request(categoryFilter));
+    setIsPullRefresh(false);
   };
 
   React.useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
@@ -120,11 +128,14 @@ const CgnMerchantsListByCategory = () => {
     [onlineMerchants, offlineMerchants]
   );
 
-  const onItemPress = (id: Merchant["id"]) => {
-    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
-      merchantID: id
-    });
-  };
+  const onItemPress = React.useCallback(
+    (id: Merchant["id"]) => {
+      navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
+        merchantID: id
+      });
+    },
+    [navigate]
+  );
 
   useHeaderSecondLevel({
     title: I18n.t(
@@ -142,8 +153,105 @@ const CgnMerchantsListByCategory = () => {
       triggerOffset: titleHeight
     },
     transparent: true,
-    supportRequest: true
+    supportRequest: true,
+    secondAction: {
+      icon: "search",
+      onPress() {
+        navigate("CGN_MERCHANTS_SEARCH");
+      },
+      accessibilityLabel: I18n.t(
+        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+      )
+    }
   });
+
+  const renderItem = React.useMemo(
+    () => CgnMerchantListViewRenderItem({ onItemPress }),
+    [onItemPress]
+  );
+
+  const isListLoading =
+    isLoading(onlineMerchants) || isLoading(offlineMerchants);
+
+  const isListRefreshing = isListLoading && isPullRefresh;
+
+  const header = () => (
+    <>
+      {Platform.OS === "ios" && (
+        <View
+          style={{
+            position: "absolute",
+            height: 1000,
+            backgroundColor: categorySpecs?.colors,
+            top: -1000,
+            right: 0,
+            left: 0
+          }}
+        />
+      )}
+      {categorySpecs && (
+        <View
+          onLayout={getTitleHeight}
+          style={[
+            IOStyles.horizontalContentPadding,
+            {
+              paddingTop: insets.top,
+              backgroundColor: categorySpecs.colors,
+              paddingBottom: 24
+            }
+          ]}
+        >
+          <VSpacer size={48} />
+          <VSpacer size={32} />
+          <View style={[IOStyles.row, { alignItems: "center" }]}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: hexToRgba(IOColors.white, 0.2),
+                height: 66,
+                width: 66,
+                borderRadius: 8
+              }}
+            >
+              <Icon
+                name={categorySpecs.icon}
+                size={32}
+                color={categorySpecs.textColor}
+              />
+            </View>
+            <HSpacer size={16} />
+            <View style={{ flex: 1 }}>
+              <H3 color={categorySpecs.textColor}>
+                {I18n.t(categorySpecs.nameKey)}
+              </H3>
+            </View>
+          </View>
+        </View>
+      )}
+    </>
+  );
+  const refreshControl = (
+    <RefreshControl
+      style={{ zIndex: 1 }}
+      progressViewOffset={Platform.OS === "ios" ? titleHeight : undefined}
+      refreshing={isListRefreshing}
+      onRefresh={() => {
+        initLoadingLists();
+        setIsPullRefresh(true);
+      }}
+    />
+  );
+
+  const getPaddingBottom = () => {
+    const ELEMENT_HEIGHT = 49;
+    const totalListElementsHeight = ELEMENT_HEIGHT * merchantsAll.length;
+    const usedVerticalSpace =
+      titleHeight + totalListElementsHeight + insets.bottom;
+    const availableVerticalSpace = screenHeight - usedVerticalSpace;
+
+    return availableVerticalSpace < titleHeight ? availableVerticalSpace : 0;
+  };
 
   return (
     <>
@@ -152,9 +260,18 @@ const CgnMerchantsListByCategory = () => {
         barStyle={"dark-content"}
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
-        <GenericErrorComponent onRetry={initLoadingLists} />
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
+          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
+          action={{
+            label: I18n.t("global.buttons.retry"),
+            accessibilityLabel: I18n.t("global.buttons.retry"),
+            onPress: initLoadingLists
+          }}
+        />
       ) : (
-        <Animated.ScrollView
+        <Animated.FlatList
           style={{ flexGrow: 1, backgroundColor: IOColors.white }}
           onScroll={scrollHandler}
           scrollEventThrottle={8}
@@ -162,76 +279,17 @@ const CgnMerchantsListByCategory = () => {
           snapToEnd={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: 48,
+            paddingBottom: getPaddingBottom(),
             backgroundColor: IOColors.white
           }}
-          refreshControl={
-            <RefreshControl
-              style={{ zIndex: 1 }}
-              refreshing={
-                isLoading(onlineMerchants) || isLoading(offlineMerchants)
-              }
-              onRefresh={initLoadingLists}
-            />
-          }
-        >
-          {Platform.OS === "ios" && (
-            <View
-              style={{
-                position: "absolute",
-                height: 1000,
-                backgroundColor: categorySpecs?.colors,
-                top: -1000,
-                right: 0,
-                left: 0
-              }}
-            />
-          )}
-          {categorySpecs && (
-            <View
-              onLayout={getTitleHeight}
-              style={[
-                IOStyles.horizontalContentPadding,
-                {
-                  paddingTop: insets.top,
-                  backgroundColor: categorySpecs.colors,
-                  paddingBottom: 24
-                }
-              ]}
-            >
-              <VSpacer size={48} />
-              <VSpacer size={32} />
-              <View style={[IOStyles.row, { alignItems: "center" }]}>
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: hexToRgba(IOColors.white, 0.2),
-                    height: 66,
-                    width: 66,
-                    borderRadius: 8
-                  }}
-                >
-                  <Icon
-                    name={categorySpecs.icon}
-                    size={32}
-                    color={categorySpecs.textColor}
-                  />
-                </View>
-                <HSpacer size={16} />
-                <View style={{ flex: 1 }}>
-                  <H3 color={categorySpecs.textColor}>
-                    {I18n.t(categorySpecs.nameKey)}
-                  </H3>
-                </View>
-              </View>
-            </View>
-          )}
-          <CgnMerchantsListView
-            merchantList={merchantsAll}
-            onItemPress={onItemPress}
-          />
-        </Animated.ScrollView>
+          refreshControl={refreshControl}
+          data={merchantsAll}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={CgnMerchantListSkeleton}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <Divider />}
+          ListHeaderComponent={header}
+        />
       )}
     </>
   );

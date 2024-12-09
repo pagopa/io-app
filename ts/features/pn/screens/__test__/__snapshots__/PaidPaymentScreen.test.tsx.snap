@@ -63,6 +63,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -428,36 +429,24 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               Questo avviso è stato già pagato!
                             </Text>
@@ -563,36 +552,26 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                         accessibilityElementsHidden={true}
                                         accessible={false}
                                         allowFontScaling={false}
-                                        color="white"
-                                        defaultColor="white"
-                                        defaultWeight="Bold"
                                         ellipsizeMode="tail"
-                                        font="TitilliumSansPro"
-                                        fontStyle={
-                                          {
-                                            "fontSize": 16,
-                                          }
-                                        }
                                         importantForAccessibility="no-hide-descendants"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={1}
                                         style={
                                           [
-                                            {
-                                              "alignSelf": "center",
-                                            },
-                                            {
-                                              "fontSize": 16,
-                                            },
+                                            {},
                                             {
                                               "color": "#FFFFFF",
                                               "fontFamily": "Titillium Sans Pro",
+                                              "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                            {
+                                              "alignSelf": "center",
                                             },
                                           ]
                                         }
-                                        weight="Bold"
                                       >
                                         Close
                                       </Text>
@@ -623,7 +602,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -793,24 +772,29 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />

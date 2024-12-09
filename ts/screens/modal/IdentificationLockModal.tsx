@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { View, Modal, StyleSheet, SafeAreaView } from "react-native";
 import {
   ContentWrapper,
-  LabelSmall,
+  H4,
+  BodySmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
 import { useIODispatch } from "../../store/hooks";
@@ -56,10 +56,12 @@ const Countdown = (props: CountdownProps) => {
       <ProgressIndicator progress={loaderValue} />
       <VSpacer size={8} />
       <View style={IOStyles.row}>
-        <LabelSmall color="black" weight="Regular">
+        <BodySmall color="black" weight="Regular">
           {waitMessageText}
-        </LabelSmall>
-        <LabelSmall color="black"> {timerCount}s</LabelSmall>
+        </BodySmall>
+        <BodySmall weight="Semibold" color="black">
+          {` ${timerCount}s`}
+        </BodySmall>
       </View>
     </>
   );
@@ -87,12 +89,12 @@ export const IdentificationLockModal = (props: Props) => {
             <VSpacer
               size={IOStyleVariables.defaultSpaceBetweenPictogramAndText}
             />
-            <H3
+            <H4
               style={styles.contentTitle}
               accessibilityLabel={tooManyAttemptsText}
             >
               {tooManyAttemptsText}
-            </H3>
+            </H4>
             <VSpacer size={32} />
             <CountdownProvider
               timerTiming={timerTiming}

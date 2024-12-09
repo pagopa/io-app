@@ -1,20 +1,15 @@
-import {
-  Label,
-  Body,
-  FeatureInfo,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "../../../../i18n";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
+import I18n from "../../../../i18n";
+import { ioSuppliersUrl } from "../../../../urls";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
-import { ioSuppliersUrl } from "../../../../urls";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 export type FeatureProps = {
   trackAction: (info: TrackingInfo) => void;
@@ -69,9 +64,9 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
     () => (
       <Body ref={bodyRef}>
         {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
-        <Label color="info-850">
+        <Body weight="Semibold">
           {I18n.t("profile.main.privacy.shareData.screen.why.description.two")}
-        </Label>
+        </Body>
         {`${I18n.t(
           "profile.main.privacy.shareData.screen.why.description.three"
         )}`}
@@ -89,9 +84,11 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
     <>
       <FeatureInfo
         iconName="analytics"
-        actionLabel={I18n.t("profile.main.privacy.shareData.screen.why.cta")}
-        actionOnPress={handleOnPress}
         body={analyticsBody}
+        action={{
+          label: I18n.t("profile.main.privacy.shareData.screen.why.cta"),
+          onPress: handleOnPress
+        }}
       />
       {bottomSheet}
     </>
@@ -107,23 +104,25 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
   return (
     <FeatureInfo
       iconName="locked"
-      actionLabel={I18n.t("profile.main.privacy.shareData.screen.security.cta")}
-      actionOnPress={handleOnPress}
       body={
         <Body>
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
           )}
-          <Label color="info-850">
+          <Body weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.security.description.two"
             )}
-          </Label>
+          </Body>
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.three"
           )}
         </Body>
       }
+      action={{
+        label: I18n.t("profile.main.privacy.shareData.screen.security.cta"),
+        onPress: handleOnPress
+      }}
     />
   );
 };
@@ -137,20 +136,22 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
   return (
     <FeatureInfo
       iconName="security"
-      actionLabel={I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
-      actionOnPress={handleOnPress}
       body={
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
-          <Label color="info-850">
+          <Body weight="Semibold">
             {I18n.t(
               "profile.main.privacy.shareData.screen.gdpr.description.two"
             )}
-          </Label>
+          </Body>
         </Body>
       }
+      action={{
+        label: I18n.t("profile.main.privacy.shareData.screen.gdpr.cta"),
+        onPress: handleOnPress
+      }}
     />
   );
 };
 
-export { AnalyticsFeatureInfo, SecurityFeatureInfo, GDPRFeatureInfo };
+export { AnalyticsFeatureInfo, GDPRFeatureInfo, SecurityFeatureInfo };

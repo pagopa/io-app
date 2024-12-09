@@ -1,39 +1,28 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../../definitions/content/Config";
-import {
-  SubscriptionState,
-  SubscriptionStateEnum
-} from "../../../../../../definitions/trial_system/SubscriptionState";
-import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { BackendStatusState } from "../../../../../store/reducers/backendStatus";
+import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
-import { itwTrialId } from "../../../../../config";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
-  itwTrialStatus?: SubscriptionState;
   isItwEnabled?: boolean;
   isItwTestEnabled?: boolean;
   itwLifecycle?: ItwLifecycleState;
+  remotelyDisabledCredentials?: Array<string>;
 };
-
-jest.mock("../../../../../config", () => ({
-  itwEnabled: true
-}));
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
@@ -48,12 +37,16 @@ describe("WalletCardOnboardingScreen", () => {
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
     ).toBeTruthy();
     expect(
+      queryByTestId(
+        `${CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}ModuleTestID`
+      )
+    ).toBeTruthy();
+    expect(
       queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
     ).toBeTruthy();
   });
 
   test.each([
-    { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
@@ -64,13 +57,29 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
+
+  test.each([
+    { remotelyDisabledCredentials: ["MDL"] },
+    { remotelyDisabledCredentials: ["MDL", "EuropeanHealthInsuranceCard"] }
+  ] as ReadonlyArray<RenderOptions>)(
+    "it should hide credential modules when $remotelyDisabledCredentials are remotely disabled",
+    options => {
+      const { queryByTestId } = renderComponent(options);
+      for (const type of options.remotelyDisabledCredentials!) {
+        // Currently ModuleCredential does not attach the testID if onPress is undefined.
+        // Since disabled credentials have undefined onPress, we can test for null.
+        expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
+      }
+      expect(queryByTestId("EuropeanDisabilityCardModuleTestID")).toBeTruthy();
+    }
+  );
 });
 
 const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
-  itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
+  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID,
+  remotelyDisabledCredentials
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -86,49 +95,46 @@ const renderComponent = ({
           })
         }
       },
-      trialSystem: {
-        [itwTrialId as TrialId]: itwTrialStatus
-          ? pot.some(itwTrialStatus)
-          : pot.none
-      },
       persistedPreferences: {
         isIdPayTestEnabled: isIdPayEnabled
       },
-      backendStatus: {
-        status: O.some({
-          config: {
-            itw: {
-              enabled: isItwEnabled,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            idPay: isIdPayEnabled && {
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            assistanceTool: { tool: ToolEnum.none },
-            cgn: { enabled: true },
-            newPaymentSection: {
-              enabled: false,
-              min_app_version: {
-                android: "0.0.0.0",
-                ios: "0.0.0.0"
-              }
-            },
-            fims: { enabled: true }
-          } as Config
-        } as BackendStatus)
-      } as BackendStatusState
+      remoteConfig: O.some({
+        itw: {
+          enabled: isItwEnabled,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          },
+          disabled_credentials: remotelyDisabledCredentials
+        },
+        idPay: isIdPayEnabled && {
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        },
+        assistanceTool: { tool: ToolEnum.none },
+        cgn: { enabled: true },
+        newPaymentSection: {
+          enabled: false,
+          min_app_version: {
+            android: "0.0.0.0",
+            ios: "0.0.0.0"
+          }
+        },
+        fims: { enabled: true }
+      } as Config) as RemoteConfigState
     } as GlobalState)
   );
+  const logic = itwCredentialIssuanceMachine.provide({
+    actions: {
+      onInit: jest.fn()
+    }
+  });
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwCredentialIssuanceMachineContext.Provider>
+      <ItwCredentialIssuanceMachineContext.Provider logic={logic}>
         <WalletCardOnboardingScreen />
       </ItwCredentialIssuanceMachineContext.Provider>
     ),

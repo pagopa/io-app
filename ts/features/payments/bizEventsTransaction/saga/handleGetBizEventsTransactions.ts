@@ -12,7 +12,7 @@ import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSession
 const DEFAULT_TRANSACTION_LIST_SIZE = 10;
 
 export function* handleGetBizEventsTransactions(
-  getTransactionList: TransactionClient["getTransactionList"],
+  getTransactionList: TransactionClient["getPaidNotices"],
   action: ActionType<(typeof getPaymentsBizEventsTransactionsAction)["request"]>
 ) {
   try {
@@ -21,7 +21,9 @@ export function* handleGetBizEventsTransactions(
       action,
       {
         size: action.payload.size || DEFAULT_TRANSACTION_LIST_SIZE,
-        "x-continuation-token": action.payload.continuationToken
+        "x-continuation-token": action.payload.continuationToken,
+        is_debtor: action.payload.noticeCategory === "debtor" || undefined,
+        is_payer: action.payload.noticeCategory === "payer" || undefined
       },
       "Authorization"
     );
@@ -46,7 +48,7 @@ export function* handleGetBizEventsTransactions(
       action.payload.onSuccess?.(continuationToken);
       yield* put(
         getPaymentsBizEventsTransactionsAction.success({
-          data: getTransactionListResult.right.value,
+          data: getTransactionListResult.right.value.notices,
           appendElements: action.payload.firstLoad
         })
       );

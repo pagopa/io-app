@@ -49,7 +49,11 @@ export type StoredStatusAttestation =
       statusAttestation: string;
       parsedStatusAttestation: ParsedStatusAttestation;
     }
-  | { credentialStatus: "invalid" | "unknown" };
+  | {
+      credentialStatus: "invalid" | "unknown";
+      // Error code that might contain more details on the invalid status, provided by the issuer
+      errorCode?: string;
+    };
 
 /**
  * Type for a stored credential.
@@ -62,4 +66,22 @@ export type StoredCredential = {
   credentialType: string;
   issuerConf: IssuerConfiguration;
   storedStatusAttestation?: StoredStatusAttestation;
+  /**
+   * The SD-JWT issuance and expiration dates in ISO format.
+   * These might be different from the underlying document's dates.
+   */
+  jwt: {
+    expiration: string;
+    issuedAt?: string;
+  };
 };
+
+// Digital credential status
+export type ItwJwtCredentialStatus = "valid" | "jwtExpired" | "jwtExpiring";
+// Combined status of a credential, that includes both the physical and the digital version
+export type ItwCredentialStatus =
+  | "valid"
+  | "invalid"
+  | "expiring"
+  | "expired"
+  | ItwJwtCredentialStatus;

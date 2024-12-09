@@ -1,16 +1,11 @@
-import {
-  IOFontWeight,
-  useTypographyFactory
-} from "@pagopa/io-app-design-system";
+import { IOFontWeight, IOText } from "@pagopa/io-app-design-system";
 import React from "react";
-import { useWindowDimensions } from "react-native";
-
-const defaultFontSize = 11;
-const defaultFontWeight: IOFontWeight = "Semibold";
+import { TextStyle, useWindowDimensions } from "react-native";
 
 export type ClaimLabelProps = {
   fontSize?: number;
   fontWeight?: IOFontWeight;
+  textTransform?: TextStyle["textTransform"];
 };
 
 /**
@@ -19,8 +14,9 @@ export type ClaimLabelProps = {
 export const ClaimLabel: React.FunctionComponent<
   React.PropsWithChildren<ClaimLabelProps>
 > = ({
-  fontSize = defaultFontSize,
-  fontWeight = defaultFontWeight,
+  fontSize = 11,
+  fontWeight = "Semibold",
+  textTransform = "none",
   ...props
 }) => {
   const { width } = useWindowDimensions();
@@ -30,13 +26,21 @@ export const ClaimLabel: React.FunctionComponent<
   // and then we scale it to the current screen width
   const fontScale = width / 360;
 
-  return useTypographyFactory({
-    ...props,
-    defaultWeight: fontWeight,
-    defaultColor: "black",
-    font: "TitilliumSansPro",
-    fontStyle: { fontSize: fontSize * fontScale },
-    lineBreakMode: "head",
-    numberOfLines: 1
-  });
+  return (
+    <IOText
+      {...props}
+      allowFontScaling={false}
+      font="TitilliumSansPro"
+      color="black"
+      lineBreakMode="head"
+      numberOfLines={1}
+      style={{ textTransform }}
+      size={fontSize * fontScale}
+      // This text should not be read by the voiceover.
+      // If you want to make it accessible use the parent components
+      accessible={false}
+    >
+      {props.children}
+    </IOText>
+  );
 };

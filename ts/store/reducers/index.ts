@@ -31,7 +31,7 @@ import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
 import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
-import { notificationsReducer } from "../../features/pushNotifications/store/reducers";
+import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
 import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
@@ -41,8 +41,6 @@ import authenticationReducer, {
   AuthenticationState,
   INITIAL_STATE as authenticationInitialState
 } from "./authentication";
-import backendStatusReducer from "./backendStatus";
-import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
 import contentReducer, {
   initialContentState as contentInitialContentState
@@ -62,7 +60,6 @@ import identificationReducer, {
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
 import onboardingReducer from "./onboarding";
-import paymentsReducer from "./payments";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
@@ -72,8 +69,10 @@ import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
-import walletReducer from "./wallet";
-import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
+import remoteConfigReducer from "./backendStatus/remoteConfig";
+import statusMessagesReducer from "./backendStatus/statusMessages";
+import sectionStatusReducer from "./backendStatus/sectionStatus";
+import { backendInfoReducer } from "./backendStatus/backendInfo";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -126,10 +125,11 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   appState: appStateReducer,
   navigation: navigationReducer,
-  backoffError: backoffErrorReducer,
-  wallet: walletReducer,
   versionInfo: versionInfoReducer,
-  backendStatus: backendStatusReducer,
+  remoteConfig: remoteConfigReducer,
+  statusMessages: statusMessagesReducer,
+  sectionStatus: sectionStatusReducer,
+  backendInfo: backendInfoReducer,
   preferences: preferencesReducer,
   search: searchReducer,
   cie: cieReducer,
@@ -154,7 +154,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   ),
   features: featuresPersistor,
   onboarding: onboardingReducer,
-  notifications: notificationsReducer,
+  notifications: persistedNotificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
   entities: persistReducer<EntitiesState, Action>(
@@ -164,7 +164,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   debug: debugPersistor,
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
-  payments: paymentsReducer,
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
@@ -203,7 +202,10 @@ export function createRootReducer(
               _persist: state.authentication._persist
             },
             // backend status must be kept
-            backendStatus: state.backendStatus,
+            backendInfo: state.backendInfo,
+            remoteConfig: state.remoteConfig,
+            statusMessages: state.statusMessages,
+            sectionStatus: state.sectionStatus,
             // keep servicesMetadata from content section
             content: {
               ...contentInitialContentState,
@@ -243,6 +245,9 @@ export function createRootReducer(
                   ...cieLoginInitialState,
                   isCieIDFeatureEnabled:
                     state.features.loginFeatures.cieLogin.isCieIDFeatureEnabled,
+                  isCieIDTourGuideEnabled:
+                    state.features.loginFeatures.cieLogin
+                      .isCieIDTourGuideEnabled,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 }
               },
@@ -272,11 +277,8 @@ export function createRootReducer(
             },
             // notifications must be kept
             notifications: {
-              ...state.notifications
-            },
-            // payments must be kept
-            payments: {
-              ...state.payments
+              ...state.notifications,
+              _persist: state.notifications._persist
             },
             // isMixpanelEnabled must be kept
             // isFingerprintEnabled must be kept only if true
@@ -287,12 +289,6 @@ export function createRootReducer(
                 .isFingerprintEnabled
                 ? true
                 : undefined
-            },
-            wallet: {
-              wallets: {
-                ...walletsInitialState,
-                _persist: state.wallet.wallets._persist
-              }
             },
             lollipop: {
               ...initialLollipopState,

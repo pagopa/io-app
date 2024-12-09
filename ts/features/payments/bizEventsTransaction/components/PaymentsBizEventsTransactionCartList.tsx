@@ -9,6 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { formatAmountText } from "../utils";
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 
 type Props = {
   carts?: ReadonlyArray<CartItem>;
@@ -38,11 +39,12 @@ export const PaymentsBizEventsTransactionCartList = ({
           key={cartItem.refNumberValue ?? index.toString()}
           title={cartItem.subject ?? ""}
           subtitle={cartItem.payee?.name ?? ""}
-          transactionStatus="success"
-          transactionAmount={
-            cartItem.amount ? formatAmountText(cartItem.amount) : ""
-          }
-          hasChevronRight
+          transaction={{
+            amount: formatAmountText(cartItem.amount),
+            amountAccessibilityLabel:
+              getAccessibleAmountText(formatAmountText(cartItem.amount)) ?? ""
+          }}
+          showChevron
           onPress={() => onPress(cartItem)}
         />
       ))}
@@ -51,7 +53,10 @@ export const PaymentsBizEventsTransactionCartList = ({
 };
 
 const SkeletonTransactionDetailsList = () => (
-  <View style={[IOStyles.flex, IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+  <View
+    style={[IOStyles.flex, IOStyles.rowSpaceBetween, IOStyles.alignCenter]}
+    testID="skeleton-transaction-details-list"
+  >
     <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
       <Placeholder.Box height={16} width="90%" radius={4} />
       <VSpacer size={8} />

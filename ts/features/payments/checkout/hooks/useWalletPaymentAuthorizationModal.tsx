@@ -10,9 +10,13 @@ import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 import { storePaymentOutcomeToHistory } from "../../history/store/actions";
 import {
   WalletPaymentAuthorizePayload,
+  paymentsDeleteTransactionAction,
   paymentsStartPaymentAuthorizationAction
 } from "../store/actions/networking";
-import { walletPaymentAuthorizationUrlSelector } from "../store/selectors/transaction";
+import {
+  walletPaymentAuthorizationUrlSelector,
+  walletPaymentTransactionSelector
+} from "../store/selectors/transaction";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
@@ -37,6 +41,7 @@ export const useWalletPaymentAuthorizationModal = ({
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
   );
+  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
 
   const [isPendingAuthorization, setIsPendingAuthorization] =
     React.useState<boolean>(false);
@@ -84,8 +89,15 @@ export const useWalletPaymentAuthorizationModal = ({
           },
           () => {
             handleAuthorizationOutcome(
-              WalletPaymentOutcomeEnum.CANCELED_BY_USER
+              WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER
             );
+            if (pot.isSome(transactionPot)) {
+              dispatch(
+                paymentsDeleteTransactionAction.request(
+                  transactionPot.value.transactionId
+                )
+              );
+            }
           }
         )
       ),
@@ -96,6 +108,7 @@ export const useWalletPaymentAuthorizationModal = ({
     isLoading,
     isPendingAuthorization,
     authorizationUrlPot,
+    transactionPot,
     handleAuthorizationResult,
     handleAuthorizationOutcome,
     dispatch

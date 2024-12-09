@@ -5,10 +5,15 @@ import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import _ from "lodash";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
 import {
   CheckoutPaymentMethodsList,
   CheckoutPaymentMethodsListSkeleton
@@ -18,7 +23,8 @@ import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
-  paymentsGetPaymentMethodsAction
+  paymentsGetPaymentMethodsAction,
+  paymentsGetRecentPaymentMethodUsedAction
 } from "../store/actions/networking";
 import {
   walletPaymentAmountSelector,
@@ -35,13 +41,7 @@ import {
   walletPaymentIsTransactionActivatedSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors/transaction";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
-import * as analytics from "../analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { PaymentAnalyticsSelectedMethodFlag } from "../../common/types/PaymentAnalytics";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { FaultCodeCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -71,9 +71,17 @@ const WalletPaymentPickMethodScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(paymentsGetPaymentMethodsAction.request());
-    }, [dispatch])
+      dispatch(
+        paymentsGetPaymentMethodsAction.request({
+          amount: pot.toUndefined(pot.map(paymentDetailsPot, el => el.amount))
+        })
+      );
+    }, [dispatch, paymentDetailsPot])
   );
+
+  useOnFirstRender(() => {
+    dispatch(paymentsGetRecentPaymentMethodUsedAction.request());
+  });
 
   const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
     pipe(
@@ -150,11 +158,32 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
+  const getFirstPotError = React.useCallback(() => {
+    if (pot.isError(transactionPot)) {
+      return transactionPot.error;
+    }
+    if (pot.isError(pspListPot)) {
+      return pspListPot.error;
+    }
+    if (pot.isError(paymentMethodsPot)) {
+      return paymentMethodsPot.error;
+    }
+    if (pot.isError(userWalletsPots)) {
+      return userWalletsPots.error;
+    }
+    return {
+      faultCodeCategory: FaultCodeCategoryEnum.GENERIC_ERROR,
+      faultCodeDetail: "GENERIC_ERROR"
+    };
+  }, [transactionPot, pspListPot, paymentMethodsPot, userWalletsPots]);
+
   useOnFirstRender(
     () => {
       analytics.trackPaymentMethodSelection({
         attempt: paymentAnalyticsData?.attempt,
         organization_name: paymentAnalyticsData?.verifiedData?.paName,
+        organization_fiscal_code:
+          paymentAnalyticsData?.verifiedData?.paFiscalCode,
         service_name: paymentAnalyticsData?.serviceName,
         amount: paymentAnalyticsData?.formattedAmount,
         saved_payment_method:
@@ -169,22 +198,16 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   React.useEffect(() => {
-    if (isError && !pot.isError(transactionPot)) {
-      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
-        params: {
-          outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
-        }
-      });
-    } else if (isError && pot.isError(transactionPot)) {
+    if (isError) {
+      const error = getFirstPotError();
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
         params: {
-          error: transactionPot.error
+          error
         }
       });
     }
-  }, [isError, navigation, transactionPot]);
+  }, [isError, navigation, getFirstPotError]);
 
   const canContinue = O.isSome(selectedPaymentMethodIdOption);
 
@@ -205,6 +228,8 @@ const WalletPaymentPickMethodScreen = () => {
     analytics.trackPaymentMethodSelected({
       attempt: paymentAnalyticsData?.attempt,
       organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       service_name: paymentAnalyticsData?.serviceName,
       amount: paymentAnalyticsData?.formattedAmount,
       expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,

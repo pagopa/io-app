@@ -13,14 +13,16 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { openAppSettings } from "../../../utils/appSettings";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { checkNotificationPermissions } from "../utils";
+import {
+  checkNotificationPermissions,
+  openSystemNotificationSettingsScreen
+} from "../utils";
 import {
   pushNotificationPreviewEnabledSelector,
   pushNotificationRemindersEnabledSelector
 } from "../../../store/reducers/profile";
-import { notificationsInfoScreenConsent } from "../store/actions/notifications";
+import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
 import {
   trackNotificationsOptInOpenSettings,
   trackNotificationsOptInReminderOnPermissionsOff,
@@ -161,7 +163,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
 
   const openSettings = useCallback(() => {
     trackNotificationsOptInOpenSettings();
-    openAppSettings();
+    openSystemNotificationSettingsScreen();
   }, []);
 
   const ListHeader = (
@@ -203,7 +205,8 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
             type: "Solid",
             buttonProps: {
               label: I18n.t("onboarding.infoConsent.openSettings"),
-              onPress: openSettings
+              onPress: openSettings,
+              testID: "settings-btn"
             }
           }}
           type="SingleButton"

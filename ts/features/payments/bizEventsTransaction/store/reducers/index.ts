@@ -1,29 +1,45 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable complexity */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 
+import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import {
+  getPaymentsBizEventsReceiptAction,
   getPaymentsBizEventsTransactionDetailsAction,
-  getPaymentsLatestBizEventsTransactionsAction,
   getPaymentsBizEventsTransactionsAction,
-  getPaymentsBizEventsReceiptAction
+  getPaymentsLatestBizEventsTransactionsAction,
+  hidePaymentsBizEventsReceiptAction,
+  PaymentsTransactionReceiptInfoPayload
 } from "../actions";
-import { TransactionListItem } from "../../../../../../definitions/pagopa/biz-events/TransactionListItem";
-import { TransactionDetailResponse } from "../../../../../../definitions/pagopa/biz-events/TransactionDetailResponse";
+import {
+  filterTransactionsByIdAndGetIndex,
+  getTransactionByIndex,
+  restoreTransactionAtIndex
+} from "../../utils";
+
+type CancelTransactionRecord = NoticeListItem & {
+  index: number;
+  cancelType: "transactions" | "latestTransactions";
+};
 
 export type PaymentsBizEventsTransactionState = {
-  transactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
-  latestTransactions: pot.Pot<ReadonlyArray<TransactionListItem>, NetworkError>;
-  details: pot.Pot<TransactionDetailResponse, NetworkError>;
-  receiptDocument: pot.Pot<string, NetworkError>;
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  details: pot.Pot<NoticeDetailResponse, NetworkError>;
+  receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
+  cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
 };
 
 const INITIAL_STATE: PaymentsBizEventsTransactionState = {
   transactions: pot.noneLoading,
-  latestTransactions: pot.noneLoading,
+  latestTransactions: pot.none,
   details: pot.noneLoading,
-  receiptDocument: pot.none
+  receiptDocument: pot.none,
+  cancelTransactionRecord: pot.none
 };
 
 const reducer = (
@@ -40,7 +56,7 @@ const reducer = (
     case getType(getPaymentsLatestBizEventsTransactionsAction.success):
       return {
         ...state,
-        latestTransactions: pot.some(action.payload.transactions || [])
+        latestTransactions: pot.some(action.payload || [])
       };
     case getType(getPaymentsLatestBizEventsTransactionsAction.failure):
       return {
@@ -57,13 +73,16 @@ const reducer = (
       };
     // GET TRANSACTIONS LIST
     case getType(getPaymentsBizEventsTransactionsAction.request):
+      const transactions = action.payload.firstLoad
+        ? pot.noneLoading
+        : pot.toLoading(state.transactions);
       return {
         ...state,
-        transactions: pot.toLoading(state.transactions)
+        transactions
       };
     case getType(getPaymentsBizEventsTransactionsAction.success):
       const previousTransactions = pot.getOrElse(state.transactions, []);
-      const maybeTransactions = action.payload.data.transactions || [];
+      const maybeTransactions = action.payload.data || [];
       return {
         ...state,
         transactions: !action.payload.appendElements
@@ -122,6 +141,63 @@ const reducer = (
         ...state,
         receiptDocument: pot.none
       };
+    case getType(hidePaymentsBizEventsReceiptAction.request): {
+      const { filteredTransactions, removedIndex: transactionIndex } =
+        filterTransactionsByIdAndGetIndex(
+          state.transactions,
+          action.payload.transactionId
+        );
+
+      const {
+        filteredTransactions: filteredLatestTransactions,
+        removedIndex: latestTransactionIndex
+      } = filterTransactionsByIdAndGetIndex(
+        state.latestTransactions,
+        action.payload.transactionId
+      );
+
+      return {
+        ...state,
+        cancelTransactionRecord: pot.some({
+          ...(transactionIndex > -1
+            ? getTransactionByIndex(state.transactions, transactionIndex)
+            : getTransactionByIndex(
+                state.latestTransactions,
+                latestTransactionIndex
+              )),
+          index:
+            transactionIndex > -1 ? transactionIndex : latestTransactionIndex,
+          cancelType:
+            transactionIndex > -1 ? "transactions" : "latestTransactions"
+        }),
+        transactions: pot.some(filteredTransactions),
+        latestTransactions: pot.some(filteredLatestTransactions)
+      };
+    }
+    case getType(hidePaymentsBizEventsReceiptAction.failure): {
+      const restoreValue = pot.getOrElse(state.cancelTransactionRecord, null);
+      if (!restoreValue) {
+        return state;
+      }
+
+      const { cancelType, index, ...restoreItem } = restoreValue;
+
+      return {
+        ...state,
+        transactions:
+          cancelType !== "latestTransactions"
+            ? restoreTransactionAtIndex(state.transactions, restoreItem, index)
+            : state.transactions,
+        latestTransactions:
+          cancelType === "latestTransactions"
+            ? restoreTransactionAtIndex(
+                state.latestTransactions,
+                restoreItem,
+                index
+              )
+            : state.latestTransactions
+      };
+    }
   }
   return state;
 };

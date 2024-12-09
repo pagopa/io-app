@@ -204,6 +204,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -431,34 +432,22 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -683,6 +672,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -910,34 +900,22 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -1162,6 +1140,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1505,6 +1484,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1848,6 +1828,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2075,34 +2056,22 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -2327,6 +2296,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2554,34 +2524,22 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                             >
                               <Text
                                 allowFontScaling={false}
-                                color="grey-700"
-                                defaultColor="black"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="headline"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 18,
-                                    "lineHeight": 25,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 role="heading"
                                 style={
                                   [
-                                    {
-                                      "fontSize": 18,
-                                      "lineHeight": 25,
-                                    },
+                                    {},
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 18,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 Attachments
                               </Text>
@@ -2806,6 +2764,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3149,6 +3108,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -3492,6 +3452,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

@@ -4,11 +4,11 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { WalletCard } from "../../../newWallet/types";
+import { WalletCard } from "../../../wallet/types";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 
 const mapCredentialsToWalletCards = (
   credentials: Array<StoredCredential>
@@ -34,10 +34,7 @@ export function* handleWalletCredentialsRehydration() {
     return;
   }
 
-  const allItwCredentials = [
-    eid.value,
-    ...pipe(credentials, A.filterMap(identity))
-  ];
+  const allItwCredentials = pipe(credentials, A.filterMap(identity));
 
   yield* put(walletAddCards(mapCredentialsToWalletCards(allItwCredentials)));
 }

@@ -1,7 +1,7 @@
 import {
   IOLogoPaymentType,
   IOPaymentLogos,
-  ListItemTransactionStatusWithBadge
+  ListItemTransactionBadge
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -15,12 +15,12 @@ import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { PaymentCardProps } from "../components/PaymentCard";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { WalletCard } from "../../../newWallet/types";
+import { WalletCard } from "../../../wallet/types";
 import { contentRepoUrl } from "../../../../config";
-import { TransactionListItem } from "../../../../../definitions/pagopa/biz-events/TransactionListItem";
 import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
-import { AlertVariant } from "./types";
+import { AlertVariant, ListItemTransactionStatus } from "./types";
 
 export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
@@ -29,20 +29,36 @@ export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
  * based on the transaction status.
  */
 
-export const getBadgeTextByTransactionStatus = (
-  transactionStatus: ListItemTransactionStatusWithBadge
-) => {
+export const getBadgePropsByTransactionStatus = (
+  transactionStatus: ListItemTransactionStatus
+): ListItemTransactionBadge => {
   switch (transactionStatus) {
     case "failure":
-      return I18n.t("global.badges.failed");
+      return {
+        text: I18n.t("global.badges.failed"),
+        variant: "error"
+      };
     case "cancelled":
-      return I18n.t("global.badges.cancelled");
+      return {
+        text: I18n.t("global.badges.cancelled"),
+        variant: "error"
+      };
     case "reversal":
-      return I18n.t("global.badges.reversal");
+      return {
+        text: I18n.t("global.badges.reversal"),
+        variant: "lightBlue"
+      };
     case "pending":
-      return I18n.t("global.badges.onGoing");
+      return {
+        text: I18n.t("global.badges.onGoing"),
+        variant: "info"
+      };
+    case "refunded":
     default:
-      return "";
+      return {
+        text: "",
+        variant: "default"
+      };
   }
 };
 
@@ -127,10 +143,18 @@ export const getSortedPspList = (
     case "name":
       return _.orderBy(pspList, psp => psp.pspBusinessName);
     case "amount":
-      return _.orderBy(pspList, psp => psp.taxPayerFee);
+      return _.orderBy(
+        pspList,
+        ["taxPayerFee", "pspBusinessName"],
+        ["asc", "asc"]
+      );
     case "default":
     default:
-      return _.orderBy(pspList, ["onUs", "taxPayerFee"], ["desc", "asc"]);
+      return _.orderBy(
+        pspList,
+        ["onUs", "taxPayerFee", "pspBusinessName"],
+        ["desc", "asc", "asc"]
+      );
   }
 };
 
@@ -162,13 +186,14 @@ export const getPaymentLogoFromWalletDetails = (
       details.brand,
       O.fromNullable,
       O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       O.map(([logoName, _]) => logoName as IOLogoPaymentType),
       O.toUndefined
     );
   }
 };
 
-export const getTransactionLogo = (transaction: TransactionListItem) =>
+export const getTransactionLogo = (transaction: NoticeListItem) =>
   pipe(
     transaction.payeeTaxCode,
     O.fromNullable,

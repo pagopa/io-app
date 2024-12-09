@@ -63,6 +63,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -221,15 +222,12 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                         >
                           <View
                             style={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flex": 1,
-                                  "height": 100,
-                                  "justifyContent": "center",
-                                },
-                                undefined,
-                              ]
+                              {
+                                "alignItems": "center",
+                                "flex": 1,
+                                "height": 100,
+                                "justifyContent": "center",
+                              }
                             }
                           >
                             <View
@@ -421,36 +419,24 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               <Text
                                 accessible={true}
                                 allowFontScaling={false}
-                                color="bluegreyDark"
-                                defaultColor="bluegreyDark"
-                                defaultWeight="Semibold"
                                 dynamicTypeRamp="title2"
-                                font="TitilliumSansPro"
-                                fontStyle={
-                                  {
-                                    "fontSize": 22,
-                                    "lineHeight": 33,
-                                  }
-                                }
                                 maxFontSizeMultiplier={1.25}
                                 style={
                                   [
+                                    {},
                                     {
-                                      "textAlign": "center",
-                                    },
-                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
                                       "lineHeight": 33,
                                     },
                                     {
-                                      "color": "#17324D",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
+                                      "textAlign": "center",
                                     },
                                   ]
                                 }
-                                weight="Semibold"
                               >
                                 Loading document...
                               </Text>
@@ -614,36 +600,26 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={false}
-                                      color="white"
-                                      defaultColor="white"
-                                      defaultWeight="Bold"
                                       ellipsizeMode="tail"
-                                      font="TitilliumSansPro"
-                                      fontStyle={
-                                        {
-                                          "fontSize": 16,
-                                        }
-                                      }
                                       importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={1}
                                       style={
                                         [
-                                          {
-                                            "alignSelf": "center",
-                                          },
-                                          {
-                                            "fontSize": 16,
-                                          },
+                                          {},
                                           {
                                             "color": "#FFFFFF",
                                             "fontFamily": "Titillium Sans Pro",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
+                                            "lineHeight": 20,
+                                          },
+                                          {
+                                            "alignSelf": "center",
                                           },
                                         ]
                                       }
-                                      weight="Bold"
                                     >
                                       Save or share
                                     </Text>
@@ -673,7 +649,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -843,24 +819,29 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />
@@ -1092,6 +1073,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1449,36 +1431,24 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             </View>
                             <Text
                               allowFontScaling={false}
-                              color="bluegreyDark"
-                              defaultColor="bluegreyDark"
-                              defaultWeight="Semibold"
                               dynamicTypeRamp="title2"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 22,
-                                  "lineHeight": 33,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
                                     "lineHeight": 33,
                                   },
                                   {
-                                    "color": "#17324D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Semibold"
                             >
                               There is a temporary problem, please try again.
                             </Text>
@@ -1491,36 +1461,24 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             />
                             <Text
                               allowFontScaling={false}
-                              color="bluegrey"
-                              defaultColor="bluegrey"
-                              defaultWeight="Regular"
                               dynamicTypeRamp="body"
-                              font="TitilliumSansPro"
-                              fontStyle={
-                                {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
                               maxFontSizeMultiplier={1.25}
                               style={
                                 [
+                                  {},
                                   {
-                                    "textAlign": "center",
-                                  },
-                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
                                     "lineHeight": 24,
                                   },
                                   {
-                                    "color": "#475A6D",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
+                                    "textAlign": "center",
                                   },
                                 ]
                               }
-                              weight="Regular"
                             >
                               If the problem is not resolved, report it with the '?' icon at the top right, thank you!
                             </Text>
@@ -1546,7 +1504,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             [
                               {
                                 "borderBottomWidth": 1,
-                                "borderColor": "rgba(232,235,241,0)",
+                                "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
                               {
@@ -1716,24 +1674,29 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             >
                               <Text
                                 accessible={false}
+                                allowFontScaling={false}
+                                maxFontSizeMultiplier={1.25}
                                 numberOfLines={1}
                                 style={
                                   [
-                                    {
-                                      "fontSize": 14,
-                                      "textAlign": "center",
-                                    },
+                                    {},
                                     {
                                       "color": "#0E0F13",
-                                    },
-                                    {
                                       "fontFamily": "Titillium Sans Pro",
+                                      "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
+                                      "lineHeight": undefined,
                                     },
-                                    {
-                                      "opacity": 1,
-                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ],
                                   ]
                                 }
                               />

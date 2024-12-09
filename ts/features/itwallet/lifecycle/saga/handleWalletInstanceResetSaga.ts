@@ -5,10 +5,12 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
-import { walletRemoveCardsByType } from "../../../newWallet/store/actions/cards";
+import { walletRemoveCardsByType } from "../../../wallet/store/actions/cards";
 import { isIos } from "../../../../utils/platform";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { updatePropertiesWalletRevoked } from "../../analytics";
+import { GlobalState } from "../../../../store/reducers/types";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(
@@ -17,6 +19,7 @@ const getKeyTag = (credential: O.Option<StoredCredential>) =>
   );
 
 export function* handleWalletInstanceResetSaga() {
+  const state: GlobalState = yield* select();
   const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
   const { eid, credentials } = yield* select(itwCredentialsSelector);
 
@@ -34,4 +37,6 @@ export function* handleWalletInstanceResetSaga() {
     RA.filterMap(identity)
   );
   yield* all(itwKeyTags.map(deleteKey));
+  // Update every mixpanel property related to the wallet instance and its credentials.
+  void updatePropertiesWalletRevoked(state);
 }

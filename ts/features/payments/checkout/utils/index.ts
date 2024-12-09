@@ -1,21 +1,17 @@
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
-import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { WalletClientStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletClientStatus";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import { WalletPaymentStepEnum } from "../types";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { format } from "../../../../utils/dates";
 import {
   PaymentAnalyticsPhase,
   PaymentAnalyticsSelectedPspFlag
 } from "../../common/types/PaymentAnalytics";
+import { WalletPaymentStepEnum } from "../types";
 
-export const WALLET_PAYMENT_FEEDBACK_URL =
-  "https://io.italia.it/diccilatua/ces-pagamento";
+export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
+  "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
 
 export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
   [
@@ -25,24 +21,6 @@ export const isValidPaymentMethod = (method: PaymentMethodResponse) =>
     PaymentMethodManagementTypeEnum.REDIRECT
   ].includes(method.methodManagement) &&
   method.status === PaymentMethodStatusEnum.ENABLED;
-
-export const getLatestUsedWallet = (
-  wallets: ReadonlyArray<WalletInfo>
-): O.Option<WalletInfo> =>
-  pipe(
-    wallets,
-    RA.filter(
-      wallet => wallet.clients.IO.status === WalletClientStatusEnum.ENABLED
-    ),
-    RA.reduce<WalletInfo, WalletInfo | undefined>(undefined, (acc, curr) =>
-      acc?.clients.IO?.lastUsage &&
-      curr.clients.IO?.lastUsage &&
-      acc.clients.IO.lastUsage > curr.clients.IO.lastUsage
-        ? acc
-        : curr
-    ),
-    O.fromNullable
-  );
 
 export const WalletPaymentStepScreenNames = {
   [WalletPaymentStepEnum.PICK_PAYMENT_METHOD]: "PICK_PAYMENT_METHOD",
@@ -72,13 +50,13 @@ export const getPaymentPhaseFromStep = (
 ): PaymentAnalyticsPhase => {
   switch (step) {
     case WalletPaymentStepEnum.PICK_PAYMENT_METHOD:
-      return "verifica";
+      return "attiva";
     case WalletPaymentStepEnum.PICK_PSP:
       return "attiva";
     case WalletPaymentStepEnum.CONFIRM_TRANSACTION:
       return "pagamento";
     default:
-      return "pagamento";
+      return "verifica";
   }
 };
 
@@ -87,4 +65,16 @@ export const trimAndLimitValue = (value: string, maxLength: number): string => {
   return trimmedValue.length > maxLength
     ? trimmedValue.substring(0, maxLength)
     : trimmedValue;
+};
+
+const YEARS_TO_EXPIRE = 10;
+
+export const isDueDateValid = (date: string): string | undefined => {
+  const formattedDate = format(date, "DD/MM/YYYY");
+  if (formattedDate === "Invalid Date") {
+    return undefined;
+  }
+  const tenYearsFromNow = new Date();
+  tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + YEARS_TO_EXPIRE);
+  return new Date(date) > tenYearsFromNow ? undefined : formattedDate;
 };

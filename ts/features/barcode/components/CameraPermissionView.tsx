@@ -5,10 +5,10 @@ import {
   ButtonSolidProps,
   VSpacer,
   Pictogram,
-  IOPictograms
+  IOPictograms,
+  H6,
+  BodySmall
 } from "@pagopa/io-app-design-system";
-import { H3 } from "../../../components/core/typography/H3";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 
 type Props = {
   title: string;
@@ -21,13 +21,13 @@ const CameraPermissionView = (props: Props) => (
   <View style={styles.container}>
     <Pictogram name={props.pictogram} pictogramStyle="light-content" />
     <VSpacer size={24} />
-    <H3 color="white" style={styles.text}>
+    <H6 color="white" style={styles.text}>
       {props.title}
-    </H3>
+    </H6>
     <VSpacer size={8} />
-    <LabelSmall weight="Regular" color="white" style={styles.text}>
+    <BodySmall weight="Regular" color="white" style={styles.text}>
       {props.body}
-    </LabelSmall>
+    </BodySmall>
     <VSpacer size={32} />
     <ButtonSolid
       label={props.action.label}

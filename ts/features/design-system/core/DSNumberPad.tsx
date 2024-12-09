@@ -7,11 +7,11 @@ import {
   NumberPad,
   VSpacer,
   hexToRgba,
-  LabelSmallAlt,
+  BodySmall,
   IOVisualCostants,
-  LabelLink,
   Pictogram,
-  Body
+  Body,
+  ButtonLink
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, View } from "react-native";
@@ -96,9 +96,12 @@ export const DSNumberPad = () => {
             bottom: -32
           }}
         >
-          <LabelSmallAlt color={darkBackground ? "white" : "black"}>
+          <BodySmall
+            weight="Semibold"
+            color={darkBackground ? "white" : "black"}
+          >
             {value}
-          </LabelSmallAlt>
+          </BodySmall>
         </View>
         <CodeInput
           value={value}
@@ -120,14 +123,12 @@ export const DSNumberPad = () => {
           onBiometricPress={() => Alert.alert("biometric")}
         />
         <VSpacer size={32} />
-        <View style={{ alignItems: "center" }}>
-          <LabelLink
-            color={darkBackground ? "white" : "grey-700"}
+        <View style={{ alignSelf: "center" }}>
+          <ButtonLink
+            color={darkBackground ? "contrast" : "primary"}
             onPress={() => Alert.alert("Forgot unlock code")}
-            accessibilityLabel=""
-          >
-            Hai dimenticato il codice di sblocco?
-          </LabelLink>
+            label="Hai dimenticato il codice di sblocco?"
+          />
         </View>
       </View>
     </View>
