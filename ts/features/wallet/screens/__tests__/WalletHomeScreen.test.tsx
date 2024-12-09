@@ -11,6 +11,7 @@ import { WalletHomeScreen } from "../WalletHomeScreen";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
+  useScrollViewOffset: jest.fn,
   Layout: {
     duration: jest.fn()
   }

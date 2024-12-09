@@ -1,11 +1,28 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import * as React from "react";
+import { useCallback, useEffect, useLayoutEffect } from "react";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../components/ui/IOScrollView";
+import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
+import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
+import * as analytics from "../analytics";
+import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
 import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
@@ -15,17 +32,9 @@ import {
   isPaymentsSectionLoadingFirstTimeSelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
-import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
-import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
-import {
-  IOScrollView,
-  IOScrollViewActions
-} from "../../../../components/ui/IOScrollView";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
-import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
+import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
+import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
+import { useHeaderFirstLevelActionPropSettings } from "../../../../hooks/useHeaderFirstLevelActionPropSettings";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -33,6 +42,7 @@ const PaymentsHomeScreen = () => {
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+
   const isLoadingFirstTime = useIOSelector(
     isPaymentsSectionLoadingFirstTimeSelector
   );
@@ -62,7 +72,40 @@ const PaymentsHomeScreen = () => {
     });
   };
 
-  React.useEffect(() => {
+  /* CODE RELATED TO THE HEADER -- START */
+
+  const currentRoute = ROUTES.PAYMENTS_HOME;
+
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  const alertProps = useStatusAlertProps(currentRoute);
+  const helpAction = useHeaderFirstLevelActionPropHelp(currentRoute);
+  const settingsAction = useHeaderFirstLevelActionPropSettings();
+
+  useLayoutEffect(() => {
+    const headerFirstLevelProps: HeaderFirstLevel = {
+      title: I18n.t("features.payments.title"),
+      ignoreSafeAreaMargin: !!alertProps,
+      animatedRef: scrollViewContentRef,
+      type: "twoActions",
+      firstAction: helpAction,
+      secondAction: settingsAction
+    };
+
+    navigation.setOptions({
+      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
+    });
+  }, [
+    scrollViewContentRef,
+    settingsAction,
+    helpAction,
+    navigation,
+    alertProps
+  ]);
+
+  /* CODE RELATED TO THE HEADER -- END */
+
+  useEffect(() => {
     if (!isLoading) {
       setIsRefreshing(false);
       analytics.trackPaymentsHome({
@@ -82,7 +125,7 @@ const PaymentsHomeScreen = () => {
     dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
   };
 
-  const AnimatedPaymentsHomeScreenContent = React.useCallback(
+  const AnimatedPaymentsHomeScreenContent = useCallback(
     () => (
       <Animated.View
         style={IOStyles.flex}
@@ -97,6 +140,7 @@ const PaymentsHomeScreen = () => {
   if (isTransactionsEmpty) {
     return (
       <IOScrollView
+        animatedRef={scrollViewContentRef}
         contentContainerStyle={{
           flexGrow: 1
         }}
@@ -121,6 +165,8 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
+      excludeSafeAreaMargins={true}
+      animatedRef={scrollViewContentRef}
       refreshControlProps={{
         refreshing: isRefreshing,
         onRefresh: handleRefreshPaymentsHome
@@ -133,7 +179,6 @@ const PaymentsHomeScreen = () => {
             }
           : undefined
       }
-      excludeSafeAreaMargins={true}
     >
       <PaymentsAlertStatus />
       <AnimatedPaymentsHomeScreenContent />

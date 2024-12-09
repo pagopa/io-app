@@ -1,8 +1,15 @@
 import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React from "react";
+import {
+  PropsWithChildren,
+  default as React,
+  useCallback,
+  useLayoutEffect
+} from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
+import { useHeaderFirstLevelActionPropHelp } from "../../../hooks/useHeaderFirstLevelActionPropHelp";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
@@ -10,6 +17,7 @@ import {
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
+import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
@@ -24,6 +32,7 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
+import { useHeaderFirstLevelActionPropSettings } from "../../../hooks/useHeaderFirstLevelActionPropSettings";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -53,7 +62,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   // Handles the "New element added" toast display once the user returns to this screen
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data
@@ -70,8 +79,7 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 };
 
-const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
-  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
   const navigation = useIONavigation();
   const cards = useIOSelector(selectWalletCards);
 
@@ -82,17 +90,38 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
     });
   };
 
+  /* CODE RELATED TO THE HEADER */
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.WALLET_HOME);
+  const settingsAction = useHeaderFirstLevelActionPropSettings();
+
+  useLayoutEffect(() => {
+    const headerFirstLevelProps: HeaderFirstLevel = {
+      testID: "wallet-home-header-title",
+      title: I18n.t("wallet.wallet"),
+      animatedRef: scrollViewContentRef,
+      firstAction: helpAction,
+      type: "twoActions",
+      secondAction: settingsAction
+    };
+
+    navigation.setOptions({
+      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
+    });
+  }, [helpAction, navigation, scrollViewContentRef, settingsAction]);
+
   useTabItemPressWhenScreenActive(
-    React.useCallback(() => {
-      animatedScrollViewRef.current?.scrollTo({ y: 0, animated: true });
-    }, [animatedScrollViewRef]),
+    useCallback(() => {
+      scrollViewContentRef.current?.scrollTo({ y: 0, animated: true });
+    }, [scrollViewContentRef]),
     false
   );
 
   if (cards.length === 0) {
     return (
       <Animated.ScrollView
-        ref={animatedScrollViewRef}
+        ref={scrollViewContentRef}
         contentContainerStyle={[
           IOStyles.flex,
           IOStyles.horizontalContentPadding
@@ -105,7 +134,7 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
 
   return (
     <IOScrollView
-      animatedRef={animatedScrollViewRef}
+      animatedRef={scrollViewContentRef}
       actions={{
         type: "SingleButton",
         primary: {

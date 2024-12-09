@@ -6,7 +6,8 @@ import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/per
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { MessagesHomeScreen } from "../MessagesHomeScreen";
-import * as engamentHook from "../../../pushNotifications/hooks/useEngagementScreen";
+import * as engagementHook from "../../../pushNotifications/hooks/useEngagementScreen";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 jest.mock("../../components/Home/PagerViewContainer");
 jest.mock("../../components/Home/Preconditions");
@@ -18,21 +19,22 @@ describe("MessagesHomeScreen", () => {
   afterEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    mockAccessibilityInfo();
   });
   it("should match snapshot (with mocked components", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
   });
   it("should call 'useEngagementScreen' hook", () => {
-    const mockUseEngagementeScreen = jest.fn();
+    const mockUseEngagementScreen = jest.fn();
     jest
-      .spyOn(engamentHook, "useEngagementScreen")
-      .mockImplementation(mockUseEngagementeScreen);
+      .spyOn(engagementHook, "useEngagementScreen")
+      .mockImplementation(mockUseEngagementScreen);
 
     renderScreen();
 
-    expect(mockUseEngagementeScreen.mock.calls.length).toBe(1);
-    expect(mockUseEngagementeScreen.mock.calls[0].length).toBe(0);
+    expect(mockUseEngagementScreen.mock.calls.length).toBe(1);
+    expect(mockUseEngagementScreen.mock.calls[0].length).toBe(0);
   });
 });
 

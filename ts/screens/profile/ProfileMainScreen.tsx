@@ -54,13 +54,7 @@ const ProfileMainScreenFC = () => {
   const { show } = useIOToast();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
-  const scrollViewContentRef = useRef<ScrollView>(null);
   const idResetTap = useRef<number>();
-
-  useTabItemPressWhenScreenActive(
-    () => scrollViewContentRef.current?.scrollTo({ y: 0, animated: true }),
-    false
-  );
 
   useEffect(
     () => () => {
