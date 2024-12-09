@@ -82,14 +82,14 @@ export const isDueDateValid = (date: string): string | undefined => {
 
 export const getSubCategoryFromFaultCode = (data: any, statusCode: string) => {
   // check if there is a subcategory array that includes passed element
-  const subcategoryKey = Object.keys(data.subcategories).find(key =>
-    data.subcategories[key].includes(statusCode)
+  const subcategoryKey = Object.keys(data.payments.subcategories).find(key =>
+    data.payments.subcategories[key].includes(statusCode)
   );
   // if there is, return the mapped subcategory with the zendesk category id
   if (subcategoryKey) {
     return {
       value: subcategoryKey,
-      zendeskCategoryId: data.subcategoryId
+      zendeskCategoryId: data.payments.subcategoryId
     };
   }
   // if not, return the parent category
