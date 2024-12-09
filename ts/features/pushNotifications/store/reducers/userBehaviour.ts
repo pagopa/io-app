@@ -11,14 +11,12 @@ export type UserBehaviourState = {
   engagementScreenShown: boolean;
   pushNotificationsBanner: {
     timesDismissed: number;
-    isForceDismissed: boolean;
     forceDismissionDate?: Date;
   };
 };
 
 const INITIAL_BANNER_STATE = {
   timesDismissed: 0,
-  isForceDismissed: false,
   forceDismissionDate: undefined
 };
 
@@ -49,7 +47,6 @@ export const userBehaviourReducer = (
         ...state,
         pushNotificationsBanner: {
           ...state.pushNotificationsBanner,
-          isForceDismissed: true,
           forceDismissionDate: new Date(Date.now())
         }
       };

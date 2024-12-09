@@ -14,11 +14,11 @@ import {
   setPushNotificationBannerForceDismissed,
   setUserDismissedNotificationsBanner
 } from "../store/actions/userBehaviour";
+import { openSystemNotificationSettingsScreen } from "../utils";
 import {
   shouldResetNotificationBannerDismissStateSelector,
   timesPushNotificationBannerDismissedSelector
-} from "../store/selectors";
-import { openSystemNotificationSettingsScreen } from "../utils";
+} from "../store/selectors/notificationsBannerDismissed";
 type Props = {
   closeHandler: () => void;
 };

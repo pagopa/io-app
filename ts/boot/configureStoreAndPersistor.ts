@@ -55,7 +55,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 39;
+const CURRENT_REDUX_STORE_VERSION = 38;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -456,21 +456,22 @@ const migrations: MigrationManifest = {
     };
   },
   // Remove old wallets&payments feature and persisted state
-  "38": (state: PersistedState) => omit(state, "payments"),
-  // Add new push notifications banner dismissal feature
-  "39": (state: PersistedState) =>
-    merge(state, {
-      notifications: {
-        userBehaviour: {
-          pushNotificationsBanner: {
-            timesDismissed: 0,
-            isForceDismissed: false,
-            forceDismissionDate: undefined
-          }
-        }
-      }
-    })
+  "38": (state: PersistedState) => omit(state, "payments")
 };
+//   // Add new push notifications banner dismissal feature
+//   "39": (state: PersistedState) =>
+//     merge(state, {
+//       notifications: {
+//         userBehaviour: {
+//           pushNotificationsBanner: {
+//             timesDismissed: 0,
+//             isForceDismissed: false,
+//             forceDismissionDate: undefined
+//           }
+//         }
+//       }
+//     })
+// };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
 
