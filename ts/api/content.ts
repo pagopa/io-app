@@ -8,6 +8,7 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
+import { unknown } from "io-ts";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
@@ -140,6 +141,23 @@ const getZendeskConfigT: GetZendeskConfigT = {
   headers: () => ({}),
   response_decoder: basicResponseDecoder(Zendesk)
 };
+
+type GetZendeskPaymentConfigT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<any>
+>;
+
+// TODO: update with new definition from related PR
+const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
+  method: "get",
+  url: () => "/assistanceTools/payment/zendeskOutcomeMapping.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(unknown)
+};
+
 /**
  * A client for the static content
  */
@@ -157,6 +175,10 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),
     getVersionInfo: createFetchRequestForApi(getVersionInfoT, options),
     getIdps: createFetchRequestForApi(getIdpsT, options),
-    getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options)
+    getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options),
+    getZendeskPaymentConfig: createFetchRequestForApi(
+      getZendeskPaymentConfig,
+      options
+    )
   };
 }

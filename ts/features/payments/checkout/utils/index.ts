@@ -9,6 +9,7 @@ import {
   PaymentAnalyticsSelectedPspFlag
 } from "../../common/types/PaymentAnalytics";
 import { WalletPaymentStepEnum } from "../types";
+import { zendeskCategoryId } from "../../../../utils/supportAssistance";
 
 export const WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL =
   "https://www.pagopa.gov.it/it/cittadini/dove-pagare/";
@@ -77,4 +78,23 @@ export const isDueDateValid = (date: string): string | undefined => {
   const tenYearsFromNow = new Date();
   tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + YEARS_TO_EXPIRE);
   return new Date(date) > tenYearsFromNow ? undefined : formattedDate;
+};
+
+export const getSubCategoryFromFaultCode = (data: any, statusCode: string) => {
+  // check if there is a subcategory array that includes passed element
+  const subcategoryKey = Object.keys(data.payments.subcategories).find(key =>
+    data.payments.subcategories[key].includes(statusCode)
+  );
+  // if there is, return the mapped subcategory with the zendesk category id
+  if (subcategoryKey) {
+    return {
+      value: subcategoryKey,
+      zendeskCategoryId: data.payments.subcategoryId
+    };
+  }
+  // if not, return the parent category
+  return {
+    value: "pagamenti_pagopa",
+    zendeskCategoryId
+  };
 };
