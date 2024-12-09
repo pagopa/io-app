@@ -8,10 +8,11 @@ import {
   updateSystemNotificationsEnabled
 } from "../../actions/environment";
 import { notificationsInfoScreenConsent } from "../../actions/profileNotificationPermissions";
+import { setEngagementScreenShown } from "../../actions/userBehaviour";
 import {
   areNotificationPermissionsEnabled,
-  INITIAL_STATE,
-  environmentReducer
+  environmentReducer,
+  INITIAL_STATE
 } from "../environment";
 
 describe("environment reducer initial state", () => {
@@ -42,7 +43,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: false,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: true
+        systemNotificationsEnabled: true,
+        engagementScreenShownThisSession: false
       },
       updateSystemNotificationsEnabled(false)
     );
@@ -55,7 +57,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: false,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: false
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
       },
       notificationsInfoScreenConsent()
     );
@@ -68,7 +71,8 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: false,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: false
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
       },
       applicationInitialized({ actionsToWaitFor: [] })
     );
@@ -81,13 +85,26 @@ describe("environmentReducer", () => {
       {
         applicationInitialized: true,
         onboardingInstructionsShown: false,
-        systemNotificationsEnabled: false
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
       },
       setPushPermissionsRequestDuration(100)
     );
     expect(userBehaviourState.pushNotificationPermissionsRequestDuration).toBe(
       100
     );
+  });
+  it("'engagementScreenShownThisSession' should be 'true' after receiving 'setEngagementScreenShown'", () => {
+    const userBehaviourState = environmentReducer(
+      {
+        applicationInitialized: true,
+        onboardingInstructionsShown: false,
+        systemNotificationsEnabled: false,
+        engagementScreenShownThisSession: false
+      },
+      setEngagementScreenShown()
+    );
+    expect(userBehaviourState.engagementScreenShownThisSession).toBe(true);
   });
 });
 
