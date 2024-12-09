@@ -30,7 +30,7 @@ jest.mock("react-native-reanimated", () => {
 
   return {
     ...Reanimated,
-    useScrollViewOffset: jest.fn()
+    useScrollViewOffset: jest.fn(() => 0)
   };
 });
 
