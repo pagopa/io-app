@@ -42,6 +42,6 @@ export const itwRequestedCredentialsSelector = createSelector(
   itwPreferencesSelector,
   ({ requestedCredentials }: ItwPreferencesState) =>
     Object.entries(requestedCredentials)
-      .filter(([_, requestedAt]) => !isPast(addDays(requestedAt, 7)))
+      .filter(([_, requestedAt]) => !isPast(addDays(requestedAt, 1)))
       .map(([credentialType]) => credentialType)
 );
