@@ -60,7 +60,7 @@ describe("itwRequestedCredentialsSelector", () => {
       itwRequestedCredentialsSelector(
         _.set(globalState, "features.itWallet.preferences", {
           requestedCredentials: {
-            MDL: "2024-11-12T20:43:21.361Z",
+            MDL: "2024-11-13T20:44:21.361Z",
             EuropeanDisabilityCard: "2024-11-03T20:43:21.361Z",
             EuropeanHealthInsuranceCard: "2024-11-06T20:43:21.361Z"
           }
