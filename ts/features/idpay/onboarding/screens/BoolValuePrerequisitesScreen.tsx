@@ -1,12 +1,14 @@
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  FooterWithButtons,
+  H2,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
-import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -14,13 +16,13 @@ import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../utils/url";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
-import { isLoadingSelector } from "../../common/machine/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -58,12 +60,16 @@ const InitiativeSelfDeclarationsScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
+          <H2>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-          <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
+          <Body
+            weight="Semibold"
+            asLink
+            onPress={() => openWebUrl(dpr28Dec2000Url)}
+          >
             {I18n.t("idpay.onboarding.boolPrerequisites.link")}
-          </Link>
+          </Body>
           <VSpacer size={24} />
           {selfCriteriaBool.map((criteria, index) => (
             <View key={criteria.code}>

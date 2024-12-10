@@ -4,18 +4,15 @@ import {
   IconButton,
   IOStyles
 } from "@pagopa/io-app-design-system";
-import { default as React } from "react";
+import { default as React, useMemo } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
-import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
-import {
-  getCredentialStatus,
-  parseClaims,
-  WellKnownClaim
-} from "../../common/utils/itwClaimsUtils";
+import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 
 type ItwPresentationClaimsSectionProps = {
   credential: StoredCredential;
@@ -25,23 +22,34 @@ export const ItwPresentationClaimsSection = ({
   credential
 }: ItwPresentationClaimsSectionProps) => {
   const [valuesHidden, setValuesHidden] = React.useState(false);
-  const credentialStatus = getCredentialStatus(credential);
+
+  const credentialStatus = useMemo(
+    () => getCredentialStatus(credential),
+    [credential]
+  );
 
   const claims = parseClaims(credential.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
   });
 
   const renderHideValuesToggle = () => (
-    <IconButton
-      testID="toggle-claim-visibility"
-      icon={valuesHidden ? "eyeHide" : "eyeShow"}
-      onPress={() => setValuesHidden(x => !x)}
+    <View
+      accessible={true}
       accessibilityLabel={I18n.t(
-        valuesHidden
-          ? "features.itWallet.presentation.credentialDetails.actions.showClaimValues"
-          : "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
+        "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
       )}
-    />
+      accessibilityRole="switch"
+      accessibilityState={{ checked: valuesHidden }}
+    >
+      <IconButton
+        testID="toggle-claim-visibility"
+        icon={valuesHidden ? "eyeHide" : "eyeShow"}
+        onPress={() => setValuesHidden(_ => !_)}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.hideClaimValues"
+        )}
+      />
+    </View>
   );
 
   return (

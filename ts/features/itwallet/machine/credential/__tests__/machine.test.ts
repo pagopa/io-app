@@ -28,7 +28,7 @@ import {
   RequestCredentialActorOutput
 } from "../actors";
 import { Context, InitialContext } from "../context";
-import { CredentialIssuanceFailureTypeEnum } from "../failure";
+import { CredentialIssuanceFailureType } from "../failure";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
@@ -121,6 +121,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
 
+  const trackAddCredential = jest.fn();
   const mockedMachine = itwCredentialIssuanceMachine.provide({
     actions: {
       navigateToCredentialPreviewScreen,
@@ -131,6 +132,7 @@ describe("itwCredentialIssuanceMachine", () => {
       storeCredential,
       closeIssuance,
       handleSessionExpired,
+      trackAddCredential,
       onInit: assign(onInit)
     },
     actors: {
@@ -439,7 +441,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureType.UNEXPECTED,
         reason: "SOME FAILURE"
       }
     });
@@ -490,7 +492,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureType.UNEXPECTED,
         reason: "SOME FAILURE"
       }
     });
@@ -565,7 +567,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureType.UNEXPECTED,
         reason: "SOME FAILURE"
       }
     });

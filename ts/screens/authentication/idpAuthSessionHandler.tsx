@@ -13,13 +13,13 @@ import * as TE from "fp-ts/lib/TaskEither";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
-import { H3 } from "../../components/core/typography/H3";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 
 import {
   Body,
   ButtonSolid,
+  H6,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -42,7 +42,7 @@ import {
 } from "../../store/actions/authentication";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import themeVariables from "../../theme/variables";
@@ -90,7 +90,7 @@ type RequestInfoPositiveStates = {
 type RequestInfoError = {
   requestState: "ERROR";
   errorType: ErrorType;
-  errorCode?: string;
+  errorCodeOrMessage?: string;
   nativeAttempts: number;
 };
 
@@ -191,22 +191,27 @@ export const AuthSessionPage = () => {
   }, [selectedIdpTextData]);
 
   const handleLoginFailure = useCallback(
-    (code?: string) => {
+    (code?: string, message?: string) => {
       dispatch(
         loginFailure({
-          error: new Error(`login failure with code ${code || "n/a"}`),
+          error: new Error(
+            `login failure with code ${code || message || "n/a"}`
+          ),
           idp
         })
       );
       const logText = pipe(
-        code,
-        O.fromNullable,
+        O.fromNullable(code || message),
         O.fold(
-          () => "login failed with no error code available",
-          ec =>
-            `login failed with code (${ec}) : ${getSpidErrorCodeDescription(
-              ec
-            )}`
+          () => "login failed with no error code or message available",
+          _ => {
+            if (code) {
+              return `login failed with code (${code}) : ${getSpidErrorCodeDescription(
+                code
+              )}`;
+            }
+            return `login failed with message ${message}`;
+          }
         )
       );
 
@@ -214,7 +219,7 @@ export const AuthSessionPage = () => {
       setRequestInfo({
         requestState: "ERROR",
         errorType: ErrorType.LOGIN_ERROR,
-        errorCode: code,
+        errorCodeOrMessage: code || message,
         nativeAttempts: requestInfo.nativeAttempts
       });
     },
@@ -309,7 +314,8 @@ export const AuthSessionPage = () => {
                           result,
                           getEitherLoginResult,
                           E.fold(
-                            e => handleLoginFailure(e.errorCode),
+                            e =>
+                              handleLoginFailure(e.errorCode, e.errorMessage),
                             success => handleLoginSuccess(success.token)
                           )
                         )
@@ -370,10 +376,10 @@ export const AuthSessionPage = () => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
-        errorCode: requestInfo.errorCode,
+        errorCodeOrMessage: requestInfo.errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: "L2",
-        onRetrySpid: onRetry
+        onRetry
       }
     });
   }
@@ -387,7 +393,7 @@ export const AuthSessionPage = () => {
             <View style={styles.errorContainer}>
               <Pictogram name={"processing"} size={120} />
               <VSpacer size={16} />
-              <H3 style={styles.title}>{I18n.t("spid.pending_login.title")}</H3>
+              <H6 style={styles.title}>{I18n.t("spid.pending_login.title")}</H6>
               <VSpacer size={16} />
               <Body>{I18n.t("spid.pending_login.details")}</Body>
             </View>

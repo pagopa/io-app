@@ -1,5 +1,4 @@
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
-import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -7,7 +6,6 @@ import React, { useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
-import { localeDateFormat } from "../../../../utils/locale";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import {
   BoolClaim,
@@ -17,17 +15,19 @@ import {
   DrivingPrivilegesClaim,
   EmptyStringClaim,
   EvidenceClaim,
+  extractFiscalCode,
   FiscalCodeClaim,
+  getSafeText,
   ImageClaim,
+  isExpirationDateClaim,
   PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  StringClaim,
-  extractFiscalCode,
-  isExpirationDateClaim,
-  getSafeText
+  SimpleDate,
+  SimpleDateClaim,
+  StringClaim
 } from "../utils/itwClaimsUtils";
-import { ItwCredentialStatus } from "./ItwCredentialCard";
+import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 
 const HIDDEN_CLAIM = "******";
 
@@ -108,40 +108,36 @@ const DateClaimItem = ({
   status
 }: {
   label: string;
-  claim: Date;
+  claim: SimpleDate;
   status?: ItwCredentialStatus;
 }) => {
   // Remove the timezone offset to display the date in its original format
 
-  const value = localeDateFormat(
-    claim,
-    I18n.t("global.dateFormats.shortFormat")
-  );
+  const value = claim.toString("DD/MM/YYYY");
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
-    if (!status || status === "pending") {
-      return;
+    const ns = "features.itWallet.presentation.credentialDetails.status";
+    switch (status) {
+      case "valid":
+      case "expiring":
+      case "jwtExpiring":
+        return {
+          type: "badge",
+          componentProps: { variant: "success", text: I18n.t(`${ns}.valid`) }
+        };
+      case "expired":
+        return {
+          type: "badge",
+          componentProps: { variant: "error", text: I18n.t(`${ns}.expired`) }
+        };
+      case "invalid":
+        return {
+          type: "badge",
+          componentProps: { variant: "error", text: I18n.t(`${ns}.invalid`) }
+        };
+      default:
+        return undefined;
     }
-
-    const credentialStatusProps = {
-      expired: {
-        badge: "error",
-        text: "features.itWallet.presentation.credentialDetails.status.expired"
-      },
-      expiring: {
-        badge: "warning",
-        text: "features.itWallet.presentation.credentialDetails.status.expiring"
-      },
-      valid: {
-        badge: "success",
-        text: "features.itWallet.presentation.credentialDetails.status.valid"
-      }
-    } as const;
-    const { badge, text } = credentialStatusProps[status];
-    return {
-      type: "badge",
-      componentProps: { variant: badge, text: I18n.t(text) }
-    };
   }, [status]);
 
   return (
@@ -228,7 +224,8 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
         accessibilityIgnoresInvertColors
       />
     }
-    accessibilityLabel={`${label}`}
+    accessibilityLabel={label}
+    accessibilityRole="image"
   />
 );
 
@@ -270,14 +267,8 @@ const DrivingPrivilegesClaimItem = ({
   claim: DrivingPrivilegeClaimType;
   detailsButtonVisible?: boolean;
 }) => {
-  const localExpiryDate = localeDateFormat(
-    claim.expiry_date,
-    I18n.t("global.dateFormats.shortFormat")
-  );
-  const localIssueDate = localeDateFormat(
-    claim.issue_date,
-    I18n.t("global.dateFormats.shortFormat")
-  );
+  const localExpiryDate = claim.expiry_date.toString("DD/MM/YYYY");
+  const localIssueDate = claim.issue_date.toString("DD/MM/YYYY");
   const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
     title: I18n.t(
       "features.itWallet.verifiableCredentials.claims.mdl.category",
@@ -290,7 +281,9 @@ const DrivingPrivilegesClaimItem = ({
             "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
           )}
           value={localIssueDate}
-          accessibilityLabel={`${label} ${localIssueDate}`}
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
+          )} ${localIssueDate}`}
         />
         <Divider />
         <ListItemInfo
@@ -298,7 +291,9 @@ const DrivingPrivilegesClaimItem = ({
             "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
           )}
           value={localExpiryDate}
-          accessibilityLabel={`${label} ${localExpiryDate}`}
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
+          )} ${localExpiryDate}`}
         />
         {claim.restrictions_conditions && (
           <>
@@ -307,8 +302,10 @@ const DrivingPrivilegesClaimItem = ({
               label={I18n.t(
                 "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
               )}
-              value={claim.restrictions_conditions || "-"}
-              accessibilityLabel={`${label} ${claim.restrictions_conditions}`}
+              value={claim.restrictions_conditions}
+              accessibilityLabel={`${I18n.t(
+                "features.itWallet.verifiableCredentials.claims.mdl.restrictionConditions"
+              )} ${claim.restrictions_conditions}`}
             />
           </>
         )}
@@ -365,7 +362,7 @@ export const ItwCredentialClaim = ({
         const decoded = hidden ? HIDDEN_CLAIM : _decoded;
         if (PlaceOfBirthClaim.is(decoded)) {
           return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
-        } else if (DateFromString.is(decoded)) {
+        } else if (SimpleDateClaim.is(decoded)) {
           return (
             <DateClaimItem
               label={claim.label}

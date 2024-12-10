@@ -9,17 +9,19 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
-import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
-  selectOngoingPaymentHistory,
-  paymentAnalyticsDataSelector
+  paymentAnalyticsDataSelector,
+  selectOngoingPaymentHistory
 } from "../../history/store/selectors";
 import * as analytics from "../analytics";
+import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { paymentsCalculatePaymentFeesAction } from "../store/actions/networking";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { selectWalletPaymentCurrentStep } from "../store/selectors";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { getPaymentPhaseFromStep } from "../utils";
 
 type Props = {
@@ -51,14 +53,36 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     supportModal.present();
   };
 
+  const handleChangePaymentMethod = () => {
+    analytics.trackPaymentsPspNotAvailableSelectNew({
+      attempt: paymentAnalyticsData?.attempt,
+      organization_name: paymentAnalyticsData?.verifiedData?.paName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      amount: paymentAnalyticsData?.formattedAmount,
+      saved_payment_method:
+        paymentAnalyticsData?.savedPaymentMethods?.length ?? 0,
+      expiration_date: paymentAnalyticsData?.verifiedData?.dueDate,
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      selected_psp_flag: paymentAnalyticsData?.selectedPspFlag
+    });
+
+    dispatch(paymentsCalculatePaymentFeesAction.cancel());
+    navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
+    });
+  };
+
   const closeAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("global.buttons.close"),
+    testID: "wallet-payment-failure-close-button",
     accessibilityLabel: I18n.t("global.buttons.close"),
     onPress: handleClose
   };
 
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.support.button"),
+    testID: "wallet-payment-failure-support-button",
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
   };
@@ -70,6 +94,18 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     action: closeAction,
     secondaryAction: contactSupportAction
   };
+
+  const selectOtherPaymentMethodAction: OperationResultScreenContentProps["action"] =
+    {
+      label: I18n.t(
+        "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.action"
+      ),
+      testID: "wallet-payment-failure-go-back-button",
+      accessibilityLabel: I18n.t(
+        "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.action"
+      ),
+      onPress: handleChangePaymentMethod
+    };
 
   const getPropsFromFailure = ({
     faultCodeCategory
@@ -132,6 +168,39 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           title: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.subtitle"),
           action: closeAction
+        };
+      case "PAYMENT_VERIFY_GENERIC_ERROR":
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t(
+            "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.subtitle"
+          ),
+          action: closeAction,
+          secondaryAction: contactSupportAction
+        };
+      case "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR":
+        return {
+          pictogram: "cardIssue",
+          title: I18n.t(
+            "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR.subtitle"
+          ),
+          action: selectOtherPaymentMethodAction
+        };
+      case "PAYMENT_SLOWDOWN_ERROR":
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
+          ),
+          action: closeAction,
+          secondaryAction: contactSupportAction
         };
 
       default:

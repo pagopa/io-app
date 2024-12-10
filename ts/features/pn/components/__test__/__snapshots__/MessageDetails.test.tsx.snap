@@ -204,6 +204,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -368,19 +369,23 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               >
                                 <View
                                   style={
-                                    {
-                                      "alignItems": "center",
-                                      "alignSelf": "flex-start",
-                                      "backgroundColor": "#FFFFFF",
-                                      "borderColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 6,
-                                      "borderWidth": 1,
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 6,
-                                    }
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 6,
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
+                                        "backgroundColor": "#FFFFFF",
+                                        "borderColor": "#E8EBF1",
+                                      },
+                                    ]
                                   }
                                 >
                                   <View
@@ -854,7 +859,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                         ]
@@ -1062,7 +1067,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                         ]
@@ -1091,7 +1096,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               onDismiss={[Function]}
                               snapPoints={
                                 [
-                                  1,
+                                  10,
                                 ]
                               }
                               style={
@@ -1163,7 +1168,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1350,7 +1355,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1476,7 +1481,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1663,7 +1668,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }

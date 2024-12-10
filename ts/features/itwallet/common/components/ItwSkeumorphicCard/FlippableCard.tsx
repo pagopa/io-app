@@ -25,14 +25,14 @@ const FlippableCard = ({
   BackComponent,
   containerStyle,
   duration = DEFAULT_DURATION,
-  ...props
+  isFlipped: _isFlipped
 }: FlippableCardProps) => {
-  const isFlipped = useSharedValue(props.isFlipped);
+  const isFlipped = useSharedValue(_isFlipped);
 
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
-    isFlipped.value = props.isFlipped;
-  }, [isFlipped, props]);
+    isFlipped.value = _isFlipped;
+  }, [isFlipped, _isFlipped]);
 
   const regularCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
@@ -41,7 +41,7 @@ const FlippableCard = ({
     return {
       transform: [{ rotateY: rotateValue }]
     };
-  });
+  }, []);
 
   const flippedCardAnimatedStyle = useAnimatedStyle(() => {
     const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]);
@@ -50,7 +50,7 @@ const FlippableCard = ({
     return {
       transform: [{ rotateY: rotateValue }]
     };
-  });
+  }, []);
 
   return (
     <View style={containerStyle}>

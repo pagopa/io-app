@@ -1,6 +1,11 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { SectionListData } from "react-native";
-import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
+import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import { NetworkError } from "../../../../utils/errors";
+import { capitalizeTextName } from "../../../../utils/strings";
 
 export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 
@@ -64,7 +69,7 @@ export const getPayerInfoLabel = (payer: InfoNotice["payer"]): string => {
     return "";
   }
 
-  const name = payer.name ? payer.name.trim() : "";
+  const name = payer.name ? capitalizeTextName(payer.name).trim() : "";
   const taxCode = payer.taxCode ? payer.taxCode.trim() : "";
 
   const payerInfo = name ? (taxCode ? `${name}\n(${taxCode})` : name) : taxCode;
@@ -96,3 +101,56 @@ export const calculateTotalAmount = (
 
   return total.toFixed(2);
 };
+
+/**
+ * Filters transactions by a given transaction ID and returns the filtered transactions along with the index of the removed transaction.
+ *
+ * @param transactions - A potential array of NoticeListItem objects wrapped in a Pot, which may contain a NetworkError.
+ * @param transactionId - The ID of the transaction to filter out.
+ * @returns An object containing:
+ *   - `filteredTransactions`: An array of NoticeListItem objects excluding the transaction with the given ID.
+ *   - `removedIndex`: The index of the removed transaction in the original array, or -1 if the transaction was not found.
+ */
+export const filterTransactionsByIdAndGetIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  transactionId: string
+): {
+  filteredTransactions: Array<NoticeListItem>;
+  removedIndex: number;
+} => {
+  const transactionList = pot.getOrElse(transactions, []);
+  const removedIndex = transactionList.findIndex(
+    transaction => transaction.eventId === transactionId
+  );
+  const filteredTransactions = transactionList.filter(
+    transaction => transaction.eventId !== transactionId
+  );
+  return { filteredTransactions, removedIndex };
+};
+
+export const getTransactionByIndex = (
+  transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  index: number
+): NoticeListItem => pot.getOrElse(transactions, [])[index];
+
+export const restoreTransactionAtIndex = (
+  transactionPot: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>,
+  restoreItem: NoticeListItem,
+  index: number
+) =>
+  pot.map(transactionPot, transactions => [
+    ...transactions.slice(0, index),
+    restoreItem,
+    ...transactions.slice(index)
+  ]);
+
+export const removeAsterisks = (text: string): string =>
+  text.replace(/\*/g, "");
+
+export const isValidPspName = (pspName: string | undefined): boolean =>
+  pipe(
+    pspName,
+    O.fromNullable,
+    O.map(name => name !== "-"),
+    O.getOrElse(() => false)
+  );

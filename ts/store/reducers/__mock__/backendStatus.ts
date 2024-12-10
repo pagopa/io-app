@@ -1,10 +1,7 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { BackendStatusState } from "../backendStatus";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -303,15 +300,12 @@ export const baseRawBackendStatus: BackendStatus = {
       min_app_version: {
         android: "0.0.0.0",
         ios: "0.0.0.0"
-      }
+      },
+      feedback_banner_visible: true,
+      disabled_identification_methods: [],
+      disabled_credentials: []
     }
   }
-};
-
-export const baseBackendState: BackendStatusState = {
-  status: O.some(baseRawBackendStatus),
-  areSystemsDead: false,
-  deadsCounter: 0
 };
 
 export const baseBackendConfig: Config = {
@@ -398,20 +392,9 @@ export const baseBackendConfig: Config = {
     min_app_version: {
       android: "0.0.0.0",
       ios: "0.0.0.0"
-    }
+    },
+    feedback_banner_visible: true,
+    disabled_credentials: [],
+    disabled_identification_methods: []
   }
 };
-
-export const withBpdRankingConfig = (
-  baseState: BackendStatusState,
-  newConfig: Config
-): BackendStatusState => ({
-  ...baseState,
-  status: pipe(
-    baseState.status,
-    O.map(s => ({
-      ...s,
-      config: { ...newConfig }
-    }))
-  )
-});

@@ -8,20 +8,18 @@ import Animated, {
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import {
+  Body,
   H3,
   HeaderSecondLevel,
   IOColors,
   IOVisualCostants,
+  makeFontStyleObject,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { Body } from "../../../components/core/typography/Body";
-import { makeFontStyleObject } from "../../../components/core/fonts";
 
 const styles = StyleSheet.create({
   sectionTitle: {
-    ...makeFontStyleObject("Regular", false, "ReadexPro"),
-    fontSize: 14,
-    lineHeight: 18,
+    ...makeFontStyleObject(14, "Titillio", 18, "Semibold"),
     color: IOColors["grey-700"]
   }
 });

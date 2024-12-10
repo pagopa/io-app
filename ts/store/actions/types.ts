@@ -9,19 +9,14 @@ import {
 } from "redux";
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 import { BonusActions } from "../../features/bonus/common/store/actions";
-import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { MessagesActions } from "../../features/messages/store/actions";
-import { WalletActions as NewWalletActions } from "../../features/newWallet/store/actions";
+import { WalletActions } from "../../features/wallet/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
-import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
-import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
-import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
-import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
 import { ServicesActions } from "../../features/services/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
@@ -38,6 +33,7 @@ import { TrialSystemActions } from "../../features/trialSystem/store/actions";
 import { ProfileSettingsActions } from "../../features/profileSettings/store/actions";
 import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
+import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -52,7 +48,6 @@ import { InstallationActions } from "./installation";
 import { MixpanelActions } from "./mixpanel";
 import { OnboardingActions } from "./onboarding";
 import { OrganizationsActions } from "./organizations";
-import { PaymentsActions } from "./payments";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
@@ -61,8 +56,6 @@ import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
 import { UserDataProcessingActions } from "./userDataProcessing";
-import { WalletActions } from "./wallet";
-import { OutcomeCodeActions } from "./wallet/outcomeCode";
 
 export type Action =
   | AnalyticsActions
@@ -84,25 +77,17 @@ export type Action =
   | PersistedPreferencesActions
   | ProfileActions
   | ServicesActions
-  | WalletActions
   | ContentActions
   | IdentificationActions
   | InstallationActions
   | DebugActions
   | CalendarEventsActions
   | SearchActions
-  | PaymentsActions
   | OrganizationsActions
   | UserDataProcessingActions
   | ProfileEmailValidationAction
   | BonusActions
-  | AbiActions
-  | BPayActions
-  | CoBadgeActions
-  | PayPalOnboardingActions
   | CrossSessionsActions
-  | EuCovidCertActions
-  | OutcomeCodeActions
   | ZendeskSupportActions
   | PnActions
   | StartupActions
@@ -112,14 +97,15 @@ export type Action =
   | FastLoginActions
   | WhatsNewActions
   | PaymentsFeatureActions
-  | NewWalletActions
+  | WalletActions
   | CieLoginConfigActions
   | FimsActions
   | ItwActions
   | TrialSystemActions
   | ProfileSettingsActions
   | IngressScreenActions
-  | MixpanelFeatureActions;
+  | MixpanelFeatureActions
+  | LandingScreenBannerActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

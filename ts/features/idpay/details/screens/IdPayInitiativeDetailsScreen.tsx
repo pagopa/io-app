@@ -1,7 +1,9 @@
 import {
+  Body,
   ButtonSolid,
-  Chip,
   ContentWrapper,
+  H6,
+  LabelMini,
   Pictogram,
   Tag,
   VSpacer
@@ -23,8 +25,6 @@ import {
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { BonusStatus } from "../../../../components/BonusCard/type";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import {
@@ -36,6 +36,7 @@ import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
+import { ConfigurationMode } from "../../configuration/types";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
@@ -51,7 +52,6 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { ConfigurationMode } from "../../configuration/types";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -225,11 +225,11 @@ const IdPayInitiativeDetailsScreen = () => {
                   <View style={styles.newInitiativeMessageContainer}>
                     <Pictogram name="empty" size={72} />
                     <VSpacer size={16} />
-                    <H3>
+                    <H6>
                       {I18n.t(
                         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
                       )}
-                    </H3>
+                    </H6>
                     <VSpacer size={8} />
                     <Body style={{ textAlign: "center" }}>
                       {I18n.t(
@@ -361,11 +361,11 @@ export function IdPayCardStatus({
   switch (getInitiativeStatus()) {
     case "ACTIVE":
       return (
-        <Chip color="grey-650">
+        <LabelMini weight="Regular" color="grey-650">
           {I18n.t("bonusCard.validUntil", {
             endDate: format(initiative.endDate, "DD/MM/YY")
           })}
-        </Chip>
+        </LabelMini>
       );
     case "EXPIRING":
       return (

@@ -5,6 +5,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
+import { ItwCredentialStatus } from "../common/utils/itwTypesUtils";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -44,6 +45,8 @@ type TrackCredentialDetail = {
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
+type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
+
 /**
  * This map is used to map the credential type to the MixPanel credential
  * ITW_ID_V2: PersonIdentificationData
@@ -72,15 +75,23 @@ type AddCredentialFailure = {
   credential: MixPanelCredential;
   reason: unknown;
   type: string;
+  caused_by: ItwFailureCause;
 };
 
 type IdRequestFailure = {
   ITW_ID_method: ItwIdMethod;
   reason: unknown;
   type: string;
+  caused_by: ItwFailureCause;
 };
 
 type IdUnexpectedFailure = {
+  reason: unknown;
+  type: string;
+};
+
+type CredentialUnexpectedFailure = {
+  credential: MixPanelCredential;
   reason: unknown;
   type: string;
 };
@@ -96,7 +107,7 @@ type TrackITWalletBannerClosureProperties = {
 };
 
 type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "cie_pin" | "cieid";
+  ITW_ID_method: "spid" | "ciePin" | "cieId";
 };
 
 type TrackITWalletSpidIDPSelected = { idp: string };
@@ -108,6 +119,25 @@ export type ItwId = "not_available" | "valid" | "not_valid";
 export type ItwPg = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwTs = "not_available" | "valid" | "not_valid" | "expiring";
 export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
+
+/**
+ * This map is used to map the eid credential status to the MixPanel eid credential status
+ * valid: valid
+ * pending: not_valid
+ * expired: not_valid
+ * expiring: expiring
+ */
+export const ID_STATUS_MAP: Record<
+  ItwCredentialStatus,
+  "valid" | "not_valid" | "expiring"
+> = {
+  valid: "valid",
+  invalid: "not_valid",
+  expired: "not_valid",
+  expiring: "expiring",
+  jwtExpired: "not_valid",
+  jwtExpiring: "expiring"
+};
 
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (credential: MixPanelCredential) => {
@@ -395,7 +425,6 @@ export function trackWalletCredentialShowIssuer(
   );
 }
 
-// TODO: To be added on the data origin tooltip
 export function trackWalletCredentialShowAuthSource(
   credential: MixPanelCredential
 ) {
@@ -443,12 +472,23 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
+// TODO: Track credential renewal flow when implemented
 export function trackWalletCredentialRenewStart(
   credential: MixPanelCredential
 ) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_RENEW_START,
     buildEventProperties("UX", "action", { credential })
+  );
+}
+
+export function trackIssuanceCredentialScrollToBottom(
+  credential: MixPanelCredential,
+  screenRoute: string
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_ISSUANCE_CREDENTIAL_SCROLL,
+    buildEventProperties("UX", "action", { credential, screen: screenRoute })
   );
 }
 
@@ -549,17 +589,6 @@ export const trackItwHasAlreadyCredential = (
   );
 };
 
-export const trackAddCredentialTimeout = ({
-  credential,
-  reason,
-  type
-}: AddCredentialFailure) => {
-  void mixpanelTrack(
-    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_TIMEOUT,
-    buildEventProperties("KO", "error", { credential, reason, type })
-  );
-};
-
 export const trackAddCredentialFailure = ({
   credential,
   reason,
@@ -567,6 +596,17 @@ export const trackAddCredentialFailure = ({
 }: AddCredentialFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_FAILURE,
+    buildEventProperties("KO", "error", { credential, reason, type })
+  );
+};
+
+export const trackAddCredentialUnexpectedFailure = ({
+  credential,
+  reason,
+  type
+}: CredentialUnexpectedFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_UNEXPECTED_FAILURE,
     buildEventProperties("KO", "error", { credential, reason, type })
   );
 };
@@ -582,7 +622,18 @@ export const trackCredentialNotEntitledFailure = ({
   );
 };
 
-export const trackItwIdRequestUnexpected = ({
+export const trackCredentialInvalidStatusFailure = ({
+  credential,
+  reason,
+  type
+}: AddCredentialFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_INVALID_STATUS,
+    buildEventProperties("KO", "error", { credential, reason, type })
+  );
+};
+
+export const trackItwIdRequestUnexpectedFailure = ({
   reason,
   type
 }: IdUnexpectedFailure) => {
@@ -592,40 +643,43 @@ export const trackItwIdRequestUnexpected = ({
   );
 };
 
+export const trackItwAlreadyActivated = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
+    buildEventProperties("KO", "error")
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
 
-export const trackCredentialDeleteProperties = async (
+export const trackCredentialDeleteProperties = (
   credential: MixPanelCredential,
   state: GlobalState
 ) => {
-  await updateMixpanelProfileProperties(state, {
+  void updateMixpanelProfileProperties(state, {
     property: credential,
     value: "not_available"
   });
-  await updateMixpanelSuperProperties(state, {
+  void updateMixpanelSuperProperties(state, {
     property: credential,
     value: "not_available"
   });
 };
 
-export const trackAllCredentialProfileAndSuperProperties = async (
-  state: GlobalState
+export const trackAddCredentialProfileAndSuperProperties = (
+  state: GlobalState,
+  credential: MixPanelCredential
 ) => {
-  const promises = mixPanelCredentials.map(async credential => {
-    await Promise.all([
-      updateMixpanelProfileProperties(state, {
-        property: credential,
-        value: "valid"
-      }),
-      updateMixpanelSuperProperties(state, {
-        property: credential,
-        value: "valid"
-      })
-    ]);
+  void updateMixpanelProfileProperties(state, {
+    property: credential,
+    value: "valid"
   });
-  await Promise.all(promises);
+  void updateMixpanelSuperProperties(state, {
+    property: credential,
+    value: "valid"
+  });
 };
 
 // #endregion PROFILE PROPERTIES

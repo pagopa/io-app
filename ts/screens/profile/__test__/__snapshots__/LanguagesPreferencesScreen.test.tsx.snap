@@ -63,6 +63,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -258,7 +259,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         "fontSize": 28,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 40,
+                                        "lineHeight": 34,
                                       },
                                     ]
                                   }
@@ -419,7 +420,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                   "fontSize": 18,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
-                                                  "lineHeight": 25,
+                                                  "lineHeight": 24,
                                                 },
                                                 {
                                                   "flexShrink": 1,
@@ -634,7 +635,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                   "fontSize": 18,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
-                                                  "lineHeight": 25,
+                                                  "lineHeight": 24,
                                                 },
                                                 {
                                                   "flexShrink": 1,
@@ -849,7 +850,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                   "fontSize": 18,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
-                                                  "lineHeight": 25,
+                                                  "lineHeight": 24,
                                                 },
                                                 {
                                                   "flexShrink": 1,

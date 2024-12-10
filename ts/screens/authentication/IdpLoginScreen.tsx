@@ -36,7 +36,7 @@ import {
   loggedOutWithIdpAuthSelector,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { SessionToken } from "../../types/SessionToken";
 import { trackSpidLoginError } from "../../utils/analytics";
@@ -98,7 +98,9 @@ const IdpLoginScreen = () => {
   const [requestState, setRequestState] = useState<pot.Pot<true, ErrorType>>(
     pot.noneLoading
   );
-  const [errorCode, setErrorCode] = useState<string | undefined>(undefined);
+  const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
+    string | undefined
+  >(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
 
   const handleOnLollipopCheckFailure = useCallback(() => {
@@ -140,28 +142,33 @@ const IdpLoginScreen = () => {
   );
 
   const handleLoginFailure = useCallback(
-    (code?: string) => {
+    (code?: string, message?: string) => {
       dispatch(
         loginFailure({
-          error: new Error(`login failure with code ${code || "n/a"}`),
+          error: new Error(
+            `login failure with code ${code || message || "n/a"}`
+          ),
           idp
         })
       );
       const logText = pipe(
-        code,
-        O.fromNullable,
+        O.fromNullable(code || message),
         O.fold(
-          () => "login failed with no error code available",
-          ec =>
-            `login failed with code (${ec}) : ${getSpidErrorCodeDescription(
-              ec
-            )}`
+          () => "login failed with no error code or message available",
+          _ => {
+            if (code) {
+              return `login failed with code (${code}) : ${getSpidErrorCodeDescription(
+                code
+              )}`;
+            }
+            return `login failed with message ${message}`;
+          }
         )
       );
 
       handleSendAssistanceLog(choosenTool, logText);
       setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
-      setErrorCode(code);
+      setErrorCodeOrMessage(code || message);
     },
     [dispatch, choosenTool, idp]
   );
@@ -227,7 +234,8 @@ const IdpLoginScreen = () => {
 
       const isLoginUrlWithToken = onLoginUriChanged(
         handleLoginFailure,
-        handleLoginSuccess
+        handleLoginSuccess,
+        idp
       )(event);
       // URL can be loaded if it's not the login URL containing the session token - this avoids
       // making a (useless) GET request with the session in the URL
@@ -237,6 +245,7 @@ const IdpLoginScreen = () => {
       handleLoginFailure,
       handleLoginSuccess,
       loggedOutWithIdpAuth?.idp,
+      idp,
       shouldBlockUrlNavigationWhileCheckingLollipop
     ]
   );
@@ -259,13 +268,13 @@ const IdpLoginScreen = () => {
     navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
-        errorCode,
+        errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: "L2",
-        onRetrySpid: onRetryButtonPressed
+        onRetry: onRetryButtonPressed
       }
     });
-  }, [errorCode, onRetryButtonPressed, navigate]);
+  }, [errorCodeOrMessage, onRetryButtonPressed, navigate]);
 
   useEffect(() => {
     if (pot.isError(requestState)) {

@@ -38,7 +38,7 @@ import {
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
-import { backendStatusSelector } from "../../store/reducers/backendStatus";
+import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
@@ -49,6 +49,7 @@ import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../startup/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
+import { userFromSuccessLoginSelector } from "../../features/login/info/store/selectors";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -115,7 +116,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .select(backendStatusSelector)
+      .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -170,7 +171,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .select(backendStatusSelector)
+      .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -219,7 +220,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .select(backendStatusSelector)
+      .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -273,7 +274,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .select(backendStatusSelector)
+      .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -293,6 +294,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(sessionInfoSelector)
       .next(aSessionInfo)
+      .select(userFromSuccessLoginSelector)
+      .next()
       .select(lollipopPublicKeySelector)
       .next(aPublicKey)
       .call(
@@ -338,7 +341,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .select(backendStatusSelector)
+      .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -392,7 +395,7 @@ describe("initializeApplicationSaga", () => {
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
-      .select(backendStatusSelector)
+      .select(remoteConfigSelector)
       .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)

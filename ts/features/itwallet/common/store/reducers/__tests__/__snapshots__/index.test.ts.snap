@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`itWalletReducer should match snapshot 1`] = `
+{
+  "credentials": {
+    "credentials": [],
+    "eid": {
+      "_tag": "None",
+    },
+  },
+  "issuance": {
+    "integrityKeyTag": {
+      "_tag": "None",
+    },
+  },
+  "lifecycle": 0,
+  "preferences": {},
+  "walletInstance": {
+    "attestation": undefined,
+  },
+}
+`;

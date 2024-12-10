@@ -1,19 +1,42 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
+import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { Alert, Linking, Platform, StyleSheet } from "react-native";
+import { Linking, Platform, StyleSheet, View } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import _isEqual from "lodash/isEqual";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { getCieIDLoginUri, SpidLevel } from "../utils";
+import { getCieIDLoginUri, isAuthenticationUrl, SpidLevel } from "../utils";
 import { useLollipopLoginSource } from "../../lollipop/hooks/useLollipopLoginSource";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { loginSuccess } from "../../../store/actions/authentication";
+import {
+  loginFailure,
+  loginSuccess
+} from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
 import ROUTES from "../../../navigation/routes";
 import { loggedInAuthSelector } from "../../../store/reducers/authentication";
 import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAuthentication";
+import { isDevEnv } from "../../../utils/environment";
+import { onLoginUriChanged } from "../../../utils/login";
+import { apiUrlPrefix } from "../../../config";
+import { trackLoginSpidError } from "../../../screens/authentication/analytics/spidAnalytics";
+import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
+import {
+  HeaderSecondLevelHookProps,
+  useHeaderSecondLevel
+} from "../../../hooks/useHeaderSecondLevel";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -27,16 +50,35 @@ const defaultUserAgent = Platform.select({
   default: undefined
 });
 
-const originSchemasWhiteList = ["https://*", "iologin://*"];
-const IO_LOGIN_CIE_URL_SCHEME = "iologincie:";
-const LOGIN_SUCCESS_PAGE = "profile.html?token=";
+const originSchemasWhiteList = [
+  "https://*",
+  "iologin://*",
+  ...(isDevEnv ? ["http://*"] : [])
+];
+const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
+const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
 const CIE_ID_ERROR = "cieiderror";
 const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
+
+const WHITELISTED_DOMAINS = [
+  "https://idserver.servizicie.interno.gov.it",
+  "https://oidc.idserver.servizicie.interno.gov.it",
+  "https://mtls.oidc.idserver.servizicie.interno.gov.it",
+  "https://mtls.idserver.servizicie.interno.gov.it",
+  "https://ios.idserver.servizicie.interno.gov.it",
+  "https://ios.oidc.idserver.servizicie.interno.gov.it"
+];
 
 export type CieIdLoginProps = {
   spidLevel: SpidLevel;
   isUat: boolean;
 };
+
+const LoadingOverlay = ({ onCancel }: { onCancel: () => void }) => (
+  <View style={styles.loader}>
+    <LoadingSpinnerOverlay isLoading onCancel={onCancel} />
+  </View>
+);
 
 const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const navigation = useIONavigation();
@@ -45,15 +87,86 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const loginUri = getCieIDLoginUri(spidLevel, isUat);
+  const [isLoadingWebView, setIsLoadingWebView] = useState(false);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.navigate(ROUTES.AUTHENTICATION, {
+    navigation.replace(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_CIE_ID_ERROR
     });
   }, [navigation]);
 
+  const navigateToCieIdAuthUrlError = useCallback(
+    (url: string) => {
+      navigation.replace(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_CIE_ID_INCORRECT_URL,
+        params: { url }
+      });
+    },
+    [navigation]
+  );
+
+  const navigateToLandingScreen = useCallback(() => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_LANDING
+    });
+  }, [navigation]);
+
+  const checkIfUrlIsWhitelisted = useCallback(
+    (url: string) => {
+      // Checks if the URL starts with one of the valid URLs
+
+      try {
+        const { origin } = new URL(url);
+        const isDomainValid = WHITELISTED_DOMAINS.includes(origin);
+
+        if (isDomainValid) {
+          // Set the URL as valid
+          setAuthenticatedUrl(url);
+        } else {
+          // Redirects the user to the error screen
+          navigateToCieIdAuthUrlError(url);
+        }
+      } catch (error) {
+        // Redirects the user to the error screen
+        navigateToCieIdAuthUrlError(url);
+      }
+    },
+    [navigateToCieIdAuthUrlError]
+  );
+
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(navigateToCieIdAuthenticationError, loginUri);
+
+  const handleLoginFailure = useCallback(
+    (code?: string, message?: string) => {
+      // TODO: move the error tracking in the `AuthErrorScreen`
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {})
+      });
+      dispatch(
+        loginFailure({
+          error: new Error(
+            `login failure with code ${code || message || "n/a"}`
+          ),
+          idp: "cieid"
+        })
+      );
+      // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
+      // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
+      // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
+      navigation.replace(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTH_ERROR_SCREEN,
+        params: {
+          errorCodeOrMessage: code || message,
+          authMethod: "CIE_ID",
+          authLevel: "L2",
+          params: { spidLevel, isUat }
+        }
+      });
+    },
+    [dispatch, navigation, spidLevel, isUat]
+  );
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
@@ -74,14 +187,12 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
                 // And we extract the error message and show it in an alert
                 const [, errorMessage] =
                   continueUrl.split(CIE_ID_ERROR_MESSAGE);
-                // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-                Alert.alert("Login error ❌", errorMessage);
+                handleLoginFailure(errorMessage);
               } else {
-                // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-                Alert.alert("Login error ❌", "error");
+                handleLoginFailure();
               }
             } else {
-              setAuthenticatedUrl(continueUrl);
+              checkIfUrlIsWhitelisted(continueUrl);
             }
           }
         }
@@ -89,11 +200,41 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     );
 
     return () => urlListenerSubscription.remove();
-  }, []);
+  }, [handleLoginFailure, checkIfUrlIsWhitelisted]);
+
+  const handleLoginSuccess = useCallback(
+    (token: SessionToken) => {
+      dispatch(loginSuccess({ token, idp: "cieid" }));
+    },
+    [dispatch]
+  );
+
+  const handleOpenCieIdApp = useCallback(
+    (url: string) => {
+      if (Platform.OS === "ios") {
+        // TODO: error tracking opening url https://pagopa.atlassian.net/browse/IOPID-2079
+        Linking.openURL(
+          `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
+        ).catch(handleLoginFailure);
+      } else {
+        openCieIdApp(
+          url,
+          result => {
+            if (result.id === "ERROR") {
+              handleLoginFailure(result.code);
+            } else {
+              checkIfUrlIsWhitelisted(result.url);
+            }
+          },
+          isUat
+        );
+      }
+    },
+    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
+  );
 
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ): boolean => {
     const url = event.url;
 
@@ -101,68 +242,85 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       return false;
     }
 
-    if (url.indexOf(LOGIN_SUCCESS_PAGE) !== -1) {
-      const [, token] = url.split(LOGIN_SUCCESS_PAGE);
-      if (token) {
-        // show success alert with dismiss button navigatin back
-        dispatch(loginSuccess({ token: token as SessionToken, idp: "cie" }));
-      }
+    if (isAuthenticationUrl(url)) {
+      handleOpenCieIdApp(url);
+
       return false;
     }
 
-    if (
-      url.indexOf("livello1") >= 0 || // SpidL1
-      (url.indexOf("livello2") >= 0 && url.indexOf("livello2mobile") === -1) || // SpidL2
-      url.indexOf("nextUrl") >= 0 || // SpidL3 iOS
-      url.indexOf("openApp") >= 0 // SpidL3 Android
-    ) {
-      if (Platform.OS === "ios") {
-        const urlForCieId = `CIEID://${url}&sourceApp=iologincie`;
-        Linking.openURL(urlForCieId).catch(navigateToCieIdAuthenticationError);
-      } else {
-        openCieIdApp(
-          url,
-          result => {
-            if (result.id === "ERROR") {
-              // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-              navigateToCieIdAuthenticationError();
-            } else {
-              setAuthenticatedUrl(result.url);
-            }
-          },
-          isUat
-        );
-      }
-      return false;
-    }
-    return true;
+    const isLoginUrlWithToken = onLoginUriChanged(
+      handleLoginFailure,
+      handleLoginSuccess,
+      "cieid"
+    )(event);
+    // URL can be loaded if it's not the login URL containing the session token - this avoids
+    // making a (useless) GET request with the session in the URL
+    return !isLoginUrlWithToken;
   };
 
-  // TODO: remove this after https://pagopa.atlassian.net/browse/IOPID-2322
-  if (!webviewSource) {
-    return (
-      <LoadingSpinnerOverlay
-        isLoading
-        onCancel={navigateToCieIdAuthenticationError}
-      />
-    );
-  }
+  const handleLoadingError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
+      // TODO: error tracking  https://pagopa.atlassian.net/browse/IOPID-2079
+      const webViewHttpError = error as WebViewHttpErrorEvent;
+      if (webViewHttpError.nativeEvent.statusCode) {
+        const { statusCode, url } = webViewHttpError.nativeEvent;
+        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+          navigateToCieIdAuthenticationError();
+        }
+      } else {
+        navigateToCieIdAuthenticationError();
+      }
+    },
+    [navigateToCieIdAuthenticationError]
+  );
+
+  const headerProps: HeaderSecondLevelHookProps = useMemo(() => {
+    if (webviewSource && !authenticatedUrl && !isLoadingWebView) {
+      return { title: "", goBack: navigateToLandingScreen };
+    }
+    return {
+      title: "",
+      canGoBack: false
+    };
+  }, [
+    authenticatedUrl,
+    isLoadingWebView,
+    navigateToLandingScreen,
+    webviewSource
+  ]);
+
+  useHeaderSecondLevel(headerProps);
 
   if (loggedInAuth) {
     return <IdpSuccessfulAuthentication />;
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webView}
-        startInLoadingState={true}
-        userAgent={defaultUserAgent}
-        javaScriptEnabled={true}
-        originWhitelist={originSchemasWhiteList}
-        onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-        source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
-      />
+    <SafeAreaView style={styles.container} edges={["bottom"]}>
+      {(webviewSource || authenticatedUrl) && (
+        <WebView
+          testID="cie-id-webview"
+          ref={webView}
+          startInLoadingState={true}
+          userAgent={defaultUserAgent}
+          javaScriptEnabled={true}
+          renderLoading={() => {
+            setIsLoadingWebView(true);
+            return (
+              <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+            );
+          }}
+          onLoadEnd={() => setIsLoadingWebView(false)}
+          originWhitelist={originSchemasWhiteList}
+          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+          onHttpError={handleLoadingError}
+          onError={handleLoadingError}
+          source={authenticatedUrl ? { uri: authenticatedUrl } : webviewSource}
+        />
+      )}
+      {!webviewSource && (
+        <LoadingOverlay onCancel={navigateToCieIdAuthenticationError} />
+      )}
     </SafeAreaView>
   );
 };
@@ -172,7 +330,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     marginHorizontal: 16
-  }
+  },
+  loader: { position: "absolute", width: "100%", height: "100%" }
 });
 
 export default CieIdLoginWebView;

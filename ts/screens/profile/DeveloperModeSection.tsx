@@ -26,7 +26,6 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../features/pushNotifications/store/reducers/installation";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -55,6 +54,7 @@ import { isDevEnv } from "../../utils/environment";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
+import { requestAppReview } from "../../utils/storeReview";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -159,6 +159,12 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.sentryTestEvent"),
       onPress: sendSentryTestEvent
+    },
+    {
+      condition: true,
+      color: "primary",
+      label: I18n.t("profile.main.storeReview"),
+      onPress: requestAppReview
     }
   ];
 
@@ -326,14 +332,8 @@ const DesignSystemSection = () => {
 };
 
 const PlaygroundsSection = () => {
-  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-
-  const onAddTestCard = () => {
-    dispatch(walletAddCoBadgeStart(undefined));
-  };
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -393,11 +393,6 @@ const PlaygroundsSection = () => {
         navigation.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.PLAYGROUNDS
         })
-    },
-    {
-      condition: isPagoPATestEnabled,
-      value: I18n.t("profile.main.addTestCard.title"),
-      onPress: onAddTestCard
     }
   ];
 

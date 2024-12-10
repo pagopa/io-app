@@ -3,10 +3,12 @@ import {
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import Animated, {
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
@@ -38,7 +40,11 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const insets = useSafeAreaInsets();
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = React.useState(0);
+
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
   const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
     title: headerTitle,
@@ -50,7 +56,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
-    }
+    },
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -74,8 +82,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: 48,
-        backgroundColor: IOColors.white
+        backgroundColor
       }}
+      ref={animatedScrollViewRef}
     >
       <FocusAwareStatusBar
         backgroundColor={blueHeaderColor}

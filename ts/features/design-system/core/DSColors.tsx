@@ -10,6 +10,7 @@ import {
   IOColorsTints,
   IOThemeDark,
   IOThemeLight,
+  BodySmall,
   VStack,
   hexToRgba,
   themeStatusColorsDarkMode,
@@ -19,7 +20,6 @@ import {
 import * as React from "react";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -300,10 +300,10 @@ export const DSColors = () => {
         <VStack space={sectionTitleMargin}>
           <View>
             <H3 color={theme["textHeading-default"]}>Legacy palette (†2023)</H3>
-            <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
+            <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
               Not moved to the &ldquo;Legacy&rdquo; category yet, because
               it&apos;s currently used everywhere
-            </LabelSmall>
+            </BodySmall>
           </View>
 
           <VStack space={colorItemMargin}>

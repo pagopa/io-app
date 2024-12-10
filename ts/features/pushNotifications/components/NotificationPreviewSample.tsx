@@ -5,7 +5,8 @@ import {
   IOSpacingScale,
   IOStyles,
   Icon,
-  LabelSmall
+  BodySmall,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -20,10 +21,9 @@ const styles = StyleSheet.create({
   notification: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: IOColors.white,
     borderWidth: 1,
-    borderColor: IOColors.bluegreyLight,
-    borderRadius: 8,
+    borderRadius: 16,
+    borderCurve: "continuous",
     minHeight: 90,
     marginVertical: notificationMarginVertical,
     paddingVertical: notificationPaddingVertical,
@@ -72,13 +72,23 @@ export const NotificationPreviewSample = ({
     remindersEnabled
   );
 
+  const theme = useIOTheme();
+
   return (
-    <View style={styles.notification}>
-      <Icon color="blueIO-450" name="productIOApp" />
+    <View
+      style={[
+        styles.notification,
+        {
+          backgroundColor: IOColors[theme["appBackground-primary"]],
+          borderColor: IOColors[theme["cardBorder-default"]]
+        }
+      ]}
+    >
+      <Icon size={24} name="productIOAppBlueBg" />
       <HSpacer />
       <View style={IOStyles.flex}>
         <H6>{I18n.t(titleKey)}</H6>
-        <LabelSmall weight="Regular">{I18n.t(messageKey)}</LabelSmall>
+        <BodySmall weight="Regular">{I18n.t(messageKey)}</BodySmall>
       </View>
     </View>
   );

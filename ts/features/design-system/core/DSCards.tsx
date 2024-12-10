@@ -387,31 +387,6 @@ const ServicesCards = () => (
 
 const ItwCards = () => (
   <VStack space={blockMargin}>
-    <DesignSystemSection title="eID">
-      <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="Valid">
-          <ItwCredentialCard credentialType={CredentialType.PID} />
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="Expired">
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            status="expired"
-          />
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="Pending">
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            status="pending"
-          />
-        </DSComponentViewerBox>
-      </VStack>
-    </DesignSystemSection>
     <DesignSystemSection title="Driving License">
       <VStack space={componentMargin}>
         <DSComponentViewerBox name="Preview">
@@ -422,6 +397,12 @@ const ItwCards = () => (
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard credentialType={CredentialType.DRIVING_LICENSE} />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Invalid">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="invalid"
+          />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
@@ -435,10 +416,16 @@ const ItwCards = () => (
             status="expiring"
           />
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="Pending">
+        <DSComponentViewerBox name="Expired Digital Credential">
           <ItwCredentialCard
             credentialType={CredentialType.DRIVING_LICENSE}
-            status="pending"
+            status="jwtExpired"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Expiring Digital Credential">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="jwtExpiring"
           />
         </DSComponentViewerBox>
       </VStack>
@@ -448,6 +435,7 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Valid">
           <ItwSkeumorphicCardPreview
             credential={ItwStoredCredentialsMocks.mdl}
+            status="valid"
           />
         </DSComponentViewerBox>
       </VStack>
@@ -477,12 +465,6 @@ const ItwCards = () => (
             status="expiring"
           />
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="Pending">
-          <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-            status="pending"
-          />
-        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Skeumorphic Disability Card">
@@ -490,6 +472,7 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Valid">
           <ItwSkeumorphicCardPreview
             credential={ItwStoredCredentialsMocks.dc}
+            status="valid"
           />
         </DSComponentViewerBox>
       </VStack>
@@ -517,12 +500,6 @@ const ItwCards = () => (
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
             status="expiring"
-          />
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="Pending">
-          <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-            status="pending"
           />
         </DSComponentViewerBox>
       </VStack>

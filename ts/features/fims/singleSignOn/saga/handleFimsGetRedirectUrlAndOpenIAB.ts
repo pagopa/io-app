@@ -6,7 +6,10 @@ import {
   isCancelledFailure,
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import {
+  isLoginUtilsError,
+  openAuthenticationSession
+} from "@pagopa/io-react-native-login-utils";
 import * as E from "fp-ts/lib/Either";
 import { Parser as HTMLParser2 } from "htmlparser2";
 import {
@@ -15,7 +18,8 @@ import {
 } from "react-native-url-polyfill";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { fimsDomainSelector } from "../../../../store/reducers/backendStatus";
+import { IOToast } from "@pagopa/io-app-design-system";
+import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { LollipopConfig } from "../../../lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
@@ -28,6 +32,7 @@ import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { serviceByIdSelector } from "../../../services/details/store/reducers";
 import { fimsCtaTextSelector } from "../store/selectors";
 import { trackInAppBrowserOpening } from "../../common/analytics";
+import I18n from "../../../../i18n";
 import {
   deallocateFimsAndRenewFastLoginSession,
   deallocateFimsResourcesAndNavigateBack
@@ -53,7 +58,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "missing FIMS domain",
         debugMessage
       })
     );
@@ -68,7 +72,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "unable to accept grants: invalid URL",
         debugMessage
       })
     );
@@ -97,7 +100,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "could not get RelyingParty redirect URL",
         debugMessage
       })
     );
@@ -134,7 +136,6 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "IAB url call failed or without a valid redirect",
         debugMessage
       })
     );
@@ -147,7 +148,16 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   yield* call(deallocateFimsResourcesAndNavigateBack);
   yield* call(computeAndTrackInAppBrowserOpening, action);
 
-  return openAuthenticationSession(inAppBrowserRedirectUrl, "", true);
+  try {
+    yield* call(
+      openAuthenticationSession,
+      inAppBrowserRedirectUrl,
+      "iossoapi",
+      true
+    );
+  } catch (error: unknown) {
+    yield* call(handleInAppBrowserErrorIfNeeded, error);
+  }
 }
 
 const recurseUntilRPUrl = async (
@@ -237,8 +247,6 @@ function* postToRelyingPartyWithImplicitCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "Could notprocess redirection page, Implicit code flow",
         debugMessage
       })
     );
@@ -262,8 +270,6 @@ function* postToRelyingPartyWithImplicitCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "could not sign request with LolliPoP, Implicit code flow",
         debugMessage
       })
     );
@@ -301,8 +307,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "Could not find valid Location header, Authorization code flow",
         debugMessage
       })
     );
@@ -319,7 +323,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage: "could not extract data from RelyingParty URL",
         debugMessage
       })
     );
@@ -339,8 +342,6 @@ function* redirectToRelyingPartyWithAuthorizationCodeFlow(
     yield* put(
       fimsGetRedirectUrlAndOpenIABAction.failure({
         errorTag: "GENERIC",
-        standardMessage:
-          "could not sign request with LolliPoP, Authorization code flow",
         debugMessage
       })
     );
@@ -494,3 +495,24 @@ function* computeAndTrackInAppBrowserOpening(
     ctaText
   );
 }
+
+function* handleInAppBrowserErrorIfNeeded(error: unknown) {
+  if (!isInAppBrowserClosedError(error)) {
+    const debugMessage = `IAB opening failed: ${inAppBrowserErrorToHumanReadable(
+      error
+    )}`;
+    yield* call(computeAndTrackAuthenticationError, debugMessage);
+    yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
+  }
+}
+
+const isInAppBrowserClosedError = (error: unknown) =>
+  isLoginUtilsError(error) &&
+  error.userInfo.error === "NativeAuthSessionClosed";
+
+const inAppBrowserErrorToHumanReadable = (error: unknown) => {
+  if (isLoginUtilsError(error)) {
+    return `${error.code} ${error.userInfo.error}`;
+  }
+  return JSON.stringify(error);
+};

@@ -204,6 +204,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -365,7 +366,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -469,7 +470,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -542,7 +543,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -644,7 +645,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -717,7 +718,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -819,7 +820,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -892,7 +893,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -994,7 +995,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1067,7 +1068,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1169,7 +1170,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1242,7 +1243,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1344,7 +1345,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1417,7 +1418,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1519,7 +1520,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1592,7 +1593,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1694,7 +1695,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1767,7 +1768,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1869,7 +1870,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -1942,7 +1943,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2044,7 +2045,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2117,7 +2118,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2219,7 +2220,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2292,7 +2293,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2396,7 +2397,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                                   "fontSize": 18,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
-                                  "lineHeight": 25,
+                                  "lineHeight": 24,
                                 },
                               ]
                             }
@@ -2652,6 +2653,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

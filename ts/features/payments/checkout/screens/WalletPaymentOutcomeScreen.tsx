@@ -44,6 +44,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
+import { requestAppReview } from "../../../../utils/storeReview";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -129,11 +130,11 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
+    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
     ) {
-      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
       // Currently we do support only navigation to the wallet
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
@@ -146,6 +147,11 @@ const WalletPaymentOutcomeScreen = () => {
     navigation.pop();
   };
 
+  const handleSuccessClose = () => {
+    requestAppReview();
+    handleClose();
+  };
+
   const handleShowMoreOnReversedPayment = () => {
     reversedPaymentModal.present();
   };
@@ -153,7 +159,8 @@ const WalletPaymentOutcomeScreen = () => {
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
-    onPress: handleClose
+    onPress: handleSuccessClose,
+    testID: "wallet-payment-outcome-success-button"
   };
 
   const closeFailureAction: OperationResultScreenContentProps["action"] = {
@@ -276,7 +283,7 @@ const WalletPaymentOutcomeScreen = () => {
           : undefined
     });
   };
-
+  // eslint-disable-next-line complexity
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
     switch (outcome) {
       case WalletPaymentOutcomeEnum.SUCCESS:
@@ -400,8 +407,7 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
           ),
           action: onboardPaymentMethodAction,
-          secondaryAction: onboardPaymentMethodCloseAction,
-          isHeaderVisible: true
+          secondaryAction: onboardPaymentMethodCloseAction
         };
       case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
         return {
@@ -429,8 +435,50 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t(
             "wallet.payment.outcome.IN_APP_BROWSER_CLOSED_BY_USER.subtitle"
           ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
+        return {
+          pictogram: "emptyWallet",
+          title: I18n.t(
+            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.INSUFFICIENT_AVAILABILITY_ERROR.subtitle"
+          ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.CVV_ERROR:
+        return {
+          pictogram: "stopSecurity",
+          title: I18n.t("wallet.payment.outcome.CVV_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.CVV_ERROR.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.PLAFOND_LIMIT_ERROR:
+        return {
+          pictogram: "meterLimit",
+          title: I18n.t("wallet.payment.outcome.PLAFOND_LIMIT_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.PLAFOND_LIMIT_ERROR.subtitle"
+          ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.BE_NODE_KO:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
+          subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
-          isHeaderVisible: true
+          secondaryAction: contactSupportAction
+        };
+      case WalletPaymentOutcomeEnum.PSP_ERROR:
+        return {
+          pictogram: "attention",
+          title: I18n.t("wallet.payment.outcome.PSP_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.PSP_ERROR.subtitle"),
+          action: closeFailureAction,
+          secondaryAction: contactSupportAction
         };
     }
   };
@@ -439,7 +487,7 @@ const WalletPaymentOutcomeScreen = () => {
 
   return (
     <>
-      <OperationResultScreenContent {...getPropsForOutcome()}>
+      <OperationResultScreenContent isHeaderVisible {...getPropsForOutcome()}>
         {requiresFeedback && <WalletPaymentFeebackBanner />}
       </OperationResultScreenContent>
       {supportModal.bottomSheet}

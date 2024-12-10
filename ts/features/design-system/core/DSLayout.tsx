@@ -1,19 +1,19 @@
 import {
+  Body,
   ContentWrapper,
   Divider,
+  H2,
+  H6,
   HStack,
   IOAppMargin,
   IOColors,
   IOSpacer,
+  BodySmall,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import { Body } from "../../../components/core/typography/Body";
-import { H1 } from "../../../components/core/typography/H1";
-import { H3 } from "../../../components/core/typography/H3";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -39,20 +39,8 @@ const Grid = () => {
   return (
     <View>
       <ContentWrapper>
-        <H1
-          color={theme["textHeading-default"]}
-          weight={"Bold"}
-          style={{ marginBottom: 16 }}
-        >
-          Grid
-        </H1>
-        <H3
-          color={theme["textHeading-default"]}
-          weight={"Semibold"}
-          style={{ marginBottom: 16 }}
-        >
-          ContentWrapper
-        </H3>
+        <H2 style={{ marginBottom: 16 }}>Grid</H2>
+        <H6 style={{ marginBottom: 16 }}>ContentWrapper</H6>
       </ContentWrapper>
 
       <VStack space={16}>
@@ -71,14 +59,13 @@ const Grid = () => {
                 }}
               >
                 <Body color={theme["textBody-secondary"]}>Content example</Body>
-                <LabelSmall
+                <BodySmall
                   style={{ position: "absolute", right: 4, top: 4 }}
-                  fontSize="small"
                   weight="Regular"
                   color={theme["textBody-tertiary"]}
                 >
                   {value}
-                </LabelSmall>
+                </BodySmall>
               </View>
             </ContentWrapper>
           </View>
@@ -88,78 +75,58 @@ const Grid = () => {
   );
 };
 
-const Spacing = () => {
-  const theme = useIOTheme();
+const Spacing = () => (
+  <ContentWrapper>
+    <H2 style={{ marginBottom: 16 }}>Spacing</H2>
 
-  return (
-    <ContentWrapper>
-      <H1
-        color={theme["textHeading-default"]}
-        weight={"Bold"}
-        style={{ marginBottom: 16 }}
-      >
-        Spacing
-      </H1>
+    <VStack space={24}>
+      {/* VSPACER */}
+      <VStack space={16}>
+        <H6>VSpacer</H6>
 
-      <VStack space={24}>
-        {/* VSPACER */}
+        {/* Vertical */}
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
-            VSpacer
-          </H3>
-
-          {/* Vertical */}
-          <VStack space={16}>
-            {IOSpacer.map((spacerEntry, i) => (
-              <DSSpacerViewerBox
-                key={`${spacerEntry}-${i}-vertical`}
-                orientation="vertical"
-                size={spacerEntry}
-              />
-            ))}
-          </VStack>
-        </VStack>
-
-        {/* HSPACER */}
-        <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
-            HSpacer
-          </H3>
-
-          {/* Horizontal */}
-          <HStack space={8}>
-            {IOSpacer.map((spacerEntry, i) => (
-              <DSSpacerViewerBox
-                key={`${spacerEntry}-${i}-horizontal`}
-                orientation="horizontal"
-                size={spacerEntry}
-              />
-            ))}
-          </HStack>
+          {IOSpacer.map((spacerEntry, i) => (
+            <DSSpacerViewerBox
+              key={`${spacerEntry}-${i}-vertical`}
+              orientation="vertical"
+              size={spacerEntry}
+            />
+          ))}
         </VStack>
       </VStack>
-    </ContentWrapper>
-  );
-};
+
+      {/* HSPACER */}
+      <VStack space={16}>
+        <H6>HSpacer</H6>
+
+        {/* Horizontal */}
+        <HStack space={8}>
+          {IOSpacer.map((spacerEntry, i) => (
+            <DSSpacerViewerBox
+              key={`${spacerEntry}-${i}-horizontal`}
+              orientation="horizontal"
+              size={spacerEntry}
+            />
+          ))}
+        </HStack>
+      </VStack>
+    </VStack>
+  </ContentWrapper>
+);
 
 const Stack = () => {
   const theme = useIOTheme();
 
   return (
     <ContentWrapper>
-      <H1
-        color={theme["textHeading-default"]}
-        weight={"Bold"}
-        style={{ marginBottom: 16 }}
-      >
+      <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
         Stack
-      </H1>
+      </H2>
 
       <VStack space={24}>
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
-            VStack
-          </H3>
+          <H6>VStack</H6>
 
           <View>
             <DSComponentViewerBox name="VStack, space 16">
@@ -190,9 +157,7 @@ const Stack = () => {
         </VStack>
 
         <VStack space={16}>
-          <H3 color={theme["textHeading-default"]} weight={"Semibold"}>
-            HStack
-          </H3>
+          <H6>HStack</H6>
 
           <DSComponentViewerBox name="HStack, space 16">
             <View
@@ -239,10 +204,10 @@ const VStackBlocks = () => {
             backgroundColor: IOColors[theme["appBackground-tertiary"]]
           }}
         >
-          <LabelSmall
+          <BodySmall
             weight="Regular"
             color={theme["textBody-tertiary"]}
-          >{`Block n.${i + 1}`}</LabelSmall>
+          >{`Block n.${i + 1}`}</BodySmall>
         </View>
       ))}
       <View
@@ -254,9 +219,9 @@ const VStackBlocks = () => {
           backgroundColor: IOColors[theme["appBackground-tertiary"]]
         }}
       >
-        <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           Different height
-        </LabelSmall>
+        </BodySmall>
       </View>
     </>
   );
@@ -278,9 +243,9 @@ const HStackBlocks = () => {
             backgroundColor: IOColors[theme["appBackground-tertiary"]]
           }}
         >
-          <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>{`${
+          <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>{`${
             i + 1
-          }`}</LabelSmall>
+          }`}</BodySmall>
         </View>
       ))}
       <View
@@ -292,39 +257,23 @@ const HStackBlocks = () => {
           backgroundColor: IOColors[theme["appBackground-tertiary"]]
         }}
       >
-        <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           Growing block
-        </LabelSmall>
+        </BodySmall>
       </View>
     </>
   );
 };
 
-const DividerRow = () => {
-  const theme = useIOTheme();
+const DividerRow = () => (
+  <>
+    <ContentWrapper>
+      <H2 style={{ marginBottom: 16 }}>Divider</H2>
 
-  return (
-    <>
-      <ContentWrapper>
-        <H1
-          color={theme["textHeading-default"]}
-          weight={"Bold"}
-          style={{ marginBottom: 16 }}
-        >
-          Divider
-        </H1>
+      <H6 style={{ marginBottom: 16 }}>Default (Horizontal)</H6>
 
-        <H3
-          color={theme["textHeading-default"]}
-          weight={"Semibold"}
-          style={{ marginBottom: 16 }}
-        >
-          Default (Horizontal)
-        </H3>
-
-        <Divider />
-      </ContentWrapper>
       <Divider />
-    </>
-  );
-};
+    </ContentWrapper>
+    <Divider />
+  </>
+);

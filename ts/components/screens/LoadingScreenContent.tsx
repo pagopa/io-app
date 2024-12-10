@@ -1,30 +1,27 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import * as React from "react";
-import { View, StyleSheet, Platform, AccessibilityInfo } from "react-native";
 import {
   ContentWrapper,
   H3,
-  IOStyles,
+  IOColors,
   useIOTheme,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 import { WithTestID } from "../../types/WithTestID";
+import {
+  AnimatedPictogram,
+  AnimatedPictogramSource
+} from "../ui/AnimatedPictogramComponent";
 
 const styles = StyleSheet.create({
   container: {
-    ...IOStyles.bgWhite,
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
+    flex: 1,
+    justifyContent: "center"
   }
 });
 
@@ -34,11 +31,18 @@ type LoadingScreenContentProps = WithTestID<{
   contentTitle: string;
   children?: React.ReactNode;
   headerVisible?: boolean;
+  animatedPictogramSource?: AnimatedPictogramSource;
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
   const theme = useIOTheme();
-  const { contentTitle, children, headerVisible, testID } = props;
+  const {
+    contentTitle,
+    children,
+    headerVisible,
+    testID,
+    animatedPictogramSource
+  } = props;
 
   React.useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -54,28 +58,37 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
 
   return (
     <SafeAreaView
-      style={styles.container}
+      style={[
+        styles.container,
+        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+      ]}
       edges={headerVisible ? ["bottom"] : undefined}
       testID={testID}
     >
       <ContentWrapper>
-        <View style={styles.content}>
+        <VStack
+          space={SPACE_BETWEEN_SPINNER_AND_TEXT}
+          style={{ alignItems: "center" }}
+        >
           <View
             accessible={false}
             accessibilityElementsHidden={true}
             importantForAccessibility={"no-hide-descendants"}
           >
-            <LoadingIndicator />
+            {animatedPictogramSource ? (
+              <AnimatedPictogram source={animatedPictogramSource} />
+            ) : (
+              <LoadingIndicator />
+            )}
           </View>
-          <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
           <H3
+            style={{ textAlign: "center" }}
             color={theme["textHeading-secondary"]}
-            style={styles.contentTitle}
             accessibilityLabel={contentTitle}
           >
             {contentTitle}
           </H3>
-        </View>
+        </VStack>
       </ContentWrapper>
       {children}
     </SafeAreaView>

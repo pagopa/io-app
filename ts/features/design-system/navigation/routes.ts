@@ -95,7 +95,7 @@ const DESIGN_SYSTEM_ROUTES = {
     },
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
-      title: "Full screen modal"
+      title: "Full screen modal (native)"
     },
     SCREEN_END_MARGIN: {
       route: "DS_SCREEN_END_MARGIN",
@@ -131,24 +131,16 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DYNAMIC_CARD_ROTATION",
       title: "Dynamic card based on device rotation"
     },
+    IRIDESCENT_TRUSTMARK: {
+      route: "DS_IRIDESCENT_TRUSTMARK",
+      title: "Iridescent trustmark"
+    },
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
     }
   },
   LEGACY: {
-    TYPOGRAPHY: {
-      route: "DESIGN_SYSTEM_LEGACY_TYPOGRAPHY",
-      title: "Typography"
-    },
-    PICTOGRAMS: {
-      route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
-      title: "Pictograms"
-    },
-    BUTTONS: {
-      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
-      title: "Buttons"
-    },
     TEXT_FIELDS: {
       route: "DESIGN_SYSTEM_LEGACY_TEXT_FIELDS",
       title: "Text Fields"
@@ -156,22 +148,6 @@ const DESIGN_SYSTEM_ROUTES = {
     LIST_ITEMS: {
       route: "DESIGN_SYSTEM_LEGACY_LIST_ITEMS",
       title: "List Items"
-    },
-    BADGES: {
-      route: "DESIGN_SYSTEM_LEGACY_BADGES",
-      title: "Badges"
-    },
-    SELECTION: {
-      route: "DESIGN_SYSTEM_LEGACY_SELECTION",
-      title: "Selection"
-    },
-    ACCORDION: {
-      route: "DESIGN_SYSTEM_LEGACY_ACCORDION",
-      title: "Accordion"
-    },
-    ALERT: {
-      route: "DESIGN_SYSTEM_LEGACY_ALERT",
-      title: "Alert"
     },
     ADVICE: {
       route: "DESIGN_SYSTEM_LEGACY_ADVICE",

@@ -9,12 +9,14 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
+import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { getSortedPspList } from "../../../common/utils";
 import { WalletPaymentStepEnum } from "../../types";
+import { FaultCodeCategoryEnum as PaymentMethodNotAvailableEnum } from "../../types/PspPaymentMethodNotAvailableProblemJson";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   paymentsCalculatePaymentFeesAction,
@@ -34,7 +36,6 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type PaymentsCheckoutState = {
@@ -47,7 +48,7 @@ export type PaymentsCheckoutState = {
   userWallets: pot.Pot<Wallets, NetworkError>;
   recentUsedPaymentMethod: pot.Pot<UserLastPaymentMethodResponse, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
-  pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
+  pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError | WalletPaymentFailure>;
   selectedWallet: O.Option<WalletInfo>;
   selectedPaymentMethod: O.Option<PaymentMethodResponse>;
   selectedPsp: O.Option<Bundle>;
@@ -209,10 +210,28 @@ const reducer = (
         currentStep,
         selectedPsp
       };
+    case getType(paymentsCalculatePaymentFeesAction.cancel):
+      return {
+        ...state,
+        pspList: pot.none,
+        selectedPaymentMethod: O.none,
+        currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
+        selectedPsp: O.none,
+        selectedWallet: O.none
+      };
     case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
         ...state,
-        pspList: pot.toError(state.pspList, action.payload)
+        pspList: pot.toError(
+          state.pspList,
+          action.payload.kind === "notFound"
+            ? {
+                faultCodeCategory:
+                  PaymentMethodNotAvailableEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
+                faultCodeDetail: ""
+              }
+            : action.payload
+        )
       };
 
     case getType(selectPaymentPspAction):
@@ -235,14 +254,13 @@ const reducer = (
         ...state,
         transaction: pot.some(action.payload)
       };
-    case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsDeleteTransactionAction.success):
       return {
         ...state,
         transaction: pot.none
       };
+    case getType(paymentsCreateTransactionAction.failure):
     case getType(paymentsGetPaymentTransactionInfoAction.failure):
-    case getType(paymentsDeleteTransactionAction.failure):
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)

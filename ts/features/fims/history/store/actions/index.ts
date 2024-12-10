@@ -3,7 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ConsentsResponseDTO } from "../../../../../../definitions/fims/ConsentsResponseDTO";
+import { AccessHistoryPage } from "../../../../../../definitions/fims_history/AccessHistoryPage";
 import { FimsExportSuccessStates } from "../reducer";
 
 export type FimsHistoryGetPayloadType = {
@@ -15,7 +15,7 @@ export const fimsHistoryGet = createAsyncAction(
   "FIMS_GET_HISTORY_REQUEST",
   "FIMS_GET_HISTORY_SUCCESS",
   "FIMS_GET_HISTORY_FAILURE"
-)<FimsHistoryGetPayloadType, ConsentsResponseDTO, string>();
+)<FimsHistoryGetPayloadType, AccessHistoryPage, string>();
 
 export const fimsHistoryExport = createAsyncAction(
   "FIMS_HISTORY_EXPORT_REQUEST",

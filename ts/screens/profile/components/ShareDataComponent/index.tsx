@@ -1,12 +1,10 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import React, { memo } from "react";
-import { Body } from "../../../../components/core/typography/Body";
-import { Link } from "../../../../components/core/typography/Link";
+import { tosConfigSelector } from "../../../../features/tos/store/selectors";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
-import { useIOSelector } from "../../../../store/hooks";
-import { tosConfigSelector } from "../../../../features/tos/store/selectors";
 import {
   AnalyticsFeatureInfo,
   FeatureProps,
@@ -43,11 +41,16 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <Link onPress={handleOnPress} testID="additionalInformation">
+        <Body
+          weight="Semibold"
+          asLink
+          onPress={handleOnPress}
+          testID="additionalInformation"
+        >
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}
-        </Link>
+        </Body>
       </Body>
     </>
   );

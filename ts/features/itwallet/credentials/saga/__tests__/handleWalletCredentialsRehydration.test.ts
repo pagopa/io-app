@@ -4,12 +4,13 @@ import { expectSaga } from "redux-saga-test-plan";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
-import { walletAddCards } from "../../../../newWallet/store/actions/cards";
-import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
+  const jwtExpiration = "2100-09-04T00:00:00.000Z";
   const mockedEid: StoredCredential = {
     credential: "",
     credentialType: CredentialType.PID,
@@ -21,7 +22,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     issuerConf: {} as StoredCredential["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
-      expiration: "2025-09-30T07:32:50.000Z"
+      expiration: jwtExpiration
     }
   };
 
@@ -68,6 +69,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
+                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
@@ -75,6 +77,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "3",
                 credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
+                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }
@@ -120,6 +123,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
               O.some({
                 keyTag: "2",
                 credentialType: CredentialType.DRIVING_LICENSE,
+                jwt: { expiration: jwtExpiration },
                 parsedCredential: {
                   expiry_date: expirationClaim
                 }

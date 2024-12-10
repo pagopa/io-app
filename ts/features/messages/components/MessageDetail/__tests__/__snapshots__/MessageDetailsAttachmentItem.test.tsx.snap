@@ -204,6 +204,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -357,9 +358,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           style={
                             {
                               "alignItems": "center",
-                              "columnGap": 8,
                               "display": "flex",
                               "flexDirection": "row",
+                              "gap": 8,
                             }
                           }
                         >
@@ -371,13 +372,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                 "flexDirection": "column",
                                 "flexGrow": 1,
                                 "flexShrink": 1,
-                                "rowGap": 4,
+                                "gap": 4,
                               }
                             }
                           >
                             <Text
                               allowFontScaling={false}
-                              dynamicTypeRamp="footnote"
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -389,7 +390,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -840,6 +841,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1034,9 +1036,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -1048,13 +1050,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >
                               <Text
                                 allowFontScaling={false}
-                                dynamicTypeRamp="footnote"
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -1066,7 +1068,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 21,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }
@@ -1401,6 +1403,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1554,9 +1557,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           style={
                             {
                               "alignItems": "center",
-                              "columnGap": 8,
                               "display": "flex",
                               "flexDirection": "row",
+                              "gap": 8,
                             }
                           }
                         >
@@ -1568,13 +1571,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 "flexDirection": "column",
                                 "flexGrow": 1,
                                 "flexShrink": 1,
-                                "rowGap": 4,
+                                "gap": 4,
                               }
                             }
                           >
                             <Text
                               allowFontScaling={false}
-                              dynamicTypeRamp="footnote"
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -1586,7 +1589,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -1927,6 +1930,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2121,9 +2125,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -2135,13 +2139,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >
                               <Text
                                 allowFontScaling={false}
-                                dynamicTypeRamp="footnote"
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -2153,7 +2157,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": 21,
+                                      "lineHeight": 24,
                                     },
                                   ]
                                 }

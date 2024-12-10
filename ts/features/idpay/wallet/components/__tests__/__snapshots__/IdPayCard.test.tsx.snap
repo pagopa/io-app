@@ -58,7 +58,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                 "fontSize": 18,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 25,
+                "lineHeight": 24,
               },
               {
                 "width": "80%",
@@ -130,7 +130,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
       />
       <Text
         allowFontScaling={false}
-        dynamicTypeRamp="footnote"
+        dynamicTypeRamp="body"
         maxFontSizeMultiplier={1.25}
         style={
           [
@@ -141,7 +141,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
-              "lineHeight": 21,
+              "lineHeight": 24,
             },
           ]
         }
@@ -171,7 +171,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
     </View>
     <Text
       allowFontScaling={false}
-      dynamicTypeRamp="footnote"
+      dynamicTypeRamp="body"
       maxFontSizeMultiplier={1.25}
       style={
         [
@@ -182,7 +182,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
             "fontSize": 16,
             "fontStyle": "normal",
             "fontWeight": "600",
-            "lineHeight": 21,
+            "lineHeight": 24,
           },
         ]
       }

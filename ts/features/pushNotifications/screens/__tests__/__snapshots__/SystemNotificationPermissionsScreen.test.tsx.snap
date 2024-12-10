@@ -204,6 +204,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -367,7 +368,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 16,
+                                "gap": 16,
                               }
                             }
                           >
@@ -562,7 +563,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                     "alignItems": "center",
                                     "display": "flex",
                                     "flexDirection": "column",
-                                    "rowGap": 8,
+                                    "gap": 8,
                                   }
                                 }
                               >
@@ -848,7 +849,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -963,7 +964,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": undefined,
                                       },
                                       {

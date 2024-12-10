@@ -1,5 +1,9 @@
 import {
+  Body,
+  BodyMonospace,
+  H4,
   IOColors,
+  BodySmall,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -7,11 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Button, ScrollView, View } from "react-native";
 import { LabelledItem } from "../../../components/LabelledItem";
-import { Body } from "../../../components/core/typography/Body";
-import { H2 } from "../../../components/core/typography/H2";
-import { Label } from "../../../components/core/typography/Label";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
-import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IdPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/routes";
@@ -58,7 +57,7 @@ const IdPayOnboardingPlayground = () => {
         {isDevEnv && (
           <>
             <VSpacer size={24} />
-            <H2>Iniziative di test</H2>
+            <H4>Iniziative di test</H4>
             <Body>Iniziative disponibili tramite io-dev-server</Body>
             {testServices.map(srv => (
               <TestServiceItem
@@ -176,11 +175,12 @@ const TestServiceItem = (props: TestServiceItemProps) => {
               alignItems: "center"
             }}
           >
-            <Label color="bluegrey">
-              {label} <LabelSmall>{willFail ? "❌" : "✅"}</LabelSmall>
-            </Label>
+            <Body weight="Semibold">
+              {label}{" "}
+              <BodySmall weight="Semibold">{willFail ? "❌" : "✅"}</BodySmall>
+            </Body>
           </View>
-          <Monospace selectable>{serviceId}</Monospace>
+          <BodyMonospace selectable>{serviceId}</BodyMonospace>
         </View>
       </PressableListItemBase>
     </View>

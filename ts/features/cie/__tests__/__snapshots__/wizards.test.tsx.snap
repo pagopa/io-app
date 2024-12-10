@@ -50,7 +50,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 40,
+                "lineHeight": 34,
               },
             ]
           }
@@ -90,7 +90,9 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          If you have the CieID app on your device, log in to IO by entering the app's credentials. You can also use your face or fingerprint, or the code you set up for the CieID app.
+          If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
+
+To enter the IO app without physically using the Electronic Identity Card, you must first enable Level 1 and Level 2 access in the CieID application.
         </Text>
       </View>
       <View
@@ -114,29 +116,105 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             }
           }
         />
-        <Text
-          accessibilityRole="link"
-          allowFontScaling={false}
-          maxFontSizeMultiplier={1.25}
-          onPress={[Function]}
-          style={
-            [
-              {
-                "textDecorationLine": "underline",
-              },
-              {
-                "color": "#0B3EE3",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 24,
-              },
-            ]
+        <View
+          accessibilityLabel="What is CieID?"
+          accessibilityRole="button"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
           }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            {
+              "bottom": 14,
+              "left": 24,
+              "right": 24,
+              "top": 14,
+            }
+          }
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTouchEnd={[Function]}
+          style={
+            {
+              "alignSelf": "flex-start",
+            }
+          }
+          testID="cie-id-wizard-open-cie-id-link"
         >
-          What is CieID?
-        </Text>
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "textAlignVertical": "center",
+                },
+                false,
+                {},
+                {
+                  "transform": [
+                    {
+                      "scale": undefined,
+                    },
+                  ],
+                },
+              ]
+            }
+          >
+            <Text
+              accessibilityElementsHidden={true}
+              accessible={false}
+              allowFontScaling={false}
+              ellipsizeMode="tail"
+              importantForAccessibility="no-hide-descendants"
+              maxFontSizeMultiplier={1.25}
+              numberOfLines={1}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#0E0F13",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": undefined,
+                  },
+                  {
+                    "color": undefined,
+                  },
+                ]
+              }
+            >
+              What is CieID?
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   </RCTScrollView>,
@@ -308,6 +386,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={{}}
+        testID="cie-id-wizard-login-with-cie-id"
       >
         <View
           style={
@@ -370,7 +449,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -445,6 +524,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="cie-id-wizard-navigate-to-cie-pin-wizard"
         >
           <View
             style={
@@ -484,7 +564,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -553,7 +633,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 40,
+                "lineHeight": 34,
               },
             ]
           }
@@ -663,6 +743,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="cie-pin-wizard-open-bottom-sheet"
         >
           <View
             style={
@@ -702,7 +783,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -716,306 +797,351 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           </View>
         </View>
       </View>
-      <Modal
-        accessibilityPositionChangeAnnouncement=""
-        accessible={false}
-        backdropComponent={[Function]}
-        enableDismissOnClose={true}
-        footerComponent={[Function]}
-        handleComponent={[Function]}
-        handleComponentAccessibility={
-          {
-            "accessible": false,
-          }
-        }
-        hardwareAccelerated={false}
-        importantForAccessibility="yes"
-        onDismiss={[Function]}
-        snapPoints={
-          [
-            350,
-          ]
-        }
+      <RCTScrollView
         style={
           {
-            "borderCurve": "continuous",
-            "borderTopLeftRadius": 24,
-            "borderTopRightRadius": 24,
-            "overflow": "hidden",
+            "flex": 1,
+            "paddingHorizontal": 24,
           }
         }
-        visible={true}
       >
-        <RCTScrollView
-          style={
-            {
-              "flex": 1,
-              "paddingHorizontal": 24,
-            }
-          }
-        >
+        <View>
           <View>
-            <View>
-              <Text
-                allowFontScaling={false}
-                dynamicTypeRamp="body"
-                maxFontSizeMultiplier={1.25}
-                style={
-                  [
-                    {},
-                    {
-                      "color": "#555C70",
-                      "fontFamily": "Titillium Sans Pro",
-                      "fontSize": 16,
-                      "fontStyle": "normal",
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                    },
-                  ]
-                }
-              >
-                The PIN code consists of 8 digits and is divided in two parts:
-              </Text>
-              <View>
-                <View
-                  style={
-                    {
-                      "height": 8,
-                    }
-                  }
-                />
-                <View
-                  style={
-                    {
-                      "flexDirection": "row",
-                    }
-                  }
-                >
-                  <View
-                    style={
-                      {
-                        "width": 12,
-                      }
-                    }
-                  />
-                  <View
-                    accessibilityRole="list"
-                    accessible={true}
-                    style={
-                      [
-                        {
-                          "flex": 1,
-                        },
-                        {
-                          "flexGrow": 1,
-                        },
-                      ]
-                    }
-                  >
-                    <View
-                      accessible={true}
-                      style={
-                        {
-                          "flexDirection": "row",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.25}
-                        style={
-                          [
-                            {},
-                            {
-                              "color": "#555C70",
-                              "fontFamily": "Titillium Sans Pro",
-                              "fontSize": 16,
-                              "fontStyle": "normal",
-                              "fontWeight": "400",
-                              "lineHeight": 24,
-                            },
-                          ]
-                        }
-                      >
-                        •
-                      </Text>
-                      <View
-                        style={
-                          {
-                            "width": 8,
-                          }
-                        }
-                      />
-                      <View
-                        accessible={false}
-                        style={
-                          [
-                            {
-                              "flex": 1,
-                            },
-                            {
-                              "flexShrink": 1,
-                            },
-                          ]
-                        }
-                      >
-                        <Text
-                          allowFontScaling={false}
-                          dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.25}
-                          style={
-                            [
-                              {},
-                              {
-                                "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontSize": 16,
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
-                                "lineHeight": 24,
-                              },
-                            ]
-                          }
-                        >
-                          the first 4 digits you received at the registry office;
-                        </Text>
-                      </View>
-                    </View>
-                    <View
-                      accessible={true}
-                      style={
-                        {
-                          "flexDirection": "row",
-                        }
-                      }
-                    >
-                      <Text
-                        allowFontScaling={false}
-                        dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.25}
-                        style={
-                          [
-                            {},
-                            {
-                              "color": "#555C70",
-                              "fontFamily": "Titillium Sans Pro",
-                              "fontSize": 16,
-                              "fontStyle": "normal",
-                              "fontWeight": "400",
-                              "lineHeight": 24,
-                            },
-                          ]
-                        }
-                      >
-                        •
-                      </Text>
-                      <View
-                        style={
-                          {
-                            "width": 8,
-                          }
-                        }
-                      />
-                      <View
-                        accessible={false}
-                        style={
-                          [
-                            {
-                              "flex": 1,
-                            },
-                            {
-                              "flexShrink": 1,
-                            },
-                          ]
-                        }
-                      >
-                        <Text
-                          allowFontScaling={false}
-                          dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.25}
-                          style={
-                            [
-                              {},
-                              {
-                                "color": "#555C70",
-                                "fontFamily": "Titillium Sans Pro",
-                                "fontSize": 16,
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
-                                "lineHeight": 24,
-                              },
-                            ]
-                          }
-                        >
-                          the last 4 digits you received at home with the CIE (Electronic Identification Card).
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={
-                    {
-                      "height": 8,
-                    }
-                  }
-                />
-              </View>
-              <Text
-                allowFontScaling={false}
-                dynamicTypeRamp="body"
-                maxFontSizeMultiplier={1.25}
-                style={
-                  [
-                    {},
-                    {
-                      "color": "#555C70",
-                      "fontFamily": "Titillium Sans Pro",
-                      "fontSize": 16,
-                      "fontStyle": "normal",
-                      "fontWeight": "400",
-                      "lineHeight": 24,
-                    },
-                  ]
-                }
-              >
-                Put them together and enter in this order.
-              </Text>
-            </View>
-            <View
-              style={
-                {
-                  "height": 24,
-                }
-              }
-            />
             <Text
-              accessibilityRole="link"
               allowFontScaling={false}
+              dynamicTypeRamp="body"
               maxFontSizeMultiplier={1.25}
-              onPress={[Function]}
               style={
                 [
+                  {},
                   {
-                    "textDecorationLine": "underline",
-                  },
-                  {
-                    "color": "#0B3EE3",
+                    "color": "#555C70",
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "600",
+                    "fontWeight": "400",
                     "lineHeight": 24,
                   },
                 ]
               }
             >
-              Forgotten your PIN?
+              The PIN code consists of 8 digits and is divided in two parts:
+            </Text>
+            <View>
+              <View
+                style={
+                  {
+                    "height": 8,
+                  }
+                }
+              />
+              <View
+                style={
+                  {
+                    "flexDirection": "row",
+                  }
+                }
+              >
+                <View
+                  style={
+                    {
+                      "width": 12,
+                    }
+                  }
+                />
+                <View
+                  accessibilityRole="list"
+                  accessible={true}
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                      },
+                      {
+                        "flexGrow": 1,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    accessible={true}
+                    style={
+                      {
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      dynamicTypeRamp="body"
+                      maxFontSizeMultiplier={1.25}
+                      style={
+                        [
+                          {},
+                          {
+                            "color": "#555C70",
+                            "fontFamily": "Titillium Sans Pro",
+                            "fontSize": 16,
+                            "fontStyle": "normal",
+                            "fontWeight": "400",
+                            "lineHeight": 24,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <View
+                      style={
+                        {
+                          "width": 8,
+                        }
+                      }
+                    />
+                    <View
+                      accessible={false}
+                      style={
+                        [
+                          {
+                            "flex": 1,
+                          },
+                          {
+                            "flexShrink": 1,
+                          },
+                        ]
+                      }
+                    >
+                      <Text
+                        allowFontScaling={false}
+                        dynamicTypeRamp="body"
+                        maxFontSizeMultiplier={1.25}
+                        style={
+                          [
+                            {},
+                            {
+                              "color": "#555C70",
+                              "fontFamily": "Titillium Sans Pro",
+                              "fontSize": 16,
+                              "fontStyle": "normal",
+                              "fontWeight": "400",
+                              "lineHeight": 24,
+                            },
+                          ]
+                        }
+                      >
+                        the first 4 digits you received at the registry office;
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    accessible={true}
+                    style={
+                      {
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      dynamicTypeRamp="body"
+                      maxFontSizeMultiplier={1.25}
+                      style={
+                        [
+                          {},
+                          {
+                            "color": "#555C70",
+                            "fontFamily": "Titillium Sans Pro",
+                            "fontSize": 16,
+                            "fontStyle": "normal",
+                            "fontWeight": "400",
+                            "lineHeight": 24,
+                          },
+                        ]
+                      }
+                    >
+                      •
+                    </Text>
+                    <View
+                      style={
+                        {
+                          "width": 8,
+                        }
+                      }
+                    />
+                    <View
+                      accessible={false}
+                      style={
+                        [
+                          {
+                            "flex": 1,
+                          },
+                          {
+                            "flexShrink": 1,
+                          },
+                        ]
+                      }
+                    >
+                      <Text
+                        allowFontScaling={false}
+                        dynamicTypeRamp="body"
+                        maxFontSizeMultiplier={1.25}
+                        style={
+                          [
+                            {},
+                            {
+                              "color": "#555C70",
+                              "fontFamily": "Titillium Sans Pro",
+                              "fontSize": 16,
+                              "fontStyle": "normal",
+                              "fontWeight": "400",
+                              "lineHeight": 24,
+                            },
+                          ]
+                        }
+                      >
+                        the last 4 digits you received at home with the CIE (Electronic Identification Card).
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={
+                  {
+                    "height": 8,
+                  }
+                }
+              />
+            </View>
+            <Text
+              allowFontScaling={false}
+              dynamicTypeRamp="body"
+              maxFontSizeMultiplier={1.25}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#555C70",
+                    "fontFamily": "Titillium Sans Pro",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                ]
+              }
+            >
+              Put them together and enter in this order.
             </Text>
           </View>
-        </RCTScrollView>
-      </Modal>
+          <View
+            style={
+              {
+                "height": 24,
+              }
+            }
+          />
+          <View
+            accessibilityLabel="Forgotten your PIN?"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              {
+                "bottom": 14,
+                "left": 24,
+                "right": 24,
+                "top": 14,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onTouchEnd={[Function]}
+            style={
+              {
+                "alignSelf": "flex-start",
+              }
+            }
+            testID="cie-pin-wizard-open-cie-pin-link"
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "textAlignVertical": "center",
+                  },
+                  false,
+                  {},
+                  {
+                    "transform": [
+                      {
+                        "scale": undefined,
+                      },
+                    ],
+                  },
+                ]
+              }
+            >
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={false}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.25}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillium Sans Pro",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": undefined,
+                    },
+                    {
+                      "color": undefined,
+                    },
+                  ]
+                }
+              >
+                Forgotten your PIN?
+              </Text>
+            </View>
+          </View>
+        </View>
+      </RCTScrollView>
     </View>
   </RCTScrollView>,
   <View
@@ -1186,6 +1312,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={{}}
+        testID="cie-pin-wizard-navigate-to-cie-pin-screen"
       >
         <View
           style={
@@ -1248,7 +1375,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -1323,6 +1450,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="cie-pin-wizard-navigate-to-spid-wizard"
         >
           <View
             style={
@@ -1362,7 +1490,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {
@@ -1431,7 +1559,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 40,
+                "lineHeight": 34,
               },
             ]
           }
@@ -1508,7 +1636,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 "fontSize": 18,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 25,
+                "lineHeight": 24,
               },
             ]
           }
@@ -1555,6 +1683,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           onTouchEnd={[Function]}
+          testID="id-activation-request-cie"
         >
           <View
             accessibilityElementsHidden={true}
@@ -1676,7 +1805,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                     ]
@@ -1721,6 +1850,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           onTouchEnd={[Function]}
+          testID="id-activation-activate-cie"
         >
           <View
             accessibilityElementsHidden={true}
@@ -1884,7 +2014,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                     ]
@@ -1929,6 +2059,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           onTouchEnd={[Function]}
+          testID="id-activation-activate-spid"
         >
           <View
             accessibilityElementsHidden={true}
@@ -2050,7 +2181,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                     ]
@@ -2295,7 +2426,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -2364,7 +2495,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 "fontSize": 28,
                 "fontStyle": "normal",
                 "fontWeight": "600",
-                "lineHeight": 40,
+                "lineHeight": 34,
               },
             ]
           }
@@ -2577,6 +2708,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={{}}
+        testID="spid-wizard-navigate-to-idp-selection"
       >
         <View
           style={
@@ -2639,7 +2771,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": 20,
                   },
                   {
@@ -2714,6 +2846,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               "alignSelf": "flex-start",
             }
           }
+          testID="spid-wizard-navigate-to-id-activation-wizard"
         >
           <View
             style={
@@ -2753,7 +2886,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   {

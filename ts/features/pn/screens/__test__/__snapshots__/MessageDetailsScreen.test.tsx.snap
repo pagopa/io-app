@@ -63,6 +63,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -227,19 +228,23 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               >
                                 <View
                                   style={
-                                    {
-                                      "alignItems": "center",
-                                      "alignSelf": "flex-start",
-                                      "backgroundColor": "#FFFFFF",
-                                      "borderColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 6,
-                                      "borderWidth": 1,
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 6,
-                                    }
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "alignSelf": "flex-start",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 6,
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 8,
+                                        "paddingVertical": 6,
+                                      },
+                                      {
+                                        "backgroundColor": "#FFFFFF",
+                                        "borderColor": "#E8EBF1",
+                                      },
+                                    ]
                                   }
                                 >
                                   <View
@@ -511,7 +516,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               >
                                 <Text
                                   allowFontScaling={false}
-                                  dynamicTypeRamp="footnote"
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   style={
                                     [
@@ -522,7 +527,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": 21,
+                                        "lineHeight": 24,
                                       },
                                     ]
                                   }
@@ -542,7 +547,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 21,
                                       },
                                     ]
@@ -766,7 +771,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontSize": 18,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 25,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -844,9 +849,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   style={
                                     {
                                       "alignItems": "center",
-                                      "columnGap": 8,
                                       "display": "flex",
                                       "flexDirection": "row",
+                                      "gap": 8,
                                     }
                                   }
                                 >
@@ -858,13 +863,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "flexDirection": "column",
                                         "flexGrow": 1,
                                         "flexShrink": 1,
-                                        "rowGap": 4,
+                                        "gap": 4,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
@@ -876,7 +881,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -1068,9 +1073,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   style={
                                     {
                                       "alignItems": "center",
-                                      "columnGap": 8,
                                       "display": "flex",
                                       "flexDirection": "row",
+                                      "gap": 8,
                                     }
                                   }
                                 >
@@ -1082,13 +1087,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "flexDirection": "column",
                                         "flexGrow": 1,
                                         "flexShrink": 1,
-                                        "rowGap": 4,
+                                        "gap": 4,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       maxFontSizeMultiplier={1.25}
                                       numberOfLines={2}
                                       style={
@@ -1100,7 +1105,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -1405,7 +1410,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                         ]
@@ -1613,7 +1618,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": 20,
                                           },
                                         ]
@@ -1642,7 +1647,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               onDismiss={[Function]}
                               snapPoints={
                                 [
-                                  1,
+                                  10,
                                 ]
                               }
                               style={
@@ -1714,7 +1719,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -1901,7 +1906,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -2027,7 +2032,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -2214,7 +2219,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                     "fontSize": 18,
                                                     "fontStyle": "normal",
                                                     "fontWeight": "600",
-                                                    "lineHeight": 25,
+                                                    "lineHeight": 24,
                                                   },
                                                 ]
                                               }
@@ -2743,6 +2748,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

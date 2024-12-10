@@ -17,7 +17,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.73.0</string>
+    <string>2.79.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>3</string>
+    <string>5</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -100,7 +100,6 @@
       <string>RobotoMono-LightItalic.ttf</string>
       <string>RobotoMono-Regular.ttf</string>
       <string>RobotoMono-RegularItalic.ttf</string>
-      <string>ReadexPro-Regular.ttf</string>
       <string>DMMono-Medium.ttf</string>
       <string>TitilliumSansPro-Black.otf</string>
       <string>TitilliumSansPro-Bold.otf</string>
@@ -114,6 +113,22 @@
       <string>TitilliumSansPro-LightItalic.otf</string>
       <string>TitilliumSansPro-SemiboldItalic.otf</string>
       <string>TitilliumSansPro-ThinItalic.otf</string>
+      <string>Titillio-Black.otf</string>
+      <string>Titillio-BlackItalic.otf</string>
+      <string>Titillio-Bold.otf</string>
+      <string>Titillio-BoldItalic.otf</string>
+      <string>Titillio-Extrablack.otf</string>
+      <string>Titillio-ExtrablackItalic.otf</string>
+      <string>Titillio-Extrabold.otf</string>
+      <string>Titillio-ExtraboldItalic.otf</string>
+      <string>Titillio-Light.otf</string>
+      <string>Titillio-LightItalic.otf</string>
+      <string>Titillio-Regular.otf</string>
+      <string>Titillio-RegularItalic.otf</string>
+      <string>Titillio-Semibold.otf</string>
+      <string>Titillio-SemiboldItalic.otf</string>
+      <string>Titillio-Thin.otf</string>
+      <string>Titillio-ThinItalic.otf</string>
     </array>
     <key>UIBackgroundModes</key>
     <array>
