@@ -33,9 +33,9 @@ const useSortPspBottomSheet = ({
   const [sortType, setSortType] =
     React.useState<WalletPaymentPspSortType>("default");
 
-  const handleChangeSort = (sortType: WalletPaymentPspSortType) => {
-    setSortType(sortType);
-    onSortChange(sortType);
+  const handleChangeSort = (currentSortCriteria: WalletPaymentPspSortType) => {
+    setSortType(currentSortCriteria);
+    onSortChange(currentSortCriteria);
   };
 
   const getModalContent = () => (
