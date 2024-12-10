@@ -24,6 +24,7 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  defaultZendeskPaymentCategory,
   resetCustomFields,
   zendeskPaymentFailure,
   zendeskPaymentNav,
@@ -49,6 +50,7 @@ import {
 } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { getSubCategoryFromFaultCode } from "../utils";
+import { isReady } from "../../../../common/model/RemoteValue";
 
 type PaymentFailureSupportModalParams = {
   failure?: WalletPaymentFailure;
@@ -89,8 +91,13 @@ const usePaymentFailureSupportModal = ({
     "";
 
   const zendeskAssistanceLogAndStart = () => {
+    if (!isReady(zendeskPaymentCategory)) {
+      return;
+    }
+    const { payments } = zendeskPaymentCategory.value;
+
     const { value, zendeskCategoryId } = getSubCategoryFromFaultCode(
-      zendeskPaymentCategory,
+      payments,
       faultCodeDetail
     );
     resetCustomFields();
@@ -111,7 +118,7 @@ const usePaymentFailureSupportModal = ({
         assistanceForFci: false
       })
     );
-    dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
+    dispatch(zendeskSelectedCategory(defaultZendeskPaymentCategory));
   };
 
   const handleAskAssistance = () => {

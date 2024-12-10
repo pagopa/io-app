@@ -25,6 +25,7 @@ import {
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
+import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -34,6 +35,11 @@ type ZendeskValue = {
   };
 };
 export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
+
+export type ZendeskSubcategoriesErrorsConfig = RemoteValue<
+  ZendeskSubcategoriesErrors,
+  NetworkError
+>;
 
 export enum ZendeskTokenStatusEnum {
   SUCCESS = "success",
@@ -48,7 +54,7 @@ export type ZendeskState = {
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
   getZendeskTokenStatus?: ZendeskTokenStatusEnum | "401";
-  zendeskMap: any;
+  zendeskMap: ZendeskSubcategoriesErrorsConfig;
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -188,7 +194,7 @@ export const zendeskTicketNumberSelector = createSelector(
 
 export const zendeskMapSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskMap],
-  (zendeskMap: any): any => zendeskMap.value
+  (zendeskMap): ZendeskSubcategoriesErrorsConfig => zendeskMap
 );
 
 export default reducer;

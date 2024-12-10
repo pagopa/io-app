@@ -6,6 +6,7 @@ import {
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
+import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -102,7 +103,7 @@ export const getZendeskPaymentConfig = createAsyncAction(
   "ZENDESK_PAYMENT_CONFIG_REQUEST",
   "ZENDESK_PAYMENT_CONFIG_SUCCESS",
   "ZENDESK_PAYMENT_CONFIG_FAILURE"
-)<void, any, NetworkError>();
+)<void, ZendeskSubcategoriesErrors, NetworkError>();
 
 // user selected a category
 export const zendeskSelectedCategory = createStandardAction(

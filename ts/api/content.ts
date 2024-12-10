@@ -8,13 +8,13 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
-import { unknown } from "io-ts";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { VersionInfo } from "../../definitions/content/VersionInfo";
 import { Zendesk } from "../../definitions/content/Zendesk";
+import { ZendeskSubcategoriesErrors } from "../../definitions/content/ZendeskSubcategoriesErrors";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { contentRepoUrl } from "../config";
@@ -146,16 +146,15 @@ type GetZendeskPaymentConfigT = IGetApiRequestType<
   void,
   never,
   never,
-  BasicResponseType<any>
+  BasicResponseType<ZendeskSubcategoriesErrors>
 >;
 
-// TODO: update with new definition from related PR
 const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
   method: "get",
   url: () => "/assistanceTools/payment/zendeskOutcomeMapping.json",
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: basicResponseDecoder(unknown)
+  response_decoder: basicResponseDecoder(ZendeskSubcategoriesErrors)
 };
 
 /**

@@ -116,6 +116,15 @@ export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskFciId = "14874226407825";
 
+export const defaultZendeskPaymentCategory: ZendeskCategory = {
+  value: "pagamento",
+  description: {
+    "it-IT": "Pagamento pagoPA",
+    "en-EN": "pagoPA payment",
+    "de-DE": "pagoPA-Zahlung"
+  }
+};
+
 export const zendeskPaymentMethodCategory: ZendeskCategory = {
   value: "metodo_di_pagamento",
   description: {
