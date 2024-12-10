@@ -1,12 +1,5 @@
-import * as React from "react";
-import { View, SectionList, ScrollView } from "react-native";
-import { Route, StackActions, useRoute } from "@react-navigation/native";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as O from "fp-ts/lib/Option";
-import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import {
-  ButtonSolidProps,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   H4,
   IconButton,
@@ -14,45 +7,52 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  fciDocumentSignatureFieldsSelector,
-  fciSignatureDetailDocumentsSelector
-} from "../../store/reducers/fciSignatureRequest";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import SignatureFieldItem from "../../components/SignatureFieldItem";
-import { SignatureField } from "../../../../../definitions/fci/SignatureField";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import {
-  fciEndRequest,
-  fciUpdateDocumentSignaturesRequest
-} from "../../store/actions";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { Route, StackActions, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import { constFalse, increment, pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { ComponentProps } from "react";
+import { ScrollView, SectionList, View } from "react-native";
 import {
   Clause,
   TypeEnum as ClausesTypeEnum
 } from "../../../../../definitions/fci/Clause";
+import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import {
+  trackFciShowSignatureFields,
+  trackFciStartSignature
+} from "../../analytics";
+import DocumentWithSignature from "../../components/DocumentWithSignature";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
+import SignatureFieldItem from "../../components/SignatureFieldItem";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
+import { FCI_ROUTES } from "../../navigation/routes";
+import {
+  fciEndRequest,
+  fciUpdateDocumentSignaturesRequest
+} from "../../store/actions";
+import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import {
+  fciDocumentSignatureFieldsSelector,
+  fciSignatureDetailDocumentsSelector
+} from "../../store/reducers/fciSignatureRequest";
 import {
   getClauseLabel,
   getRequiredSignatureFields,
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
-import { LightModalContext } from "../../../../components/ui/LightModal";
-import DocumentWithSignature from "../../components/DocumentWithSignature";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
-import {
-  trackFciShowSignatureFields,
-  trackFciStartSignature
-} from "../../analytics";
-import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
-import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -222,13 +222,18 @@ const FciSignatureFieldsScreen = () => {
     />
   );
 
-  const cancelButtonProps: ButtonSolidProps = {
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    color: "primary",
     onPress: present,
-    label: I18n.t("global.buttons.cancel"),
-    accessibilityLabel: I18n.t("global.buttons.cancel")
+    label: I18n.t("global.buttons.cancel")
   };
 
-  const continueButtonProps: ButtonSolidProps = {
+  const continueButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
+    color: "primary",
     disabled: !isClausesChecked,
     onPress: () => {
       if (currentDoc < documentsSelector.length - 1) {
@@ -245,10 +250,6 @@ const FciSignatureFieldsScreen = () => {
         });
       }
     },
-    accessibilityLabel:
-      currentDoc < documentsSelector.length - 1
-        ? I18n.t("global.buttons.continue")
-        : "Firma",
     label:
       currentDoc < documentsSelector.length - 1
         ? I18n.t("global.buttons.continue")
@@ -279,10 +280,9 @@ const FciSignatureFieldsScreen = () => {
         <VSpacer size={32} />
         {renderSignatureFields()}
       </ScrollView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        secondary={{ type: "Solid", buttonProps: continueButtonProps }}
-        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      <FooterActionsInline
+        startAction={cancelButtonProps}
+        endAction={continueButtonProps}
       />
       {fciAbortSignature}
     </View>
