@@ -1,9 +1,9 @@
 import {
   Body,
   ButtonSolid,
-  Chip,
   ContentWrapper,
   H6,
+  LabelMini,
   Pictogram,
   Tag,
   VSpacer
@@ -36,6 +36,7 @@ import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
+import { ConfigurationMode } from "../../configuration/types";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
@@ -51,7 +52,6 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { ConfigurationMode } from "../../configuration/types";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -361,11 +361,11 @@ export function IdPayCardStatus({
   switch (getInitiativeStatus()) {
     case "ACTIVE":
       return (
-        <Chip color="grey-650">
+        <LabelMini weight="Regular" color="grey-650">
           {I18n.t("bonusCard.validUntil", {
             endDate: format(initiative.endDate, "DD/MM/YY")
           })}
-        </Chip>
+        </LabelMini>
       );
     case "EXPIRING":
       return (

@@ -1,9 +1,9 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOPictograms } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
 import * as O from "fp-ts/lib/Option";
+import * as React from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -13,24 +13,26 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
-import { PaymentsOnboardingParamsList } from "../navigation/params";
-import {
-  WalletOnboardingOutcome,
-  WalletOnboardingOutcomeEnum
-} from "../types/OnboardingOutcomeEnum";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
+import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import * as analytics from "../analytics";
+import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
+import { PaymentsOnboardingParamsList } from "../navigation/params";
+import { paymentsResetRptIdToResume } from "../store/actions";
 import {
   selectPaymentOnboardingMethods,
   selectPaymentOnboardingRptIdToResume,
   selectPaymentOnboardingSelectedMethod
 } from "../store/selectors";
-import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
-import { paymentsResetRptIdToResume } from "../store/actions";
-import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
-import { usePaymentOnboardingAuthErrorBottomSheet } from "../components/PaymentsOnboardingAuthErrorBottomSheet";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import * as analytics from "../analytics";
+import {
+  WalletOnboardingOutcome,
+  WalletOnboardingOutcomeEnum
+} from "../types/OnboardingOutcomeEnum";
+import { usePaymentFailureSupportModal } from "../../checkout/hooks/usePaymentFailureSupportModal";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -51,7 +53,9 @@ export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
     [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
     [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew",
     [WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
-    [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention"
+    [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention",
+    [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING]: "attention",
+    [WalletOnboardingOutcomeEnum.BE_KO]: "umbrellaNew"
   };
 
 const PaymentsOnboardingFeedbackScreen = () => {
@@ -68,6 +72,11 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const rptIdToResume = useIOSelector(selectPaymentOnboardingRptIdToResume);
   const { startPaymentFlow } = usePagoPaPayment();
   const { bottomSheet, present } = usePaymentOnboardingAuthErrorBottomSheet();
+  const supportModal = usePaymentFailureSupportModal({
+    outcome,
+    isOnboarding: true
+  });
+  const paymentMethodSelectedRef = React.useRef<string | undefined>();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
@@ -77,11 +86,9 @@ const PaymentsOnboardingFeedbackScreen = () => {
     const payment_method_selected = availablePaymentMethods?.find(
       paymentMethod => paymentMethod.id === selectedPaymentMethodId
     )?.name;
-    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
-      analytics.trackSuccessOnboardingPaymentMethod({
-        payment_method_selected
-      });
-    }
+    // eslint-disable-next-line functional/immutable-data
+    paymentMethodSelectedRef.current = payment_method_selected;
+    analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
   });
 
   React.useEffect(
@@ -90,6 +97,18 @@ const PaymentsOnboardingFeedbackScreen = () => {
     },
     [dispatch]
   );
+
+  // Disables the hardware back button on Android devices
+  useAvoidHardwareBackButton();
+
+  // Disables the swipe back gesture on iOS to the parent stack navigator
+  React.useEffect(() => {
+    navigation.getParent()?.setOptions({ gestureEnabled: false });
+    // Re-enable swipe after going back
+    return () => {
+      navigation.getParent()?.setOptions({ gestureEnabled: true });
+    };
+  }, [navigation, outcome]);
 
   const handleContinueButton = () => {
     navigation.popToTop();
@@ -127,6 +146,14 @@ const PaymentsOnboardingFeedbackScreen = () => {
     }
   };
 
+  const handleContactSupport = () => {
+    analytics.trackPaymentOnboardingErrorHelp({
+      error: outcome,
+      payment_method_selected: paymentMethodSelectedRef.current
+    });
+    supportModal.present();
+  };
+
   const renderSecondaryAction = () => {
     switch (outcome) {
       case WalletOnboardingOutcomeEnum.AUTH_ERROR:
@@ -135,7 +162,17 @@ const PaymentsOnboardingFeedbackScreen = () => {
           accessibilityLabel: I18n.t(
             `wallet.onboarding.outcome.AUTH_ERROR.secondaryAction`
           ),
-          onPress: present
+          onPress: present,
+          testID: "wallet-onboarding-secondary-action-button"
+        };
+      case WalletOnboardingOutcomeEnum.BE_KO:
+        return {
+          label: I18n.t(`wallet.onboarding.outcome.BE_KO.secondaryAction`),
+          accessibilityLabel: I18n.t(
+            `wallet.onboarding.outcome.BE_KO.secondaryAction`
+          ),
+          onPress: handleContactSupport,
+          testID: "wallet-onboarding-secondary-action-button"
         };
     }
     return undefined;
@@ -161,11 +198,13 @@ const PaymentsOnboardingFeedbackScreen = () => {
         action={{
           label: actionButtonLabel,
           accessibilityLabel: actionButtonLabel,
-          onPress: handleContinueButton
+          onPress: handleContinueButton,
+          testID: "wallet-onboarding-continue-button"
         }}
         secondaryAction={renderSecondaryAction()}
       />
       {bottomSheet}
+      {supportModal.bottomSheet}
     </View>
   );
 };

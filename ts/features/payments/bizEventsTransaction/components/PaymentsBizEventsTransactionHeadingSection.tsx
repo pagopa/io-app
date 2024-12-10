@@ -1,24 +1,20 @@
-import _ from "lodash";
 import {
-  Body,
   IOColors,
   IOStyles,
   useIOTheme,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
-import I18n from "../../../../i18n";
+import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { Psp } from "../../../../types/pagopa";
-import { calculateTotalAmount, formatAmountText } from "../utils";
 import { PaymentsTransactionBizEventsStackNavigation } from "../navigation/navigator";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
-import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
+import { calculateTotalAmount } from "../utils";
 import { PaymentsBizEventsTransactionCartList } from "./PaymentsBizEventsTransactionCartList";
+import PaymentsBizEventsTransactionFeeAmountSection from "./PaymentsBizEventsTransactionFeeAmountSection";
 import { PaymentsBizEventsTransactionTotalAmount } from "./PaymentsBizEventsTransactionTotalAmount";
 
 type Props = {
@@ -50,44 +46,6 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
     }
   };
 
-  const FeeAmountSection = () => {
-    if (isLoading) {
-      return (
-        <View style={IOStyles.flex}>
-          <VSpacer size={4} />
-          <Placeholder.Line width="100%" animate="fade" />
-          <VSpacer size={8} />
-          <Placeholder.Line width="50%" animate="fade" />
-        </View>
-      );
-    }
-    const pspName = transactionInfo?.pspName;
-    if (transactionInfo?.fee !== undefined) {
-      const formattedFee = formatAmountText(transactionInfo.fee);
-      return (
-        <Body>
-          {I18n.t("transaction.details.totalFee")}{" "}
-          <Body weight="Semibold">{formattedFee}</Body>{" "}
-          {pspName
-            ? // we want to make sure no empty string is passed either
-              I18n.t("transaction.details.totalFeePsp", {
-                pspName
-              })
-            : I18n.t("transaction.details.totalFeeNoPsp")}
-        </Body>
-      );
-    }
-    return (
-      <Body>
-        {pspName
-          ? I18n.t("features.payments.transactions.details.totalFeeUnknown", {
-              pspName
-            })
-          : I18n.t("features.payments.transactions.details.totalFeeUnknownPsp")}
-      </Body>
-    );
-  };
-
   const totalAmount = calculateTotalAmount(transactionInfo);
 
   return (
@@ -104,7 +62,10 @@ export const PaymentsBizEventsTransactionHeadingSection = ({
             totalAmount={totalAmount}
           />
         )}
-        <FeeAmountSection />
+        <PaymentsBizEventsTransactionFeeAmountSection
+          loading={isLoading}
+          transactionInfo={transactionInfo}
+        />
       </VStack>
     </View>
   );

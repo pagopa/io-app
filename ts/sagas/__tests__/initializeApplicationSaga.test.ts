@@ -49,6 +49,7 @@ import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../startup/watchCheckSessionSaga";
 import { formatRequestedTokenString } from "../../features/zendesk/utils";
 import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
+import { userFromSuccessLoginSelector } from "../../features/login/info/store/selectors";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -293,6 +294,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(sessionInfoSelector)
       .next(aSessionInfo)
+      .select(userFromSuccessLoginSelector)
+      .next()
       .select(lollipopPublicKeySelector)
       .next(aPublicKey)
       .call(

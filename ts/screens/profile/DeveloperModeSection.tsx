@@ -54,6 +54,7 @@ import { isDevEnv } from "../../utils/environment";
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { isCieIDLocalFeatureEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieIDFeatureSetEnabled } from "../../features/cieLogin/store/actions";
+import { requestAppReview } from "../../utils/storeReview";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -158,6 +159,12 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.sentryTestEvent"),
       onPress: sendSentryTestEvent
+    },
+    {
+      condition: true,
+      color: "primary",
+      label: I18n.t("profile.main.storeReview"),
+      onPress: requestAppReview
     }
   ];
 

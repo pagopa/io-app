@@ -78,7 +78,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     <Text
       style={
         {
-          "fontWeight": "800",
+          "fontWeight": "600",
         }
       }
     >
@@ -694,6 +694,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     <Text
       accessibilityRole="link"
       allowFontScaling={false}
+      dynamicTypeRamp="body"
       maxFontSizeMultiplier={1.25}
       onPress={[Function]}
       style={

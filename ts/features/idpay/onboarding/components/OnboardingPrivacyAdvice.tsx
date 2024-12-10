@@ -1,4 +1,4 @@
-import { Body, IOToast, LabelSmall } from "@pagopa/io-app-design-system";
+import { Body, IOToast, BodySmall } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
@@ -19,26 +19,28 @@ const OnboardingPrivacyAdvice = (props: OnboardingPrivacyAdviceProps) => {
 
   return (
     <Body accessibilityRole="link" testID="IDPayOnboardingBeforeContinue">
-      <LabelSmall weight={"Regular"} color={"bluegrey"}>
+      <BodySmall weight="Regular" color={"bluegrey"}>
         {I18n.t("idpay.onboarding.beforeContinue.text1")}
-      </LabelSmall>
-      <LabelSmall
-        color={"blue"}
+      </BodySmall>
+      <BodySmall
+        asLink
+        weight="Semibold"
         onPress={handleTosLinkPress}
         testID="IDPayOnboardingPrivacyLink"
       >
         {I18n.t("idpay.onboarding.beforeContinue.tosLink")}
-      </LabelSmall>
-      <LabelSmall weight={"Regular"} color={"bluegrey"}>
+      </BodySmall>
+      <BodySmall weight={"Regular"} color={"bluegrey"}>
         {I18n.t("idpay.onboarding.beforeContinue.text2")}
-      </LabelSmall>
-      <LabelSmall
-        color={"blue"}
+      </BodySmall>
+      <BodySmall
+        asLink
+        weight="Semibold"
         onPress={handlePrivacyLinkPress}
         testID="IDPayOnboardingTOSLink"
       >
         {I18n.t("idpay.onboarding.beforeContinue.privacyLink")}
-      </LabelSmall>
+      </BodySmall>
     </Body>
   );
 };

@@ -204,6 +204,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -547,6 +548,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -890,6 +892,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1135,7 +1138,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                     {
@@ -1367,6 +1370,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

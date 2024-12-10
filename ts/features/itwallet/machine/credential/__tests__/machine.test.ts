@@ -28,7 +28,7 @@ import {
   RequestCredentialActorOutput
 } from "../actors";
 import { Context, InitialContext } from "../context";
-import { CredentialIssuanceFailureTypeEnum } from "../failure";
+import { CredentialIssuanceFailureType } from "../failure";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
@@ -441,7 +441,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureType.UNEXPECTED,
         reason: "SOME FAILURE"
       }
     });
@@ -492,7 +492,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureType.UNEXPECTED,
         reason: "SOME FAILURE"
       }
     });
@@ -567,7 +567,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       failure: {
-        type: CredentialIssuanceFailureTypeEnum.GENERIC,
+        type: CredentialIssuanceFailureType.UNEXPECTED,
         reason: "SOME FAILURE"
       }
     });

@@ -1,4 +1,4 @@
-import { LabelSmall } from "@pagopa/io-app-design-system";
+import { BodySmall } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -26,7 +26,7 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
   );
 
   return (
-    <LabelSmall
+    <BodySmall
       style={styles.lastUpdate}
       color="bluegrey"
       weight="Regular"
@@ -36,7 +36,7 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
         "idpay.initiative.details.initiativeDetailsScreen.configured.lastUpdated"
       )}
       {lastUpdateString}
-    </LabelSmall>
+    </BodySmall>
   );
 };
 

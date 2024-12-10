@@ -7,7 +7,7 @@ import {
   IOIcons,
   IOStyles,
   Icon,
-  LabelSmall,
+  BodySmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -150,9 +150,9 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
       )}
       <View>
         <H6 color="bluegreyDark">{props.title}</H6>
-        <LabelSmall weight="Regular" color="bluegrey">
+        <BodySmall weight="Regular" color="bluegrey">
           {props.subTitle}
-        </LabelSmall>
+        </BodySmall>
       </View>
     </View>
   );

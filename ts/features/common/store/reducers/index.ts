@@ -11,10 +11,6 @@ import {
   cieLoginPersistor
 } from "../../../cieLogin/store/reducers";
 import {
-  EuCovidCertState,
-  euCovidCertReducer
-} from "../../../euCovidCert/store/reducers";
-import {
   FastLoginState,
   fastLoginReducer
 } from "../../../fastLogin/store/reducers";
@@ -28,7 +24,7 @@ import {
   NativeLoginState,
   nativeLoginReducer
 } from "../../../nativeLogin/store/reducers";
-import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
+import walletReducer, { WalletState } from "../../../wallet/store/reducers";
 import paymentsReducer, {
   PaymentsState
 } from "../../../payments/common/store/reducers";
@@ -70,7 +66,6 @@ type LoginFeaturesState = {
 };
 
 export type FeaturesState = {
-  euCovidCert: EuCovidCertState;
   pn: PnState;
   fci: FciState;
   idPay: IDPayState;
@@ -90,7 +85,6 @@ export type FeaturesState = {
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
 
 const rootReducer = combineReducers<FeaturesState, Action>({
-  euCovidCert: euCovidCertReducer,
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,

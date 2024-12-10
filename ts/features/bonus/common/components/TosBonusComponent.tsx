@@ -4,19 +4,18 @@ import {
   FooterWithButtons,
   H2,
   IconButton,
+  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
   BackHandler,
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View
 } from "react-native";
 import WebView from "react-native-webview";
-import brokenLinkImage from "../../../../../img/broken-link.png";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import I18n from "../../../../i18n";
@@ -85,11 +84,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
     }
     return (
       <View style={styles.errorContainer}>
-        <Image
-          accessibilityIgnoresInvertColors
-          source={brokenLinkImage}
-          resizeMode="contain"
-        />
+        <Pictogram name="lostConnection" />
         <VSpacer size={16} />
         <H2>{I18n.t("onboarding.tos.error")}</H2>
 

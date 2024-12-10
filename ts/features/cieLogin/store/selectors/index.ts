@@ -29,3 +29,6 @@ export const isCieIDFFEnabledSelector = (state: GlobalState) =>
 export const isCieIDTourGuideEnabledSelector = (state: GlobalState) =>
   state.features.loginFeatures.cieLogin.isCieIDTourGuideEnabled &&
   isCieIDFFEnabledSelector(state);
+
+export const cieIDSelectedSecurityLevelSelector = (state: GlobalState) =>
+  state.features.loginFeatures.cieLogin.cieIDSelectedSecurityLevel;

@@ -9,13 +9,12 @@ import {
 } from "redux";
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 import { BonusActions } from "../../features/bonus/common/store/actions";
-import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { MessagesActions } from "../../features/messages/store/actions";
-import { WalletActions as NewWalletActions } from "../../features/newWallet/store/actions";
+import { WalletActions } from "../../features/wallet/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { ServicesActions } from "../../features/services/common/store/actions";
@@ -89,7 +88,6 @@ export type Action =
   | ProfileEmailValidationAction
   | BonusActions
   | CrossSessionsActions
-  | EuCovidCertActions
   | ZendeskSupportActions
   | PnActions
   | StartupActions
@@ -99,7 +97,7 @@ export type Action =
   | FastLoginActions
   | WhatsNewActions
   | PaymentsFeatureActions
-  | NewWalletActions
+  | WalletActions
   | CieLoginConfigActions
   | FimsActions
   | ItwActions

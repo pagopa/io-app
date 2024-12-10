@@ -1,16 +1,9 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../../definitions/content/Config";
-import {
-  SubscriptionState,
-  SubscriptionStateEnum
-} from "../../../../../../definitions/trial_system/SubscriptionState";
-import { TrialId } from "../../../../../../definitions/trial_system/TrialId";
-import { itwTrialId } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { RemoteConfigState } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -25,15 +18,11 @@ import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
 
 type RenderOptions = {
   isIdPayEnabled?: boolean;
-  itwTrialStatus?: SubscriptionState;
   isItwEnabled?: boolean;
   isItwTestEnabled?: boolean;
   itwLifecycle?: ItwLifecycleState;
+  remotelyDisabledCredentials?: Array<string>;
 };
-
-jest.mock("../../../../../config", () => ({
-  itwEnabled: true
-}));
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {
@@ -48,12 +37,16 @@ describe("WalletCardOnboardingScreen", () => {
       queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
     ).toBeTruthy();
     expect(
+      queryByTestId(
+        `${CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}ModuleTestID`
+      )
+    ).toBeTruthy();
+    expect(
       queryByTestId(`${CredentialType.EUROPEAN_DISABILITY_CARD}ModuleTestID`)
     ).toBeTruthy();
   });
 
   test.each([
-    { itwTrialStatus: SubscriptionStateEnum.DISABLED },
     { isItwEnabled: false },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_INSTALLED },
     { itwLifecycle: ItwLifecycleState.ITW_LIFECYCLE_DEACTIVATED }
@@ -64,13 +57,29 @@ describe("WalletCardOnboardingScreen", () => {
       expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
     }
   );
+
+  test.each([
+    { remotelyDisabledCredentials: ["MDL"] },
+    { remotelyDisabledCredentials: ["MDL", "EuropeanHealthInsuranceCard"] }
+  ] as ReadonlyArray<RenderOptions>)(
+    "it should hide credential modules when $remotelyDisabledCredentials are remotely disabled",
+    options => {
+      const { queryByTestId } = renderComponent(options);
+      for (const type of options.remotelyDisabledCredentials!) {
+        // Currently ModuleCredential does not attach the testID if onPress is undefined.
+        // Since disabled credentials have undefined onPress, we can test for null.
+        expect(queryByTestId(`${type}ModuleTestID`)).toBeNull();
+      }
+      expect(queryByTestId("EuropeanDisabilityCardModuleTestID")).toBeTruthy();
+    }
+  );
 });
 
 const renderComponent = ({
   isIdPayEnabled = true,
   isItwEnabled = true,
-  itwTrialStatus = SubscriptionStateEnum.ACTIVE,
-  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID
+  itwLifecycle = ItwLifecycleState.ITW_LIFECYCLE_VALID,
+  remotelyDisabledCredentials
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -86,11 +95,6 @@ const renderComponent = ({
           })
         }
       },
-      trialSystem: {
-        [itwTrialId as TrialId]: itwTrialStatus
-          ? pot.some(itwTrialStatus)
-          : pot.none
-      },
       persistedPreferences: {
         isIdPayTestEnabled: isIdPayEnabled
       },
@@ -100,7 +104,8 @@ const renderComponent = ({
           min_app_version: {
             android: "0.0.0.0",
             ios: "0.0.0.0"
-          }
+          },
+          disabled_credentials: remotelyDisabledCredentials
         },
         idPay: isIdPayEnabled && {
           min_app_version: {

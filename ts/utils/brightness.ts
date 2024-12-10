@@ -52,6 +52,7 @@ export function useMaxBrightness({
   useSmoothTransition = false,
   transitionDuration = DEFAULT_TRANSITION_DURATION
 }: UseMaxBrightnessOptions = {}) {
+  const currentAppState = useRef<AppStateStatus | null>(null);
   // Store the initial brightness
   const initialBrightness = useRef<number | null>(null);
   // Only for Android, store if the app was using auto brightness mode
@@ -209,11 +210,15 @@ export function useMaxBrightness({
     let appStateSubscription: any;
 
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      if (nextAppState === "active") {
+      if (nextAppState === "active" && currentAppState.current === "inactive") {
+        // If the app is becoming active and was previously inactive, set the max brightness
         await setMaxBrightness();
-      } else if (initialBrightness.current !== null) {
+      } else if (nextAppState !== "active") {
+        // If the app is becoming inactive, restore the initial brightness
+        // The app always becomes inactive before becoming background
         await restoreInitialBrightness();
       }
+      currentAppState.current = nextAppState;
     };
 
     const initialize = async () => {

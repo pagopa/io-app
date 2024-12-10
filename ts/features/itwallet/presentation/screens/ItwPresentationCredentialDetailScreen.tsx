@@ -110,8 +110,8 @@ const ItwPresentationCredentialDetail = ({
             <ItwPresentationAdditionalInfoSection credential={credential} />
             <ItwPresentationCredentialStatusAlert credential={credential} />
             <ItwPresentationCredentialInfoAlert credential={credential} />
-            <ItwCredentialTrustmark credential={credential} />
             <ItwPresentationClaimsSection credential={credential} />
+            <ItwCredentialTrustmark credential={credential} />
           </VStack>
         </ContentWrapper>
         <ItwPresentationDetailsFooter credential={credential} />

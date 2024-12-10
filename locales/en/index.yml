@@ -257,9 +257,7 @@ startup:
   profileEnabled: User profile activated
   userDeletePendingAlert:
     title: Profile deletion in progress
-    messageLegacy: If you have changed your mind, you can cancel the deletion request within the Privacy section of your Profile.
     message: If you have changed your mind, you can cancel the deletion request within the Privacy section in Settings.
-    cta_1_legacy: Go to Profile
     cta_1: Go to Settings
     cta_2: Discard
   contextualHelp:
@@ -316,8 +314,8 @@ profile:
     clearAsyncStorage: Clear AsyncStorage
     dumpAsyncStorage: Dump AsyncStorage content to console
     sentryTestEvent: Send Exception to Sentry
-    contextualHelpTitle: What you can do in {{pageName}} section
-    legacyContextualHelpContent: !include profile/legacy_profile_account_main.md
+    storeReview: Request a store review
+    contextualHelpTitle: What you can do in Settings section
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Developer mode enabled
     cache:
@@ -440,7 +438,7 @@ profile:
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in {{pageName}} > Privacy Policy and Terms of Service"
+          profileSettings: "You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
           cta:
             shareData: "Share"
             dontShareData: Please don't share data
@@ -669,7 +667,7 @@ authentication:
   wizards:
     cie_id_wizard:
       title: Do you have the CieID app?
-      description: "If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.\n\nTo enter the IO app without physically using the Electronic Identity Card,you must first enable Level 1 and Level 2 access in the CieID application."
+      description: "If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.\n\nTo enter the IO app without physically using the Electronic Identity Card, you must first enable Level 1 and Level 2 access in the CieID application."
       actions:
         primary:
           label: Yes, log in with CieID
@@ -992,7 +990,6 @@ email:
     subtitle: You will receive IO's communications at
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
-  legacyContextualHelpContent: !include onboarding/legacy_onboarding_fingerprint.md
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
@@ -1041,7 +1038,7 @@ onboarding:
     headerTitle: Configure IO
     available:
       title: Enable biometric recognition
-      settings: You can always change your choice in {{pageName}} > Security
+      settings: You can always change your choice in Settings > Security
       body:
         text: You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.
         infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorize operations and payments with your
@@ -1059,7 +1056,7 @@ onboarding:
             value: Set up face or fingerprint
           step3:
             label: Step 3
-            value: Enable it in IO under {{pageName}} > Security
+            value: Enable it in IO under Settings > Security
     unavailable:
       title: Protect your device
       subtitle: IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.
@@ -1430,6 +1427,15 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+      PSP_ERROR_ONBOARDING:
+        title: L’aggiunta del metodo non è andata a buon fine
+        subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
+        primaryAction: Chiudi
+      BE_KO:
+        title: "Stiamo riscontrando alcuni problemi con l'aggiunta del metodo"
+        subtitle: "Riprova più tardi."
+        primaryAction: Chiudi
+        secondaryAction: Contatta l'assistenza
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1980,7 +1986,7 @@ wallet:
         title: Hai interrotto il pagamento
         subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
       INSUFFICIENT_AVAILABILITY_ERROR:
-        title: Il saldo è insufficiente
+        title: Il saldo della tua carta è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
       CVV_ERROR:
         title: Il codice di sicurezza inserito è errato
@@ -1991,6 +1997,9 @@ wallet:
       BE_NODE_KO:
         title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
         subtitle: Verifica l’esito del pagamento nella sezione Pagamenti, altrimenti attendi qualche minuto prima di riprovare.
+      PSP_ERROR:
+        title: Il pagamento non è andato a buon fine
+        subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2226,7 +2235,7 @@ services:
         title: "Preferences saved!"
         body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
-      banner: You can change this choice anytime in {{pageName}} > Preferences
+      banner: You can change this choice anytime in Settings > Preferences
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
@@ -2789,10 +2798,12 @@ bonus:
           static: Vai al codice sconto
           bucket: Vai al codice sconto
           landingpage: Vai all'opportunità
+          createNew: Usa un nuovo codice
         secondaryCta: Vai all'opportunità
         title: Ecco il codice sconto!
-        expired: Codice sconto scaduto!
+        expired: Il codice è scaduto
         copyButton: Copia codice sconto
+        error: In questo momento non è possibile generare un codice
     cta:
       activeBonus: Activate Carta Giovani Nazionale
       back: Not now
@@ -2954,57 +2965,9 @@ features:
       title: "pagoPA notices"
       noticeCode: "Notice code"
       pay: "Pay"
-  euCovidCertificate:
-    save:
-      album: "IO"
-      noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
-      ok: "Image saved in your device gallery"
-      bottomSheet:
-        title: "Save the certificate"
-        subTitle: "You will be able to show the QR code of the certificate without opening IO app, even when you're offline."
-        saveAsImage:
-          title: "Save as an image in the gallery"
-          subTitle: "You will find the QR code in your device gallery"
-    listItem:
-      cta: "View"
-    common:
-      title: "Certificazione verde COVID-19"
-      subtitle: "EU Digital COVID Certificate"
-      learnMore: "Learn more"
-      authorizationCode: "Authorization code"
-      messageIdentifier: "Message identifier"
-    loading:
-      title: "We are loading your certificate data from the National Platform of the Ministry of Health"
-      subtitle: "Please wait"
-    valid:
-      accessibility:
-        qrCode: "QR Code"
-        hint: "Display the QR Code in full screen"
-      markdownDetails:
-        headerTitle: "Certificate Details"
-        save: "Save details"
-    revoked:
-      title: "This certificate is not valid"
-    expired:
-      title: "This certificate has expired"
-    ko:
-      genericError:
-        title: "Your certificate data could not be retrieved: please try again"
-        subtitle: "This could be due to a temporary problem."
-      notFound:
-        title: "It seems that the certificate does not \nexist: contact support"
-        subtitle: "Details to receive support:"
-        cta: "Get support"
-      notOperational:
-        title: "The EU Digital COVID Certificate is not currently operational"
-        subtitle: "TMP"
-      temporarilyNotAvailable:
-        title: "The service is temporarily unavailable"
-        subtitle: "Please try again later"
-      wrongFormat:
-        title: "This certificate cannot be retrieved"
-        subtitle: "Details to receive support:"
-        cta: "Get support"
+  greenPass:
+    button: "Indietro"
+    title: "Questo servizio non è più attivo su IO"
   pn:
     service:
       activate: "Attiva il servizio"
@@ -3199,6 +3162,7 @@ features:
         other: Altro
       badge:
         active: Già presente
+        unavailable: Non disponibile
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3364,7 +3328,7 @@ features:
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
       content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
-      tos: Premendo **Continua** dichiari di aver letto l’[informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}}).
+      tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!
@@ -3675,7 +3639,7 @@ idpay:
       bodyCta: "Come funziona?"
       banner:
         header: E se lo dimentichi?
-        body: You can reset the code anytime from {{pageName}} > Security.
+        body: You can reset the code anytime from Settings > Security.
       title: Paga con la tua carta d'identità elettronica
       description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
       buttons:
@@ -3778,7 +3742,7 @@ idpay:
             GENERIC: In questo momento non è possibile generare un codice
         successScreen:
           header: Ora puoi utilizzare la tua carta d’identità per pagare!
-          body: If you forget the code, reset it under {{pageName}} > Security.
+          body: If you forget the code, reset it under Settings > Security.
           cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
@@ -3857,7 +3821,7 @@ idpay:
         title: "Come funziona?"
         featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare sul POS la tua carta d’identità elettronica."
         featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
-        featureThree: "If you forget the code, you can generate another one from {{pageName}} > Security."
+        featureThree: "If you forget the code, you can generate another one from Settings > Security."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -4013,7 +3977,6 @@ idpay:
         bodyLink: Scopri di più
         modal:
           title: Cosa significa?
-          legacyContent: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
           content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app"
           button: Ok, ho capito
       onboarding:
@@ -4021,12 +3984,10 @@ idpay:
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
         nameAssignInput: Assegna un nome
-        legacyBottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       enrollment:
         header: Scegli quale IBAN associare all’iniziativa
         subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
-        legacyFooter: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
         footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento dalle impostazioni dell'app
       button:
         addNew: Aggiungi nuovo
@@ -4234,7 +4195,7 @@ FIMS:
         title: "C’è un problema temporaneo"
         body: "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       toast: C’è un problema nel caricamento della lista. Riprova
-    emptyBody: "Qui troverai la lista degli accessi ogni volta che usi un servizio di terza parte tramite IO."
+    emptyBody: "Non hai ancora effettuato alcun accesso a servizi di terze parti"
     exportData:
       alerts:
         areYouSure: "Vuoi davvero esportare una copia di tutti gli accessi?"

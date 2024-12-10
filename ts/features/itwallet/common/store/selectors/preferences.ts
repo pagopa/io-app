@@ -3,6 +3,14 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwPreferencesState } from "../reducers/preferences";
 
+const isPastDate = (date?: string) => {
+  if (!date) {
+    return false;
+  }
+  const hideUntilDate = new Date(date);
+  return !isNaN(hideUntilDate.getTime()) && !isPast(hideUntilDate);
+};
+
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
@@ -13,13 +21,12 @@ export const itwPreferencesSelector = (state: GlobalState) =>
  */
 export const itwIsFeedbackBannerHiddenSelector = createSelector(
   itwPreferencesSelector,
-  ({ hideFeedbackBannerUntilDate }: ItwPreferencesState) => {
-    if (!hideFeedbackBannerUntilDate) {
-      return false;
-    }
+  ({ hideFeedbackBannerUntilDate }: ItwPreferencesState) =>
+    isPastDate(hideFeedbackBannerUntilDate)
+);
 
-    const hideUntilDate = new Date(hideFeedbackBannerUntilDate);
-
-    return !isNaN(hideUntilDate.getTime()) && !isPast(hideUntilDate);
-  }
+export const itwIsDiscoveryBannerHiddenSelector = createSelector(
+  itwPreferencesSelector,
+  ({ hideDiscoveryBannerUntilDate }: ItwPreferencesState) =>
+    isPastDate(hideDiscoveryBannerUntilDate)
 );

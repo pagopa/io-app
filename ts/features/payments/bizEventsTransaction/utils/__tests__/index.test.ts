@@ -5,6 +5,8 @@ import {
   formatAmountText,
   getPayerInfoLabel,
   getTransactionByIndex,
+  isValidPspName,
+  removeAsterisks,
   restoreTransactionAtIndex
 } from "..";
 import { InfoNotice } from "../../../../../../definitions/pagopa/biz-events/InfoNotice";
@@ -347,5 +349,41 @@ describe("restoreTransactionAtIndex", () => {
     const restoredTransactions = pot.getOrElse(restoredPot, []);
 
     expect(restoredTransactions).toEqual([restoreItem]);
+  });
+});
+
+describe("removeAsterisks", () => {
+  it("should remove all asterisks from the input string", () => {
+    expect(removeAsterisks("abc*def*ghi")).toBe("abcdefghi");
+  });
+
+  it("should return an empty string if the input is an asterisk", () => {
+    expect(removeAsterisks("*")).toBe("");
+  });
+
+  it("should return an empty string if the input is an empty string", () => {
+    expect(removeAsterisks("")).toBe("");
+  });
+
+  it("should return the input string if there are no asterisks", () => {
+    expect(removeAsterisks("abcdefghi")).toBe("abcdefghi");
+  });
+
+  it("should return the input string if there are no characters", () => {
+    expect(removeAsterisks("")).toBe("");
+  });
+});
+
+describe("isValidPspName", () => {
+  it("should return false if the name is undefined", () => {
+    expect(isValidPspName(undefined)).toBe(false);
+  });
+
+  it('should return false if the name is "-"', () => {
+    expect(isValidPspName("-")).toBe(false);
+  });
+
+  it("should return true if the name is not undefined and not equal to '-'", () => {
+    expect(isValidPspName("Test PSP")).toBe(true);
   });
 });

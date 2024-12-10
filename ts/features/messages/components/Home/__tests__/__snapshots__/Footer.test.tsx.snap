@@ -204,6 +204,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -547,6 +548,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

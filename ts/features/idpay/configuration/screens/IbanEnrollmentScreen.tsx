@@ -13,8 +13,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -54,10 +52,6 @@ export const IbanEnrollmentScreen = () => {
     IdPayConfigurationMachineContext.useSelector(isUpsertingSelector);
   const enrolledIban =
     IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
-
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
 
@@ -187,11 +181,7 @@ export const IbanEnrollmentScreen = () => {
           <VSpacer size={16} />
           <FeatureInfo
             iconName="profile"
-            body={
-              isSettingsVisibleAndHideProfile
-                ? I18n.t("idpay.configuration.iban.enrollment.footer")
-                : I18n.t("idpay.configuration.iban.enrollment.legacyFooter")
-            }
+            body={I18n.t("idpay.configuration.iban.enrollment.footer")}
           />
         </ScrollView>
         <SafeAreaView>{renderFooter()}</SafeAreaView>

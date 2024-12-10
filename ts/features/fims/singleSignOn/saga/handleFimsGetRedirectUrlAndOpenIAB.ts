@@ -149,7 +149,12 @@ export function* handleFimsGetRedirectUrlAndOpenIAB(
   yield* call(computeAndTrackInAppBrowserOpening, action);
 
   try {
-    yield* call(openAuthenticationSession, inAppBrowserRedirectUrl, "", true);
+    yield* call(
+      openAuthenticationSession,
+      inAppBrowserRedirectUrl,
+      "iossoapi",
+      true
+    );
   } catch (error: unknown) {
     yield* call(handleInAppBrowserErrorIfNeeded, error);
   }

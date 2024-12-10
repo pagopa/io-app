@@ -5,8 +5,8 @@ import * as React from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { profileSelector } from "../../../../store/reducers/profile";
-import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
-import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
+import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
+import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import CGN_ROUTES from "../navigation/routes";
 import { CgnCard, CgnCardProps } from "./CgnCard";
 

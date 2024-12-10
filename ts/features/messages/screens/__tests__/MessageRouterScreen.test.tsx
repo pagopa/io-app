@@ -154,11 +154,11 @@ const globalStateFromStatus = (
           organizationName: "orgName",
           organizationFiscalCode: "orgFisCod",
           firstTimeOpening: true,
+          isLegacyGreenPass: false,
           isPNMessage: false,
           containsAttachments: false,
           containsPayment: undefined,
-          hasRemoteContent: false,
-          euCovidCerficateAuthCode: undefined
+          hasRemoteContent: false
         })
       );
   }

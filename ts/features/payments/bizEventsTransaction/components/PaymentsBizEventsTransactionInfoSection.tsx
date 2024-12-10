@@ -25,7 +25,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { WalletTransactionReceiptDivider } from "../../transaction/components/WalletTransactionReceiptDivider";
-import { getPayerInfoLabel } from "../utils";
+import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -83,6 +83,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
               {transactionInfo.payer && (
                 <>
                   <ListItemInfo
+                    testID="payer-info"
                     label={I18n.t("transaction.details.info.executedBy")}
                     value={getPayerInfoLabel(transactionInfo.payer)}
                   />
@@ -110,15 +111,16 @@ const PaymentsBizEventsTransactionInfoSection = ({
                   <Divider />
                 </>
               )}
-              {transactionInfo.pspName && (
-                <>
-                  <ListItemInfo
-                    label={I18n.t("transaction.details.info.pspName")}
-                    value={transactionInfo.pspName}
-                  />
-                  <Divider />
-                </>
-              )}
+              {transactionInfo.pspName &&
+                isValidPspName(transactionInfo.pspName) && (
+                  <>
+                    <ListItemInfo
+                      label={I18n.t("transaction.details.info.pspName")}
+                      value={transactionInfo.pspName}
+                    />
+                    <Divider />
+                  </>
+                )}
               {transactionInfo.noticeDate && (
                 <>
                   <ListItemInfo
@@ -196,13 +198,15 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
     return (
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
-        value={`${capitalize(walletInfo.brand)} •••• ${
+        value={`${capitalize(walletInfo.brand)} •••• ${removeAsterisks(
           walletInfo.blurredNumber
-        }`}
+        )}`}
         accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
           circuit: walletInfo.brand,
           // we space the hpan to make the screen reader read it digit by digit
-          spacedHpan: walletInfo.blurredNumber.split("").join(" ")
+          spacedHpan: removeAsterisks(walletInfo.blurredNumber)
+            .split("")
+            .join(" ")
         })}
         paymentLogoIcon={walletInfo.brand as IOLogoPaymentType}
       />
@@ -221,7 +225,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
 };
 
 const SkeletonItem = () => (
-  <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
+  <View style={[IOStyles.flex, { paddingVertical: 12 }]} testID="skeleton-item">
     <Placeholder.Box height={16} width="80%" radius={4} />
     <VSpacer size={8} />
     <Placeholder.Box height={16} width="25%" radius={4} />

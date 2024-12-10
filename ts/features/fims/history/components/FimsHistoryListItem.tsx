@@ -5,7 +5,7 @@ import {
   Icon,
   IOListItemStyles,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -52,9 +52,9 @@ const SuccessListItem = ({ serviceData, consent }: SuccessListItemProps) => {
       <VSpacer size={8} />
 
       <H6>{serviceData.organization_name}</H6>
-      <LabelSmall weight="Regular" color="grey-700">
+      <BodySmall weight="Regular" color="grey-700">
         {consent.redirect?.display_name}
-      </LabelSmall>
+      </BodySmall>
     </View>
   );
 };
@@ -82,9 +82,9 @@ const FailureListItem = ({ item }: BaseHistoryListItemProps) => {
           </Caption>
         </View>
         <VSpacer size={4} />
-        <LabelSmall weight="Semibold" color="error-600">
+        <BodySmall weight="Semibold" color="error-600">
           {I18n.t("FIMS.history.errorStates.dataUnavailable")}
-        </LabelSmall>
+        </BodySmall>
       </View>
       <Icon name="errorFilled" color="error-600" />
     </View>

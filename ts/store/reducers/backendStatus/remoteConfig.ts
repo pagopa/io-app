@@ -299,44 +299,6 @@ export const isIdPayEnabledSelector = createSelector(
 );
 
 /**
- * Return the remote config about the new payment section enabled/disabled
- * If the local feature flag is enabled, the remote config is ignored
- */
-export const isNewPaymentSectionEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
-      remoteConfig,
-      O.map(config =>
-        isVersionSupported(
-          Platform.OS === "ios"
-            ? config.newPaymentSection.min_app_version.ios
-            : config.newPaymentSection.min_app_version.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
-/*
-This selector checks that both the new wallet section and the
-new document scan section are included in the tab bar.
-In this case, the navigation to the profile section in the tab bar
-is replaced with the 'settings' section accessed by clicking
-on the icon in the headers of the top-level screens.
-It will be possible to delete this control and all the code it carries
-it carries when isNewPaymentSectionEnabledSelector and
-isNewScanSectionLocallyEnabled will be deleted.
-
-NOTE: Since there is a lot of logic attached to this selector,
-this reassignment of its value has been done for the moment,
-but as soon as the FF can be eliminated, all the logic on which
-it depends and both selectors will also be eliminated.
- */
-export const isSettingsVisibleAndHideProfileSelector =
-  isNewPaymentSectionEnabledSelector;
-
-/**
  * Return the remote config about IT-WALLET enabled/disabled
  * if there is no data or the local Feature Flag is disabled,
  * false is the default value -> (IT-WALLET disabled)
@@ -441,5 +403,18 @@ export const isItwActivationDisabledSelector = createSelector(
       remoteConfig,
       O.chainNullableK(config => config.itw.wallet_activation_disabled),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return IT Wallet credentials that have been disabled remotely.
+ */
+export const itwDisabledCredentialsSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_credentials),
+      O.getOrElse(() => emptyArray)
     )
 );

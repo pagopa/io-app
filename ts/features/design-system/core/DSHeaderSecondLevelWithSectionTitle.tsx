@@ -13,15 +13,13 @@ import {
   HeaderSecondLevel,
   IOColors,
   IOVisualCostants,
+  makeFontStyleObject,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { makeFontStyleObject } from "../../../components/core/fonts";
 
 const styles = StyleSheet.create({
   sectionTitle: {
-    ...makeFontStyleObject("Regular", false, "ReadexPro"),
-    fontSize: 14,
-    lineHeight: 18,
+    ...makeFontStyleObject(14, "Titillio", 18, "Semibold"),
     color: IOColors["grey-700"]
   }
 });

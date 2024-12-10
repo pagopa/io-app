@@ -204,6 +204,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1224,7 +1225,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -1338,7 +1339,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": undefined,
                                       },
                                       {

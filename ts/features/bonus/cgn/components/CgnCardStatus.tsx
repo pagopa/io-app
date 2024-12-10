@@ -1,11 +1,11 @@
+import { LabelMini, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Tag, Chip } from "@pagopa/io-app-design-system";
-import { CardActivated } from "../../../../../definitions/cgn/CardActivated";
-import I18n from "../../../../i18n";
-import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
-import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
-import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { Card } from "../../../../../definitions/cgn/Card";
+import { CardActivated } from "../../../../../definitions/cgn/CardActivated";
+import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
+import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
+import I18n from "../../../../i18n";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 export function CgnCardStatus({ card }: { card: Card }) {
   return (
@@ -25,11 +25,15 @@ export function CgnCardStatus({ card }: { card: Card }) {
         />
       )}
       {CardActivated.is(card) && (
-        <Chip color="grey-650" testID="card-bottom-content">
+        <LabelMini
+          weight="Regular"
+          color="grey-650"
+          testID="card-bottom-content"
+        >
           {I18n.t("bonus.cgn.detail.status.date.valid_until", {
             date: formatDateAsShortFormat(card.expiration_date)
           })}
-        </Chip>
+        </LabelMini>
       )}
     </React.Fragment>
   );

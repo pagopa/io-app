@@ -204,6 +204,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -365,9 +366,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -385,7 +386,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                                   {
                                     "display": "flex",
                                     "flexDirection": "column",
-                                    "rowGap": 4,
+                                    "gap": 4,
                                   }
                                 }
                               >
@@ -677,6 +678,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -876,9 +878,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -913,6 +915,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1245,6 +1248,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1444,9 +1448,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1481,6 +1485,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={

@@ -117,20 +117,26 @@ export const zendeskVersionsHistoryId = "4419641151505";
 export const zendeskFciId = "14874226407825";
 export const zendeskPaymentCategory: ZendeskCategory = {
   value: "pagamenti_pagopa",
-  description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
+  description: {
+    "it-IT": "Pagamento pagoPA",
+    "en-EN": "pagoPA payment",
+    "de-DE": "pagoPA-Zahlung"
+  }
 };
 export const zendeskPaymentMethodCategory: ZendeskCategory = {
   value: "metodo_di_pagamento",
   description: {
     "it-IT": "Metodo di pagamento",
-    "en-EN": "Payment method"
+    "en-EN": "Payment method",
+    "de-DE": "Zahlungsmethode"
   }
 };
 export const zendeskFCICategory: ZendeskCategory = {
   value: "firma_con_io",
   description: {
     "it-IT": "Firma con IO",
-    "en-EN": "Firma con IO"
+    "en-EN": "Firma con IO",
+    "de-DE": "Firma con IO"
   }
 };
 

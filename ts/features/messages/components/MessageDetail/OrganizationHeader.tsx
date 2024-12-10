@@ -1,17 +1,17 @@
-import React, { useCallback } from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
 import {
   Avatar,
+  Body,
   IOSpacingScale,
   IOStyles,
-  Label,
-  LabelSmall,
+  BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import React, { useCallback } from "react";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import { UIMessageId } from "../../types";
 import { DoubleAvatar } from "../Home/DS/DoubleAvatar";
@@ -64,14 +64,16 @@ export const OrganizationHeader = ({
   return (
     <View style={styles.item}>
       <View style={IOStyles.flex}>
-        <Label color="grey-700">{organizationName}</Label>
-        <LabelSmall
+        <Body weight="Semibold" color="grey-700">
+          {organizationName}
+        </Body>
+        <BodySmall
           color={theme["interactiveElem-default"]}
           onPress={navigateToServiceDetails}
-          weight="Bold"
+          weight="Semibold"
         >
           {serviceName}
-        </LabelSmall>
+        </BodySmall>
       </View>
       <View style={styles.itemAvatar}>
         {paymentData ? (

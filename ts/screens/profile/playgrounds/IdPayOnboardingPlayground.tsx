@@ -3,8 +3,7 @@ import {
   BodyMonospace,
   H4,
   IOColors,
-  Label,
-  LabelSmall,
+  BodySmall,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -176,9 +175,10 @@ const TestServiceItem = (props: TestServiceItemProps) => {
               alignItems: "center"
             }}
           >
-            <Label>
-              {label} <LabelSmall>{willFail ? "❌" : "✅"}</LabelSmall>
-            </Label>
+            <Body weight="Semibold">
+              {label}{" "}
+              <BodySmall weight="Semibold">{willFail ? "❌" : "✅"}</BodySmall>
+            </Body>
           </View>
           <BodyMonospace selectable>{serviceId}</BodyMonospace>
         </View>

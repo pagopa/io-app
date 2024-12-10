@@ -1,8 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useRoute } from "@react-navigation/native";
-import * as React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import * as O from "fp-ts/lib/Option";
 import {
   Body,
   ButtonSolidProps,
@@ -12,11 +7,18 @@ import {
   HSpacer,
   IOStyles,
   IconButton,
-  Label,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   profileEmailSelector,
@@ -24,16 +26,13 @@ import {
   profileNameSelector,
   profileSelector
 } from "../../../../store/reducers/profile";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { capitalize } from "../../../../utils/strings";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import ROUTES from "../../../../navigation/routes";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
-import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
   alertTextContainer: {
@@ -105,7 +104,8 @@ const FciDataSharingScreen = (): React.ReactElement => {
         <H6 color={"bluegrey"}>
           {I18n.t("features.fci.shareDataScreen.alertText")}
           <HSpacer size={8} />
-          <Label
+          <Body
+            weight="Semibold"
             asLink
             onPress={() => {
               trackFciUserExit(route.name, fciEnvironment, "modifica_email");
@@ -119,7 +119,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
             }}
           >
             {I18n.t("features.fci.shareDataScreen.alertLink")}
-          </Label>
+          </Body>
         </H6>
       </View>
     </View>

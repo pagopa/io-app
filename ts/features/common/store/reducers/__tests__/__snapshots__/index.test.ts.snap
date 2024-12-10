@@ -2,9 +2,6 @@
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
-  "euCovidCert": {
-    "byAuthCode": {},
-  },
   "fci": {
     "documentPreview": {
       "kind": "PotNone",
@@ -122,14 +119,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "credentials": [],
       "eid": {
         "_tag": "None",
-      },
-    },
-    "identification": {
-      "isCieSupported": {
-        "kind": "PotNone",
-      },
-      "isNfcEnabled": {
-        "kind": "PotNone",
       },
     },
     "issuance": {
@@ -280,7 +269,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "paymentsBackoffRetry": {},
     "wallet": {
       "userMethods": {
-        "kind": "PotNone",
+        "kind": "PotNoneLoading",
       },
     },
   },

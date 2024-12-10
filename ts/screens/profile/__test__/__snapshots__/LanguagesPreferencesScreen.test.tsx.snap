@@ -63,6 +63,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

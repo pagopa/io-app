@@ -204,6 +204,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2652,6 +2653,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

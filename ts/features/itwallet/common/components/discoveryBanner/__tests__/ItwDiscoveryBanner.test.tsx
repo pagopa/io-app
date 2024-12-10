@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
@@ -6,8 +5,6 @@ import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../../../definitions/content/Config";
-import { SubscriptionStateEnum } from "../../../../../../../definitions/trial_system/SubscriptionState";
-import { itwTrialId } from "../../../../../../config";
 import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -19,14 +16,9 @@ import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
 import { ItwDiscoveryBannerStandalone } from "../ItwDiscoveryBannerStandalone";
 
 type RenderOptions = {
-  isItwTrial?: boolean;
   isItwValid?: boolean;
   isItwEnabled?: boolean;
 };
-
-jest.mock("../../../../../../config", () => ({
-  itwEnabled: true
-}));
 
 describe("ItwDiscoveryBanner", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -55,7 +47,6 @@ describe("ItwDiscoveryBannerStandalone", () => {
   });
 
   test.each([
-    { isItwTrial: false },
     { isItwEnabled: false },
     { isItwValid: true }
   ] as ReadonlyArray<RenderOptions>)(
@@ -71,7 +62,6 @@ describe("ItwDiscoveryBannerStandalone", () => {
 
 const renderComponent = ({
   isItwEnabled = true,
-  isItwTrial = true,
   isItwValid = false
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -79,11 +69,6 @@ const renderComponent = ({
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
     _.merge(undefined, globalState, {
-      trialSystem: isItwTrial
-        ? {
-            [itwTrialId]: pot.some(SubscriptionStateEnum.ACTIVE)
-          }
-        : {},
       features: {
         itWallet: isItwValid
           ? {
