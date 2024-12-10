@@ -145,7 +145,7 @@ const WalletPaymentConfirmScreen = () => {
 
   React.useEffect(() => {
     if (isError) {
-      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.GENERIC_ERROR);
+      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR);
     }
   }, [isError, handleAuthorizationOutcome]);
 

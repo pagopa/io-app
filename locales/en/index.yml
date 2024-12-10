@@ -1405,7 +1405,7 @@ wallet:
         primaryAction: Chiudi
         secondaryAction: Scopri di più
         bottomSheet:
-          title: "Cosa fare se il salvataggio non va a buon fine?"
+          title: "Cosa fare se l’aggiunta del metodo non va a buon fine?"
           description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: La sessione è scaduta
@@ -2000,6 +2000,9 @@ wallet:
       PSP_ERROR:
         title: Il pagamento non è andato a buon fine
         subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
+      AUTH_REQUEST_ERROR:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Riprova più tardi.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -3196,19 +3199,6 @@ features:
           label: The loading of the payment methods failed.
           retryButton: Retry
     transactions:
-      showLegacyTransactions: Mostra precedenti
-      legacy:
-        empty:
-          title: Nessuna ricevuta trovata
-          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
-        banner:
-          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
-          action: Scopri di più
-        title: Operazioni precedenti
-        bottomSheet:
-          title: Dove trovo la ricevuta di pagamento?
-          notice: "**Avvisi pagati di recente**\nStiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
-          allNotices: "**Tutti gli altri avvisi**\nPer le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore."
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
