@@ -18,7 +18,7 @@ export const ItwDiscoveryBannerStandalone = () => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper} testID="itwDiscoveryBannerStandaloneTestID">
       <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
     </View>
   );

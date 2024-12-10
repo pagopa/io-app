@@ -1,70 +1,66 @@
-import _ from "lodash";
+import { fireEvent } from "@testing-library/react-native";
+import { AnyAction, Dispatch } from "redux";
 import configureMockStore from "redux-mock-store";
-import * as O from "fp-ts/lib/Option";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import * as hooks from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { walletSetCategoryFilter } from "../../store/actions/preferences";
+import * as selectors from "../../store/selectors";
 import { WalletCategoryFilterTabs } from "../WalletCategoryFilterTabs";
-import { ItwLifecycleState } from "../../../itwallet/lifecycle/store/reducers";
 
 describe("WalletCategoryFilterTabs", () => {
-  it("should not render the component when the wallet is not active", () => {
-    const { queryByTestId } = renderComponent({
-      isItwValid: false,
-      isWalletEmpty: true
-    });
+  it("should not render the component if there is only one cards category in the wallet", () => {
+    jest
+      .spyOn(selectors, "selectWalletCategoryFilter")
+      .mockImplementation(() => undefined);
+    jest
+      .spyOn(selectors, "selectWalletCategories")
+      .mockImplementation(() => new Set(["itw"]));
+
+    const { queryByTestId } = renderComponent();
     expect(queryByTestId("CategoryTabsContainerTestID")).toBeNull();
   });
 
-  it("should not render the component when the wallet is empty", () => {
-    const { queryByTestId } = renderComponent({
-      isItwValid: true,
-      isWalletEmpty: true
-    });
-    expect(queryByTestId("CategoryTabsContainerTestID")).toBeNull();
-  });
+  it("should render the component if there is more than one cards category in the wallet", () => {
+    jest
+      .spyOn(selectors, "selectWalletCategoryFilter")
+      .mockImplementation(() => undefined);
+    jest
+      .spyOn(selectors, "selectWalletCategories")
+      .mockImplementation(() => new Set(["itw", "other"]));
 
-  it("should render the component when the wallet is active and not empty", () => {
-    const { queryByTestId } = renderComponent({
-      isItwValid: true,
-      isWalletEmpty: false
-    });
+    const { queryByTestId } = renderComponent();
     expect(queryByTestId("CategoryTabsContainerTestID")).not.toBeNull();
+  });
+
+  it("should change the selected category when the user clicks on a tab", () => {
+    const mockedDispatch = jest.fn();
+    jest
+      .spyOn(hooks, "useIODispatch")
+      .mockImplementation(() => mockedDispatch as Dispatch<AnyAction>);
+    jest
+      .spyOn(selectors, "selectWalletCategoryFilter")
+      .mockImplementation(() => undefined);
+    jest
+      .spyOn(selectors, "selectWalletCategories")
+      .mockImplementation(() => new Set(["itw", "other"]));
+
+    const { getByTestId } = renderComponent();
+    const itwTab = getByTestId("CategoryTabTestID-itw");
+    fireEvent.press(itwTab);
+
+    expect(mockedDispatch).toHaveBeenCalledWith(walletSetCategoryFilter("itw"));
   });
 });
 
-const renderComponent = ({
-  isItwValid,
-  isWalletEmpty
-}: {
-  isItwValid: boolean;
-  isWalletEmpty: boolean;
-}) => {
+const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(
-    _.merge(undefined, globalState, {
-      features: {
-        itWallet: {
-          ...(isItwValid && {
-            issuance: {
-              integrityKeyTag: O.some("key-tag")
-            },
-            credentials: {
-              eid: O.some({ parsedCredential: {} }),
-              credentials: isWalletEmpty
-                ? []
-                : [O.some({ parsedCredential: {} })]
-            },
-            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
-          })
-        }
-      }
-    })
-  );
+  const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WalletCategoryFilterTabs,

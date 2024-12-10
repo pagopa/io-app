@@ -7,27 +7,36 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { walletSetCategoryFilter } from "../store/actions/preferences";
-import { selectWalletCategoryFilter } from "../store/selectors";
-import { walletCardCategoryFilters } from "../types";
-import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
-import { itwIsWalletEmptySelector } from "../../itwallet/credentials/store/selectors";
 import { trackWalletCategoryFilter } from "../../itwallet/analytics";
+import { walletSetCategoryFilter } from "../store/actions/preferences";
+import {
+  selectWalletCategories,
+  selectWalletCategoryFilter
+} from "../store/selectors";
+import { walletCardCategoryFilters } from "../types";
 
+/**
+ * Renders filter tabs to categorize cards on the wallet home screen.
+ * The tabs allow users to filter between different wallet categories like ITW, payments and bonus cards.
+ * Automatically hides when only one category is available to avoid unnecessary UI clutter.
+ */
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
-  const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
+  const categories = useIOSelector(selectWalletCategories);
 
-  if (!isItwValid || isWalletEmpty) {
+  const selectedIndex = React.useMemo(
+    () =>
+      selectedCategory
+        ? walletCardCategoryFilters.indexOf(selectedCategory) + 1
+        : 0,
+    [selectedCategory]
+  );
+
+  if (categories.size <= 1) {
     return null;
   }
-
-  const selectedIndex = selectedCategory
-    ? walletCardCategoryFilters.indexOf(selectedCategory) + 1
-    : 0;
 
   const handleFilterSelected = (index: number) => {
     const categoryByIndex =

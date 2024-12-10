@@ -3,7 +3,10 @@ import {
   isItwFeedbackBannerEnabledSelector
 } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { itwIsWalletEmptySelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialsEidStatusSelector,
+  itwIsWalletEmptySelector
+} from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import {
   itwIsFeedbackBannerHiddenSelector,
@@ -43,3 +46,16 @@ export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletEmptySelector(state) &&
   !itwIsFeedbackBannerHiddenSelector(state);
+
+/**
+ * Returns if the wallet ready banner should be visible. The banner is visible if:
+ * - The Wallet has valid Wallet Instance and a valid eID
+ * - The eID is not expired
+ * - The Wallet is empty
+ * @param state the application global state
+ * @returns true if the banner should be visible, false otherwise
+ */
+export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
+  itwLifecycleIsValidSelector(state) &&
+  itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
+  itwIsWalletEmptySelector(state);
