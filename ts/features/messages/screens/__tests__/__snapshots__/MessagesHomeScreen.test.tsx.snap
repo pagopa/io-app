@@ -355,14 +355,12 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 16,
+                                }
                               }
                             >
                               <View
@@ -487,13 +485,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                 </View>
                               </View>
                               <View
-                                style={
-                                  {
-                                    "width": 16,
-                                  }
-                                }
-                              />
-                              <View
                                 accessibilityLabel="Settings"
                                 accessibilityRole="button"
                                 accessibilityState={
@@ -617,13 +608,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                   </RNSVGSvgView>
                                 </View>
                               </View>
-                              <View
-                                style={
-                                  {
-                                    "width": 16,
-                                  }
-                                }
-                              />
                               <View
                                 accessibilityLabel="Contextual Help"
                                 accessibilityRole="button"
