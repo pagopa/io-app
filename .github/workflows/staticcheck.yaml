@@ -20,6 +20,7 @@ jobs:
         run: yarn prettier:check
   unit-test:
     runs-on: ubuntu-latest
+    environment: dev
     needs: static-checks
     strategy:
       matrix:
