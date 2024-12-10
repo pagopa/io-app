@@ -458,20 +458,6 @@ const migrations: MigrationManifest = {
   // Remove old wallets&payments feature and persisted state
   "38": (state: PersistedState) => omit(state, "payments")
 };
-//   // Add new push notifications banner dismissal feature
-//   "39": (state: PersistedState) =>
-//     merge(state, {
-//       notifications: {
-//         userBehaviour: {
-//           pushNotificationsBanner: {
-//             timesDismissed: 0,
-//             isForceDismissed: false,
-//             forceDismissionDate: undefined
-//           }
-//         }
-//       }
-//     })
-// };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
 

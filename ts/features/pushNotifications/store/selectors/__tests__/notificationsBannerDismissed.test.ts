@@ -7,21 +7,15 @@ import {
 } from "../notificationsBannerDismissed";
 
 type TestStateProps = {
-  hasSeen?: boolean;
   timesDismissed?: number;
   forceDismissionDate?: Date;
 };
 const getTestState = ({
-  hasSeen,
   timesDismissed,
   forceDismissionDate
-}: TestStateProps): GlobalState => {
-  const duration = hasSeen !== undefined ? (hasSeen ? 1000 : 1) : undefined;
-  return {
+}: TestStateProps): GlobalState =>
+  ({
     notifications: {
-      environment: {
-        pushNotificationPermissionsRequestDuration: duration
-      },
       userBehaviour: {
         pushNotificationsBanner: {
           timesDismissed: timesDismissed ?? 0,
@@ -29,8 +23,7 @@ const getTestState = ({
         }
       }
     }
-  } as unknown as GlobalState;
-};
+  } as unknown as GlobalState);
 
 const unreadMessage = {
   isRead: false,

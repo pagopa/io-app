@@ -32,7 +32,6 @@ export const hasUserSeenSystemNotificationsPromptSelector = (
 export const isPushNotificationsBannerRenderableSelector = (
   state: GlobalState
 ) => {
-  // the banner should not be renedered *only* when force dismissed and there are not enough new messages
   const isForceDismissed =
     state.notifications.userBehaviour.pushNotificationsBanner
       .forceDismissionDate !== undefined &&
