@@ -1,27 +1,27 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
-import { Calendar } from "react-native-calendar-events";
-import { RouteProp, useRoute } from "@react-navigation/native";
 import {
-  FooterWithButtons,
+  FooterActions,
   IOStyles,
   ModalBSHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import I18n from "../../../i18n";
-import { UIMessageId } from "../types";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../navigation/params";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import React, { useCallback, useEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
+import { Calendar } from "react-native-calendar-events";
 import { CalendarList } from "../../../components/CalendarList";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { findDeviceCalendarsTask } from "../../../utils/calendar";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { useMessageCalendar } from "../hooks/useMessageCalendar";
+import { MessagesParamsList } from "../navigation/params";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
+import { UIMessageId } from "../types";
 
 export type MessageCalendarScreenRouteParams = {
   messageId: UIMessageId;
@@ -131,13 +131,11 @@ export const MessageCalendarScreen = () => {
           />
         </View>
       </ScrollView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Outline",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: I18n.t("global.buttons.cancel"),
-            accessibilityLabel: I18n.t("global.buttons.cancel"),
             onPress: () => navigation.goBack()
           }
         }}

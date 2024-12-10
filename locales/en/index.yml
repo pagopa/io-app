@@ -1405,7 +1405,7 @@ wallet:
         primaryAction: Chiudi
         secondaryAction: Scopri di più
         bottomSheet:
-          title: "Cosa fare se il salvataggio non va a buon fine?"
+          title: "Cosa fare se l’aggiunta del metodo non va a buon fine?"
           description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: La sessione è scaduta
@@ -1427,6 +1427,15 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+      PSP_ERROR_ONBOARDING:
+        title: L’aggiunta del metodo non è andata a buon fine
+        subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
+        primaryAction: Chiudi
+      BE_KO:
+        title: "Stiamo riscontrando alcuni problemi con l'aggiunta del metodo"
+        subtitle: "Riprova più tardi."
+        primaryAction: Chiudi
+        secondaryAction: Contatta l'assistenza
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
