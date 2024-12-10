@@ -2379,7 +2379,7 @@ bonus:
         alert:
           title: "Karte deaktivieren"
           message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
-        expired: Elimina Carta Giovani Nazionale
+        expired: Rimuovi dal Portafoglio
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
       code:
