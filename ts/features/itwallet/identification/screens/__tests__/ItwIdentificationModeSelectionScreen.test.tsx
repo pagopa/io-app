@@ -20,8 +20,8 @@ jest.mock("../../../../../config", () => ({
   itwEnabled: true
 }));
 
-jest.mock("../../../../../store/reducers/cie", () => ({
-  isCieSupportedSelector: () => true
+jest.mock("../../../machine/eid/selectors", () => ({
+  isCIEAuthenticationSupportedSelector: () => true
 }));
 
 describe("ItwIdentificationModeSelectionScreen", () => {
