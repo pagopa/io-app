@@ -2000,6 +2000,9 @@ wallet:
       PSP_ERROR:
         title: Il pagamento non è andato a buon fine
         subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
+      AUTH_REQUEST_ERROR:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Riprova più tardi.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
