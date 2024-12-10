@@ -335,8 +335,8 @@ profile:
       title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
       subtitle: Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
-      loading: Wait few seconds, we're checking your profile..
-      errorMessage: Non riusciamo a recuperare lo stato delle tue richieste. Riprova.
+      loading: Wait few seconds, we're checking your profile...
+      errorMessage: We can't retrieve the status of your request at the moment. Please try again.
       removeAccount:
         title: Delete your profile
         description: Delete your account and your personal data
