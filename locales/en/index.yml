@@ -3194,19 +3194,6 @@ features:
           label: The loading of the payment methods failed.
           retryButton: Retry
     transactions:
-      showLegacyTransactions: Mostra precedenti
-      legacy:
-        empty:
-          title: Nessuna ricevuta trovata
-          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
-        banner:
-          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
-          action: Scopri di più
-        title: Operazioni precedenti
-        bottomSheet:
-          title: Dove trovo la ricevuta di pagamento?
-          notice: "**Avvisi pagati di recente**\nStiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
-          allNotices: "**Tutti gli altri avvisi**\nPer le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore."
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
