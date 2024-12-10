@@ -1239,172 +1239,160 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                       </RCTScrollView>
                       <View
                         style={
-                          {
-                            "paddingBottom": 16,
-                          }
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
                         }
                       >
                         <View
+                          pointerEvents="none"
+                          style={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 4,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
+                        />
+                        <View
+                          onLayout={[Function]}
                           pointerEvents="box-none"
                           style={
                             {
-                              "marginTop": -50,
-                              "overflow": "hidden",
-                              "paddingTop": 50,
+                              "flexShrink": 0,
+                              "paddingHorizontal": 24,
                               "width": "100%",
                             }
                           }
-                          testID="FooterWithButtons"
                         >
                           <View
-                            onLayout={[Function]}
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "#FFFFFF",
-                                  "elevation": 20,
-                                  "paddingHorizontal": 24,
-                                  "shadowColor": "#0E0F13",
-                                  "shadowOffset": {
-                                    "height": 50,
-                                    "width": 0,
-                                  },
-                                  "shadowOpacity": 0.5,
-                                  "shadowRadius": 37,
-                                },
-                                {
-                                  "paddingBottom": 16,
-                                  "paddingTop": 16,
-                                },
-                              ]
+                            accessibilityLabel="Go to Settings"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              {
+                                "busy": false,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
                             }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={{}}
+                            testID="settings-btn"
                           >
                             <View
                               style={
-                                {
-                                  "flexDirection": "row",
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderRadius": 4,
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "paddingHorizontal": 16,
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "overflow": "hidden",
+                                  },
+                                  false,
+                                  {
+                                    "height": 40,
+                                  },
+                                  {
+                                    "backgroundColor": "#0073E6",
+                                  },
+                                  {
+                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
                                 style={
-                                  {
-                                    "alignContent": "center",
-                                    "flex": 1,
-                                    "justifyContent": "center",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    false,
+                                  ]
                                 }
                               >
-                                <View
-                                  accessibilityLabel="Go to Settings"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": false,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={false}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#FFFFFF",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
+                                      },
+                                      {
+                                        "alignSelf": "center",
+                                      },
+                                    ]
                                   }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
-                                  style={{}}
-                                  testID="settings-btn"
                                 >
-                                  <View
-                                    style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderRadius": 4,
-                                          "elevation": 0,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "paddingHorizontal": 16,
-                                          "textAlignVertical": "center",
-                                        },
-                                        {
-                                          "overflow": "hidden",
-                                        },
-                                        false,
-                                        {
-                                          "height": 40,
-                                        },
-                                        {
-                                          "backgroundColor": "#0073E6",
-                                        },
-                                        {
-                                          "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <View
-                                      style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                          },
-                                          false,
-                                        ]
-                                      }
-                                    >
-                                      <Text
-                                        accessibilityElementsHidden={true}
-                                        accessible={false}
-                                        allowFontScaling={false}
-                                        ellipsizeMode="tail"
-                                        importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
-                                        numberOfLines={1}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 20,
-                                            },
-                                            {
-                                              "alignSelf": "center",
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Go to Settings
-                                      </Text>
-                                    </View>
-                                  </View>
-                                </View>
+                                  Go to Settings
+                                </Text>
                               </View>
                             </View>
                           </View>

@@ -52,8 +52,6 @@ import { PaymentsMethodDetailsParamsList } from "../../features/payments/details
 import { PaymentsMethodDetailsRoutes } from "../../features/payments/details/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding/navigation/params";
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
-import { PaymentsTransactionParamsList } from "../../features/payments/transaction/navigation/params";
-import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -110,7 +108,6 @@ export type AppParamsList = {
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;
   [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
-  [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionParamsList>;
   [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionBizEventsParamsList>;
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;

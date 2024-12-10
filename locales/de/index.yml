@@ -1329,6 +1329,9 @@ wallet:
         subtitle: "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast."
         primaryAction: "Schließen"
         secondaryAction: "Mehr erfahren"
+        bottomSheet:
+          title: "Cosa fare se l’aggiunta del metodo non va a buon fine?"
+          description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: "Die Sitzung ist abgelaufen"
         subtitle: "Zu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
@@ -2376,7 +2379,7 @@ bonus:
         alert:
           title: "Karte deaktivieren"
           message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
-        expired: Elimina Carta Giovani Nazionale
+        expired: Rimuovi dal Portafoglio
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
       code:
@@ -2501,17 +2504,6 @@ features:
       status:
         expired: "Abgelaufen"
     transactions:
-      showLegacyTransactions: "Vorherige anzeigen"
-      legacy:
-        empty:
-          title: "Keine Quittung gefunden"
-          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
-        banner:
-          content: "Wir generieren Quittungen im PDF-Format: Wenn du Duplikate in dieser Liste findest, ignoriere diese bitte!"
-          action: "Mehr erfahren"
-        title: "Vorherige Transaktionen"
-        bottomSheet:
-          title: "Wo finde ich die Zahlungsquittung?"
       multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
