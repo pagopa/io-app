@@ -1,19 +1,12 @@
 import {
-  ButtonLink,
   Divider,
   IOStyles,
-  ListItemHeader,
-  VSpacer
+  ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp } from "@react-navigation/native";
 import * as React from "react";
-import {
-  LayoutChangeEvent,
-  SectionList,
-  SectionListData,
-  View
-} from "react-native";
+import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
@@ -31,7 +24,6 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { groupTransactionsByMonth } from "../utils";
 import I18n from "../../../../i18n";
 import { PaymentsTransactionBizEventsRoutes } from "../navigation/routes";
-import { PaymentsTransactionRoutes } from "../../transaction/navigation/routes";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import * as analytics from "../analytics";
 import { PaymentBizEventsCategoryFilter } from "../types";
@@ -85,16 +77,6 @@ const PaymentsTransactionBizEventsListScreen = () => {
           transactionId: transaction.eventId,
           isPayer: transaction.isPayer
         }
-      }
-    );
-  };
-
-  const handleNavigateToLegacyTransactions = () => {
-    analytics.trackPaymentsOpenOldReceiptListing("payments_receipt_listing");
-    navigation.navigate(
-      PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
-      {
-        screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_LIST
       }
     );
   };
@@ -179,26 +161,12 @@ const PaymentsTransactionBizEventsListScreen = () => {
     }
   }, [transactionsPot]);
 
-  const ShowLegacyTransactionsButton = () => (
-    <View style={{ marginTop: 12 }}>
-      <VSpacer size={16} />
-      <ButtonLink
-        label={I18n.t("features.payments.transactions.showLegacyTransactions")}
-        onPress={handleNavigateToLegacyTransactions}
-        icon="history"
-      />
-    </View>
-  );
-
   const renderLoadingFooter = () => (
     <>
       {isLoading && (
         <PaymentsBizEventsTransactionLoadingList
           showSectionTitleSkeleton={!continuationToken}
         />
-      )}
-      {!isLoading && !continuationToken && noticeCategory === "all" && (
-        <ShowLegacyTransactionsButton />
       )}
     </>
   );

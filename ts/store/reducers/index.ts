@@ -33,7 +33,6 @@ import { isDevEnv } from "../../utils/environment";
 import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
 import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
 import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { itwIdentificationInitialState } from "../../features/itwallet/identification/store/reducers";
 import { cieLoginInitialState } from "../../features/cieLogin/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
@@ -263,7 +262,6 @@ export function createRootReducer(
               _persist: state.features._persist,
               // IT Wallet must be kept
               itWallet: {
-                identification: itwIdentificationInitialState,
                 issuance: state.features.itWallet.issuance,
                 lifecycle: state.features.itWallet.lifecycle,
                 credentials: state.features.itWallet.credentials,
