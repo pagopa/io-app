@@ -3,6 +3,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { isCancelledFailure } from "@pagopa/io-react-native-http-client";
 import {
   fimsAcceptConsentsAction,
+  fimsAcceptConsentsFailureAction,
   fimsSignAndRetrieveInAppBrowserUrlAction
 } from "../store/actions";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -23,7 +24,7 @@ export function* handleFimsAcceptedConsents(
     const debugMessage = `missing FIMS, domain is ${oidcProviderDomain}`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsSignAndRetrieveInAppBrowserUrlAction.failure({
+      fimsAcceptConsentsFailureAction({
         errorTag: "GENERIC",
         debugMessage
       })
@@ -40,7 +41,7 @@ export function* handleFimsAcceptedConsents(
     const debugMessage = `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsSignAndRetrieveInAppBrowserUrlAction.failure({
+      fimsAcceptConsentsFailureAction({
         errorTag: "GENERIC",
         debugMessage
       })
@@ -67,7 +68,7 @@ export function* handleFimsAcceptedConsents(
     )}`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
-      fimsSignAndRetrieveInAppBrowserUrlAction.failure({
+      fimsAcceptConsentsFailureAction({
         errorTag: "GENERIC",
         debugMessage
       })

@@ -25,8 +25,10 @@ export const fimsGetConsentsListAction = createAsyncAction(
 // note: IAB==InAppBrowser
 export const fimsAcceptConsentsAction = createStandardAction(
   "FIMS_ACCEPT_CONSENTS"
-  // TODO above action's failure version
 )<FimsAcceptConsentsRequestType>();
+export const fimsAcceptConsentsFailureAction = createStandardAction(
+  "FIMS_ACCEPT_CONSENTS_FAILURE"
+)<FimsErrorStateType>();
 export const fimsCancelOrAbortAction = createStandardAction(
   "FIMS_CANCEL_OR_ABORT"
 )<void>();
@@ -40,5 +42,6 @@ export const fimsSignAndRetrieveInAppBrowserUrlAction = createAsyncAction(
 export type FimsSSOActions =
   | ActionType<typeof fimsGetConsentsListAction>
   | ActionType<typeof fimsAcceptConsentsAction>
+  | ActionType<typeof fimsAcceptConsentsFailureAction>
   | ActionType<typeof fimsSignAndRetrieveInAppBrowserUrlAction>
   | ActionType<typeof fimsCancelOrAbortAction>;

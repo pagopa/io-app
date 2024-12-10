@@ -9,6 +9,7 @@ import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";
 import {
   fimsAcceptConsentsAction,
+  fimsAcceptConsentsFailureAction,
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
   fimsSignAndRetrieveInAppBrowserUrlAction
@@ -89,6 +90,7 @@ const reducer = (
         currentFlowState: "idle"
       };
     case getType(fimsGetConsentsListAction.failure):
+    case getType(fimsAcceptConsentsFailureAction):
     case getType(fimsSignAndRetrieveInAppBrowserUrlAction.failure):
       return {
         ...state,
