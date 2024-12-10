@@ -1015,23 +1015,6 @@
                 "it-IT": "Cognome",
                 "en-US": "Family Name"
             }
-        },
-        "evidence": {
-            "value": [
-                {
-                    "type": "electronic_record",
-                    "record": {
-                        "type": "https://eudi.wallet.pdnd.gov.it",
-                        "source": {
-                            "organization_name": "Ragioneria Generale dello Stato",
-                            "organization_id": "urn:eudi:it:organization_id:ipa_code:QLHCFC",
-                            "country_code": "IT"
-                        }
-                    }
-                }
-            ],
-            "mandatory": false,
-            "name": "evidence"
         }
     },
     "credentialConfigurationSchema": {
