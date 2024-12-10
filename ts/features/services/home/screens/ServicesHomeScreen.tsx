@@ -10,19 +10,13 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React, {
-  ComponentProps,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo
-} from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
-import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
-import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
+import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
+import { useHeaderFirstLevelProps } from "../../../../hooks/useHeaderFirstLevelProps";
 import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
@@ -210,6 +204,9 @@ export const ServicesHomeScreen = () => {
   /* CODE RELATED TO THE HEADER -- START */
 
   const scrollViewContentRef = useAnimatedRef<Animated.FlatList<Institution>>();
+  const { actionHelp } = useHeaderFirstLevelProps(
+    SERVICES_ROUTES.SERVICES_HOME
+  );
 
   const { bottomSheet, present } = useServicesHomeBottomSheet();
 
@@ -218,11 +215,7 @@ export const ServicesHomeScreen = () => {
     navigation.navigate(SERVICES_ROUTES.SEARCH);
   }, [navigation]);
 
-  const helpAction = useHeaderFirstLevelActionPropHelp(
-    SERVICES_ROUTES.SERVICES_HOME
-  );
-
-  const settingsAction: HeaderActionProps = useMemo(
+  const actionSettings: HeaderActionProps = useMemo(
     () => ({
       icon: "coggle",
       accessibilityLabel: I18n.t("global.buttons.settings"),
@@ -231,7 +224,7 @@ export const ServicesHomeScreen = () => {
     [present]
   );
 
-  const searchAction: HeaderActionProps = useMemo(
+  const actionSearch: HeaderActionProps = useMemo(
     () => ({
       icon: "search",
       accessibilityLabel: I18n.t("global.accessibility.search"),
@@ -240,32 +233,17 @@ export const ServicesHomeScreen = () => {
     [handleSearch]
   );
 
-  useLayoutEffect(() => {
-    const headerFirstLevelProps: ComponentProps<typeof HeaderFirstLevel> = {
-      title: I18n.t("services.title"),
-      animatedFlatListRef: scrollViewContentRef,
-      ignoreSafeAreaMargin: !!alertProps,
-      type: "threeActions",
-      firstAction: helpAction,
-      secondAction: settingsAction,
-      thirdAction: searchAction
-    };
+  useHeaderFirstLevel({
+    title: I18n.t("services.title"),
+    animatedFlatListRef: scrollViewContentRef,
+    ignoreSafeAreaMargin: !!alertProps,
+    type: "threeActions",
+    firstAction: actionHelp,
+    secondAction: actionSettings,
+    thirdAction: actionSearch
+  });
 
-    navigation.setOptions({
-      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
-    });
-  }, [
-    SearchInputComponent,
-    alertProps,
-    handleSearch,
-    helpAction,
-    navigation,
-    scrollViewContentRef,
-    searchAction,
-    settingsAction
-  ]);
-
-  /* CODE RELATED TO THE HEADER -- START */
+  /* CODE RELATED TO THE HEADER -- END */
 
   /* Scroll to top when the active tab is tapped */
   useTabItemPressWhenScreenActive(

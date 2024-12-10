@@ -1,15 +1,10 @@
 import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  PropsWithChildren,
-  default as React,
-  useCallback,
-  useLayoutEffect
-} from "react";
+import { PropsWithChildren, default as React, useCallback } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
-import { useHeaderFirstLevelActionPropHelp } from "../../../hooks/useHeaderFirstLevelActionPropHelp";
+import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
+import { useHeaderFirstLevelProps } from "../../../hooks/useHeaderFirstLevelProps";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
@@ -32,7 +27,6 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { selectWalletCards } from "../store/selectors";
-import { useHeaderFirstLevelActionPropSettings } from "../../../hooks/useHeaderFirstLevelActionPropSettings";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -90,26 +84,23 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
     });
   };
 
-  /* CODE RELATED TO THE HEADER */
+  /* CODE RELATED TO THE HEADER -- START */
+
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(
+    ROUTES.WALLET_HOME
+  );
 
-  const helpAction = useHeaderFirstLevelActionPropHelp(ROUTES.WALLET_HOME);
-  const settingsAction = useHeaderFirstLevelActionPropSettings();
+  useHeaderFirstLevel({
+    testID: "wallet-home-header-title",
+    title: I18n.t("wallet.wallet"),
+    animatedRef: scrollViewContentRef,
+    type: "twoActions",
+    firstAction: actionHelp,
+    secondAction: actionSettings
+  });
 
-  useLayoutEffect(() => {
-    const headerFirstLevelProps: HeaderFirstLevel = {
-      testID: "wallet-home-header-title",
-      title: I18n.t("wallet.wallet"),
-      animatedRef: scrollViewContentRef,
-      firstAction: helpAction,
-      type: "twoActions",
-      secondAction: settingsAction
-    };
-
-    navigation.setOptions({
-      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
-    });
-  }, [helpAction, navigation, scrollViewContentRef, settingsAction]);
+  /* CODE RELATED TO THE HEADER -- END */
 
   useTabItemPressWhenScreenActive(
     useCallback(() => {

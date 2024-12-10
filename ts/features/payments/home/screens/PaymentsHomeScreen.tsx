@@ -1,7 +1,7 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { useCallback, useEffect, useLayoutEffect } from "react";
+import { useCallback, useEffect } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
@@ -10,7 +10,8 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
-import { useHeaderFirstLevelActionPropHelp } from "../../../../hooks/useHeaderFirstLevelActionPropHelp";
+import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
+import { useHeaderFirstLevelProps } from "../../../../hooks/useHeaderFirstLevelProps";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -32,9 +33,6 @@ import {
   isPaymentsSectionLoadingFirstTimeSelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
-import HeaderFirstLevel from "../../../../components/ui/HeaderFirstLevel";
-import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
-import { useHeaderFirstLevelActionPropSettings } from "../../../../hooks/useHeaderFirstLevelActionPropSettings";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -74,34 +72,19 @@ const PaymentsHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
-  const currentRoute = ROUTES.PAYMENTS_HOME;
-
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+  const { actionHelp, actionSettings, alertProps } = useHeaderFirstLevelProps(
+    ROUTES.PAYMENTS_HOME
+  );
 
-  const alertProps = useStatusAlertProps(currentRoute);
-  const helpAction = useHeaderFirstLevelActionPropHelp(currentRoute);
-  const settingsAction = useHeaderFirstLevelActionPropSettings();
-
-  useLayoutEffect(() => {
-    const headerFirstLevelProps: HeaderFirstLevel = {
-      title: I18n.t("features.payments.title"),
-      ignoreSafeAreaMargin: !!alertProps,
-      animatedRef: scrollViewContentRef,
-      type: "twoActions",
-      firstAction: helpAction,
-      secondAction: settingsAction
-    };
-
-    navigation.setOptions({
-      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
-    });
-  }, [
-    scrollViewContentRef,
-    settingsAction,
-    helpAction,
-    navigation,
-    alertProps
-  ]);
+  useHeaderFirstLevel({
+    title: I18n.t("features.payments.title"),
+    ignoreSafeAreaMargin: !!alertProps,
+    animatedRef: scrollViewContentRef,
+    type: "twoActions",
+    firstAction: actionHelp,
+    secondAction: actionSettings
+  });
 
   /* CODE RELATED TO THE HEADER -- END */
 

@@ -1,20 +1,10 @@
 import { HeaderActionProps, IOStyles } from "@pagopa/io-app-design-system";
-import React, {
-  ComponentProps,
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef
-} from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
-import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
-import { useHeaderFirstLevelActionPropHelp } from "../../../hooks/useHeaderFirstLevelActionPropHelp";
-import {
-  useHeaderFirstLevelActionPropSettings,
-  useNavigateToSettingMainScreen
-} from "../../../hooks/useHeaderFirstLevelActionPropSettings";
-import { useStatusAlertProps } from "../../../hooks/useStatusAlertProps";
+import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
+import { useNavigateToSettingMainScreen } from "../../../hooks/useHeaderFirstLevelActionPropSettings";
+import { useHeaderFirstLevelProps } from "../../../hooks/useHeaderFirstLevelProps";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../store/hooks";
@@ -42,6 +32,9 @@ export const MessagesHomeScreen = () => {
   /* CODE RELATED TO THE HEADER -- START */
 
   const currentRoute = MESSAGES_ROUTES.MESSAGES_HOME;
+  const { actionHelp, actionSettings, alertProps } =
+    useHeaderFirstLevelProps(currentRoute);
+  const navigateToSettingMainScreen = useNavigateToSettingMainScreen();
 
   const canNavigateIfIsArchivingCallback = useCallback(() => {
     const state = store.getState();
@@ -70,25 +63,18 @@ export const MessagesHomeScreen = () => {
     }
   }, [canNavigateIfIsArchivingCallback, navigation]);
 
-  const navigateToSettingMainScreen = useNavigateToSettingMainScreen();
-
   const navigateToSettingMainScreenFromMessageSection = useCallback(() => {
     if (canNavigateIfIsArchivingCallback()) {
       navigateToSettingMainScreen();
     }
   }, [canNavigateIfIsArchivingCallback, navigateToSettingMainScreen]);
 
-  const settingsAction = useHeaderFirstLevelActionPropSettings();
-  const helpAction = useHeaderFirstLevelActionPropHelp(currentRoute);
-
-  const alertProps = useStatusAlertProps(currentRoute);
-
   const settingsActionInMessageSection: HeaderActionProps = useMemo(
     () => ({
-      ...settingsAction,
+      ...actionSettings,
       onPress: navigateToSettingMainScreenFromMessageSection
     }),
-    [navigateToSettingMainScreenFromMessageSection, settingsAction]
+    [navigateToSettingMainScreenFromMessageSection, actionSettings]
   );
 
   const searchMessageAction: HeaderActionProps = useMemo(
@@ -100,27 +86,14 @@ export const MessagesHomeScreen = () => {
     [messageSearchCallback]
   );
 
-  useLayoutEffect(() => {
-    const headerFirstLevelProps: ComponentProps<typeof HeaderFirstLevel> = {
-      title: I18n.t("messages.contentTitle"),
-      ignoreSafeAreaMargin: !!alertProps,
-      type: "threeActions",
-      firstAction: helpAction,
-      secondAction: settingsActionInMessageSection,
-      thirdAction: searchMessageAction
-    };
-
-    navigation.setOptions({
-      header: () => <HeaderFirstLevel {...headerFirstLevelProps} />
-    });
-  }, [
-    alertProps,
-    helpAction,
-    navigation,
-    searchMessageAction,
-    settingsAction,
-    settingsActionInMessageSection
-  ]);
+  useHeaderFirstLevel({
+    title: I18n.t("messages.contentTitle"),
+    ignoreSafeAreaMargin: !!alertProps,
+    type: "threeActions",
+    firstAction: actionHelp,
+    secondAction: settingsActionInMessageSection,
+    thirdAction: searchMessageAction
+  });
 
   /* CODE RELATED TO THE HEADER -- END */
 

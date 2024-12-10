@@ -1,7 +1,5 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import I18n from "../i18n";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
@@ -53,12 +51,7 @@ export const useHeaderFirstLevelActionPropHelp = (
   currentRouteName: TabRoutes
 ): HeaderActionProps => {
   const requestParams = useMemo(
-    () =>
-      pipe(
-        headerHelpByRoute[currentRouteName as TabRoutes],
-        O.fromNullable,
-        O.getOrElse(() => ({}))
-      ),
+    () => headerHelpByRoute[currentRouteName] ?? {},
     [currentRouteName]
   );
 
