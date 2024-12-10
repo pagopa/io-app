@@ -13,6 +13,7 @@ import {
 } from "../watchCheckSessionSaga";
 import { handleSessionExpiredSaga } from "../../../features/fastLogin/saga/utils";
 import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
+import { sessionInfoSelector } from "../../../store/reducers/authentication";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();
@@ -29,7 +30,7 @@ describe("checkSession", () => {
 
     const fields = "(zendeskToken,walletToken,lollipopAssertionRef)";
 
-    testSaga(testableCheckSession!, getSessionValidity, fields)
+    testSaga(testableCheckSession!, getSessionValidity, fields, false)
       .next()
       .call(getSessionValidity, { fields })
       .next(responseOK)
@@ -38,6 +39,8 @@ describe("checkSession", () => {
           isSessionValid: true
         })
       )
+      .next()
+      .select(sessionInfoSelector)
       .next()
       .put(sessionInformationLoadSuccess(responseValue as PublicSession))
       .next()
@@ -49,7 +52,7 @@ describe("checkSession", () => {
 
     const fields = "(zendeskToken,walletToken,lollipopAssertionRef)";
 
-    testSaga(testableCheckSession!, getSessionValidity, fields)
+    testSaga(testableCheckSession!, getSessionValidity, fields, false)
       .next()
       .call(getSessionValidity, { fields })
       .next(responseUnauthorized)
@@ -67,7 +70,7 @@ describe("checkSession", () => {
 
     const fields = undefined;
 
-    testSaga(testableCheckSession!, getSessionValidity, fields)
+    testSaga(testableCheckSession!, getSessionValidity, fields, false)
       .next()
       .call(getSessionValidity, { fields })
       .next(response500)
@@ -89,7 +92,7 @@ describe("checkSession", () => {
 
     const fields = "(zendeskToken,walletToken,lollipopAssertionRef)";
 
-    testSaga(testableCheckSession!, getSessionValidity, fields)
+    testSaga(testableCheckSession!, getSessionValidity, fields, false)
       .next()
       .call(getSessionValidity, { fields })
       .next(responseLeft)

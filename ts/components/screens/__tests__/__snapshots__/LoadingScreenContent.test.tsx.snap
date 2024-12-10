@@ -366,7 +366,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >
@@ -964,7 +964,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >
@@ -1562,7 +1562,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >
@@ -2157,7 +2157,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >

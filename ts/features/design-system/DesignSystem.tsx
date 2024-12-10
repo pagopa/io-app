@@ -2,7 +2,7 @@ import {
   Divider,
   H2,
   IOVisualCostants,
-  LabelSmall,
+  BodySmall,
   ListItemNav,
   VSpacer,
   VStack,
@@ -111,9 +111,9 @@ export const DesignSystem = () => {
     <VStack space={4}>
       <H2 color={theme["textHeading-default"]}>{title}</H2>
       {description && (
-        <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
+        <BodySmall weight={"Regular"} color={theme["textBody-tertiary"]}>
           {description}
-        </LabelSmall>
+        </BodySmall>
       )}
     </VStack>
   );

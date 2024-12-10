@@ -44,6 +44,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
+import { requestAppReview } from "../../../../utils/storeReview";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -146,6 +147,11 @@ const WalletPaymentOutcomeScreen = () => {
     navigation.pop();
   };
 
+  const handleSuccessClose = () => {
+    requestAppReview();
+    handleClose();
+  };
+
   const handleShowMoreOnReversedPayment = () => {
     reversedPaymentModal.present();
   };
@@ -153,7 +159,7 @@ const WalletPaymentOutcomeScreen = () => {
   const closeSuccessAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
-    onPress: handleClose,
+    onPress: handleSuccessClose,
     testID: "wallet-payment-outcome-success-button"
   };
 
@@ -473,6 +479,15 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t("wallet.payment.outcome.PSP_ERROR.subtitle"),
           action: closeFailureAction,
           secondaryAction: contactSupportAction
+        };
+      case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.outcome.AUTH_REQUEST_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
+          ),
+          action: closeFailureAction
         };
     }
   };

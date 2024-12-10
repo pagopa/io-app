@@ -1,8 +1,11 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  makeFontStyleObject,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
@@ -12,12 +15,7 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
 import I18n from "../i18n";
-import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { useIOSelector } from "../store/hooks";
-import {
-  isNewPaymentSectionEnabledSelector,
-  isSettingsVisibleAndHideProfileSelector
-} from "../store/reducers/backendStatus/remoteConfig";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
@@ -33,13 +31,6 @@ export const MainTabNavigator = () => {
 
   const startupLoaded = useIOSelector(isStartupLoaded);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
-
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -59,14 +50,12 @@ export const MainTabNavigator = () => {
               currentRouteName={route.name as keyof MainTabParamsList}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: isDesignSystemEnabled ? 10 : 12,
-            ...makeFontStyleObject(
-              "Regular",
-              false,
-              isDesignSystemEnabled ? "ReadexPro" : "TitilliumSansPro"
-            )
-          },
+          tabBarLabelStyle: makeFontStyleObject(
+            11,
+            isDesignSystemEnabled ? "Titillio" : "TitilliumSansPro",
+            11,
+            "Regular"
+          ),
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
@@ -104,46 +93,45 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {isSettingsVisibleAndHideProfile && (
-          <Tab.Screen
-            name={ROUTES.BARCODE_SCAN}
-            component={EmptyComponent}
-            listeners={{
-              tabPress: ({ preventDefault }) => {
-                preventDefault();
-                navigateToBarcodeScanScreen();
-              }
-            }}
-            options={{
-              title: I18n.t("global.navigator.scan"),
-              tabBarIcon: ({ color, focused }) => (
-                <TabIconComponent
-                  iconName={"navScan"}
-                  iconNameFocused={"navScan"}
-                  color={color}
-                  focused={focused}
-                />
-              )
-            }}
-          />
-        )}
-        {isNewWalletSectionEnabled && (
-          <Tab.Screen
-            name={ROUTES.PAYMENTS_HOME}
-            component={PaymentsHomeScreen}
-            options={{
-              title: I18n.t("global.navigator.payments"),
-              tabBarIcon: ({ color, focused }) => (
-                <TabIconComponent
-                  iconName={"navPsp"}
-                  iconNameFocused={"navPsp"}
-                  color={color}
-                  focused={focused}
-                />
-              )
-            }}
-          />
-        )}
+
+        <Tab.Screen
+          name={ROUTES.BARCODE_SCAN}
+          component={EmptyComponent}
+          listeners={{
+            tabPress: ({ preventDefault }) => {
+              preventDefault();
+              navigateToBarcodeScanScreen();
+            }
+          }}
+          options={{
+            title: I18n.t("global.navigator.scan"),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIconComponent
+                iconName={"navScan"}
+                iconNameFocused={"navScan"}
+                color={color}
+                focused={focused}
+              />
+            )
+          }}
+        />
+
+        <Tab.Screen
+          name={ROUTES.PAYMENTS_HOME}
+          component={PaymentsHomeScreen}
+          options={{
+            title: I18n.t("global.navigator.payments"),
+            tabBarIcon: ({ color, focused }) => (
+              <TabIconComponent
+                iconName={"navPsp"}
+                iconNameFocused={"navPsp"}
+                color={color}
+                focused={focused}
+              />
+            )
+          }}
+        />
+
         <Tab.Screen
           name={SERVICES_ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
@@ -159,23 +147,6 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {!isSettingsVisibleAndHideProfile && (
-          <Tab.Screen
-            name={ROUTES.PROFILE_MAIN}
-            component={ProfileMainScreen}
-            options={{
-              title: I18n.t("global.navigator.profile"),
-              tabBarIcon: ({ color, focused }) => (
-                <TabIconComponent
-                  iconName="navProfile"
-                  iconNameFocused="navProfileFocused"
-                  color={color}
-                  focused={focused}
-                />
-              )
-            }}
-          />
-        )}
       </Tab.Navigator>
     </LoadingSpinnerOverlay>
   );

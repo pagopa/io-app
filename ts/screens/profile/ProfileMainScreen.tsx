@@ -18,7 +18,6 @@ import React, {
   useState
 } from "react";
 import { Alert, FlatList, ListRenderItemInfo, ScrollView } from "react-native";
-import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../components/ui/LightModal";
@@ -28,11 +27,9 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../store/reducers/backendStatus/remoteConfig";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { isDevEnv } from "../../utils/environment";
 import DeveloperModeSection from "./DeveloperModeSection";
-import useContentWithFF from "./useContentWithFF";
 import { ProfileMainScreenTopBanner } from "./ProfileMainScreenTopBanner";
 
 const consecutiveTapRequired = 4;
@@ -246,12 +243,6 @@ const ProfileMainScreenFC = () => {
 };
 
 const ProfileMainScreen = () => {
-  const contextualHelpTitleContent = useContentWithFF(
-    "profile.main.contextualHelpTitle"
-  );
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
   const scrollViewContentRef = useRef<ScrollView>(null);
 
   useTabItemPressWhenScreenActive(
@@ -259,30 +250,20 @@ const ProfileMainScreen = () => {
     false
   );
 
-  if (isSettingsVisibleAndHideProfile) {
-    return (
-      <IOScrollViewWithLargeHeader
-        title={{
-          label: I18n.t("global.buttons.settings")
-        }}
-        headerActionsProp={{ showHelp: true }}
-        contextualHelpMarkdown={{
-          title: contextualHelpTitleContent as TranslationKeys,
-          body: isSettingsVisibleAndHideProfile
-            ? "profile.main.contextualHelpContent"
-            : "profile.main.legacyContextualHelpContent"
-        }}
-        faqCategories={["profile"]}
-      >
-        <ProfileMainScreenFC />
-      </IOScrollViewWithLargeHeader>
-    );
-  }
   return (
-    <ScrollView ref={scrollViewContentRef}>
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("global.buttons.settings")
+      }}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={{
+        title: "profile.main.contextualHelpTitle",
+        body: "profile.main.contextualHelpContent"
+      }}
+      faqCategories={["profile"]}
+    >
       <ProfileMainScreenFC />
-      <VSpacer size={24} />
-    </ScrollView>
+    </IOScrollViewWithLargeHeader>
   );
 };
 

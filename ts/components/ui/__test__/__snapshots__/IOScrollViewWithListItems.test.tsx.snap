@@ -865,7 +865,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -1501,7 +1501,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -2443,7 +2443,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {

@@ -254,9 +254,7 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
-    messageLegacy: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz deines Profils löschen."
     message: "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz in den Einstellungen löschen."
-    cta_1_legacy: "Geh zum Profil"
     cta_1: "Geh zu den Einstellungen"
     cta_2: "Ignorieren"
   contextualHelp:
@@ -423,7 +421,7 @@ profile:
           additionalInformation:
             description: "Für weitere Informationen lies bitte die "
             cta: "Datenschutzerklärung und die Nutzungsbedingungen"
-          profileSettings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Datenschutz und Nutzungsbedingungen ändern"
+          profileSettings: "Du kannst deine Wahl jederzeit unter Einstellungen > Datenschutz und Nutzungsbedingungen ändern"
           cta:
             shareData: "Daten freigeben"
             dontShareData: "Daten nicht freigeben"
@@ -968,7 +966,7 @@ onboarding:
     headerTitle: "IO einrichten"
     available:
       title: "Biometrische Erkennung aktiveren"
-      settings: "Du kannst deine Wahl jederzeit unter {{pageName}} > Sicherheit ändern"
+      settings: "Du kannst deine Wahl jederzeit unter Einstellungen > Sicherheit ändern"
       body:
         text: "Du kannst dein Gesicht oder deinen Fingerabdruck anstelle des Entsperrcodes verwenden. Damit kannst du schneller und sicherer auf die App zugreifen und Transaktionen und Zahlungen autorisieren."
         infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
@@ -986,7 +984,7 @@ onboarding:
             value: "Konfiguriere dein Gesicht oder deinen Fingerabdruck"
           step3:
             label: "Schritt 3"
-            value: "Aktiviere sie in IO unter {{pageName}} > Sicherheit"
+            value: "Aktiviere sie in IO unter Einstellungen > Sicherheit"
     unavailable:
       title: "Schütze dein Gerät"
       subtitle: "IO sendet dir Mitteilungen, die dich persönlich betreffen. Stelle sicher, dass nur du auf die App zugreifen kannst, indem du einen Code oder ein Zeichen zum Entsperren des Geräts festlegst."
@@ -1331,6 +1329,9 @@ wallet:
         subtitle: "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast."
         primaryAction: "Schließen"
         secondaryAction: "Mehr erfahren"
+        bottomSheet:
+          title: "Cosa fare se l’aggiunta del metodo non va a buon fine?"
+          description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: "Die Sitzung ist abgelaufen"
         subtitle: "Zu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
@@ -2060,7 +2061,7 @@ services:
         title: "Einstellungen gespeichert!"
         body: "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen."
         cta: "Verfügbare Dienste anzeigen"
-      banner: "Du kannst deine Wahl jederzeit unter {{pageName}} > Einstellungen ändern"
+      banner: "Du kannst deine Wahl jederzeit unter Einstellungen > Einstellungen ändern"
       oldUsersBadge: "Aktuelle Einstellungen"
       choiceLabel: "Deine Wahl:"
       unavailable: "Nicht ausgewählt"
@@ -2503,17 +2504,6 @@ features:
       status:
         expired: "Abgelaufen"
     transactions:
-      showLegacyTransactions: "Vorherige anzeigen"
-      legacy:
-        empty:
-          title: "Keine Quittung gefunden"
-          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
-        banner:
-          content: "Wir generieren Quittungen im PDF-Format: Wenn du Duplikate in dieser Liste findest, ignoriere diese bitte!"
-          action: "Mehr erfahren"
-        title: "Vorherige Transaktionen"
-        bottomSheet:
-          title: "Wo finde ich die Zahlungsquittung?"
       multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"

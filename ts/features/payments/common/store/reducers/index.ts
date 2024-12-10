@@ -12,9 +12,6 @@ import historyReducer, {
 import onboardingReducer, {
   PaymentsOnboardingState
 } from "../../../onboarding/store/reducers";
-import legacyTransactionReducer, {
-  PaymentsLegacyTransactionState
-} from "../../../transaction/store/reducers";
 import homeReducer, { PaymentsHomeState } from "../../../home/store/reducers";
 import paymentsWalletReducer, {
   PaymentsWalletState
@@ -33,7 +30,6 @@ export type PaymentsState = {
   onboarding: PaymentsOnboardingState;
   details: PaymentsMethodDetailsState & PersistPartial;
   checkout: PaymentsCheckoutState;
-  legacyTransaction: PaymentsLegacyTransactionState;
   history: PaymentsHistoryState & PersistPartial;
   home: PaymentsHomeState & PersistPartial;
   wallet: PaymentsWalletState;
@@ -46,7 +42,6 @@ const paymentsReducer = combineReducers({
   onboarding: onboardingReducer,
   details: detailsReducer,
   checkout: paymentReducer,
-  legacyTransaction: legacyTransactionReducer,
   history: historyReducer,
   home: homeReducer,
   wallet: paymentsWalletReducer,

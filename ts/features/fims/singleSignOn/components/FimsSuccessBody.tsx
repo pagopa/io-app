@@ -10,7 +10,6 @@ import {
   Icon,
   IOColors,
   IOStyles,
-  Label,
   ListItemHeader,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -20,6 +19,7 @@ import * as O from "fp-ts/Option";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { FooterActions } from "../../../../components/ui/FooterActions";
 import { LoadingSkeleton } from "../../../../components/ui/Markdown/LoadingSkeleton";
 import I18n from "../../../../i18n";
@@ -27,13 +27,12 @@ import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
 import { logoForService } from "../../../services/home/utils";
-import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
-import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import {
   computeAndTrackDataShare,
   computeAndTrackDataShareAccepted
 } from "../../common/analytics";
-import { Consent } from "../../../../../definitions/fims_sso/Consent";
+import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
+import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
 import { FimsClaimsList } from "./FimsClaims";
 import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
@@ -87,9 +86,9 @@ export const FimsFlowSuccessBody = ({
     serviceData !== undefined ? (
       <Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle")}</Body>
-        <Body weight="Bold">{serviceData.organization_name}</Body>
+        <Body weight="Semibold">{serviceData.organization_name}</Body>
         <Body weight="Regular">{I18n.t("FIMS.consentsScreen.subtitle2")}</Body>
-        <Body weight="Bold">{consents.redirect.display_name ?? ""}.</Body>
+        <Body weight="Semibold">{consents.redirect.display_name ?? ""}.</Body>
       </Body>
     ) : (
       <LoadingSkeleton lines={3} />
@@ -178,11 +177,9 @@ const generateBottomSheetProps = (
   title: I18n.t("FIMS.consentsScreen.bottomSheet.title"),
   component: (
     <>
-      <Label weight="Regular">
-        {I18n.t("FIMS.consentsScreen.bottomSheet.body")}
-      </Label>
+      <Body>{I18n.t("FIMS.consentsScreen.bottomSheet.body")}</Body>
       <VSpacer size={8} />
-      <Label weight="Regular">
+      <Body>
         {I18n.t("FIMS.consentsScreen.bottomSheet.body2")}
         <H6
           onPress={() => privacyUrl && openWebUrl(privacyUrl)}
@@ -190,7 +187,7 @@ const generateBottomSheetProps = (
         >
           {I18n.t("FIMS.consentsScreen.bottomSheet.bodyPrivacy")}
         </H6>
-      </Label>
+      </Body>
     </>
   ),
   snapPoint: [340]

@@ -1,15 +1,15 @@
+import { LabelMini } from "@pagopa/io-app-design-system";
 import { render } from "@testing-library/react-native";
 import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { Chip } from "@pagopa/io-app-design-system";
+import I18n from "../../../i18n";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
+import { format } from "../../../utils/dates";
 import { BonusCard } from "../BonusCard";
 import { BonusCardCounter } from "../BonusCardCounter";
-import I18n from "../../../i18n";
-import { format } from "../../../utils/dates";
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });
@@ -60,11 +60,11 @@ describe("Test BonusCard", () => {
         name: T_NAME,
         organizationName: T_ORG_NAME,
         status: (
-          <Chip color="grey-650">
+          <LabelMini weight="Regular" color="grey-650">
             {I18n.t("bonusCard.validUntil", {
               endDate: format(T_END_DATE, "DD/MM/YY")
             })}
-          </Chip>
+          </LabelMini>
         ),
         counters: [T_COUNTER_WITH_PROGRESS, T_COUNTER]
       });
