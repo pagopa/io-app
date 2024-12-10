@@ -18,6 +18,7 @@ import {
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { isAndroid } from "../../../../../utils/platform";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -48,9 +49,18 @@ const ItwCieIdLoginScreen = () => {
   const [authUrl, setAuthUrl] = useState<O.Option<string>>();
   const webViewSource = authUrl || spidAuthUrl;
 
+  const canUseCieIdApp2AppFlow = useMemo(
+    () => isAndroid && isCieIdAvailable(),
+    []
+  );
+
   const onLoadEnd = useCallback(() => {
-    setWebViewLoading(false);
-  }, []);
+    // When CieId app-to-app flow is enabled, stop loading only after we got
+    // the authUrl from CieId app, so the user doesn't see the login screen.
+    if (canUseCieIdApp2AppFlow ? authUrl : true) {
+      setWebViewLoading(false);
+    }
+  }, [canUseCieIdApp2AppFlow, authUrl]);
 
   const onError = useCallback(() => {
     machineRef.send({ type: "error", scope: "spid-login" });
@@ -59,9 +69,8 @@ const ItwCieIdLoginScreen = () => {
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
-      const idpIntent = getIntentFallbackUrl(url);
 
-      if (isCieIdAvailable() && isAuthenticationUrl(url)) {
+      if (canUseCieIdApp2AppFlow && isAuthenticationUrl(url)) {
         openCieIdApp(url, result => {
           if (result.id === "URL") {
             setAuthUrl(O.some(result.url));
@@ -70,7 +79,7 @@ const ItwCieIdLoginScreen = () => {
       }
 
       return pipe(
-        idpIntent,
+        getIntentFallbackUrl(url),
         O.fold(
           () => true,
           intentUrl => {
@@ -80,7 +89,7 @@ const ItwCieIdLoginScreen = () => {
         )
       );
     },
-    []
+    [canUseCieIdApp2AppFlow]
   );
 
   const handleNavigationStateChange = useCallback(
