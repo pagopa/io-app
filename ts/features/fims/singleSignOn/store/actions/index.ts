@@ -3,18 +3,17 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { FimsErrorStateType } from "../reducers";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 type FimsGetConsentsListRequestType = {
   ctaText: string;
   ctaUrl: string;
 };
 
-type FimsGetRedirectUrlAndOpenIABRequestType = {
+type FimsAcceptConsentsRequestType = {
   acceptUrl?: string;
-  serviceId: ServiceId;
 };
 
 export const fimsGetConsentsListAction = createAsyncAction(
@@ -24,17 +23,22 @@ export const fimsGetConsentsListAction = createAsyncAction(
 )<FimsGetConsentsListRequestType, Consent, FimsErrorStateType>();
 
 // note: IAB==InAppBrowser
-export const fimsGetRedirectUrlAndOpenIABAction = createAsyncAction(
-  "FIMS_GET_REDIRECT_URL_REQUEST",
-  "FIMS_GET_REDIRECT_URL_SUCCESS",
-  "FIMS_GET_REDIRECT_URL_FAILURE"
-)<FimsGetRedirectUrlAndOpenIABRequestType, void, FimsErrorStateType>();
-
+export const fimsAcceptConsentsAction = createStandardAction(
+  "FIMS_ACCEPT_CONSENTS"
+  // TODO above action's failure version
+)<FimsAcceptConsentsRequestType>();
 export const fimsCancelOrAbortAction = createStandardAction(
   "FIMS_CANCEL_OR_ABORT"
 )<void>();
 
+export const fimsSignAndRetrieveInAppBrowserUrlAction = createAsyncAction(
+  "FIMS_GET_REDIRECT_URL_REQUEST",
+  "FIMS_GET_REDIRECT_URL_SUCCESS",
+  "FIMS_GET_REDIRECT_URL_FAILURE"
+)<HttpClientSuccessResponse, void, FimsErrorStateType>();
+
 export type FimsSSOActions =
   | ActionType<typeof fimsGetConsentsListAction>
-  | ActionType<typeof fimsGetRedirectUrlAndOpenIABAction>
+  | ActionType<typeof fimsAcceptConsentsAction>
+  | ActionType<typeof fimsSignAndRetrieveInAppBrowserUrlAction>
   | ActionType<typeof fimsCancelOrAbortAction>;

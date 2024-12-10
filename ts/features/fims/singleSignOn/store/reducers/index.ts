@@ -8,9 +8,10 @@ import { Action } from "../../../../../store/actions/types";
 import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";
 import {
+  fimsAcceptConsentsAction,
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
-  fimsGetRedirectUrlAndOpenIABAction
+  fimsSignAndRetrieveInAppBrowserUrlAction
 } from "../actions";
 import { abortUrlFromConsentsPot } from "../selectors";
 
@@ -75,19 +76,20 @@ const reducer = (
         ssoData: pot.some(action.payload),
         relyingPartyServiceId: action.payload.service_id as ServiceId
       };
-    case getType(fimsGetRedirectUrlAndOpenIABAction.request):
+    case getType(fimsAcceptConsentsAction):
+    case getType(fimsSignAndRetrieveInAppBrowserUrlAction.request):
       return {
         ...state,
         currentFlowState: "in-app-browser-loading",
         ssoData: pot.none
       };
-    case getType(fimsGetRedirectUrlAndOpenIABAction.success):
+    case getType(fimsSignAndRetrieveInAppBrowserUrlAction.success):
       return {
         ...state,
         currentFlowState: "idle"
       };
     case getType(fimsGetConsentsListAction.failure):
-    case getType(fimsGetRedirectUrlAndOpenIABAction.failure):
+    case getType(fimsSignAndRetrieveInAppBrowserUrlAction.failure):
       return {
         ...state,
         currentFlowState: "idle",

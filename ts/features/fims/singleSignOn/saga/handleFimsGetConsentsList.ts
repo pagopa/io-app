@@ -12,30 +12,36 @@ import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { fimsTokenSelector } from "../../../../store/reducers/authentication";
-import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { fimsGetConsentsListAction } from "../store/actions";
+import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  fimsGetConsentsListAction,
+  fimsSignAndRetrieveInAppBrowserUrlAction
+} from "../store/actions";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";
 import { FimsErrorStateType } from "../store/reducers";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { preferredLanguageToString } from "../../common/utils";
-import { deallocateFimsAndRenewFastLoginSession } from "./handleFimsResourcesDeallocation";
 import {
   computeAndTrackAuthenticationError,
+  deallocateFimsAndRenewFastLoginSession,
+  followProviderRedirects,
   formatHttpClientResponseForMixPanel,
   isFastLoginFailure,
-  isValidRedirectResponse
+  isSuccessfulStatusCode,
+  isValidRedirectResponse,
+  responseContentIsApplicationJson
 } from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
   action: ActionType<typeof fimsGetConsentsListAction.request>
 ) {
   const fimsToken = yield* select(fimsTokenSelector);
-  const fimsProviderDomain = yield* select(fimsDomainSelector);
+  const oidcProviderDomain = yield* select(oidcProviderDomainSelector);
   const fimsCTAUrl = action.payload.ctaUrl;
 
-  if (!fimsToken || !fimsProviderDomain || !fimsCTAUrl) {
-    const debugMessage = `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderUrl: ${!!fimsProviderDomain}, fimsCTAUrl: ${!!fimsCTAUrl}`;
+  if (!fimsToken || !oidcProviderDomain || !fimsCTAUrl) {
+    const debugMessage = `missing FIMS data: fimsToken: ${!!fimsToken}, oidcProviderDomain: ${!!oidcProviderDomain}, fimsCTAUrl: ${!!fimsCTAUrl}`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
 
     yield* put(
@@ -64,7 +70,7 @@ export function* handleFimsGetConsentsList(
     return;
   }
 
-  yield* call(setCookie, fimsProviderDomain, "/", "_io_fims_token", fimsToken);
+  yield* call(setCookie, oidcProviderDomain, "/", "_io_fims_token", fimsToken);
 
   const fimsCTAUrlResponse = yield* call(nativeRequest, {
     verb: "get",
@@ -90,7 +96,7 @@ export function* handleFimsGetConsentsList(
 
   const isRedirectTowardsFimsProvider = relyingPartyRedirectUrl
     .toLowerCase()
-    .startsWith(fimsProviderDomain.toLowerCase());
+    .startsWith(oidcProviderDomain.toLowerCase());
 
   if (!isRedirectTowardsFimsProvider) {
     const debugMessage = `relying party did not redirect to provider, URL was: ${relyingPartyRedirectUrl}`;
@@ -110,42 +116,62 @@ export function* handleFimsGetConsentsList(
     preferredLanguageMaybe
   );
 
-  const getConsentsResult = yield* call(nativeRequest, {
-    verb: "get",
-    followRedirects: true,
-    url: relyingPartyRedirectUrl,
-    headers: {
-      "Accept-Language": preferredLanguage
-    }
-  });
+  const consetsOrRedirectToRelyingPartyResult = yield* call(
+    followProviderRedirects,
+    {
+      verb: "get",
+      followRedirects: false,
+      url: relyingPartyRedirectUrl,
+      headers: {
+        "Accept-Language": preferredLanguage
+      }
+    },
+    oidcProviderDomain
+  );
 
-  if (getConsentsResult.type === "failure") {
-    if (isCancelledFailure(getConsentsResult)) {
+  if (consetsOrRedirectToRelyingPartyResult.type === "failure") {
+    if (isCancelledFailure(consetsOrRedirectToRelyingPartyResult)) {
       return;
     }
 
-    if (isFastLoginFailure(getConsentsResult)) {
+    if (isFastLoginFailure(consetsOrRedirectToRelyingPartyResult)) {
       yield* call(deallocateFimsAndRenewFastLoginSession);
       return;
     }
 
-    const consentsError = extractConsentsError(getConsentsResult);
+    const consentsError = extractConsentsError(
+      consetsOrRedirectToRelyingPartyResult
+    );
     yield* call(computeAndTrackAuthenticationError, consentsError.debugMessage);
     yield* put(fimsGetConsentsListAction.failure(consentsError));
     return;
   }
-  const nextAction = yield* call(
-    decodeSuccessfulConsentsResponse,
-    getConsentsResult
-  );
-  if (isActionOf(fimsGetConsentsListAction.failure, nextAction)) {
-    const debugMessage = nextAction.payload.debugMessage;
-    yield* call(computeAndTrackAuthenticationError, debugMessage);
-  }
-  yield* put(nextAction);
-}
 
-// --------- UTILS --------
+  if (
+    isSuccessfulStatusCode(consetsOrRedirectToRelyingPartyResult.status) &&
+    responseContentIsApplicationJson(consetsOrRedirectToRelyingPartyResult)
+  ) {
+    // External Relying Party, expected consents list in response
+    const nextAction = yield* call(
+      decodeSuccessfulConsentsResponse,
+      consetsOrRedirectToRelyingPartyResult
+    );
+    if (isActionOf(fimsGetConsentsListAction.failure, nextAction)) {
+      const debugMessage = nextAction.payload.debugMessage;
+      yield* call(computeAndTrackAuthenticationError, debugMessage);
+    }
+    yield* put(nextAction);
+  } else {
+    // Internal Relying Party, expected response is either a 200 HTML
+    // page with an autosubmit form to the relying party redirect uri
+    // or it is a direct redirect to the relying party
+    yield* put(
+      fimsSignAndRetrieveInAppBrowserUrlAction.request(
+        consetsOrRedirectToRelyingPartyResult
+      )
+    );
+  }
+}
 
 const decodeSuccessfulConsentsResponse = (
   getConsentsResult: HttpClientSuccessResponse
@@ -157,7 +183,7 @@ const decodeSuccessfulConsentsResponse = (
     E.flatten,
     E.foldW(
       () => {
-        const debugMessage = `could not decode, body: ${getConsentsResult.body}`;
+        const debugMessage = `could not decode consents, body: ${getConsentsResult.body}`;
         return fimsGetConsentsListAction.failure({
           errorTag: "GENERIC",
           debugMessage
