@@ -18,6 +18,10 @@ jest.mock("../../../machine/provider", () => ({
 }));
 
 describe("ItwIssuanceCredentialNotFoundScreen", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("it should render the generic error message when route params are invalid", () => {
     const componentNoParams = renderComponent(undefined);
     expect(componentNoParams).toMatchSnapshot();
