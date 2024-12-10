@@ -20,13 +20,7 @@ import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
-import {
-  apiUrlPrefix,
-  cdcEnabled,
-  pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixTest,
-  zendeskEnabled
-} from "../config";
+import { apiUrlPrefix, cdcEnabled, zendeskEnabled } from "../config";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
@@ -81,10 +75,7 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
-import {
-  isIdPayTestEnabledSelector,
-  isPagoPATestEnabledSelector
-} from "../store/reducers/persistedPreferences";
+import { isIdPayTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -112,7 +103,6 @@ import { cancellAllLocalNotifications } from "../features/pushNotifications/util
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
 import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
 import { startAndReturnIdentificationResult } from "./identification";
@@ -599,15 +589,6 @@ export function* initializeApplicationSaga(
   const walletToken = maybeSessionInformation.value.walletToken as string;
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
-
-  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
-    yield* select(isPagoPATestEnabledSelector);
-
-  yield* fork(
-    watchLegacyTransactionSaga,
-    walletToken,
-    isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
-  );
 
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
