@@ -134,6 +134,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
           return;
         }
+        if (choice === UserDataProcessingChoiceEnum.DELETE) {
+          navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+          return;
+        }
       } else {
         handleAlreadyProcessingAlert(choice);
       }
@@ -146,34 +150,39 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     // if it is a get request after user click, check if shows the alert
     const checkUpdate = (
       errorMessage: string,
-      choice: UserDataProcessingChoiceEnum
+      choices: Array<UserDataProcessingChoiceEnum>
     ) => {
-      const currentState = userDataProcessing[choice];
+      const currentStates = choices.map(choice => userDataProcessing[choice]);
+      const prevStates = choices
+        .map(choice => (prevUserDataProcessing || {})[choice])
+        .filter(Boolean);
 
       if (
-        prevUserDataProcessing &&
-        pot.isLoading(prevUserDataProcessing[choice]) &&
-        !pot.isLoading(currentState)
+        prevStates.some(v => v && pot.isLoading(v)) &&
+        currentStates.every(curr => !pot.isLoading(curr))
       ) {
-        if (pot.isError(currentState)) {
+        if (currentStates.some(pot.isError)) {
           IOToast.error(errorMessage);
         }
         // if the user asks for download/delete prompt an alert
         else if (requestProcess) {
           setRequestProcess(false);
-          handleUserDataRequestAlert(choice);
+          choices.forEach(choice => {
+            if (
+              prevUserDataProcessing &&
+              pot.isLoading(prevUserDataProcessing[choice]) &&
+              !pot.isLoading(userDataProcessing[choice])
+            ) {
+              handleUserDataRequestAlert(choice);
+            }
+          });
         }
       }
     };
-    checkUpdate(
-      I18n.t("profile.main.privacy.exportData.error"),
-      UserDataProcessingChoiceEnum.DOWNLOAD
-    );
-
-    checkUpdate(
-      I18n.t("profile.main.privacy.removeAccount.error"),
+    checkUpdate(I18n.t("profile.main.privacy.errorMessage"), [
+      UserDataProcessingChoiceEnum.DOWNLOAD,
       UserDataProcessingChoiceEnum.DELETE
-    );
+    ]);
   }, [
     userDataProcessing,
     prevUserDataProcessing,
@@ -241,11 +250,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.removeAccount.title"),
         description: I18n.t("profile.main.privacy.removeAccount.description"),
         onPress: () => {
-          if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
-            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
-          } else {
-            navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
-          }
+          setRequestProcess(true);
+          dispatch(
+            loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+          );
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
           ? {
@@ -259,7 +267,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       }
     ],
 
-    [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
+    [dispatch, isRequestProcessing, navigation]
   );
 
   const renderPrivacyNavItem = useCallback(
