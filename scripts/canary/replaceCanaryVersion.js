@@ -20,17 +20,19 @@ const replaceCanaryVersion = () => {
   const package = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
 
   const versionSplit = package.version.split("-");
-  const canarySplit = process.argv[2].split("-");
 
   // replace the version, removing the rc part
-  package.version = `${versionSplit[0]}-${canarySplit[1]}`;
+  package.version = `${versionSplit[0]}-canary.${parseInt(
+    process.argv[2],
+    10
+  )}`;
 
   const contents = fs.readFileSync(gradlePath).toString("utf8");
 
   const updatedGradleContents = contents.replace(
     versionCodeRegex,
     (substr, ...args) =>
-      replaceVersionCode(substr, parseInt(process.argv[3], 10), ...args)
+      replaceVersionCode(substr, parseInt(process.argv[2], 10), ...args)
   );
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
   fs.writeFileSync(gradlePath, updatedGradleContents);
