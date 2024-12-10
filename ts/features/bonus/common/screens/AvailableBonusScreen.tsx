@@ -1,8 +1,4 @@
-import {
-  Divider,
-  FooterWithButtons,
-  IOToast
-} from "@pagopa/io-app-design-system";
+import { Divider, FooterActions, IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -17,6 +13,7 @@ import {
 import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -34,6 +31,7 @@ import {
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
+import { ServiceDetailsScreenRouteParams } from "../../../services/details/screens/ServiceDetailsScreen";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
@@ -50,8 +48,6 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
-import { ServiceDetailsScreenRouteParams } from "../../../services/details/screens/ServiceDetailsScreen";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -204,14 +200,12 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             />
           </ScrollView>
         </SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Outline",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               onPress: this.props.navigateBack,
-              label: I18n.t("global.buttons.cancel"),
-              accessibilityLabel: I18n.t("global.buttons.cancel")
+              label: I18n.t("global.buttons.cancel")
             }
           }}
         />
