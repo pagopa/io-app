@@ -1,9 +1,9 @@
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { WalletCard } from "../../types";
-import { walletAddCards } from "../actions/cards";
-import { selectIsWalletCardsLoading } from "../selectors";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { WalletCard } from "../../../types";
+import { walletAddCards } from "../../actions/cards";
+import { selectIsWalletCardsLoading } from "../../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",

@@ -1,17 +1,17 @@
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { WalletCard } from "../../types";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { WalletCard } from "../../../types";
 import {
   walletAddCards,
   walletRemoveCards,
   walletRemoveCardsByType,
   walletUpsertCard
-} from "../actions/cards";
-import { selectWalletCards } from "../selectors";
-import { walletResetPlaceholders } from "../actions/placeholders";
-import { paymentsDeleteMethodAction } from "../../../payments/details/store/actions";
-import { getNetworkError } from "../../../../utils/errors";
+} from "../../actions/cards";
+import { selectWalletCards } from "../../selectors";
+import { walletResetPlaceholders } from "../../actions/placeholders";
+import { paymentsDeleteMethodAction } from "../../../../payments/details/store/actions";
+import { getNetworkError } from "../../../../../utils/errors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
