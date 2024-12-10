@@ -480,6 +480,15 @@ const WalletPaymentOutcomeScreen = () => {
           action: closeFailureAction,
           secondaryAction: contactSupportAction
         };
+      case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.outcome.AUTH_REQUEST_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
+          ),
+          action: closeFailureAction
+        };
     }
   };
 

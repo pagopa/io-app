@@ -2504,17 +2504,6 @@ features:
       status:
         expired: "Abgelaufen"
     transactions:
-      showLegacyTransactions: "Vorherige anzeigen"
-      legacy:
-        empty:
-          title: "Keine Quittung gefunden"
-          body: "Wenn du eine Quittung für eine pagoPA-Zahlungsaufforderung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
-        banner:
-          content: "Wir generieren Quittungen im PDF-Format: Wenn du Duplikate in dieser Liste findest, ignoriere diese bitte!"
-          action: "Mehr erfahren"
-        title: "Vorherige Transaktionen"
-        bottomSheet:
-          title: "Wo finde ich die Zahlungsquittung?"
       multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
       button: "Alle anzeigen"
