@@ -221,7 +221,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -261,7 +261,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -301,7 +301,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -341,7 +341,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -381,7 +381,7 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -435,7 +435,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 18.75,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -475,7 +475,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 18.75,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -515,7 +515,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 18.75,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -555,7 +555,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 18.75,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -595,7 +595,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 18.75,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -635,7 +635,7 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 18.75,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -722,7 +722,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -762,7 +762,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -802,7 +802,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -842,7 +842,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -882,7 +882,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "700",
             "lineHeight": undefined,
           },
           {
@@ -922,7 +922,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -962,7 +962,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "700",
             "lineHeight": undefined,
           },
           {
@@ -1002,7 +1002,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
@@ -1042,7 +1042,7 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontFamily": "Titillium Sans Pro",
             "fontSize": 22.916666666666668,
             "fontStyle": "normal",
-            "fontWeight": "400",
+            "fontWeight": "600",
             "lineHeight": undefined,
           },
           {
