@@ -1,3 +1,4 @@
+import { WalletInstanceData } from "@pagopa/io-react-native-wallet/lib/typescript/client/generated/wallet-provider";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
@@ -7,6 +8,10 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
   "ITW_WALLET_INSTANCE_ATTESTATION_STORE"
 )<string>();
 
-export type ItwWalletInstanceActions = ActionType<
-  typeof itwWalletInstanceAttestationStore
->;
+export const itwUpdateWalletInstanceStatus = createStandardAction(
+  "ITW_WALLET_INSTANCE__STATUS_UPDATE"
+)<WalletInstanceData>();
+
+export type ItwWalletInstanceActions =
+  | ActionType<typeof itwWalletInstanceAttestationStore>
+  | ActionType<typeof itwUpdateWalletInstanceStatus>;

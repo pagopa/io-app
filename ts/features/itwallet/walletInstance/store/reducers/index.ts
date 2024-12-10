@@ -1,21 +1,37 @@
 import * as O from "fp-ts/lib/Option";
-import { flow } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
-import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils";
+import {
+  isWalletInstanceAttestationValid,
+  toRevocationReason
+} from "../../../common/utils/itwAttestationUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwWalletInstanceAttestationStore } from "../actions";
+import {
+  itwWalletInstanceAttestationStore,
+  itwUpdateWalletInstanceStatus
+} from "../actions";
+
+export enum RevocationReason {
+  CERTIFICATE_REVOKED_BY_ISSUER = "CERTIFICATE_REVOKED_BY_ISSUER",
+  NEW_WALLET_INSTANCE_CREATED = "NEW_WALLET_INSTANCE_CREATED",
+  REVOKED_BY_USER = "REVOKED_BY_USER"
+}
 
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
+  isRevoked: boolean;
+  revocationReason?: RevocationReason;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
-  attestation: undefined
+  attestation: undefined,
+  isRevoked: false,
+  revocationReason: undefined
 };
 
 const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = -1;
@@ -27,7 +43,16 @@ const reducer = (
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
+        ...state,
         attestation: action.payload
+      };
+    }
+
+    case getType(itwUpdateWalletInstanceStatus): {
+      return {
+        ...state,
+        isRevoked: action.payload.is_revoked,
+        revocationReason: toRevocationReason(action.payload.revocation_reason)
       };
     }
 
@@ -60,6 +85,21 @@ export const itwIsWalletInstanceAttestationValidSelector = createSelector(
     O.map(isWalletInstanceAttestationValid),
     O.getOrElse(() => false)
   )
+);
+
+/* Selector to get the wallet instance status */
+export const itwWalletInstanceStatusSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.walletInstance,
+  walletInstance =>
+    pipe(
+      O.fromNullable(walletInstance.isRevoked),
+      O.filter(Boolean),
+      O.map(() => ({
+        isRevoked: true,
+        revocationReason: walletInstance.revocationReason
+      })),
+      O.getOrElse(() => ({ isRevoked: false }))
+    )
 );
 
 export default persistedReducer;
