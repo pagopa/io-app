@@ -1,6 +1,7 @@
 import { GlobalState } from "../../../../store/reducers/types";
 import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
 import { areNotificationPermissionsEnabled } from "../reducers/environment";
+import { shouldResetNotificationBannerDismissStateSelector } from "./notificationsBannerDismissed";
 
 export const hasUserSeenSystemNotificationsPromptSelector = (
   state: GlobalState
@@ -31,6 +32,11 @@ export const hasUserSeenSystemNotificationsPromptSelector = (
 export const isPushNotificationsBannerRenderableSelector = (
   state: GlobalState
 ) => {
+  const isForceDismissed =
+    state.notifications.userBehaviour.pushNotificationsBanner
+      .forceDismissionDate !== undefined &&
+    !shouldResetNotificationBannerDismissStateSelector(state);
+
   const notificationsEnabled = areNotificationPermissionsEnabled(state);
   // user has seen the full SPID/CIE login flow,
   // so is not logged with fasLogin during this session
@@ -40,6 +46,7 @@ export const isPushNotificationsBannerRenderableSelector = (
     hasUserSeenSystemNotificationsPromptSelector(state);
 
   return (
+    !isForceDismissed &&
     !isFullLogin &&
     !notificationsEnabled &&
     !hasUserSeenSystemNotificationsPrompt
