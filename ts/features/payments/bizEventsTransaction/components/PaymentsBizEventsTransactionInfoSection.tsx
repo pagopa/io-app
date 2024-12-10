@@ -24,8 +24,8 @@ import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { capitalizeTextName } from "../../../../utils/strings";
-import { WalletTransactionReceiptDivider } from "../../transaction/components/WalletTransactionReceiptDivider";
 import { getPayerInfoLabel, isValidPspName, removeAsterisks } from "../utils";
+import { PaymentsBizEventsReceiptDivider } from "./PaymentsBizEventsReceiptDivider";
 
 type PaymentsBizEventsTransactionInfoSectionProps = {
   transaction?: NoticeDetailResponse;
@@ -58,7 +58,7 @@ const PaymentsBizEventsTransactionInfoSection = ({
 
   return (
     <>
-      <WalletTransactionReceiptDivider />
+      <PaymentsBizEventsReceiptDivider />
       <View style={styles.container}>
         <View style={[styles.contentCard, { backgroundColor }]}>
           <ListItemHeader
