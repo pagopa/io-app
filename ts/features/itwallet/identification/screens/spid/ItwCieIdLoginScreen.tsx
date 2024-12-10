@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
@@ -12,7 +12,6 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import I18n from "../../../../../i18n";
 import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
 import { itWalletIssuanceRedirectUri } from "../../../../../config";
-import { getIntentFallbackUrl } from "../../../../../utils/login";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -74,22 +73,16 @@ const ItwCieIdLoginScreen = () => {
         openCieIdApp(url, result => {
           if (result.id === "URL") {
             setAuthUrl(O.some(result.url));
+          } else {
+            machineRef.send({ type: "back" });
           }
         });
+        return false;
       }
 
-      return pipe(
-        getIntentFallbackUrl(url),
-        O.fold(
-          () => true,
-          intentUrl => {
-            void Linking.openURL(intentUrl);
-            return false;
-          }
-        )
-      );
+      return true;
     },
-    [canUseCieIdApp2AppFlow]
+    [canUseCieIdApp2AppFlow, machineRef]
   );
 
   const handleNavigationStateChange = useCallback(
