@@ -324,7 +324,6 @@ profile:
       removeAccount:
         title: "Dein Profil löschen"
         description: "Dein Profil und deine persönlichen Daten löschen"
-        error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
         alert:
           activeBonusTitle: "Dein Profil löschen"
           activeBonusDescription: "Es scheint, dass du einigen Initiativen auf IO beigetreten bist. Wenn du dein Profil löschst, werden die Initiativen, denen du beigetreten bist, nicht beendet.\n\nUm sie zu verwalten, geh zum Abschnitt „Konto“, andernfalls wähle „Löschen“."

@@ -336,10 +336,10 @@ profile:
       description: Your rights and obligations when using IO
       subtitle: Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
+      errorMessage: Non riusciamo a recuperare lo stato delle tue richieste. Riprova.
       removeAccount:
         title: Delete your profile
         description: Delete your account and your personal data
-        error: An error occurred while submit your deletion request, please retry!
         alert:
           activeBonusTitle: Delete your profile
           activeBonusDescription: "It seems that you have joined some initiatives on IO. Deleting your profile will not remove your subscriptions to the initiatives you have joined.\n\nTo manage them, go to the Portfolio section, otherwise choose 'Delete'"
