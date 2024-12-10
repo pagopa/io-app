@@ -1,6 +1,6 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActions,
   H6,
   Pictogram,
   VSpacer
@@ -12,8 +12,8 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
-import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
 
 const CompletionScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -49,15 +49,11 @@ const CompletionScreen = () => {
           </Body>
         </View>
       </SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: I18n.t("idpay.onboarding.success.button.continue"),
-            accessibilityLabel: I18n.t(
-              "idpay.onboarding.success.button.continue"
-            ),
             onPress: handleClosePress,
             testID: "closeButton"
           }

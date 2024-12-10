@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.5](https://github.com/pagopa/io-app/compare/2.79.0-rc.4...2.79.0-rc.5) (2024-12-09)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1899](https://pagopa.atlassian.net/browse/SIW-1899)] Fix filter tabs padding within wallet home screen ([#6517](https://github.com/pagopa/io-app/issues/6517)) ([1dbc898](https://github.com/pagopa/io-app/commit/1dbc898f498e6efa70b294fc80dcefd57d5702f3))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1404](https://pagopa.atlassian.net/browse/SIW-1404)] Move CIE/NFC logic to XState ([#6508](https://github.com/pagopa/io-app/issues/6508)) ([8465717](https://github.com/pagopa/io-app/commit/846571770e33ed653ec1fc779a3729dcf8223886))
+* [[IOBP-1044](https://pagopa.atlassian.net/browse/IOBP-1044),[IOBP-1054](https://pagopa.atlassian.net/browse/IOBP-1054)] Add missing outcome screen into payment onboarding ([#6514](https://github.com/pagopa/io-app/issues/6514)) ([26d92d0](https://github.com/pagopa/io-app/commit/26d92d0ee90ef7c184fd4e8add4321cf555795c4))
+* [[IOPLT-753](https://pagopa.atlassian.net/browse/IOPLT-753)] Update Sentry SDK to latest version ([#6429](https://github.com/pagopa/io-app/issues/6429)) ([d26118f](https://github.com/pagopa/io-app/commit/d26118fdb6e11172e19ae38b2859fd99b7353c70))
+
 ## [2.79.0-rc.4](https://github.com/pagopa/io-app/compare/2.79.0-rc.3...2.79.0-rc.4) (2024-12-06)
 
 
