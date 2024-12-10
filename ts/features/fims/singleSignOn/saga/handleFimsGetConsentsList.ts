@@ -30,7 +30,7 @@ import {
   isFastLoginFailure,
   isSuccessfulStatusCode,
   isValidRedirectResponse,
-  responseContentIsApplicationJson
+  responseContentContainsJson
 } from "./sagaUtils";
 
 export function* handleFimsGetConsentsList(
@@ -149,7 +149,7 @@ export function* handleFimsGetConsentsList(
 
   if (
     isSuccessfulStatusCode(consetsOrRedirectToRelyingPartyResult.status) &&
-    responseContentIsApplicationJson(consetsOrRedirectToRelyingPartyResult)
+    responseContentContainsJson(consetsOrRedirectToRelyingPartyResult)
   ) {
     // External Relying Party, expected consents list in response
     const nextAction = yield* call(

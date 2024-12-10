@@ -119,8 +119,11 @@ export const isRedirectStatusCode = (statusCode: number) =>
 export const isFastLoginFailure = (res: HttpClientFailureResponse) =>
   res.code === 401;
 
-export const responseContentIsApplicationJson = (res: HttpClientResponse) =>
-  res.headers["content-type"]?.toLowerCase().includes("application/json");
+// This method check for a generic 'json' substring since there are multiple
+// formats that may identify json, like 'application/json', 'application/hal+json'
+// 'application/ld+json'
+export const responseContentContainsJson = (res: HttpClientResponse) =>
+  res.headers["content-type"]?.toLowerCase().includes("json");
 
 export const followProviderRedirects = async (
   httpClientConfig: HttpCallConfig,
