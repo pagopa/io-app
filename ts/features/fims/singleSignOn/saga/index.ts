@@ -1,9 +1,10 @@
 import { SagaIterator } from "redux-saga";
 import { put, select, takeLatest } from "typed-redux-saga/macro";
 import {
+  fimsAcceptConsentsAction,
   fimsCancelOrAbortAction,
   fimsGetConsentsListAction,
-  fimsGetRedirectUrlAndOpenIABAction
+  fimsSignAndRetrieveInAppBrowserUrlAction
 } from "../store/actions";
 import {
   fimsCtaTextSelector,
@@ -11,16 +12,18 @@ import {
 } from "../store/selectors";
 import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
 import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
-import { handleFimsGetRedirectUrlAndOpenIAB } from "./handleFimsGetRedirectUrlAndOpenIAB";
+import { handleFimsAuthorizationOrImplicitCodeFlow } from "./handleFimsAuthorizationOrImplicitCodeFlow";
+import { handleFimsAcceptedConsents } from "./handleFIMSAcceptedConsents";
 
 export function* watchFimsSSOSaga(): SagaIterator {
   yield* takeLatest(
     fimsGetConsentsListAction.request,
     handleFimsGetConsentsList
   );
+  yield* takeLatest(fimsAcceptConsentsAction, handleFimsAcceptedConsents);
   yield* takeLatest(
-    fimsGetRedirectUrlAndOpenIABAction.request,
-    handleFimsGetRedirectUrlAndOpenIAB
+    fimsSignAndRetrieveInAppBrowserUrlAction.request,
+    handleFimsAuthorizationOrImplicitCodeFlow
   );
   yield* takeLatest(fimsCancelOrAbortAction, handleFimsAbortOrCancel);
 

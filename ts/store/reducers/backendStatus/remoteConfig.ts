@@ -121,15 +121,13 @@ export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
       })
   );
 
-export const fimsDomainSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): string | undefined =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.fims.domain),
-      O.toUndefined
-    )
-);
+export const oidcProviderDomainSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.fims.domain),
+    O.toUndefined
+  );
 
 /**
  * Return the remote config about the Premium Messages opt-in/out

@@ -63,7 +63,7 @@ export const trackDataShareAccepted = (
 };
 
 export const trackInAppBrowserOpening = (
-  serviceId: ServiceId,
+  serviceId: ServiceId | undefined,
   serviceName: string | undefined,
   organizationName: string | undefined,
   organizationFiscalCode: string | undefined,

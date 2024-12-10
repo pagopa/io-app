@@ -104,7 +104,7 @@ export const FimsFlowHandlerScreen = (
     const title = I18n.t(`FIMS.loadingScreen.${loadingState}.title`);
 
     return (
-      <LoadingScreenContent contentTitle={title}>
+      <LoadingScreenContent headerVisible contentTitle={title}>
         {subtitle}
       </LoadingScreenContent>
     );
