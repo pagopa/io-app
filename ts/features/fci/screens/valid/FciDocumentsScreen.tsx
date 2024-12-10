@@ -57,10 +57,6 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
   currentDoc: number;
 }>;
 
-type FooterActionsInlineEndButton = ComponentProps<
-  typeof FooterActionsInline
->["endAction"];
-
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -139,19 +135,30 @@ const FciDocumentsScreen = () => {
 
   const onCancelPress = () => present();
 
-  const continueButtonProps: FooterActionsInlineEndButton = {
-    color: "primary",
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
+    onPress: onCancelPress,
+    label: I18n.t("features.fci.documents.footer.cancel")
+  };
+
+  const continueButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
     onPress: onContinuePress,
     label: I18n.t("features.fci.documents.footer.continue")
   };
 
-  const keepReadingButtonProps: FooterActionsInlineEndButton = {
-    color: "primary",
+  const keepReadingButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
     onPress: () => pointToPage(totalPages),
     label: I18n.t("global.buttons.continue")
   };
 
-  const secondaryButtonProps: FooterActionsInlineEndButton =
+  const endActionButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] =
     currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
 
   const pointToPage = (page: number) =>
@@ -242,12 +249,8 @@ const FciDocumentsScreen = () => {
           <>
             {renderPager()}
             <FooterActionsInline
-              startAction={{
-                color: "primary",
-                onPress: onCancelPress,
-                label: I18n.t("features.fci.documents.footer.cancel")
-              }}
-              endAction={secondaryButtonProps}
+              startAction={cancelButtonProps}
+              endAction={endActionButtonProps}
             />
           </>
         )}
