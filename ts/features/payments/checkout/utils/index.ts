@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { ZendeskSubCategoriesMap } from "../../../../../definitions/content/ZendeskSubCategoriesMap";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
@@ -77,4 +78,23 @@ export const isDueDateValid = (date: string): string | undefined => {
   const tenYearsFromNow = new Date();
   tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + YEARS_TO_EXPIRE);
   return new Date(date) > tenYearsFromNow ? undefined : formattedDate;
+};
+
+export const getSubCategoryFromFaultCode = (
+  data: ZendeskSubCategoriesMap,
+  statusCode: string
+) => {
+  // check if there is a subcategory array that includes passed element
+  const subcategoryKey = Object.keys(data.subcategories).find(key =>
+    data.subcategories[key].includes(statusCode)
+  );
+  // if there is, return the mapped subcategory with the zendesk category id
+  if (subcategoryKey) {
+    return {
+      value: subcategoryKey,
+      zendeskSubCategoryId: data.subcategoryId
+    };
+  }
+  // if not, return nullable
+  return null;
 };
