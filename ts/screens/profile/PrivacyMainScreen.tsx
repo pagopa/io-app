@@ -146,22 +146,26 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   );
 
   useEffect(() => {
+    const prevIsLoading = (choice: UserDataProcessingChoiceEnum) =>
+      prevUserDataProcessing && pot.isLoading(prevUserDataProcessing[choice]);
+    const someWereLoading = (choices: Array<UserDataProcessingChoiceEnum>) =>
+      choices.some(
+        choice =>
+          prevIsLoading(choice) && !pot.isLoading(userDataProcessing[choice])
+      );
+    const someHasError = (choices: Array<UserDataProcessingChoiceEnum>) =>
+      choices.some(
+        choice =>
+          prevIsLoading(choice) && pot.isError(userDataProcessing[choice])
+      );
     // If the new request submission fails, show an alert and hide the 'in progress' badge
     // if it is a get request after user click, check if shows the alert
     const checkUpdate = (
       errorMessage: string,
       choices: Array<UserDataProcessingChoiceEnum>
     ) => {
-      const currentStates = choices.map(choice => userDataProcessing[choice]);
-      const prevStates = choices
-        .map(choice => (prevUserDataProcessing || {})[choice])
-        .filter(Boolean);
-
-      if (
-        prevStates.some(v => v && pot.isLoading(v)) &&
-        currentStates.every(curr => !pot.isLoading(curr))
-      ) {
-        if (currentStates.some(pot.isError)) {
+      if (someWereLoading(choices)) {
+        if (someHasError(choices)) {
           IOToast.error(errorMessage);
         }
         // if the user asks for download/delete prompt an alert
@@ -169,8 +173,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           setRequestProcess(false);
           choices.forEach(choice => {
             if (
-              prevUserDataProcessing &&
-              pot.isLoading(prevUserDataProcessing[choice]) &&
+              prevIsLoading(choice) &&
               !pot.isLoading(userDataProcessing[choice])
             ) {
               handleUserDataRequestAlert(choice);
@@ -228,12 +231,16 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.exportData.title"),
         description: I18n.t("profile.main.privacy.exportData.description"),
         onPress: () => {
-          setRequestProcess(true);
-          dispatch(
-            loadUserDataProcessing.request(
-              UserDataProcessingChoiceEnum.DOWNLOAD
-            )
-          );
+          if (pot.isError(userDataProcessing.DOWNLOAD)) {
+            setRequestProcess(true);
+            dispatch(
+              loadUserDataProcessing.request(
+                UserDataProcessingChoiceEnum.DOWNLOAD
+              )
+            );
+          } else {
+            navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+          }
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
           ? {
@@ -250,10 +257,16 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.removeAccount.title"),
         description: I18n.t("profile.main.privacy.removeAccount.description"),
         onPress: () => {
-          setRequestProcess(true);
-          dispatch(
-            loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
-          );
+          if (pot.isError(userDataProcessing.DELETE)) {
+            setRequestProcess(true);
+            dispatch(
+              loadUserDataProcessing.request(
+                UserDataProcessingChoiceEnum.DELETE
+              )
+            );
+          } else {
+            navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+          }
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
           ? {
@@ -267,7 +280,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       }
     ],
 
-    [dispatch, isRequestProcessing, navigation]
+    [dispatch, isRequestProcessing, navigation, userDataProcessing]
   );
 
   const renderPrivacyNavItem = useCallback(
