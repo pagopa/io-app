@@ -3308,7 +3308,6 @@ features:
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
         info: "Ulteriori info su questi dati"
-        issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
         authenticSource: Origine dei dati
