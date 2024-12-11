@@ -26,9 +26,9 @@ const ItwDiscoveryBannerOnboarding = () => {
 
   const trackBannerProperties = React.useMemo(
     () => ({
-      banner_id: "itwDiscoveryBannerTestID",
+      banner_id: "itwDiscoveryBannerOnboardingTestID",
       banner_page: route.name,
-      banner_landing: "ITW_INTRO"
+      banner_landing: "ITW_ONBOARDING"
     }),
     [route.name]
   );
@@ -55,7 +55,7 @@ const ItwDiscoveryBannerOnboarding = () => {
   return (
     <View style={styles.wrapper}>
       <Banner
-        testID="itwDiscoveryBannerTestID"
+        testID="itwDiscoveryBannerOnboardingTestID"
         content={I18n.t(
           "features.itWallet.discovery.banner.onboarding.content"
         )}
