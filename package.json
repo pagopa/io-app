@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.79.0-rc.6",
+  "version": "2.79.0-rc.7",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v16.4.0-RELEASE/api_backend.yaml",
   "io_session_manager_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml",
   "io_session_manager_public_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml",
