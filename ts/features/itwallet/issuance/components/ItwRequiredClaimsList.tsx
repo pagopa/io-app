@@ -18,7 +18,6 @@ import {
   ClaimValue,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
-  EvidenceClaim,
   extractFiscalCode,
   FiscalCodeClaim,
   getSafeText,
@@ -95,8 +94,6 @@ export const getClaimDisplayValue = (
           return `${decoded.locality} (${decoded.country})`;
         } else if (SimpleDateClaim.is(decoded)) {
           return decoded.toString();
-        } else if (EvidenceClaim.is(decoded)) {
-          return decoded[0].record.source.organization_name;
         } else if (ImageClaim.is(decoded)) {
           return decoded;
         } else if (DrivingPrivilegesClaim.is(decoded)) {
