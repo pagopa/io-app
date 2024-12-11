@@ -3,7 +3,6 @@ import { useIOSelector } from "../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../lifecycle/store/selectors";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
-import { itwHasMdlCredentialSelector } from "../credentials/store/selectors";
 import { ITW_ROUTES } from "./routes";
 
 /**
@@ -13,13 +12,6 @@ import { ITW_ROUTES } from "./routes";
 export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const isMdlPresent = useIOSelector(itwHasMdlCredentialSelector);
-
-  const presentationRoute = isItwValid
-    ? isMdlPresent
-      ? ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
-      : ITW_ROUTES.ISSUANCE.CREDENTIAL_NOT_FOUND
-    : ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION;
 
   return {
     [ITW_ROUTES.MAIN]: {
@@ -31,11 +23,10 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
           [isItwValid
             ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
             : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info",
-          [presentationRoute]: {
-            path: "presentation/credential-detail/:credentialType?",
-            parse: {
-              credentialType: (credentialType: string) => credentialType
-            }
+          [isItwValid
+            ? ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
+            : ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: {
+            path: "presentation/credential-detail/:credentialType"
           }
         })
       }

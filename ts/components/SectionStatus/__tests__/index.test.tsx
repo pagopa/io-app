@@ -21,11 +21,6 @@ import { GlobalState } from "../../../store/reducers/types";
 
 jest.mock("../../../utils/url");
 
-// Mocking the useItwLinkingOptions hook to avoid errors
-jest.mock("../../../features/itwallet/navigation/useItwLinkingOptions", () => ({
-  useItwLinkingOptions: jest.fn(() => ({}))
-}));
-
 const sectionStatus: SectionStatus = {
   is_visible: true,
   level: LevelEnum.normal,

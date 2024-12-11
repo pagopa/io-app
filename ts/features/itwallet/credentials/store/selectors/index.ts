@@ -130,8 +130,3 @@ export const itwCredentialsEidStatusSelector = createSelector(
       O.toUndefined
     )
 );
-
-export const itwHasMdlCredentialSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  credentials => O.isSome(credentials[CredentialType.DRIVING_LICENSE] || O.none)
-);

@@ -1,28 +1,20 @@
-import React from "react";
-import I18n from "../../../../i18n";
+import React, { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
+import I18n from "../../../../i18n";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useItwDisableGestureNavigation } from "../hooks/useItwDisableGestureNavigation";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
-export type ItwIssuanceCredentialNotFoundNavigationParams = {
+const ItwCredentialNotFound = ({
+  credentialType
+}: {
   credentialType: string;
-};
-
-type Props = IOStackNavigationRouteProps<
-  ItwParamsList,
-  "ITW_ISSUANCE_CREDENTIAL_NOT_FOUND"
->;
-
-export const ItwIssuanceCredentialNotFoundScreen = ({ route }: Props) => {
-  const { credentialType } = route.params;
+}) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
+
+  // Disable the back gesture navigation and the hardware back button
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
@@ -37,6 +29,13 @@ export const ItwIssuanceCredentialNotFoundScreen = ({ route }: Props) => {
   const handleClose = () => {
     navigation.pop();
   };
+
+  // Since this component could be used on a screen where the header is visible, we hide it.
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [navigation]);
 
   return (
     <OperationResultScreenContent
@@ -59,3 +58,5 @@ export const ItwIssuanceCredentialNotFoundScreen = ({ route }: Props) => {
     />
   );
 };
+
+export default ItwCredentialNotFound;

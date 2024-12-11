@@ -4,7 +4,6 @@ import { ItwPresentationCredentialAttachmentNavigationParams } from "../presenta
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/screens/ItwPresentationCredentialDetailScreen";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
-import { ItwIssuanceCredentialNotFoundNavigationParams } from "../issuance/screens/ItwIssuanceCredentialNotFoundScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -36,8 +35,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE
     .CREDENTIAL_ASYNC_FLOW_CONTINUATION]: ItwIssuanceCredentialAsyncContinuationNavigationParams;
-  [ITW_ROUTES.ISSUANCE
-    .CREDENTIAL_NOT_FOUND]: ItwIssuanceCredentialNotFoundNavigationParams;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
