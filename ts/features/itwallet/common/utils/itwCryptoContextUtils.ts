@@ -4,7 +4,6 @@ import { constNull } from "fp-ts/lib/function";
 // Key tags
 export const WIA_KEYTAG = "WIA_KEYTAG";
 export const DPOP_KEYTAG = "DPOP_KEYTAG";
-export const INTEGRITY_ANDROID_KEYTAG = "INTEGRITY_ANDROID_KEYTAG";
 
 export const regenerateCryptoKey = (keyTag: string) =>
   deleteKey(keyTag)
