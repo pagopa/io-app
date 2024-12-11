@@ -3166,6 +3166,7 @@ features:
       badge:
         active: Già presente
         unavailable: Non disponibile
+        requested: In corso
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3302,7 +3303,6 @@ features:
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
         info: "Ulteriori info su questi dati"
-        issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
         authenticSource: Origine dei dati
