@@ -14,7 +14,9 @@ exports[`itWalletReducer should match snapshot 1`] = `
     },
   },
   "lifecycle": 0,
-  "preferences": {},
+  "preferences": {
+    "requestedCredentials": {},
+  },
   "walletInstance": {
     "attestation": undefined,
   },
