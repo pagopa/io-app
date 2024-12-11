@@ -38,7 +38,7 @@ export function* handleFimsAcceptedConsents(
     oidcProviderDomain
   );
   if (!acceptUrl) {
-    const debugMessage = `unable to accept grants, could not buld url. obtained URL: ${maybeAcceptUrl}`;
+    const debugMessage = `unable to accept grants, could not build url. obtained URL: ${maybeAcceptUrl}`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
     yield* put(
       fimsAcceptConsentsFailureAction({
