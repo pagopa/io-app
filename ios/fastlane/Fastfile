@@ -202,7 +202,7 @@ platform :ios do
     )
   end
 
-  desc "Submit a new Beta Build to TestFlight, using CircleCI"
+  desc "Submit a new Beta Build to TestFlight"
   lane :beta_circleci_testflight do |options|
 
     # xCode 14.2, prevents altool to fail with error "Could not
@@ -236,6 +236,58 @@ platform :ios do
     )
 
     previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
+
+    # generate the changelog based on last commits
+    changelog = changelog_from_git_commits(
+      tag_match_pattern: "*" +previous_tag + "*" ,
+      pretty:"- %s",
+      merge_commit_filtering: "exclude_merges"
+    )
+
+    # upload to App store
+    pilot(
+      api_key: api_key,
+      changelog: changelog,
+      # max wait for App Store Connect processing (30 min)
+      wait_processing_timeout_duration: 1800
+    )
+  end
+
+  desc "Submit a new Canary Build to TestFlight"
+  lane :canary_ci_testflight do |options|
+
+    # xCode 14.2, prevents altool to fail with error "Could not
+    # determine the package’s bundle ID" during the "pilot" step
+    # See https://github.com/fastlane/fastlane/issues/20741
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
+
+    # Setup the CI environment
+    setup_ci()
+
+    # use the App Store API Key to authenticate
+    api_key = app_store_connect_api_key(
+      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
+      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
+      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
+      duration: 1200,
+    )
+
+    sync_code_signing(type: "appstore", api_key: api_key)
+
+    # Install pods
+    cocoapods
+
+    # build the app
+    gym(
+      scheme: "ItaliaApp",
+      clean: true,
+      export_method: "app-store",
+      configuration: "Canary",
+      workspace: "ItaliaApp.xcworkspace",
+      include_symbols: false
+    )
+
+    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-canary\\\\. | sed -n '2 p' | tr -d '\n'")
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
