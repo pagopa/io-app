@@ -39,7 +39,7 @@ describe("Onboarding Analytics", () => {
         WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND,
         "PAYMENT_ADD_METHOD_BPAY_NOT_FOUND"
       ],
-      [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING, "PAMENT_PSP_ERROR"],
+      [WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING, "PAYMENT_PSP_ERROR"],
       [WalletOnboardingOutcomeEnum.INVALID_SESSION, "PAYMENT_SESSION_TIMEOUT"],
       [WalletOnboardingOutcomeEnum.TIMEOUT, "PAYMENT_SESSION_TIMEOUT"],
       [WalletOnboardingOutcomeEnum.GENERIC_ERROR, "PAYMENT_GENERIC_ERROR"],
