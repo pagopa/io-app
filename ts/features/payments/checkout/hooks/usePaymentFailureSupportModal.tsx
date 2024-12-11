@@ -97,6 +97,8 @@ const usePaymentFailureSupportModal = ({
     }
     const { payments } = zendeskPaymentCategory.value;
     const subCategory = getSubCategoryFromFaultCode(payments, faultCodeDetail);
+
+    resetCustomFields();
     // attach the main zendesk category to the ticket
     addTicketCustomField(
       zendeskCategoryId,
@@ -107,9 +109,7 @@ const usePaymentFailureSupportModal = ({
       // if a subcategory is found, we attach its id and value to the ticket
       const { value, zendeskSubCategoryId } = subCategory;
       addTicketCustomField(zendeskSubCategoryId, value);
-      return;
     }
-    resetCustomFields();
 
     addTicketCustomField(zendeskPaymentOrgFiscalCode, organizationFiscalCode);
     addTicketCustomField(zendeskPaymentNav, paymentNoticeNumber);
