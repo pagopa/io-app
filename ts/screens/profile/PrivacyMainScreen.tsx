@@ -10,6 +10,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
@@ -64,6 +65,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const [requestProcess, setRequestProcess] = useState(false);
+  const canShowTooltipRef = useRef(true);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
     pot.isLoading(userDataProcessing.DOWNLOAD);
@@ -145,6 +147,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     [handleAlreadyProcessingAlert, navigation, userDataProcessing]
   );
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     const prevIsLoading = (choice: UserDataProcessingChoiceEnum) =>
       prevUserDataProcessing && pot.isLoading(prevUserDataProcessing[choice]);
@@ -165,7 +168,11 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       choices: Array<UserDataProcessingChoiceEnum>
     ) => {
       if (someWereLoading(choices)) {
-        if (someHasError(choices)) {
+        if (someHasError(choices) && canShowTooltipRef.current) {
+          // This reference ensures to display the toast message once between re-execution of this effect
+          // eslint-disable-next-line functional/immutable-data
+          canShowTooltipRef.current = false;
+
           IOToast.error(errorMessage);
         }
         // if the user asks for download/delete prompt an alert
@@ -232,6 +239,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         description: I18n.t("profile.main.privacy.exportData.description"),
         onPress: () => {
           if (pot.isError(userDataProcessing.DOWNLOAD)) {
+            // eslint-disable-next-line functional/immutable-data
+            canShowTooltipRef.current = true;
             setRequestProcess(true);
             dispatch(
               loadUserDataProcessing.request(
@@ -258,6 +267,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         description: I18n.t("profile.main.privacy.removeAccount.description"),
         onPress: () => {
           if (pot.isError(userDataProcessing.DELETE)) {
+            // eslint-disable-next-line functional/immutable-data
+            canShowTooltipRef.current = true;
             setRequestProcess(true);
             dispatch(
               loadUserDataProcessing.request(
