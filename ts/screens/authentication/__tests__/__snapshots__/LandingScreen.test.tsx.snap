@@ -1269,18 +1269,15 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     {
                                       "backgroundColor": "#0073E6",
                                     },
+                                    false,
                                     {
                                       "backgroundColor": undefined,
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  entering={[Function]}
                                   style={
                                     [
                                       {
@@ -1459,18 +1456,15 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1651,14 +1645,11 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -2311,7 +2302,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                             {
                                               "color": "#031344",
                                               "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
+                                              "fontSize": 17,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,
@@ -2676,13 +2667,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -4050,18 +4035,15 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     {
                                       "backgroundColor": "#0073E6",
                                     },
+                                    false,
                                     {
                                       "backgroundColor": undefined,
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  entering={[Function]}
                                   style={
                                     [
                                       {
@@ -4240,18 +4222,15 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -4432,14 +4411,11 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -5092,7 +5068,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                             {
                                               "color": "#031344",
                                               "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
+                                              "fontSize": 17,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,
@@ -5457,13 +5433,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

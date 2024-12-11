@@ -441,7 +441,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -909,7 +909,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -2065,7 +2065,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -2533,7 +2533,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
