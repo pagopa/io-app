@@ -54,13 +54,13 @@ export type ZendeskState = {
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
   getZendeskTokenStatus?: ZendeskTokenStatusEnum | "401";
-  zendeskMap: ZendeskSubcategoriesErrorsConfig;
+  zendeskSubcategoriesErrorMap: ZendeskSubcategoriesErrorsConfig;
 };
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
   ticketNumber: pot.none,
-  zendeskMap: remoteUndefined
+  zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
 const reducer = (
@@ -147,17 +147,17 @@ const reducer = (
     case getType(getZendeskPaymentConfig.request):
       return {
         ...state,
-        zendeskMap: remoteLoading
+        zendeskSubcategoriesErrorMap: remoteLoading
       };
     case getType(getZendeskPaymentConfig.success):
       return {
         ...state,
-        zendeskMap: remoteReady(action.payload)
+        zendeskSubcategoriesErrorMap: remoteReady(action.payload)
       };
     case getType(getZendeskPaymentConfig.failure):
       return {
         ...state,
-        zendeskMap: remoteError(action.payload)
+        zendeskSubcategoriesErrorMap: remoteError(action.payload)
       };
   }
   return state;
@@ -193,7 +193,10 @@ export const zendeskTicketNumberSelector = createSelector(
 );
 
 export const zendeskMapSelector = createSelector(
-  [(state: GlobalState) => state.assistanceTools.zendesk.zendeskMap],
+  [
+    (state: GlobalState) =>
+      state.assistanceTools.zendesk.zendeskSubcategoriesErrorMap
+  ],
   (zendeskMap): ZendeskSubcategoriesErrorsConfig => zendeskMap
 );
 
