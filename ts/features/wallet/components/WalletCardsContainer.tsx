@@ -65,7 +65,7 @@ const WalletCardsContainer = () => {
     // the wallet is not in a loading state anymore
     return (
       <View style={IOStyles.flex}>
-        <ItwDiscoveryBannerStandalone closable={false} />
+        <ItwDiscoveryBannerStandalone />
         <WalletEmptyScreenContent />
       </View>
     );
@@ -80,7 +80,7 @@ const WalletCardsContainer = () => {
       layout={LinearTransition.duration(200)}
     >
       <View testID="walletCardsContainerTestID">
-        <ItwDiscoveryBannerStandalone closable={false} />
+        <ItwDiscoveryBannerStandalone />
         {shouldRender("itw") && <ItwCardsContainer />}
         {shouldRender("other") && <OtherCardsContainer />}
       </View>

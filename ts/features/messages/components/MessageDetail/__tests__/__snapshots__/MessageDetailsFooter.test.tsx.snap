@@ -510,7 +510,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -1046,7 +1046,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -1582,7 +1582,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -2118,7 +2118,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -2654,7 +2654,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -2821,7 +2821,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -3357,7 +3357,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -3524,7 +3524,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -4060,7 +4060,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -4227,7 +4227,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -4763,7 +4763,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]
@@ -4930,7 +4930,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                     ]

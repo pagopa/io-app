@@ -5,7 +5,10 @@ import {
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwIsWalletEmptySelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-import { itwIsFeedbackBannerHiddenSelector } from "./preferences";
+import {
+  itwIsFeedbackBannerHiddenSelector,
+  itwIsDiscoveryBannerHiddenSelector
+} from "./preferences";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
@@ -16,6 +19,16 @@ import { itwIsFeedbackBannerHiddenSelector } from "./preferences";
  */
 export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
   !itwLifecycleIsValidSelector(state) && isItwEnabledSelector(state);
+
+/**
+ * Returns the renderable state of the discovery banner with the persisted user's preference:
+ * after being closed by the user it should stay hidden for 6 months.
+ */
+export const isItwPersistedDiscoveryBannerRenderableSelector = (
+  state: GlobalState
+) =>
+  !itwIsDiscoveryBannerHiddenSelector(state) &&
+  isItwDiscoveryBannerRenderableSelector(state);
 
 /**
  * Returns if the feedback banner should be visible. The banner is visible if:

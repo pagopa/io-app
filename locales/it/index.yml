@@ -1405,7 +1405,7 @@ wallet:
         primaryAction: Chiudi
         secondaryAction: Scopri di più
         bottomSheet:
-          title: "Cosa fare se il salvataggio non va a buon fine?"
+          title: "Cosa fare se l’aggiunta del metodo non va a buon fine?"
           description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
       TIMEOUT:
         title: La sessione è scaduta
@@ -1427,6 +1427,15 @@ wallet:
         title: Non abbiamo trovato alcun BANCOMAT Pay attivo
         subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
+      PSP_ERROR_ONBOARDING:
+        title: L’aggiunta del metodo non è andata a buon fine
+        subtitle: "Riprova più tardi. Se il problema persiste, ti invitiamo a verificare con la tua banca."
+        primaryAction: Chiudi
+      BE_KO:
+        title: "Stiamo riscontrando alcuni problemi con l'aggiunta del metodo"
+        subtitle: "Riprova più tardi."
+        primaryAction: Chiudi
+        secondaryAction: Contatta l'assistenza
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1991,6 +2000,9 @@ wallet:
       PSP_ERROR:
         title: Il pagamento non è andato a buon fine
         subtitle: "Non è stato addebitato alcun importo.\nSe il problema persiste, prova a usare un altro metodo o gestore del pagamento."
+      AUTH_REQUEST_ERROR:
+        title: Stiamo riscontrando alcuni problemi sui sistemi di pagamento
+        subtitle: Riprova più tardi.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -2871,7 +2883,7 @@ bonus:
         alert:
           title: "Vuoi rimuovere Carta Giovani dal Portafoglio?"
           message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
-        expired: Elimina Carta Giovani Nazionale
+        expired: Rimuovi dal Portafoglio
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       code:
@@ -3154,6 +3166,7 @@ features:
       badge:
         active: Già presente
         unavailable: Non disponibile
+        requested: In corso
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
@@ -3182,19 +3195,6 @@ features:
           label: Il caricamento dei metodi è fallito.
           retryButton: Prova di nuovo
     transactions:
-      showLegacyTransactions: Mostra precedenti
-      legacy:
-        empty:
-          title: Nessuna ricevuta trovata
-          body: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
-        banner:
-          content: "Stiamo generando le ricevute in formato PDF: se in questa lista trovi dei doppioni, ignorali pure!"
-          action: Scopri di più
-        title: Operazioni precedenti
-        bottomSheet:
-          title: Dove trovo la ricevuta di pagamento?
-          notice: "**Avvisi pagati di recente**\nStiamo aggiornando i nostri sistemi: non appena pronte, troverai le ricevute in formato PDF nella sezione Pagamenti."
-          allNotices: "**Tutti gli altri avvisi**\nPer le operazioni eseguite prima del 1° aprile 2023, rivolgiti all’ente creditore."
       multiplePayment: Pagamento multiplo
       title: Ricevute pagoPA
       button: Vedi tutte
@@ -3303,7 +3303,6 @@ features:
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
         info: "Ulteriori info su questi dati"
-        issuedByNew: "Emessa da"
         releasedBy: Emissione versione digitale
         attachments: "Allegati"
         authenticSource: Origine dei dati
@@ -3319,7 +3318,7 @@ features:
         action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
       content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
-      tos: Premendo **Continua** dichiari di aver letto l’[informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d’uso]({{tosUrl}}).
+      tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
       upcomingWalletBanner:
         title: "Novità in arrivo: i tuoi Documenti su IO"
         content: Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!

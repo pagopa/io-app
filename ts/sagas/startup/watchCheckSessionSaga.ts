@@ -1,8 +1,9 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { TypeOfApiResponseStatus } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { GetSessionStateT } from "../../../definitions/session_manager/requestTypes";
 import { BackendClient } from "../../api/backend";
@@ -14,10 +15,13 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
 import { handleSessionExpiredSaga } from "../../features/fastLogin/saga/utils";
+import { getOnlyNotAlreadyExistentValues } from "../../features/zendesk/utils";
+import { sessionInfoSelector } from "../../store/reducers/authentication";
 
 export function* checkSession(
   getSessionValidity: ReturnType<typeof BackendClient>["getSession"],
-  fields?: string // the `fields` parameter is optional and it defaults to an empty object
+  fields?: string, // the `fields` parameter is optional and it defaults to an empty object
+  mergeOldAndNewValues: boolean = false
 ): Generator<
   ReduxSagaEffect,
   TypeOfApiResponseStatus<GetSessionStateT> | undefined,
@@ -40,7 +44,18 @@ export function* checkSession(
       );
 
       if (response.right.status === 200) {
-        yield* put(sessionInformationLoadSuccess(response.right.value));
+        const currentSessionInfo = yield* select(sessionInfoSelector);
+
+        yield* put(
+          sessionInformationLoadSuccess(
+            mergeOldAndNewValues && O.isSome(currentSessionInfo)
+              ? getOnlyNotAlreadyExistentValues(
+                  response.right.value,
+                  currentSessionInfo.value
+                )
+              : response.right.value
+          )
+        );
       }
       return response.right.status;
     }

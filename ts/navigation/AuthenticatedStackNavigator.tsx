@@ -45,8 +45,6 @@ import { PaymentsMethodDetailsNavigator } from "../features/payments/details/nav
 import { PaymentsMethodDetailsRoutes } from "../features/payments/details/navigation/routes";
 import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/navigation/navigator";
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
-import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
-import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -337,14 +335,6 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR}
         component={PaymentsMethodDetailsNavigator}
-        options={{
-          gestureEnabled: isGestureEnabled,
-          ...hideHeaderOptions
-        }}
-      />
-      <Stack.Screen
-        name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR}
-        component={PaymentsTransactionNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions

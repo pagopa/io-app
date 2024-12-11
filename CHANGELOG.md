@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.6](https://github.com/pagopa/io-app/compare/2.79.0-rc.5...2.79.0-rc.6) (2024-12-10)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1900](https://pagopa.atlassian.net/browse/SIW-1900)] Add feedback for deferred credentials issuance ([#6516](https://github.com/pagopa/io-app/issues/6516)) ([5b244c8](https://github.com/pagopa/io-app/commit/5b244c8e608d2bec19bfd69bd2ae473bcf29cc23))
+
+
+### Chores
+
+* [[IOBP-1060](https://pagopa.atlassian.net/browse/IOBP-1060)] Add payment authorization generic error screen ([#6528](https://github.com/pagopa/io-app/issues/6528)) ([1dcbcf7](https://github.com/pagopa/io-app/commit/1dcbcf7e226b0283988cc7c8fa94813b6ce5eb9c))
+* [[IOBP-1071](https://pagopa.atlassian.net/browse/IOBP-1071)] Payment onboarding bottom sheet text ([#6527](https://github.com/pagopa/io-app/issues/6527)) ([1fd724e](https://github.com/pagopa/io-app/commit/1fd724ee3fa4bbc29739dcb0c5f1dd8837658df8))
+* [[IOBP-1073](https://pagopa.atlassian.net/browse/IOBP-1073)] Remove payment legacy transactions screen ([#6529](https://github.com/pagopa/io-app/issues/6529)) ([fc268d2](https://github.com/pagopa/io-app/commit/fc268d2443e16c3d720c2f24f7dd11551e979316))
+* [[PE-868](https://pagopa.atlassian.net/browse/PE-868)] CGN Update cta when card is expired ([#6531](https://github.com/pagopa/io-app/issues/6531)) ([087d116](https://github.com/pagopa/io-app/commit/087d1160103076687f8abbde756461b727526c64))
+* **Cross:** [[IOAPPX-445](https://pagopa.atlassian.net/browse/IOAPPX-445)] Replace legacy `FooterWithButtons` with a mix of `FooterActions` and `FooterActionsInline` ([#6477](https://github.com/pagopa/io-app/issues/6477)) ([89bb56a](https://github.com/pagopa/io-app/commit/89bb56a6f9c2e102d73cb91d96a66b6301c8c970))
+
+## [2.79.0-rc.5](https://github.com/pagopa/io-app/compare/2.79.0-rc.4...2.79.0-rc.5) (2024-12-09)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1899](https://pagopa.atlassian.net/browse/SIW-1899)] Fix filter tabs padding within wallet home screen ([#6517](https://github.com/pagopa/io-app/issues/6517)) ([1dbc898](https://github.com/pagopa/io-app/commit/1dbc898f498e6efa70b294fc80dcefd57d5702f3))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1404](https://pagopa.atlassian.net/browse/SIW-1404)] Move CIE/NFC logic to XState ([#6508](https://github.com/pagopa/io-app/issues/6508)) ([8465717](https://github.com/pagopa/io-app/commit/846571770e33ed653ec1fc779a3729dcf8223886))
+* [[IOBP-1044](https://pagopa.atlassian.net/browse/IOBP-1044),[IOBP-1054](https://pagopa.atlassian.net/browse/IOBP-1054)] Add missing outcome screen into payment onboarding ([#6514](https://github.com/pagopa/io-app/issues/6514)) ([26d92d0](https://github.com/pagopa/io-app/commit/26d92d0ee90ef7c184fd4e8add4321cf555795c4))
+* [[IOPLT-753](https://pagopa.atlassian.net/browse/IOPLT-753)] Update Sentry SDK to latest version ([#6429](https://github.com/pagopa/io-app/issues/6429)) ([d26118f](https://github.com/pagopa/io-app/commit/d26118fdb6e11172e19ae38b2859fd99b7353c70))
+
+## [2.79.0-rc.4](https://github.com/pagopa/io-app/compare/2.79.0-rc.3...2.79.0-rc.4) (2024-12-06)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1852](https://pagopa.atlassian.net/browse/SIW-1852)] Hide discovery banner after close ([#6499](https://github.com/pagopa/io-app/issues/6499)) ([6d87026](https://github.com/pagopa/io-app/commit/6d870260f3cdf9ba3a3098f760b572486613d126))
+
+
+### Bug Fixes
+
+* [[IOPID-2543](https://pagopa.atlassian.net/browse/IOPID-2543)] Add logic to merge data during zendesk polling ([#6515](https://github.com/pagopa/io-app/issues/6515)) ([7e60a3c](https://github.com/pagopa/io-app/commit/7e60a3c6ab92665cc64837ddcdd178d19fd051fd))
+* assistance flow actionsheet contains extra space on header ([#6513](https://github.com/pagopa/io-app/issues/6513)) ([3591b9a](https://github.com/pagopa/io-app/commit/3591b9ab0a31959e9dfd7733b04c35c4f89f342a))
+
+## [2.79.0-rc.3](https://github.com/pagopa/io-app/compare/2.79.0-rc.2...2.79.0-rc.3) (2024-12-05)
+
+
+### Features
+
+* [[IOBP-1047](https://pagopa.atlassian.net/browse/IOBP-1047)] Add store review when a payment is completed ([#6496](https://github.com/pagopa/io-app/issues/6496)) ([a8e32df](https://github.com/pagopa/io-app/commit/a8e32df7c81690d3af396c5923d55b330704c373))
+
+
+### Bug Fixes
+
+* Status banner contains extra space on header ([#6510](https://github.com/pagopa/io-app/issues/6510)) ([bd558bd](https://github.com/pagopa/io-app/commit/bd558bdbab8ac525146e4c424f5f75376abffb6e))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-347](https://pagopa.atlassian.net/browse/IOAPPX-347)] Remove react-native-text-input-mask build phase script on iOS ([#6310](https://github.com/pagopa/io-app/issues/6310)) ([f5cf7ce](https://github.com/pagopa/io-app/commit/f5cf7ce35c936649da893514fc8420f64ecf2d70))
+* **Cross:** [[IOAPPX-435](https://pagopa.atlassian.net/browse/IOAPPX-435)] Improve overall UI typography + Update `io-app-design-system` to `4.0.1` ([#6422](https://github.com/pagopa/io-app/issues/6422)) ([b9d3233](https://github.com/pagopa/io-app/commit/b9d3233500766efa207716a2e5d3bb279612b84f))
+* **IT Wallet:** [[SIW-1807](https://pagopa.atlassian.net/browse/SIW-1807)] Change privacy  in ITWallet Discovery  ([#6506](https://github.com/pagopa/io-app/issues/6506)) ([14d6543](https://github.com/pagopa/io-app/commit/14d654319b96ff5fb901e30da0325acfd770c400))
+* **IT Wallet:** [[SIW-1878](https://pagopa.atlassian.net/browse/SIW-1878)] Loader before SPID Login Webview ([#6493](https://github.com/pagopa/io-app/issues/6493)) ([4e19eaa](https://github.com/pagopa/io-app/commit/4e19eaaa9a17d64d124b46c5d360ca978af5d1bb))
+* [[IOBP-1020](https://pagopa.atlassian.net/browse/IOBP-1020)] Using optimistic UI for remove payment method action ([#6446](https://github.com/pagopa/io-app/issues/6446)) ([274fa6f](https://github.com/pagopa/io-app/commit/274fa6f54608acb7207a51d37fd7f62aade12ddf))
+* [[IOBP-1048](https://pagopa.atlassian.net/browse/IOBP-1048)] Delete transaction when interrupting a payment ([#6494](https://github.com/pagopa/io-app/issues/6494)) ([a94ca59](https://github.com/pagopa/io-app/commit/a94ca5950eb0450baec881da2de15261f59f2055))
+* [[IOCOM-1949](https://pagopa.atlassian.net/browse/IOCOM-1949)] FIMS `iossoapi` protocol ([#6505](https://github.com/pagopa/io-app/issues/6505)) ([c963455](https://github.com/pagopa/io-app/commit/c9634553f96fdd6648b8678553931058fb9fedb6))
+* [[IOPID-2405](https://pagopa.atlassian.net/browse/IOPID-2405)] Delete isNewPaymentSectionEnabledSelector and isSettingsVisibleAndHideProfileSelector ([#6498](https://github.com/pagopa/io-app/issues/6498)) ([b420196](https://github.com/pagopa/io-app/commit/b420196f936929fbd2bfc18015f62256ae680a9d))
+
 ## [2.79.0-rc.2](https://github.com/pagopa/io-app/compare/2.79.0-rc.1...2.79.0-rc.2) (2024-12-04)
 
 

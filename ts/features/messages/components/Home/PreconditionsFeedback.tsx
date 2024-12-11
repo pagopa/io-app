@@ -1,7 +1,7 @@
 import {
   H3,
   IOPictograms,
-  LabelSmall,
+  BodySmall,
   Pictogram,
   useIOTheme,
   VSpacer
@@ -45,13 +45,13 @@ export const PreconditionsFeedback = ({
       {subtitle && (
         <>
           <VSpacer size={8} />
-          <LabelSmall
+          <BodySmall
             style={{ textAlign: "center" }}
             color={theme["textBody-tertiary"]}
             weight="Regular"
           >
             {subtitle}
-          </LabelSmall>
+          </BodySmall>
         </>
       )}
     </View>
