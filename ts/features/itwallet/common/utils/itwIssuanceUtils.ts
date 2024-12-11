@@ -64,7 +64,7 @@ const startAuthFlow = async ({
     credentialType: CREDENTIAL_TYPE
   });
 
-  const idpHint = getIdpHint(identification);
+  const idpHint = getIdpHint({ mode: "cieId" });
 
   const redirectUri = getRedirectUri(identification.mode);
 
