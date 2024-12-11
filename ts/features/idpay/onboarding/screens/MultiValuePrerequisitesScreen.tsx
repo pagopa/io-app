@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import {
   Body,
-  FooterWithButtons,
+  FooterActionsInline,
   H1,
   H6,
   IOColors,
@@ -117,22 +117,16 @@ const MultiValuePrerequisiteItemScreenContent = ({
           </ScrollView>
         </View>
       </BaseScreenComponent>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            onPress: handleGoBack,
-            label: I18n.t("global.buttons.back")
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          onPress: handleGoBack,
+          label: I18n.t("global.buttons.back")
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            onPress: handleContinuePress,
-            disabled: selectedIndex === undefined,
-            label: I18n.t("global.buttons.continue")
-          }
+        endAction={{
+          onPress: handleContinuePress,
+          disabled: selectedIndex === undefined,
+          label: I18n.t("global.buttons.continue")
         }}
       />
     </>
