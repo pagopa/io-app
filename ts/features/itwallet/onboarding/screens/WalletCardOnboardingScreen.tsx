@@ -1,6 +1,6 @@
 import {
   Badge,
-  ContentWrapper,
+  IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
   VStack
@@ -9,6 +9,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback } from "react";
+import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -29,6 +30,7 @@ import {
   trackShowCredentialsList,
   trackStartAddNewCredential
 } from "../../analytics";
+import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
 import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
@@ -75,10 +77,11 @@ const WalletCardOnboardingScreen = () => {
       faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
     >
-      <ContentWrapper>
+      <View style={styles.wrapper}>
+        <ItwDiscoveryBannerOnboarding />
         {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
         <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
-      </ContentWrapper>
+      </View>
     </IOScrollViewWithLargeHeader>
   );
 };
@@ -190,5 +193,13 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingVertical: 16,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    gap: 16
+  }
+});
 
 export { WalletCardOnboardingScreen };
