@@ -26,6 +26,7 @@ import {
   assistanceToolRemoteConfig,
   defaultZendeskPaymentCategory,
   resetCustomFields,
+  zendeskCategoryId,
   zendeskPaymentFailure,
   zendeskPaymentNav,
   zendeskPaymentOrgFiscalCode,
@@ -95,13 +96,21 @@ const usePaymentFailureSupportModal = ({
       return;
     }
     const { payments } = zendeskPaymentCategory.value;
-
-    const { value, zendeskCategoryId } = getSubCategoryFromFaultCode(
-      payments,
-      faultCodeDetail
+    const subCategory = getSubCategoryFromFaultCode(payments, faultCodeDetail);
+    // attach the main zendesk category to the ticket
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskPaymentCategory.value
     );
+
+    if (subCategory) {
+      // if a subcategory is found, we attach its id and value to the ticket
+      const { value, zendeskSubCategoryId } = subCategory;
+      addTicketCustomField(zendeskSubCategoryId, value);
+      return;
+    }
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, value);
+
     addTicketCustomField(zendeskPaymentOrgFiscalCode, organizationFiscalCode);
     addTicketCustomField(zendeskPaymentNav, paymentNoticeNumber);
     addTicketCustomField(zendeskPaymentFailure, faultCodeDetail);

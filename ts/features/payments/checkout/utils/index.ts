@@ -5,7 +5,6 @@ import { PaymentMethodManagementTypeEnum } from "../../../../../definitions/pago
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { format } from "../../../../utils/dates";
-import { zendeskCategoryId } from "../../../../utils/supportAssistance";
 import {
   PaymentAnalyticsPhase,
   PaymentAnalyticsSelectedPspFlag
@@ -93,12 +92,9 @@ export const getSubCategoryFromFaultCode = (
   if (subcategoryKey) {
     return {
       value: subcategoryKey,
-      zendeskCategoryId: data.subcategoryId
+      zendeskSubCategoryId: data.subcategoryId
     };
   }
-  // if not, return the parent category
-  return {
-    value: "pagamenti_pagopa",
-    zendeskCategoryId
-  };
+  // if not, return nullable
+  return null;
 };

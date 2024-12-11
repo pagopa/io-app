@@ -6,7 +6,6 @@ import {
   trimAndLimitValue
 } from "..";
 import { ZendeskSubCategoriesMap } from "../../../../../../definitions/content/ZendeskSubCategoriesMap";
-import { zendeskCategoryId } from "../../../../../utils/supportAssistance";
 import { WalletPaymentStepEnum } from "../../types";
 
 const mockCategories: ZendeskSubCategoriesMap = {
@@ -151,20 +150,17 @@ describe("getPaymentPhaseFromStep", () => {
 describe("getSubCategoryFromFaultCode", () => {
   it("should return the subcategory if the fault code is in the map", () => {
     const result = getSubCategoryFromFaultCode(mockCategories, "subcategory1");
-    expect(result).toStrictEqual({ value: "12345", zendeskCategoryId: "313" });
+    expect(result).toStrictEqual({
+      value: "12345",
+      zendeskSubCategoryId: "313"
+    });
   });
 
-  it("should return default category if the fault code is not in the map or is empty string", () => {
+  it("should return nullable if the fault code is not in the map or is empty string", () => {
     const result = getSubCategoryFromFaultCode(mockCategories, "subcategory3");
-    expect(result).toStrictEqual({
-      value: "pagamenti_pagopa",
-      zendeskCategoryId
-    });
+    expect(result).toStrictEqual(null);
 
     const emptyResult = getSubCategoryFromFaultCode(mockCategories, "");
-    expect(emptyResult).toStrictEqual({
-      value: "pagamenti_pagopa",
-      zendeskCategoryId
-    });
+    expect(emptyResult).toStrictEqual(null);
   });
 });
