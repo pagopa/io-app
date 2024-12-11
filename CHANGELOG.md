@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.6](https://github.com/pagopa/io-app/compare/2.79.0-rc.5...2.79.0-rc.6) (2024-12-10)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1900](https://pagopa.atlassian.net/browse/SIW-1900)] Add feedback for deferred credentials issuance ([#6516](https://github.com/pagopa/io-app/issues/6516)) ([5b244c8](https://github.com/pagopa/io-app/commit/5b244c8e608d2bec19bfd69bd2ae473bcf29cc23))
+
+
+### Chores
+
+* [[IOBP-1060](https://pagopa.atlassian.net/browse/IOBP-1060)] Add payment authorization generic error screen ([#6528](https://github.com/pagopa/io-app/issues/6528)) ([1dcbcf7](https://github.com/pagopa/io-app/commit/1dcbcf7e226b0283988cc7c8fa94813b6ce5eb9c))
+* [[IOBP-1071](https://pagopa.atlassian.net/browse/IOBP-1071)] Payment onboarding bottom sheet text ([#6527](https://github.com/pagopa/io-app/issues/6527)) ([1fd724e](https://github.com/pagopa/io-app/commit/1fd724ee3fa4bbc29739dcb0c5f1dd8837658df8))
+* [[IOBP-1073](https://pagopa.atlassian.net/browse/IOBP-1073)] Remove payment legacy transactions screen ([#6529](https://github.com/pagopa/io-app/issues/6529)) ([fc268d2](https://github.com/pagopa/io-app/commit/fc268d2443e16c3d720c2f24f7dd11551e979316))
+* [[PE-868](https://pagopa.atlassian.net/browse/PE-868)] CGN Update cta when card is expired ([#6531](https://github.com/pagopa/io-app/issues/6531)) ([087d116](https://github.com/pagopa/io-app/commit/087d1160103076687f8abbde756461b727526c64))
+* **Cross:** [[IOAPPX-445](https://pagopa.atlassian.net/browse/IOAPPX-445)] Replace legacy `FooterWithButtons` with a mix of `FooterActions` and `FooterActionsInline` ([#6477](https://github.com/pagopa/io-app/issues/6477)) ([89bb56a](https://github.com/pagopa/io-app/commit/89bb56a6f9c2e102d73cb91d96a66b6301c8c970))
+
 ## [2.79.0-rc.5](https://github.com/pagopa/io-app/compare/2.79.0-rc.4...2.79.0-rc.5) (2024-12-09)
 
 
