@@ -8,21 +8,21 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import * as analytics from "../analytics";
-import { default as I18n } from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
-import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
-import { PaymentsBizEventsListItemTransaction } from "../../bizEventsTransaction/components/PaymentsBizEventsListItemTransaction";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { BannerErrorState } from "../../../../components/ui/BannerErrorState";
+import { default as I18n } from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PaymentsTransactionBizEventsRoutes } from "../../bizEventsTransaction/navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePaymentsBackoffRetry } from "../../common/hooks/usePaymentsBackoffRetry";
 import { clearPaymentsBackoffRetry } from "../../common/store/actions";
 import { PaymentsBackoffRetry } from "../../common/types/PaymentsBackoffRetry";
+import { NoticeListItemTransaction } from "../../notices/components/NoticeListItemTransaction";
+import { PaymentsNoticeRoutes } from "../../notices/navigation/routes";
+import { getPaymentsLatestNoticeAction } from "../../notices/store/actions";
+import { walletLatestNoticeListPotSelector } from "../../notices/store/selectors";
+import * as analytics from "../analytics";
+import { isPaymentsLatestTransactionsEmptySelector } from "../store/selectors";
 import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 
 type Props = {
@@ -37,7 +37,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const navigation = useIONavigation();
 
   const latestTransactionsPot = useIOSelector(
-    walletLatestTransactionsBizEventsListPotSelector
+    walletLatestNoticeListPotSelector
   );
   const { canRetryRequest } = usePaymentsBackoffRetry(
     PAYMENTS_HOME_TRANSACTIONS_LIST_BACKOFF
@@ -51,7 +51,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
 
   useOnFirstRender(() => {
     if (pot.isNone(latestTransactionsPot)) {
-      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+      dispatch(getPaymentsLatestNoticeAction.request());
     }
   });
 
@@ -71,36 +71,28 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       if (eventId === undefined) {
         return;
       }
-      navigation.navigate(
-        PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
-        {
-          screen:
-            PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_DETAILS,
-          params: {
-            transactionId: eventId,
-            isPayer
-          }
+      navigation.navigate(PaymentsNoticeRoutes.PAYMENT_NOTICE_NAVIGATOR, {
+        screen: PaymentsNoticeRoutes.PAYMENT_NOTICE_DETAILS,
+        params: {
+          transactionId: eventId,
+          isPayer
         }
-      );
+      });
     },
     [navigation]
   );
 
   const handleOnRetry = () => {
     if (canRetryRequest()) {
-      dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+      dispatch(getPaymentsLatestNoticeAction.request());
     }
   };
 
   const handleNavigateToTransactionList = () => {
     analytics.trackPaymentsOpenReceiptListing();
-    navigation.navigate(
-      PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR,
-      {
-        screen:
-          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_LIST_SCREEN
-      }
-    );
+    navigation.navigate(PaymentsNoticeRoutes.PAYMENT_NOTICE_NAVIGATOR, {
+      screen: PaymentsNoticeRoutes.PAYMENT_NOTICE_LIST_SCREEN
+    });
   };
 
   const renderLatestNoticesItems = () => {
@@ -109,7 +101,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
         <View testID="PaymentsHomeTransactionsListTestID">
           {latestTransactionsPot.value.map((latestTransaction, index) => (
             <React.Fragment key={`transaction_${latestTransaction.eventId}`}>
-              <PaymentsBizEventsListItemTransaction
+              <NoticeListItemTransaction
                 key={`transaction_${latestTransaction.eventId}`}
                 onPress={() =>
                   handleNavigateToTransactionDetails(latestTransaction)

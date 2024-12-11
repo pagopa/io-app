@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
+
 import paymentReducer, {
   PaymentsCheckoutState
 } from "../../../checkout/store/reducers";
@@ -9,16 +10,16 @@ import detailsReducer, {
 import historyReducer, {
   PaymentsHistoryState
 } from "../../../history/store/reducers";
+import homeReducer, { PaymentsHomeState } from "../../../home/store/reducers";
+import noticeReducer, {
+  PaymentsNoticeState
+} from "../../../notices/store/reducers";
 import onboardingReducer, {
   PaymentsOnboardingState
 } from "../../../onboarding/store/reducers";
-import homeReducer, { PaymentsHomeState } from "../../../home/store/reducers";
 import paymentsWalletReducer, {
   PaymentsWalletState
 } from "../../../wallet/store/reducers";
-import paymentsBizEventsTransactionReducer, {
-  PaymentsBizEventsTransactionState
-} from "../../../bizEventsTransaction/store/reducers";
 import paymentsPagoPaPlatformReducer, {
   PaymentsPagoPaPlatformState
 } from "./pagoPaPlatformReducer";
@@ -33,7 +34,7 @@ export type PaymentsState = {
   history: PaymentsHistoryState & PersistPartial;
   home: PaymentsHomeState & PersistPartial;
   wallet: PaymentsWalletState;
-  bizEventsTransaction: PaymentsBizEventsTransactionState;
+  notice: PaymentsNoticeState;
   pagoPaPlatform: PaymentsPagoPaPlatformState;
   paymentsBackoffRetry: PaymentsBackoffRetryState;
 };
@@ -45,7 +46,7 @@ const paymentsReducer = combineReducers({
   history: historyReducer,
   home: homeReducer,
   wallet: paymentsWalletReducer,
-  bizEventsTransaction: paymentsBizEventsTransactionReducer,
+  notice: noticeReducer,
   pagoPaPlatform: paymentsPagoPaPlatformReducer,
   paymentsBackoffRetry: paymentsBackoffRetryReducer
 });

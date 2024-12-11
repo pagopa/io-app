@@ -7,44 +7,44 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { profileEmailSelector } from "../../../../store/reducers/profile";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { requestAppReview } from "../../../../utils/storeReview";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import {
+  paymentAnalyticsDataSelector,
+  selectOngoingPaymentHistory
+} from "../../history/store/selectors";
+import { getPaymentsLatestNoticeAction } from "../../notices/store/actions";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import * as analytics from "../analytics";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
+import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import {
+  paymentCompletedSuccess,
+  walletPaymentSetCurrentStep
+} from "../store/actions/orchestration";
 import {
   selectWalletPaymentCurrentStep,
   walletPaymentDetailsSelector,
   walletPaymentOnSuccessActionSelector
 } from "../store/selectors";
+import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
+import { WalletPaymentStepEnum } from "../types";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import ROUTES from "../../../../navigation/routes";
-import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
-import * as analytics from "../analytics";
-import {
-  paymentAnalyticsDataSelector,
-  selectOngoingPaymentHistory
-} from "../../history/store/selectors";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
-import {
-  paymentCompletedSuccess,
-  walletPaymentSetCurrentStep
-} from "../store/actions/orchestration";
-import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
-import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
-import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
-import { WalletPaymentStepEnum } from "../types";
-import { requestAppReview } from "../../../../utils/storeReview";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -130,7 +130,7 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+    dispatch(getPaymentsLatestNoticeAction.request());
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"

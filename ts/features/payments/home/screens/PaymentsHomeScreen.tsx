@@ -17,7 +17,7 @@ import {
 } from "../store/selectors";
 import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { getPaymentsLatestNoticeAction } from "../../notices/store/actions";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -25,7 +25,7 @@ import {
 import * as analytics from "../analytics";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
-import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
+import { walletLatestNoticeListPotSelector } from "../../notices/store/selectors";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -41,7 +41,7 @@ const PaymentsHomeScreen = () => {
   );
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const latestTransactionsPot = useIOSelector(
-    walletLatestTransactionsBizEventsListPotSelector
+    walletLatestNoticeListPotSelector
   );
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
@@ -79,7 +79,7 @@ const PaymentsHomeScreen = () => {
     }
     setIsRefreshing(true);
     dispatch(getPaymentsWalletUserMethods.request());
-    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+    dispatch(getPaymentsLatestNoticeAction.request());
   };
 
   const AnimatedPaymentsHomeScreenContent = React.useCallback(
@@ -148,7 +148,7 @@ const PaymentsHomeScreenContent = () => {
   const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
   const userMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const latestTransactionsPot = useIOSelector(
-    walletLatestTransactionsBizEventsListPotSelector
+    walletLatestNoticeListPotSelector
   );
 
   if (

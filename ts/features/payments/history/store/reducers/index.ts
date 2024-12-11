@@ -41,10 +41,10 @@ import {
   PaymentsAnalyticsHomeStatus
 } from "../../../common/types/PaymentAnalytics";
 import {
-  getPaymentsBizEventsTransactionDetailsAction,
-  getPaymentsLatestBizEventsTransactionsAction
-} from "../../../bizEventsTransaction/store/actions";
-import * as bizEventAnalytics from "../../../bizEventsTransaction/analytics";
+  getPaymentsNoticeDetailsAction,
+  getPaymentsLatestNoticeAction
+} from "../../../notices/store/actions";
+import * as noticesAnalytics from "../../../notices/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
 
 export type PaymentsHistoryState = {
@@ -188,7 +188,7 @@ const reducer = (
           )
         }
       };
-    case getType(getPaymentsLatestBizEventsTransactionsAction.success):
+    case getType(getPaymentsLatestNoticeAction.success):
       return {
         ...state,
         analyticsData: {
@@ -200,7 +200,7 @@ const reducer = (
           )
         }
       };
-    case getType(getPaymentsBizEventsTransactionDetailsAction.request):
+    case getType(getPaymentsNoticeDetailsAction.request):
       const isFirstTimeOpening = !state.receiptsOpened.has(
         action.payload.transactionId
       );
@@ -215,8 +215,8 @@ const reducer = (
           action.payload.transactionId
         )
       };
-    case getType(getPaymentsBizEventsTransactionDetailsAction.success):
-      bizEventAnalytics.trackPaymentsOpenReceipt({
+    case getType(getPaymentsNoticeDetailsAction.success):
+      noticesAnalytics.trackPaymentsOpenReceipt({
         organization_name: action.payload.carts?.[0]?.payee?.name,
         first_time_opening: state.analyticsData?.receiptFirstTimeOpening,
         user: state.analyticsData?.receiptUser

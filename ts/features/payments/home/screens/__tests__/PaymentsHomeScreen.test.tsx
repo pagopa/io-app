@@ -178,7 +178,7 @@ const renderComponent = ({
         home: {
           shouldShowAddMethodsBanner
         },
-        bizEventsTransaction: {
+        notice: {
           latestTransactions: transactions
         }
       }

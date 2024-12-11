@@ -9,12 +9,11 @@ import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
 import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
 import { PaymentsHomeActions } from "../../../home/store/actions";
 import { PaymentsWalletActions } from "../../../wallet/store/actions";
-import { PaymentsTransactionBizEventsActions } from "../../../bizEventsTransaction/store/actions";
-
 import { NetworkError } from "../../../../../utils/errors";
 import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
 import { Action } from "../../../../../store/actions/types";
 import { PaymentsBackoffRetry } from "../../types/PaymentsBackoffRetry";
+import { PaymentsNoticeActions } from "../../../notices/store/actions";
 
 export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
   "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
@@ -55,4 +54,4 @@ export type PaymentsActions =
   | PaymentsHistoryActions
   | PaymentsHomeActions
   | PaymentsWalletActions
-  | PaymentsTransactionBizEventsActions;
+  | PaymentsNoticeActions;

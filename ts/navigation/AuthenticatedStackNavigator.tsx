@@ -50,8 +50,8 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
-import { PaymentsTransactionBizEventsRoutes } from "../features/payments/bizEventsTransaction/navigation/routes";
-import { PaymentsTransactionBizEventsNavigator } from "../features/payments/bizEventsTransaction/navigation/navigator";
+import { PaymentsNoticeRoutes } from "../features/payments/notices/navigation/routes";
+import { PaymentsNoticeNavigator } from "../features/payments/notices/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -341,10 +341,8 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={
-          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR
-        }
-        component={PaymentsTransactionBizEventsNavigator}
+        name={PaymentsNoticeRoutes.PAYMENT_NOTICE_NAVIGATOR}
+        component={PaymentsNoticeNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions

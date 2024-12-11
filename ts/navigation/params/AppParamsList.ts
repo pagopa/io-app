@@ -1,3 +1,4 @@
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
   NavigatorScreenParams,
   ParamListBase,
@@ -5,7 +6,6 @@ import {
   useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
 import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
@@ -25,14 +25,14 @@ import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/rout
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 
+import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
+import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
 } from "../../features/idpay/details/navigation";
 import { IdPayOnboardingParamsList } from "../../features/idpay/onboarding/navigation/params";
 import { IdPayOnboardingRoutes } from "../../features/idpay/onboarding/navigation/routes";
-import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
-import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import { IdPayPaymentParamsList } from "../../features/idpay/payment/navigation/params";
 import { IdPayPaymentRoutes } from "../../features/idpay/payment/navigation/routes";
 import { IdPayUnsubscriptionParamsList } from "../../features/idpay/unsubscription/navigation/params";
@@ -41,17 +41,17 @@ import { ItwParamsList } from "../../features/itwallet/navigation/ItwParamsList"
 import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
-import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
 import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
 import { PaymentsCheckoutRoutes } from "../../features/payments/checkout/navigation/routes";
 import { PaymentsMethodDetailsParamsList } from "../../features/payments/details/navigation/params";
 import { PaymentsMethodDetailsRoutes } from "../../features/payments/details/navigation/routes";
+import { PaymentsNoticeParamsList } from "../../features/payments/notices/navigation/params";
+import { PaymentsNoticeRoutes } from "../../features/payments/notices/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding/navigation/params";
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
+import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -108,7 +108,7 @@ export type AppParamsList = {
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;
   [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
-  [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionBizEventsParamsList>;
+  [PaymentsNoticeRoutes.PAYMENT_NOTICE_NAVIGATOR]: NavigatorScreenParams<PaymentsNoticeParamsList>;
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
 };
