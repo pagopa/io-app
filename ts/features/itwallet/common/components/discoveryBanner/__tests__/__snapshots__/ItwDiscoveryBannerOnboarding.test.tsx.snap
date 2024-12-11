@@ -713,7 +713,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          testID="itwDiscoveryBannerTestID"
+                          testID="itwDiscoveryBannerOnboardingTestID"
                         >
                           <View
                             style={
