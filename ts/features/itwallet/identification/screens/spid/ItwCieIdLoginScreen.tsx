@@ -1,5 +1,5 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
@@ -17,7 +17,7 @@ import {
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { isAndroid } from "../../../../../utils/platform";
+import { isAndroid, isIos } from "../../../../../utils/platform";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -31,6 +31,9 @@ const isAuthenticationUrl = (url: string) => {
   const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
   return authUrlRegex.test(url);
 };
+
+const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
+const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
 
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.
@@ -48,41 +51,66 @@ const ItwCieIdLoginScreen = () => {
   const [authUrl, setAuthUrl] = useState<O.Option<string>>();
   const webViewSource = authUrl || spidAuthUrl;
 
-  const canUseCieIdApp2AppFlow = useMemo(
-    () => isAndroid && isCieIdAvailable(),
-    []
-  );
+  useEffect(() => {
+    const urlListenerSubscription = Linking.addEventListener(
+      "url",
+      ({ url }) => {
+        if (url.startsWith(IO_LOGIN_CIE_URL_SCHEME)) {
+          const [, continueUrl] = url.split(IO_LOGIN_CIE_URL_SCHEME);
+          setAuthUrl(O.some(continueUrl));
+        }
+      }
+    );
+
+    return () => urlListenerSubscription.remove();
+  }, []);
 
   const onLoadEnd = useCallback(() => {
     // When CieId app-to-app flow is enabled, stop loading only after we got
     // the authUrl from CieId app, so the user doesn't see the login screen.
-    if (canUseCieIdApp2AppFlow ? authUrl : true) {
+    if (isCieIdAvailable() ? !!authUrl : true) {
       setWebViewLoading(false);
     }
-  }, [canUseCieIdApp2AppFlow, authUrl]);
+  }, [authUrl]);
 
   const onError = useCallback(() => {
     machineRef.send({ type: "error", scope: "spid-login" });
   }, [machineRef]);
 
+  const startCieIdAppAuthentication = useCallback((url: string) => {
+    // Use the new CieID app-to-app flow on Android
+    if (isAndroid) {
+      openCieIdApp(url, result => {
+        if (result.id === "URL") {
+          setAuthUrl(O.some(result.url));
+        } else {
+          handleAuthenticationFailure(result);
+        }
+      });
+    }
+
+    // Try to directly open the CieID app on iOS
+    if (isIos) {
+      Linking.openURL(
+        `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
+      ).catch(handleAuthenticationFailure);
+    }
+  }, []);
+
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
 
-      if (canUseCieIdApp2AppFlow && isAuthenticationUrl(url)) {
-        openCieIdApp(url, result => {
-          if (result.id === "URL") {
-            setAuthUrl(O.some(result.url));
-          } else {
-            machineRef.send({ type: "back" });
-          }
-        });
+      // When CieID is available, use a flow that launches the app
+      if (isAuthenticationUrl(url) && isCieIdAvailable()) {
+        startCieIdAppAuthentication(url);
         return false;
       }
 
+      // When CieID is not available, revert to the regular webview
       return true;
     },
-    [canUseCieIdApp2AppFlow, machineRef]
+    [startCieIdAppAuthentication]
   );
 
   const handleNavigationStateChange = useCallback(
@@ -106,6 +134,10 @@ const ItwCieIdLoginScreen = () => {
     },
     [machineRef]
   );
+
+  const handleAuthenticationFailure = (error: unknown) => {
+    // TODO: handle error
+  };
 
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
