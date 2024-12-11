@@ -32,8 +32,7 @@ export const MessagesHomeScreen = () => {
   /* CODE RELATED TO THE HEADER -- START */
 
   const currentRoute = MESSAGES_ROUTES.MESSAGES_HOME;
-  const { actionHelp, actionSettings, alertProps } =
-    useHeaderFirstLevelProps(currentRoute);
+  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(currentRoute);
   const navigateToSettingMainScreen = useNavigateToSettingMainScreen();
 
   const canNavigateIfIsArchivingCallback = useCallback(() => {
@@ -87,12 +86,14 @@ export const MessagesHomeScreen = () => {
   );
 
   useHeaderFirstLevel({
-    title: I18n.t("messages.contentTitle"),
-    ignoreSafeAreaMargin: !!alertProps,
-    type: "threeActions",
-    firstAction: actionHelp,
-    secondAction: settingsActionInMessageSection,
-    thirdAction: searchMessageAction
+    currentRoute,
+    headerProps: {
+      title: I18n.t("messages.contentTitle"),
+      type: "threeActions",
+      firstAction: actionHelp,
+      secondAction: settingsActionInMessageSection,
+      thirdAction: searchMessageAction
+    }
   });
 
   /* CODE RELATED TO THE HEADER -- END */

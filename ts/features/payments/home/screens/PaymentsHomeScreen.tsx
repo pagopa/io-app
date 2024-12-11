@@ -72,18 +72,19 @@ const PaymentsHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
+  const currentRoute = ROUTES.PAYMENTS_HOME;
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const { actionHelp, actionSettings, alertProps } = useHeaderFirstLevelProps(
-    ROUTES.PAYMENTS_HOME
-  );
+  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(currentRoute);
 
   useHeaderFirstLevel({
-    title: I18n.t("features.payments.title"),
-    ignoreSafeAreaMargin: !!alertProps,
-    animatedRef: scrollViewContentRef,
-    type: "twoActions",
-    firstAction: actionHelp,
-    secondAction: actionSettings
+    currentRoute,
+    headerProps: {
+      title: I18n.t("features.payments.title"),
+      animatedRef: scrollViewContentRef,
+      type: "twoActions",
+      firstAction: actionHelp,
+      secondAction: actionSettings
+    }
   });
 
   /* CODE RELATED TO THE HEADER -- END */

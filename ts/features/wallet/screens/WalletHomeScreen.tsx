@@ -86,18 +86,20 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
+  const currentRoute = ROUTES.WALLET_HOME;
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(
-    ROUTES.WALLET_HOME
-  );
+  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(currentRoute);
 
   useHeaderFirstLevel({
-    testID: "wallet-home-header-title",
-    title: I18n.t("wallet.wallet"),
-    animatedRef: scrollViewContentRef,
-    type: "twoActions",
-    firstAction: actionHelp,
-    secondAction: actionSettings
+    currentRoute,
+    headerProps: {
+      testID: "wallet-home-header-title",
+      title: I18n.t("wallet.wallet"),
+      animatedRef: scrollViewContentRef,
+      type: "twoActions",
+      firstAction: actionHelp,
+      secondAction: actionSettings
+    }
   });
 
   /* CODE RELATED TO THE HEADER -- END */

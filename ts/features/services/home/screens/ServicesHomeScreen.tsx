@@ -17,7 +17,6 @@ import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useHeaderFirstLevelProps } from "../../../../hooks/useHeaderFirstLevelProps";
-import { useStatusAlertProps } from "../../../../hooks/useStatusAlertProps";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -44,8 +43,6 @@ export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isFirstRender = useFirstRender();
-
-  const alertProps = useStatusAlertProps(SERVICES_ROUTES.SERVICES_HOME);
 
   const {
     currentPage,
@@ -203,10 +200,9 @@ export const ServicesHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
+  const currentRoute = SERVICES_ROUTES.SERVICES_HOME;
   const scrollViewContentRef = useAnimatedRef<Animated.FlatList<Institution>>();
-  const { actionHelp } = useHeaderFirstLevelProps(
-    SERVICES_ROUTES.SERVICES_HOME
-  );
+  const { actionHelp } = useHeaderFirstLevelProps(currentRoute);
 
   const { bottomSheet, present } = useServicesHomeBottomSheet();
 
@@ -234,13 +230,15 @@ export const ServicesHomeScreen = () => {
   );
 
   useHeaderFirstLevel({
-    title: I18n.t("services.title"),
-    animatedFlatListRef: scrollViewContentRef,
-    ignoreSafeAreaMargin: !!alertProps,
-    type: "threeActions",
-    firstAction: actionHelp,
-    secondAction: actionSettings,
-    thirdAction: actionSearch
+    currentRoute,
+    headerProps: {
+      title: I18n.t("services.title"),
+      animatedFlatListRef: scrollViewContentRef,
+      type: "threeActions",
+      firstAction: actionHelp,
+      secondAction: actionSettings,
+      thirdAction: actionSearch
+    }
   });
 
   /* CODE RELATED TO THE HEADER -- END */
