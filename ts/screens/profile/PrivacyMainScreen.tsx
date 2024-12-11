@@ -216,6 +216,19 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       ),
     [userDataProcessing]
   );
+  const handleChoiceSelection = useCallback(
+    (choice: UserDataProcessingChoiceEnum) => {
+      if (pot.isError(userDataProcessing[choice])) {
+        // eslint-disable-next-line functional/immutable-data
+        canShowTooltipRef.current = true;
+        setRequestProcess(true);
+        dispatch(loadUserDataProcessing.request(choice));
+      } else {
+        handleUserDataRequestAlert(choice);
+      }
+    },
+    [dispatch, handleUserDataRequestAlert, userDataProcessing]
+  );
 
   const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = useMemo(
     () => [
@@ -238,18 +251,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.exportData.title"),
         description: I18n.t("profile.main.privacy.exportData.description"),
         onPress: () => {
-          if (pot.isError(userDataProcessing.DOWNLOAD)) {
-            // eslint-disable-next-line functional/immutable-data
-            canShowTooltipRef.current = true;
-            setRequestProcess(true);
-            dispatch(
-              loadUserDataProcessing.request(
-                UserDataProcessingChoiceEnum.DOWNLOAD
-              )
-            );
-          } else {
-            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DOWNLOAD);
-          }
+          handleChoiceSelection(UserDataProcessingChoiceEnum.DOWNLOAD);
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
           ? {
@@ -266,18 +268,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.removeAccount.title"),
         description: I18n.t("profile.main.privacy.removeAccount.description"),
         onPress: () => {
-          if (pot.isError(userDataProcessing.DELETE)) {
-            // eslint-disable-next-line functional/immutable-data
-            canShowTooltipRef.current = true;
-            setRequestProcess(true);
-            dispatch(
-              loadUserDataProcessing.request(
-                UserDataProcessingChoiceEnum.DELETE
-              )
-            );
-          } else {
-            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
-          }
+          handleChoiceSelection(UserDataProcessingChoiceEnum.DELETE);
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
           ? {
@@ -291,13 +282,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       }
     ],
 
-    [
-      dispatch,
-      isRequestProcessing,
-      handleUserDataRequestAlert,
-      navigation,
-      userDataProcessing
-    ]
+    [isRequestProcessing, navigation, handleChoiceSelection]
   );
 
   const renderPrivacyNavItem = useCallback(
