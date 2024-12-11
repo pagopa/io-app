@@ -16,7 +16,7 @@ import { ImageURISource, StyleSheet, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
-import { DoubleAvatar } from "./DoubleAvatar";
+import { AvatarDouble } from "./AvatarDouble";
 
 export const StandardHeight = 95;
 export const EnhancedHeight = 133;
@@ -116,7 +116,7 @@ export const MessageListItem = ({
             style={styles.serviceLogoContainer}
           >
             {doubleAvatar ? (
-              <DoubleAvatar backgroundLogoUri={serviceLogos} />
+              <AvatarDouble backgroundLogoUri={serviceLogos} />
             ) : (
               <Avatar logoUri={serviceLogos} size="small" />
             )}
