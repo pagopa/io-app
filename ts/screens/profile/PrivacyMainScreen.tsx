@@ -239,7 +239,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
               )
             );
           } else {
-            navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DOWNLOAD);
           }
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
@@ -265,7 +265,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
               )
             );
           } else {
-            navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
           }
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
@@ -280,7 +280,13 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       }
     ],
 
-    [dispatch, isRequestProcessing, navigation, userDataProcessing]
+    [
+      dispatch,
+      isRequestProcessing,
+      handleUserDataRequestAlert,
+      navigation,
+      userDataProcessing
+    ]
   );
 
   const renderPrivacyNavItem = useCallback(
