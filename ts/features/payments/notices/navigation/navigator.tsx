@@ -42,13 +42,12 @@ export const PaymentsNoticeNavigator = () => (
   </Stack.Navigator>
 );
 
-export type PaymentsTransactionBizEventsStackNavigationProp<
+export type PaymentsNoticeStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<PaymentsNoticeParamsList & ParamList, RouteName>;
 
-export type PaymentsNoticeStackNavigation =
-  PaymentsTransactionBizEventsStackNavigationProp<
-    PaymentsNoticeParamsList,
-    keyof PaymentsNoticeParamsList
-  >;
+export type PaymentsNoticeStackNavigation = PaymentsNoticeStackNavigationProp<
+  PaymentsNoticeParamsList,
+  keyof PaymentsNoticeParamsList
+>;
