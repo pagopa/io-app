@@ -30,6 +30,7 @@ export const ClaimLabel: React.FunctionComponent<
     <IOText
       {...props}
       allowFontScaling={false}
+      weight={fontWeight}
       font="TitilliumSansPro"
       color="black"
       lineBreakMode="head"
