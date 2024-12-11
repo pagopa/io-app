@@ -2883,7 +2883,7 @@ bonus:
         alert:
           title: "Vuoi rimuovere Carta Giovani dal Portafoglio?"
           message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
-        expired: Elimina Carta Giovani Nazionale
+        expired: Rimuovi dal Portafoglio
     otp:
       error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
       code:
@@ -3171,6 +3171,7 @@ features:
       badge:
         active: Già presente
         unavailable: Non disponibile
+        requested: In corso
       options:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
