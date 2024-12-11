@@ -67,7 +67,7 @@ describe("selectWalletCards", () => {
             key: "test123",
             category: "itw",
             type: "itw",
-            deleted: true
+            hidden: true
           }
         }
       })
