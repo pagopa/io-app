@@ -61,7 +61,15 @@ describe("selectWalletCards", () => {
 
     const cards = selectWalletCards(
       _.set(globalState, "features.wallet", {
-        cards: T_CARDS
+        cards: {
+          ...T_CARDS,
+          test123: {
+            key: "test123",
+            category: "itw",
+            type: "itw",
+            deleted: true
+          }
+        }
       })
     );
 

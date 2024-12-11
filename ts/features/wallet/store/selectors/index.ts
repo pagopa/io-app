@@ -17,10 +17,13 @@ export const selectWalletPlaceholders = createSelector(
     )
 );
 
-export const selectWalletCards = createSelector(selectWalletFeature, wallet => {
-  const { deletedCard, ...cards } = wallet.cards;
-  return Object.values(cards);
-});
+/**
+ * Returns the list of cards excluding hidden cards
+ */
+export const selectWalletCards = createSelector(
+  selectWalletFeature,
+  ({ cards }) => Object.values(cards).filter(({ hidden }) => !hidden)
+);
 
 /**
  * Returns the list of card categories available in the wallet

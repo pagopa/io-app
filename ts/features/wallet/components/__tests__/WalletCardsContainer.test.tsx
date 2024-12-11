@@ -74,17 +74,14 @@ const T_CARDS: WalletCardsState = {
   }
 };
 
-const T_PLACEHOLDERS: WalletCardsState = _.omit(
-  _.mapValues(
-    T_CARDS,
-    card =>
-      ({
-        type: "placeholder",
-        category: card.category,
-        key: card.key
-      } as WalletCard)
-  ),
-  "deletedCard"
+const T_PLACEHOLDERS: WalletCardsState = _.mapValues(
+  T_CARDS,
+  card =>
+    ({
+      type: "placeholder",
+      category: card.category,
+      key: card.key
+    } as WalletCard)
 );
 
 describe("WalletCardsContainer", () => {

@@ -1,17 +1,18 @@
+import _ from "lodash";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { WalletCard } from "../../../types";
 import {
   walletAddCards,
+  walletHideCards,
   walletRemoveCards,
   walletRemoveCardsByType,
+  walletRestoreCards,
   walletUpsertCard
 } from "../../actions/cards";
-import { selectWalletCards } from "../../selectors";
 import { walletResetPlaceholders } from "../../actions/placeholders";
-import { paymentsDeleteMethodAction } from "../../../../payments/details/store/actions";
-import { getNetworkError } from "../../../../../utils/errors";
+import { selectWalletCards } from "../../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
@@ -27,15 +28,15 @@ const T_CARD_1: WalletCard = {
 };
 const T_CARD_2: WalletCard = {
   category: "payment",
-  key: "9999",
+  key: "method_1234",
   type: "payment",
-  walletId: ""
+  walletId: "1234"
 };
 const T_CARD_3: WalletCard = {
   category: "payment",
-  key: "4444",
+  key: "method_5678",
   type: "payment",
-  walletId: ""
+  walletId: "5678"
 };
 
 describe("Wallet cards reducer", () => {
@@ -63,13 +64,12 @@ describe("Wallet cards reducer", () => {
 
   it("should update a specific card in the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    store.dispatch(walletAddCards([T_CARD_1]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [T_CARD_1.key]: T_CARD_1
-    });
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1
+      }) as any
+    );
 
     store.dispatch(walletUpsertCard({ ...T_CARD_1, type: "cgn" }));
 
@@ -80,13 +80,12 @@ describe("Wallet cards reducer", () => {
 
   it("should add a card in the store if not present another with the same key", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    store.dispatch(walletAddCards([T_CARD_1]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [T_CARD_1.key]: T_CARD_1
-    });
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1
+      }) as any
+    );
 
     store.dispatch(walletUpsertCard(T_CARD_2));
 
@@ -98,15 +97,14 @@ describe("Wallet cards reducer", () => {
 
   it("should remove cards from the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [T_CARD_1.key]: T_CARD_1,
-      [T_CARD_2.key]: T_CARD_2,
-      [T_CARD_3.key]: T_CARD_3
-    });
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1,
+        [T_CARD_2.key]: T_CARD_2,
+        [T_CARD_3.key]: T_CARD_3
+      }) as any
+    );
 
     store.dispatch(walletRemoveCards([T_CARD_1.key, T_CARD_3.key]));
 
@@ -117,15 +115,14 @@ describe("Wallet cards reducer", () => {
 
   it("should remove cards of the same type from the store", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [T_CARD_1.key]: T_CARD_1,
-      [T_CARD_2.key]: T_CARD_2,
-      [T_CARD_3.key]: T_CARD_3
-    });
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1,
+        [T_CARD_2.key]: T_CARD_2,
+        [T_CARD_3.key]: T_CARD_3
+      }) as any
+    );
 
     store.dispatch(walletRemoveCardsByType("payment"));
 
@@ -135,18 +132,16 @@ describe("Wallet cards reducer", () => {
   });
 
   it("should remove placeholder cards from the store", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
     const placeholderCard: WalletCard = { ...T_CARD_1, type: "placeholder" };
-
-    store.dispatch(walletAddCards([placeholderCard, T_CARD_2, T_CARD_3]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [placeholderCard.key]: placeholderCard,
-      [T_CARD_2.key]: T_CARD_2,
-      [T_CARD_3.key]: T_CARD_3
-    });
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [placeholderCard.key]: placeholderCard,
+        [T_CARD_2.key]: T_CARD_2,
+        [T_CARD_3.key]: T_CARD_3
+      }) as any
+    );
 
     store.dispatch(walletResetPlaceholders([placeholderCard]));
 
@@ -156,66 +151,41 @@ describe("Wallet cards reducer", () => {
     });
   });
 
-  it("should handle paymentsDeleteMethodAction request", () => {
+  it("should hide cards", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    const cardKey = {
-      ...T_CARD_1,
-      key: "method_1234"
-    };
-
-    store.dispatch(walletAddCards([cardKey]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [cardKey.key]: cardKey
-    });
-
-    store.dispatch(
-      paymentsDeleteMethodAction.request({
-        walletId: "1234"
-      })
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1,
+        [T_CARD_2.key]: T_CARD_2,
+        [T_CARD_3.key]: T_CARD_3
+      }) as any
     );
 
+    store.dispatch(walletHideCards([T_CARD_2.key]));
+
     expect(store.getState().features.wallet.cards).toStrictEqual({
-      deletedCard: { ...cardKey, index: 0 }
+      [T_CARD_1.key]: T_CARD_1,
+      [T_CARD_2.key]: { ...T_CARD_2, hidden: true },
+      [T_CARD_3.key]: T_CARD_3
     });
   });
 
-  it("should handle paymentsDeleteMethodAction cancel and failure", () => {
+  it("should restore hidden cards", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    const networkError = getNetworkError(new Error("test"));
-
-    const cardKey = {
-      ...T_CARD_1,
-      key: "method_1234"
-    };
-
-    store.dispatch(walletAddCards([cardKey, T_CARD_2, T_CARD_3]));
-
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      [cardKey.key]: cardKey,
-      [T_CARD_2.key]: T_CARD_2,
-      [T_CARD_3.key]: T_CARD_3
-    });
-
-    store.dispatch(
-      paymentsDeleteMethodAction.request({
-        walletId: "1234"
-      })
+    const store = createStore(
+      appReducer,
+      _.set(globalState, "features.wallet.cards", {
+        [T_CARD_1.key]: T_CARD_1,
+        [T_CARD_2.key]: { ...T_CARD_2, hidden: true },
+        [T_CARD_3.key]: T_CARD_3
+      }) as any
     );
 
-    expect(store.getState().features.wallet.cards).toStrictEqual({
-      deletedCard: { ...cardKey, index: 2 },
-      [T_CARD_2.key]: T_CARD_2,
-      [T_CARD_3.key]: T_CARD_3
-    });
-
-    store.dispatch(paymentsDeleteMethodAction.failure(networkError));
+    store.dispatch(walletRestoreCards([T_CARD_2.key]));
 
     expect(store.getState().features.wallet.cards).toStrictEqual({
-      [cardKey.key]: { ...cardKey, index: 2 },
+      [T_CARD_1.key]: T_CARD_1,
       [T_CARD_2.key]: T_CARD_2,
       [T_CARD_3.key]: T_CARD_3
     });
