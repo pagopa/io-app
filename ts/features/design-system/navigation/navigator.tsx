@@ -9,8 +9,7 @@ import {
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Alert, Platform } from "react-native";
-import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
+import { Platform } from "react-native";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
@@ -89,27 +88,6 @@ const RNNCloseButton = () => {
     />
   );
 };
-
-const HeaderFirstLevelComponent = () => (
-  <HeaderFirstLevel
-    title="Portafoglio"
-    type="twoActions"
-    firstAction={{
-      icon: "coggle",
-      accessibilityLabel: "Tap to trigger test alert",
-      onPress: () => {
-        Alert.alert("Settings");
-      }
-    }}
-    secondAction={{
-      icon: "help",
-      accessibilityLabel: "Tap to trigger test alert",
-      onPress: () => {
-        Alert.alert("Assistance");
-      }
-    }}
-  />
-);
 
 export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
@@ -402,9 +380,6 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
           component={DSHeaderFirstLevel}
-          options={{
-            header: HeaderFirstLevelComponent
-          }}
         />
 
         <Stack.Screen
@@ -415,9 +390,6 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
           component={DSHeaderSecondLevelWithSectionTitle}
-          options={{
-            header: HeaderFirstLevelComponent
-          }}
         />
 
         {/* SCREENS */}
