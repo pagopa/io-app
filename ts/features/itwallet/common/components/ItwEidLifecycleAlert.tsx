@@ -54,6 +54,7 @@ export const ItwEidLifecycleAlert = ({
       ComponentProps<typeof Alert>
     > = {
       valid: {
+        testID: "itwEidLifecycleAlertTestID_valid",
         variant: "success",
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.valid",
@@ -65,6 +66,7 @@ export const ItwEidLifecycleAlert = ({
         )
       },
       jwtExpiring: {
+        testID: "itwEidLifecycleAlertTestID_jwtExpiring",
         variant: "warning",
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.expiring",
@@ -74,6 +76,7 @@ export const ItwEidLifecycleAlert = ({
         )
       },
       jwtExpired: {
+        testID: "itwEidLifecycleAlertTestID_jwtExpired",
         variant: "error",
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.expired"
@@ -82,7 +85,7 @@ export const ItwEidLifecycleAlert = ({
     };
 
     return (
-      <View style={{ marginBottom: 16 }}>
+      <View style={{ marginBottom: 16 }} testID={`itwEidLifecycleAlertTestID`}>
         <Alert {...alertProps[eidStatus]} />
       </View>
     );

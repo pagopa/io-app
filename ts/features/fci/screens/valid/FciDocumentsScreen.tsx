@@ -1,10 +1,8 @@
-import * as React from "react";
-import Pdf from "react-native-pdf";
-import { pipe } from "fp-ts/lib/function";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as O from "fp-ts/lib/Option";
-import * as S from "fp-ts/lib/string";
-import { StyleSheet, View } from "react-native";
+import {
+  FooterActionsInline,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import {
   RouteProp,
   StackActions,
@@ -12,40 +10,41 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import {
-  BlockButtonProps,
-  ButtonSolidProps,
-  FooterWithButtons,
-  IOColors,
-  IOStyles
-} from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
-import { FCI_ROUTES } from "../../navigation/routes";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as S from "fp-ts/lib/string";
+import * as React from "react";
+import { ComponentProps } from "react";
+import { StyleSheet, View } from "react-native";
+import Pdf from "react-native-pdf";
 import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
-import { FciParamsList } from "../../navigation/params";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
+import LoadingComponent from "../../components/LoadingComponent";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import { FciParamsList } from "../../navigation/params";
+import { FCI_ROUTES } from "../../navigation/routes";
 import {
   fciClearStateRequest,
   fciDownloadPreview,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
-import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
 import {
   getOptionalSignatureFields,
   getRequiredSignatureFields,
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
-import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
-import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import LoadingComponent from "../../components/LoadingComponent";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -136,29 +135,31 @@ const FciDocumentsScreen = () => {
 
   const onCancelPress = () => present();
 
-  const cancelButtonProps: ButtonSolidProps = {
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
     onPress: onCancelPress,
-    label: I18n.t("features.fci.documents.footer.cancel"),
-    accessibilityLabel: I18n.t("features.fci.documents.footer.cancel")
+    label: I18n.t("features.fci.documents.footer.cancel")
   };
 
-  const continueButtonProps: ButtonSolidProps = {
+  const continueButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
     onPress: onContinuePress,
-    label: I18n.t("features.fci.documents.footer.continue"),
-    accessibilityLabel: I18n.t("features.fci.documents.footer.continue")
+    label: I18n.t("features.fci.documents.footer.continue")
   };
 
-  const keepReadingButtonProps: ButtonSolidProps = {
+  const keepReadingButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
     onPress: () => pointToPage(totalPages),
-    label: I18n.t("global.buttons.continue"),
-    accessibilityLabel: I18n.t("global.buttons.continue")
+    label: I18n.t("global.buttons.continue")
   };
 
-  const secondaryButtonProps: BlockButtonProps = {
-    type: currentPage < totalPages ? "Outline" : "Solid",
-    buttonProps:
-      currentPage < totalPages ? keepReadingButtonProps : continueButtonProps
-  };
+  const endActionButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] =
+    currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
 
   const pointToPage = (page: number) =>
     pipe(
@@ -247,10 +248,9 @@ const FciDocumentsScreen = () => {
         {documents.length > 0 && (
           <>
             {renderPager()}
-            <FooterWithButtons
-              type="TwoButtonsInlineThird"
-              secondary={secondaryButtonProps}
-              primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+            <FooterActionsInline
+              startAction={cancelButtonProps}
+              endAction={endActionButtonProps}
             />
           </>
         )}

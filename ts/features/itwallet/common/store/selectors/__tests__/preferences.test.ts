@@ -1,10 +1,12 @@
 import { addDays, addMonths } from "date-fns";
 import _ from "lodash";
+import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import {
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsFeedbackBannerHiddenSelector
+  itwIsFeedbackBannerHiddenSelector,
+  itwRequestedCredentialsSelector
 } from "../preferences";
 
 describe("itwIsFeedbackBannerHiddenSelector", () => {
@@ -45,5 +47,26 @@ describe("itwIsDiscoveryBannerHiddenSelector", () => {
         })
       )
     ).toBe(expected);
+  });
+});
+
+describe("itwRequestedCredentialsSelector", () => {
+  it("should return the list of requested credentials in the past 7 days", () => {
+    MockDate.set("2024-11-14T20:43:21.361Z");
+
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    expect(
+      itwRequestedCredentialsSelector(
+        _.set(globalState, "features.itWallet.preferences", {
+          requestedCredentials: {
+            MDL: "2023-11-14T20:43:21.362Z",
+            EuropeanDisabilityCard: "2023-11-14T20:43:21.360Z",
+            EuropeanHealthInsuranceCard: "2023-11-10T20:43:21.361Z"
+          }
+        })
+      )
+    ).toEqual(["MDL"]);
+    MockDate.reset();
   });
 });

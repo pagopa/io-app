@@ -127,7 +127,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "lifecycle": 0,
-    "preferences": {},
+    "preferences": {
+      "requestedCredentials": {},
+    },
     "walletInstance": {
       "attestation": undefined,
     },
@@ -238,17 +240,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "home": {
       "shouldShowAddMethodsBanner": true,
-    },
-    "legacyTransaction": {
-      "details": {
-        "kind": "PotNoneLoading",
-      },
-      "total": {
-        "kind": "PotNone",
-      },
-      "transactions": {
-        "kind": "PotNone",
-      },
     },
     "onboarding": {
       "paymentMethods": {
