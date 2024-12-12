@@ -24,7 +24,8 @@ import { ZendeskState } from "../index";
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: pot.none
+  ticketNumber: pot.none,
+  zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
 const mockCategory: ZendeskCategory = {

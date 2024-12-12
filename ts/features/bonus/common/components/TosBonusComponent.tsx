@@ -1,7 +1,7 @@
 import {
   ButtonOutline,
   ButtonSolidProps,
-  FooterWithButtons,
+  FooterActions,
   H2,
   IconButton,
   Pictogram,
@@ -68,8 +68,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
 
   const closeButtonProps: ButtonSolidProps = {
     onPress: props.onClose,
-    label: I18n.t("global.buttons.close"),
-    accessibilityLabel: I18n.t("global.buttons.close")
+    label: I18n.t("global.buttons.close")
   };
 
   const handleLoadEnd = () => setOnLoadEnd(true);
@@ -132,12 +131,12 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
         )}
       </ScrollView>
       {isLoadEnd && (
-        <View>
-          <FooterWithButtons
-            type="SingleButton"
-            primary={{ type: "Outline", buttonProps: closeButtonProps }}
-          />
-        </View>
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: closeButtonProps
+          }}
+        />
       )}
     </SafeAreaView>
   ));
