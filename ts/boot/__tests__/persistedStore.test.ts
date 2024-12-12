@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
-import { GlobalState } from "../../store/reducers/types";
 
 describe("Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot!", () => {
   jest.useFakeTimers();
