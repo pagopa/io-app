@@ -43598,7 +43598,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 ]
                               }
                             >
-                              Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
+                              Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi almeno 15 minuti prima di riprovare.
                             </Text>
                             <View
                               style={
