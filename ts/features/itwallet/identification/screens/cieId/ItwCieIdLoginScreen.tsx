@@ -165,7 +165,7 @@ const ItwCieIdLoginScreen = () => {
         return false;
       }
 
-      // When CieID is not available, revert to the regular webview
+      // When CieID is not available, fallback to the regular webview
       return true;
     },
     [startCieIdAppAuthentication]
