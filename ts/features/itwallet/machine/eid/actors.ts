@@ -41,12 +41,6 @@ export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
 };
 
-export type GetAuthRedirectUrlActorParam = {
-  redirectUri: string | undefined;
-  authUrl: string | undefined;
-  identification: IdentificationContext | undefined;
-};
-
 export const createEidIssuanceActorsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
