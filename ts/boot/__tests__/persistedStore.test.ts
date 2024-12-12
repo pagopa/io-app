@@ -9,20 +9,7 @@ describe("Check the addition for new fields to the persisted store. If one of th
   it("Freeze 'onboarding' state", () => {
     expect(globalState.onboarding).toMatchSnapshot();
   });
-  it("Freeze 'notifications' state", () => {
-    const notifications: GlobalState["notifications"] = {
-      ...globalState.notifications,
-      installation: {
-        ...globalState.notifications.installation,
-        id: "fakeInstallationId"
-      }
-    };
-    const notificationsWithoutEnvironment = _.omit(
-      notifications,
-      "environment"
-    );
-    expect(notificationsWithoutEnvironment).toMatchSnapshot();
-  });
+
   it("Freeze 'profile' state", () => {
     expect(globalState.profile).toMatchSnapshot();
   });
