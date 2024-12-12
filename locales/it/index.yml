@@ -3432,6 +3432,9 @@ features:
         bodyBold: Documenti su IO
         primaryAction: Inizia
         secondaryAction: Non ora
+      credentialNotFound:
+        title: "Aggiungi il documento al Portafoglio"
+        subtitle: "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
