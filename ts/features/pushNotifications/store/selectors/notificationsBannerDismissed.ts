@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getTime } from "date-fns";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessage } from "../../../messages/types";
 
