@@ -1,16 +1,16 @@
 import React, { createRef } from "react";
 import { Platform } from "react-native";
 import { WebView } from "react-native-webview";
-
 import type {
   WebViewErrorEvent,
-  WebViewNavigationEvent,
+  WebViewHttpErrorEvent,
   WebViewMessageEvent,
   WebViewNavigation,
-  WebViewHttpErrorEvent
+  WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
-import { startCieAndroid, startCieiOS, type ContinueWithUrl } from "./manager";
 import { CieError, CieErrorType } from "./error";
+import { CieEvent } from "./event";
+import { startCieAndroid, startCieiOS, type ContinueWithUrl } from "./manager";
 
 const AUTH_LINK_PATTERN = "lettura carta";
 
@@ -38,19 +38,15 @@ const injectedJavaScript = `
     })();
     true;
   `;
-export type OnSuccess = (url: string) => void;
-export type OnError = (e: CieError) => void;
-export type OnCieEvent = (e: CieEvent) => void;
-export enum CieEvent {
-  "reading" = "reading",
-  "completed" = "completed",
-  "waiting_card" = "waiting_card"
-}
 
-type CIEParams = {
+export type OnCieSuccess = (url: string) => void;
+export type OnCieError = (e: CieError) => void;
+export type OnCieEvent = (e: CieEvent) => void;
+
+type WebViewComponentProps = {
   authUrl: string;
-  onSuccess: OnSuccess;
-  onError: OnError;
+  onSuccess: OnCieSuccess;
+  onError: OnCieError;
   pin: string;
   useUat: boolean;
   redirectUrl: string;
@@ -84,7 +80,7 @@ const webView = createRef<WebView>();
  * This url can be configured using the redirectUrl parameter which allows you to close the WebView.
  * The event can then be captured via the onSuccess parameter.
  *
- * @param {CIEParams} params - Parameters required by the component.
+ * @param {WebViewComponentProps} props - Parameters required by the component.
  * @param {string} params.authUrl -The authentication URL of the Service Provider to which to authenticate.
  * @param {boolean} params.useUat - If set to true it uses the CIE testing environment.
  * @param {string} params.pin - CIE pin for use with NFC reading.
@@ -94,8 +90,8 @@ const webView = createRef<WebView>();
  * @param {Function} params.onEvent - Callback function that is called whenever there is a new CieEvent from the CIE reader.
  * @returns {JSX.Element} - The configured component with WebView.
  */
-export const WebViewComponent = (params: CIEParams) => {
-  const [webViewUrl, setWebViewUrl] = React.useState(params.authUrl);
+export const WebViewComponent = (props: WebViewComponentProps) => {
+  const [webViewUrl, setWebViewUrl] = React.useState(props.authUrl);
   const [isCardReadingFinished, setCardReadingFinished] = React.useState(false);
   const cieCompletedEventEmitted = React.useRef(false);
 
@@ -117,10 +113,10 @@ export const WebViewComponent = (params: CIEParams) => {
       default: startCieAndroid
     });
     await startCie(
-      params.useUat,
-      params.pin,
-      params.onError,
-      params.onEvent,
+      props.useUat,
+      props.pin,
+      props.onError,
+      props.onEvent,
       cieAuthorizationUri,
       continueWithUrl
     );
@@ -128,7 +124,7 @@ export const WebViewComponent = (params: CIEParams) => {
 
   // This function is called when authentication with CIE ends and the SP URL containing code and state is returned
   const handleShouldStartLoading =
-    (onSuccess: OnSuccess, redirectUrl: string) =>
+    (onSuccess: OnCieSuccess, redirectUrl: string) =>
     (event: WebViewNavigation): boolean => {
       if (isCardReadingFinished && event.url.includes(redirectUrl)) {
         onSuccess(event.url);
@@ -139,7 +135,7 @@ export const WebViewComponent = (params: CIEParams) => {
     };
 
   const handleOnLoadEnd =
-    (onError: OnError, onCieEvent: OnCieEvent) =>
+    (onError: OnCieError, onCieEvent: OnCieEvent) =>
     (e: WebViewNavigationEvent | WebViewErrorEvent) => {
       const eventTitle = e.nativeEvent.title.toLowerCase();
       if (
@@ -166,7 +162,7 @@ export const WebViewComponent = (params: CIEParams) => {
     };
 
   const handleOnError =
-    (onError: OnError) =>
+    (onError: OnCieError) =>
     (e: WebViewErrorEvent | WebViewHttpErrorEvent | Error): void => {
       const error = e as Error;
       const webViewError = e as WebViewErrorEvent;
@@ -210,13 +206,13 @@ export const WebViewComponent = (params: CIEParams) => {
       userAgent={defaultUserAgent}
       javaScriptEnabled={true}
       source={{ uri: webViewUrl }}
-      onLoadEnd={handleOnLoadEnd(params.onError, params.onEvent)}
-      onError={handleOnError(params.onError)}
-      onHttpError={handleOnError(params.onError)}
+      onLoadEnd={handleOnLoadEnd(props.onError, props.onEvent)}
+      onError={handleOnError(props.onError)}
+      onHttpError={handleOnError(props.onError)}
       injectedJavaScript={injectedJavaScript}
       onShouldStartLoadWithRequest={handleShouldStartLoading(
-        params.onSuccess,
-        params.redirectUrl
+        props.onSuccess,
+        props.redirectUrl
       )}
       onMessage={handleMessage}
     />

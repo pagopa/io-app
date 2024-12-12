@@ -1,7 +1,8 @@
-import cieManager, { type Event as CEvent } from "@pagopa/react-native-cie";
+import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import { Platform } from "react-native";
-import { CieEvent, type OnCieEvent, type OnError } from "./component";
+import { OnCieEvent, OnCieError } from "./WebViewComponent";
 import { CieError, CieErrorType } from "./error";
+import { CieEvent } from "./event";
 
 const BASE_UAT_URL = "https://collaudo.idserver.servizicie.interno.gov.it/idp/";
 
@@ -10,7 +11,7 @@ export type ContinueWithUrl = (callbackUrl: string) => void;
 export const startCieAndroid = async (
   useCieUat: boolean,
   ciePin: string,
-  onError: OnError,
+  onError: OnCieError,
   onEvent: OnCieEvent,
   cieAuthorizationUri: string,
   continueWithUrl: ContinueWithUrl
@@ -46,7 +47,7 @@ export const startCieAndroid = async (
 export const startCieiOS = async (
   useCieUat: boolean,
   ciePin: string,
-  onError: OnError,
+  onError: OnCieError,
   onEvent: OnCieEvent,
   cieAuthorizationUri: string,
   continueWithUrl: ContinueWithUrl
@@ -80,7 +81,7 @@ export const startCieiOS = async (
 };
 
 const handleCieEvent =
-  (onError: OnError, onEvent: OnCieEvent) => (event: CEvent) => {
+  (onError: OnCieError, onEvent: OnCieEvent) => (event: CEvent) => {
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
