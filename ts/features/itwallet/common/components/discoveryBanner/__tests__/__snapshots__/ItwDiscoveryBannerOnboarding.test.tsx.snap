@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItwDiscoveryBanner should match snapshot 1`] = `
+exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryBannerRenderable is false 1`] = `
 <View
   style={
     {
@@ -150,7 +150,351 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                     }
                   }
                 >
-                  WALLET_HOME
+                  ITW_CARD_ONBOARDING
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      <RNSScreenContainer
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <RNSScreen
+          activityState={2}
+          collapsable={false}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
+          pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
+          style={
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                handlerTag={2}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  {
+                    "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      [
+                        {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </RNSScreen>
+      </RNSScreenContainer>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryBannerRenderable is true 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          {
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  ITW_CARD_ONBOARDING
                 </Text>
               </View>
               <View
@@ -335,8 +679,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                       <View
                         style={
                           {
-                            "marginHorizontal": 24,
-                            "marginVertical": 16,
+                            "marginBottom": 16,
                           }
                         }
                       >
@@ -370,7 +713,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                           onResponderTerminate={[Function]}
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
-                          testID="itwDiscoveryBannerTestID"
+                          testID="itwDiscoveryBannerOnboardingTestID"
                         >
                           <View
                             style={
@@ -383,7 +726,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                   "flexDirection": "row",
                                 },
                                 {
-                                  "backgroundColor": "#DBF9FA",
+                                  "backgroundColor": "#F4F5F8",
                                   "paddingHorizontal": 16,
                                   "paddingVertical": 16,
                                 },
@@ -398,7 +741,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Novità: Documenti su IO Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti! Inizia"
+                              accessibilityLabel="Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti! Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -412,33 +755,6 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              <Text
-                                allowFontScaling={false}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.25}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#031344",
-                                      "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Novità: Documenti su IO
-                              </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 4,
-                                  }
-                                }
-                              />
                               <Text
                                 allowFontScaling={false}
                                 dynamicTypeRamp="footnote"
@@ -457,7 +773,7 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
+                                Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
                               </Text>
                               <View
                                 style={

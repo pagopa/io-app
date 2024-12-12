@@ -43,12 +43,15 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 0;
+const CURRENT_REDUX_ITW_STORE_VERSION = 1;
 
 const migrations: MigrationManifest = {
   // Added preferences store
   "0": (state: PersistedState): PersistedState =>
-    _.set(state, "preferences", {})
+    _.set(state, "preferences", {}),
+  // Added requestedCredentials to preferences store
+  "1": (state: PersistedState): PersistedState =>
+    _.set(state, "preferences.requestedCredentials", {})
 };
 
 const itwPersistConfig: PersistConfig = {

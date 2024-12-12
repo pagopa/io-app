@@ -335,11 +335,11 @@ profile:
       title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
       subtitle: Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
-      loading: Wait few seconds, we're checking your profile..
+      loading: Wait few seconds, we're checking your profile...
+      errorMessage: We can't retrieve the status of your request at the moment. Please try again.
       removeAccount:
         title: Delete your profile
         description: Delete your account and your personal data
-        error: An error occurred while submit your deletion request, please retry!
         alert:
           activeBonusTitle: Delete your profile
           activeBonusDescription: "It seems that you have joined some initiatives on IO. Deleting your profile will not remove your subscriptions to the initiatives you have joined.\n\nTo manage them, go to the Portfolio section, otherwise choose 'Delete'"
@@ -3318,9 +3318,13 @@ features:
           restrictionConditions: "Codici"
     discovery:
       banner:
-        title: "Novità: Documenti su IO"
-        content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
-        action: Inizia
+        home:
+          title: "Novità: Documenti su IO"
+          content: Da oggi puoi aggiungere al Portafoglio di IO la versione digitale dei tuoi documenti!
+          action: Inizia
+        onboarding:
+          content: Attiva Documenti su IO per aggiungere al Portafoglio la versione digitale dei tuoi documenti!
+          action: Inizia
       title: La versione digitale dei tuoi documenti, su IO
       content: "###### Documenti su IO: come funziona \n Da oggi puoi aggiungere al Portafoglio di IO **la versione digitale dei tuoi documenti** personali, come la Patente di guida e la Tessera Sanitaria.  \n\n Attiva la funzionalità **Documenti su IO** per averli sempre a portata di mano sul tuo dispositivo.  \n ###### È facile e veloce \n Avrai bisogno delle credenziali **SPID** o **CIE** (Carta d’Identità Elettronica) per completare l’attivazione: è un passaggio di sicurezza necessario per garantire la sicurezza dei tuoi dati."
       tos: Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyAndTosUrl}}).
@@ -3433,6 +3437,9 @@ features:
         bodyBold: Documenti su IO
         primaryAction: Inizia
         secondaryAction: Non ora
+      credentialNotFound:
+        title: "Aggiungi il documento al Portafoglio"
+        subtitle: "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info
