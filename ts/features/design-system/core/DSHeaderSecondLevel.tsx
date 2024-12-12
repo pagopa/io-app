@@ -1,16 +1,17 @@
-import * as React from "react";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import { RNavScreenWithLargeHeader } from "../../../components/ui/RNavScreenWithLargeHeader";
+import * as React from "react";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 
 export const DSHeaderSecondLevel = () => (
-  <RNavScreenWithLargeHeader
+  <IOScrollViewWithLargeHeader
     title={{
       label: "Questo è un titolo lungo, ma lungo lungo davvero, eh!"
     }}
+    includeContentMargins
   >
     <VSpacer />
     {[...Array(50)].map((_el, i) => (
       <Body key={`body-${i}`}>Repeated text</Body>
     ))}
-  </RNavScreenWithLargeHeader>
+  </IOScrollViewWithLargeHeader>
 );
