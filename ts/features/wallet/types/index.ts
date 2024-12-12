@@ -13,11 +13,21 @@ export const walletCardCategoryFilters = ["itw", "other"] as const;
 export type WalletCardCategoryFilter =
   (typeof walletCardCategoryFilters)[number];
 
-// Basic type definition for a wallet card, describes the properties that
-// each card MUST have in order to be placed inside the wallet.
+/**
+ * Base type definition for all wallet cards.
+ * Every card in the wallet must implement these essential properties
+ * to ensure proper identification, categorization, and lifecycle management.
+ */
 type WalletCardBase = {
+  /** Unique identifier used to track and reference individual cards */
   key: string;
+  /** Classification of the card (e.g., itw, cgn, bonus, payment) */
   category: WalletCardCategory;
+  /**
+   * Marks a card as hidden. Hidden cards are not displayed in the wallet UI
+   * Usefull when we need to remove card without deleting its data from the wallet
+   */
+  hidden?: true;
 };
 
 // Specific type for ID Pay bonus cards
