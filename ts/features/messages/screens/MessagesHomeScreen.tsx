@@ -3,8 +3,10 @@ import React, { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
-import { useNavigateToSettingMainScreen } from "../../../hooks/useHeaderFirstLevelActionPropSettings";
-import { useHeaderFirstLevelProps } from "../../../hooks/useHeaderFirstLevelProps";
+import {
+  useHeaderFirstLevelActionPropSettings,
+  useNavigateToSettingMainScreen
+} from "../../../hooks/useHeaderFirstLevelActionPropSettings";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../store/hooks";
@@ -31,8 +33,7 @@ export const MessagesHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
-  const currentRoute = MESSAGES_ROUTES.MESSAGES_HOME;
-  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(currentRoute);
+  const actionSettings = useHeaderFirstLevelActionPropSettings();
   const navigateToSettingMainScreen = useNavigateToSettingMainScreen();
 
   const canNavigateIfIsArchivingCallback = useCallback(() => {
@@ -86,13 +87,11 @@ export const MessagesHomeScreen = () => {
   );
 
   useHeaderFirstLevel({
-    currentRoute,
+    currentRoute: MESSAGES_ROUTES.MESSAGES_HOME,
     headerProps: {
       title: I18n.t("messages.contentTitle"),
-      type: "threeActions",
-      firstAction: actionHelp,
       secondAction: settingsActionInMessageSection,
-      thirdAction: searchMessageAction
+      optionalAction: searchMessageAction
     }
   });
 

@@ -11,7 +11,6 @@ import {
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
-import { useHeaderFirstLevelProps } from "../../../../hooks/useHeaderFirstLevelProps";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -72,18 +71,13 @@ const PaymentsHomeScreen = () => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
-  const currentRoute = ROUTES.PAYMENTS_HOME;
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(currentRoute);
 
   useHeaderFirstLevel({
-    currentRoute,
+    currentRoute: ROUTES.PAYMENTS_HOME,
     headerProps: {
       title: I18n.t("features.payments.title"),
-      animatedRef: scrollViewContentRef,
-      type: "twoActions",
-      firstAction: actionHelp,
-      secondAction: actionSettings
+      animatedRef: scrollViewContentRef
     }
   });
 

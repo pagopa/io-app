@@ -4,7 +4,6 @@ import { PropsWithChildren, default as React, useCallback } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
-import { useHeaderFirstLevelProps } from "../../../hooks/useHeaderFirstLevelProps";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
@@ -91,19 +90,14 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
 
   /* CODE RELATED TO THE HEADER -- START */
 
-  const currentRoute = ROUTES.WALLET_HOME;
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const { actionHelp, actionSettings } = useHeaderFirstLevelProps(currentRoute);
 
   useHeaderFirstLevel({
-    currentRoute,
+    currentRoute: ROUTES.WALLET_HOME,
     headerProps: {
       testID: "wallet-home-header-title",
       title: I18n.t("wallet.wallet"),
-      animatedRef: scrollViewContentRef,
-      type: "twoActions",
-      firstAction: actionHelp,
-      secondAction: actionSettings
+      animatedRef: scrollViewContentRef
     }
   });
 
