@@ -146,6 +146,18 @@ android {
         }
     }
 
+    flavorDimensions += "version"
+    productFlavors {
+        create("production") {
+            applicationIdSuffix = "" // Nessun suffisso per la produzione
+            versionNameSuffix = ""
+        }
+        create("canary") {
+            applicationIdSuffix = ".canary" // Suffix per identificare la build Canary
+            versionNameSuffix = ""
+        }
+    }
+    
     // The Android App Bundle read this section to create different bundles
     bundle {
         language {
