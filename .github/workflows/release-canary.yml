@@ -1,51 +1,47 @@
 name: Canary release
 on:
-  workflow_dispatch:
-  issue_comment:                                     
-    types: [created, edited, deleted]
+  pull_request: 
+  # issue_comment:                                     
+  #   types: [created]
 jobs:
-  run-static-checks:
-    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
+  #   uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
-    needs: run-static-checks
-    environment: canary
+    # needs: run-static-checks
     runs-on: ubuntu-latest
     outputs:
-      currentAppVersion: ${{ steps.store-current-version.outputs.CURRENT_APP_VERSION }}
-      currentAppBuildCode: ${{ steps.store-current-version.outputs.CURRENT_APP_BUILD_CODE }}
+      canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-      - id: store-current-version
-        run: |
-          APP_VERSION=$(node -p -e "require('./package.json').version")
-          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
-          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
-          echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
+      - id: setup
+        uses: ./.github/actions/setup-composite
       - id: replace-version-with-canary
         run: |
-          node scripts/canary/replaceCanaryVersion.js ${{ vars.CANARY_VERSION }} ${{ vars.CANARY_BUILD_CODE }}
-          bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
-          bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
-          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios
+          UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
+          node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
+          mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
+          mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add .; git commit -m "Replace Matchfile for canary" --no-verify;
           yarn release-canary
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          git push --no-verify origin tag $APP_VERSION
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release create "(Canary) $APP_VERSION" --generate-notes
-          gh variable set CANARY_VERSION -b "$APP_VERSION" -e canary
-          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
-          gh variable set CANARY_BUILD_CODE -b "$BUILD_CODE" -e canary
+          gh release create $APP_VERSION --generate-notes
+          echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
     needs: prepare-canary-release
     environment: canary
@@ -55,7 +51,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
+          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -73,7 +69,7 @@ jobs:
       - id: build-release-android
         run: |
           ./scripts/android-release.sh ./android/app
-          cd android && bundle exec fastlane alpha
+          cd android && bundle exec fastlane alpha_canary
         shell: bash
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
@@ -93,7 +89,7 @@ jobs:
           cd android
           VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-          bundle exec fastlane download_apk
+          bundle exec fastlane download_canary_apk
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}          
@@ -103,20 +99,20 @@ jobs:
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: io-app-universal.apk
-          path: android/io-app-universal.apk
+          name: io-app-canary-universal.apk
+          path: android/io-app-canary-universal.apk
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: app-release.aab
+          name: app-canary-release.aab
           path: android/app/build/outputs/bundle/release/app-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload "(Canary) $APP_VERSION" android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/release/app-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
@@ -131,7 +127,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
+          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
@@ -158,7 +154,7 @@ jobs:
         name: Build & submit to App store
         run: |
           cd ios
-          bundle exec fastlane beta_circleci_testflight
+          bundle exec fastlane canary_ci_testflight
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
@@ -189,7 +185,7 @@ jobs:
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload "(Canary) $APP_VERSION" ios/IO.ipa#IO-iOS.ipa
+          gh release upload $APP_VERSION ios/IO.ipa#IO-canary-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
@@ -201,20 +197,9 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - id: revert-package-and-version
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          node scripts/canary/replaceCanaryVersion.js ${{ needs.prepare-canary-release.outputs.currentAppVersion }} ${{ needs.prepare-canary-release.outputs.currentAppBuildCode }}
-          bash ./.github/scripts/package-name-restore.sh it.pagopa.io.app.canary it.pagopa.io.app android
-          bash ./.github/scripts/package-name-restore.sh it.pagopa.app.io.canary it.pagopa.app.io ios
-          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-canary-certs.git" "git\@github.com:pagopa\/IO-App-certs.git" ios
-          git add .
-          git commit -m "revert: restoring repository to default package name and version" --no-verify
-          git push --no-verify origin HEAD:${{ github.head_ref }}
       - id: comment-process-end
         if: github.event.issue.number
         run: |
-          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, check it at the [release list](https://github.com/pagopa/io-app/releases)"
+          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, [${{ needs.prepare-canary-release.outputs.canaryVersion }}](https://github.com/pagopa/io-app/releases/tag/${{ needs.prepare-canary-release.outputs.canaryVersion }})"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
