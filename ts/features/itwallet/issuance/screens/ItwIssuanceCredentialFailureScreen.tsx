@@ -26,6 +26,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -81,7 +82,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   useDebugInfo({
-    failure
+    failure: serializeFailureReason(failure)
   });
 
   const getOperationResultScreenContentProps =
