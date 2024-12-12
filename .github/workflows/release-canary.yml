@@ -1,14 +1,13 @@
 name: Canary release
 on:
-  pull_request: 
-  # issue_comment:                                     
-  #   types: [created]
+  issue_comment:                                     
+    types: [created]
 jobs:
-  # run-static-checks:
-  #   if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
-  #   uses: ./.github/workflows/staticcheck.yaml
+  run-static-checks:
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
+    uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
-    # needs: run-static-checks
+    needs: run-static-checks
     runs-on: ubuntu-latest
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
@@ -107,12 +106,12 @@ jobs:
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
           name: app-canary-release.aab
-          path: android/app/build/outputs/bundle/canaryRelease/app-release.aab
+          path: android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload $APP_VERSION android/app/build/outputs/bundle/canaryRelease/app-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
