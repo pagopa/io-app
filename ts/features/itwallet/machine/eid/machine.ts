@@ -1,10 +1,9 @@
 import _ from "lodash";
-import { assign, fromPromise, not, or, setup } from "xstate";
+import { assertEvent, assign, fromPromise, not, setup } from "xstate";
 import { assert } from "../../../../utils/assert";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
-  GetAuthRedirectUrlActorParam,
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams
@@ -55,7 +54,24 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    onInit: notImplemented
+    onInit: notImplemented,
+    /**
+     * Save the final redirect url in the machine context for later reuse.
+     * This action is the same for the three identification methods.
+     */
+    completeUserIdentification: assign(({ context, event }) => {
+      assertEvent(event, "user-identification-completed");
+      assert(
+        context.authenticationContext,
+        "authenticationContext must be defined when completing auth flow"
+      );
+      return {
+        authenticationContext: {
+          ...context.authenticationContext,
+          callbackUrl: event.authRedirectUrl
+        }
+      };
+    })
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -68,9 +84,6 @@ export const itwEidIssuanceMachine = setup({
       notImplemented
     ),
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
-      notImplemented
-    ),
-    getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
       notImplemented
     )
   },
@@ -292,84 +305,23 @@ export const itwEidIssuanceMachine = setup({
                     target: "#itwEidIssuanceMachine.Failure"
                   }
                 ]
-              },
-              on: {
-                abort: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
-                },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
-                }
               }
             },
             CompletingCieIDAuthFlow: {
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: assign(({ context, event }) => {
-                    assert(
-                      context.authenticationContext,
-                      "authenticationContext must be defined when completing auth flow"
-                    );
-                    return {
-                      authenticationContext: {
-                        ...context.authenticationContext,
-                        callbackUrl: event.authRedirectUrl
-                      }
-                    };
-                  })
-                },
-                back: {
-                  target: "#itwEidIssuanceMachine.UserIdentification"
+                  actions: "completeUserIdentification"
                 }
               }
             },
-            /* CieIDBuildAuthRedirectUrl: {
-              invoke: {
-                src: "getAuthRedirectUrl",
-                input: ({ context }) => ({
-                  redirectUri: context.authenticationContext?.redirectUri,
-                  authUrl: context.authenticationContext?.authUrl,
-                  identification: context.identification
-                }),
-                onDone: {
-                  actions: assign(({ context, event }) => {
-                    assert(
-                      context.authenticationContext,
-                      "authenticationContext must be defined when completing auth flow"
-                    );
-                    return {
-                      authenticationContext: {
-                        ...context.authenticationContext,
-                        callbackUrl: event.output
-                      }
-                    };
-                  }),
-                  target: "Completed"
-                },
-                onError: [
-                  {
-                    guard: or(["isOperationAborted"]),
-                    target: "#itwEidIssuanceMachine.UserIdentification"
-                  },
-                  {
-                    actions: "setFailure",
-                    target: "#itwEidIssuanceMachine.Failure"
-                  }
-                ]
-              },
-              on: {
-                abort: { actions: "abortIdentification" },
-                back: {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
-                }
-              }
-            } */
             Completed: {
               type: "final"
+            }
+          },
+          on: {
+            back: {
+              target: "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
             }
           },
           onDone: {
@@ -411,7 +363,7 @@ export const itwEidIssuanceMachine = setup({
                   actions: assign(({ event }) => ({
                     authenticationContext: event.output
                   })),
-                  target: "SpidLoginIdentificationCompleted"
+                  target: "CompletingSpidAuthFlow"
                 },
                 onError: {
                   actions: "setFailure",
@@ -424,23 +376,11 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             },
-            SpidLoginIdentificationCompleted: {
+            CompletingSpidAuthFlow: {
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  // eslint-disable-next-line sonarjs/no-identical-functions
-                  actions: assign(({ context, event }) => {
-                    assert(
-                      context.authenticationContext,
-                      "authenticationContext must be defined when completing auth flow"
-                    );
-                    return {
-                      authenticationContext: {
-                        ...context.authenticationContext,
-                        callbackUrl: event.authRedirectUrl
-                      }
-                    };
-                  })
+                  actions: "completeUserIdentification"
                 },
                 back: {
                   target: "IdpSelection"
@@ -537,19 +477,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  // eslint-disable-next-line sonarjs/no-identical-functions
-                  actions: assign(({ context, event }) => {
-                    assert(
-                      context.authenticationContext,
-                      "authenticationContext must be defined when completing auth flow"
-                    );
-                    return {
-                      authenticationContext: {
-                        ...context.authenticationContext,
-                        callbackUrl: event.authRedirectUrl
-                      }
-                    };
-                  })
+                  actions: "completeUserIdentification"
                 },
                 close: {
                   target: "#itwEidIssuanceMachine.UserIdentification"

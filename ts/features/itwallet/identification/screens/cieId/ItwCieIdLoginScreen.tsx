@@ -54,6 +54,7 @@ const ItwCieIdLoginScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
+  const [cancelVisible, setCancelVisible] = useState(false);
   const [authUrl, setAuthUrl] = useState<O.Option<string>>();
   const webViewSource = authUrl || cieIdAuthUrl;
 
@@ -69,6 +70,7 @@ const ItwCieIdLoginScreen = () => {
         if (url.startsWith(IO_LOGIN_CIE_URL_SCHEME)) {
           const [, continueUrl] = url.split(IO_LOGIN_CIE_URL_SCHEME);
           setAuthUrl(O.some(continueUrl));
+          setCancelVisible(false);
         }
       }
     );
@@ -83,6 +85,11 @@ const ItwCieIdLoginScreen = () => {
       setWebViewLoading(false);
     }
   }, [authUrl]);
+
+  const goBack = useCallback(
+    () => machineRef.send({ type: "back" }),
+    [machineRef]
+  );
 
   const handleAuthenticationFailure = useCallback(
     (error: unknown) => {
@@ -122,9 +129,9 @@ const ItwCieIdLoginScreen = () => {
 
       // Try to directly open the CieID app on iOS
       if (isIos) {
-        Linking.openURL(
-          `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
-        ).catch(handleAuthenticationFailure);
+        Linking.openURL(`CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`)
+          .then(() => setCancelVisible(true))
+          .catch(handleAuthenticationFailure);
       }
     },
     [handleAuthenticationFailure]
@@ -203,7 +210,11 @@ const ItwCieIdLoginScreen = () => {
   );
 
   return (
-    <LoadingSpinnerOverlay isLoading={isWebViewLoading} loadingOpacity={1.0}>
+    <LoadingSpinnerOverlay
+      isLoading={isWebViewLoading}
+      loadingOpacity={1.0}
+      onCancel={cancelVisible ? goBack : undefined} // This should only be possible when opening CieID through the Linking module
+    >
       <View style={styles.webViewWrapper}>{content}</View>
     </LoadingSpinnerOverlay>
   );
