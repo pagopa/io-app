@@ -11,7 +11,7 @@ export type UserBehaviourState = {
   engagementScreenShown: boolean;
   pushNotificationsBanner: {
     timesDismissed: number;
-    forceDismissionDate?: Date;
+    forceDismissionDate?: number;
   };
 };
 
@@ -47,7 +47,7 @@ export const userBehaviourReducer = (
         ...state,
         pushNotificationsBanner: {
           ...state.pushNotificationsBanner,
-          forceDismissionDate: new Date(Date.now())
+          forceDismissionDate: new Date().getTime()
         }
       };
     case getType(resetNotificationBannerDismissState):

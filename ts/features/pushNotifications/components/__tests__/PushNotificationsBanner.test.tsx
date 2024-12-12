@@ -1,14 +1,18 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
+import { createStore } from "redux";
 import I18n from "../../../../i18n";
+import { applicationChangeState } from "../../../../store/actions/application";
 import * as IOHOOKS from "../../../../store/hooks";
+import { appReducer } from "../../../../store/reducers";
 import * as BS from "../../../../utils/hooks/bottomSheet";
-import { renderTestingComponent } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import * as ACTIONS from "../../store/actions/userBehaviour";
 import * as SELECTORS from "../../store/selectors";
+import * as NOTIFICATION_DISMISS_SELECTORS from "../../store/selectors/notificationsBannerDismissed";
 import * as UTILS from "../../utils";
 import { PushNotificationsBanner } from "../PushNotificationsBanner";
-import * as NOTIFICATION_DISMISS_SELECTORS from "../../store/selectors/notificationsBannerDismissed";
 
 const testPressHandler = jest.fn();
 jest
@@ -95,3 +99,14 @@ describe("PushNotificationsBanner", () => {
     );
   });
 });
+
+const renderTestingComponent = (component: React.ReactElement) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  return renderScreenWithNavigationStoreContext(
+    () => component,
+    MESSAGES_ROUTES.MESSAGES_HOME,
+    {},
+    store
+  );
+};

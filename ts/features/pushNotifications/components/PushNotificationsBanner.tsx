@@ -35,13 +35,13 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
     }
   }, [dispatch, shouldResetDismissState]);
 
-  const dismssionCount = useIOSelector(
+  const dismissionCount = useIOSelector(
     timesPushNotificationBannerDismissedSelector
   );
   const discardModal = usePushNotificationsBannerBottomSheet(closeHandler);
 
   const onClose = () => {
-    if (dismssionCount >= 2) {
+    if (dismissionCount >= 2) {
       discardModal.present();
     } else {
       dispatch(setUserDismissedNotificationsBanner());
@@ -75,6 +75,7 @@ const usePushNotificationsBannerBottomSheet = (
 
   const fullCloseHandler = () =>
     dispatch(setPushNotificationBannerForceDismissed());
+
   return useIOBottomSheetModal({
     title: I18n.t(
       "features.messages.pushNotifications.banner.bottomSheet.title"

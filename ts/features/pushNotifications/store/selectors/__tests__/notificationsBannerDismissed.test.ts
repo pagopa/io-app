@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as ALL_PAGINATED from "../../../../messages/store/reducers/allPaginated";
 import { UIMessage } from "../../../../messages/types";
@@ -8,13 +9,26 @@ import {
 
 type TestStateProps = {
   timesDismissed?: number;
-  forceDismissionDate?: Date;
+  forceDismissionDate?: number;
+  messages?: Array<UIMessage>;
 };
 const getTestState = ({
   timesDismissed,
-  forceDismissionDate
+  forceDismissionDate,
+  messages
 }: TestStateProps): GlobalState =>
   ({
+    entities: {
+      messages: {
+        allPaginated: {
+          inbox: {
+            data: pot.some({
+              page: messages
+            })
+          }
+        }
+      }
+    },
     notifications: {
       userBehaviour: {
         pushNotificationsBanner: {
@@ -51,9 +65,6 @@ describe("shouldResetNotificationsBannerDismissStateSelector", () => {
     jest.resetAllMocks();
   });
   it("should return false if 'messageList' is undefined", () => {
-    jest
-      .spyOn(ALL_PAGINATED, "messageListForCategorySelector")
-      .mockImplementation(() => undefined);
     expect(
       shouldResetNotificationBannerDismissStateSelector(getTestState({}))
     ).toBe(false);
@@ -77,7 +88,7 @@ describe("shouldResetNotificationsBannerDismissStateSelector", () => {
     ${false} | ${false}     | ${true}  | ${false}
     ${false} | ${false}     | ${false} | ${false}
   `(
-    "should return $expected messageListForCategorySelector returns a list with {more than 4? $moreThanFour, unread? $unread, new? $isNew} messages",
+    "should return $expected when messageListForCategorySelector returns a list with {more than 4? $moreThanFour, unread? $unread, new? $isNew} messages",
     ({ unread, moreThanFour, isNew, expected }) => {
       const messageList = unread
         ? [
@@ -99,9 +110,10 @@ describe("shouldResetNotificationsBannerDismissStateSelector", () => {
       expect(
         shouldResetNotificationBannerDismissStateSelector(
           getTestState({
+            messages: messageList,
             forceDismissionDate: isNew
-              ? new Date("2000-1-1")
-              : new Date("2500-1-1")
+              ? new Date("2000-1-1").getTime()
+              : new Date("2500-1-1").getTime()
           })
         )
       ).toBe(expected);

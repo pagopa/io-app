@@ -39,8 +39,8 @@ describe("userBehaviourReducer", () => {
     );
 
     expect(
-      userBehaviourState.pushNotificationsBanner.forceDismissionDate
-    ).toBeInstanceOf(Date);
+      typeof userBehaviourState.pushNotificationsBanner.forceDismissionDate
+    ).toBe("number");
   });
   it("pushNotificationsBanner should match initial state upon receiving 'resetNotificationBannerDismissState", () => {
     const userBehaviourState = userBehaviourReducer(

@@ -1,7 +1,10 @@
 import { GlobalState } from "../../../../store/reducers/types";
 import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
 import { areNotificationPermissionsEnabled } from "../reducers/environment";
-import { shouldResetNotificationBannerDismissStateSelector } from "./notificationsBannerDismissed";
+import {
+  pushNotificationsBannerForceDismissionDateSelector,
+  shouldResetNotificationBannerDismissStateSelector
+} from "./notificationsBannerDismissed";
 
 export const hasUserSeenSystemNotificationsPromptSelector = (
   state: GlobalState
@@ -33,8 +36,7 @@ export const isPushNotificationsBannerRenderableSelector = (
   state: GlobalState
 ) => {
   const isForceDismissed =
-    state.notifications.userBehaviour.pushNotificationsBanner
-      .forceDismissionDate !== undefined &&
+    pushNotificationsBannerForceDismissionDateSelector(state) !== undefined &&
     !shouldResetNotificationBannerDismissStateSelector(state);
 
   const notificationsEnabled = areNotificationPermissionsEnabled(state);

@@ -16,28 +16,20 @@ jest.mock("../../reducers/environment", () => ({
   areNotificationPermissionsEnabled: jest.fn()
 }));
 jest.mock("../notificationsBannerDismissed", () => ({
-  shouldResetNotificationBannerDismissStateSelector: jest.fn()
+  shouldResetNotificationBannerDismissStateSelector: jest.fn(),
+  pushNotificationsBannerForceDismissionDateSelector: jest.fn()
 }));
 
 type TestStateProps = {
   hasSeen?: boolean;
-  forceDismissionDate?: Date;
 };
 
-const getTestState = ({
-  hasSeen,
-  forceDismissionDate
-}: TestStateProps): GlobalState => {
+const getTestState = ({ hasSeen }: TestStateProps): GlobalState => {
   const duration = hasSeen !== undefined ? (hasSeen ? 1000 : 1) : undefined;
   return {
     notifications: {
       environment: {
         pushNotificationPermissionsRequestDuration: duration
-      },
-      userBehaviour: {
-        pushNotificationsBanner: {
-          forceDismissionDate
-        }
       }
     }
   } as unknown as GlobalState;
@@ -54,7 +46,7 @@ describe("isPushNotificationsBannerRenderableSelector", () => {
   for (const notificationsEnabled of falseTrueArr) {
     for (const isFullLogin of falseTrueArr) {
       for (const hasUserSeenSystemNotificationsPrompt of falseTrueArr) {
-        for (const forceDismissionDate of [undefined, new Date(Date.now())]) {
+        for (const forceDismissionDate of [undefined, new Date().getTime()]) {
           for (const shouldResetNotificationBannerDismissState of falseTrueArr) {
             const isForceDismissed =
               forceDismissionDate !== undefined &&
@@ -79,6 +71,9 @@ describe("isPushNotificationsBannerRenderableSelector", () => {
                 () => shouldResetNotificationBannerDismissState
               );
               (
+                DISMISSAL_SELECTORS.pushNotificationsBannerForceDismissionDateSelector as unknown as JestMock
+              ).mockImplementation(() => forceDismissionDate);
+              (
                 areNotificationPermissionsEnabled as unknown as JestMock
               ).mockImplementation(() => notificationsEnabled);
               (
@@ -87,7 +82,6 @@ describe("isPushNotificationsBannerRenderableSelector", () => {
               expect(
                 isPushNotificationsBannerRenderableSelector(
                   getTestState({
-                    forceDismissionDate,
                     hasSeen: hasUserSeenSystemNotificationsPrompt
                   })
                 )
