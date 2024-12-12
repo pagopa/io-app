@@ -18,6 +18,16 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { isAndroid, isIos } from "../../../../../utils/platform";
 import { convertUnknownToError } from "../../../../../utils/errors";
+import {
+  CIE_ID_ERROR,
+  CIE_ID_ERROR_MESSAGE,
+  IO_LOGIN_CIE_SOURCE_APP,
+  IO_LOGIN_CIE_URL_SCHEME
+} from "../../../../../utils/cie";
+
+// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
+const defaultUserAgent =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -28,20 +38,23 @@ const cieIdAppError = t.type({
   code: t.string
 });
 
-const isCieIdAppError = (e: unknown): e is CieIdErrorResult =>
-  cieIdAppError.is(e);
-
 const isAuthenticationUrl = (url: string) => {
   const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
   return authUrlRegex.test(url);
 };
 
-// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
-const defaultUserAgent =
-  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
+const isCieIdAppError = (e: unknown): e is CieIdErrorResult =>
+  cieIdAppError.is(e);
 
-const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
-const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
+const extractCieIdErrorFromUrl = (url: string) =>
+  pipe(
+    url,
+    O.fromPredicate(x => x.includes(CIE_ID_ERROR)),
+    O.map(
+      x => x.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID"
+    ),
+    O.toUndefined
+  );
 
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.
@@ -63,20 +76,35 @@ const ItwCieIdLoginScreen = () => {
     supportRequest: false
   });
 
+  const sendErrorToMachine = useCallback(
+    (error: Error) => {
+      machineRef.send({ type: "error", scope: "cieid-login", error });
+    },
+    [machineRef]
+  );
+
   useEffect(() => {
     const urlListenerSubscription = Linking.addEventListener(
       "url",
       ({ url }) => {
-        if (url.startsWith(IO_LOGIN_CIE_URL_SCHEME)) {
-          const [, continueUrl] = url.split(IO_LOGIN_CIE_URL_SCHEME);
-          setAuthUrl(O.some(continueUrl));
-          setCancelVisible(false);
+        if (!url.startsWith(IO_LOGIN_CIE_URL_SCHEME)) {
+          return;
         }
+
+        const [, continueUrl] = url.split(IO_LOGIN_CIE_URL_SCHEME);
+        const cieIdError = extractCieIdErrorFromUrl(continueUrl);
+
+        if (cieIdError) {
+          return sendErrorToMachine(new Error(cieIdError));
+        }
+
+        setAuthUrl(O.some(continueUrl));
+        setCancelVisible(false);
       }
     );
 
     return () => urlListenerSubscription.remove();
-  }, []);
+  }, [sendErrorToMachine]);
 
   const onLoadEnd = useCallback(() => {
     // When CieId app-to-app flow is enabled, stop loading only after we got
@@ -94,24 +122,14 @@ const ItwCieIdLoginScreen = () => {
   const handleAuthenticationFailure = useCallback(
     (error: unknown) => {
       if (isCieIdAppError(error)) {
-        return machineRef.send(
-          error.code === "CIEID_OPERATION_CANCEL"
-            ? { type: "back" }
-            : {
-                type: "error",
-                scope: "cieid-login",
-                error: new Error(error.code)
-              }
-        );
+        return error.code === "CIEID_OPERATION_CANCEL"
+          ? goBack()
+          : sendErrorToMachine(new Error(error.code));
       }
 
-      machineRef.send({
-        type: "error",
-        scope: "cieid-login",
-        error: convertUnknownToError(error)
-      });
+      sendErrorToMachine(convertUnknownToError(error));
     },
-    [machineRef]
+    [sendErrorToMachine, goBack]
   );
 
   const startCieIdAppAuthentication = useCallback(

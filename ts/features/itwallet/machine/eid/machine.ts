@@ -312,6 +312,10 @@ export const itwEidIssuanceMachine = setup({
                 "user-identification-completed": {
                   target: "Completed",
                   actions: "completeUserIdentification"
+                },
+                error: {
+                  actions: "setFailure",
+                  target: "#itwEidIssuanceMachine.Failure"
                 }
               }
             },
