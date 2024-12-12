@@ -4,12 +4,12 @@ import {
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
 import { call, select } from "typed-redux-saga/macro";
-import { fimsDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsPartialAbortUrl } from "../store/selectors";
-import { deallocateFimsResourcesAndNavigateBack } from "./handleFimsResourcesDeallocation";
 import {
-  buildAbsoluteUrl,
+  absoluteRedirectUrl,
   computeAndTrackAuthenticationError,
+  deallocateFimsResourcesAndNavigateBack,
   formatHttpClientResponseForMixPanel
 } from "./sagaUtils";
 
@@ -17,13 +17,13 @@ const abortTimeoutMillisecondsGenerator = () => 8000;
 
 export function* handleFimsAbortOrCancel() {
   yield* call(cancelAllRunningRequests);
-  const oidcProviderUrl = yield* select(fimsDomainSelector);
+  const oidcProviderDomain = yield* select(oidcProviderDomainSelector);
   const abortUrlMaybePartial = yield* select(fimsPartialAbortUrl);
-  if (oidcProviderUrl && abortUrlMaybePartial) {
+  if (oidcProviderDomain && abortUrlMaybePartial) {
     const abortAbsoluteUrl = yield* call(
-      buildAbsoluteUrl,
+      absoluteRedirectUrl,
       abortUrlMaybePartial,
-      oidcProviderUrl
+      oidcProviderDomain
     );
     if (abortAbsoluteUrl) {
       const abortResponse = yield* call(nativeRequest, {

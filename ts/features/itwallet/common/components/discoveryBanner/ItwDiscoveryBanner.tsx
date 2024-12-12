@@ -69,11 +69,11 @@ export const ItwDiscoveryBanner = ({
         viewRef={bannerRef}
         title={
           withTitle
-            ? I18n.t("features.itWallet.discovery.banner.title")
+            ? I18n.t("features.itWallet.discovery.banner.home.title")
             : undefined
         }
-        content={I18n.t("features.itWallet.discovery.banner.content")}
-        action={I18n.t("features.itWallet.discovery.banner.action")}
+        content={I18n.t("features.itWallet.discovery.banner.home.content")}
+        action={I18n.t("features.itWallet.discovery.banner.home.action")}
         pictogramName="itWallet"
         color="turquoise"
         size="big"
