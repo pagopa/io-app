@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-canary.6534](https://github.com/pagopa/io-app/compare/2.79.0-rc.8...2.79.0-canary.6534) (2024-12-12)
+
+
+### Bug Fixes
+
+* [[IOBP-1082](https://pagopa.atlassian.net/browse/IOBP-1082)] Typo in Zendesk assistance json remote path   ([#6546](https://github.com/pagopa/io-app/issues/6546)) ([d385843](https://github.com/pagopa/io-app/commit/d3858438b8a964e4a670945f6fd8290f44ae044f))
+
+
+### Chores
+
+* improvements and fix to canary release workflow ([0661d12](https://github.com/pagopa/io-app/commit/0661d1263c552b0c6622cb455636ada223c3c59c))
+
 ## [2.79.0-rc.8](https://github.com/pagopa/io-app/compare/2.79.0-rc.7...2.79.0-rc.8) (2024-12-12)
 
 
