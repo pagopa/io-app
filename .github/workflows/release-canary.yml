@@ -38,7 +38,7 @@ jobs:
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release create "(Canary) $APP_VERSION" --generate-notes
+          gh release create $APP_VERSION --generate-notes
           echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -112,7 +112,7 @@ jobs:
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload "(Canary) $APP_VERSION" android/app/build/outputs/bundle/release/app-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/release/app-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
@@ -185,7 +185,7 @@ jobs:
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload "(Canary) $APP_VERSION" ios/IO.ipa#IO-canary-iOS.ipa
+          gh release upload $APP_VERSION ios/IO.ipa#IO-canary-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
