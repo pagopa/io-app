@@ -36,8 +36,8 @@ import {
   trackSaveCredentialToWallet
 } from "../../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { ItwIssuanceLoadingScreen } from "../components/ItwIssuanceLoadingScreen";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -51,7 +51,9 @@ export const ItwIssuanceEidPreviewScreen = () => {
       // If there is no eID in the context (None), we can safely assume the issuing phase is still ongoing.
       // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
       // to the Failure state.
-      () => <ItwIssuanceLoadingScreen />,
+      () => (
+        <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+      ),
       eid => <ContentView eid={eid} />
     )
   );

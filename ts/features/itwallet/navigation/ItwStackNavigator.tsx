@@ -36,7 +36,7 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/screens/I
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import ItwSpidIdpLoginScreen from "../identification/screens/spid/ItwSpidIdpLoginScreen";
-import ItwCieIdLoginScreen from "../identification/screens/spid/ItwCieIdLoginScreen";
+import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginScreen";
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
@@ -101,6 +101,10 @@ const InnerNavigator = () => {
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.SPID.LOGIN}
+        component={ItwSpidIdpLoginScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN}
         component={ItwCieIdLoginScreen}
       />
       {/* IDENTIFICATION CIE + PIN */}

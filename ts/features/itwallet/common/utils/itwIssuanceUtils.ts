@@ -9,8 +9,7 @@ import uuid from "react-native-uuid";
 import {
   itwPidProviderBaseUrl,
   itWalletIssuanceRedirectUri,
-  itwIdpHintTest,
-  itWalletIssuanceRedirectUriCie
+  itwIdpHintTest
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
 import { StoredCredential } from "./itwTypesUtils";
@@ -26,21 +25,7 @@ type AccessToken = Awaited<
 
 type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 
-// This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
-const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 const CREDENTIAL_TYPE = "PersonIdentificationData";
-
-// Different scheme to avoid conflicts with the scheme handled by io-react-native-login-utils's activity
-const getRedirectUri = (identificationMode: IdentificationContext["mode"]) => {
-  switch (identificationMode) {
-    case "cieId":
-      return itWalletIssuanceRedirectUriCie;
-    case "ciePin":
-      return CIE_L3_REDIRECT_URI;
-    default:
-      return itWalletIssuanceRedirectUri;
-  }
-};
 
 type StartAuthFlowParams = {
   walletAttestation: string;
@@ -64,9 +49,7 @@ const startAuthFlow = async ({
     credentialType: CREDENTIAL_TYPE
   });
 
-  const idpHint = getIdpHint({ mode: "cieId" });
-
-  const redirectUri = getRedirectUri(identification.mode);
+  const idpHint = getIdpHint(identification);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -82,7 +65,7 @@ const startAuthFlow = async ({
       credentialType,
       {
         walletInstanceAttestation: walletAttestation,
-        redirectUri,
+        redirectUri: itWalletIssuanceRedirectUri,
         wiaCryptoContext
       }
     );
@@ -101,7 +84,7 @@ const startAuthFlow = async ({
     clientId,
     codeVerifier,
     credentialDefinition,
-    redirectUri
+    redirectUri: itWalletIssuanceRedirectUri
   };
 };
 

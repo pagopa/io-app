@@ -33,6 +33,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToIdentificationModeScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
     navigateToSpidLoginScreen: notImplemented,
+    navigateToCieIdLoginScreen: notImplemented,
     navigateToEidPreviewScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -271,7 +272,7 @@ export const itwEidIssuanceMachine = setup({
             StartingCieIDAuthFlow: {
               entry: [
                 assign(() => ({ authenticationContext: undefined })),
-                { type: "navigateToEidPreviewScreen" }
+                { type: "navigateToCieIdLoginScreen" }
               ],
               invoke: {
                 src: "startAuthFlow",
@@ -283,7 +284,7 @@ export const itwEidIssuanceMachine = setup({
                   actions: assign(({ event }) => ({
                     authenticationContext: event.output
                   })),
-                  target: "CieIDBuildAuthRedirectUrl"
+                  target: "CompletingCieIDAuthFlow"
                 },
                 onError: [
                   {
@@ -303,7 +304,29 @@ export const itwEidIssuanceMachine = setup({
                 }
               }
             },
-            CieIDBuildAuthRedirectUrl: {
+            CompletingCieIDAuthFlow: {
+              on: {
+                "user-identification-completed": {
+                  target: "Completed",
+                  actions: assign(({ context, event }) => {
+                    assert(
+                      context.authenticationContext,
+                      "authenticationContext must be defined when completing auth flow"
+                    );
+                    return {
+                      authenticationContext: {
+                        ...context.authenticationContext,
+                        callbackUrl: event.authRedirectUrl
+                      }
+                    };
+                  })
+                },
+                back: {
+                  target: "#itwEidIssuanceMachine.UserIdentification"
+                }
+              }
+            },
+            /* CieIDBuildAuthRedirectUrl: {
               invoke: {
                 src: "getAuthRedirectUrl",
                 input: ({ context }) => ({
@@ -344,7 +367,7 @@ export const itwEidIssuanceMachine = setup({
                     "#itwEidIssuanceMachine.UserIdentification.ModeSelection"
                 }
               }
-            },
+            } */
             Completed: {
               type: "final"
             }
@@ -403,8 +426,9 @@ export const itwEidIssuanceMachine = setup({
             },
             SpidLoginIdentificationCompleted: {
               on: {
-                "spid-identification-completed": {
+                "user-identification-completed": {
                   target: "Completed",
+                  // eslint-disable-next-line sonarjs/no-identical-functions
                   actions: assign(({ context, event }) => {
                     assert(
                       context.authenticationContext,
@@ -511,8 +535,9 @@ export const itwEidIssuanceMachine = setup({
               description:
                 "Read the CIE card and get back a url to continue the PID issuing flow. This state also handles errors when reading the card.",
               on: {
-                "cie-identification-completed": {
+                "user-identification-completed": {
                   target: "Completed",
+                  // eslint-disable-next-line sonarjs/no-identical-functions
                   actions: assign(({ context, event }) => {
                     assert(
                       context.authenticationContext,
@@ -521,7 +546,7 @@ export const itwEidIssuanceMachine = setup({
                     return {
                       authenticationContext: {
                         ...context.authenticationContext,
-                        callbackUrl: event.url
+                        callbackUrl: event.authRedirectUrl
                       }
                     };
                   })
