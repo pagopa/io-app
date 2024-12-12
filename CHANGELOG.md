@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-canary.6532](https://github.com/pagopa/io-app/compare/2.79.0-rc.8...2.79.0-canary.6532) (2024-12-12)
+
+
+### Chores
+
+* improvements and fix to canary release workflow ([0661d12](https://github.com/pagopa/io-app/commit/0661d1263c552b0c6622cb455636ada223c3c59c))
+
 ## [2.79.0-rc.8](https://github.com/pagopa/io-app/compare/2.79.0-rc.7...2.79.0-rc.8) (2024-12-12)
 
 
