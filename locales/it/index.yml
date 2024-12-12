@@ -336,10 +336,10 @@ profile:
       description: I tuoi diritti e obblighi nell’uso di IO
       subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
+      errorMessage: Non riusciamo a recuperare lo stato delle tue richieste. Riprova.
       removeAccount:
         title: Elimina il tuo profilo
         description: Elimina il tuo profilo e i tuoi dati personali
-        error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
           activeBonusTitle: Elimina il tuo profilo
           activeBonusDescription: "Sembra che tu abbia aderito ad alcune iniziative presenti su IO. Se elimini il tuo profilo, l’iscrizione a eventuali iniziative a cui hai aderito non verrà cancellata\n\nPer gestirle, vai alla sezione Portafoglio, altrimenti scegli “Elimina”"
@@ -3437,6 +3437,9 @@ features:
         bodyBold: Documenti su IO
         primaryAction: Inizia
         secondaryAction: Non ora
+      credentialNotFound:
+        title: "Aggiungi il documento al Portafoglio"
+        subtitle: "Per usare i documenti su IO, prima aggiungili al Portafoglio. È facile e veloce."
     unsupportedDevice:
       text: Starting from 02.07.2024 your device may no longer be compatible with IO.
       moreInfo: More info

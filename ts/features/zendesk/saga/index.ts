@@ -11,7 +11,8 @@ import {
   zendeskStartPolling,
   zendeskSupportCompleted,
   zendeskSupportStart,
-  getZendeskToken
+  getZendeskToken,
+  getZendeskPaymentConfig
 } from "../store/actions";
 import { ContentClient } from "../../../api/content";
 import { dismissSupport } from "../../../utils/supportAssistance";
@@ -33,6 +34,7 @@ import { isDevEnv } from "./../../../utils/environment";
 import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
 import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
+import { handleGetZendeskPaymentConfig } from "./networking/handleGetZendeskPaymentConfig";
 
 const ZENDESK_GET_SESSION_POLLING_INTERVAL = ((isDevEnv ? 10 : 60) *
   1000) as Millisecond;
@@ -87,6 +89,12 @@ export function* watchZendeskSupportSaga() {
     getZendeskConfig.request,
     handleGetZendeskConfig,
     contentClient.getZendeskConfig
+  );
+
+  yield* takeLatest(
+    getZendeskPaymentConfig.request,
+    handleGetZendeskPaymentConfig,
+    contentClient.getZendeskPaymentConfig
   );
 
   yield* takeLatest(zendeskRequestTicketNumber.request, handleHasOpenedTickets);
