@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.8](https://github.com/pagopa/io-app/compare/2.79.0-rc.7...2.79.0-rc.8) (2024-12-12)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1917](https://pagopa.atlassian.net/browse/SIW-1917)] Fix crash in credentials onboarding screen ([#6544](https://github.com/pagopa/io-app/issues/6544)) ([5294897](https://github.com/pagopa/io-app/commit/5294897e2431693da274e2b31c44aede704c7b39))
+* [[IOPID-2169](https://pagopa.atlassian.net/browse/IOPID-2169)] Fix toast messages behavior in the `PrivacyMainScreen` ([#6526](https://github.com/pagopa/io-app/issues/6526)) ([9232798](https://github.com/pagopa/io-app/commit/92327983094770a99917cb47523e5d1953cbe00e))
+
 ## [2.79.0-rc.7](https://github.com/pagopa/io-app/compare/2.79.0-rc.6...2.79.0-rc.7) (2024-12-11)
 
 
