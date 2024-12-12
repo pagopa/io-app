@@ -40,6 +40,8 @@ jobs:
           APP_VERSION=$(node -p -e "require('./package.json').version")
           gh release create "(Canary) $APP_VERSION" --generate-notes
           echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
     needs: prepare-canary-release
     environment: canary
