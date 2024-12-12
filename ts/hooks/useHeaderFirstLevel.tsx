@@ -1,24 +1,25 @@
-import * as React from "react";
-import { ComponentProps, useLayoutEffect } from "react";
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { useLayoutEffect } from "react";
 import HeaderFirstLevel from "../components/ui/HeaderFirstLevel";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import { useHeaderFirstLevelActionPropHelp } from "./useHeaderFirstLevelActionPropHelp";
-import { useStatusAlertProps } from "./useStatusAlertProps";
 import { useHeaderFirstLevelActionPropSettings } from "./useHeaderFirstLevelActionPropSettings";
+import { useStatusAlertProps } from "./useStatusAlertProps";
 
 type useHeaderFirstLevelProps = {
   currentRoute: keyof MainTabParamsList;
   headerProps: HeaderFirstLevelHookProps;
 };
 
-/* These props are already managed by the hook,
-except for `secondAction`, which has a default behaviour
-but can be overridden (as in `ServicesHomeScreen') */
+/* `firstAction` and `ignoreSafeAreaMargin` are
+already managed by the hook, while `secondAction`
+has a default behaviour but can be overridden
+(as in `ServicesHomeScreen') */
 type HeaderFirstLevelHookProps = Omit<
-  ComponentProps<typeof HeaderFirstLevel>,
-  "firstAction" | "ignoreSafeAreaMargin" | "secondAction"
+  HeaderFirstLevel,
+  "firstAction" | "secondAction" | "ignoreSafeAreaMargin"
 > & {
   secondAction?: HeaderActionProps;
 };

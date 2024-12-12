@@ -91,7 +91,7 @@ export const MessagesHomeScreen = () => {
     headerProps: {
       title: I18n.t("messages.contentTitle"),
       secondAction: settingsActionInMessageSection,
-      optionalAction: searchMessageAction
+      thirdAction: searchMessageAction
     }
   });
 

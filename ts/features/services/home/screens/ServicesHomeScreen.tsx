@@ -232,7 +232,7 @@ export const ServicesHomeScreen = () => {
       title: I18n.t("services.title"),
       animatedFlatListRef: scrollViewContentRef,
       secondAction: actionSettings,
-      optionalAction: actionSearch
+      thirdAction: actionSearch
     }
   });
 

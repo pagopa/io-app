@@ -26,11 +26,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type HeaderFirstLevel = WithTestID<{
+export type HeaderFirstLevel = WithTestID<{
   title: string;
   firstAction: HeaderActionProps;
   secondAction: HeaderActionProps;
-  optionalAction?: HeaderActionProps;
+  thirdAction?: HeaderActionProps;
   animatedRef?: AnimatedRef<Animated.ScrollView>;
   animatedFlatListRef?: AnimatedRef<Animated.FlatList<any>>;
   ignoreSafeAreaMargin?: boolean;
@@ -60,7 +60,7 @@ export const HeaderFirstLevel = ({
   testID,
   firstAction,
   secondAction,
-  optionalAction,
+  thirdAction,
   ignoreSafeAreaMargin = false,
   animatedRef,
   animatedFlatListRef
@@ -133,9 +133,7 @@ export const HeaderFirstLevel = ({
           </H3>
         </View>
         <HStack space={16} style={{ flexShrink: 0 }}>
-          {optionalAction && (
-            <IconButton {...optionalAction} color={"primary"} />
-          )}
+          {thirdAction && <IconButton {...thirdAction} color={"primary"} />}
           <IconButton {...secondAction} color={"primary"} />
           <IconButton {...firstAction} color={"primary"} />
         </HStack>
