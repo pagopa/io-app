@@ -154,7 +154,7 @@ android {
         }
         create("canary") {
             applicationIdSuffix = ".canary" // Suffix per identificare la build Canary
-            versionNameSuffix = "-canary"
+            versionNameSuffix = ""
         }
     }
     

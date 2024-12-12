@@ -32,7 +32,11 @@ const replaceCanaryVersion = () => {
   const updatedGradleContents = contents.replace(
     versionCodeRegex,
     (substr, ...args) =>
-      replaceVersionCode(substr, parseInt(process.argv[2], 10), ...args)
+      replaceVersionCode(
+        substr,
+        `20000${parseInt(process.argv[2], 10)}`,
+        ...args
+      )
   );
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
   fs.writeFileSync(gradlePath, updatedGradleContents);
