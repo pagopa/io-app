@@ -4,11 +4,11 @@ on:
   # issue_comment:                                     
   #   types: [created]
 jobs:
-  run-static-checks:
-    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
+  #   uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
-    needs: run-static-checks
+    # needs: run-static-checks
     environment: canary
     runs-on: ubuntu-latest
     outputs:
