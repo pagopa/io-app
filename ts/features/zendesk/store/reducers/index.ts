@@ -20,10 +20,12 @@ import {
   zendeskStartPolling,
   zendeskStopPolling,
   zendeskSupportStart,
-  getZendeskToken
+  getZendeskToken,
+  getZendeskPaymentConfig
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
+import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -33,6 +35,11 @@ type ZendeskValue = {
   };
 };
 export type ZendeskConfig = RemoteValue<ZendeskValue, NetworkError>;
+
+export type ZendeskSubcategoriesErrorsConfig = RemoteValue<
+  ZendeskSubcategoriesErrors,
+  NetworkError
+>;
 
 export enum ZendeskTokenStatusEnum {
   SUCCESS = "success",
@@ -47,11 +54,13 @@ export type ZendeskState = {
   ticketNumber: pot.Pot<number, Error>;
   getSessionPollingRunning?: boolean;
   getZendeskTokenStatus?: ZendeskTokenStatusEnum | "401";
+  zendeskSubcategoriesErrorMap: ZendeskSubcategoriesErrorsConfig;
 };
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: pot.none
+  ticketNumber: pot.none,
+  zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
 const reducer = (
@@ -135,6 +144,21 @@ const reducer = (
         ...state,
         ticketNumber: pot.toError(state.ticketNumber, action.payload)
       };
+    case getType(getZendeskPaymentConfig.request):
+      return {
+        ...state,
+        zendeskSubcategoriesErrorMap: remoteLoading
+      };
+    case getType(getZendeskPaymentConfig.success):
+      return {
+        ...state,
+        zendeskSubcategoriesErrorMap: remoteReady(action.payload)
+      };
+    case getType(getZendeskPaymentConfig.failure):
+      return {
+        ...state,
+        zendeskSubcategoriesErrorMap: remoteError(action.payload)
+      };
   }
   return state;
 };
@@ -166,6 +190,14 @@ export const zendeskSelectedSubcategorySelector = createSelector(
 export const zendeskTicketNumberSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.ticketNumber],
   (ticketNumber: pot.Pot<number, Error>): pot.Pot<number, Error> => ticketNumber
+);
+
+export const zendeskMapSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.assistanceTools.zendesk.zendeskSubcategoriesErrorMap
+  ],
+  (zendeskMap): ZendeskSubcategoriesErrorsConfig => zendeskMap
 );
 
 export default reducer;

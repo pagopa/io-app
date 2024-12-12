@@ -23,7 +23,7 @@ import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/action
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { selectWalletCards } from "../store/selectors";
+import { isWalletEmptySelector } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -33,12 +33,12 @@ export type WalletHomeNavigationParams = Readonly<{
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
+  const dispatch = useIODispatch();
+  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
+
   useFocusEffect(() => {
     trackOpenWalletScreen();
   });
-
-  const dispatch = useIODispatch();
-  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
   useOnFirstRender(() => {
     fetchWalletSectionData();
@@ -70,10 +70,15 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 };
 
-const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
+/**
+ * A wrapper which renders a scrollview with an optional CTA based on the wallet state:
+ * - If the wallet is empty, it renders the empty state
+ * - If the wallet is not empty, it renders the scrollview with the "add to wallet" button
+ */
+const WalletScrollView = ({ children }: React.PropsWithChildren) => {
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const navigation = useIONavigation();
-  const cards = useIOSelector(selectWalletCards);
+  const isWalletEmpty = useIOSelector(isWalletEmptySelector);
 
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();
@@ -89,7 +94,7 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
     false
   );
 
-  if (cards.length === 0) {
+  if (isWalletEmpty) {
     return (
       <Animated.ScrollView
         ref={animatedScrollViewRef}

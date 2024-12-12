@@ -11,7 +11,7 @@ import {
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useEffect } from "react";
 import { Linking } from "react-native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import I18n from "../../../../i18n";
@@ -24,30 +24,34 @@ import {
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
+  defaultZendeskPaymentCategory,
   resetCustomFields,
   zendeskCategoryId,
-  zendeskPaymentCategory,
   zendeskPaymentFailure,
   zendeskPaymentNav,
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../../utils/supportAssistance";
 import {
+  getZendeskPaymentConfig,
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
+import { zendeskMapSelector } from "../../../zendesk/store/reducers";
+import { formatPaymentNoticeNumber } from "../../common/utils";
 import { selectOngoingPaymentHistory } from "../../history/store/selectors";
+import {
+  WalletOnboardingOutcome,
+  getWalletOnboardingOutcomeEnumByValue
+} from "../../onboarding/types/OnboardingOutcomeEnum";
 import { walletPaymentRptIdSelector } from "../store/selectors";
 import {
   WalletPaymentOutcome,
   getWalletPaymentOutcomeEnumByValue
 } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { formatPaymentNoticeNumber } from "../../common/utils";
-import {
-  getWalletOnboardingOutcomeEnumByValue,
-  WalletOnboardingOutcome
-} from "../../onboarding/types/OnboardingOutcomeEnum";
+import { getSubCategoryFromFaultCode } from "../utils";
+import { isReady } from "../../../../common/model/RemoteValue";
 
 type PaymentFailureSupportModalParams = {
   failure?: WalletPaymentFailure;
@@ -71,7 +75,13 @@ const usePaymentFailureSupportModal = ({
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const rptId = useIOSelector(walletPaymentRptIdSelector);
   const paymentHistory = useIOSelector(selectOngoingPaymentHistory);
+  const zendeskPaymentCategory = useIOSelector(zendeskMapSelector);
+
   const dispatch = useIODispatch();
+
+  useEffect(() => {
+    dispatch(getZendeskPaymentConfig.request());
+  }, [dispatch]);
 
   const faultCodeDetail =
     failure?.faultCodeDetail ||
@@ -82,8 +92,25 @@ const usePaymentFailureSupportModal = ({
     "";
 
   const zendeskAssistanceLogAndStart = () => {
+    if (!isReady(zendeskPaymentCategory)) {
+      return;
+    }
+    const { payments } = zendeskPaymentCategory.value;
+    const subCategory = getSubCategoryFromFaultCode(payments, faultCodeDetail);
+
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+    // attach the main zendesk category to the ticket
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskPaymentCategory.value
+    );
+
+    if (subCategory) {
+      // if a subcategory is found, we attach its id and value to the ticket
+      const { value, zendeskSubCategoryId } = subCategory;
+      addTicketCustomField(zendeskSubCategoryId, value);
+    }
+
     addTicketCustomField(zendeskPaymentOrgFiscalCode, organizationFiscalCode);
     addTicketCustomField(zendeskPaymentNav, paymentNoticeNumber);
     addTicketCustomField(zendeskPaymentFailure, faultCodeDetail);
@@ -100,7 +127,7 @@ const usePaymentFailureSupportModal = ({
         assistanceForFci: false
       })
     );
-    dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
+    dispatch(zendeskSelectedCategory(defaultZendeskPaymentCategory));
   };
 
   const handleAskAssistance = () => {
