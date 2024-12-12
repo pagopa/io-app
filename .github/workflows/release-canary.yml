@@ -24,11 +24,13 @@ jobs:
         run: |
           UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
           node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
-          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios
+          mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
+          mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add .; git commit -m "Replace Matchfile for canary" --no-verify;
           yarn release-canary
       - id: push-tags
         run: |
