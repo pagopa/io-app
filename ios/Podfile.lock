@@ -76,9 +76,6 @@ PODS:
   - hermes-engine (0.72.14):
     - hermes-engine/Pre-built (= 0.72.14)
   - hermes-engine/Pre-built (0.72.14)
-  - io-react-native-secure-storage (0.1.1):
-    - RCT-Folly (= 2021.07.22.00)
-    - React-Core
   - jail-monkey (2.8.0):
     - React-Core
   - JOSESwift (2.4.0)
@@ -103,7 +100,7 @@ PODS:
     - Alamofire (~> 5.9.1)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - pagopa-io-react-native-integrity (0.3.0):
+  - pagopa-io-react-native-integrity (0.3.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - SwiftCBOR
@@ -112,6 +109,9 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - pagopa-io-react-native-login-utils (1.0.8):
+    - React-Core
+  - pagopa-io-react-native-secure-storage (0.2.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - pagopa-react-native-zendesk (0.3.29):
     - RCT-Folly (= 2021.07.22.00)
@@ -708,7 +708,6 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (= 0.182.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - io-react-native-secure-storage (from `../node_modules/io-react-native-secure-storage`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
@@ -720,6 +719,7 @@ DEPENDENCIES:
   - "pagopa-io-react-native-integrity (from `../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
+  - "pagopa-io-react-native-secure-storage (from `../node_modules/@pagopa/io-react-native-secure-storage`)"
   - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -850,8 +850,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
-  io-react-native-secure-storage:
-    :path: "../node_modules/io-react-native-secure-storage"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
   lottie-react-native:
@@ -870,6 +868,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-jwt"
   pagopa-io-react-native-login-utils:
     :path: "../node_modules/@pagopa/io-react-native-login-utils"
+  pagopa-io-react-native-secure-storage:
+    :path: "../node_modules/@pagopa/io-react-native-secure-storage"
   pagopa-react-native-zendesk:
     :path: "../node_modules/@pagopa/io-react-native-zendesk"
   RCT-Folly:
@@ -1044,7 +1044,6 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: b213bace5f31766ad1434d2d9b2cbf04cf92a2b6
-  io-react-native-secure-storage: 5e6f84d27ead13de84f2014ecc767bffdc3e97e9
   jail-monkey: a71b35d482a70ecba844a90f002994012cf12a5d
   JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
@@ -1056,9 +1055,10 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: d58f2bf3581fe20e10de735b376652a9221f0493
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: cbdfb83c92432efb0de22b7c3c85cffa391870f8
-  pagopa-io-react-native-integrity: ca77804cefb1cd75d04053652472bcb938ce4b18
+  pagopa-io-react-native-integrity: f7445d78f6239fddd4b22baa8c30a08d55893930
   pagopa-io-react-native-jwt: 27f6cb1ea58ea1df6778c67f23a932b90dc7e9a2
   pagopa-io-react-native-login-utils: 090a98354cdbbf176059a1aa4163120468ee4356
+  pagopa-io-react-native-secure-storage: 5cd527b1b140a4fe3eae3b9c9b6db35780bc81d1
   pagopa-react-native-zendesk: 60a26f8a8072234789c34bb7c8a769c156eb57dc
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 264adaca1d8b1a9c078761891898d4142df05313

@@ -1,6 +1,6 @@
 import {
-  TransitionPresets,
-  createStackNavigator
+  createStackNavigator,
+  TransitionPresets
 } from "@react-navigation/stack";
 import * as React from "react";
 import { Platform } from "react-native";

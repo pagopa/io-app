@@ -35,10 +35,9 @@ const reducer = (
     case getType(walletAddCards):
       return {
         ...state,
-        items: action.payload
-          .filter(({ type }) => type !== "placeholder")
-          .reduce(cardPlaceholderReducerFn, state.items)
+        items: action.payload.reduce(cardPlaceholderReducerFn, state.items)
       };
+
     case getType(walletRemoveCards):
       return {
         ...state,
@@ -52,9 +51,7 @@ const reducer = (
     case getType(walletResetPlaceholders):
       return {
         ...state,
-        items: action.payload
-          .filter(({ type }) => type !== "placeholder")
-          .reduce(cardPlaceholderReducerFn, {})
+        items: action.payload.reduce(cardPlaceholderReducerFn, {})
       };
   }
   return state;
@@ -62,11 +59,18 @@ const reducer = (
 
 const cardPlaceholderReducerFn = (
   acc: WalletPlaceholders,
-  { category, key }: WalletCard
-) => ({
-  ...acc,
-  [key]: category
-});
+  { category, key, type, hidden }: WalletCard
+) => {
+  // Hidden cards and placeholder cards are not added to the placeholders
+  if (hidden || type === "placeholder") {
+    return acc;
+  }
+
+  return {
+    ...acc,
+    [key]: category
+  };
+};
 
 const CURRENT_REDUX_WALLET_PLACEHOLDERS_STORE_VERSION = -1;
 
