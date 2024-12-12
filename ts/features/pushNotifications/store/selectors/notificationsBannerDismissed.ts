@@ -30,7 +30,7 @@ export const shouldResetNotificationBannerDismissStateSelector = (
 
   const newUnreadCount = messagesList.filter(
     (message: UIMessage) =>
-      getTime(message.createdAt) > forceDismissDate && !message.isRead
+      message.createdAt.getTime() > forceDismissDate && !message.isRead
   ).length;
 
   return newUnreadCount >= NEW_MESSAGES_COUNT_TO_RESET_FORCE_DISMISS;
