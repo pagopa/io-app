@@ -33,6 +33,8 @@ import {
 import { WalletCardCategoryFilter } from "../types";
 import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
 import { cgnDetailSelector } from "../../bonus/cgn/store/reducers/details";
+import { itwWalletInstanceStatusSelector } from "../../itwallet/walletInstance/store/reducers";
+import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -46,6 +48,9 @@ const WalletCardsContainer = () => {
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
   const paymentMethodsStatus = useIOSelector(paymentsWalletUserMethodsSelector);
   const cgnStatus = useIOSelector(cgnDetailSelector);
+  const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
+
+  useItwWalletInstanceRevocationAlert(walletInstanceStatus);
 
   if (isLoading && cards.length === 0) {
     return (

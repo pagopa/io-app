@@ -8,6 +8,9 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
   "ITW_WALLET_INSTANCE_ATTESTATION_STORE"
 )<string>();
 
+/**
+ * This action update the Wallet Instance Status
+ */
 export const itwUpdateWalletInstanceStatus = createStandardAction(
   "ITW_WALLET_INSTANCE__STATUS_UPDATE"
 )<WalletInstanceData>();

@@ -25,6 +25,8 @@ exports[`itWalletReducer should match snapshot 1`] = `
   "preferences": {},
   "walletInstance": {
     "attestation": undefined,
+    "isRevoked": false,
+    "revocationReason": undefined,
   },
 }
 `;

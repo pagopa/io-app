@@ -259,3 +259,8 @@ export const itwDocumentsOnIOUrl: string = pipe(
   t.string.decode,
   E.getOrElse(() => "https://io.italia.it/documenti-su-io")
 );
+export const itwMinIntegrityReqURL: string = pipe(
+  Config.ITW_MINIMUM_INTEGRITY_REQUIREMENTS,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it/documenti-su-io/faq/#n1_12")
+);

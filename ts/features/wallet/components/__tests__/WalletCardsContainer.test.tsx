@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { Alert } from "react-native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../definitions/content/Config";
 import ROUTES from "../../../../navigation/routes";
@@ -16,6 +17,8 @@ import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
 import { WalletCard } from "../../types";
 import { WalletCardsContainer } from "../WalletCardsContainer";
+import { RevocationReason } from "../../../itwallet/walletInstance/store/reducers";
+import I18n from "../../../../i18n";
 
 type RenderOptions = {
   cards?: WalletCardsState;
@@ -23,8 +26,11 @@ type RenderOptions = {
   isItwEnabled?: boolean;
   isItwValid?: boolean;
   isWalletEmpty?: boolean;
+  isRevoked?: boolean;
+  revocationReason?: RevocationReason;
 };
 
+jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
   Layout: {
@@ -163,6 +169,91 @@ describe("WalletCardsContainer", () => {
     expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
   });
 
+  it("should not show alert if not revoked", () => {
+    renderComponent({
+      isRevoked: false
+    });
+
+    expect(Alert.alert).not.toHaveBeenCalled();
+  });
+
+  it("should show alert for NEW_WALLET_INSTANCE_CREATED", () => {
+    renderComponent({
+      isRevoked: true,
+      revocationReason: RevocationReason.NEW_WALLET_INSTANCE_CREATED
+    });
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButton"
+          )
+        },
+        {
+          text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+          onPress: expect.any(Function)
+        }
+      ]
+    );
+  });
+
+  it("should show alert for CERTIFICATE_REVOKED_BY_ISSUER", () => {
+    renderComponent({
+      isRevoked: true,
+      revocationReason: RevocationReason.CERTIFICATE_REVOKED_BY_ISSUER
+    });
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButton"
+          )
+        },
+        {
+          text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+          onPress: expect.any(Function)
+        }
+      ]
+    );
+  });
+
+  it("should show alert for REVOKED_BY_USER", () => {
+    renderComponent({
+      isRevoked: true,
+      revocationReason: RevocationReason.REVOKED_BY_USER
+    });
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByUser.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByUser.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButtonAlt"
+          )
+        }
+      ]
+    );
+  });
+
   test.each([
     { isItwValid: false },
     { isItwValid: true, isWalletEmpty: false }
@@ -183,7 +274,9 @@ const renderComponent = ({
   isItwEnabled = true,
   isItwValid = true,
   isLoading = false,
-  isWalletEmpty = true
+  isWalletEmpty = true,
+  isRevoked = false,
+  revocationReason = undefined
 }: RenderOptions) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -206,7 +299,11 @@ const renderComponent = ({
                 ? []
                 : [O.some({ parsedCredential: {} })]
             },
-            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
+            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID,
+            walletInstance: {
+              isRevoked,
+              revocationReason
+            }
           })
         }
       },
