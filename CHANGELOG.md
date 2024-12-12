@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-canary.6537](https://github.com/pagopa/io-app/compare/2.79.0-rc.9...2.79.0-canary.6537) (2024-12-12)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-356](https://pagopa.atlassian.net/browse/IOAPPX-356)] Add divider to first level sections when the user scrolls + Add `useHeaderFirstLevel` hook ([#6054](https://github.com/pagopa/io-app/issues/6054)) ([77dfc48](https://github.com/pagopa/io-app/commit/77dfc48da20c8276f9a2509f58d377b57cdbe3a8))
+* improvements and fix to canary release workflow ([0661d12](https://github.com/pagopa/io-app/commit/0661d1263c552b0c6622cb455636ada223c3c59c))
+
 ## [2.79.0-rc.9](https://github.com/pagopa/io-app/compare/2.79.0-rc.8...2.79.0-rc.9) (2024-12-12)
 
 
