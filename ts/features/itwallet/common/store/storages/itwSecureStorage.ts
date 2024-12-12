@@ -1,4 +1,4 @@
-import * as SecureStorage from "io-react-native-secure-storage";
+import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
 
 export default function itwCreateSecureStorage(): Storage {

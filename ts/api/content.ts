@@ -14,6 +14,7 @@ import { Municipality as MunicipalityMedadata } from "../../definitions/content/
 import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { VersionInfo } from "../../definitions/content/VersionInfo";
 import { Zendesk } from "../../definitions/content/Zendesk";
+import { ZendeskSubcategoriesErrors } from "../../definitions/content/ZendeskSubcategoriesErrors";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { contentRepoUrl } from "../config";
@@ -140,6 +141,22 @@ const getZendeskConfigT: GetZendeskConfigT = {
   headers: () => ({}),
   response_decoder: basicResponseDecoder(Zendesk)
 };
+
+type GetZendeskPaymentConfigT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<ZendeskSubcategoriesErrors>
+>;
+
+const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
+  method: "get",
+  url: () => "/assistanceTools/payments/zendeskOutcomeMapping.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(ZendeskSubcategoriesErrors)
+};
+
 /**
  * A client for the static content
  */
@@ -157,6 +174,10 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),
     getVersionInfo: createFetchRequestForApi(getVersionInfoT, options),
     getIdps: createFetchRequestForApi(getIdpsT, options),
-    getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options)
+    getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options),
+    getZendeskPaymentConfig: createFetchRequestForApi(
+      getZendeskPaymentConfig,
+      options
+    )
   };
 }

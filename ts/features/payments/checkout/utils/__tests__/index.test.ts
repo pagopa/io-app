@@ -1,10 +1,20 @@
 import {
   getPaymentPhaseFromStep,
   getPspFlagType,
+  getSubCategoryFromFaultCode,
   isDueDateValid,
   trimAndLimitValue
 } from "..";
+import { ZendeskSubCategoriesMap } from "../../../../../../definitions/content/ZendeskSubCategoriesMap";
 import { WalletPaymentStepEnum } from "../../types";
+
+const mockCategories: ZendeskSubCategoriesMap = {
+  subcategories: {
+    "12345": ["subcategory1"],
+    "67890": ["subcategory2"]
+  },
+  subcategoryId: "313"
+};
 
 describe("trimAndLimitValue", () => {
   it("should remove all spaces from the string", () => {
@@ -134,5 +144,23 @@ describe("getPaymentPhaseFromStep", () => {
   it("should return 'verifica' for any other step", () => {
     const result = getPaymentPhaseFromStep(WalletPaymentStepEnum.NONE);
     expect(result).toBe("verifica");
+  });
+});
+
+describe("getSubCategoryFromFaultCode", () => {
+  it("should return the subcategory if the fault code is in the map", () => {
+    const result = getSubCategoryFromFaultCode(mockCategories, "subcategory1");
+    expect(result).toStrictEqual({
+      value: "12345",
+      zendeskSubCategoryId: "313"
+    });
+  });
+
+  it("should return nullable if the fault code is not in the map or is empty string", () => {
+    const result = getSubCategoryFromFaultCode(mockCategories, "subcategory3");
+    expect(result).toStrictEqual(null);
+
+    const emptyResult = getSubCategoryFromFaultCode(mockCategories, "");
+    expect(emptyResult).toStrictEqual(null);
   });
 });
