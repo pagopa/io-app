@@ -1,11 +1,28 @@
 import { IOStyles } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import * as React from "react";
+import { useCallback, useEffect } from "react";
+import Animated, {
+  LinearTransition,
+  useAnimatedRef
+} from "react-native-reanimated";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../components/ui/IOScrollView";
+import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
+import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
+import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
+import * as analytics from "../analytics";
+import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
 import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
 import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
 import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
@@ -15,17 +32,6 @@ import {
   isPaymentsSectionLoadingFirstTimeSelector,
   isPaymentsSectionLoadingSelector
 } from "../store/selectors";
-import { PaymentsAlertStatus } from "../components/PaymentsAlertStatus";
-import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
-import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
-import {
-  IOScrollView,
-  IOScrollViewActions
-} from "../../../../components/ui/IOScrollView";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
-import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
 
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -33,6 +39,7 @@ const PaymentsHomeScreen = () => {
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
+
   const isLoadingFirstTime = useIOSelector(
     isPaymentsSectionLoadingFirstTimeSelector
   );
@@ -62,7 +69,21 @@ const PaymentsHomeScreen = () => {
     });
   };
 
-  React.useEffect(() => {
+  /* CODE RELATED TO THE HEADER -- START */
+
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  useHeaderFirstLevel({
+    currentRoute: ROUTES.PAYMENTS_HOME,
+    headerProps: {
+      title: I18n.t("features.payments.title"),
+      animatedRef: scrollViewContentRef
+    }
+  });
+
+  /* CODE RELATED TO THE HEADER -- END */
+
+  useEffect(() => {
     if (!isLoading) {
       setIsRefreshing(false);
       analytics.trackPaymentsHome({
@@ -82,7 +103,7 @@ const PaymentsHomeScreen = () => {
     dispatch(getPaymentsLatestReceiptAction.request());
   };
 
-  const AnimatedPaymentsHomeScreenContent = React.useCallback(
+  const AnimatedPaymentsHomeScreenContent = useCallback(
     () => (
       <Animated.View
         style={IOStyles.flex}
@@ -97,6 +118,7 @@ const PaymentsHomeScreen = () => {
   if (isTransactionsEmpty) {
     return (
       <IOScrollView
+        animatedRef={scrollViewContentRef}
         contentContainerStyle={{
           flexGrow: 1
         }}
@@ -121,6 +143,8 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
+      excludeSafeAreaMargins={true}
+      animatedRef={scrollViewContentRef}
       refreshControlProps={{
         refreshing: isRefreshing,
         onRefresh: handleRefreshPaymentsHome
@@ -133,7 +157,6 @@ const PaymentsHomeScreen = () => {
             }
           : undefined
       }
-      excludeSafeAreaMargins={true}
     >
       <PaymentsAlertStatus />
       <AnimatedPaymentsHomeScreenContent />
