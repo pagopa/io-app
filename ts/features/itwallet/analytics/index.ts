@@ -45,6 +45,8 @@ type TrackCredentialDetail = {
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
+type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
+
 /**
  * This map is used to map the credential type to the MixPanel credential
  * ITW_ID_V2: PersonIdentificationData
@@ -73,15 +75,23 @@ type AddCredentialFailure = {
   credential: MixPanelCredential;
   reason: unknown;
   type: string;
+  caused_by: ItwFailureCause;
 };
 
 type IdRequestFailure = {
   ITW_ID_method: ItwIdMethod;
   reason: unknown;
   type: string;
+  caused_by: ItwFailureCause;
 };
 
 type IdUnexpectedFailure = {
+  reason: unknown;
+  type: string;
+};
+
+type CredentialUnexpectedFailure = {
+  credential: MixPanelCredential;
   reason: unknown;
   type: string;
 };
@@ -579,17 +589,6 @@ export const trackItwHasAlreadyCredential = (
   );
 };
 
-export const trackAddCredentialTimeout = ({
-  credential,
-  reason,
-  type
-}: AddCredentialFailure) => {
-  void mixpanelTrack(
-    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_TIMEOUT,
-    buildEventProperties("KO", "error", { credential, reason, type })
-  );
-};
-
 export const trackAddCredentialFailure = ({
   credential,
   reason,
@@ -597,6 +596,17 @@ export const trackAddCredentialFailure = ({
 }: AddCredentialFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_FAILURE,
+    buildEventProperties("KO", "error", { credential, reason, type })
+  );
+};
+
+export const trackAddCredentialUnexpectedFailure = ({
+  credential,
+  reason,
+  type
+}: CredentialUnexpectedFailure) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_UNEXPECTED_FAILURE,
     buildEventProperties("KO", "error", { credential, reason, type })
   );
 };
@@ -623,7 +633,7 @@ export const trackCredentialInvalidStatusFailure = ({
   );
 };
 
-export const trackItwIdRequestUnexpected = ({
+export const trackItwIdRequestUnexpectedFailure = ({
   reason,
   type
 }: IdUnexpectedFailure) => {

@@ -1,9 +1,11 @@
 name: Canary release
 on:
-  - issue_comment
+  workflow_dispatch:
+  issue_comment:                                     
+    types: [created, edited, deleted]
 jobs:
   run-static-checks:
-    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, '/release-canary') 
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
@@ -25,7 +27,7 @@ jobs:
           echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
       - id: replace-version-with-canary
         run: |
-          node scripts/canary/replaceCanaryVersion.js ${{ env.CANARY_VERSION }} ${{ env.CANARY_BUILD_CODE }}
+          node scripts/canary/replaceCanaryVersion.js ${{ vars.CANARY_VERSION }} ${{ vars.CANARY_BUILD_CODE }}
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
           bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
           bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios
@@ -53,6 +55,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-17
@@ -117,7 +120,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
-    needs: run-static-checks
+    needs: prepare-canary-release
     environment: canary
     runs-on: macos-13-xlarge
     steps:
@@ -128,6 +131,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
+          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby

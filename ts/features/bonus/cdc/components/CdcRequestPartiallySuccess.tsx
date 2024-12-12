@@ -1,13 +1,8 @@
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { Anno } from "../../../../../definitions/cdc/Anno";
-import image from "../../../../../img/wallet/errors/payment-unknown-icon.png";
 import { isReady } from "../../../../common/model/RemoteValue";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -97,33 +92,21 @@ const CdcRequestPartiallySuccess = () => {
   }, "");
 
   return (
-    <>
-      <SafeAreaView style={IOStyles.flex} testID={"cdcRequestPartiallySuccess"}>
-        <InfoScreenComponent
-          image={renderInfoRasterImage(image)}
-          title={I18n.t(
-            "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title"
-          )}
-          body={outcomeMessageBody}
-        />
-      </SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t(
-              "bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"
-            ),
-            accessibilityLabel: I18n.t(
-              "bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"
-            ),
-            onPress: onExitPress,
-            testID: "closeButton"
-          }
-        }}
-      />
-    </>
+    <OperationResultScreenContent
+      testID={"cdcRequestPartiallySuccess"}
+      pictogram="doc"
+      title={I18n.t(
+        "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title"
+      )}
+      subtitle={outcomeMessageBody}
+      action={{
+        label: I18n.t(
+          "bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"
+        ),
+        onPress: onExitPress,
+        testID: "closeButton"
+      }}
+    />
   );
 };
 

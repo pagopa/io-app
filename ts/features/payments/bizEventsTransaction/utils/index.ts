@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { SectionListData } from "react-native";
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -141,3 +143,14 @@ export const restoreTransactionAtIndex = (
     restoreItem,
     ...transactions.slice(index)
   ]);
+
+export const removeAsterisks = (text: string): string =>
+  text.replace(/\*/g, "");
+
+export const isValidPspName = (pspName: string | undefined): boolean =>
+  pipe(
+    pspName,
+    O.fromNullable,
+    O.map(name => name !== "-"),
+    O.getOrElse(() => false)
+  );

@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   buttonSolidHeight,
   GradientBottomActions,
@@ -7,7 +6,10 @@ import {
   IOToast,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedScrollHandler,
@@ -16,36 +18,34 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
+import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
+import I18n from "../../../../../i18n";
+import { mixpanelTrack } from "../../../../../mixpanel";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { profileSelector } from "../../../../../store/reducers/profile";
+import { openWebUrl } from "../../../../../utils/url";
+import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
+import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import CGN_ROUTES from "../../navigation/routes";
+import { cgnCodeFromBucket } from "../../store/actions/bucket";
+import {
+  resetMerchantDiscountCode,
+  setMerchantDiscountCode
+} from "../../store/actions/merchants";
+import { cgnGenerateOtp, resetOtpState } from "../../store/actions/otp";
+import { cgnBucketSelector } from "../../store/reducers/bucket";
 import {
   cgnSelectedDiscountCodeSelector,
   cgnSelectedDiscountSelector,
   cgnSelectedMerchantSelector
 } from "../../store/reducers/merchants";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
-import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
-import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
-import I18n from "../../../../../i18n";
-import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { mixpanelTrack } from "../../../../../mixpanel";
-import { getCgnUserAgeRange } from "../../utils/dates";
-import { profileSelector } from "../../../../../store/reducers/profile";
-import { openWebUrl } from "../../../../../utils/url";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import CGN_ROUTES from "../../navigation/routes";
-import {
-  resetMerchantDiscountCode,
-  setMerchantDiscountCode
-} from "../../store/actions/merchants";
-import { cgnCodeFromBucket } from "../../store/actions/bucket";
-import { cgnBucketSelector } from "../../store/reducers/bucket";
-import { CgnDetailsParamsList } from "../../navigation/params";
-import { cgnGenerateOtp, resetOtpState } from "../../store/actions/otp";
 import { cgnOtpDataSelector } from "../../store/reducers/otp";
+import { getCgnUserAgeRange } from "../../utils/dates";
 
 const gradientSafeAreaHeight: IOSpacingScale = 96;
 
@@ -140,7 +140,7 @@ const CgnDiscountDetailScreen = () => {
       return;
     }
     switch (merchantDetails?.discountCodeType) {
-      case DiscountCodeTypeEnum.landingpage:
+      case DiscountCodeTypeEnum.landingpage: {
         const landingPageUrl = discountDetails?.landingPageUrl;
         const referer = discountDetails?.landingPageReferrer;
         if (!landingPageUrl) {
@@ -155,12 +155,16 @@ const CgnDiscountDetailScreen = () => {
           }
         });
         break;
+      }
       case DiscountCodeTypeEnum.api:
         mixpanelCgnEvent("CGN_OTP_START_REQUEST");
         dispatch(
           cgnGenerateOtp.request({
             onSuccess: navigateToDiscountCode,
-            onError: showErrorToast
+            onError: () =>
+              navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
+                screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE
+              })
           })
         );
         break;
@@ -212,7 +216,8 @@ const CgnDiscountDetailScreen = () => {
             ),
             onPress: onPressDiscountCode,
             disabled: loading,
-            loading
+            loading,
+            testID: "discount-code-button"
           }
         : undefined;
     const secondaryAction: GradientBottomActions["secondaryActionProps"] =
@@ -220,7 +225,8 @@ const CgnDiscountDetailScreen = () => {
       merchantDetails?.discountCodeType !== DiscountCodeTypeEnum.landingpage
         ? {
             label: I18n.t(`bonus.cgn.merchantDetail.discount.secondaryCta`),
-            onPress: onNavigateToDiscountUrl
+            onPress: onNavigateToDiscountUrl,
+            testID: "discount-url-button"
           }
         : undefined;
 

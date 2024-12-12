@@ -1,11 +1,6 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import paymentCompleted from "../../../img/pictograms/payment-completed.png";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
+import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import I18n from "../../i18n";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { Dispatch } from "../../store/actions/types";
@@ -19,20 +14,15 @@ type Props = ReturnType<typeof mapStateToProps> &
  * and it has been correctly activated
  */
 const ServicePreferenceCompleteScreen = (props: Props): React.ReactElement => (
-  <SafeAreaView style={IOStyles.flex}>
-    <InfoScreenComponent
-      image={renderInfoRasterImage(paymentCompleted)}
-      title={I18n.t("services.optIn.preferences.completed.title")}
-      body={I18n.t("services.optIn.preferences.completed.body")}
-    />
-    <FooterStackButton
-      primaryActionProps={{
-        label: I18n.t("global.buttons.continue"),
-        accessibilityLabel: I18n.t("global.buttons.continue"),
-        onPress: props.onContinue
-      }}
-    />
-  </SafeAreaView>
+  <OperationResultScreenContent
+    pictogram="success"
+    title={I18n.t("services.optIn.preferences.completed.title")}
+    subtitle={I18n.t("services.optIn.preferences.completed.body")}
+    action={{
+      label: I18n.t("global.buttons.continue"),
+      onPress: props.onContinue
+    }}
+  />
 );
 
 const mapStateToProps = (_: GlobalState) => ({});

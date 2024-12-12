@@ -1,7 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
-import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
 import { MessageRouterScreen } from "../screens/MessageRouterScreen";
@@ -10,6 +8,7 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { MessageGreenPassScreen } from "../screens/MessageGreenPassScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
@@ -43,11 +42,10 @@ export const MessagesStackNavigator = () => {
         />
 
         <Stack.Screen
-          name={EUCOVIDCERT_ROUTES.MAIN}
-          component={EUCovidCertStackNavigator}
+          name={MESSAGES_ROUTES.MESSAGE_GREEN_PASS}
+          component={MessageGreenPassScreen}
           options={{
-            gestureEnabled: false,
-            headerShown: false
+            animationEnabled: false
           }}
         />
 

@@ -1,48 +1,43 @@
-import { enumType } from "@pagopa/ts-commons/lib/types";
-import * as t from "io-ts";
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { assert } from "../../../../utils/assert";
 import { CredentialIssuanceEvents } from "./events";
 
-export enum CredentialIssuanceFailureTypeEnum {
-  GENERIC = "GENERIC",
+const {
+  isIssuerResponseError,
+  isWalletProviderResponseError,
+  IssuerResponseErrorCodes: Codes
+} = Errors;
+
+export enum CredentialIssuanceFailureType {
+  UNEXPECTED = "UNEXPECTED",
   ASYNC_ISSUANCE = "ASYNC_ISSUANCE",
-  INVALID_STATUS = "INVALID_STATUS"
+  INVALID_STATUS = "INVALID_STATUS",
+  ISSUER_GENERIC = "ISSUER_GENERIC",
+  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC"
 }
 
-export const CredentialIssuanceFailureType =
-  enumType<CredentialIssuanceFailureTypeEnum>(
-    CredentialIssuanceFailureTypeEnum,
-    "CredentialIssuanceFailureTypeEnum"
-  );
+/**
+ * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
+ */
+export type ReasonTypeByFailure = {
+  [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
+  [CredentialIssuanceFailureType.INVALID_STATUS]: Errors.IssuerResponseError;
+  [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
+  [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
+  [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
+};
 
-export type CredentialIssuanceFailureType = t.TypeOf<
-  typeof CredentialIssuanceFailureType
->;
+type TypedCredentialIssuanceFailures = {
+  [K in CredentialIssuanceFailureType]: {
+    type: K;
+    reason?: ReasonTypeByFailure[K];
+  };
+};
 
-const CredentialIssuanceFailureR = t.type({
-  type: CredentialIssuanceFailureType
-});
-
-const CredentialIssuanceFailureO = t.partial({
-  reason: t.unknown
-});
-
-export const CredentialIssuanceFailure = t.intersection(
-  [CredentialIssuanceFailureR, CredentialIssuanceFailureO],
-  "CredentialIssuanceFailure"
-);
-
-export type CredentialIssuanceFailure = t.TypeOf<
-  typeof CredentialIssuanceFailure
->;
-
-export const isCredentialInvalidStatusError = (
-  error: CredentialIssuanceFailure
-): error is {
-  type: CredentialIssuanceFailureTypeEnum.INVALID_STATUS;
-  reason: Errors.CredentialInvalidStatusError;
-} => error.type === CredentialIssuanceFailureTypeEnum.INVALID_STATUS;
+/*
+ * Union type of failures with the reason properly typed.
+ */
+export type CredentialIssuanceFailure =
+  TypedCredentialIssuanceFailures[keyof TypedCredentialIssuanceFailures];
 
 /**
  * Maps an event dispatched by the credential issuance machine to a failure object.
@@ -54,32 +49,45 @@ export const isCredentialInvalidStatusError = (
 export const mapEventToFailure = (
   event: CredentialIssuanceEvents
 ): CredentialIssuanceFailure => {
-  try {
-    assert("error" in event && event.error, "Not an error event");
-    const error = event.error;
-
-    if (error instanceof Errors.CredentialInvalidStatusError) {
-      return {
-        type: CredentialIssuanceFailureTypeEnum.INVALID_STATUS,
-        reason: error
-      };
-    }
-
-    if (error instanceof Errors.CredentialIssuingNotSynchronousError) {
-      return {
-        type: CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE,
-        reason: error
-      };
-    }
-
+  if (!("error" in event)) {
     return {
-      type: CredentialIssuanceFailureTypeEnum.GENERIC,
-      reason: error
-    };
-  } catch (e) {
-    return {
-      type: CredentialIssuanceFailureTypeEnum.GENERIC,
-      reason: e
+      type: CredentialIssuanceFailureType.UNEXPECTED,
+      reason: event
     };
   }
+
+  const { error } = event;
+
+  if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
+    return {
+      type: CredentialIssuanceFailureType.INVALID_STATUS,
+      reason: error
+    };
+  }
+
+  if (isIssuerResponseError(error, Codes.CredentialIssuingNotSynchronous)) {
+    return {
+      type: CredentialIssuanceFailureType.ASYNC_ISSUANCE,
+      reason: error
+    };
+  }
+
+  if (isIssuerResponseError(error)) {
+    return {
+      type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+      reason: error
+    };
+  }
+
+  if (isWalletProviderResponseError(error)) {
+    return {
+      type: CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
+      reason: error
+    };
+  }
+
+  return {
+    type: CredentialIssuanceFailureType.UNEXPECTED,
+    reason: error
+  };
 };

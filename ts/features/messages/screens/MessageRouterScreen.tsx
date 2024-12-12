@@ -23,7 +23,6 @@ import {
   getMessageDataAction,
   SuccessGetMessageDataActionType
 } from "../store/actions";
-import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -93,18 +92,9 @@ export const MessageRouterScreen = (
         fromPushNotification
       );
 
-      if (data.euCovidCerficateAuthCode) {
+      if (data.isLegacyGreenPass) {
         navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-            screen: EUCOVIDCERT_ROUTES.MAIN,
-            params: {
-              screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
-              params: {
-                authCode: data.euCovidCerficateAuthCode,
-                messageId: data.messageId
-              }
-            }
-          })
+          StackActions.replace(MESSAGES_ROUTES.MESSAGE_GREEN_PASS)
         );
       } else if (data.isPNMessage) {
         navigation.dispatch(

@@ -204,6 +204,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -778,6 +779,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1352,6 +1354,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1926,6 +1929,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

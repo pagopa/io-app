@@ -20,17 +20,9 @@ import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
-import {
-  apiUrlPrefix,
-  cdcEnabled,
-  euCovidCertificateEnabled,
-  pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixTest,
-  zendeskEnabled
-} from "../config";
+import { apiUrlPrefix, cdcEnabled, zendeskEnabled } from "../config";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import {
@@ -80,14 +72,10 @@ import {
 } from "../store/reducers/authentication";
 import {
   remoteConfigSelector,
-  isPnEnabledSelector,
-  isSettingsVisibleAndHideProfileSelector
+  isPnEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { IdentificationResult } from "../store/reducers/identification";
-import {
-  isIdPayTestEnabledSelector,
-  isPagoPATestEnabledSelector
-} from "../store/reducers/persistedPreferences";
+import { isIdPayTestEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -103,7 +91,7 @@ import { watchFimsSaga } from "../features/fims/common/saga";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
-import { watchWalletSaga as watchNewWalletSaga } from "../features/newWallet/saga";
+import { watchWalletSaga } from "../features/wallet/saga";
 import { watchServicesSaga } from "../features/services/common/saga";
 import { watchItwSaga } from "../features/itwallet/common/saga";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
@@ -115,7 +103,8 @@ import { cancellAllLocalNotifications } from "../features/pushNotifications/util
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
-import { watchLegacyTransactionSaga } from "../features/payments/transaction/store/saga";
+import { userFromSuccessLoginSelector } from "../features/login/info/store/selectors";
+import { shouldTrackLevelSecurityMismatchSaga } from "../features/cieLogin/sagas/trackLevelSecuritySaga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -379,6 +368,12 @@ export function* initializeApplicationSaga(
     }
   }
 
+  const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
+
+  if (userFromSuccessLogin) {
+    yield* call(shouldTrackLevelSecurityMismatchSaga, maybeSessionInformation);
+  }
+
   const publicKey = yield* select(lollipopPublicKeySelector);
 
   // #LOLLIPOP_CHECK_BLOCK2_START
@@ -555,7 +550,7 @@ export function* initializeApplicationSaga(
   //
 
   // Start wathing new wallet sagas
-  yield* fork(watchNewWalletSaga);
+  yield* fork(watchWalletSaga);
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
@@ -566,11 +561,6 @@ export function* initializeApplicationSaga(
 
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
-
-  if (euCovidCertificateEnabled) {
-    // Start watching for EU Covid Certificate actions
-    yield* fork(watchEUCovidCertificateSaga, sessionToken);
-  }
 
   const pnEnabled: ReturnType<typeof isPnEnabledSelector> = yield* select(
     isPnEnabledSelector
@@ -600,15 +590,6 @@ export function* initializeApplicationSaga(
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
 
-  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
-    yield* select(isPagoPATestEnabledSelector);
-
-  yield* fork(
-    watchLegacyTransactionSaga,
-    walletToken,
-    isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
-  );
-
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
 
@@ -633,20 +614,14 @@ export function* initializeApplicationSaga(
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
-        const isSettingsVisibleAndHideProfile = yield* select(
-          isSettingsVisibleAndHideProfileSelector
-        );
+
         if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
-            isSettingsVisibleAndHideProfile
-              ? I18n.t("startup.userDeletePendingAlert.message")
-              : I18n.t("startup.userDeletePendingAlert.messageLegacy"),
+            I18n.t("startup.userDeletePendingAlert.message"),
             [
               {
-                text: isSettingsVisibleAndHideProfile
-                  ? I18n.t("startup.userDeletePendingAlert.cta_1")
-                  : I18n.t("startup.userDeletePendingAlert.cta_1_legacy"),
+                text: I18n.t("startup.userDeletePendingAlert.cta_1"),
                 style: "cancel",
                 onPress: () => {
                   alertChoiceChannel.put("left");

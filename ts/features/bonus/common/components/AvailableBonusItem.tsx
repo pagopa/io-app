@@ -1,13 +1,11 @@
-import { Body, H6, HSpacer } from "@pagopa/io-app-design-system";
+import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../messages/utils/messages";
-
-import { IOBadge } from "../../../../components/core/IOBadge";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
@@ -42,16 +40,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const BonusBadge = (props: { caption: string }) => (
-  <IOBadge small text={props.caption} variant="solid" color="grey" />
-);
-
 const renderBadge = (state: AvailableBonusItemState) => {
   switch (state) {
     case "incoming":
-      return <BonusBadge caption={I18n.t("wallet.methods.comingSoon")} />;
+      return (
+        <Badge variant="default" text={I18n.t("wallet.methods.comingSoon")} />
+      );
     case "completed":
-      return <BonusBadge caption={I18n.t("bonus.state.completed.caption")} />;
+      return (
+        <Badge
+          variant="default"
+          text={I18n.t("bonus.state.completed.caption")}
+        />
+      );
     case "active":
       return null;
   }

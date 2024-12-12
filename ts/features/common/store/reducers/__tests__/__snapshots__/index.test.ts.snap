@@ -2,9 +2,6 @@
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
-  "euCovidCert": {
-    "byAuthCode": {},
-  },
   "fci": {
     "documentPreview": {
       "kind": "PotNone",
@@ -124,21 +121,15 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "_tag": "None",
       },
     },
-    "identification": {
-      "isCieSupported": {
-        "kind": "PotNone",
-      },
-      "isNfcEnabled": {
-        "kind": "PotNone",
-      },
-    },
     "issuance": {
       "integrityKeyTag": {
         "_tag": "None",
       },
     },
     "lifecycle": 0,
-    "preferences": {},
+    "preferences": {
+      "requestedCredentials": {},
+    },
     "walletInstance": {
       "attestation": undefined,
     },
@@ -250,17 +241,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "home": {
       "shouldShowAddMethodsBanner": true,
     },
-    "legacyTransaction": {
-      "details": {
-        "kind": "PotNoneLoading",
-      },
-      "total": {
-        "kind": "PotNone",
-      },
-      "transactions": {
-        "kind": "PotNone",
-      },
-    },
     "onboarding": {
       "paymentMethods": {
         "kind": "PotNoneLoading",
@@ -280,7 +260,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "paymentsBackoffRetry": {},
     "wallet": {
       "userMethods": {
-        "kind": "PotNone",
+        "kind": "PotNoneLoading",
       },
     },
   },

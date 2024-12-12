@@ -63,6 +63,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -466,164 +467,160 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                         </View>
                       </View>
                       <View
-                        pointerEvents="box-none"
                         style={
-                          {
-                            "marginTop": -50,
-                            "overflow": "hidden",
-                            "paddingTop": 50,
-                            "width": "100%",
-                          }
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
                         }
-                        testID="FooterWithButtons"
                       >
                         <View
-                          onLayout={[Function]}
+                          pointerEvents="none"
                           style={
                             [
                               {
                                 "backgroundColor": "#FFFFFF",
-                                "elevation": 20,
-                                "paddingHorizontal": 24,
+                                "bottom": 0,
+                                "height": 4,
+                                "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {
-                                  "height": 50,
+                                  "height": -4,
                                   "width": 0,
                                 },
-                                "shadowOpacity": 0.5,
-                                "shadowRadius": 37,
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
                               },
-                              {
-                                "paddingBottom": 16,
-                                "paddingTop": 16,
-                              },
+                              undefined,
                             ]
+                          }
+                        />
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                          style={
+                            {
+                              "flexShrink": 0,
+                              "paddingHorizontal": 24,
+                              "width": "100%",
+                            }
                           }
                         >
                           <View
-                            style={
+                            accessibilityLabel="Save or share document"
+                            accessibilityRole="button"
+                            accessibilityState={
                               {
-                                "flexDirection": "row",
+                                "busy": false,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
                               }
                             }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={{}}
                           >
                             <View
                               style={
-                                {
-                                  "alignContent": "center",
-                                  "flex": 1,
-                                  "justifyContent": "center",
-                                }
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderRadius": 4,
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "paddingHorizontal": 16,
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "overflow": "hidden",
+                                  },
+                                  false,
+                                  {
+                                    "height": 40,
+                                  },
+                                  {
+                                    "backgroundColor": "#0073E6",
+                                  },
+                                  {
+                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": undefined,
+                                      },
+                                    ],
+                                  },
+                                ]
                               }
                             >
                               <View
-                                accessibilityLabel="Save or share document"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": false,
-                                    "checked": undefined,
-                                    "disabled": false,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    false,
+                                  ]
                                 }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                                style={{}}
                               >
-                                <View
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={false}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "alignItems": "center",
-                                        "borderRadius": 4,
-                                        "elevation": 0,
-                                        "flexDirection": "row",
-                                        "justifyContent": "center",
-                                        "paddingHorizontal": 16,
-                                        "textAlignVertical": "center",
+                                        "color": "#FFFFFF",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
                                       },
                                       {
-                                        "overflow": "hidden",
-                                      },
-                                      false,
-                                      {
-                                        "height": 40,
-                                      },
-                                      {
-                                        "backgroundColor": "#0073E6",
-                                      },
-                                      {
-                                        "backgroundColor": undefined,
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "alignSelf": "center",
                                       },
                                     ]
                                   }
                                 >
-                                  <View
-                                    style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                        },
-                                        false,
-                                      ]
-                                    }
-                                  >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={false}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#FFFFFF",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "700",
-                                            "lineHeight": 20,
-                                          },
-                                          {
-                                            "alignSelf": "center",
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      Save or share
-                                    </Text>
-                                  </View>
-                                </View>
+                                  Save or share
+                                </Text>
                               </View>
                             </View>
                           </View>
@@ -1072,6 +1069,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >

@@ -1,20 +1,18 @@
-import * as React from "react";
-import { Alert, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import {
-  BlockButtons,
-  ButtonSolidProps,
-  IOVisualCostants,
+  FooterActionsInline,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
-import { fciEndRequest } from "../store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { trackFciUserExit } from "../analytics";
-import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
+import { useRoute } from "@react-navigation/native";
+import * as React from "react";
+import { Alert } from "react-native";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
+import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { trackFciUserExit } from "../analytics";
+import { fciEndRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -35,19 +33,6 @@ export const useFciAbortSignatureFlow = () => {
     dismiss();
   };
 
-  const cancelButtonProps: ButtonSolidProps = {
-    testID: "FciStopAbortingSignatureTestID",
-    onPress: () => dismiss(),
-    label: I18n.t("features.fci.abort.confirm"),
-    accessibilityLabel: I18n.t("features.fci.abort.confirm")
-  };
-  const continueButtonProps: ButtonSolidProps = {
-    onPress: () => abortSignatureFlow(),
-    color: "danger",
-    label: I18n.t("features.fci.abort.cancel"),
-    accessibilityLabel: I18n.t("features.fci.abort.cancel")
-  };
-
   const {
     present: presentBs,
     bottomSheet,
@@ -61,13 +46,19 @@ export const useFciAbortSignatureFlow = () => {
     ),
     snapPoint: [280],
     footer: (
-      <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
-        <BlockButtons
-          type={"TwoButtonsInlineHalf"}
-          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
-        />
-      </View>
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("features.fci.abort.confirm"),
+          onPress: () => dismiss(),
+          testID: "FciStopAbortingSignatureTestID"
+        }}
+        endAction={{
+          color: "danger",
+          label: I18n.t("features.fci.abort.cancel"),
+          onPress: () => abortSignatureFlow()
+        }}
+      />
     )
   });
 

@@ -9,7 +9,6 @@ import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
-import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 
 import "react-native-get-random-values";
@@ -20,12 +19,7 @@ jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
-jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
 
-/**
- * adds as for documentation suggestion
- * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
- */
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
 

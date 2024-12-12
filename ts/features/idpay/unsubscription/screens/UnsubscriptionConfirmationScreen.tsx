@@ -1,7 +1,7 @@
 import {
   Body,
   ContentWrapper,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
   IconButton,
   VSpacer
@@ -22,13 +22,13 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { IdPayUnsubscriptionParamsList } from "../navigation/params";
+import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
 import { idPayUnsubscribeAction } from "../store/actions";
 import {
   isFailureSelector,
   isLoadingSelector,
   isUnsubscriptionSuccessSelector
 } from "../store/selectors";
-import { IdPayUnsubscriptionRoutes } from "../navigation/routes";
 
 export type IdPayUnsubscriptionConfirmationScreenParams = {
   initiativeId: string;
@@ -121,30 +121,20 @@ const UnsubscriptionConfirmationScreen = () => {
         </View>
       ),
       footer: (
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          primary={{
-            type: "Outline",
-            buttonProps: {
-              label: I18n.t("idpay.unsubscription.button.continue"),
-              accessibilityLabel: I18n.t(
-                "idpay.unsubscription.button.continue"
-              ),
-              onPress: () => {
-                confirmModal.dismiss();
-                handleConfirmPress();
-              },
-              color: "danger"
+        <FooterActionsInline
+          startAction={{
+            color: "primary",
+            label: I18n.t("global.buttons.cancel"),
+            onPress: () => {
+              confirmModal.dismiss();
             }
           }}
-          secondary={{
-            type: "Outline",
-            buttonProps: {
-              label: I18n.t("global.buttons.cancel"),
-              accessibilityLabel: I18n.t("global.buttons.cancel"),
-              onPress: () => {
-                confirmModal.dismiss();
-              }
+          endAction={{
+            color: "danger",
+            label: I18n.t("idpay.unsubscription.button.continue"),
+            onPress: () => {
+              confirmModal.dismiss();
+              handleConfirmPress();
             }
           }}
         />
@@ -174,23 +164,17 @@ const UnsubscriptionConfirmationScreen = () => {
           <VSpacer size={48} />
         </ContentWrapper>
       </ScrollView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: handleClosePress
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: handleClosePress
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            color: checks.areFulfilled ? "danger" : "primary",
-            label: I18n.t("idpay.unsubscription.button.continue"),
-            onPress: confirmModal.present,
-            disabled: !checks.areFulfilled
-          }
+        endAction={{
+          color: checks.areFulfilled ? "danger" : "primary",
+          label: I18n.t("idpay.unsubscription.button.continue"),
+          onPress: confirmModal.present,
+          disabled: !checks.areFulfilled
         }}
       />
     </SafeAreaView>

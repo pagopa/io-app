@@ -11,7 +11,7 @@ export type PaymentsWalletState = {
 };
 
 const INITIAL_STATE: PaymentsWalletState = {
-  userMethods: pot.none
+  userMethods: pot.noneLoading
 };
 
 const paymentsWalletReducer = (

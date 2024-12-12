@@ -4,7 +4,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
-import { walletAddCards } from "../../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwLifecycleState } from "../../../lifecycle/store/reducers";
 

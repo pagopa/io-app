@@ -21,7 +21,7 @@ import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import { isLoading } from "../../../../common/model/RemoteValue";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
-import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
@@ -116,10 +116,19 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   if (pot.isError(props.potCgnDetails)) {
     // subText is a blank space to avoid default value when it is undefined
     return (
-      <GenericErrorComponent
-        subText={" "}
-        onRetry={loadCGN}
-        onCancel={navigation.goBack}
+      <OperationResultScreenContent
+        pictogram="umbrellaNew"
+        title={I18n.t("wallet.methodDetails.error.title")}
+        isHeaderVisible
+        subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
+        action={{
+          label: I18n.t("global.buttons.close"),
+          onPress: navigation.goBack
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: loadCGN
+        }}
       />
     );
   }

@@ -7,8 +7,8 @@ import { fastLoginOptInSelector } from "../features/fastLogin/store/selectors";
 import {
   selectBonusCards,
   selectWalletCgnCard
-} from "../features/newWallet/store/selectors";
-import { WalletCardBonus } from "../features/newWallet/types";
+} from "../features/wallet/store/selectors";
+import { WalletCardBonus } from "../features/wallet/types";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
   NotificationPreferenceConfiguration,

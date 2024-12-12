@@ -1,19 +1,15 @@
 import {
-  IOVisualCostants,
+  IOColors,
   IconButton,
+  makeFontStyleObject,
   useIOExperimentalDesign,
+  useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
-import {
-  StackNavigationOptions,
-  TransitionPresets,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Alert, Platform, View } from "react-native";
-import { makeFontStyleObject } from "../../../components/core/fonts";
-import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
+import { Platform } from "react-native";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
@@ -52,11 +48,7 @@ import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyAlert } from "../core/DSLegacyAlert";
-import { DSLegacyBadges } from "../core/DSLegacyBadges";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyListItems } from "../core/DSLegacyListItems";
-import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacyTextFields } from "../core/DSLegacyTextFields";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
@@ -79,91 +71,43 @@ import { DSWallet } from "../core/DSWallet";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
-const Stack = createStackNavigator<DesignSystemParamsList>();
-
-// BackButton managed through React Navigation
-const RNNBackButton = () => {
-  const navigation = useNavigation();
-  const { themeType } = useIOThemeContext();
-  return (
-    <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon={Platform.select({
-          android: "backAndroid",
-          default: "backiOS"
-        })}
-        color={themeType === "dark" ? "contrast" : "neutral"}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
-  );
-};
+const Stack = createNativeStackNavigator<DesignSystemParamsList>();
 
 const RNNCloseButton = () => {
   const navigation = useNavigation();
+  const { themeType } = useIOThemeContext();
 
   return (
-    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon="closeMedium"
-        color="neutral"
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
+    <IconButton
+      icon="closeMedium"
+      color={themeType === "dark" ? "contrast" : "neutral"}
+      onPress={() => {
+        navigation.goBack();
+      }}
+      accessibilityLabel={""}
+    />
   );
-};
-
-const HeaderFirstLevelComponent = () => (
-  <HeaderFirstLevel
-    title="Portafoglio"
-    firstAction={
-      <IconButton
-        accessibilityLabel="Tap to trigger test alert"
-        icon="coggle"
-        onPress={() => {
-          Alert.alert("Settings");
-        }}
-      />
-    }
-    secondAction={
-      <IconButton
-        accessibilityLabel="Tap to trigger test alert"
-        icon="help"
-        onPress={() => {
-          Alert.alert("Assistance");
-        }}
-      />
-    }
-  />
-);
-
-const customModalHeaderConf: StackNavigationOptions = {
-  headerLeft: () => null,
-  headerTitle: () => null,
-  headerRight: RNNCloseButton,
-  headerStyle: { height: IOVisualCostants.headerHeight },
-  headerStatusBarHeight: 0
 };
 
 export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
+  const theme = useIOTheme();
 
-  const customHeaderConf: StackNavigationOptions = {
+  const customModalHeaderConf = {
+    headerRight: RNNCloseButton,
+    title: DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.title,
+    sheetCornerRadius: 24,
     headerTitleStyle: {
-      ...(isExperimental
-        ? makeFontStyleObject("Regular", false, "ReadexPro")
-        : makeFontStyleObject("Semibold", false, "TitilliumSansPro")),
-      fontSize: 14
-    },
-    headerTitleAlign: "center",
-    headerLeft: RNNBackButton
+      ...makeFontStyleObject(
+        14,
+        isExperimental ? "Titillio" : "TitilliumSansPro",
+        18,
+        isExperimental ? "Regular" : "Semibold",
+        undefined
+      ),
+      color: IOColors[theme["textHeading-default"]]
+    }
   };
 
   return (
@@ -174,13 +118,29 @@ export const DesignSystemNavigator = () => {
     >
       <Stack.Navigator
         initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-        screenOptions={customHeaderConf}
+        screenOptions={{
+          headerTintColor: IOColors[theme["interactiveElem-default"]],
+          headerTitleStyle: {
+            ...makeFontStyleObject(
+              14,
+              isExperimental ? "Titillio" : "TitilliumSansPro",
+              18,
+              isExperimental ? "Regular" : "Semibold",
+              undefined
+            ),
+            color: IOColors[theme["textHeading-default"]]
+          },
+          headerTitleAlign: "center",
+          headerBackTitleVisible: false,
+          headerShown: true,
+          autoHideHomeIndicator: true
+        }}
       >
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.MAIN.route}
           component={DesignSystem}
           options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title
+            title: DESIGN_SYSTEM_ROUTES.MAIN.title
           }}
         />
 
@@ -420,9 +380,6 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
           component={DSHeaderFirstLevel}
-          options={{
-            header: HeaderFirstLevelComponent
-          }}
         />
 
         <Stack.Screen
@@ -433,9 +390,6 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
           component={DSHeaderSecondLevelWithSectionTitle}
-          options={{
-            header: HeaderFirstLevelComponent
-          }}
         />
 
         {/* SCREENS */}
@@ -567,13 +521,10 @@ export const DesignSystemNavigator = () => {
 
         <Stack.Group
           screenOptions={{
-            headerMode: "screen",
-            presentation: "modal",
+            presentation: "formSheet",
             ...(Platform.OS === "ios"
               ? {
-                  gestureEnabled: isGestureEnabled,
-                  cardOverlayEnabled: true,
-                  ...TransitionPresets.ModalPresentationIOS
+                  gestureEnabled: isGestureEnabled
                 }
               : null)
           }}
@@ -588,22 +539,6 @@ export const DesignSystemNavigator = () => {
         {/* LEGACY */}
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
-          component={DSLegacyPictograms}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
-          component={DSLegacyButtons}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
-          }}
-        />
-
-        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.TEXT_FIELDS.route}
           component={DSLegacyTextFields}
           options={{
@@ -616,22 +551,6 @@ export const DesignSystemNavigator = () => {
           component={DSLegacyListItems}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.LIST_ITEMS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.route}
-          component={DSLegacyBadges}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BADGES.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.route}
-          component={DSLegacyAlert}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ALERT.title
           }}
         />
 

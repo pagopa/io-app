@@ -53,7 +53,15 @@ export enum WellKnownClaim {
   /**
    * Claims that contains the document number, if applicable for the credential
    */
-  document_number = "document_number"
+  document_number = "document_number",
+  /**
+   * Claim that contains the first name, if applicable for the credential
+   */
+  given_name = "given_name",
+  /**
+   * Claim that contains the family name, if applicable for the credential
+   */
+  family_name = "family_name"
 }
 
 /**
@@ -274,23 +282,6 @@ export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
 );
 
 /**
- * io-ts decoder for the evidence claim field of the credential.
- */
-export const EvidenceClaim = t.array(
-  t.type({
-    type: t.string,
-    record: t.type({
-      type: t.string,
-      source: t.type({
-        organization_name: t.string,
-        organization_id: t.string,
-        country_code: t.string
-      })
-    })
-  })
-);
-
-/**
  * io-ts decoder for the place of birth claim field of the credential.
  */
 export const PlaceOfBirthClaim = t.type({
@@ -370,8 +361,6 @@ export const ClaimValue = t.union([
   PlaceOfBirthClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
-  // Parse an object representing the claim evidence
-  EvidenceClaim,
   // Otherwise parse a date as string
   SimpleDateClaim,
   // Otherwise parse an image
@@ -445,19 +434,6 @@ const FISCAL_CODE_REGEX =
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-export const getFiscalCodeFromCredential = (
-  credential: StoredCredential | undefined
-) =>
-  pipe(
-    credential?.parsedCredential,
-    O.fromNullable,
-    O.chain(x => O.fromNullable(x[WellKnownClaim.tax_id_code]?.value)),
-    O.map(t.string.decode),
-    O.chain(O.fromEither),
-    O.chain(extractFiscalCode),
-    O.getOrElse(() => "")
-  );
-
 /**
  * Truncate long strings to avoid performance issues when rendering claims.
  */
@@ -465,3 +441,76 @@ export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
   claim.id === WellKnownClaim.expiry_date;
+
+/**
+ *
+ *
+ * Claim extractors
+ *
+ *
+ */
+
+/**
+ * Function that extracts a claim from a credential.
+ * @param claimId - the claim id / name to extract
+ * @param decoder - optional decoder for the claim value, defaults to decoding a string
+ * @returns a function that extracts a claim from a credential
+ */
+export const extractClaim =
+  <T = string>(
+    claimId: string,
+    decoder: (i: unknown) => t.Validation<T> = t.string.decode as (
+      i: unknown
+    ) => t.Validation<T>
+  ) =>
+  (credential: ParsedCredential): O.Option<T> =>
+    pipe(
+      credential,
+      O.fromNullable,
+      O.chainNullableK(x => x[claimId]?.value),
+      O.map(decoder),
+      O.chain(O.fromEither)
+    );
+
+/**
+ * Returns the fiscal code from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the fiscal code
+ */
+export const getFiscalCodeFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.tax_id_code)),
+    O.chain(extractFiscalCode),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Returns the first name from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the first name
+ */
+export const getFirstNameFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.given_name)),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Returns the family name from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the family name
+ */
+export const getFamilyNameFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.family_name)),
+    O.getOrElse(() => "")
+  );

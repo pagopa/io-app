@@ -34,7 +34,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { useInteractiveElementDefaultColorName } from "../../../../../utils/hooks/theme";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import {
-  selectCieAuthUrlOption,
+  selectAuthUrlOption,
   selectCiePin,
   selectIsLoading
 } from "../../../machine/eid/selectors";
@@ -161,9 +161,8 @@ export const ItwCieCardReaderScreen = () => {
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const ciePin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
-  const cieAuthUrl = ItwEidIssuanceMachineContext.useSelector(
-    selectCieAuthUrlOption
-  );
+  const cieAuthUrl =
+    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
 
   const [identificationStep, setIdentificationStep] = useState(
     IdentificationStep.AUTHENTICATION

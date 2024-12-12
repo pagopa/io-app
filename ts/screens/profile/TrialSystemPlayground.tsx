@@ -62,7 +62,7 @@ const TrialSystemPlayground = () => {
           <Body color="black" weight="Semibold">
             {"Stato attuale: "}
           </Body>
-          <Body color="black" weight="Bold">
+          <Body color="black" weight="Semibold">
             {trialStatus ? trialStatus : "Non presente"}
           </Body>
         </View>
