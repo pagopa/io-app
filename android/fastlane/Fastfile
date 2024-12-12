@@ -87,6 +87,7 @@ platform :android do
 
     upload_to_play_store(
       track: "internal",
+      package_name: "it.pagopa.io.app.canary",
       skip_upload_screenshots: true,
       skip_upload_images: true
     )

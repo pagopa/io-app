@@ -272,7 +272,7 @@ platform :ios do
       duration: 1200,
     )
 
-    sync_code_signing(type: "appstore", api_key: api_key)
+    sync_code_signing(type: "appstore", app_identifier:"it.pagopa.app.io.canary", api_key: api_key)
 
     # Install pods
     cocoapods
