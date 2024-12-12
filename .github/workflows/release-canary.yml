@@ -9,7 +9,6 @@ jobs:
   #   uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     # needs: run-static-checks
-    environment: canary
     runs-on: ubuntu-latest
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
