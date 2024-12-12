@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.7](https://github.com/pagopa/io-app/compare/2.79.0-rc.6...2.79.0-rc.7) (2024-12-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1853](https://pagopa.atlassian.net/browse/SIW-1853)] Ipatente routing with IT Wallet ([#6521](https://github.com/pagopa/io-app/issues/6521)) ([cf6423f](https://github.com/pagopa/io-app/commit/cf6423f85e3900933db7e3f6258480de37d6b9b5))
+* **IT Wallet:** [[SIW-1915](https://pagopa.atlassian.net/browse/SIW-1915)] Add discovery banner in wallet onboarding screen ([#6538](https://github.com/pagopa/io-app/issues/6538)) ([c7eca8a](https://github.com/pagopa/io-app/commit/c7eca8a8c569217bb04a797ece5a53efb3dc0e81))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1806](https://pagopa.atlassian.net/browse/SIW-1806)] Fix state inconsistencies in wallet home screen ([#6532](https://github.com/pagopa/io-app/issues/6532)) ([64a1fc3](https://github.com/pagopa/io-app/commit/64a1fc34a4b39d8be7bdca7c7aa72305275c77bf))
+* **IT Wallet:** [[SIW-1827](https://pagopa.atlassian.net/browse/SIW-1827)] Accessibility improvements ([#6511](https://github.com/pagopa/io-app/issues/6511)) ([d6de235](https://github.com/pagopa/io-app/commit/d6de235314fe06af92d59e00a6b28c47b631666c))
+* **IT Wallet:** [[SIW-1880](https://pagopa.atlassian.net/browse/SIW-1880)] Change attestation key access policy ([#6539](https://github.com/pagopa/io-app/issues/6539)) ([ef675c9](https://github.com/pagopa/io-app/commit/ef675c9848466a177d058ecfae740df31d422b3b))
+* **IT Wallet:** [[SIW-1913](https://pagopa.atlassian.net/browse/SIW-1913)] Fix regression on font weight in skeumorphic cards ([#6534](https://github.com/pagopa/io-app/issues/6534)) ([9aa2b73](https://github.com/pagopa/io-app/commit/9aa2b7374ddfaf9d30ad9c727ad55bb5b7e55bbd))
+
+
+### Chores
+
+* [[IOBP-964](https://pagopa.atlassian.net/browse/IOBP-964)] Add zendesk payment subcategories ([#6522](https://github.com/pagopa/io-app/issues/6522)) ([86043f0](https://github.com/pagopa/io-app/commit/86043f00b5625c0b8e9e169d9b237595c66d3c17))
+* [[IOCOM-2018](https://pagopa.atlassian.net/browse/IOCOM-2018)] FIMS authentication flow support for Internal Relying Party ([#6530](https://github.com/pagopa/io-app/issues/6530)) ([b6afc5c](https://github.com/pagopa/io-app/commit/b6afc5c49a20c4b17e467cfdf6b2c6ed185d098f))
+
 ## [2.79.0-rc.6](https://github.com/pagopa/io-app/compare/2.79.0-rc.5...2.79.0-rc.6) (2024-12-10)
 
 
