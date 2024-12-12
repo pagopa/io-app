@@ -151,7 +151,7 @@ type GetZendeskPaymentConfigT = IGetApiRequestType<
 
 const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
   method: "get",
-  url: () => "/assistanceTools/payment/zendeskOutcomeMapping.json",
+  url: () => "/assistanceTools/payments/zendeskOutcomeMapping.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(ZendeskSubcategoriesErrors)
