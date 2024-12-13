@@ -3,7 +3,6 @@ import React from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
 import { RevocationReason } from "../store/reducers";
 import I18n from "../../../../i18n";
-import { itwMinIntegrityReqURL } from "../../../../config";
 
 const closeButtonText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.closeButton"
@@ -11,6 +10,8 @@ const closeButtonText = I18n.t(
 const alertCtaText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.cta"
 );
+
+const itwMinIntergityReqUrl = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
 /**
  * Hook to monitor wallet instance status and display alerts if revoked.
@@ -45,7 +46,7 @@ const showWalletRevocationAlert = (revocationReason?: RevocationReason) => {
           {
             text: alertCtaText,
             onPress: () => {
-              Linking.openURL(itwMinIntegrityReqURL).catch(() => {
+              Linking.openURL(itwMinIntergityReqUrl).catch(() => {
                 IOToast.error(I18n.t("global.genericError"));
               });
             }
