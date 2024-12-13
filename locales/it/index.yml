@@ -2950,6 +2950,11 @@ features:
         title: "Non perderti i messaggi importanti"
         body: "Attiva le notifiche push per sapere quando ricevi un messaggio su IO"
         CTA: "Attiva notifiche push"
+        bottomSheet:
+          title: "Preferisci non vedere più questo avviso?"
+          body: "Ti ricordiamo che attivare le notifiche push può aiutarti a non perdere comunicazioni importanti e scadenze sui pagamenti."
+          cta: "Ricordamelo più tardi"
+          cta2: "Non mostrarmelo più"
     attachmentDownloadFeedback: "Download in corso"
     attachments: "Allegati"
     loading:
