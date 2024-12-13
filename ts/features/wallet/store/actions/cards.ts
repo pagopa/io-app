@@ -15,8 +15,17 @@ export const walletRemoveCardsByType = createStandardAction(
   "WALLET_REMOVE_CARDS_BY_TYPE"
 )<WalletCardType>();
 
+export const walletHideCards =
+  createStandardAction("WALLET_HIDE_CARDS")<ReadonlyArray<WalletCard["key"]>>();
+
+export const walletRestoreCards = createStandardAction("WALLET_RESTORE_CARDS")<
+  ReadonlyArray<WalletCard["key"]>
+>();
+
 export type WalletCardsActions =
   | ActionType<typeof walletUpsertCard>
   | ActionType<typeof walletAddCards>
   | ActionType<typeof walletRemoveCards>
-  | ActionType<typeof walletRemoveCardsByType>;
+  | ActionType<typeof walletRemoveCardsByType>
+  | ActionType<typeof walletHideCards>
+  | ActionType<typeof walletRestoreCards>;

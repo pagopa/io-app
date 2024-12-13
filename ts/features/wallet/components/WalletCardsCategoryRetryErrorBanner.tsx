@@ -49,7 +49,10 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
 
   return (
     (isPaymentMethodsError || isCgnError || isIdPayError) && (
-      <View style={{ marginTop: 16 }}>
+      <View
+        style={{ marginTop: 16 }}
+        testID="walletCardsCategoryRetryErrorBannerTestID"
+      >
         <BannerErrorState
           icon="warningFilled"
           label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}

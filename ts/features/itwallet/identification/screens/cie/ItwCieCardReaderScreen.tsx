@@ -21,7 +21,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Cie } from "@pagopa/io-react-native-wallet";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../../../components/cie/CieCardReadingAnimation";
@@ -47,6 +46,7 @@ import {
   trackItWalletCieCardReadingSuccess,
   trackItWalletErrorCardReading
 } from "../../../analytics";
+import * as Cie from "../../components/cie";
 
 // This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
 const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
