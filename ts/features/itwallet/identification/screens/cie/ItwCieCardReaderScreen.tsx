@@ -21,7 +21,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Cie } from "@pagopa/io-react-native-wallet";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../../../components/cie/CieCardReadingAnimation";
@@ -50,6 +49,7 @@ import {
   trackItWalletCieCardReadingSuccess,
   trackItWalletErrorCardReading
 } from "../../../analytics";
+import * as Cie from "../../components/cie";
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
