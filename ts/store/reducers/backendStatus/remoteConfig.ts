@@ -416,3 +416,16 @@ export const itwDisabledCredentialsSelector = createSelector(
       O.getOrElse(() => emptyArray)
     )
 );
+
+/**
+ * Return the remote config content for the deferred issuance screen content.
+ */
+export const itwDeferredIssuanceScreenContentSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.itw.deferred_issuance_screen_content),
+      O.toUndefined
+    )
+);
