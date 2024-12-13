@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.10](https://github.com/pagopa/io-app/compare/2.79.0-rc.9...2.79.0-rc.10) (2024-12-12)
+
+
+### Chores
+
+* [[IOCOM-1761](https://pagopa.atlassian.net/browse/IOCOM-1761)] Push notification reminder banner BS and logic ([#6503](https://github.com/pagopa/io-app/issues/6503)) ([4a5626a](https://github.com/pagopa/io-app/commit/4a5626a2b04d90064c2de9d3eef9e7d769ee62cd))
+* **Cross:** [[IOAPPX-356](https://pagopa.atlassian.net/browse/IOAPPX-356)] Add divider to first level sections when the user scrolls + Add `useHeaderFirstLevel` hook ([#6054](https://github.com/pagopa/io-app/issues/6054)) ([77dfc48](https://github.com/pagopa/io-app/commit/77dfc48da20c8276f9a2509f58d377b57cdbe3a8))
+
 ## [2.79.0-rc.9](https://github.com/pagopa/io-app/compare/2.79.0-rc.8...2.79.0-rc.9) (2024-12-12)
 
 
