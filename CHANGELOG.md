@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.10](https://github.com/pagopa/io-app/compare/2.79.0-rc.9...2.79.0-rc.10) (2024-12-12)
+
+
+### Chores
+
+* [[IOCOM-1761](https://pagopa.atlassian.net/browse/IOCOM-1761)] Push notification reminder banner BS and logic ([#6503](https://github.com/pagopa/io-app/issues/6503)) ([4a5626a](https://github.com/pagopa/io-app/commit/4a5626a2b04d90064c2de9d3eef9e7d769ee62cd))
+* **Cross:** [[IOAPPX-356](https://pagopa.atlassian.net/browse/IOAPPX-356)] Add divider to first level sections when the user scrolls + Add `useHeaderFirstLevel` hook ([#6054](https://github.com/pagopa/io-app/issues/6054)) ([77dfc48](https://github.com/pagopa/io-app/commit/77dfc48da20c8276f9a2509f58d377b57cdbe3a8))
+
+## [2.79.0-rc.9](https://github.com/pagopa/io-app/compare/2.79.0-rc.8...2.79.0-rc.9) (2024-12-12)
+
+
+### Bug Fixes
+
+* [[IOBP-1082](https://pagopa.atlassian.net/browse/IOBP-1082)] Typo in Zendesk assistance json remote path   ([#6546](https://github.com/pagopa/io-app/issues/6546)) ([d385843](https://github.com/pagopa/io-app/commit/d3858438b8a964e4a670945f6fd8290f44ae044f))
+
+## [2.79.0-rc.8](https://github.com/pagopa/io-app/compare/2.79.0-rc.7...2.79.0-rc.8) (2024-12-12)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1917](https://pagopa.atlassian.net/browse/SIW-1917)] Fix crash in credentials onboarding screen ([#6544](https://github.com/pagopa/io-app/issues/6544)) ([5294897](https://github.com/pagopa/io-app/commit/5294897e2431693da274e2b31c44aede704c7b39))
+* [[IOPID-2169](https://pagopa.atlassian.net/browse/IOPID-2169)] Fix toast messages behavior in the `PrivacyMainScreen` ([#6526](https://github.com/pagopa/io-app/issues/6526)) ([9232798](https://github.com/pagopa/io-app/commit/92327983094770a99917cb47523e5d1953cbe00e))
+
 ## [2.79.0-rc.7](https://github.com/pagopa/io-app/compare/2.79.0-rc.6...2.79.0-rc.7) (2024-12-11)
 
 
