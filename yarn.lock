@@ -2215,10 +2215,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-4.0.1.tgz#1f939232e3662fa519eba9d2334b33a597643ebb"
-  integrity sha512-CSaWgbkZ9Tjzz7qdCKz6wnRQ1c3/rej6ordgDeDH0faIlMwCkzNqpduwUWF3j91dIirLpSRCJPhKMfnOkhQsAA==
+"@pagopa/io-app-design-system@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-4.0.2.tgz#95848d1ae7a20a6905bf4ca749bbcd6b8b20530d"
+  integrity sha512-z7ST78N0q9LEI+tA2rqD3saAXImkuqKiHg16CF3Cg+J+jtIsmKlRZq9kCOsYUGIv02/F+5lUjZyCrElJRN+eMQ==
   dependencies:
     "@testing-library/jest-native" "^5.4.2"
     "@types/react-test-renderer" "^18.0.0"
@@ -2259,10 +2259,10 @@
   dependencies:
     auto-changelog "^2.4.0"
 
-"@pagopa/io-react-native-integrity@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-integrity/-/io-react-native-integrity-0.3.0.tgz#ec0808f308f0dc7b163febdbfa528819b1730c2d"
-  integrity sha512-K9omm939IhhuKBopdtDsDLeh6k9XZPgf03WlHnuiFtxo2rdfAUlWj8Fq9njpyT0ovmwDfP12PtRYSDFzkYH5Lg==
+"@pagopa/io-react-native-integrity@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-integrity/-/io-react-native-integrity-0.3.1.tgz#4dc23b221452b4101ea7a5bf35aedbe2e5a3a5fe"
+  integrity sha512-ZQP58OSLSus8LbFRa8jHtGo2BoR2Jn8lY1SirhBCfk9qo2qLcwRwanZ5T/tzO9inFOaTxPCvPu7uMdSdi8uRUQ==
 
 "@pagopa/io-react-native-jwt@^1.3.0":
   version "1.3.0"
@@ -2277,10 +2277,15 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.8.tgz#dc5911f756cbf9fa76529041c1422aaecd85c8b2"
   integrity sha512-gQY3Bkqtov0i9bZ3CV9ukPQYn9kOP6CaxUfbIyf1ZPOvXqAvDSqcbiM/Bdzkp3DneCrfvPMl9mkZ23af4Tu0fQ==
 
-"@pagopa/io-react-native-wallet@^0.26.0":
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.26.0.tgz#01ccf96e2be5e99643159322d5e21c8b89fb9ca7"
-  integrity sha512-7HhOfWlqE98Ft0Tz7MMkzs3scrF/qEFBSVuG5i0KrTa6sr8M2D2bKGXxdj5vx2/7H1J525L/mSAiUt8IExHhoQ==
+"@pagopa/io-react-native-secure-storage@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-secure-storage/-/io-react-native-secure-storage-0.2.0.tgz#386982f350fcefa7bf8dc56e26ff390a9c94db03"
+  integrity sha512-nPdYOKa9DAMtmPanIOwyKzOJ6JpBINfLgOp3wzVT7pCOJPRo0FYHBwyt0nxrKufE42rz9z9Sh8K7Y0faB0kuMw==
+
+"@pagopa/io-react-native-wallet@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.27.0.tgz#b692f9b5e9ba71e4a0dbf7802bd7e78ca970148c"
+  integrity sha512-9fVcBCXSHQcnShZOtwv0pwqkzCed/afhDszh0HmIl46d8jTNSugEcCN4ivIDC+l87wgZ1VxxQad9tM0mn0EkDg==
   dependencies:
     js-base64 "^3.7.7"
     js-sha256 "^0.9.0"
@@ -8864,11 +8869,6 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
   dependencies:
     loose-envify "^1.0.0"
-
-io-react-native-secure-storage@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/io-react-native-secure-storage/-/io-react-native-secure-storage-0.1.1.tgz#c1fb28125f6c9f8f1b7436198fab726f4ae790ef"
-  integrity sha512-ceBQImvJoxGoyD5tDZ9E0SqDb/9CKPSR5XrMfDDBJ5topKDXCUkC9tiuEv/RYhOOzLbaLR7qvvkEtla5fcnHmg==
 
 io-ts@^2.2.16:
   version "2.2.20"

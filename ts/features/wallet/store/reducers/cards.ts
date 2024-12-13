@@ -3,21 +3,15 @@ import { Action } from "../../../../store/actions/types";
 import { WalletCard } from "../../types";
 import {
   walletAddCards,
+  walletHideCards,
   walletRemoveCards,
   walletRemoveCardsByType,
+  walletRestoreCards,
   walletUpsertCard
 } from "../actions/cards";
 import { walletResetPlaceholders } from "../actions/placeholders";
-import { paymentsDeleteMethodAction } from "../../../payments/details/store/actions";
-import { mapWalletIdToCardKey } from "../../../payments/common/utils";
 
-type DeletedCard = WalletCard & { index: number };
-
-export type WalletCardsState = {
-  [key: string]: WalletCard;
-} & {
-  deletedCard?: DeletedCard;
-};
+export type WalletCardsState = { [key: string]: WalletCard };
 
 const INITIAL_STATE: WalletCardsState = {};
 
@@ -48,7 +42,9 @@ const reducer = (
 
     case getType(walletResetPlaceholders):
       return Object.fromEntries(
-        Object.entries(state).filter(([_, card]) => card.type !== "placeholder")
+        Object.entries(state).filter(
+          ([_key, card]) => card.type !== "placeholder"
+        )
       );
 
     case getType(walletRemoveCardsByType):
@@ -56,39 +52,26 @@ const reducer = (
         Object.entries(state).filter(([, { type }]) => type !== action.payload)
       );
 
-    case getType(paymentsDeleteMethodAction.request): {
-      const cardKey = mapWalletIdToCardKey(action.payload.walletId);
-      const deletedCard = {
-        ...state[cardKey],
-        index: Object.keys(state).indexOf(cardKey)
-      };
-
-      const newState = Object.fromEntries(
-        Object.entries(state).filter(([key]) => key !== cardKey)
+    case getType(walletHideCards):
+      return Object.fromEntries(
+        Object.entries(state).map(([key, card]) => {
+          if (action.payload.includes(key)) {
+            return [key, { ...card, hidden: true }];
+          }
+          return [key, card];
+        })
       );
 
-      return {
-        ...newState,
-        deletedCard
-      };
-    }
-
-    case getType(paymentsDeleteMethodAction.cancel):
-    case getType(paymentsDeleteMethodAction.failure): {
-      if (!state.deletedCard) {
-        return state; // No deletedCard to restore
-      }
-
-      const { deletedCard, ...rest } = state;
-      // Reconstruct state with deletedCard in its original position
-      const restoredEntries = [
-        ...Object.entries(rest).slice(0, deletedCard.index),
-        [deletedCard.key, deletedCard],
-        ...Object.entries(rest).slice(deletedCard.index)
-      ];
-
-      return Object.fromEntries(restoredEntries);
-    }
+    case getType(walletRestoreCards):
+      return Object.fromEntries(
+        Object.entries(state).map(([key, card]) => {
+          if (action.payload.includes(key)) {
+            const { hidden, ...rest } = card;
+            return [key, rest];
+          }
+          return [key, card];
+        })
+      );
   }
   return state;
 };
