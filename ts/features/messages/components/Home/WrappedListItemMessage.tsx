@@ -59,7 +59,7 @@ export const WrappedListItemMessage = ({
   );
 
   const messageCategoryTag = message.category.tag;
-  const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
+  const avatarDouble = messageCategoryTag === PaymentTagEnum.PAYMENT;
   const serviceLogoUriSources = useMemo(
     () => logoForService(serviceId, organizationFiscalCode),
     [serviceId, organizationFiscalCode]
@@ -161,7 +161,7 @@ export const WrappedListItemMessage = ({
       accessibilityLabel={accessibilityLabel}
       badgeText={badgeText}
       badgeVariant={badgeVariant}
-      doubleAvatar={doubleAvatar}
+      avatarDouble={avatarDouble}
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}

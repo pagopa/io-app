@@ -55,7 +55,7 @@ export type ListItemMessage = WithTestID<{
   accessibilityLabel: string;
   badgeText?: string;
   badgeVariant?: "legalMessage" | "success";
-  doubleAvatar?: boolean;
+  avatarDouble?: boolean;
   formattedDate: string;
   isRead: boolean;
   messageTitle: string;
@@ -97,7 +97,7 @@ export const ListItemMessage = ({
   accessibilityRole,
   badgeText,
   badgeVariant,
-  doubleAvatar,
+  avatarDouble,
   formattedDate,
   isRead,
   messageTitle,
@@ -150,7 +150,7 @@ export const ListItemMessage = ({
                 importantForAccessibility="no-hide-descendants"
                 style={styles.serviceLogoContainer}
               >
-                {doubleAvatar ? (
+                {avatarDouble ? (
                   <AvatarDouble backgroundLogoUri={serviceLogos} />
                 ) : (
                   <Avatar logoUri={serviceLogos} size="small" />

@@ -17,6 +17,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
+import I18n from "../../../i18n";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
@@ -26,6 +27,7 @@ import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
+import { ListItemMessage } from "../../messages/components/Home/DS/ListItemMessage";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -34,6 +36,8 @@ const onButtonPress = () => {
 const onCopyButtonPress = () => {
   Alert.alert("Copied!", "Value copied");
 };
+
+const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 
 const sectionTitleMargin = 16;
 const sectionMargin = 48;
@@ -187,10 +191,96 @@ const renderListItemNav = () => (
   </VStack>
 );
 
+const listItemMessageSample: ListItemMessage = {
+  formattedDate: "09 dic",
+  isRead: false,
+  messageTitle: "Il tuo appuntamento",
+  organizationName: "Ministero dell'Interno",
+  serviceName: "Carta d'Identità Elettronica",
+  accessibilityLabel: "Leggi il messaggio inviato dal Ministero dell'Interno",
+  serviceLogos: [{ uri: `${cdnPath}80215430580.png` }],
+  onLongPress: () => {
+    Alert.alert("Long press");
+  },
+  onPress: () => {
+    Alert.alert("Pressed");
+  }
+};
+
 const renderListItemMessage = () => (
-  <DSComponentViewerBox name="ListItemMessageSkeleton">
-    <ListItemMessageSkeleton accessibilityLabel="Loading message…" />
-  </DSComponentViewerBox>
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="ListItemMessageSkeleton">
+      <ListItemMessageSkeleton accessibilityLabel="Loading message…" />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, read/unread">
+      <ListItemMessage {...listItemMessageSample} isRead={false} />
+      <Divider />
+      <ListItemMessage {...listItemMessageSample} isRead={true} />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, selected">
+      <ListItemMessage
+        {...listItemMessageSample}
+        isRead={true}
+        selected={true}
+      />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, with badge">
+      <ListItemMessage
+        {...listItemMessageSample}
+        serviceName="Richiesta di cittadinanza"
+        messageTitle="Hai un nuovo avviso di pagamento"
+        badgeText={I18n.t("messages.badge.paid")}
+        badgeVariant="success"
+        isRead={true}
+      />
+      <Divider />
+      <ListItemMessage
+        {...listItemMessageSample}
+        serviceName="Richiesta di cittadinanza"
+        messageTitle="Hai acquisito la cittadinanza italiana"
+        badgeText={I18n.t("features.pn.details.badge.legalValue")}
+        badgeVariant="legalMessage"
+        isRead={true}
+      />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, avatar undefined & double">
+      <ListItemMessage
+        {...listItemMessageSample}
+        organizationName="Comune di Isolabona"
+        serviceName="Servizi cimiteriali"
+        messageTitle="Hai un nuovo avviso di pagamento"
+        serviceLogos={undefined}
+        isRead={true}
+      />
+      <Divider />
+      <ListItemMessage
+        {...listItemMessageSample}
+        avatarDouble={true}
+        organizationName={"Comune di Milano"}
+        serviceName="Tassa sui rifiuti (TARI)"
+        messageTitle="Hai un pagamento in scadenza"
+        serviceLogos={[{ uri: `${cdnPath}1199250158.png` }]}
+        isRead={true}
+      />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, stress test">
+      <ListItemMessage
+        {...listItemMessageSample}
+        organizationName={"Nome dell'ente molto molto molto lungo"}
+        serviceName="Nome del servizio mooolto lungo"
+        messageTitle={
+          "Titolo del messaggio scritto da una persona davvero prolissa"
+        }
+        serviceLogos={[{ uri: `${cdnPath}5779711000.png` }]}
+        isRead={true}
+      />
+    </DSComponentViewerBox>
+  </VStack>
 );
 
 const renderListItemInfoCopy = () => (
@@ -406,7 +496,6 @@ const renderListItemHeader = () => (
 /* LIST ITEM TRANSACTION */
 
 /* Mock assets */
-const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 const organizationLogoURI = {
   imageSource: `${cdnPath}82003830161.png`,
   name: "Comune di Milano"
