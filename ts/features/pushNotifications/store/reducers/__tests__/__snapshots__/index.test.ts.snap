@@ -15,6 +15,10 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
   "pendingMessage": null,
   "userBehaviour": {
     "engagementScreenShown": false,
+    "pushNotificationsBanner": {
+      "forceDismissionDate": undefined,
+      "timesDismissed": 0,
+    },
   },
 }
 `;
@@ -34,6 +38,10 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
   "pendingMessage": null,
   "userBehaviour": {
     "engagementScreenShown": false,
+    "pushNotificationsBanner": {
+      "forceDismissionDate": undefined,
+      "timesDismissed": 0,
+    },
   },
 }
 `;
