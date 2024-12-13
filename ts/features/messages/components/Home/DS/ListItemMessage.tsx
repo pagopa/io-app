@@ -1,22 +1,24 @@
 import {
   AnimatedMessageCheckbox,
   Avatar,
+  BodySmall,
   H6,
   HSpacer,
   IOColors,
+  IOListItemStyles,
   IOStyles,
   IOVisualCostants,
-  BodySmall,
   Tag,
   useIOTheme,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import React, { ComponentProps } from "react";
+import { ImageURISource, Pressable, StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
-import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { AvatarDouble } from "./AvatarDouble";
+import { useListItemSpringAnimation } from "./useListItemSpringAnimation";
 
 export const ListItemMessageStandardHeight = 95;
 export const ListItemMessageEnhancedHeight = 133;
@@ -63,7 +65,16 @@ export type ListItemMessage = WithTestID<{
   selected?: boolean;
   serviceLogos?: ReadonlyArray<ImageURISource>;
   serviceName: string;
-}>;
+}> &
+  Pick<
+    ComponentProps<typeof Pressable>,
+    | "onPress"
+    | "onLongPress"
+    | "accessibilityLabel"
+    | "accessibilityHint"
+    | "accessibilityState"
+    | "accessibilityRole"
+  >;
 
 type BadgeComponentProps = {
   color?: IOColors;
@@ -83,6 +94,7 @@ const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
 
 export const ListItemMessage = ({
   accessibilityLabel,
+  accessibilityRole,
   badgeText,
   badgeVariant,
   doubleAvatar,
@@ -99,93 +111,114 @@ export const ListItemMessage = ({
 }: ListItemMessage) => {
   const theme = useIOTheme();
 
+  const { onPressIn, onPressOut, animatedScaleStyle, animatedBackgroundStyle } =
+    useListItemSpringAnimation();
+
   return (
-    <CustomPressableListItemBase
+    <Pressable
       onPress={onPress}
-      onLongPress={onLongPress}
-      selected={selected}
       testID={testID}
+      accessible={true}
+      onLongPress={onLongPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+      accessibilityRole={accessibilityRole || "button"}
       accessibilityLabel={accessibilityLabel}
-      minHeight={
-        badgeText && badgeVariant
-          ? ListItemMessageEnhancedHeight
-          : ListItemMessageStandardHeight
-      }
+      style={{
+        backgroundColor: selected ? IOColors["blueIO-50"] : undefined,
+        minHeight:
+          badgeText && badgeVariant
+            ? ListItemMessageEnhancedHeight
+            : ListItemMessageStandardHeight
+      }}
     >
-      <View style={styles.container}>
-        <View style={styles.serviceLogoAndSelectionContainer}>
-          <View
-            accessibilityElementsHidden={true}
-            importantForAccessibility="no-hide-descendants"
-            style={styles.serviceLogoContainer}
-          >
-            {doubleAvatar ? (
-              <AvatarDouble backgroundLogoUri={serviceLogos} />
-            ) : (
-              <Avatar logoUri={serviceLogos} size="small" />
-            )}
-            <View
-              style={[
-                StyleSheet.absoluteFill,
-                {
-                  pointerEvents: "none"
-                }
-              ]}
-            >
-              <AnimatedMessageCheckbox checked={selected} />
+      <Animated.View
+        style={[
+          IOListItemStyles.listItem,
+          !selected ? animatedBackgroundStyle : undefined,
+          { flexGrow: 1, justifyContent: "center" }
+        ]}
+      >
+        <Animated.View
+          style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
+        >
+          <View style={styles.container}>
+            <View style={styles.serviceLogoAndSelectionContainer}>
+              <View
+                accessibilityElementsHidden={true}
+                importantForAccessibility="no-hide-descendants"
+                style={styles.serviceLogoContainer}
+              >
+                {doubleAvatar ? (
+                  <AvatarDouble backgroundLogoUri={serviceLogos} />
+                ) : (
+                  <Avatar logoUri={serviceLogos} size="small" />
+                )}
+                <View
+                  style={[
+                    StyleSheet.absoluteFill,
+                    {
+                      pointerEvents: "none"
+                    }
+                  ]}
+                >
+                  <AnimatedMessageCheckbox checked={selected} />
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <View style={styles.textContainer}>
-          <View style={styles.organizationContainer}>
-            {/* We use 'flexGrow: 1, flexShrink: 1' instead of 'flex: 1'
+            <View style={styles.textContainer}>
+              <View style={styles.organizationContainer}>
+                {/* We use 'flexGrow: 1, flexShrink: 1' instead of 'flex: 1'
                 in order to keep a consistent styling approach between
                 react and react-native (on react-native, 'flex: 1' does
                 something similar to 'flex-grow') */}
-            <H6
-              numberOfLines={1}
-              color={theme["textBody-default"]}
-              style={{ flexGrow: 1, flexShrink: 1 }}
-            >
-              {organizationName}
-            </H6>
-            <BodySmall
-              color={theme["textBody-tertiary"]}
-              weight="Regular"
-              style={{ marginLeft: 8 }}
-            >
-              {formattedDate}
-            </BodySmall>
-          </View>
-          <View style={styles.serviceNameAndMessageTitleContainer}>
-            <BodySmall numberOfLines={2} style={IOStyles.flex}>
-              <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
-              <BodySmall weight="Regular">{messageTitle}</BodySmall>
-            </BodySmall>
-            {!isRead && (
-              <View style={styles.messageReadContainer}>
-                <BadgeComponent />
+                <H6
+                  numberOfLines={1}
+                  color={theme["textBody-default"]}
+                  style={{ flexGrow: 1, flexShrink: 1 }}
+                >
+                  {organizationName}
+                </H6>
+                <BodySmall
+                  color={theme["textBody-tertiary"]}
+                  weight="Regular"
+                  style={{ marginLeft: 8 }}
+                >
+                  {formattedDate}
+                </BodySmall>
               </View>
-            )}
-          </View>
-          {badgeText && badgeVariant && (
-            <View style={styles.badgeContainer}>
-              <Tag text={badgeText} variant={badgeVariant} />
-              {badgeVariant === "legalMessage" && (
-                <>
-                  <HSpacer size={8} />
-                  <Tag
-                    variant="attachment"
-                    iconAccessibilityLabel={I18n.t(
-                      "features.pn.details.attachmentsSection.title"
-                    )}
-                  />
-                </>
+              <View style={styles.serviceNameAndMessageTitleContainer}>
+                <BodySmall numberOfLines={2} style={IOStyles.flex}>
+                  <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
+                  <BodySmall weight="Regular">{messageTitle}</BodySmall>
+                </BodySmall>
+                {!isRead && (
+                  <View style={styles.messageReadContainer}>
+                    <BadgeComponent />
+                  </View>
+                )}
+              </View>
+              {badgeText && badgeVariant && (
+                <View style={styles.badgeContainer}>
+                  <Tag text={badgeText} variant={badgeVariant} />
+                  {badgeVariant === "legalMessage" && (
+                    <>
+                      <HSpacer size={8} />
+                      <Tag
+                        variant="attachment"
+                        iconAccessibilityLabel={I18n.t(
+                          "features.pn.details.attachmentsSection.title"
+                        )}
+                      />
+                    </>
+                  )}
+                </View>
               )}
             </View>
-          )}
-        </View>
-      </View>
-    </CustomPressableListItemBase>
+          </View>
+        </Animated.View>
+      </Animated.View>
+    </Pressable>
   );
 };

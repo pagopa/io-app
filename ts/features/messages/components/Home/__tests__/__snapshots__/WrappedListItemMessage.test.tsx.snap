@@ -368,14 +368,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 133,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 133,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -1328,14 +1324,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 133,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 133,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -2343,14 +2335,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 133,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 133,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -3330,14 +3318,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 133,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 133,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -4372,14 +4356,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 95,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 95,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -5226,14 +5206,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 95,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 95,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -6135,14 +6111,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 95,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 95,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
@@ -6868,14 +6840,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
                         style={
-                          [
-                            {
-                              "backgroundColor": undefined,
-                            },
-                            {
-                              "minHeight": 95,
-                            },
-                          ]
+                          {
+                            "backgroundColor": undefined,
+                            "minHeight": 95,
+                          }
                         }
                         testID="wrapped_message_list_item_0"
                       >
