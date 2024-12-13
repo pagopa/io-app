@@ -21,12 +21,12 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     sessionToken
   );
 
-  // Update wallet instance status
-  yield* put(itwUpdateWalletInstanceStatus(walletInstanceStatus));
-
   if (walletInstanceStatus.is_revoked) {
     yield* call(handleWalletInstanceResetSaga);
   }
+
+  // Update wallet instance status
+  yield* put(itwUpdateWalletInstanceStatus(walletInstanceStatus));
 }
 
 /**
