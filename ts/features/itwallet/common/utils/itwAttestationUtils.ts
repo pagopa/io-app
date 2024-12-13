@@ -7,7 +7,6 @@ import {
 import { itwWalletProviderBaseUrl } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { createItWalletFetch } from "../../api/client";
-import { RevocationReason } from "../../walletInstance/store/reducers";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
   generateIntegrityHardwareKeyTag,
@@ -92,16 +91,3 @@ export const getWalletInstanceStatus = (
     walletProviderBaseUrl: itwWalletProviderBaseUrl,
     appFetch: createItWalletFetch(itwWalletProviderBaseUrl, sessionToken)
   });
-
-/**
- * Map an optional string `revocationReason` to a value of the `RevocationReason` enum.
- * @param revocationReason - An optional string representing the reason for revocation.
- * @returns A value of the `RevocationReason` enum if the string `revocationReason`
- * matches one of the enum values, otherwise `undefined`.
- */
-export const toRevocationReason = (
-  revocationReason?: string
-): RevocationReason | undefined =>
-  Object.values(RevocationReason).includes(revocationReason as RevocationReason)
-    ? (revocationReason as RevocationReason)
-    : undefined;

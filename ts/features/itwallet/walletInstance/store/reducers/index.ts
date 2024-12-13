@@ -6,26 +6,18 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
-import {
-  isWalletInstanceAttestationValid,
-  toRevocationReason
-} from "../../../common/utils/itwAttestationUtils";
+import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus
 } from "../actions";
-
-export enum RevocationReason {
-  CERTIFICATE_REVOKED_BY_ISSUER = "CERTIFICATE_REVOKED_BY_ISSUER",
-  NEW_WALLET_INSTANCE_CREATED = "NEW_WALLET_INSTANCE_CREATED",
-  REVOKED_BY_USER = "REVOKED_BY_USER"
-}
+import { WalletInstanceRevocationReason } from "../../../common/utils/itwTypesUtils";
 
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
   isRevoked: boolean;
-  revocationReason?: RevocationReason;
+  revocationReason?: WalletInstanceRevocationReason;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
@@ -52,7 +44,7 @@ const reducer = (
       return {
         ...state,
         isRevoked: action.payload.is_revoked,
-        revocationReason: toRevocationReason(action.payload.revocation_reason)
+        revocationReason: action.payload.revocation_reason
       };
     }
 

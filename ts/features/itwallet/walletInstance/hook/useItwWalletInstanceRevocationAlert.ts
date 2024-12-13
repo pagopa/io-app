@@ -1,8 +1,8 @@
 import { Alert, AlertButton, Linking } from "react-native";
 import React from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
-import { RevocationReason } from "../store/reducers";
 import I18n from "../../../../i18n";
+import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 
 const closeButtonText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.closeButton"
@@ -19,7 +19,7 @@ const itwMinIntergityReqUrl = "https://io.italia.it/documenti-su-io/faq/#n1_12";
  */
 export const useItwWalletInstanceRevocationAlert = (walletInstanceStatus: {
   isRevoked: boolean;
-  revocationReason?: RevocationReason;
+  revocationReason?: WalletInstanceRevocationReason;
 }) => {
   React.useEffect(() => {
     if (walletInstanceStatus.isRevoked) {
@@ -31,9 +31,11 @@ export const useItwWalletInstanceRevocationAlert = (walletInstanceStatus: {
 /**
  * Displays an alert based on the revocation reason.
  */
-const showWalletRevocationAlert = (revocationReason?: RevocationReason) => {
+const showWalletRevocationAlert = (
+  revocationReason?: WalletInstanceRevocationReason
+) => {
   switch (revocationReason) {
-    case RevocationReason.CERTIFICATE_REVOKED_BY_ISSUER:
+    case "CERTIFICATE_REVOKED_BY_ISSUER":
       showAlert(
         I18n.t(
           "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.title"
@@ -55,7 +57,7 @@ const showWalletRevocationAlert = (revocationReason?: RevocationReason) => {
       );
       break;
 
-    case RevocationReason.NEW_WALLET_INSTANCE_CREATED:
+    case "NEW_WALLET_INSTANCE_CREATED":
       showAlert(
         I18n.t(
           "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.title"
@@ -77,7 +79,7 @@ const showWalletRevocationAlert = (revocationReason?: RevocationReason) => {
         ]
       );
       break;
-    case RevocationReason.REVOKED_BY_USER:
+    case "REVOKED_BY_USER":
       showAlert(
         I18n.t(
           "features.itWallet.walletInstanceRevoked.alert.revokedByUser.title"
