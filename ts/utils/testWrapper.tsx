@@ -3,8 +3,8 @@ import { render, RenderOptions } from "@testing-library/react-native";
 import React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
-import * as linkingSubscription from "../navigation/linkingSubscription";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
+import * as linkingSubscription from "../navigation/linkingSubscription";
 
 /**
  * This should be used to test component in a new navigator
