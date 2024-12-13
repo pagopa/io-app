@@ -199,7 +199,7 @@ const ItwCieIdLoginScreen = () => {
         () => null,
         (url: string) => (
           <WebView
-            key="cieid_webview"
+            testID="cieid-webview"
             cacheEnabled={false}
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
