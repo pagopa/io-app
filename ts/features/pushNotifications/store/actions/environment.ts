@@ -6,7 +6,11 @@ export const updateSystemNotificationsEnabled = createStandardAction(
 export const setPushPermissionsRequestDuration = createStandardAction(
   "SET_PUSH_PERMISSIONS_REQUEST_DURATION"
 )<number>();
+export const setEngagementScreenShown = createStandardAction(
+  "SET_ENGAGEMENT_SCREEN_SHOWN"
+)<void>();
 
 export type NotificationPermissionsActions =
   | ActionType<typeof updateSystemNotificationsEnabled>
-  | ActionType<typeof setPushPermissionsRequestDuration>;
+  | ActionType<typeof setPushPermissionsRequestDuration>
+  | ActionType<typeof setEngagementScreenShown>;
