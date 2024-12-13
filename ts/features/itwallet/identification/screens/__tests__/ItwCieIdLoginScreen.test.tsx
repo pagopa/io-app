@@ -1,7 +1,7 @@
 /* eslint-disable functional/no-let */
 import React from "react";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createActor } from "xstate";
 import _ from "lodash";
 import { Linking } from "react-native";
@@ -64,7 +64,7 @@ describe("ItwCieIdLoginScreen", () => {
     expect(Linking.openURL).not.toHaveBeenCalled();
   });
 
-  it("should open CieID app when it is installed (iOS)", () => {
+  it("should open CieID app when it is installed (iOS)", async () => {
     (isCieIdAvailable as jest.Mock).mockImplementation(() => true);
     mockIsAndroid = false;
     mockIsIOS = true;
@@ -73,8 +73,10 @@ describe("ItwCieIdLoginScreen", () => {
     const { getByTestId } = renderComponent();
     const webView = getByTestId("cieid-webview");
 
-    fireEvent(webView, "onShouldStartLoadWithRequest", {
-      url: "https://idserver.servizicie.interno.gov.it/idp/login/livello2"
+    await waitFor(() => {
+      fireEvent(webView, "onShouldStartLoadWithRequest", {
+        url: "https://idserver.servizicie.interno.gov.it/idp/login/livello2"
+      });
     });
     expect(openCieIdApp).not.toHaveBeenCalled();
     expect(Linking.openURL).toHaveBeenCalledTimes(1);
