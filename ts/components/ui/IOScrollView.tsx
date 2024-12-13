@@ -154,8 +154,8 @@ export const IOScrollView = ({
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
-  animatedRef,
   debugMode = false,
+  animatedRef,
   centerContent,
   refreshControlProps,
   contentContainerStyle,
@@ -245,6 +245,13 @@ export const IOScrollView = ({
     )
   }));
 
+  const ignoreSafeAreaMargin = React.useMemo(() => {
+    if (alertProps !== undefined) {
+      return true;
+    }
+    return headerConfig?.ignoreSafeAreaMargin;
+  }, [headerConfig?.ignoreSafeAreaMargin, alertProps]);
+
   /* Set custom header with `react-navigation` library using
      `useLayoutEffect` hook */
 
@@ -259,7 +266,7 @@ export const IOScrollView = ({
         header: () => (
           <HeaderSecondLevel
             {...headerConfig}
-            ignoreSafeAreaMargin={!!alertProps}
+            ignoreSafeAreaMargin={ignoreSafeAreaMargin}
             scrollValues={scrollValues}
           />
         ),
@@ -271,7 +278,7 @@ export const IOScrollView = ({
     navigation,
     scrollPositionAbsolute,
     snapOffset,
-    alertProps
+    ignoreSafeAreaMargin
   ]);
 
   const RefreshControlComponent = refreshControlProps ? (

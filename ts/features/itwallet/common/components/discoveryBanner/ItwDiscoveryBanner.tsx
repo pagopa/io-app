@@ -11,6 +11,8 @@ import {
   trackITWalletBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { useIODispatch } from "../../../../../store/hooks";
+import { itwCloseDiscoveryBanner } from "../../store/actions/preferences";
 
 /**
  * to use in flows where we want to handle the banner's visibility logic externally
@@ -31,6 +33,7 @@ export const ItwDiscoveryBanner = ({
   handleOnClose
 }: ItwDiscoveryBannerProps) => {
   const bannerRef = React.createRef<View>();
+  const dispatch = useIODispatch();
 
   const navigation = useIONavigation();
   const route = useRoute();
@@ -56,6 +59,7 @@ export const ItwDiscoveryBanner = ({
   const handleClose = () => {
     trackItWalletBannerClosure(trackBannerProperties);
     handleOnClose?.();
+    dispatch(itwCloseDiscoveryBanner());
   };
 
   return (
@@ -65,11 +69,11 @@ export const ItwDiscoveryBanner = ({
         viewRef={bannerRef}
         title={
           withTitle
-            ? I18n.t("features.itWallet.discovery.banner.title")
+            ? I18n.t("features.itWallet.discovery.banner.home.title")
             : undefined
         }
-        content={I18n.t("features.itWallet.discovery.banner.content")}
-        action={I18n.t("features.itWallet.discovery.banner.action")}
+        content={I18n.t("features.itWallet.discovery.banner.home.content")}
+        action={I18n.t("features.itWallet.discovery.banner.home.action")}
         pictogramName="itWallet"
         color="turquoise"
         size="big"
