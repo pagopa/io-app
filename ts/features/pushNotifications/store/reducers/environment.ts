@@ -1,13 +1,13 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import {
+  setEngagementScreenShown,
   setPushPermissionsRequestDuration,
   updateSystemNotificationsEnabled
 } from "../actions/environment";
 import { GlobalState } from "../../../../store/reducers/types";
 import { notificationsInfoScreenConsent } from "../actions/profileNotificationPermissions";
 import { applicationInitialized } from "../../../../store/actions/application";
-import { setEngagementScreenShown } from "../actions/userBehaviour";
 
 export type EnvironmentState = {
   applicationInitialized: boolean;

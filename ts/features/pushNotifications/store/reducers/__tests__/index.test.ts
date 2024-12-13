@@ -49,41 +49,36 @@ describe("shouldShowEngagementScreenSelector", () => {
     [false, true].forEach(onboardingInstructionsShown =>
       [false, true].forEach(systemNotificationsEnabled =>
         [false, true].forEach(userFromSuccessLogin =>
-          [10, 900].forEach(pushNotificationPermissionsRequestDuration =>
-            [false, true].forEach(engagementScreenShown => {
-              const expectedOutput =
-                userFromSuccessLogin &&
-                pushNotificationPermissionsRequestDuration < 750 &&
-                applicationInitialized &&
-                !onboardingInstructionsShown &&
-                !systemNotificationsEnabled &&
-                !engagementScreenShown;
-              it(`Should output '${expectedOutput}' when 'applicationInitialized' is '${applicationInitialized}' , 'onboardingInstructionsShown' is '${onboardingInstructionsShown}' , 'systemNotificationsEnabled' is '${systemNotificationsEnabled} ' and 'engagementScreenShown' is '${engagementScreenShown}' `, () => {
-                const state = {
-                  features: {
-                    loginFeatures: {
-                      loginInfo: {
-                        userFromSuccessLogin
-                      }
-                    }
-                  },
-                  notifications: {
-                    environment: {
-                      applicationInitialized,
-                      onboardingInstructionsShown,
-                      systemNotificationsEnabled,
-                      pushNotificationPermissionsRequestDuration
-                    },
-                    userBehaviour: {
-                      engagementScreenShown
+          [10, 900].forEach(pushNotificationPermissionsRequestDuration => {
+            const expectedOutput =
+              userFromSuccessLogin &&
+              !systemNotificationsEnabled &&
+              pushNotificationPermissionsRequestDuration < 750 &&
+              applicationInitialized &&
+              !onboardingInstructionsShown;
+
+            it(`Should output '${expectedOutput}' when 'applicationInitialized' is '${applicationInitialized}' , 'onboardingInstructionsShown' is '${onboardingInstructionsShown}' , 'systemNotificationsEnabled' is '${systemNotificationsEnabled} ' `, () => {
+              const state = {
+                features: {
+                  loginFeatures: {
+                    loginInfo: {
+                      userFromSuccessLogin
                     }
                   }
-                } as GlobalState;
-                const output = shouldShowEngagementScreenSelector(state);
-                expect(output).toBe(expectedOutput);
-              });
-            })
-          )
+                },
+                notifications: {
+                  environment: {
+                    applicationInitialized,
+                    onboardingInstructionsShown,
+                    systemNotificationsEnabled,
+                    pushNotificationPermissionsRequestDuration
+                  }
+                }
+              } as GlobalState;
+              const output = shouldShowEngagementScreenSelector(state);
+              expect(output).toBe(expectedOutput);
+            });
+          })
         )
       )
     )

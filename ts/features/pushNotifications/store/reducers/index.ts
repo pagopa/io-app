@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { merge } from "lodash";
 import { combineReducers } from "redux";
 import {
   createMigrate,
@@ -24,16 +23,14 @@ export const NOTIFICATIONS_STORE_VERSION = 0;
 export type PersistedNotificationsState = NotificationsState & PersistPartial;
 
 const migrations: MigrationManifest = {
-  // Add new push notifications banner dismissal feature
-  "0": (state: PersistedState) =>
-    merge(state, {
-      userBehaviour: {
-        pushNotificationsBanner: {
-          timesDismissed: 0,
-          forceDismissionDate: undefined
-        }
-      }
-    } as NotificationsState)
+  // Add new push notifications banner dismissal feature, also removal of old engagement screen logic
+  "0": (state: PersistedState) => ({
+    ...state,
+    userBehaviour: {
+      pushNotificationBannerDismissalCount: 0,
+      pushNotificationBannerForceDismissionDate: undefined
+    }
+  })
 };
 
 export type NotificationsState = {
@@ -69,6 +66,5 @@ export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
   userFromSuccessLoginSelector(state) &&
   !state.notifications.environment.systemNotificationsEnabled &&
   !hasUserSeenSystemNotificationsPromptSelector(state) &&
-  !state.notifications.userBehaviour.engagementScreenShown &&
   state.notifications.environment.applicationInitialized &&
   !state.notifications.environment.onboardingInstructionsShown;

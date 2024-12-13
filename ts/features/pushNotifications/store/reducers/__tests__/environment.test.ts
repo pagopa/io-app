@@ -4,11 +4,11 @@ import {
 } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
+  setEngagementScreenShown,
   setPushPermissionsRequestDuration,
   updateSystemNotificationsEnabled
 } from "../../actions/environment";
 import { notificationsInfoScreenConsent } from "../../actions/profileNotificationPermissions";
-import { setEngagementScreenShown } from "../../actions/userBehaviour";
 import {
   areNotificationPermissionsEnabled,
   environmentReducer,
