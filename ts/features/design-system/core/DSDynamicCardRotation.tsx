@@ -28,7 +28,7 @@ import {
   ViewStyle
 } from "react-native";
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   SensorType,
   interpolate,
   useAnimatedReaction,
@@ -86,33 +86,30 @@ export const DSDynamicCardRotation = () => {
   /* On first render, store the current device orientation
   using quaternions */
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const { qx, qy } = rotationSensor.sensor.value;
-  const initialQx = useSharedValue(0);
-  const initialQy = useSharedValue(0);
+  const { roll: initialRoll, pitch: initialPitch } =
+    rotationSensor.sensor.value;
 
+  const roll = useSharedValue(0);
+  const pitch = useSharedValue(0);
   const skiaTranslateX = useSharedValue(0);
   const skiaTranslateY = useSharedValue(0);
 
   useAnimatedReaction(
     () => rotationSensor.sensor.value,
-    s => {
-      initialQx.value = s.qx;
-      initialQy.value = s.qy;
+    sensor => {
+      roll.value = sensor.roll;
+      pitch.value = sensor.pitch;
     },
     []
   );
-
   /* Not all devices are in an initial flat position on a surface
     (e.g. a table) then we use relative rotation values,
     not absolute ones  */
-  const relativeQx = useDerivedValue(() => qx - initialQx.value);
-  const relativeQy = useDerivedValue(() => qy - initialQy.value);
+  const relativeRoll = useDerivedValue(() => -(initialRoll - roll.value));
+  const relativePitch = useDerivedValue(() => initialPitch - pitch.value);
 
   // eslint-disable-next-line no-console
-  console.log(
-    "Sensor values:",
-    `qx: ${initialQx.value}, qy: ${initialQy.value}`
-  );
+  console.log("Sensor values:", `qx: ${roll.value}, qy: ${pitch.value}`);
 
   /* Get both card and light sizes to set the basic boundaries */
   const [cardSize, setCardSize] = useState<CardSize>();
@@ -140,23 +137,23 @@ export const DSDynamicCardRotation = () => {
     2;
 
   /* We don't need to consider the whole
-    quaternion range, just the 1/10 */
-  const quaternionRange: number = 0.1;
+    sensor range, just the 1/10 */
+  const sensorRange: number = 0.1;
 
   /* Calculate the light position using quaternions */
   const lightAnimatedStyle = useAnimatedStyle(() => {
     const translateX = interpolate(
-      relativeQx.value,
-      [-quaternionRange, quaternionRange],
+      relativeRoll.value,
+      [-sensorRange, sensorRange],
       [maxTranslateX, -maxTranslateX],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     );
 
     const translateY = interpolate(
-      relativeQy.value,
-      [-quaternionRange, quaternionRange],
+      relativePitch.value,
+      [-sensorRange, sensorRange],
       [-maxTranslateY, maxTranslateY],
-      Extrapolate.CLAMP
+      Extrapolation.CLAMP
     );
 
     return {
@@ -171,20 +168,20 @@ export const DSDynamicCardRotation = () => {
   const skiaLightTranslateValues = useDerivedValue(() => {
     skiaTranslateX.value = withSpring(
       interpolate(
-        relativeQx.value,
-        [-quaternionRange, quaternionRange],
+        relativeRoll.value,
+        [-sensorRange, sensorRange],
         [maxTranslateX, -maxTranslateX],
-        Extrapolate.CLAMP
+        Extrapolation.CLAMP
       ),
       springConfig
     );
 
     skiaTranslateY.value = withSpring(
       interpolate(
-        relativeQy.value,
-        [-quaternionRange, quaternionRange],
+        relativePitch.value,
+        [-sensorRange, sensorRange],
         [-maxTranslateY, maxTranslateY],
-        Extrapolate.CLAMP
+        Extrapolation.CLAMP
       ),
       springConfig
     );
@@ -195,17 +192,6 @@ export const DSDynamicCardRotation = () => {
       { scale: lightScaleMultiplier }
     ];
   });
-
-  // const CardMask = () => (
-  //   <RoundedRect
-  //     x={0}
-  //     y={0}
-  //     width={cardSize?.width ?? 0}
-  //     height={cardSize?.height ?? 0}
-  //     r={cardBorderRadius}
-  //     color={IOColors.black}
-  //   />
-  // );
 
   // Inner card (border excluded)
   const CardInnerMask = () => (
@@ -316,24 +302,6 @@ export const DSDynamicCardRotation = () => {
       </Mask>
     );
   };
-
-  // const CardEUCountry = () => {
-  //   const countryFlag = useSVG(
-  //     require("../../../../img/dynamicCardRotation/driver-license-it-flag.svg")
-  //   );
-
-  //   return (
-  //     countryFlag && (
-  //       <ImageSVG
-  //         x={(cardSize?.width ?? 0) - flagDistanceFromEdge - flagSize}
-  //         y={flagDistanceFromEdge}
-  //         svg={countryFlag}
-  //         width={flagSize}
-  //         height={flagSize}
-  //       />
-  //     )
-  //   );
-  // };
 
   const CardBorderMask = () => (
     <Mask mode="alpha" mask={<CardLight />}>
@@ -449,6 +417,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     aspectRatio: cardAspectRatio,
+    borderRadius: 24,
+    borderCurve: "continuous",
     backgroundColor: IOColors["hanPurple-250"]
   },
   debugInfo: {
