@@ -17,8 +17,8 @@ import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
 import { WalletCard } from "../../types";
 import { WalletCardsContainer } from "../WalletCardsContainer";
-import { RevocationReason } from "../../../itwallet/walletInstance/store/reducers";
 import I18n from "../../../../i18n";
+import { WalletInstanceRevocationReason } from "../../../itwallet/common/utils/itwTypesUtils";
 
 type RenderOptions = {
   cards?: WalletCardsState;
@@ -27,7 +27,7 @@ type RenderOptions = {
   isItwValid?: boolean;
   isWalletEmpty?: boolean;
   isRevoked?: boolean;
-  revocationReason?: RevocationReason;
+  revocationReason?: WalletInstanceRevocationReason;
 };
 
 jest.spyOn(Alert, "alert");
@@ -180,7 +180,7 @@ describe("WalletCardsContainer", () => {
   it("should show alert for NEW_WALLET_INSTANCE_CREATED", () => {
     renderComponent({
       isRevoked: true,
-      revocationReason: RevocationReason.NEW_WALLET_INSTANCE_CREATED
+      revocationReason: "NEW_WALLET_INSTANCE_CREATED"
     });
 
     expect(Alert.alert).toHaveBeenCalledWith(
@@ -207,7 +207,7 @@ describe("WalletCardsContainer", () => {
   it("should show alert for CERTIFICATE_REVOKED_BY_ISSUER", () => {
     renderComponent({
       isRevoked: true,
-      revocationReason: RevocationReason.CERTIFICATE_REVOKED_BY_ISSUER
+      revocationReason: "CERTIFICATE_REVOKED_BY_ISSUER"
     });
 
     expect(Alert.alert).toHaveBeenCalledWith(
@@ -234,7 +234,7 @@ describe("WalletCardsContainer", () => {
   it("should show alert for REVOKED_BY_USER", () => {
     renderComponent({
       isRevoked: true,
-      revocationReason: RevocationReason.REVOKED_BY_USER
+      revocationReason: "REVOKED_BY_USER"
     });
 
     expect(Alert.alert).toHaveBeenCalledWith(
