@@ -22,8 +22,8 @@ import {
   trackSaveCredentialSuccess,
   updateITWStatusAndIDProperties
 } from "../../analytics";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 

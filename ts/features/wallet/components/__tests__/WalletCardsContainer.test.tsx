@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { Alert } from "react-native";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -16,6 +17,7 @@ import {
 import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesUtils";
 import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
+import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
 import { WalletCardsState } from "../../store/reducers/cards";
 import * as walletSelectors from "../../store/selectors";
 import { WalletCard } from "../../types";
@@ -24,7 +26,9 @@ import {
   OtherWalletCardsContainer,
   WalletCardsContainer
 } from "../WalletCardsContainer";
+import I18n from "../../../../i18n";
 
+jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
   Layout: {
@@ -355,6 +359,108 @@ describe("OtherWalletCardsContainer", () => {
     ).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
+  });
+
+  it("should not show alert if not revoked", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        isRevoked: false,
+        revocationReason: ""
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).not.toHaveBeenCalled();
+  });
+
+  it("should show alert for NEW_WALLET_INSTANCE_CREATED", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        isRevoked: true,
+        revocationReason: "NEW_WALLET_INSTANCE_CREATED"
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButton"
+          )
+        },
+        {
+          text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+          onPress: expect.any(Function)
+        }
+      ]
+    );
+  });
+
+  it("should show alert for CERTIFICATE_REVOKED_BY_ISSUER", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        isRevoked: true,
+        revocationReason: "CERTIFICATE_REVOKED_BY_ISSUER"
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButton"
+          )
+        },
+        {
+          text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+          onPress: expect.any(Function)
+        }
+      ]
+    );
+  });
+
+  it("should show alert for REVOKED_BY_USER", () => {
+    jest
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .mockImplementation(() => ({
+        isRevoked: true,
+        revocationReason: "REVOKED_BY_USER"
+      }));
+
+    renderComponent(WalletCardsContainer);
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByUser.title"
+      ),
+      I18n.t(
+        "features.itWallet.walletInstanceRevoked.alert.revokedByUser.content"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.walletInstanceRevoked.alert.closeButtonAlt"
+          )
+        }
+      ]
+    );
   });
 });
 

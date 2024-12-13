@@ -28,8 +28,8 @@ import {
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
-import { itwWalletInstanceStatusSelector } from "../../itwallet/walletInstance/store/reducers";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
+import { itwWalletInstanceStatusSelector } from "../../itwallet/walletInstance/store/selectors";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
