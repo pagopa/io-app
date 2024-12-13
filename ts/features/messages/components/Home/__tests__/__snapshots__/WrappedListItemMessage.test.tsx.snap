@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1`] = `
 <View
   style={
     {
@@ -960,7 +960,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, from SEND, unread message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, from SEND, unread message 1`] = `
 <View
   style={
     {
@@ -1975,7 +1975,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, not from SEND, contains paid payment, read message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, not from SEND, contains paid payment, read message 1`] = `
 <View
   style={
     {
@@ -2962,7 +2962,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, not from SEND, contains paid payment, unread message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, not from SEND, contains paid payment, unread message 1`] = `
 <View
   style={
     {
@@ -4004,7 +4004,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, not from SEND, contains unpaid payment, read message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, not from SEND, contains unpaid payment, read message 1`] = `
 <View
   style={
     {
@@ -4858,7 +4858,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, not from SEND, contains unpaid payment, unread message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, not from SEND, contains unpaid payment, unread message 1`] = `
 <View
   style={
     {
@@ -5767,7 +5767,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, not from SEND, not a payment, read message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, not from SEND, not a payment, read message 1`] = `
 <View
   style={
     {
@@ -6500,7 +6500,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
 </View>
 `;
 
-exports[`WrappedMessageListItem should match snapshot, not from SEND, not a payment, unread message 1`] = `
+exports[`WrappedListItemMessage should match snapshot, not from SEND, not a payment, unread message 1`] = `
 <View
   style={
     {

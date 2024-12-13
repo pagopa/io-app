@@ -18,8 +18,8 @@ import I18n from "../../../../../i18n";
 import { CustomPressableListItemBase } from "./CustomPressableListItemBase";
 import { AvatarDouble } from "./AvatarDouble";
 
-export const StandardHeight = 95;
-export const EnhancedHeight = 133;
+export const ListItemMessageStandardHeight = 95;
+export const ListItemMessageEnhancedHeight = 133;
 
 const styles = StyleSheet.create({
   badgeContainer: { flexDirection: "row", marginTop: 8 },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   textContainer: { ...IOStyles.flex, marginLeft: 8 }
 });
 
-type MessageListItemProps = WithTestID<{
+export type ListItemMessage = WithTestID<{
   accessibilityLabel: string;
   badgeText?: string;
   badgeVariant?: "legalMessage" | "success";
@@ -81,7 +81,7 @@ const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
   </Svg>
 );
 
-export const MessageListItem = ({
+export const ListItemMessage = ({
   accessibilityLabel,
   badgeText,
   badgeVariant,
@@ -96,7 +96,7 @@ export const MessageListItem = ({
   selected,
   serviceLogos,
   testID
-}: MessageListItemProps) => {
+}: ListItemMessage) => {
   const theme = useIOTheme();
 
   return (
@@ -106,7 +106,11 @@ export const MessageListItem = ({
       selected={selected}
       testID={testID}
       accessibilityLabel={accessibilityLabel}
-      minHeight={badgeText && badgeVariant ? EnhancedHeight : StandardHeight}
+      minHeight={
+        badgeText && badgeVariant
+          ? ListItemMessageEnhancedHeight
+          : ListItemMessageStandardHeight
+      }
     >
       <View style={styles.container}>
         <View style={styles.serviceLogoAndSelectionContainer}>

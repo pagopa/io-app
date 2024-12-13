@@ -30,19 +30,19 @@ import {
   accessibilityLabelForMessageItem,
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
-import { MessageListItem } from "./DS/MessageListItem";
+import { ListItemMessage } from "./DS/ListItemMessage";
 
-type WrappedMessageListItemProps = {
+type WrappedListItemMessage = {
   index: number;
   message: UIMessage;
   source: MessageListCategory | "SEARCH";
 };
 
-export const WrappedMessageListItem = ({
+export const WrappedListItemMessage = ({
   index,
   message,
   source
-}: WrappedMessageListItemProps) => {
+}: WrappedListItemMessage) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
@@ -157,7 +157,7 @@ export const WrappedMessageListItem = ({
   ]);
 
   return (
-    <MessageListItem
+    <ListItemMessage
       accessibilityLabel={accessibilityLabel}
       badgeText={badgeText}
       badgeVariant={badgeVariant}
@@ -177,9 +177,9 @@ export const WrappedMessageListItem = ({
 };
 
 export const isInboxOrArchiveSource = (
-  source: WrappedMessageListItemProps["source"]
+  source: WrappedListItemMessage["source"]
 ) => source === "ARCHIVE" || isInboxSource(source);
-export const isInboxSource = (source: WrappedMessageListItemProps["source"]) =>
+export const isInboxSource = (source: WrappedListItemMessage["source"]) =>
   source === "INBOX";
-export const isSearchSource = (source: WrappedMessageListItemProps["source"]) =>
+export const isSearchSource = (source: WrappedListItemMessage["source"]) =>
   source === "SEARCH";

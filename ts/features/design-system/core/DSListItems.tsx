@@ -25,6 +25,7 @@ import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/Cg
 import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
+import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -47,6 +48,11 @@ export const DSListItems = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ListItemNav</H4>
           {renderListItemNav()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemMessage</H4>
+          {renderListItemMessage()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -179,6 +185,12 @@ const renderListItemNav = () => (
       />
     </DSComponentViewerBox>
   </VStack>
+);
+
+const renderListItemMessage = () => (
+  <DSComponentViewerBox name="ListItemMessageSkeleton">
+    <ListItemMessageSkeleton accessibilityLabel="Loading message…" />
+  </DSComponentViewerBox>
 );
 
 const renderListItemInfoCopy = () => (
