@@ -7,11 +7,11 @@ const NEW_MESSAGES_COUNT_TO_RESET_FORCE_DISMISS = 4;
 export const pushNotificationsBannerForceDismissionDateSelector = (
   state: GlobalState
 ) =>
-  state.notifications.userBehaviour.pushNotificationsBanner.forceDismissionDate;
+  state.notifications.userBehaviour.pushNotificationBannerForceDismissionDate;
 
 export const timesPushNotificationBannerDismissedSelector = (
   state: GlobalState
-) => state.notifications.userBehaviour.pushNotificationsBanner.timesDismissed;
+) => state.notifications.userBehaviour.pushNotificationBannerDismissalCount;
 
 export const shouldResetNotificationBannerDismissStateSelector = (
   state: GlobalState

@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { merge } from "lodash";
 import { combineReducers } from "redux";
 import {
   createMigrate,
@@ -12,6 +11,8 @@ import {
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isDevEnv } from "../../../../utils/environment";
+import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
 import { environmentReducer, EnvironmentState } from "./environment";
 import { installationReducer, InstallationState } from "./installation";
 import { pendingMessageReducer, PendingMessageState } from "./pendingMessage";
@@ -22,16 +23,14 @@ export const NOTIFICATIONS_STORE_VERSION = 0;
 export type PersistedNotificationsState = NotificationsState & PersistPartial;
 
 const migrations: MigrationManifest = {
-  // Add new push notifications banner dismissal feature
-  "0": (state: PersistedState) =>
-    merge(state, {
-      userBehaviour: {
-        pushNotificationsBanner: {
-          timesDismissed: 0,
-          forceDismissionDate: undefined
-        }
-      }
-    } as NotificationsState)
+  // Add new push notifications banner dismissal feature, also removal of old engagement screen logic
+  "0": (state: PersistedState) => ({
+    ...state,
+    userBehaviour: {
+      pushNotificationBannerDismissalCount: 0,
+      pushNotificationBannerForceDismissionDate: undefined
+    }
+  })
 };
 
 export type NotificationsState = {
@@ -64,7 +63,8 @@ export const persistedNotificationsReducer = persistReducer<
 >(notificationsPersistConfig, notificationsReducer);
 
 export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
+  userFromSuccessLoginSelector(state) &&
   !state.notifications.environment.systemNotificationsEnabled &&
-  !state.notifications.userBehaviour.engagementScreenShown &&
+  !hasUserSeenSystemNotificationsPromptSelector(state) &&
   state.notifications.environment.applicationInitialized &&
   !state.notifications.environment.onboardingInstructionsShown;
