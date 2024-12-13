@@ -7,7 +7,7 @@ import {
   Pictogram,
   IOPictograms,
   H6,
-  LabelSmall
+  BodySmall
 } from "@pagopa/io-app-design-system";
 
 type Props = {
@@ -25,9 +25,9 @@ const CameraPermissionView = (props: Props) => (
       {props.title}
     </H6>
     <VSpacer size={8} />
-    <LabelSmall weight="Regular" color="white" style={styles.text}>
+    <BodySmall weight="Regular" color="white" style={styles.text}>
       {props.body}
-    </LabelSmall>
+    </BodySmall>
     <VSpacer size={32} />
     <ButtonSolid
       label={props.action.label}

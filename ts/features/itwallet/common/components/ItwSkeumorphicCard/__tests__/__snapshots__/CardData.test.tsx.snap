@@ -210,24 +210,12 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -236,9 +224,11 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       Marco
     </Text>
@@ -260,24 +250,12 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -286,9 +264,11 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       Rossi
     </Text>
@@ -310,24 +290,12 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -336,9 +304,11 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       15/03/90
     </Text>
@@ -360,24 +330,12 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -386,9 +344,11 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       10008581
     </Text>
@@ -410,24 +370,12 @@ exports[`CardData should match snapshot for DC front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -436,9 +384,11 @@ exports[`CardData should match snapshot for DC front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       23/03/32
     </Text>
@@ -474,24 +424,12 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 18.75,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 18.75,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -500,9 +438,11 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       23/01/35
     </Text>
@@ -524,24 +464,12 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 18.75,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 18.75,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -550,9 +478,11 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       16/02/35
     </Text>
@@ -574,24 +504,12 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 18.75,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 18.75,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -600,9 +518,11 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       23/01/35
     </Text>
@@ -624,24 +544,12 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 18.75,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 18.75,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -650,9 +558,11 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       16/02/35
     </Text>
@@ -674,24 +584,12 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 18.75,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 18.75,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -700,9 +598,11 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       78
     </Text>
@@ -724,24 +624,12 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 18.75,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 18.75,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -750,9 +638,11 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       71 MS5118113X
     </Text>
@@ -821,24 +711,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -847,9 +725,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       ROSSI
     </Text>
@@ -871,24 +751,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -897,9 +765,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       MARCO
     </Text>
@@ -921,24 +791,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -947,9 +805,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       22/09/92
     </Text>
@@ -971,24 +831,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -997,9 +845,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       MILANO (MI)
     </Text>
@@ -1021,24 +871,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Bold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -1047,9 +885,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "700",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Bold"
     >
       08/01/2025
     </Text>
@@ -1071,24 +911,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -1097,9 +925,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       MC-RM
     </Text>
@@ -1121,24 +951,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Bold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -1147,9 +965,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "700",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Bold"
     >
       16/02/2035
     </Text>
@@ -1171,24 +991,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -1197,9 +1005,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       RM8375131N
     </Text>
@@ -1221,24 +1031,12 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
     <Text
       accessible={false}
       allowFontScaling={false}
-      color="black"
-      defaultColor="black"
-      defaultWeight="Semibold"
-      font="TitilliumSansPro"
-      fontStyle={
-        {
-          "fontSize": 22.916666666666668,
-          "textTransform": "none",
-        }
-      }
       lineBreakMode="head"
+      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
         [
-          {
-            "fontSize": 22.916666666666668,
-            "textTransform": "none",
-          },
+          {},
           {
             "color": "#0E0F13",
             "fontFamily": "Titillium Sans Pro",
@@ -1247,9 +1045,11 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
             "fontWeight": "600",
             "lineHeight": undefined,
           },
+          {
+            "textTransform": "none",
+          },
         ]
       }
-      weight="Semibold"
     >
       AM B
     </Text>

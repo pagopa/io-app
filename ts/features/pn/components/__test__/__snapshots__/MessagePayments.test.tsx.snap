@@ -885,9 +885,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -922,6 +922,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1135,9 +1136,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1172,6 +1173,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1385,9 +1387,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1422,6 +1424,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1635,9 +1638,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1672,6 +1675,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -1885,9 +1889,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -1922,6 +1926,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -2135,9 +2140,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -2172,6 +2177,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -2385,9 +2391,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -2422,6 +2428,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3116,9 +3123,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3153,6 +3160,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3366,9 +3374,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3403,6 +3411,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3616,9 +3625,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3653,6 +3662,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -3866,9 +3876,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -3903,6 +3913,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -4116,9 +4127,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -4153,6 +4164,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -4366,9 +4378,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -4403,6 +4415,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -4616,9 +4629,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -4653,6 +4666,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -5683,9 +5697,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -5720,6 +5734,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -5907,9 +5922,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -5944,6 +5959,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -6156,9 +6172,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -6193,6 +6209,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -6405,9 +6422,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -6442,6 +6459,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -6654,9 +6672,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -6691,6 +6709,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -7377,9 +7396,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -7414,6 +7433,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -7601,9 +7621,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -7638,6 +7658,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -7850,9 +7871,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -7887,6 +7908,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -8099,9 +8121,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -8136,6 +8158,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -8348,9 +8371,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -8385,6 +8408,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9071,9 +9095,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9108,6 +9132,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9295,9 +9320,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9332,6 +9357,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9544,9 +9570,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9581,6 +9607,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -9793,9 +9820,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -9830,6 +9857,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -10042,9 +10070,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -10079,6 +10107,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -10318,7 +10347,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   {
@@ -10885,9 +10914,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -10922,6 +10951,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11109,9 +11139,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11146,6 +11176,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11358,9 +11389,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11395,6 +11426,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11607,9 +11639,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11644,6 +11676,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -11856,9 +11889,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -11893,6 +11926,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -12132,7 +12166,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": undefined,
                                   },
                                   {
@@ -12699,9 +12733,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -12736,6 +12770,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={
@@ -13397,9 +13432,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                             <View
                               style={
                                 {
-                                  "columnGap": 12,
                                   "display": "flex",
                                   "flexDirection": "row",
+                                  "gap": 12,
                                 }
                               }
                             >
@@ -13434,6 +13469,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 </Text>
                                 <Text
                                   allowFontScaling={false}
+                                  dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.25}
                                   numberOfLines={2}
                                   style={

@@ -70,7 +70,7 @@ const RemoveAccountInfo = () => {
               "profile.main.privacy.removeAccount.info.body.p2.firstPart"
             )}
           </Body>
-          <Body weight="Bold">
+          <Body weight="Semibold">
             {I18n.t("profile.main.privacy.removeAccount.info.body.p2.lastPart")}
           </Body>
         </Body>

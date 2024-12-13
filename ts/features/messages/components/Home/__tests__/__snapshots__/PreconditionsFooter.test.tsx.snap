@@ -477,7 +477,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -592,7 +592,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": undefined,
                                       },
                                       {
@@ -1442,7 +1442,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -1557,7 +1557,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": undefined,
                                       },
                                       {

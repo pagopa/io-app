@@ -96,7 +96,7 @@ export const IdentificationInstructionsComponent = (props: {
     <View style={IOStyles.row}>
       <Body color="white" weight="Regular">
         {unlockCodePrefix}
-        <Body color="white" weight="Bold">
+        <Body color="white" weight="Semibold">
           {` ${unlockCode}`}
         </Body>
       </Body>
@@ -106,7 +106,7 @@ export const IdentificationInstructionsComponent = (props: {
     <View style={IOStyles.row}>
       <Body color="white" weight="Regular">
         {fingerprintPrefix}
-        <Body color="white" weight="Bold">{` ${fingerprint}`}</Body>
+        <Body color="white" weight="Semibold">{` ${fingerprint}`}</Body>
       </Body>
     </View>
   );
@@ -114,7 +114,7 @@ export const IdentificationInstructionsComponent = (props: {
     <View style={IOStyles.row}>
       <Body color="white" weight="Regular">
         {faceIdPrefix}
-        <Body color="white" weight="Bold">{` ${faceId}`}</Body>
+        <Body color="white" weight="Semibold">{` ${faceId}`}</Body>
       </Body>
     </View>
   );

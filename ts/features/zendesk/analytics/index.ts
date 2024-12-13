@@ -7,6 +7,7 @@ import { zendeskEnabled } from "../../../config";
 import { getNetworkErrorMessage } from "../../../utils/errors";
 import {
   getZendeskConfig,
+  getZendeskPaymentConfig,
   zendeskSelectedCategory,
   zendeskSupportCancel,
   zendeskSupportCompleted,
@@ -22,6 +23,8 @@ const trackZendesk =
       case getType(zendeskSupportCancel):
       case getType(getZendeskConfig.request):
       case getType(getZendeskConfig.success):
+      case getType(getZendeskPaymentConfig.success):
+      case getType(getZendeskPaymentConfig.request):
         return mp.track(action.type);
       case getType(zendeskSupportStart):
         return mp.track(action.type, {
@@ -38,6 +41,7 @@ const trackZendesk =
           category: action.payload.value
         });
       case getType(getZendeskConfig.failure):
+      case getType(getZendeskPaymentConfig.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload)
         });

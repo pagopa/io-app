@@ -1,8 +1,11 @@
-import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  makeFontStyleObject,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
@@ -15,7 +18,6 @@ import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
@@ -42,19 +44,12 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          header: ({ route }) => (
-            <HeaderFirstLevelHandler
-              currentRouteName={route.name as keyof MainTabParamsList}
-            />
+          tabBarLabelStyle: makeFontStyleObject(
+            11,
+            isDesignSystemEnabled ? "Titillio" : "TitilliumSansPro",
+            11,
+            "Regular"
           ),
-          tabBarLabelStyle: {
-            fontSize: isDesignSystemEnabled ? 10 : 12,
-            ...makeFontStyleObject(
-              "Regular",
-              false,
-              isDesignSystemEnabled ? "ReadexPro" : "TitilliumSansPro"
-            )
-          },
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
