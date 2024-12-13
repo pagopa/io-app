@@ -1,12 +1,6 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import {
-  assign,
-  createActor,
-  fromPromise,
-  StateFrom,
-  waitFor as waitForActor
-} from "xstate";
+import { assign, createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
