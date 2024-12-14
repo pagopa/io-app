@@ -1889,7 +1889,7 @@ cardComponent:
   lastUsage: "Letzte Verwendung"
   detailsAndTransactions: "Details und Transaktionen"
   pick: "Diese Zahlungsmethode verwenden"
-  removeCta: "Aus Wallet entfernen"
+  removeCta: "Aus dem Konto entfernen"
 messages:
   accessibility:
     message:
@@ -2307,7 +2307,7 @@ bonus:
     cta:
       activeBonus: Attiva Carta Giovani Nazionale
       back: Non ora
-      deactivateBonus: "Aus Wallet entfernen"
+      deactivateBonus: "Aus dem Konto entfernen"
       goToDetail: Usa la Carta
     detail:
       cta:
@@ -2517,7 +2517,7 @@ features:
         title: "pagoPA-Quittung"
         shareButton: "Speichern oder teilen"
         error: "Die Quittung konnte nicht abgerufen werden."
-        download: "Quittung erhalten"
+        download: "Quittung abrufen"
         hideFromList: Von der Liste verstecken
         delete:
           successful: "Die Quittung wurde ausgeblendet"
