@@ -601,7 +601,7 @@ authentication:
     card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
     card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
     card3-title: "Bezahle schnell eine Aufforderung in Papierform"
-    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"
+    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsmitteilung in Papierform bezahlen"
     card5-title: "Willkommen in IO!"
     card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
     card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
@@ -1005,11 +1005,11 @@ onboarding:
     continue: "Weiter"
     preview:
       accessibilityLabelPrefix: "Hier ein Beispiel:"
-      reminderOnPreviewOnTitle: "Du hast eine fällige Zahlungsaufforderung"
-      reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsaufforderung von ACI"
+      reminderOnPreviewOnTitle: "Du hast eine fällige Zahlungsmitteilung"
+      reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsmitteilung von ACI"
       reminderOffPreviewOnTitle: "Gemeinde Ipazia"
       reminderOffPreviewOnMessage: "Die Einschreibungen für die Sommerbetreuung sind offen"
-      reminderOnPreviewOffTitle: "Du hast eine fällige Zahlungsaufforderung"
+      reminderOnPreviewOffTitle: "Du hast eine fällige Zahlungsmitteilung"
       reminderOnPreviewOffMessage: "Öffne die App um sie zu bezahlen"
       reminderOffPreviewOffTitle: "Du hast eine neue Mitteilung"
       reminderOffPreviewOffMessage: "Öffne die App um sie zu lesen"
@@ -1162,7 +1162,7 @@ wallet:
     bpay:
       title: "Zahle auf IO mit BANCOMAT-Pay"
       description:
-        text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
+        text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsmitteilungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
         text3: "Tippe auf 'Weiter', um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
         text4: "Liste der verfügbaren Banken"
@@ -1847,7 +1847,7 @@ wallet:
         subtitle: "Weitere Informationen erhältst du bei deiner Bank."
       CANCELED_BY_USER:
         title: "Der Vorgang wurde abgebrochen"
-        subtitle: "Wenn du die Zahlungsaufforderung bezahlen willst, warte ein paar Minuten, bevor du es erneut versuchst."
+        subtitle: "Wenn du die Zahlungsmitteilung bezahlen willst, warte ein paar Minuten, bevor du es erneut versuchst."
       EXCESSIVE_AMOUNT:
         title: "Autorisierung verweigert"
         subtitle: "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
@@ -2012,7 +2012,7 @@ messageDetails:
     title: "Identifikationsdaten"
     messageId: "MitteilungsID"
     messageIdAccessibility: "MitteilungsID kopieren"
-    pagoPAHeader: "pagoPA Zahlungsaufforderung"
+    pagoPAHeader: "pagoPA Zahlungsmitteilung"
     noticeCode: "Zahlungskodex"
     noticeCodeAccessibility: "Zahlungskodex, kopieren"
     entityFiscalCode: "Steuernummer Körperschaft"
@@ -2407,7 +2407,7 @@ features:
       removeReminder: "Erinnerung entfernen"
       content: "Läuft am {{date}} um {{time}} ab"
     payments:
-      title: "pagoPA Zahlungsaufforderungen"
+      title: "pagoPA-Zahlungsmitteilungen"
       noticeCode: "Zahlungskodex"
       pay: "Zahlen"
   pn:
@@ -2430,9 +2430,9 @@ features:
         unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
         payments: "Zahlungen"
       paymentSection:
-        title: "pagoPA Zahlungsaufforderungen"
-        morePayments: "Alle Zahlungsaufforderungen anzeigen"
-        bottomSheetTitle: "Welche Zahlungsaufforderung möchtest du bezahlen?"
+        title: "pagoPA-Zahlungsmitteilungen"
+        morePayments: "Alle Zahlungsmitteilungen anzeigen"
+        bottomSheetTitle: "Welche Zahlungsmitteilung möchtest du bezahlen?"
       attachmentsSection:
         title: "Anhänge"
       f24Section:
@@ -2508,7 +2508,7 @@ features:
       button: "Alle anzeigen"
       empty:
         title: "Hier siehst du deine pagoPA-Quittungen"
-        content: "Bezahle eine Zahlungsaufforderung in der App oder mittels jedem pagoPA-fähigen Kanal."
+        content: "Bezahle eine Zahlungsmitteilung in der App oder mittels jedem pagoPA-fähigen Kanal."
       status:
         failure: "FEHLGESCHLAGEN"
         success: ""
@@ -2573,7 +2573,7 @@ support:
     devicePerformance: "Leistung des Geräts"
     devicePerformanceDataAndroid: "Speicher und Akkustand"
     devicePerformanceDataiOS: "Speicher ({{storage}}) und Akkustand"
-    stock: "Daten zur Zahlungsaufforderung"
+    stock: "Daten zur Zahlungsmitteilung"
     stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
     card: "Angaben zur Zahlungsmethode"
     cardValue: "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk"
@@ -2691,7 +2691,7 @@ transaction:
       debtor: "Schuldner"
       iuv: "IUV"
       subject: "Zahlungsgrund"
-      noticeCode: "Kodex der Zahlungsaufforderung"
+      noticeCode: "Kodex der Zahlungsmitteilung"
       taxCode: "Steuernummer Körperschaft"
 permissionRequest:
   gallery:
