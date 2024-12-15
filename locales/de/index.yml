@@ -697,7 +697,7 @@ authentication:
       subtitle: "Um dich anzumelden, musst du mindestens 18 Jahre alt sein."
     missing_saml_response:
       title: "Es war nicht möglich, dich anzumelden"
-      subtitle: "Es ist derzeit nicht möglich, sich mit deinem SPID-Identitätsanbieter anzumelden. Bitte versuche es in ein paar Minuten erneut."
+      subtitle: "Es ist derzeit nicht möglich, dich mit deinem SPID-Identitätsanbieter anzumelden. Bitte versuche es in ein paar Minuten erneut."
     generic:
       title: "Es war nicht möglich dich anzumelden"
       subtitle: "Beim Anmelden ist ein Problem aufgetreten. Bitte versuche es in ein paar Minuten erneut."
