@@ -210,7 +210,7 @@ tablet:
   message: "Die Benutzeroberfläche von IO ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar."
 rooted:
   title: "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!"
-  body: "Wenn du auf “Weiter” klickst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App."
+  body: "Wenn du auf 'Weiter' klickst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App."
   learnMoreButton:
     title: "Was bedeutet das?"
   learnMoreBottomsheet:
@@ -326,9 +326,9 @@ profile:
         description: "Dein Profil und deine persönlichen Daten löschen"
         alert:
           activeBonusTitle: "Dein Profil löschen"
-          activeBonusDescription: "Es scheint, dass du einigen Initiativen auf IO beigetreten bist. Wenn du dein Profil löschst, werden die Initiativen, denen du beigetreten bist, nicht beendet.\n\nUm sie zu verwalten, geh zum Abschnitt „Konto“, andernfalls wähle „Löschen“."
+          activeBonusDescription: "Es scheint, dass du einigen Initiativen auf IO beigetreten bist. Wenn du dein Profil löschst, werden die Initiativen, denen du beigetreten bist, nicht beendet.\n\nUm sie zu verwalten, geh zum Abschnitt 'Konto', andernfalls wähle 'Löschen'."
           oldRequest: "Du hast bereits beantragt, dass dein Profil gelöscht wird"
-          oldRequestSubtitle: "Wir bearbeiten deine Anfrage.\n\nWenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, drücke bitte auf „Löschung abbrechen“."
+          oldRequestSubtitle: "Wir bearbeiten deine Anfrage.\n\nWenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, drücke bitte auf 'Löschung abbrechen'."
           cta:
             manageBonus: "Geh zum Konto"
             continue: "Profil löschen"
@@ -347,7 +347,7 @@ profile:
           cta: "Mit der Löschung fortfahren"
         details:
           title: "Warum möchtest du dein Profil bei IO löschen?"
-          body: "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und klicke auf „Profil löschen“."
+          body: "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und klicke auf 'Profil löschen'."
           question: "Was ist der Grund dafür?"
           answer_1: "Ich halte IO nicht mehr für nützlich"
           answer_2: "Ich fühle mich in IO nicht sicher"
@@ -452,7 +452,7 @@ profile:
     designSystem: "Design System"
     banner:
       title: "Möchtest du deine Steuernummer anzeigen?"
-      action: "Geh zum Abschnitt „Deine Daten“."
+      action: "Geh zum Abschnitt 'Deine Daten'."
       close: "Schließe das Banner und zeige es nicht mehr an."
   data:
     title: "Deine Daten"
@@ -704,7 +704,7 @@ authentication:
       listItemLabel1: "Schritt 1"
       listItemValue1: "Rufe die Einstellungen deines Geräts auf"
       listItemLabel2: "Schritt 2"
-      listItemValue2: "Suche nach “NFC”"
+      listItemValue2: "Suche nach 'NFC'"
       listItemLabel3: "Schritt 3"
       listItemValue3: "Aktiviere NFC"
       activeNfcAlert: "Aktiviere NFC, damit IO deine CIE lesen kann!"
@@ -1025,15 +1025,15 @@ onboarding:
       title: "So geht's:"
       label: "Schritt"
       ios:
-        step1: "Gehe zu “Einstellungen”"
-        step2: "Wähle “Benachrichtigungen”"
-        step3: "Aktiviere “Benachrichtigungen zulassen”"
+        step1: "Gehe zu 'Einstellungen'"
+        step2: "Wähle 'Benachrichtigungen'"
+        step3: "Aktiviere 'Benachrichtigungen zulassen'"
       android:
-        step1: "Gehe zu “Einstellungen”"
-        step2: "Wähle “Apps”"
-        step3: "Wähle “IO”"
-        step4: "Wähle “Benachrichtigungen”"
-        step5: "Aktiviere “Benachrichtigungen zulassen”"
+        step1: "Gehe zu 'Einstellungen'"
+        step2: "Wähle 'Apps'"
+        step3: "Wähle 'IO'"
+        step4: "Wähle 'Benachrichtigungen'"
+        step5: "Aktiviere 'Benachrichtigungen zulassen'"
 datetimes:
   yesterday: "gestern"
   todayAt: "heute um"
@@ -1164,7 +1164,7 @@ wallet:
       description:
         text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
+        text3: "Drücke auf 'Weiter', um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
         text4: "Liste der verfügbaren Banken"
     cobadge:
       title: "Suche deine Karten im internationalen Zahlungsnetzwerk"
@@ -1205,8 +1205,8 @@ wallet:
         title: "PagoBancomat hinzufügen"
         label: "PagoBancomat-Karte {{current}} von {{length}}"
         screenTitle: "Möchtest du diese Karte hinzufügen?"
-        bodySingular: "Wir haben eine Karte gefunden, die auf deinen Namen ausgestellt ist. Klicke auf “Hinzufügen”, um diese Karte hinzuzufügen oder klicke auf “Überspringen”, um den Vorgang abzubrechen."
-        bodyPlural: "Wir haben {{number}} Karten gefunden, die auf deinen Namen ausgestellt sind. Klicke auf “Hinzufügen”, um diese Karte hinzuzufügen oder klicke auf “Überspringen”, um zur nächsten Karte zu gelangen."
+        bodySingular: "Wir haben eine Karte gefunden, die auf deinen Namen ausgestellt ist. Klicke auf 'Hinzufügen', um diese Karte hinzuzufügen oder klicke auf 'Überspringen', um den Vorgang abzubrechen."
+        bodyPlural: "Wir haben {{number}} Karten gefunden, die auf deinen Namen ausgestellt sind. Klicke auf 'Hinzufügen', um diese Karte hinzuzufügen oder klicke auf 'Überspringen', um zur nächsten Karte zu gelangen."
         loading: "Wir fügen gerade deine PagoBANCOMAT-Karte hinzu\n\nWarte ein paar Sekunden..."
         warning: "Wenn du nicht all deine Karten findest, versuche später nocheinmal die fehlende Karte hinzuzufügen, indem du die Bank, wo du dein Kontokorrent hast, auswählst."
         blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deine Bank."
@@ -1476,10 +1476,10 @@ wallet:
           bottomSheetDescription: "Versuche in der Zwischenzeit, mit einer anderen Methode zu bezahlen. Du kannst pagoPA auch in deiner bevorzugten Zahlungs-App oder auf der Website deines Zahlungsempfängers nutzen."
         unaccepted:
           bottomSheetTitle: "Warum kann ich nicht mit dieser Karte bezahlen?"
-          bottomSheetDescription: "Das Zahlungsnetzwerk dieser Karte erlaubt es dir an physischen Verkaufsstellen zu bezahlen, aber nicht online. Wenn deine Karte für Online-Zahlungen aktiviert ist, füge sie als “Debit- oder Kreditkarte” zu deinem Konto hinzu."
+          bottomSheetDescription: "Das Zahlungsnetzwerk dieser Karte erlaubt es dir an physischen Verkaufsstellen zu bezahlen, aber nicht online. Wenn deine Karte für Online-Zahlungen aktiviert ist, füge sie als 'Debit- oder Kreditkarte' zu deinem Konto hinzu."
         payment_disabled:
           bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
-          bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
+          bottomSheetDescription: "Die Funktion 'In-App-Zahlungen' ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich 'Konto';\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere 'In-App-Zahlungen'."
   firstTransactionSummary:
     loading: "Informationen werden abgerufen"
     title: "Zahlungsdetails"
@@ -1511,7 +1511,7 @@ wallet:
       messageId: "ID der Nachricht"
       copyToClipboard: "Daten für die Assistenz kopieren"
   errorTransaction:
-    submitBugText: "Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol “?” in der oberen rechten Ecke mit. Danke!"
+    submitBugText: "Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
   insertManually:
     header: "Zahlungsmitteilungsdaten einfügen"
     title: "Was möchtest du bezahlen?"
@@ -1643,7 +1643,7 @@ wallet:
     byCameraTitle: "QR-Code scannen"
     cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungskodex und Steuernummer Körperschaft) manuell ein"
     setManually: "Manuell eingeben"
-    enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü “Einstellungen” deines Geräts tun."
+    enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü 'Einstellungen' deines Geräts tun."
     readStorageDisclosure:
       title: "Zugriff auf die Galerie zulassen"
       message: "Du kannst Screenshots und Zahlungsmitteilungen hochladen"
@@ -1731,7 +1731,7 @@ wallet:
       description: "Du hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten. Erkundige dich bei deiner Bank, bevor du es erneut versuchst."
     code15:
       title: "Zahlungsmethode für In-App-Zahlungen aktivieren"
-      description: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “In-App-Zahlungen”."
+      description: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
     code18:
       title: "Es ist ein unerwarteter Fehler aufgetreten"
       description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
@@ -1859,7 +1859,7 @@ wallet:
         defaultSubtitle: "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
       METHOD_NOT_ENABLED:
         title: "Zahlungsmethode in der App aktivieren"
-        subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “Zahlungen in der App”."
+        subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
     support:
       button: "Support kontaktieren"
       supportTitle: "Support kontaktieren"
@@ -1976,7 +1976,7 @@ messageDetails:
   loadingText: "Laden der Mitteilungsdetails läuft..."
   errorText: "Wir konnten die Details deiner Mitteilung nicht laden"
   retryText: "Es handelt sich wahrscheinlich um einen temporären Fehler... bitte versuche es erneut!"
-  submitBugText: "Wenn das Problem nicht gelöst ist, lasse es uns bitte über dem “?”-Symbol in der oberen rechten Ecke wissen, danke!"
+  submitBugText: "Wenn das Problem nicht gelöst ist, lasse es uns bitte über dem '?'-Symbol in der oberen rechten Ecke wissen, danke!"
   dateSending: "Datum und Uhrzeit:"
   sender: "Absender:"
   service: "Dienst:"
@@ -2083,7 +2083,7 @@ services:
           text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
         bottomSheet:
           title: "Wenn du bestätigst, erhältst du keine Mitteilungen"
-          body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
+          body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt 'In der App kontaktieren' auf jeder Registerkarte des Dienstes aktivierst."
   title: "Dienste"
   contextualHelpTitle: "Was du in deinen Diensten machen kannst"
   new: "Neu"
@@ -2234,7 +2234,7 @@ bonus:
     contentTitle: "Wähle einen der verfügbaren Boni aus"
     contextualHelp:
       title: "Hinzufügen eines Bonus oder Rabatts"
-      body: "Hier kannst du den Bonus oder Rabatt auswählen, die du hinzufügen möchten. Sobald sie aktiviert sind, werden sie in der Rubrik “Konto” angezeigt. Du kannst die Details des Bonus oder des Rabatts jederzeit einsehen, indem du den Bereich “Konto” aufrufst und das entsprechende Element in der Liste auswählst."
+      body: "Hier kannst du den Bonus oder Rabatt auswählen, die du hinzufügen möchten. Sobald sie aktiviert sind, werden sie in der Rubrik 'Konto' angezeigt. Du kannst die Details des Bonus oder des Rabatts jederzeit einsehen, indem du den Bereich 'Konto' aufrufst und das entsprechende Element in der Liste auswählst."
   request: "Beantrage einen neuen Bonus"
   requestLabel: "Boni und Rabatte"
   requestTitle: "Anfrage"
@@ -2533,12 +2533,12 @@ features:
       payPal:
         banner:
           title: "Möchtest du in 3 Raten zahlen?"
-          content: "Verwende nicht diese Methode. Wähle bei der Bezahlung „PayPal (auch in 3 Raten)“."
+          content: "Verwende nicht diese Methode. Wähle bei der Bezahlung 'PayPal (auch in 3 Raten)'."
       pspAlert:
-        description: "Für diese Methode ist die Expresszahlung mit dem Anbieter {{pspBusinessName}} aktiv."
+        description: "Für diese Methode ist die Schnellzahlung mit dem Anbieter {{pspBusinessName}} aktiv."
         action: "Was bedeutet das?"
         title: "Was bedeutet das?"
-        explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über „PayPal-Expresszahlung“ abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
+        explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über 'PayPal-Schnellzahlung' abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
     errors:
       transactionCreationError: "Es gibt ein Problem mit den Bezahlsystemen."
 support:
@@ -2553,7 +2553,7 @@ support:
       seeReports: "Offene Tickets"
     supportComponent:
       title: "Benötigst du Hilfe?"
-      subtitle: "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte “Offene Tickets”."
+      subtitle: "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte 'Offene Tickets'."
       adviceMessage: "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontaktdaten in der Nachricht oder in den Details des Dienstes."
   panicMode:
     title: "Leider können wir dir zur Zeit nicht helfen"
@@ -2701,13 +2701,13 @@ permissionRequest:
     step: "Schritt {{step}}"
     steps:
       android:
-        1: "Geh zu “Einstellungen”"
-        2: "Wähle “Apps”"
-        3: "Wähle “IO”"
+        1: "Geh zu 'Einstellungen'"
+        2: "Wähle 'Apps'"
+        3: "Wähle 'IO'"
         4: "Wähle den Punkt App-Berechtigungen"
         5: "Lass den Zugriff auf Dateien und Medien zu"
       ios:
-        1: "Geh zu “Einstellungen”"
-        2: "Wähle “IO”"
-        3: "Wähle “Fotos” und erlaube den Zugriff"
+        1: "Geh zu 'Einstellungen'"
+        2: "Wähle 'IO'"
+        3: "Wähle 'Fotos' und erlaube den Zugriff"
     cta: "Öffne Einstellungen"
