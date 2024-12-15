@@ -1855,7 +1855,7 @@ wallet:
         title: "Ein unerwarteter Fehler ist aufgetreten"
         subtitle: "Versuche es erneut oder wende dich an den Support."
       PAYMENT_SLOWDOWN_ERROR:
-        title: "Wir haben einige Probleme mit pagoPA Systemen"
+        title: "Wir haben einige Probleme mit den pagoPA-Systemen"
         subtitle: "Versuche es später erneut."
       PAYMENT_UNKNOWN:
         title: "Wir können die Zahlungsmitteilung nicht finden"
@@ -1867,7 +1867,7 @@ wallet:
     outcome:
       SUCCESS:
         title: "Du hast {{amount}} bezahlt"
-        subtitle: "Die Quittung ist im Abschnitt 'Zahlungen'."
+        subtitle: "Die Quittung ist im Abschnitt 'Zahlungen'. verfügbar"
         button: "OK, schließen"
         banner:
           title: "Kannst du uns sagen, wie es lief?"
