@@ -500,7 +500,7 @@ profile:
         subtitle: "Wähle die Sprache"
       preferred_calendar:
         title: "Bevorzugter Kalender"
-        description: "Wählen einen Kalender"
+        description: "Wähle einen Kalender"
       preferred_language:
         title: "Bevorzugte Sprache"
         subtitle: "In welcher Sprache möchtest du die App nutzen?"
