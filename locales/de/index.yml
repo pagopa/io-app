@@ -248,6 +248,7 @@ permissionRationale:
     message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
 startup:
   title: "Wir bereiten dein Erlebnis in IO vor"
+  title2: "Ein bisschen mehr Geduld..."
   authentication: "Benutzer authentifiziert"
   sessionInfo: "SPID-Attribute geladen"
   profileInfo: "Benutzerprofil geladen"
@@ -259,6 +260,15 @@ startup:
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
+  connection_lost:
+    title: "Du hast keine aktive Internetverbindung"
+    description: "Überprüfe deine Verbindung und starte die App neu"
+  slowdowns_results_screen:
+    title: "Die Dinge scheinen etwas langsam zu gehen"
+    subtitle: "Dies kann von unseren Systemen oder von der Verbindung deines Geräts abhängen. Bitte versuche es in ein paar Minuten erneut."
+  cdn_unreachable_results_screen:
+    title: "Etwas hat nicht funktioniert"
+    subtitle: "Schließe die App und versuche es in ein paar Minuten erneut."
 login:
   expiration_info: "Aus Sicherheitsgründen musst du dich alle 30 Tage mit SPID oder CIE anmelden."
   expiration_info_FL: "Aus Sicherheitsgründen musst du dich einmal im Jahr mit SPID oder CIE anmelden."
@@ -321,6 +331,7 @@ profile:
       description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
       subtitle: "Hier findest du Informationen über deine Rechte und Pflichten sowie über die Verarbeitung personenbezogener Daten."
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
+      errorMessage: "Wir können den Status deiner Anfrage nicht abrufen. Bitte versuche es erneut."
       removeAccount:
         title: "Dein Profil löschen"
         description: "Dein Profil und deine persönlichen Daten löschen"
@@ -468,6 +479,7 @@ profile:
     list:
       biometric_recognition:
         title: "Biometrische Erkennung"
+        subtitle: "Verwende dein Gesicht oder deinen Abdruck."
         needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
     title: "Einstellungen"
@@ -488,6 +500,7 @@ profile:
         subtitle: "Wähle die Sprache"
       preferred_calendar:
         title: "Bevorzugter Kalender"
+        description: "Wählen einen Kalender"
       preferred_language:
         title: "Bevorzugte Sprache"
         subtitle: "In welcher Sprache möchtest du die App nutzen?"
@@ -609,6 +622,12 @@ authentication:
     expiredCardHeaderTitle: "Anmeldung mit CIE"
     expiredCardContent: "Die verwendete Karte ist möglicherweise abgelaufen oder nicht mehr gültig. Versuche dich mit SPID bei der App anzumelden."
     expiredCardHelp: "Wie erneuert man seine elektronische Identitätskarte?"
+    tour_guide:
+      title: "Neu"
+      content: "Jetzt kannst du CieID verwenden, um dich in IO anzumelden!"
+  cieidUrlErrorScreen:
+    title: "Wir können dich nicht mit der CieID-App authentifizieren"
+    description: "Verwende eine andere Methode zum Anmelden"
   wizards:
     cie_id_wizard:
       title: "Hast du die CieID-App?"
@@ -676,6 +695,9 @@ authentication:
     error_1001:
       title: "Du hast das erforderliche Mindestalter nicht erreicht"
       subtitle: "Um dich anzumelden, musst du mindestens 18 Jahre alt sein."
+    missing_saml_response:
+      title: "Es war nicht möglich, dich anzumelden"
+      subtitle: "Es ist derzeit nicht möglich, sich mit deinem SPID-Identitätsanbieter anzumelden. Bitte versuche es in ein paar Minuten erneut."
     generic:
       title: "Es war nicht möglich dich anzumelden"
       subtitle: "Beim Anmelden ist ein Problem aufgetreten. Bitte versuche es in ein paar Minuten erneut."
@@ -689,6 +711,10 @@ authentication:
         description: "Wenn du einen SPID hast, melde dich bei IO an, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters."
         primary_action_label: "Mit SPID anmelden"
       secondary_action_label: "Schließen"
+    cie_not_installed:
+      title: "Wir können die CieID-App nicht finden"
+      description: "Um darauf zugreifen zu können, musst du die App auf deinem Gerät installiert haben."
+      primary_action_label: "CieID installieren"
   cie:
     genericTitle: "Anmeldung mit CIE"
     cie: "CIE"
@@ -820,6 +846,7 @@ authentication:
     subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
     subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder deiner CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
     learnmore: "Mehr erfahren"
+    loginIO: "Nicht jetzt, IO öffnen"
   unlockmodal:
     title: "Was bedeutet das?"
     description1_1: "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können."
@@ -1319,6 +1346,7 @@ wallet:
         title: "Die Karte wurde hinzugefügt!"
         subtitle: ""
         primaryAction: "Details anzeigen"
+        secondaryAction: "Weiter"
       GENERIC_ERROR:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
         subtitle: "Versuche es erneut oder kontaktiere den Support"
@@ -1329,8 +1357,8 @@ wallet:
         primaryAction: "Schließen"
         secondaryAction: "Mehr erfahren"
         bottomSheet:
-          title: "Cosa fare se l’aggiunta del metodo non va a buon fine?"
-          description: "**Carta di credito o debito**\n\nTi invitiamo a verificare con la tua banca. I casi più frequenti sono:\n\n1. La tua carta non è abilitata agli acquisti online.\n2. Non hai ancora attivato il servizio 3DS: si tratta di un sistema di sicurezza legato ai pagamenti online.\n3. La tua carta è stata sospesa o bloccata.\n4. Hai messo 'in pausa' la tua carta.\n\n\n**Altri metodi**\n\nContatta l'assistenza del tuo metodo e chiedi il motivo del rifiuto."
+          title: "Was ist zu tun, wenn das Hinzufügen der Methode fehlschlägt?"
+          description: "**Kredit- oder Debitkarte** Bitte erkundige dich bei deiner Bank. Die häufigsten Fälle sind: \n- deine Karte ist nicht für Online-Einkäufe freigeschaltet.\n- du hast den 3DS-Dienst noch nicht aktiviert: Dies ist ein Sicherheitssystem für Online-Zahlungen.\n- deine Karte wurde gesperrt oder blockiert.\n- du hast deine Karte 'pausiert'.\n**Andere Methoden** Wende dich an den Support der Zahlungsmethode und frage nach dem Grund für die Ablehnung."
       TIMEOUT:
         title: "Die Sitzung ist abgelaufen"
         subtitle: "Zu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
@@ -1351,6 +1379,15 @@ wallet:
         title: "Wir haben kein aktives BANCOMAT Pay Konto gefunden."
         subtitle: "Wende dich an deine Bank, um den Dienst zu aktivieren."
         primaryAction: "Schließen"
+      PSP_ERROR_ONBOARDING:
+        title: "Das Hinzufügen der Methode ist fehlgeschlagen"
+        subtitle: "Bitte versuche es später noch einmal. Sollte das Problem weiterhin bestehen, wende dich bitte an deine Bank."
+        primaryAction: "Schließen"
+      BE_KO:
+        title: "Wir haben einige Probleme beim Hinzufügen der Zahlungsmethode"
+        subtitle: "Versuche es später erneut."
+        primaryAction: "Schließen"
+        secondaryAction: "Kontaktiere den Support"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1768,10 +1805,13 @@ wallet:
       title: "Möchtest du den Vorgang abbrechen?"
       confirm: "Ja, abbrechen"
       cancel: "Nein, zurück"
+    methodType:
+      fastPayPalPayment: "PayPal-Schnellzahlung"
     methodSelection:
       header: "Zahlungsmethode auswählen"
       yourMethods: "Gespeicherte"
       otherMethods: "Alle Zahlungsmethoden"
+      latestMethod: "Zuletzt verwendet"
       alert:
         body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
         cta: "OK, habe verstanden!"
@@ -1808,9 +1848,15 @@ wallet:
         subtitle: "Wende dich für weitere Informationen an die Körperschaft."
       PAYMENT_DUPLICATED:
         title: "Diese Zahlungsmitteilung wurde bereits bezahlt!"
+      PAYMENT_VERIFY_GENERIC_ERROR:
+        title: "Wir können den Status dieser Zahlungsmitteilung nicht überprüfen"
+        subtitle: "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
       GENERIC_ERROR:
         title: "Ein unerwarteter Fehler ist aufgetreten"
         subtitle: "Versuche es erneut oder wende dich an den Support."
+      PAYMENT_SLOWDOWN_ERROR:
+        title: "Wir haben einige Probleme mit pagoPA Systemen"
+        subtitle: "Versuche es später erneut."
       PAYMENT_UNKNOWN:
         title: "Wir können die Zahlungsmitteilung nicht finden"
         subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
@@ -1821,6 +1867,7 @@ wallet:
     outcome:
       SUCCESS:
         title: "Du hast {{amount}} bezahlt"
+        subtitle: "Die Quittung ist im Abschnitt 'Zahlungen'."
         button: "OK, schließen"
         banner:
           title: "Kannst du uns sagen, wie es lief?"
