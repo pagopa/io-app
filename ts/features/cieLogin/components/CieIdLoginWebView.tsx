@@ -37,6 +37,12 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../hooks/useHeaderSecondLevel";
+import {
+  CIE_ID_ERROR,
+  CIE_ID_ERROR_MESSAGE,
+  IO_LOGIN_CIE_SOURCE_APP,
+  IO_LOGIN_CIE_URL_SCHEME
+} from "../../../utils/cie";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -55,10 +61,6 @@ const originSchemasWhiteList = [
   "iologin://*",
   ...(isDevEnv ? ["http://*"] : [])
 ];
-const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
-const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
-const CIE_ID_ERROR = "cieiderror";
-const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
 const WHITELISTED_DOMAINS = [
   "https://idserver.servizicie.interno.gov.it",

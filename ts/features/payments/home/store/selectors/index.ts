@@ -4,13 +4,13 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { paymentsWalletUserMethodsSelector } from "../../../wallet/store/selectors";
 import {
-  walletLatestTransactionsBizEventsListPotSelector,
-  walletTransactionBizEventsListPotSelector
-} from "../../../bizEventsTransaction/store/selectors";
+  walletLatestReceiptListPotSelector,
+  walletReceiptListPotSelector
+} from "../../../receipts/store/selectors";
 
 export const isPaymentsSectionLoadingFirstTimeSelector = createSelector(
   paymentsWalletUserMethodsSelector,
-  walletLatestTransactionsBizEventsListPotSelector,
+  walletLatestReceiptListPotSelector,
   (methodsPot, latestTransactionsPot) =>
     (!pot.isSome(methodsPot) && pot.isLoading(methodsPot)) ||
     (!pot.isSome(latestTransactionsPot) && pot.isLoading(latestTransactionsPot))
@@ -18,7 +18,7 @@ export const isPaymentsSectionLoadingFirstTimeSelector = createSelector(
 
 export const isPaymentsSectionLoadingSelector = createSelector(
   paymentsWalletUserMethodsSelector,
-  walletLatestTransactionsBizEventsListPotSelector,
+  walletLatestReceiptListPotSelector,
   (methodsPot, latestTransactionsPot) =>
     pot.isLoading(methodsPot) || pot.isLoading(latestTransactionsPot)
 );
@@ -33,7 +33,7 @@ export const isPaymentsMethodsEmptySelector = createSelector(
 );
 
 export const isPaymentsLatestTransactionsEmptySelector = createSelector(
-  walletLatestTransactionsBizEventsListPotSelector,
+  walletLatestReceiptListPotSelector,
   latestTransactionsPot =>
     pot.getOrElse(
       pot.map(latestTransactionsPot, transactions => transactions.length === 0),
@@ -42,7 +42,7 @@ export const isPaymentsLatestTransactionsEmptySelector = createSelector(
 );
 
 export const isPaymentsTransactionsEmptySelector = createSelector(
-  walletTransactionBizEventsListPotSelector,
+  walletReceiptListPotSelector,
   transactionsPot =>
     pot.getOrElse(
       pot.map(transactionsPot, transactions => transactions.length === 0),

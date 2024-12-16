@@ -70,20 +70,6 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'installation.appVersionHistory' state 1`] = `[]`;
 
-exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'notifications' state 1`] = `
-{
-  "installation": {
-    "id": "fakeInstallationId",
-    "registeredToken": undefined,
-    "token": undefined,
-  },
-  "pendingMessage": null,
-  "userBehaviour": {
-    "engagementScreenShown": false,
-  },
-}
-`;
-
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'onboarding' state 1`] = `
 {
   "isFingerprintAcknowledged": false,

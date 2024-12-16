@@ -1,13 +1,19 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { setEngagementScreenShown } from "../actions/userBehaviour";
+import {
+  resetNotificationBannerDismissState,
+  setPushNotificationBannerForceDismissed,
+  setUserDismissedNotificationsBanner
+} from "../actions/userBehaviour";
 
 export type UserBehaviourState = {
-  engagementScreenShown: boolean;
+  pushNotificationBannerDismissalCount: number;
+  pushNotificationBannerForceDismissionDate?: number;
 };
 
 export const INITIAL_STATE: UserBehaviourState = {
-  engagementScreenShown: false
+  pushNotificationBannerDismissalCount: 0,
+  pushNotificationBannerForceDismissionDate: undefined
 };
 
 export const userBehaviourReducer = (
@@ -15,8 +21,21 @@ export const userBehaviourReducer = (
   action: Action
 ): UserBehaviourState => {
   switch (action.type) {
-    case getType(setEngagementScreenShown):
-      return { ...state, engagementScreenShown: true };
+    case getType(setUserDismissedNotificationsBanner):
+      return {
+        ...state,
+        pushNotificationBannerDismissalCount:
+          state.pushNotificationBannerDismissalCount + 1
+      };
+    case getType(setPushNotificationBannerForceDismissed):
+      return {
+        ...state,
+        pushNotificationBannerForceDismissionDate: new Date().getTime()
+      };
+    case getType(resetNotificationBannerDismissState):
+      return {
+        ...INITIAL_STATE
+      };
   }
   return state;
 };
