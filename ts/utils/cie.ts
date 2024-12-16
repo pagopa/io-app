@@ -22,3 +22,8 @@ export const isCIEAuthenticationSupported = test
 export const isNfcEnabled = test ? mockIsNfcEnabled : realIsNfcEnabled;
 export const openNFCSettings = test ? mockOpenNfcSettings : realOpenNfcSettings;
 export const launchCieID = test ? mockLaunchCieID : realLaunchCieID;
+
+export const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
+export const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
+export const CIE_ID_ERROR = "cieiderror";
+export const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";

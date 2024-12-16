@@ -39,7 +39,10 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { itwIdpHintTest } from "../../../../../config";
+import {
+  itWalletIssuanceRedirectUri,
+  itwIdpHintTest
+} from "../../../../../config";
 import {
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
@@ -48,8 +51,6 @@ import {
 } from "../../../analytics";
 import * as Cie from "../../components/cie";
 
-// This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
-const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
@@ -168,7 +169,6 @@ export const ItwCieCardReaderScreen = () => {
     IdentificationStep.AUTHENTICATION
   );
   const [readingState, setReadingState] = useState<ReadingState>();
-  const [webViewVisible, setWebViewVisible] = useState(true);
 
   const blueColorName = useInteractiveElementDefaultColorName();
   const isScreenReaderEnabled = useScreenReaderEnabled();
@@ -243,8 +243,10 @@ export const ItwCieCardReaderScreen = () => {
   };
 
   const handleCieReadSuccess = (url: string) => {
-    setWebViewVisible(false); // Try to hide the error page because the callback url is fake
-    machineRef.send({ type: "cie-identification-completed", url });
+    machineRef.send({
+      type: "user-identification-completed",
+      authRedirectUrl: url
+    });
   };
 
   if (isMachineLoading) {
@@ -308,7 +310,7 @@ export const ItwCieCardReaderScreen = () => {
     <SafeAreaView style={styles.container}>
       <View
         style={
-          webViewVisible && identificationStep === IdentificationStep.CONSENT
+          identificationStep === IdentificationStep.CONSENT
             ? { width: "100%", height: "100%" }
             : { width: "0%", height: "0%" }
         }
@@ -321,7 +323,7 @@ export const ItwCieCardReaderScreen = () => {
             onEvent={handleCieReadEvent}
             onSuccess={handleCieReadSuccess}
             onError={handleCieReadError}
-            redirectUrl={CIE_L3_REDIRECT_URI}
+            redirectUrl={itWalletIssuanceRedirectUri}
           />
         ) : null}
       </View>

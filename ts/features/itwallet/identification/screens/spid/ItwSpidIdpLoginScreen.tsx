@@ -80,7 +80,7 @@ const ItwSpidIdpLoginScreen = () => {
 
       if (isIssuanceRedirect) {
         machineRef.send({
-          type: "spid-identification-completed",
+          type: "user-identification-completed",
           authRedirectUrl
         });
       }
