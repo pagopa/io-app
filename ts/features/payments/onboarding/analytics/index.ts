@@ -23,7 +23,7 @@ export const getOnboardingPaymentMethodOutcomeEvent = (
     case WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND:
       return "PAYMENT_ADD_METHOD_BPAY_NOT_FOUND";
     case WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING:
-      return "PAYMENT_ADD_METHOD_PSP_ERROR";
+      return "PAYMENT_PSP_ERROR";
     case WalletOnboardingOutcomeEnum.INVALID_SESSION:
     case WalletOnboardingOutcomeEnum.TIMEOUT:
       return "PAYMENT_SESSION_TIMEOUT";
