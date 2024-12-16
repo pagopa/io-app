@@ -7,7 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { WalletPaymentOutcomeScreen } from "../WalletPaymentOutcomeScreen";
 import { WalletPaymentOutcomeEnum } from "../../types/PaymentOutcomeEnum";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../../bizEventsTransaction/store/actions";
+import { getPaymentsLatestReceiptAction } from "../../../receipts/store/actions";
 import * as useIO from "../../../../../store/hooks";
 
 jest.mock("react-native-store-review", () => ({
@@ -46,7 +46,7 @@ describe("WalletPaymentOutcomeScreen for all outcomes", () => {
     const { getByTestId } = renderComponent(WalletPaymentOutcomeEnum.SUCCESS);
     fireEvent.press(getByTestId("wallet-payment-outcome-success-button"));
     expect(mockedDispatch).toHaveBeenCalledWith(
-      getPaymentsLatestBizEventsTransactionsAction.request()
+      getPaymentsLatestReceiptAction.request()
     );
   });
 });
