@@ -469,7 +469,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -477,10 +477,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -586,7 +586,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -594,10 +594,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -617,6 +617,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="footnote"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
@@ -628,10 +629,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -739,7 +740,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -747,10 +748,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -770,6 +771,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="footnote"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
@@ -781,10 +783,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -889,7 +891,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -897,10 +899,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }

@@ -44,16 +44,10 @@ export type SelectSpidIdp = {
 export type CiePinEntered = {
   type: "cie-pin-entered";
   pin: string;
-  isNfcEnabled: boolean;
 };
 
-export type CieIdentificationCompleted = {
-  type: "cie-identification-completed";
-  url: string;
-};
-
-export type SpidIdentificationCompleted = {
-  type: "spid-identification-completed";
+export type UserIdentificationCompleted = {
+  type: "user-identification-completed";
   authRedirectUrl: string;
 };
 
@@ -81,10 +75,11 @@ export type RevokeWalletInstance = {
   type: "revoke-wallet-instance";
 };
 
-export type Error = {
+export type ExternalErrorEvent = {
   type: "error";
   // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
-  scope: "ipzs-privacy" | "spid-login";
+  scope: "ipzs-privacy" | "spid-login" | "cieid-login";
+  error?: Error;
 };
 
 export type EidIssuanceEvents =
@@ -95,8 +90,7 @@ export type EidIssuanceEvents =
   | SelectIdentificationMode
   | SelectSpidIdp
   | CiePinEntered
-  | CieIdentificationCompleted
-  | SpidIdentificationCompleted
+  | UserIdentificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential
@@ -107,4 +101,4 @@ export type EidIssuanceEvents =
   | Abort
   | RevokeWalletInstance
   | ErrorActorEvent
-  | Error;
+  | ExternalErrorEvent;

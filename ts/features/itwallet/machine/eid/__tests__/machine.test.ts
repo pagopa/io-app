@@ -1,23 +1,21 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import {
-  assign,
-  createActor,
-  fromPromise,
-  StateFrom,
-  waitFor as waitForActor
-} from "xstate";
+import { assign, createActor, fromPromise, StateFrom } from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
-  GetAuthRedirectUrlActorParam,
   GetWalletAttestationActorParams,
   RequestEidActorParams,
   StartAuthFlowActorParams
 } from "../actors";
-import { AuthenticationContext, Context, InitialContext } from "../context";
+import {
+  AuthenticationContext,
+  CieContext,
+  Context,
+  InitialContext
+} from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
@@ -40,6 +38,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCiePinScreen = jest.fn();
   const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
+  const navigateToCieIdLoginScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeEidCredential = jest.fn();
@@ -51,10 +50,10 @@ describe("itwEidIssuanceMachine", () => {
   const onInit = jest.fn();
 
   const createWalletInstance = jest.fn();
+  const getCieStatus = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestEid = jest.fn();
   const startAuthFlow = jest.fn();
-  const getAuthRedirectUrl = jest.fn();
 
   const issuedEidMatchesAuthenticatedUser = jest.fn();
   const isSessionExpired = jest.fn();
@@ -81,6 +80,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCiePinScreen,
       navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
+      navigateToCieIdLoginScreen,
       storeIntegrityKeyTag,
       storeWalletInstanceAttestation,
       storeEidCredential,
@@ -101,11 +101,9 @@ describe("itwEidIssuanceMachine", () => {
         string,
         GetWalletAttestationActorParams
       >(getWalletAttestation),
+      getCieStatus: fromPromise<CieContext>(getCieStatus),
       requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
         requestEid
-      ),
-      getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
-        getAuthRedirectUrl
       ),
       startAuthFlow: fromPromise<
         AuthenticationContext,
@@ -118,14 +116,6 @@ describe("itwEidIssuanceMachine", () => {
       isOperationAborted,
       hasValidWalletInstanceAttestation
     }
-  });
-
-  beforeEach(() => {
-    onInit.mockImplementation(() => ({
-      integrityKeyTag: undefined,
-      walletInstanceAttestation: undefined
-    }));
-    hasValidWalletInstanceAttestation.mockImplementation(() => false);
   });
 
   afterEach(() => {
@@ -251,12 +241,12 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        Spid: "SpidLoginIdentificationCompleted"
+        Spid: "CompletingSpidAuthFlow"
       }
     });
 
     actor.send({
-      type: "spid-identification-completed",
+      type: "user-identification-completed",
       authRedirectUrl: "http://test.it"
     });
 
@@ -313,14 +303,13 @@ describe("itwEidIssuanceMachine", () => {
     /** Initial part is the same as the previous test, we can start from the identification */
 
     startAuthFlow.mockImplementation(() => Promise.resolve({}));
-    getAuthRedirectUrl.mockImplementation(() => Promise.resolve({}));
-    requestEid.mockImplementation(() => Promise.reject({}));
+    requestEid.mockImplementation(() => Promise.resolve({}));
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
@@ -345,7 +334,6 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -355,26 +343,29 @@ describe("itwEidIssuanceMachine", () => {
         abortController: new AbortController()
       }
     });
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);
 
-    const cieIDBuildAuthRedirectUrlState = await waitForActor(actor, snapshot =>
-      snapshot.matches({
-        UserIdentification: { CieID: "CieIDBuildAuthRedirectUrl" }
-      })
-    );
-    expect(cieIDBuildAuthRedirectUrlState.value).toStrictEqual({
-      UserIdentification: { CieID: "CieIDBuildAuthRedirectUrl" }
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: { CieID: "CompletingCieIDAuthFlow" }
     });
 
-    expect(getAuthRedirectUrl).toHaveBeenCalledTimes(1);
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://cieid.test.it"
+    });
 
-    const requestingEidState = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "RequestingEid" })
-    );
-    expect(requestingEidState.value).toStrictEqual({
+    expect(actor.getSnapshot().value).toStrictEqual({
       Issuance: "RequestingEid"
     });
+    expect(actor.getSnapshot().context).toMatchObject({
+      authenticationContext: {
+        callbackUrl: "http://cieid.test.it"
+      }
+    });
 
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
     expect(requestEid).toHaveBeenCalledTimes(1);
 
     /** Last part is the same as the previous test */
@@ -387,11 +378,15 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: T_WIA,
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
       }
     } as MachineSnapshot);
 
@@ -416,7 +411,11 @@ describe("itwEidIssuanceMachine", () => {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: T_WIA,
-      identification: undefined
+      identification: undefined,
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true
+      }
     });
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
 
@@ -428,8 +427,7 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({
       type: "cie-pin-entered",
-      pin: "12345678",
-      isNfcEnabled: true
+      pin: "12345678"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -444,6 +442,10 @@ describe("itwEidIssuanceMachine", () => {
       identification: {
         mode: "ciePin",
         pin: "12345678"
+      },
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -463,8 +465,8 @@ describe("itwEidIssuanceMachine", () => {
      */
 
     actor.send({
-      type: "cie-identification-completed",
-      url: "http://test.it"
+      type: "user-identification-completed",
+      authRedirectUrl: "http://test.it"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -488,7 +490,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: {
         UserIdentification: {
           CiePin: "InsertingCardPin"
@@ -496,7 +498,11 @@ describe("itwEidIssuanceMachine", () => {
       },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: T_WIA
+        walletInstanceAttestation: T_WIA,
+        cieContext: {
+          isNFCEnabled: false,
+          isCIEAuthenticationSupported: true
+        }
       }
     } as MachineSnapshot);
 
@@ -511,13 +517,12 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({
       type: "cie-pin-entered",
-      pin: "12345678",
-      isNfcEnabled: false
+      pin: "12345678"
     });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
-        CiePin: "ActivateNfc"
+        CiePin: "RequestingNfcActivation"
       }
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -528,6 +533,10 @@ describe("itwEidIssuanceMachine", () => {
       identification: {
         mode: "ciePin",
         pin: "12345678"
+      },
+      cieContext: {
+        isNFCEnabled: false,
+        isCIEAuthenticationSupported: true
       }
     });
     expect(navigateToNfcInstructionsScreen).toHaveBeenCalledTimes(1);
@@ -545,6 +554,19 @@ describe("itwEidIssuanceMachine", () => {
         CiePin: "StartingCieAuthFlow"
       }
     });
+    expect(actor.getSnapshot().context).toStrictEqual<Context>({
+      ...InitialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: T_WIA,
+      identification: {
+        mode: "ciePin",
+        pin: "12345678"
+      },
+      cieContext: {
+        isNFCEnabled: true,
+        isCIEAuthenticationSupported: true
+      }
+    });
 
     /** Last part is the same as the previous test */
   });
@@ -554,7 +576,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY
       }
@@ -603,7 +625,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: T_WIA
@@ -655,7 +677,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Success"
     } as MachineSnapshot);
 
@@ -840,13 +862,14 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should fail when requesting eID (user identification or eID request failed)", async () => {
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
     requestEid.mockImplementation(() => Promise.reject({}));
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" }
     } as MachineSnapshot);
 
@@ -864,8 +887,24 @@ describe("itwEidIssuanceMachine", () => {
         CieID: "StartingCieIDAuthFlow"
       }
     });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToCieIdLoginScreen).toHaveBeenCalledTimes(1);
+
+    // Start the issuance flow
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: { CieID: "CompletingCieIDAuthFlow" }
+    });
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://cieid.test.it"
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "RequestingEid"
+    });
 
     await waitFor(() => expect(requestEid).toHaveBeenCalledTimes(1));
 
@@ -917,7 +956,7 @@ describe("itwEidIssuanceMachine", () => {
       itwEidIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "Failure"
     } as MachineSnapshot);
 

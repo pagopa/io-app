@@ -27,7 +27,8 @@ export enum WalletPaymentOutcomeEnum {
   BE_NODE_KO = "99", // Backend error when the node service is down
   INSUFFICIENT_AVAILABILITY_ERROR = "116", // insufficient availability
   CVV_ERROR = "117", // CVV error
-  PLAFOND_LIMIT_ERROR = "121" // plafond limit error
+  PLAFOND_LIMIT_ERROR = "121", // plafond limit error
+  AUTH_REQUEST_ERROR = "1000" // authorization request is in error
 }
 
 export type WalletPaymentOutcome = t.TypeOf<typeof WalletPaymentOutcome>;

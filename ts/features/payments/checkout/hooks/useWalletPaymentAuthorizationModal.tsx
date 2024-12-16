@@ -37,7 +37,6 @@ export const useWalletPaymentAuthorizationModal = ({
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
   );
-
   const [isPendingAuthorization, setIsPendingAuthorization] =
     React.useState<boolean>(false);
   const isLoading = pot.isLoading(authorizationUrlPot);

@@ -241,8 +241,6 @@ export const itwWalletProviderBaseUrl = Config.ITW_WALLET_PROVIDER_BASE_URL;
 export const itwGoogleCloudProjectNumber =
   Config.ITW_GOOGLE_CLOUD_PROJECT_NUMBER;
 export const itWalletIssuanceRedirectUri = Config.ITW_ISSUANCE_REDIRECT_URI;
-export const itWalletIssuanceRedirectUriCie =
-  Config.ITW_ISSUANCE_REDIRECT_URI_CIE;
 export const itwPidProviderBaseUrl = Config.ITW_PID_PROVIDER_BASE_URL;
 export const itwEaaProviderBaseUrl = Config.ITW_EAA_PROVIDER_BASE_URL;
 export const itwEaaVerifierBaseUrl = Config.ITW_EAA_VERIFIER_BASE_URL;
@@ -253,16 +251,6 @@ export const itwIpzsPrivacyUrl: string = pipe(
   Config.ITW_IPZS_PRIVACY_URL,
   t.string.decode,
   E.getOrElse(() => "https://io.italia.it/informativa-ipzs")
-);
-export const itwPrivacyUrl: string = pipe(
-  Config.ITW_PRIVACY_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/informativa-sperimentazione")
-);
-export const itwTosUrl: string = pipe(
-  Config.ITW_TOS_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/tos-sperimentazione")
 );
 export const itwDocumentsOnIOUrl: string = pipe(
   Config.ITW_DOCUMENTS_ON_IO_URL,

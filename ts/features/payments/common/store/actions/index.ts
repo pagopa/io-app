@@ -7,15 +7,13 @@ import { PaymentsMethodDetailsActions } from "../../../details/store/actions";
 import { PaymentsHistoryActions } from "../../../history/store/actions";
 import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
 import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
-import { PaymentsTransactionActions } from "../../../transaction/store/actions";
 import { PaymentsHomeActions } from "../../../home/store/actions";
 import { PaymentsWalletActions } from "../../../wallet/store/actions";
-import { PaymentsTransactionBizEventsActions } from "../../../bizEventsTransaction/store/actions";
+import { PaymentsReceiptActions } from "../../../receipts/store/actions";
 
 import { NetworkError } from "../../../../../utils/errors";
 import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
 import { Action } from "../../../../../store/actions/types";
-import { LegacyTransactionsActions } from "../../../transaction/store/actions/legacyTransactionsActions";
 import { PaymentsBackoffRetry } from "../../types/PaymentsBackoffRetry";
 
 export const paymentsGetPagoPaPlatformSessionTokenAction = createAsyncAction(
@@ -54,9 +52,7 @@ export type PaymentsActions =
   | PaymentsOnboardingActions
   | PaymentsMethodDetailsActions
   | PaymentsCheckoutActions
-  | PaymentsTransactionActions
   | PaymentsHistoryActions
   | PaymentsHomeActions
   | PaymentsWalletActions
-  | LegacyTransactionsActions
-  | PaymentsTransactionBizEventsActions;
+  | PaymentsReceiptActions;

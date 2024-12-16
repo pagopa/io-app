@@ -1,6 +1,5 @@
 import {
   Body,
-  Label,
   ListItemHeader,
   ModuleCheckout,
   VSpacer
@@ -146,7 +145,7 @@ const WalletPaymentConfirmScreen = () => {
 
   React.useEffect(() => {
     if (isError) {
-      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.GENERIC_ERROR);
+      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR);
     }
   }, [isError, handleAuthorizationOutcome]);
 
@@ -225,7 +224,8 @@ const WalletPaymentConfirmScreen = () => {
       <VSpacer size={16} />
       <Body>
         {I18n.t("payment.confirm.termsAndConditions")}{" "}
-        <Label
+        <Body
+          weight="Semibold"
           asLink
           onPress={() =>
             openAuthenticationSession(
@@ -235,7 +235,7 @@ const WalletPaymentConfirmScreen = () => {
           }
         >
           {I18n.t("payment.confirm.termsAndConditionsLink")}
-        </Label>
+        </Body>
       </Body>
     </IOScrollView>
   );

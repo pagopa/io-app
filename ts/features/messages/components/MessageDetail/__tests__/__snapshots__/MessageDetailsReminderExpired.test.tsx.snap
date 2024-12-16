@@ -815,6 +815,7 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                           <Text
                             accessibilityRole="text"
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             onTextLayout={[Function]}
                             style={

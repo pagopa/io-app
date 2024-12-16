@@ -10,27 +10,6 @@ PODS:
   - hermes-engine (0.75.4):
     - hermes-engine/Pre-built (= 0.75.4)
   - hermes-engine/Pre-built (0.75.4)
-  - io-react-native-secure-storage (0.1.1):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - jail-monkey (2.8.0):
     - React-Core
   - JOSESwift (2.4.0)
@@ -127,7 +106,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - pagopa-io-react-native-integrity (0.3.0):
+  - pagopa-io-react-native-integrity (0.3.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -173,6 +152,27 @@ PODS:
     - Yoga
   - pagopa-io-react-native-login-utils (1.0.8):
     - React-Core
+  - pagopa-io-react-native-secure-storage (0.2.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - pagopa-react-native-zendesk (0.3.29):
     - DoubleConversion
     - glog
@@ -2003,7 +2003,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSentry (5.32.0):
+  - RNSentry (6.4.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2024,7 +2024,7 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - Sentry/HybridSDK (= 8.36.0)
+    - Sentry/HybridSDK (= 8.41.0)
     - Yoga
   - RNShare (10.2.1):
     - React-Core
@@ -2032,9 +2032,9 @@ PODS:
     - React-Core
   - RNSVG (15.8.0):
     - React-Core
-  - Sentry/HybridSDK (8.36.0)
+  - Sentry/HybridSDK (8.41.0)
   - SocketRocket (0.7.0)
-  - SwiftCBOR (0.4.7)
+  - SwiftCBOR (0.5.0)
   - VisionCamera (4.5.3):
     - VisionCamera/Core (= 4.5.3)
     - VisionCamera/React (= 4.5.3)
@@ -2076,7 +2076,6 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - io-react-native-secure-storage (from `../node_modules/io-react-native-secure-storage`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
@@ -2086,6 +2085,7 @@ DEPENDENCIES:
   - "pagopa-io-react-native-integrity (from `../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
+  - "pagopa-io-react-native-secure-storage (from `../node_modules/@pagopa/io-react-native-secure-storage`)"
   - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -2225,8 +2225,6 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2024-08-15-RNv0.75.1-4b3bf912cc0f705b51b71ce1a5b8bd79b93a451b
-  io-react-native-secure-storage:
-    :path: "../node_modules/io-react-native-secure-storage"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
   lottie-react-native:
@@ -2245,6 +2243,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-jwt"
   pagopa-io-react-native-login-utils:
     :path: "../node_modules/@pagopa/io-react-native-login-utils"
+  pagopa-io-react-native-secure-storage:
+    :path: "../node_modules/@pagopa/io-react-native-secure-storage"
   pagopa-react-native-zendesk:
     :path: "../node_modules/@pagopa/io-react-native-zendesk"
   RCT-Folly:
@@ -2451,7 +2451,6 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
   hermes-engine: ea92f60f37dba025e293cbe4b4a548fd26b610a0
-  io-react-native-secure-storage: 2a73ef53ebf038a6be886a8021218392c120cf5a
   jail-monkey: a71b35d482a70ecba844a90f002994012cf12a5d
   JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
@@ -2461,9 +2460,10 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: 1b63abc3e851ee3285234d45719a2d928d8e8a98
   pagopa-io-react-native-crypto: 6ca129c232a916e00094e2a4164931349b8af671
   pagopa-io-react-native-http-client: 3ee0c20ccfcc9f6dbe7433d3aa66c31d66fe8ecd
-  pagopa-io-react-native-integrity: 99a8772bd2d058442f08233fbfac93c367b758f6
+  pagopa-io-react-native-integrity: 489054e32ac5954af864bbe7336107ebda9ebece
   pagopa-io-react-native-jwt: d170ab1475627e0cf070e57fc59b73521dadd066
   pagopa-io-react-native-login-utils: 090a98354cdbbf176059a1aa4163120468ee4356
+  pagopa-io-react-native-secure-storage: 9a5975f66be58c8639b4188ab9b571651950d131
   pagopa-react-native-zendesk: 6d2339df555ff3083faddeb8be96a7a03092d73c
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 726d24248aeab6d7180dac71a936bbca6a994ed1
@@ -2556,13 +2556,13 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: 0d591ea1e150f36cb96d868d4e8d77272243d78a
   RNReanimated: 83a2baa5f4dc44ace7b5296ea1f3533d998dfb69
   RNScreens: c7ceced6a8384cb9be5e7a5e88e9e714401fd958
-  RNSentry: e280ee2f6d0aa58c8ac0eb9a45b7678b5840c1da
+  RNSentry: 6747516b98b64d55d115ade591143803dbbf9851
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
   RNStoreReview: 31dbfd0dac2eea9675f0b84f1dd3261c2110c337
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
-  Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
+  Sentry: 54d0fe6c0df448497c8ed4cce66ccf7027e1823e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  SwiftCBOR: 465775bed0e8bac7bfb8160bcf7b95d7f75971e4
+  SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
   VisionCamera: cb84d0d8485b3e67c91b62931d3aa88f49747c92
   Yoga: aa3df615739504eebb91925fc9c58b4922ea9a08
   ZendeskAnswerBotProvidersSDK: 516624907e1c688933dbe727ba6870b8df2237f1

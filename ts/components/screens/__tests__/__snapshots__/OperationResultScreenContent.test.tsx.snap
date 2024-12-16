@@ -544,7 +544,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -660,7 +660,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {

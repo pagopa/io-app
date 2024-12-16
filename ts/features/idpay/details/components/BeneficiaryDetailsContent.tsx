@@ -1,4 +1,4 @@
-import { Label, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -235,9 +235,9 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         ]}
       />
       <VSpacer size={8} />
-      <LabelSmall weight="Regular" color="bluegrey">
+      <BodySmall weight="Regular" color="bluegrey">
         {lastUpdateString}
-      </LabelSmall>
+      </BodySmall>
       <VSpacer size={8} />
       <Table
         title={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
@@ -273,16 +273,16 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       />
       <VSpacer size={24} />
       <View style={styles.linkRow}>
-        <Label asLink onPress={handlePrivacyLinkPress}>
+        <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
           {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-        </Label>
+        </Body>
       </View>
       <View style={styles.linkRow}>
-        <Label asLink onPress={handleUnsubscribePress}>
+        <Body weight="Semibold" asLink onPress={handleUnsubscribePress}>
           {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
             initiativeName
           })}
-        </Label>
+        </Body>
       </View>
       <VSpacer size={48} />
     </>

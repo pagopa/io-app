@@ -369,7 +369,7 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >

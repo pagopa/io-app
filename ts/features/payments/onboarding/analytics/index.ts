@@ -6,76 +6,54 @@ export type PaymentOnboardingAnalyticsProps = {
   payment_method_selected: string;
 };
 
-const trackSuccessOnboardingPaymentMethod = (
-  props: Partial<PaymentOnboardingAnalyticsProps>
+export const getOnboardingPaymentMethodOutcomeEvent = (
+  outcome: WalletOnboardingOutcomeEnum
 ) => {
-  void mixpanelTrack(
-    "ADD_PAYMENT_METHOD_UX_SUCCESS",
-    buildEventProperties("UX", "screen_view", props)
-  );
+  switch (outcome) {
+    case WalletOnboardingOutcomeEnum.SUCCESS:
+      return "ADD_PAYMENT_METHOD_UX_SUCCESS";
+    case WalletOnboardingOutcomeEnum.AUTH_ERROR:
+      return "PAYMENT_ADD_METHOD_AUTHORIZATION_DENIED";
+    case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
+      return "PAYMENT_ADD_METHOD_CANCELED_BY_USER";
+    case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
+      return "PAYMENT_ADD_METHOD_DUPLICATE_ERROR";
+    case WalletOnboardingOutcomeEnum.BE_KO:
+      return "PAYMENT_99_ERROR";
+    case WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND:
+      return "PAYMENT_ADD_METHOD_BPAY_NOT_FOUND";
+    case WalletOnboardingOutcomeEnum.PSP_ERROR_ONBOARDING:
+      return "PAYMENT_PSP_ERROR";
+    case WalletOnboardingOutcomeEnum.INVALID_SESSION:
+    case WalletOnboardingOutcomeEnum.TIMEOUT:
+      return "PAYMENT_SESSION_TIMEOUT";
+    case WalletOnboardingOutcomeEnum.GENERIC_ERROR:
+    default:
+      return "PAYMENT_GENERIC_ERROR";
+  }
 };
-
-const trackOnboardingPaymentMethodDenied = (
-  props: Partial<PaymentOnboardingAnalyticsProps>
-) => {
-  void mixpanelTrack(
-    "PAYMENT_ADD_METHOD_AUTHORIZATION_DENIED",
-    buildEventProperties("UX", "screen_view", props)
-  );
-};
-
-const trackAddOnboardingPaymentMethodCanceled = (
-  props: Partial<PaymentOnboardingAnalyticsProps>
-) => {
-  void mixpanelTrack(
-    "PAYMENT_ADD_METHOD_CANCELED_BY_USER",
-    buildEventProperties("UX", "screen_view", props)
-  );
-};
-
-const trackAddOnboardingPaymentMethodDuplicated = (
-  props: Partial<PaymentOnboardingAnalyticsProps>
-) => {
-  void mixpanelTrack(
-    "PAYMENT_ADD_METHOD_DUPLICATE_ERROR",
-    buildEventProperties("UX", "screen_view", props)
-  );
-};
-
-// This function will be used in the future when we will have 3DS
-// const trackOnboardingPaymentMethod3dsError = (
-//   props: Partial<PaymentOnboardingAnalyticsProps>
-// ) => {
-//   void mixpanelTrack(
-//     "PAYMENT_ADD_METHOD_3DS_ERROR",
-//     buildEventProperties("UX", "screen_view", props)
-//   );
-// };
 
 export const trackAddOnboardingPaymentMethod = (
   outcome: WalletOnboardingOutcomeEnum,
   payment_method_selected: string | undefined
 ) => {
-  switch (outcome) {
-    case WalletOnboardingOutcomeEnum.SUCCESS:
-      trackSuccessOnboardingPaymentMethod({
-        payment_method_selected
-      });
-      break;
-    case WalletOnboardingOutcomeEnum.AUTH_ERROR:
-      trackOnboardingPaymentMethodDenied({
-        payment_method_selected
-      });
-      break;
-    case WalletOnboardingOutcomeEnum.CANCELED_BY_USER:
-      trackAddOnboardingPaymentMethodCanceled({
-        payment_method_selected
-      });
-      break;
-    case WalletOnboardingOutcomeEnum.ALREADY_ONBOARDED:
-      trackAddOnboardingPaymentMethodDuplicated({
-        payment_method_selected
-      });
-      break;
-  }
+  void mixpanelTrack(
+    getOnboardingPaymentMethodOutcomeEvent(outcome),
+    buildEventProperties("UX", "screen_view", {
+      payment_method_selected,
+      payment_phase: "onboarding"
+    })
+  );
+};
+
+export const trackPaymentOnboardingErrorHelp = (
+  props: Partial<PaymentOnboardingAnalyticsProps> & { error: string }
+) => {
+  void mixpanelTrack(
+    "PAYMENT_ERROR_HELP",
+    buildEventProperties("UX", "action", {
+      payment_phase: "onboarding",
+      ...props
+    })
+  );
 };

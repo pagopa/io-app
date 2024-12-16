@@ -851,9 +851,9 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -871,7 +871,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "display": "flex",
                                     "flexDirection": "column",
-                                    "rowGap": 4,
+                                    "gap": 4,
                                   }
                                 }
                               >

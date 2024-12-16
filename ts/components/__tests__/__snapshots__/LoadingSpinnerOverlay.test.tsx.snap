@@ -348,7 +348,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                     "fontFamily": "Titillium Sans Pro",
                     "fontSize": 16,
                     "fontStyle": "normal",
-                    "fontWeight": "700",
+                    "fontWeight": "600",
                     "lineHeight": undefined,
                   },
                   [

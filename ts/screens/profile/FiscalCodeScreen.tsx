@@ -1,7 +1,7 @@
 import {
   H3,
+  BodySmall,
   IOColors,
-  LabelSmall,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -98,7 +98,7 @@ const FiscalCodeScreen = () => {
           ]}
           testID="barcode-box"
         >
-          <LabelSmall weight="Semibold">{nameSurname}</LabelSmall>
+          <BodySmall weight="Semibold">{nameSurname}</BodySmall>
           <Barcode
             value={fiscalCode}
             width={1.3}

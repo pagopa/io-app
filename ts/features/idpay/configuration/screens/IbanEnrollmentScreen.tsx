@@ -1,8 +1,9 @@
 import {
-  H2,
   Body,
   FeatureInfo,
-  FooterWithButtons,
+  FooterActions,
+  FooterActionsInline,
+  H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -13,8 +14,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -54,10 +53,6 @@ export const IbanEnrollmentScreen = () => {
     IdPayConfigurationMachineContext.useSelector(isUpsertingSelector);
   const enrolledIban =
     IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
-
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
 
@@ -107,11 +102,10 @@ export const IbanEnrollmentScreen = () => {
   const renderFooter = () => {
     if (isIbanOnly) {
       return (
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t("idpay.configuration.iban.button.addNew"),
               disabled: isUpsertingIban,
               onPress: handleAddNewIbanPress,
@@ -123,26 +117,20 @@ export const IbanEnrollmentScreen = () => {
     }
 
     return (
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("idpay.configuration.iban.button.addNew"),
-            disabled: isUpsertingIban,
-            onPress: handleAddNewIbanPress,
-            testID: "addIbanButtonTestID"
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("idpay.configuration.iban.button.addNew"),
+          disabled: isUpsertingIban,
+          onPress: handleAddNewIbanPress,
+          testID: "addIbanButtonTestID"
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            disabled: !selectedIban || isUpsertingIban,
-            loading: isUpsertingIban,
-            onPress: handleContinuePress,
-            testID: "continueButtonTestID"
-          }
+        endAction={{
+          label: I18n.t("global.buttons.continue"),
+          disabled: !selectedIban || isUpsertingIban,
+          loading: isUpsertingIban,
+          onPress: handleContinuePress,
+          testID: "continueButtonTestID"
         }}
       />
     );
@@ -187,11 +175,7 @@ export const IbanEnrollmentScreen = () => {
           <VSpacer size={16} />
           <FeatureInfo
             iconName="profile"
-            body={
-              isSettingsVisibleAndHideProfile
-                ? I18n.t("idpay.configuration.iban.enrollment.footer")
-                : I18n.t("idpay.configuration.iban.enrollment.legacyFooter")
-            }
+            body={I18n.t("idpay.configuration.iban.enrollment.footer")}
           />
         </ScrollView>
         <SafeAreaView>{renderFooter()}</SafeAreaView>

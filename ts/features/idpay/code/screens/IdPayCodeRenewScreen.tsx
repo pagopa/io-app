@@ -2,7 +2,6 @@ import {
   Body,
   H2,
   IOStyles,
-  Label,
   ListItemAction,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -68,9 +67,9 @@ export const IdPayCodeRenewScreen = () => {
           <H2>{I18n.t("idpay.code.renew.screen.header")}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.code.renew.screen.body")}</Body>
-          <Label asLink onPress={presentCieBottomSheet}>
+          <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
             {I18n.t("idpay.code.renew.screen.link")}
-          </Label>
+          </Body>
           <VSpacer size={16} />
           <ListItemAction
             label={I18n.t("idpay.code.renew.screen.generateCTA")}
