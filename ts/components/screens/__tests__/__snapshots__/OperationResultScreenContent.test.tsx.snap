@@ -503,18 +503,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -631,14 +628,11 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        {},
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "columnGap": 8,
                                         },
+                                        {},
+                                        false,
                                       ]
                                     }
                                   >

@@ -1192,18 +1192,15 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -6843,18 +6840,15 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
