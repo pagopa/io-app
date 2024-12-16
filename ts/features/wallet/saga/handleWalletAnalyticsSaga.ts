@@ -15,7 +15,7 @@ import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/action
 export function* handleWalletAnalyticsSaga() {
   const isIdPayEnabled = yield* select(isIdPayEnabledSelector);
 
-  // Create array of sagas to wait for, conditionally including IDPay
+  // Prerequisites for the analytics update
   const analyticsPrerequisites = [
     waitForPaymentMethods,
     waitForCgnDetails,
@@ -25,9 +25,8 @@ export function* handleWalletAnalyticsSaga() {
   // Wait for all prerequisite sagas to complete
   yield* all(analyticsPrerequisites);
 
-  // Get final state and update analytics
+  // Update analytics
   const state: GlobalState = yield* select();
-
   void updateMixpanelProfileProperties(state);
   void updateMixpanelSuperProperties(state);
 }
