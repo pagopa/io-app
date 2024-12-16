@@ -6,20 +6,19 @@ import CieIdNotInstalled, {
   CIE_ID_ANDROID_LINK,
   CIE_ID_IOS_LINK
 } from "../components/CieIdNotInstalled";
+import * as urlUtils from "../../../utils/url";
 
 const UAT_ENV_ENABLE_STATES = [true, false];
 
 const mockPopToTop = jest.fn();
-const mockOpenUrl = jest.fn((url: string) => Promise.resolve(url));
+const mockOpenUrl = jest.spyOn(urlUtils, "openWebUrl");
+const anyFunction = expect.any(Function);
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({
     popToTop: mockPopToTop
   })
-}));
-jest.mock("react-native/Libraries/Linking/Linking", () => ({
-  openURL: mockOpenUrl
 }));
 
 describe(CieIdNotInstalled, () => {
@@ -38,7 +37,7 @@ describe(CieIdNotInstalled, () => {
         const openStore = getByTestId("cie-id-not-installed-open-store");
         fireEvent.press(openStore);
 
-        expect(mockOpenUrl).toHaveBeenCalledWith(CIE_ID_IOS_LINK);
+        expect(mockOpenUrl).toHaveBeenCalledWith(CIE_ID_IOS_LINK, anyFunction);
         expect(mockPopToTop).not.toHaveBeenCalled();
       });
     });
@@ -52,7 +51,10 @@ describe(CieIdNotInstalled, () => {
       const openStore = getByTestId("cie-id-not-installed-open-store");
       fireEvent.press(openStore);
 
-      expect(mockOpenUrl).toHaveBeenCalledWith(CIE_ID_ANDROID_LINK);
+      expect(mockOpenUrl).toHaveBeenCalledWith(
+        CIE_ID_ANDROID_LINK,
+        anyFunction
+      );
       expect(mockPopToTop).not.toHaveBeenCalled();
     });
     it("Should open CIE_ID_ANDROID_COLL_LINK", () => {
@@ -63,7 +65,10 @@ describe(CieIdNotInstalled, () => {
       const openStore = getByTestId("cie-id-not-installed-open-store");
       fireEvent.press(openStore);
 
-      expect(mockOpenUrl).toHaveBeenCalledWith(CIE_ID_ANDROID_COLL_LINK);
+      expect(mockOpenUrl).toHaveBeenCalledWith(
+        CIE_ID_ANDROID_COLL_LINK,
+        anyFunction
+      );
       expect(mockPopToTop).not.toHaveBeenCalled();
     });
   });
