@@ -1,12 +1,7 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import React, { memo, useCallback, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-import * as t from "io-ts";
-import {
-  CieIdErrorResult,
-  isCieIdAvailable,
-  openCieIdApp
-} from "@pagopa/io-react-native-cieid";
+import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { selectAuthUrlOption } from "../../../machine/eid/selectors";
@@ -16,14 +11,7 @@ import { originSchemasWhiteList } from "../../../../../screens/authentication/or
 import { itWalletIssuanceRedirectUri } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { isAndroid, isIos } from "../../../../../utils/platform";
-import { convertUnknownToError } from "../../../../../utils/errors";
-import {
-  CIE_ID_ERROR,
-  CIE_ID_ERROR_MESSAGE,
-  IO_LOGIN_CIE_SOURCE_APP,
-  IO_LOGIN_CIE_URL_SCHEME
-} from "../../../../../utils/cie";
+import { useCieIdApp } from "../../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
 const defaultUserAgent =
@@ -33,28 +21,10 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-const cieIdAppError = t.type({
-  id: t.literal("ERROR"),
-  code: t.string
-});
-
 const isAuthenticationUrl = (url: string) => {
   const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
   return authUrlRegex.test(url);
 };
-
-const isCieIdAppError = (e: unknown): e is CieIdErrorResult =>
-  cieIdAppError.is(e);
-
-const extractCieIdErrorFromUrl = (url: string) =>
-  pipe(
-    url,
-    O.fromPredicate(x => x.includes(CIE_ID_ERROR)),
-    O.map(
-      x => x.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID"
-    ),
-    O.toUndefined
-  );
 
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.
@@ -62,49 +32,32 @@ const extractCieIdErrorFromUrl = (url: string) =>
  * and sends the redirectAuthUrl back to the state machine.
  */
 const ItwCieIdLoginScreen = () => {
-  const cieIdAuthUrl =
+  const initialAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
-  const [cancelVisible, setCancelVisible] = useState(false);
-  const [authUrl, setAuthUrl] = useState<O.Option<string>>();
-  const webViewSource = authUrl || cieIdAuthUrl;
+  const {
+    authUrl,
+    isAppLaunched,
+    startCieIdAppAuthentication,
+    handleAuthenticationFailure
+  } = useCieIdApp();
+
+  const webViewSource = pipe(
+    authUrl,
+    O.alt(() => initialAuthUrl)
+  );
 
   useHeaderSecondLevel({
     title: I18n.t("features.itWallet.identification.mode.title"),
     supportRequest: false
   });
 
-  const sendErrorToMachine = useCallback(
-    (error: Error) => {
-      machineRef.send({ type: "error", scope: "cieid-login", error });
-    },
+  const goBack = useCallback(
+    () => machineRef.send({ type: "back" }),
     [machineRef]
   );
-
-  useEffect(() => {
-    const urlListenerSubscription = Linking.addEventListener(
-      "url",
-      ({ url }) => {
-        if (!url.startsWith(IO_LOGIN_CIE_URL_SCHEME)) {
-          return;
-        }
-
-        const [, continueUrl] = url.split(IO_LOGIN_CIE_URL_SCHEME);
-        const cieIdError = extractCieIdErrorFromUrl(continueUrl);
-
-        if (cieIdError) {
-          return sendErrorToMachine(new Error(cieIdError));
-        }
-
-        setAuthUrl(O.some(continueUrl));
-        setCancelVisible(false);
-      }
-    );
-
-    return () => urlListenerSubscription.remove();
-  }, [sendErrorToMachine]);
 
   const onLoadEnd = useCallback(() => {
     // When CieId app-to-app flow is enabled, stop loading only after we got
@@ -113,47 +66,6 @@ const ItwCieIdLoginScreen = () => {
       setWebViewLoading(false);
     }
   }, [authUrl]);
-
-  const goBack = useCallback(
-    () => machineRef.send({ type: "back" }),
-    [machineRef]
-  );
-
-  const handleAuthenticationFailure = useCallback(
-    (error: unknown) => {
-      if (isCieIdAppError(error)) {
-        return error.code === "CIEID_OPERATION_CANCEL"
-          ? goBack()
-          : sendErrorToMachine(new Error(error.code));
-      }
-
-      sendErrorToMachine(convertUnknownToError(error));
-    },
-    [sendErrorToMachine, goBack]
-  );
-
-  const startCieIdAppAuthentication = useCallback(
-    (url: string) => {
-      // Use the new CieID app-to-app flow on Android
-      if (isAndroid) {
-        openCieIdApp(url, result => {
-          if (result.id === "URL") {
-            setAuthUrl(O.some(result.url));
-          } else {
-            handleAuthenticationFailure(result);
-          }
-        });
-      }
-
-      // Try to directly open the CieID app on iOS
-      if (isIos) {
-        Linking.openURL(`CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`)
-          .then(() => setCancelVisible(true))
-          .catch(handleAuthenticationFailure);
-      }
-    },
-    [handleAuthenticationFailure]
-  );
 
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
@@ -195,29 +107,32 @@ const ItwCieIdLoginScreen = () => {
 
   const content = useMemo(
     () =>
-      O.fold(
-        () => null,
-        (url: string) => (
-          <WebView
-            testID="cieid-webview"
-            cacheEnabled={false}
-            androidCameraAccessDisabled
-            androidMicrophoneAccessDisabled
-            javaScriptEnabled
-            textZoom={100}
-            originWhitelist={originSchemasWhiteList}
-            source={{ uri: url }}
-            onError={handleAuthenticationFailure}
-            onHttpError={handleAuthenticationFailure}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
-            allowsInlineMediaPlayback
-            mediaPlaybackRequiresUserAction
-            userAgent={defaultUserAgent}
-            onLoadEnd={onLoadEnd}
-          />
+      pipe(
+        webViewSource,
+        O.fold(
+          () => null,
+          (url: string) => (
+            <WebView
+              testID="cieid-webview"
+              cacheEnabled={false}
+              androidCameraAccessDisabled
+              androidMicrophoneAccessDisabled
+              javaScriptEnabled
+              textZoom={100}
+              originWhitelist={originSchemasWhiteList}
+              source={{ uri: url }}
+              onError={handleAuthenticationFailure}
+              onHttpError={handleAuthenticationFailure}
+              onNavigationStateChange={handleNavigationStateChange}
+              onShouldStartLoadWithRequest={handleShouldStartLoading}
+              allowsInlineMediaPlayback
+              mediaPlaybackRequiresUserAction
+              userAgent={defaultUserAgent}
+              onLoadEnd={onLoadEnd}
+            />
+          )
         )
-      )(webViewSource),
+      ),
     [
       webViewSource,
       handleNavigationStateChange,
@@ -231,7 +146,7 @@ const ItwCieIdLoginScreen = () => {
     <LoadingSpinnerOverlay
       isLoading={isWebViewLoading}
       loadingOpacity={1.0}
-      onCancel={cancelVisible ? goBack : undefined} // This should only be possible when opening CieID through the Linking module
+      onCancel={isAppLaunched ? goBack : undefined} // This should only be possible when opening CieID through the Linking module
     >
       <View style={styles.webViewWrapper}>{content}</View>
     </LoadingSpinnerOverlay>
