@@ -12,7 +12,6 @@ import {
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
-import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -40,12 +39,6 @@ export type StartAuthFlowActorParams = {
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
-};
-
-export type GetAuthRedirectUrlActorParam = {
-  redirectUri: string | undefined;
-  authUrl: string | undefined;
-  identification: IdentificationContext | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = (
@@ -150,25 +143,6 @@ export const createEidIssuanceActorsImplementation = (
         ...authenticationContext,
         callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
       };
-    }
-  ),
-
-  getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
-    async ({ input }) => {
-      assert(
-        input.redirectUri,
-        "redirectUri must be defined to get authRedirectUrl"
-      );
-      assert(input.authUrl, "authUrl must be defined to get authRedirectUrl");
-      assert(input.identification, "identification is undefined");
-
-      const { authRedirectUrl } = await openUrlAndListenForAuthRedirect(
-        input.redirectUri,
-        input.authUrl,
-        input.identification.abortController?.signal
-      );
-
-      return authRedirectUrl;
     }
   ),
 

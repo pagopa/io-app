@@ -41,7 +41,7 @@ import {
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
 import { requestAppReview } from "../../../../utils/storeReview";
@@ -130,7 +130,7 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+    dispatch(getPaymentsLatestReceiptAction.request());
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"

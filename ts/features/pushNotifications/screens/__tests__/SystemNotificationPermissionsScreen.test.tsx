@@ -11,9 +11,9 @@ import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as analytics from "../../analytics";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
-import { setEngagementScreenShown } from "../../store/actions/userBehaviour";
 import * as utils from "../../utils";
 import { SystemNotificationPermissionsScreen } from "../SystemNotificationPermissionsScreen";
+import { setEngagementScreenShown } from "../../store/actions/environment";
 
 const mockGoBack = jest.fn();
 const mockSetNavigationOptions = jest.fn();
