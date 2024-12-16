@@ -29,6 +29,7 @@ import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTrackin
 import { useIOSelector } from "../../../../store/hooks";
 import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { getFullLocale } from "../../../../utils/locale";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -88,7 +89,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
 
   useDebugInfo({
-    failure
+    failure: serializeFailureReason(failure)
   });
 
   const getOperationResultScreenContentProps =
