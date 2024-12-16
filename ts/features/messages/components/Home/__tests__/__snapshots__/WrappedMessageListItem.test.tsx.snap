@@ -608,7 +608,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -1570,7 +1570,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2708,7 +2708,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3697,7 +3697,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains p
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4741,7 +4741,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5597,7 +5597,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, contains u
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6387,7 +6387,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -7122,7 +7122,7 @@ exports[`WrappedMessageListItem should match snapshot, not from SEND, not a paym
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,

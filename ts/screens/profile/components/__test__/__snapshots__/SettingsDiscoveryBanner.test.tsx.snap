@@ -630,13 +630,7 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

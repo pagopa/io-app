@@ -418,7 +418,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 {
                                                   "color": "#0E0F13",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 18,
+                                                  "fontSize": 17,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 24,
@@ -633,7 +633,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 {
                                                   "color": "#0E0F13",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 18,
+                                                  "fontSize": 17,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 24,
@@ -848,7 +848,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                 {
                                                   "color": "#0E0F13",
                                                   "fontFamily": "Titillium Sans Pro",
-                                                  "fontSize": 18,
+                                                  "fontSize": 17,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
                                                   "lineHeight": 24,
@@ -1069,13 +1069,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -1250,13 +1244,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

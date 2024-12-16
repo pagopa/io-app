@@ -446,7 +446,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -553,14 +553,11 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                {},
                                 {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "columnGap": 8,
                                 },
+                                {},
+                                false,
                               ]
                             }
                           >
@@ -2585,7 +2582,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,

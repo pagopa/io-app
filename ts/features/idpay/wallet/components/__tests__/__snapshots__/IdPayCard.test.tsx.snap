@@ -55,7 +55,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               {
                 "color": "#001F3D",
                 "fontFamily": "Titillium Sans Pro",
-                "fontSize": 18,
+                "fontSize": 17,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,

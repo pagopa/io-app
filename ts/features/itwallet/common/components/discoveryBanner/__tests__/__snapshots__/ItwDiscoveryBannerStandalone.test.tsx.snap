@@ -774,7 +774,7 @@ exports[`ItwDiscoveryBannerStandalone should match snapshot when isItwDiscoveryB
                                       {
                                         "color": "#031344",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,

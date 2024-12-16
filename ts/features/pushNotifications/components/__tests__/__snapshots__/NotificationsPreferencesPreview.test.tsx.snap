@@ -532,7 +532,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -1110,7 +1110,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -1688,7 +1688,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -2266,7 +2266,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,

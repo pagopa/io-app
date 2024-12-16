@@ -400,14 +400,11 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                {},
                                 {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "columnGap": 8,
                                 },
+                                {},
+                                false,
                               ]
                             }
                           >
@@ -3133,14 +3130,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                {},
                                 {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "columnGap": 8,
                                 },
+                                {},
+                                false,
                               ]
                             }
                           >
@@ -3632,14 +3626,11 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                {},
                                 {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "columnGap": 8,
                                 },
+                                {},
+                                false,
                               ]
                             }
                           >

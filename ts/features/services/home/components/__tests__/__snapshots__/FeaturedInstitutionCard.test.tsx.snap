@@ -497,7 +497,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1025,7 +1025,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
