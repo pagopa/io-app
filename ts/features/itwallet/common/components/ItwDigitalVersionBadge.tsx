@@ -3,11 +3,10 @@ import {
   IOBadgeRadius,
   IOBadgeVSpacing,
   IOColors,
-  IOText,
-  useIOExperimentalDesign
+  makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../i18n";
 
 type DigitalVersionBadgeProps = {
@@ -24,8 +23,6 @@ const ItwDigitalVersionBadge = ({
   credentialType,
   isFaded = false
 }: DigitalVersionBadgeProps) => {
-  const { isExperimental } = useIOExperimentalDesign();
-
   const mapCredentialTypes: Record<
     NonNullable<string>,
     CredentialTypesProps
@@ -56,24 +53,19 @@ const ItwDigitalVersionBadge = ({
     <View style={styles.wrapper}>
       <View style={[styles.badge, { backgroundColor: background }]}>
         {isFaded && <View style={styles.faded} />}
-        <IOText
-          font={isExperimental ? "Titillio" : "TitilliumSansPro"}
-          weight="Regular"
-          size={12}
-          lineHeight={16}
+        <Text
           numberOfLines={1}
           ellipsizeMode="tail"
-          maxFontSizeMultiplier={1.2}
-          style={{
-            color: foreground,
-            alignSelf: "center",
-            textTransform: "uppercase",
-            letterSpacing: 0.5,
-            flexShrink: 1
-          }}
+          allowFontScaling={false}
+          style={[
+            styles.label,
+            {
+              color: foreground
+            }
+          ]}
         >
           {`${I18n.t("features.itWallet.card.digital")}`}
-        </IOText>
+        </Text>
       </View>
     </View>
   );
@@ -107,6 +99,12 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     opacity: 0.6,
     zIndex: 10
+  },
+  label: {
+    alignSelf: "center",
+    textTransform: "uppercase",
+    flexShrink: 1,
+    ...makeFontStyleObject(12, "Titillio", 16, "Regular")
   }
 });
 
