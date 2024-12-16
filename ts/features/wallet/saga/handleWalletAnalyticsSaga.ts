@@ -1,8 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { all, call, select, take } from "typed-redux-saga/macro";
-// We need to disable the eslint rule because the types are not available for the following imports
-// eslint-disable-next-line @jambit/typed-redux-saga/use-typed-effects
-import { StrictEffect } from "redux-saga/effects";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { isIdPayEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -12,25 +9,32 @@ import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 
 /**
- * Saga that handles the Mixpanel properties update based on the wallet screen content
+ * Saga that handles the Mixpanel properties update based on the wallet screen content.
+ * It waits for all wallet-related API calls to complete before updating analytics.
  */
 export function* handleWalletAnalyticsSaga() {
   const isIdPayEnabled = yield* select(isIdPayEnabledSelector);
 
-  const bonusAndPaymentsSagas = [
-    call(waitForPaymentMethods),
-    call(waitForCgnDetails),
-    ...(isIdPayEnabled ? [call(waitForIdPay)] : [])
-  ] as unknown as Array<StrictEffect>;
+  // Create array of sagas to wait for, conditionally including IDPay
+  const analyticsPrerequisites = [
+    waitForPaymentMethods,
+    waitForCgnDetails,
+    ...(isIdPayEnabled ? [waitForIdPay] : [])
+  ].map(saga => call(saga));
 
-  yield* all(bonusAndPaymentsSagas);
+  // Wait for all prerequisite sagas to complete
+  yield* all(analyticsPrerequisites);
 
+  // Get final state and update analytics
   const state: GlobalState = yield* select();
 
   void updateMixpanelProfileProperties(state);
   void updateMixpanelSuperProperties(state);
 }
 
+/**
+ * Wait for payment methods request to complete (success or failure)
+ */
 function* waitForPaymentMethods(): SagaIterator {
   yield* take([
     getPaymentsWalletUserMethods.success,
@@ -38,10 +42,16 @@ function* waitForPaymentMethods(): SagaIterator {
   ]);
 }
 
+/**
+ * Wait for IDPay wallet request to complete (success or failure)
+ */
 function* waitForIdPay(): SagaIterator {
   yield* take([idPayWalletGet.success, idPayWalletGet.failure]);
 }
 
+/**
+ * Wait for CGN details request to complete (success or failure)
+ */
 function* waitForCgnDetails(): SagaIterator {
   yield* take([cgnDetails.success, cgnDetails.failure]);
 }
