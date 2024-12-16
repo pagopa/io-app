@@ -4,7 +4,7 @@ import { WalletPlaceholdersActions } from "./placeholders";
 import { WalletPreferencesActions } from "./preferences";
 
 /**
- * Action to trigger the update the content of the wallet screen
+ * Action to trigger the update of the wallet screen content
  */
 export const walletUpdate = createStandardAction("WALLET_UPDATE")();
 
