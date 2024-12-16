@@ -1,69 +1,86 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
+import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import {
-  selectAuthUrlOption,
-  selectIsLoading
-} from "../../../machine/eid/selectors";
+import { constNull, pipe } from "fp-ts/lib/function";
+import { selectAuthUrlOption } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import I18n from "../../../../../i18n";
 import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
 import { itWalletIssuanceRedirectUri } from "../../../../../config";
-import { getIntentFallbackUrl } from "../../../../../utils/login";
-import {
-  HeaderSecondLevelHookProps,
-  useHeaderSecondLevel
-} from "../../../../../hooks/useHeaderSecondLevel";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { useCieIdApp } from "../../hooks/useCieIdApp";
+
+// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
+const defaultUserAgent =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-// To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
-const defaultUserAgent =
-  "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
+const isAuthenticationUrl = (url: string) => {
+  const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
+  return authUrlRegex.test(url);
+};
 
 /**
  * This component renders a WebView that loads the URL obtained from the startAuthFlow.
  * It handles the navigation state changes to detect when the authentication is completed
  * and sends the redirectAuthUrl back to the state machine.
  */
-const ItwSpidIdpLoginScreen = () => {
-  const isMachineLoading =
-    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const spidAuthUrl =
+const ItwCieIdLoginScreen = () => {
+  const initialAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
-  const onLoadEnd = useCallback(() => {
-    setWebViewLoading(false);
-  }, []);
+  const {
+    authUrl,
+    isAppLaunched,
+    startCieIdAppAuthentication,
+    handleAuthenticationFailure
+  } = useCieIdApp();
 
-  const onError = useCallback(() => {
-    machineRef.send({ type: "error", scope: "spid-login" });
-  }, [machineRef]);
+  const webViewSource = pipe(
+    authUrl,
+    O.alt(() => initialAuthUrl)
+  );
+
+  useHeaderSecondLevel({
+    title: I18n.t("features.itWallet.identification.mode.title"),
+    supportRequest: false
+  });
+
+  const goBack = useCallback(
+    () => machineRef.send({ type: "back" }),
+    [machineRef]
+  );
+
+  const onLoadEnd = useCallback(() => {
+    // When CieId app-to-app flow is enabled, stop loading only after we got
+    // the authUrl from CieId app, so the user doesn't see the login screen.
+    if (isCieIdAvailable() ? !!authUrl : true) {
+      setWebViewLoading(false);
+    }
+  }, [authUrl]);
 
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const url = event.url;
-      const idpIntent = getIntentFallbackUrl(url);
 
-      return pipe(
-        idpIntent,
-        O.fold(
-          () => true,
-          intentUrl => {
-            void Linking.openURL(intentUrl);
-            return false;
-          }
-        )
-      );
+      // When CieID is available, use a flow that launches the app
+      if (isAuthenticationUrl(url) && isCieIdAvailable()) {
+        startCieIdAppAuthentication(url);
+        return false;
+      }
+
+      // When CieID is not available, fallback to the regular webview
+      return true;
     },
-    []
+    [startCieIdAppAuthentication]
   );
 
   const handleNavigationStateChange = useCallback(
@@ -88,21 +105,13 @@ const ItwSpidIdpLoginScreen = () => {
     [machineRef]
   );
 
-  // Setup header properties
-  const headerProps: HeaderSecondLevelHookProps = {
-    title: I18n.t("features.itWallet.identification.mode.title"),
-    supportRequest: false
-  };
-
-  useHeaderSecondLevel(headerProps);
-
   const content = useMemo(
     () =>
-      O.fold(
-        () => null,
-        (url: string) => (
+      pipe(
+        webViewSource,
+        O.fold(constNull, (url: string) => (
           <WebView
-            key={"spid_webview"}
+            testID="cieid-webview"
             cacheEnabled={false}
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
@@ -110,8 +119,8 @@ const ItwSpidIdpLoginScreen = () => {
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
             source={{ uri: url }}
-            onError={onError}
-            onHttpError={onError}
+            onError={handleAuthenticationFailure}
+            onHttpError={handleAuthenticationFailure}
             onNavigationStateChange={handleNavigationStateChange}
             onShouldStartLoadWithRequest={handleShouldStartLoading}
             allowsInlineMediaPlayback
@@ -119,25 +128,26 @@ const ItwSpidIdpLoginScreen = () => {
             userAgent={defaultUserAgent}
             onLoadEnd={onLoadEnd}
           />
-        )
-      )(spidAuthUrl),
+        ))
+      ),
     [
-      spidAuthUrl,
+      webViewSource,
       handleNavigationStateChange,
       handleShouldStartLoading,
-      onError,
+      handleAuthenticationFailure,
       onLoadEnd
     ]
   );
 
   return (
     <LoadingSpinnerOverlay
-      isLoading={isWebViewLoading || isMachineLoading}
+      isLoading={isWebViewLoading}
       loadingOpacity={1.0}
+      onCancel={isAppLaunched ? goBack : undefined} // This should only be possible when opening CieID through the Linking module
     >
       <View style={styles.webViewWrapper}>{content}</View>
     </LoadingSpinnerOverlay>
   );
 };
 
-export default memo(ItwSpidIdpLoginScreen);
+export default memo(ItwCieIdLoginScreen);
