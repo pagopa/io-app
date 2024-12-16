@@ -3,7 +3,7 @@
 exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 1`] = `
 {
   "ITW_DISCOVERY": true,
-  "PUSH_NOTIFICATIONS_REMINDER": false,
+  "PUSH_NOTIFICATIONS_REMINDER": true,
   "SETTINGS_DISCOVERY": true,
 }
 `;

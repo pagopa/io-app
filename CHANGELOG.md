@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.79.0-rc.11](https://github.com/pagopa/io-app/compare/2.79.0-rc.10...2.79.0-rc.11) (2024-12-13)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1901](https://pagopa.atlassian.net/browse/SIW-1901)] Deferred issuance for credential ([#6549](https://github.com/pagopa/io-app/issues/6549)) ([a6a7134](https://github.com/pagopa/io-app/commit/a6a71349f95d7b8cb01262d578ae83f9c25b74d1))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1902](https://pagopa.atlassian.net/browse/SIW-1902)] Wallet accessibility improvements ([#6543](https://github.com/pagopa/io-app/issues/6543)) ([b4f9164](https://github.com/pagopa/io-app/commit/b4f9164ed190c6ecb9a8b510e5f648c2c86b32d4))
+
+
+### Chores
+
+* [[IOBP-1083](https://pagopa.atlassian.net/browse/IOBP-1083)] Update `IN_APP_BROWSER_CLOSED_BY_USER` outcome text ([#6548](https://github.com/pagopa/io-app/issues/6548)) ([47c6573](https://github.com/pagopa/io-app/commit/47c657388e9528327ac87d46337a52265c9ba439))
+* [[IOCOM-1763](https://pagopa.atlassian.net/browse/IOCOM-1763)] Refactor of push notification engagement screen display logic ([#6464](https://github.com/pagopa/io-app/issues/6464)) ([9d41018](https://github.com/pagopa/io-app/commit/9d4101855ac25a51a959c1c2686eb7983768260d))
+* **IT Wallet:** [[SIW-1909](https://pagopa.atlassian.net/browse/SIW-1909)] Move CIE logic from `@pagopa/io-react-native-wallet` to app ([#6542](https://github.com/pagopa/io-app/issues/6542)) ([f0bd90e](https://github.com/pagopa/io-app/commit/f0bd90e49de5307e550867a3ebd0a35cf9a208e4))
+
+## [2.79.0-rc.10](https://github.com/pagopa/io-app/compare/2.79.0-rc.9...2.79.0-rc.10) (2024-12-12)
+
+
+### Chores
+
+* [[IOCOM-1761](https://pagopa.atlassian.net/browse/IOCOM-1761)] Push notification reminder banner BS and logic ([#6503](https://github.com/pagopa/io-app/issues/6503)) ([4a5626a](https://github.com/pagopa/io-app/commit/4a5626a2b04d90064c2de9d3eef9e7d769ee62cd))
+* **Cross:** [[IOAPPX-356](https://pagopa.atlassian.net/browse/IOAPPX-356)] Add divider to first level sections when the user scrolls + Add `useHeaderFirstLevel` hook ([#6054](https://github.com/pagopa/io-app/issues/6054)) ([77dfc48](https://github.com/pagopa/io-app/commit/77dfc48da20c8276f9a2509f58d377b57cdbe3a8))
+
 ## [2.79.0-rc.9](https://github.com/pagopa/io-app/compare/2.79.0-rc.8...2.79.0-rc.9) (2024-12-12)
 
 

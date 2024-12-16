@@ -1984,7 +1984,7 @@ wallet:
         subtitle: Potresti avere rimosso pagoPA dai pagamenti automatici di PayPal. Elimina il conto PayPal dal tuo Portafoglio, aggiungilo di nuovo e riprova ad effettuare il pagamento.
       IN_APP_BROWSER_CLOSED_BY_USER:
         title: Hai interrotto il pagamento
-        subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi qualche minuto prima di riprovare.
+        subtitle: Verifica l’esito dalla sezione Pagamenti. Se intendi pagare, attendi almeno 15 minuti prima di riprovare.
       INSUFFICIENT_AVAILABILITY_ERROR:
         title: Il saldo della tua carta è insufficiente
         subtitle: Non è stato addebitato alcun importo. Prima di riprovare, aggiungi fondi alla carta o usa un altro metodo di pagamento.
@@ -2950,6 +2950,11 @@ features:
         title: "Don't miss any important messages!"
         body: "Turn on push notifications to know when you get a message on IO."
         CTA: "Turn on push notifications"
+        bottomSheet:
+          title: "Preferisci non vedere più questo avviso?"
+          body: "Ti ricordiamo che attivare le notifiche push può aiutarti a non perdere comunicazioni importanti e scadenze sui pagamenti."
+          cta: "Ricordamelo più tardi"
+          cta2: "Non mostrarmelo più"
     attachmentDownloadFeedback: "Download in progress"
     attachments: "Attachments"
     loading:
