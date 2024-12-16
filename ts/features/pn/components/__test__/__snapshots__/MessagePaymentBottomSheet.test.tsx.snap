@@ -826,9 +826,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -863,6 +863,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1051,9 +1052,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1088,6 +1089,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1301,9 +1303,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1338,6 +1340,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1551,9 +1554,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1588,6 +1591,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -1801,9 +1805,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -1838,6 +1842,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -2051,9 +2056,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -2088,6 +2093,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={
@@ -2301,9 +2307,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                   <View
                                     style={
                                       {
-                                        "columnGap": 12,
                                         "display": "flex",
                                         "flexDirection": "row",
+                                        "gap": 12,
                                       }
                                     }
                                   >
@@ -2338,6 +2344,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       </Text>
                                       <Text
                                         allowFontScaling={false}
+                                        dynamicTypeRamp="body"
                                         maxFontSizeMultiplier={1.25}
                                         numberOfLines={2}
                                         style={

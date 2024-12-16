@@ -6,7 +6,7 @@ import {
   H2,
   HeaderSecondLevel,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -119,9 +119,9 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           onLayout={getTitleHeight}
         >
           {title.section && (
-            <LabelSmall weight="Semibold" color={theme["textBody-tertiary"]}>
+            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
               {title.section}
-            </LabelSmall>
+            </BodySmall>
           )}
           <H2
             color={theme["textHeading-default"]}

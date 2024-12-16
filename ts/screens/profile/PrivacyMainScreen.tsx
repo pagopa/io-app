@@ -10,6 +10,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from "react";
 import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
@@ -64,6 +65,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const [requestProcess, setRequestProcess] = useState(false);
+  const canShowTooltipRef = useRef(true);
   const isLoading =
     pot.isLoading(userDataProcessing.DELETE) ||
     pot.isLoading(userDataProcessing.DOWNLOAD);
@@ -134,6 +136,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
           return;
         }
+        if (choice === UserDataProcessingChoiceEnum.DELETE) {
+          navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+          return;
+        }
       } else {
         handleAlreadyProcessingAlert(choice);
       }
@@ -141,39 +147,52 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     [handleAlreadyProcessingAlert, navigation, userDataProcessing]
   );
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
+    const prevIsLoading = (choice: UserDataProcessingChoiceEnum) =>
+      prevUserDataProcessing && pot.isLoading(prevUserDataProcessing[choice]);
+    const someWereLoading = (choices: Array<UserDataProcessingChoiceEnum>) =>
+      choices.some(
+        choice =>
+          prevIsLoading(choice) && !pot.isLoading(userDataProcessing[choice])
+      );
+    const someHasError = (choices: Array<UserDataProcessingChoiceEnum>) =>
+      choices.some(
+        choice =>
+          prevIsLoading(choice) && pot.isError(userDataProcessing[choice])
+      );
     // If the new request submission fails, show an alert and hide the 'in progress' badge
     // if it is a get request after user click, check if shows the alert
     const checkUpdate = (
       errorMessage: string,
-      choice: UserDataProcessingChoiceEnum
+      choices: Array<UserDataProcessingChoiceEnum>
     ) => {
-      const currentState = userDataProcessing[choice];
+      if (someWereLoading(choices)) {
+        if (someHasError(choices) && canShowTooltipRef.current) {
+          // This reference ensures to display the toast message once between re-execution of this effect
+          // eslint-disable-next-line functional/immutable-data
+          canShowTooltipRef.current = false;
 
-      if (
-        prevUserDataProcessing &&
-        pot.isLoading(prevUserDataProcessing[choice]) &&
-        !pot.isLoading(currentState)
-      ) {
-        if (pot.isError(currentState)) {
           IOToast.error(errorMessage);
         }
         // if the user asks for download/delete prompt an alert
         else if (requestProcess) {
           setRequestProcess(false);
-          handleUserDataRequestAlert(choice);
+          choices.forEach(choice => {
+            if (
+              prevIsLoading(choice) &&
+              !pot.isLoading(userDataProcessing[choice])
+            ) {
+              handleUserDataRequestAlert(choice);
+            }
+          });
         }
       }
     };
-    checkUpdate(
-      I18n.t("profile.main.privacy.exportData.error"),
-      UserDataProcessingChoiceEnum.DOWNLOAD
-    );
-
-    checkUpdate(
-      I18n.t("profile.main.privacy.removeAccount.error"),
+    checkUpdate(I18n.t("profile.main.privacy.errorMessage"), [
+      UserDataProcessingChoiceEnum.DOWNLOAD,
       UserDataProcessingChoiceEnum.DELETE
-    );
+    ]);
   }, [
     userDataProcessing,
     prevUserDataProcessing,
@@ -197,6 +216,19 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       ),
     [userDataProcessing]
   );
+  const handleChoiceSelection = useCallback(
+    (choice: UserDataProcessingChoiceEnum) => {
+      if (pot.isError(userDataProcessing[choice])) {
+        // eslint-disable-next-line functional/immutable-data
+        canShowTooltipRef.current = true;
+        setRequestProcess(true);
+        dispatch(loadUserDataProcessing.request(choice));
+      } else {
+        handleUserDataRequestAlert(choice);
+      }
+    },
+    [dispatch, handleUserDataRequestAlert, userDataProcessing]
+  );
 
   const privacyNavListItems: ReadonlyArray<PrivacyNavListItem> = useMemo(
     () => [
@@ -219,12 +251,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.exportData.title"),
         description: I18n.t("profile.main.privacy.exportData.description"),
         onPress: () => {
-          setRequestProcess(true);
-          dispatch(
-            loadUserDataProcessing.request(
-              UserDataProcessingChoiceEnum.DOWNLOAD
-            )
-          );
+          handleChoiceSelection(UserDataProcessingChoiceEnum.DOWNLOAD);
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
           ? {
@@ -241,11 +268,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         value: I18n.t("profile.main.privacy.removeAccount.title"),
         description: I18n.t("profile.main.privacy.removeAccount.description"),
         onPress: () => {
-          if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
-            handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
-          } else {
-            navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
-          }
+          handleChoiceSelection(UserDataProcessingChoiceEnum.DELETE);
         },
         topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
           ? {
@@ -259,7 +282,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       }
     ],
 
-    [dispatch, handleUserDataRequestAlert, isRequestProcessing, navigation]
+    [isRequestProcessing, navigation, handleChoiceSelection]
   );
 
   const renderPrivacyNavItem = useCallback(

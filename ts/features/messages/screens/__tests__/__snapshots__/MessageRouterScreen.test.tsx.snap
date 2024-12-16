@@ -227,7 +227,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >
@@ -1087,7 +1087,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >
@@ -2278,7 +2278,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -2394,7 +2394,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {
@@ -3021,7 +3021,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >
@@ -3881,7 +3881,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "column",
-                                "rowGap": 24,
+                                "gap": 24,
                               }
                             }
                           >

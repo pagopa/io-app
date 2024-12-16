@@ -1,4 +1,4 @@
-import { LabelSmall, RadioGroup } from "@pagopa/io-app-design-system";
+import { BodySmall, RadioGroup } from "@pagopa/io-app-design-system";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../../../i18n";
@@ -19,12 +19,12 @@ const ServicesContactComponent = (props: Props): ReactElement => {
       value: I18n.t("services.optIn.preferences.quickConfig.title"),
       id: ServicesPreferencesModeEnum.AUTO,
       description: (
-        <LabelSmall weight="Regular">
+        <BodySmall weight="Regular">
           {I18n.t("services.optIn.preferences.quickConfig.body.text1")}{" "}
-          <LabelSmall weight="Semibold">
+          <BodySmall weight="Semibold">
             {I18n.t("services.optIn.preferences.quickConfig.body.text2")}
-          </LabelSmall>
-        </LabelSmall>
+          </BodySmall>
+        </BodySmall>
       )
     },
     {

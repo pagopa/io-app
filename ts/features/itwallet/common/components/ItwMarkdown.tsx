@@ -14,7 +14,6 @@ import {
   H6,
   h6FontSize,
   IOToast,
-  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
@@ -74,12 +73,13 @@ const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
     </React.Fragment>
   ),
   strong: (node: ASTNode, children: Array<ReactNode>) => (
-    <Body key={node.key} weight="Bold">
+    <Body key={node.key} weight="Semibold">
       {children}
     </Body>
   ),
   link: (node: ASTNode, children: Array<ReactNode>) => (
-    <Label
+    <Body
+      weight="Semibold"
       asLink
       key={node.key}
       onPress={() => {
@@ -91,7 +91,7 @@ const getRules = (onLinkOpen?: ItwMarkdownProps["onLinkOpen"]) => ({
       numberOfLines={1}
     >
       {children}
-    </Label>
+    </Body>
   )
 });
 

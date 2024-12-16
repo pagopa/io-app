@@ -14,7 +14,6 @@ import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE
 } from "../../analytics";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
@@ -35,6 +34,7 @@ import {
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
+import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -55,9 +55,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 
   if (O.isNone(credentialOption)) {
-    // This is unlikely to happen, but we want to handle the case where the credential is not found
-    // because of inconsistencies in the state, and assert that the credential is O.some
-    return <ItwGenericErrorContent />;
+    // If the credential is not found, we render a screen that allows the user to request that credential.
+    return <ItwCredentialNotFound credentialType={credentialType} />;
   }
 
   return (

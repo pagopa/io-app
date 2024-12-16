@@ -99,7 +99,7 @@ const DownloadProfileDataScreen = () => {
   );
 
   const titleProps = useMemo<ComponentProps<typeof Body>>(
-    () => ({ weight: "Bold" }),
+    () => ({ weight: "Semibold" }),
     []
   );
 
@@ -110,7 +110,7 @@ const DownloadProfileDataScreen = () => {
       },
       {
         text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part2"),
-        weight: "Bold"
+        weight: "Semibold"
       },
       {
         text: I18n.t("profile.main.privacy.exportData.detail.paragraph2.part3")
@@ -146,7 +146,11 @@ const DownloadProfileDataScreen = () => {
         <VSpacer />
         <Body accessibilityRole="link" onPress={handleNavigateToProfilePrivacy}>
           {I18n.t("profile.main.privacy.exportData.detail.paragraph3.part1")}
-          <Body asLink onPress={handleNavigateToProfilePrivacy}>
+          <Body
+            asLink
+            weight="Semibold"
+            onPress={handleNavigateToProfilePrivacy}
+          >
             {I18n.t("profile.main.privacy.exportData.detail.paragraph3.link")}
           </Body>
         </Body>

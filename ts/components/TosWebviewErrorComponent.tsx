@@ -1,11 +1,11 @@
-import React from "react";
 import {
-  FooterWithButtons,
+  FooterActions,
   H3,
   IOStyles,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import React from "react";
 import { View } from "react-native";
 import I18n from "../i18n";
 
@@ -32,11 +32,10 @@ const TosWebviewErrorComponent = ({
         {I18n.t("onboarding.tos.error")}
       </H3>
     </View>
-    <FooterWithButtons
-      type="SingleButton"
-      primary={{
-        type: "Solid",
-        buttonProps: {
+    <FooterActions
+      actions={{
+        type: "SingleButton",
+        primary: {
           label: I18n.t("global.buttons.retry"),
           onPress: handleRetry,
           testID: "RetryButtonTest"

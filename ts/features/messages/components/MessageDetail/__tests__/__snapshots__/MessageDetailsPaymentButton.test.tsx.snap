@@ -1033,7 +1033,7 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                                     "fontFamily": "Titillium Sans Pro",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
-                                    "fontWeight": "700",
+                                    "fontWeight": "600",
                                     "lineHeight": 20,
                                   },
                                   {

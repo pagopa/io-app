@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IO_BACKEND_VERSION=v16.4.0-RELEASE
-IO_SERVICES_METADATA_VERSION=1.0.49
+IO_SERVICES_METADATA_VERSION=1.0.51
 
 declare -a apis=(
   # Backend APIs
@@ -62,4 +62,4 @@ wait
 
 cp mock-google-services.json ./android/app/google-services.json
 
-yarn ts-node --skip-project -O '{"lib":["es2015"]}' scripts/make-locales.ts
+yarn generate:locales

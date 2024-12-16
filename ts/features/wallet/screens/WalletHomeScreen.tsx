@@ -1,8 +1,9 @@
 import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React from "react";
+import { PropsWithChildren, default as React, useCallback } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
+import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
@@ -10,6 +11,7 @@ import {
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
+import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
@@ -23,7 +25,7 @@ import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/action
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { selectWalletCards } from "../store/selectors";
+import { isWalletEmptySelector } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -33,12 +35,12 @@ export type WalletHomeNavigationParams = Readonly<{
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
+  const dispatch = useIODispatch();
+  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
+
   useFocusEffect(() => {
     trackOpenWalletScreen();
   });
-
-  const dispatch = useIODispatch();
-  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
   useOnFirstRender(() => {
     fetchWalletSectionData();
@@ -53,7 +55,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   // Handles the "New element added" toast display once the user returns to this screen
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (isNewElementAdded.current) {
         IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
         // eslint-disable-next-line functional/immutable-data
@@ -70,10 +72,14 @@ const WalletHomeScreen = ({ route }: Props) => {
   );
 };
 
-const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
-  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+/**
+ * A wrapper which renders a scrollview with an optional CTA based on the wallet state:
+ * - If the wallet is empty, it renders the empty state
+ * - If the wallet is not empty, it renders the scrollview with the "add to wallet" button
+ */
+const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
   const navigation = useIONavigation();
-  const cards = useIOSelector(selectWalletCards);
+  const isWalletEmpty = useIOSelector(isWalletEmptySelector);
 
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();
@@ -82,17 +88,32 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
     });
   };
 
+  /* CODE RELATED TO THE HEADER -- START */
+
+  const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  useHeaderFirstLevel({
+    currentRoute: ROUTES.WALLET_HOME,
+    headerProps: {
+      testID: "wallet-home-header-title",
+      title: I18n.t("wallet.wallet"),
+      animatedRef: scrollViewContentRef
+    }
+  });
+
+  /* CODE RELATED TO THE HEADER -- END */
+
   useTabItemPressWhenScreenActive(
-    React.useCallback(() => {
-      animatedScrollViewRef.current?.scrollTo({ y: 0, animated: true });
-    }, [animatedScrollViewRef]),
+    useCallback(() => {
+      scrollViewContentRef.current?.scrollTo({ y: 0, animated: true });
+    }, [scrollViewContentRef]),
     false
   );
 
-  if (cards.length === 0) {
+  if (isWalletEmpty) {
     return (
       <Animated.ScrollView
-        ref={animatedScrollViewRef}
+        ref={scrollViewContentRef}
         contentContainerStyle={[
           IOStyles.flex,
           IOStyles.horizontalContentPadding
@@ -105,7 +126,7 @@ const WalletScrollView = ({ children }: React.PropsWithChildren<any>) => {
 
   return (
     <IOScrollView
-      animatedRef={animatedScrollViewRef}
+      animatedRef={scrollViewContentRef}
       actions={{
         type: "SingleButton",
         primary: {

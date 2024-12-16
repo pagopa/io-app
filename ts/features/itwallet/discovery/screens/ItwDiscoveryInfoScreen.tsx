@@ -21,9 +21,9 @@ import {
   trackItWalletIntroScreen,
   trackOpenItwTos
 } from "../../analytics";
-import { itwPrivacyUrl, itwTosUrl } from "../../../../config";
 import { useIOSelector } from "../../../../store/hooks";
 import { isItwActivationDisabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { tosConfigSelector } from "../../../tos/store/selectors";
 
 /**
  * This is the screen that shows the information about the discovery process
@@ -37,6 +37,8 @@ const ItwDiscoveryInfoScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(isItwActivationDisabledSelector);
+  const tosConfig = useIOSelector(tosConfigSelector);
+  const privacyAndTosUrl = tosConfig.tos_url;
 
   const handleContinuePress = () => {
     trackItWalletActivationStart();
@@ -71,8 +73,7 @@ const ItwDiscoveryInfoScreen = () => {
           onLinkOpen={trackOpenItwTos}
         >
           {I18n.t("features.itWallet.discovery.tos", {
-            privacyUrl: itwPrivacyUrl,
-            tosUrl: itwTosUrl
+            privacyAndTosUrl
           })}
         </ItwMarkdown>
       </ContentWrapper>

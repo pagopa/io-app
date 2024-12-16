@@ -353,6 +353,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                         >
                           <Text
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
@@ -383,7 +384,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                   "lineHeight": 21,
                                 },
                               ]

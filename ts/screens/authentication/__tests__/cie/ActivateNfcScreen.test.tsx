@@ -23,6 +23,10 @@ jest.mock("../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
+jest.mock("../../../../hooks/useStatusAlertProps", () => ({
+  useStatusAlertProps: jest.fn()
+}));
+
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
 jest.mock("@react-navigation/native", () => {

@@ -4,7 +4,7 @@ import {
   IOAppMargin,
   IOColors,
   IOVisualCostants,
-  LabelSmall,
+  BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -102,7 +102,9 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
         ]}
       >
         <View style={styles.container}>
-          <LabelSmall style={{ alignSelf: "center" }}>{nameSurname}</LabelSmall>
+          <BodySmall weight="Semibold" style={{ alignSelf: "center" }}>
+            {nameSurname}
+          </BodySmall>
           <Barcode
             value={fiscalCode}
             width={barcodeHeigth} // Since it is rotated by 90 degrees, we use the height as width
