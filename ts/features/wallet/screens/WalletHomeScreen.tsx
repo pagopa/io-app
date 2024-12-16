@@ -1,8 +1,11 @@
-import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { PropsWithChildren, default as React, useCallback } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { IOScrollView } from "../../../components/ui/IOScrollView";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
@@ -14,18 +17,19 @@ import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList"
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { cgnDetails } from "../../bonus/cgn/store/actions/details";
-import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
-import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
+import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { isWalletEmptySelector } from "../store/selectors";
+import {
+  isWalletEmptySelector,
+  isWalletScreenRefreshingSelector
+} from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -48,9 +52,7 @@ const WalletHomeScreen = ({ route }: Props) => {
 
   const fetchWalletSectionData = () => {
     dispatch(walletToggleLoadingState(true));
-    dispatch(getPaymentsWalletUserMethods.request());
-    dispatch(idPayWalletGet.request());
-    dispatch(cgnDetails.request());
+    dispatch(walletUpdate());
   };
 
   // Handles the "New element added" toast display once the user returns to this screen
@@ -79,14 +81,16 @@ const WalletHomeScreen = ({ route }: Props) => {
  */
 const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
+  const isRefreshing = useIOSelector(isWalletScreenRefreshingSelector);
 
-  const handleAddToWalletButtonPress = () => {
+  const handleAddToWalletButtonPress = React.useCallback(() => {
     trackWalletAdd();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });
-  };
+  }, [navigation]);
 
   /* CODE RELATED TO THE HEADER -- START */
 
@@ -110,34 +114,37 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
     false
   );
 
-  if (isWalletEmpty) {
-    return (
-      <Animated.ScrollView
-        ref={scrollViewContentRef}
-        contentContainerStyle={[
-          IOStyles.flex,
-          IOStyles.horizontalContentPadding
-        ]}
-      >
-        {children}
-      </Animated.ScrollView>
-    );
-  }
+  // Returns the CTA props based on the screen state
+  // We need to displayed the CTA only if the wallet is not empty
+  const screenActions = React.useMemo((): IOScrollViewActions | undefined => {
+    if (isWalletEmpty) {
+      return undefined;
+    }
+
+    return {
+      type: "SingleButton",
+      primary: {
+        testID: "walletAddCardButtonTestID",
+        label: I18n.t("features.wallet.home.cta"),
+        icon: "addSmall",
+        iconPosition: "end",
+        onPress: handleAddToWalletButtonPress
+      }
+    };
+  }, [isWalletEmpty, handleAddToWalletButtonPress]);
 
   return (
     <IOScrollView
       animatedRef={scrollViewContentRef}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          testID: "walletAddCardButtonTestID",
-          label: I18n.t("features.wallet.home.cta"),
-          icon: "addSmall",
-          iconPosition: "end",
-          onPress: handleAddToWalletButtonPress
+      centerContent={true}
+      excludeSafeAreaMargins={true}
+      refreshControlProps={{
+        refreshing: isRefreshing,
+        onRefresh: () => {
+          dispatch(walletUpdate());
         }
       }}
-      excludeSafeAreaMargins={true}
+      actions={screenActions}
     >
       {children}
     </IOScrollView>
