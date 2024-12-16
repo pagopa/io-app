@@ -16,9 +16,9 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
-import { walletLatestTransactionsBizEventsListPotSelector } from "../../bizEventsTransaction/store/selectors";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
+import { walletLatestReceiptListPotSelector } from "../../receipts/store/selectors";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import * as analytics from "../analytics";
@@ -48,7 +48,7 @@ const PaymentsHomeScreen = () => {
   );
   const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const latestTransactionsPot = useIOSelector(
-    walletLatestTransactionsBizEventsListPotSelector
+    walletLatestReceiptListPotSelector
   );
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
@@ -100,7 +100,7 @@ const PaymentsHomeScreen = () => {
     }
     setIsRefreshing(true);
     dispatch(getPaymentsWalletUserMethods.request());
-    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+    dispatch(getPaymentsLatestReceiptAction.request());
   };
 
   const AnimatedPaymentsHomeScreenContent = useCallback(
@@ -171,7 +171,7 @@ const PaymentsHomeScreenContent = () => {
   const isEmpty = useIOSelector(isPaymentsSectionEmptySelector);
   const userMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const latestTransactionsPot = useIOSelector(
-    walletLatestTransactionsBizEventsListPotSelector
+    walletLatestReceiptListPotSelector
   );
 
   if (
