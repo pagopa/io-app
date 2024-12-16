@@ -180,7 +180,7 @@ const renderComponent = ({
         home: {
           shouldShowAddMethodsBanner
         },
-        bizEventsTransaction: {
+        receipt: {
           latestTransactions: transactions
         }
       }

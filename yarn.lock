@@ -2282,10 +2282,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-secure-storage/-/io-react-native-secure-storage-0.2.0.tgz#386982f350fcefa7bf8dc56e26ff390a9c94db03"
   integrity sha512-nPdYOKa9DAMtmPanIOwyKzOJ6JpBINfLgOp3wzVT7pCOJPRo0FYHBwyt0nxrKufE42rz9z9Sh8K7Y0faB0kuMw==
 
-"@pagopa/io-react-native-wallet@^0.26.0":
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.26.0.tgz#01ccf96e2be5e99643159322d5e21c8b89fb9ca7"
-  integrity sha512-7HhOfWlqE98Ft0Tz7MMkzs3scrF/qEFBSVuG5i0KrTa6sr8M2D2bKGXxdj5vx2/7H1J525L/mSAiUt8IExHhoQ==
+"@pagopa/io-react-native-wallet@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.27.0.tgz#b692f9b5e9ba71e4a0dbf7802bd7e78ca970148c"
+  integrity sha512-9fVcBCXSHQcnShZOtwv0pwqkzCed/afhDszh0HmIl46d8jTNSugEcCN4ivIDC+l87wgZ1VxxQad9tM0mn0EkDg==
   dependencies:
     js-base64 "^3.7.7"
     js-sha256 "^0.9.0"

@@ -96,10 +96,11 @@ const styles = StyleSheet.create({
       }
     }),
     borderCurve: "continuous",
-    borderTopLeftRadius: IOBadgeRadius,
-    borderBottomLeftRadius: IOBadgeRadius,
+    borderRadius: IOBadgeRadius,
     paddingHorizontal: IOBadgeHSpacing,
-    paddingVertical: IOBadgeVSpacing
+    paddingVertical: IOBadgeVSpacing,
+    paddingEnd: IOBadgeHSpacing + 8,
+    marginEnd: -IOBadgeHSpacing
   },
   faded: {
     ...StyleSheet.absoluteFillObject,
