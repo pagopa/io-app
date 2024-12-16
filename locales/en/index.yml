@@ -752,6 +752,7 @@ authentication:
       title: We can't find the CieID app
       description: To login, you must have the app installed on your device.
       primary_action_label: Get the app
+      link_error: Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID
   cie:
     genericTitle: Login with CIE
     cie: CIE

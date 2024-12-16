@@ -1,5 +1,6 @@
 import React from "react";
 import { Linking, Platform } from "react-native";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
@@ -17,6 +18,7 @@ export type CieIdNotInstalledProps = {
 
 const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
   const { popToTop } = useIONavigation();
+  const { error } = useIOToast();
 
   return (
     <OperationResultScreenContent
@@ -36,7 +38,9 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
               android: isUat ? CIE_ID_ANDROID_COLL_LINK : CIE_ID_ANDROID_LINK,
               default: ""
             })
-          );
+          ).catch(() => {
+            error(I18n.t("authentication.cie_id.cie_not_installed.link_error"));
+          });
         }
       }}
       secondaryAction={{
