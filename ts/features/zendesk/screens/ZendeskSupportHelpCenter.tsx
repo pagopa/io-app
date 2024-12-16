@@ -3,6 +3,7 @@ import {
   Body,
   ButtonLink,
   FeatureInfo,
+  FooterActions,
   H4,
   H6,
   HeaderSecondLevel,
@@ -395,7 +396,6 @@ const ZendeskSupportHelpCenter = () => {
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       testID={"ZendeskSupportHelpCenterScreen"}
-      actions={showRequestSupportContacts ? footerActions : undefined}
     >
       <FaqManager
         contextualHelpConfig={contextualHelpConfig}
@@ -422,6 +422,10 @@ const ZendeskSupportHelpCenter = () => {
           <FeatureInfo
             iconName="notice"
             body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+          />
+          <FooterActions
+            fixed={false}
+            actions={showRequestSupportContacts ? footerActions : undefined}
           />
         </>
       )}
