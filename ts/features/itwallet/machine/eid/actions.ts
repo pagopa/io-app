@@ -62,6 +62,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToCieIdLoginScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN
+    });
+  },
+
   navigateToEidPreviewScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
