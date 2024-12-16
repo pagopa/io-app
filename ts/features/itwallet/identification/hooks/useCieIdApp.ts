@@ -109,6 +109,8 @@ export const useCieIdApp = (): CieIdHookResult => {
   );
 
   useEffect(() => {
+    // Listen for a URL event to continue the flow. This is only needed on iOS,
+    // as the CieID app is opened with the Linking module.
     const urlListenerSubscription = Linking.addEventListener(
       "url",
       ({ url }) => {
