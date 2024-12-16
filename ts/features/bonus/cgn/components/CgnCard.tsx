@@ -44,6 +44,7 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   const expiredTag = (
     <View>
       <Tag
+        forceLightMode
         testID="cgnExpiredTagTestID"
         variant="error"
         text={I18n.t("bonus.cgn.detail.status.badge.expired")}
@@ -58,7 +59,13 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
       </View>
       <View style={styles.content}>
         <View style={styles.header}>
-          <H6>{I18n.t("bonus.cgn.name")}</H6>
+          <H6
+            color="blueItalia-850"
+            style={{ flexShrink: 1 }}
+            numberOfLines={1}
+          >
+            {I18n.t("bonus.cgn.name")}
+          </H6>
           {isExpired && expiredTag}
         </View>
         <BodySmall
