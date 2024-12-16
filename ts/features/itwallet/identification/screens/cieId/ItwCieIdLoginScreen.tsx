@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import { selectAuthUrlOption } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
 import I18n from "../../../../../i18n";
@@ -109,29 +109,26 @@ const ItwCieIdLoginScreen = () => {
     () =>
       pipe(
         webViewSource,
-        O.fold(
-          () => null,
-          (url: string) => (
-            <WebView
-              testID="cieid-webview"
-              cacheEnabled={false}
-              androidCameraAccessDisabled
-              androidMicrophoneAccessDisabled
-              javaScriptEnabled
-              textZoom={100}
-              originWhitelist={originSchemasWhiteList}
-              source={{ uri: url }}
-              onError={handleAuthenticationFailure}
-              onHttpError={handleAuthenticationFailure}
-              onNavigationStateChange={handleNavigationStateChange}
-              onShouldStartLoadWithRequest={handleShouldStartLoading}
-              allowsInlineMediaPlayback
-              mediaPlaybackRequiresUserAction
-              userAgent={defaultUserAgent}
-              onLoadEnd={onLoadEnd}
-            />
-          )
-        )
+        O.fold(constNull, (url: string) => (
+          <WebView
+            testID="cieid-webview"
+            cacheEnabled={false}
+            androidCameraAccessDisabled
+            androidMicrophoneAccessDisabled
+            javaScriptEnabled
+            textZoom={100}
+            originWhitelist={originSchemasWhiteList}
+            source={{ uri: url }}
+            onError={handleAuthenticationFailure}
+            onHttpError={handleAuthenticationFailure}
+            onNavigationStateChange={handleNavigationStateChange}
+            onShouldStartLoadWithRequest={handleShouldStartLoading}
+            allowsInlineMediaPlayback
+            mediaPlaybackRequiresUserAction
+            userAgent={defaultUserAgent}
+            onLoadEnd={onLoadEnd}
+          />
+        ))
       ),
     [
       webViewSource,
