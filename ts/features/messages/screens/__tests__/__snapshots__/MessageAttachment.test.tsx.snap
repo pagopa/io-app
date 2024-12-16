@@ -571,18 +571,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -722,13 +719,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -901,13 +892,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -1577,13 +1562,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -1756,13 +1735,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

@@ -310,7 +310,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               {
                 "color": "#031344",
                 "fontFamily": "Titillium Sans Pro",
-                "fontSize": 18,
+                "fontSize": 17,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -560,13 +560,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 {
                   "justifyContent": "center",
                 },
-                {
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
-                },
+                false,
               ]
             }
           >

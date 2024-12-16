@@ -1099,18 +1099,15 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1578,10 +1575,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   "backgroundColor": "#CCD4DC",
                                 },
                                 false,
+                                false,
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
