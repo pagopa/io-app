@@ -13,7 +13,7 @@ import { paymentsGetPagoPaPlatformSessionTokenAction } from "../store/actions";
 import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchPaymentsMethodDetailsSaga } from "../../details/saga";
 import { watchPaymentsWalletSaga } from "../../wallet/saga";
-import { watchPaymentsBizEventsTransactionSaga } from "../../bizEventsTransaction/saga";
+import { watchPaymentsReceiptSaga } from "../../receipts/saga";
 import { handlePaymentsSessionToken } from "./handlePaymentsSessionToken";
 import { handleResumePaymentsPendingActions } from "./handleResumePaymentsPendingActions";
 
@@ -43,6 +43,6 @@ export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   yield* fork(watchPaymentsWalletSaga, walletClient);
   yield* fork(watchPaymentsOnboardingSaga, walletClient);
   yield* fork(watchPaymentsMethodDetailsSaga, walletClient);
-  yield* fork(watchPaymentsBizEventsTransactionSaga, transactionClient);
+  yield* fork(watchPaymentsReceiptSaga, transactionClient);
   yield* fork(watchPaymentsCheckoutSaga, paymentClient);
 }

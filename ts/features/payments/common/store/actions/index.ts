@@ -9,7 +9,7 @@ import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
 import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
 import { PaymentsHomeActions } from "../../../home/store/actions";
 import { PaymentsWalletActions } from "../../../wallet/store/actions";
-import { PaymentsTransactionBizEventsActions } from "../../../bizEventsTransaction/store/actions";
+import { PaymentsReceiptActions } from "../../../receipts/store/actions";
 
 import { NetworkError } from "../../../../../utils/errors";
 import { SessionTokenResponse } from "../../../../../../definitions/pagopa/platform/SessionTokenResponse";
@@ -55,4 +55,4 @@ export type PaymentsActions =
   | PaymentsHistoryActions
   | PaymentsHomeActions
   | PaymentsWalletActions
-  | PaymentsTransactionBizEventsActions;
+  | PaymentsReceiptActions;

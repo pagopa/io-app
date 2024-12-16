@@ -44,8 +44,8 @@ import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import { PaymentsTransactionBizEventsParamsList } from "../../features/payments/bizEventsTransaction/navigation/params";
-import { PaymentsTransactionBizEventsRoutes } from "../../features/payments/bizEventsTransaction/navigation/routes";
+import { PaymentsReceiptParamsList } from "../../features/payments/receipts/navigation/params";
+import { PaymentsReceiptRoutes } from "../../features/payments/receipts/navigation/routes";
 import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
 import { PaymentsCheckoutRoutes } from "../../features/payments/checkout/navigation/routes";
 import { PaymentsMethodDetailsParamsList } from "../../features/payments/details/navigation/params";
@@ -108,7 +108,7 @@ export type AppParamsList = {
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;
   [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
-  [PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionBizEventsParamsList>;
+  [PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR]: NavigatorScreenParams<PaymentsReceiptParamsList>;
 
   [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
 };
