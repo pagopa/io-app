@@ -20,10 +20,10 @@ export function* handleWalletAnalyticsSaga() {
     waitForPaymentMethods,
     waitForCgnDetails,
     ...(isIdPayEnabled ? [waitForIdPay] : [])
-  ].map(saga => call(saga));
+  ];
 
-  // Wait for all prerequisite sagas to complete
-  yield* all(analyticsPrerequisites);
+  // Call and wait for all prerequisite sagas to complete
+  yield* all(analyticsPrerequisites.map(call));
 
   // Update analytics
   const state: GlobalState = yield* select();
