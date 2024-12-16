@@ -920,7 +920,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, read message 1
                                         width={16}
                                       >
                                         <RNSVGGroup
-                                          color="#555C70"
+                                          color="#636B82"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1939,7 +1939,7 @@ exports[`WrappedMessageListItem should match snapshot, from SEND, unread message
                                         width={16}
                                       >
                                         <RNSVGGroup
-                                          color="#555C70"
+                                          color="#636B82"
                                           fill={
                                             {
                                               "payload": 4278190080,

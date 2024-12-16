@@ -56464,6 +56464,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -56526,6 +56527,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={53}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -57201,6 +57203,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -57537,6 +57540,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -57654,6 +57658,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0073E6"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -57792,6 +57797,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -57907,6 +57913,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0073E6"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -58045,6 +58052,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -58160,6 +58168,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0073E6"
                                           fill={
                                             {
                                               "payload": 4278190080,
