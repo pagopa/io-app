@@ -6,6 +6,7 @@ import {
   shouldResetNotificationBannerDismissStateSelector,
   timesPushNotificationBannerDismissedSelector
 } from "../notificationsBannerDismissed";
+import { UserBehaviourState } from "../../reducers/userBehaviour";
 
 type TestStateProps = {
   timesDismissed?: number;
@@ -31,11 +32,9 @@ const getTestState = ({
     },
     notifications: {
       userBehaviour: {
-        pushNotificationsBanner: {
-          timesDismissed: timesDismissed ?? 0,
-          forceDismissionDate
-        }
-      }
+        pushNotificationBannerDismissalCount: timesDismissed ?? 0,
+        pushNotificationBannerForceDismissionDate: forceDismissionDate
+      } as UserBehaviourState
     }
   } as unknown as GlobalState);
 
