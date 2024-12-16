@@ -4,6 +4,7 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
 {
   "environment": {
     "applicationInitialized": false,
+    "engagementScreenShownThisSession": false,
     "onboardingInstructionsShown": false,
     "pushNotificationPermissionsRequestDuration": undefined,
     "systemNotificationsEnabled": false,
@@ -14,11 +15,8 @@ exports[`Main pushNotifications reducer notificationsReducer initial state shoul
   },
   "pendingMessage": null,
   "userBehaviour": {
-    "engagementScreenShown": false,
-    "pushNotificationsBanner": {
-      "forceDismissionDate": undefined,
-      "timesDismissed": 0,
-    },
+    "pushNotificationBannerDismissalCount": 0,
+    "pushNotificationBannerForceDismissionDate": undefined,
   },
 }
 `;
@@ -27,6 +25,7 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
 {
   "environment": {
     "applicationInitialized": false,
+    "engagementScreenShownThisSession": false,
     "onboardingInstructionsShown": false,
     "pushNotificationPermissionsRequestDuration": undefined,
     "systemNotificationsEnabled": false,
@@ -37,11 +36,8 @@ exports[`Main pushNotifications reducer persistedNotificationsReducer initial st
   },
   "pendingMessage": null,
   "userBehaviour": {
-    "engagementScreenShown": false,
-    "pushNotificationsBanner": {
-      "forceDismissionDate": undefined,
-      "timesDismissed": 0,
-    },
+    "pushNotificationBannerDismissalCount": 0,
+    "pushNotificationBannerForceDismissionDate": undefined,
   },
 }
 `;
