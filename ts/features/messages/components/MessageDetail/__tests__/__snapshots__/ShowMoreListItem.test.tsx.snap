@@ -487,7 +487,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -1046,7 +1046,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -1663,7 +1663,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -2467,7 +2467,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -3339,7 +3339,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -4338,7 +4338,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -5473,7 +5473,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -7488,7 +7488,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]

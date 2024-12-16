@@ -2,7 +2,7 @@ import {
   Body,
   Divider,
   H6,
-  LabelSmall,
+  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -108,7 +108,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 );
 
 const EmptyTimelineComponent = () => (
-  <LabelSmall
+  <BodySmall
     weight="Regular"
     color="bluegreyDark"
     testID="IDPayEmptyTimelineTestID"
@@ -116,7 +116,7 @@ const EmptyTimelineComponent = () => (
     {I18n.t(
       "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
     )}
-  </LabelSmall>
+  </BodySmall>
 );
 
 const InitiativeTimelineComponentSkeleton = ({

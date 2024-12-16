@@ -1,13 +1,13 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActions,
   H1,
   H6,
   IOColors,
   IOIcons,
   IOStyles,
   Icon,
-  LabelSmall,
+  BodySmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -24,10 +24,10 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { IdPayConfigurationParamsList } from "../navigation/params";
 import { ConfigurationMode } from "../types";
-import { isLoadingSelector } from "../../common/machine/selectors";
 
 export type IdPayInitiativeConfigurationIntroScreenParams = {
   initiativeId?: string;
@@ -111,15 +111,11 @@ export const InitiativeConfigurationIntroScreen = () => {
             </View>
           </ScrollView>
         </SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t("idpay.configuration.intro.buttons.continue"),
-              accessibilityLabel: I18n.t(
-                "idpay.configuration.intro.buttons.continue"
-              ),
               onPress: handleContinuePress
             }
           }}
@@ -150,9 +146,9 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
       )}
       <View>
         <H6 color="bluegreyDark">{props.title}</H6>
-        <LabelSmall weight="Regular" color="bluegrey">
+        <BodySmall weight="Regular" color="bluegrey">
           {props.subTitle}
-        </LabelSmall>
+        </BodySmall>
       </View>
     </View>
   );

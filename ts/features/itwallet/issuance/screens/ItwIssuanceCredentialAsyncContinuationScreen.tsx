@@ -105,7 +105,7 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
           { text: I18n.t(`${ns}.body`) },
           {
             text: I18n.t(`${ns}.bodyBold`),
-            weight: "Bold"
+            weight: "Semibold"
           }
         ]}
         pictogram="itWallet"

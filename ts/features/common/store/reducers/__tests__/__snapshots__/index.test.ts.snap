@@ -121,28 +121,22 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "_tag": "None",
       },
     },
-    "identification": {
-      "isCieSupported": {
-        "kind": "PotNone",
-      },
-      "isNfcEnabled": {
-        "kind": "PotNone",
-      },
-    },
     "issuance": {
       "integrityKeyTag": {
         "_tag": "None",
       },
     },
     "lifecycle": 0,
-    "preferences": {},
+    "preferences": {
+      "requestedCredentials": {},
+    },
     "walletInstance": {
       "attestation": undefined,
     },
   },
   "landingBanners": {
     "ITW_DISCOVERY": true,
-    "PUSH_NOTIFICATIONS_REMINDER": false,
+    "PUSH_NOTIFICATIONS_REMINDER": true,
     "SETTINGS_DISCOVERY": true,
   },
   "loginFeatures": {
@@ -184,23 +178,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "isMixpanelInitialized": false,
   },
   "payments": {
-    "bizEventsTransaction": {
-      "cancelTransactionRecord": {
-        "kind": "PotNone",
-      },
-      "details": {
-        "kind": "PotNoneLoading",
-      },
-      "latestTransactions": {
-        "kind": "PotNone",
-      },
-      "receiptDocument": {
-        "kind": "PotNone",
-      },
-      "transactions": {
-        "kind": "PotNoneLoading",
-      },
-    },
     "checkout": {
       "allPaymentMethods": {
         "kind": "PotNone",
@@ -247,17 +224,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "home": {
       "shouldShowAddMethodsBanner": true,
     },
-    "legacyTransaction": {
-      "details": {
-        "kind": "PotNoneLoading",
-      },
-      "total": {
-        "kind": "PotNone",
-      },
-      "transactions": {
-        "kind": "PotNone",
-      },
-    },
     "onboarding": {
       "paymentMethods": {
         "kind": "PotNoneLoading",
@@ -275,6 +241,23 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "paymentsBackoffRetry": {},
+    "receipt": {
+      "cancelTransactionRecord": {
+        "kind": "PotNone",
+      },
+      "details": {
+        "kind": "PotNoneLoading",
+      },
+      "latestTransactions": {
+        "kind": "PotNone",
+      },
+      "receiptDocument": {
+        "kind": "PotNone",
+      },
+      "transactions": {
+        "kind": "PotNoneLoading",
+      },
+    },
     "wallet": {
       "userMethods": {
         "kind": "PotNoneLoading",

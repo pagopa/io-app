@@ -18,11 +18,17 @@ import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
 import { StatusMessages } from "./components/StatusMessages";
 
-export const routingInstrumentation = Sentry.reactNavigationIntegration({
+export type ReactNavigationInstrumentation = ReturnType<
+  typeof Sentry.reactNavigationIntegration
+>;
+
+export const navigationIntegration = Sentry.reactNavigationIntegration({
   enableTimeToInitialDisplay: true
 });
 
-const removeUserFromEvent = (event: ErrorEvent | TransactionEvent) => {
+const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
+  event: T
+): T => {
   // console.log(JSON.stringify(event));
   // Modify or drop the event here
   if (event.user) {
@@ -42,10 +48,7 @@ Sentry.init({
   beforeSendTransaction(event) {
     return removeUserFromEvent(event);
   },
-  integrations: integrations => [
-    ...integrations,
-    Sentry.reactNativeTracingIntegration({ routingInstrumentation })
-  ],
+  integrations: integrations => [...integrations, navigationIntegration],
   enabled: !isDevEnv,
   // https://sentry.zendesk.com/hc/en-us/articles/23337524872987-Why-is-the-the-message-in-my-error-being-truncated
   maxValueLength: 3000,
@@ -73,7 +76,7 @@ const App = (): JSX.Element => (
                   <LightModalProvider>
                     <StatusMessages>
                       <RootContainer
-                        routingInstumentation={routingInstrumentation}
+                        routingInstumentation={navigationIntegration}
                       />
                     </StatusMessages>
                   </LightModalProvider>

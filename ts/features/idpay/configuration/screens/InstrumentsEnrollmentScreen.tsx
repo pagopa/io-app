@@ -1,7 +1,8 @@
 import {
   Body,
   FeatureInfo,
-  FooterWithButtons,
+  FooterActions,
+  FooterActionsInline,
   H2,
   IOStyles,
   VSpacer
@@ -18,6 +19,8 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import {
@@ -31,8 +34,6 @@ import {
 import { IdPayConfigurationParamsList } from "../navigation/params";
 import { ConfigurationMode } from "../types";
 import { InitiativeFailureType } from "../types/failure";
-import { isLoadingSelector } from "../../common/machine/selectors";
-import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
 
 export type IdPayInstrumentsEnrollmentScreenParams = {
   initiativeId?: string;
@@ -127,33 +128,22 @@ export const InstrumentsEnrollmentScreen = () => {
     ),
     title: I18n.t("idpay.configuration.instruments.enrollmentSheet.header"),
     footer: (
-      <FooterWithButtons
-        type="TwoButtonsInlineThird"
-        primary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
-            ),
-            accessibilityLabel: I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
-            ),
-            onPress: handleEnrollConfirm
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t(
+            "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
+          ),
+          onPress: () => {
+            enrollmentBottomSheetModal.dismiss();
           }
         }}
-        secondary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
-            ),
-            accessibilityLabel: I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
-            ),
-            onPress: () => {
-              enrollmentBottomSheetModal.dismiss();
-            }
-          }
+        endAction={{
+          color: "primary",
+          label: I18n.t(
+            "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
+          ),
+          onPress: handleEnrollConfirm
         }}
       />
     ),
@@ -173,15 +163,11 @@ export const InstrumentsEnrollmentScreen = () => {
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
       return (
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
               label: I18n.t(
-                "idpay.configuration.instruments.buttons.addMethod"
-              ),
-              accessibilityLabel: I18n.t(
                 "idpay.configuration.instruments.buttons.addMethod"
               ),
               onPress: handleAddPaymentMethodButton,
@@ -193,32 +179,21 @@ export const InstrumentsEnrollmentScreen = () => {
     }
 
     return (
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("idpay.configuration.instruments.buttons.skip"),
-            accessibilityLabel: I18n.t(
-              "idpay.configuration.instruments.buttons.skip"
-            ),
-            onPress: handleSkipButton,
-            disabled: isUpserting
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("idpay.configuration.instruments.buttons.skip"),
+          onPress: handleSkipButton,
+          disabled: isUpserting
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: !isUpserting
-              ? I18n.t("idpay.configuration.instruments.buttons.continue")
-              : "",
-            accessibilityLabel: !isUpserting
-              ? I18n.t("idpay.configuration.instruments.buttons.continue")
-              : "",
-            disabled: isUpserting || !hasSelectedInstruments,
-            onPress: handleContinueButton,
-            loading: isUpserting
-          }
+        endAction={{
+          color: "primary",
+          label: !isUpserting
+            ? I18n.t("idpay.configuration.instruments.buttons.continue")
+            : "",
+          disabled: isUpserting || !hasSelectedInstruments,
+          onPress: handleContinueButton,
+          loading: isUpserting
         }}
       />
     );

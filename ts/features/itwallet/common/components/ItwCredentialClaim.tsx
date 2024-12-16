@@ -6,7 +6,6 @@ import React, { useMemo } from "react";
 import { Image } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import {
   BoolClaim,
   ClaimDisplayFormat,
@@ -14,7 +13,6 @@ import {
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
-  EvidenceClaim,
   extractFiscalCode,
   FiscalCodeClaim,
   getSafeText,
@@ -148,48 +146,6 @@ const DateClaimItem = ({
       accessibilityLabel={`${label} ${value}`}
       endElement={endElement}
     />
-  );
-};
-
-/**
- * Component which renders a evidence type claim.
- * It features a bottom sheet with information about the issuer of the claim.
- * @param issuerName - the organization name of the issuer of the evidence claim.
- */
-const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
-  const issuedByBottomSheet = useItwInfoBottomSheet({
-    title: issuerName,
-    content: [
-      {
-        title: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.about.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle"
-        )
-      }
-    ]
-  });
-  const label = I18n.t(
-    "features.itWallet.verifiableCredentials.claims.issuedByNew"
-  );
-  return (
-    <>
-      <ListItemInfo
-        endElement={{
-          type: "iconButton",
-          componentProps: {
-            icon: "info",
-            accessibilityLabel: "test",
-            onPress: () => issuedByBottomSheet.present()
-          }
-        }}
-        label={label}
-        value={issuerName}
-        accessibilityLabel={`${label} ${issuerName}`}
-      />
-      {issuedByBottomSheet.bottomSheet}
-    </>
   );
 };
 
@@ -372,12 +328,6 @@ export const ItwCredentialClaim = ({
                   ? credentialStatus
                   : undefined
               }
-            />
-          );
-        } else if (EvidenceClaim.is(decoded)) {
-          return (
-            <EvidenceClaimItem
-              issuerName={decoded[0].record.source.organization_name}
             />
           );
         } else if (ImageClaim.is(decoded)) {

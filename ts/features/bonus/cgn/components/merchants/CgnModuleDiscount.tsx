@@ -59,10 +59,10 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
       <View>
         <Tag
           text={I18n.t(categorySpecs.value.nameKey)}
-          variant="customIcon"
-          customIconProps={{
-            iconName: categorySpecs.value.icon,
-            iconColor: "grey-300"
+          variant="custom"
+          icon={{
+            name: categorySpecs.value.icon,
+            color: "lightGrey"
           }}
         />
         <VSpacer size={4} />

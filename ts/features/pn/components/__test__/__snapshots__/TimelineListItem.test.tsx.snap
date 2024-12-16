@@ -486,7 +486,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -2803,7 +2803,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -5120,7 +5120,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -5683,7 +5683,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]

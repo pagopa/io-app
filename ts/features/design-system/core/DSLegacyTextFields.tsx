@@ -1,9 +1,4 @@
-import {
-  H4,
-  IOColors,
-  LabelSmall,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { H4, IOColors, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useState } from "react";
@@ -201,9 +196,9 @@ const LegacyTextFields = () => {
           accessibilityElementsHidden={true}
           importantForAccessibility="no-hide-descendants"
         >
-          <LabelSmall weight="Regular" color="red">
+          <BodySmall weight="Regular" color="red">
             With two lines, this custom description breaks everything ¯\_(ツ)_/¯
-          </LabelSmall>
+          </BodySmall>
         </View>
       </View>
 

@@ -20,10 +20,6 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
-/**
- * adds as for documentation suggestion
- * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
- */
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
 
