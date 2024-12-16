@@ -659,18 +659,15 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
