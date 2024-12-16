@@ -426,7 +426,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={16}
@@ -534,7 +533,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     ]
                                   }
                                   testID="attachment-tag"
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={16}
@@ -813,7 +811,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -1022,7 +1019,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                           },
                                         ]
                                       }
-                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
@@ -1288,7 +1284,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              tintColor="#99A3C1"
                                               vbHeight={24}
                                               vbWidth={24}
                                               width={24}
@@ -1406,7 +1401,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              tintColor="#0073E6"
                                               vbHeight={24}
                                               vbWidth={24}
                                               width={24}
@@ -1603,7 +1597,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              tintColor="#99A3C1"
                                               vbHeight={24}
                                               vbWidth={24}
                                               width={24}
@@ -1721,7 +1714,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                                   },
                                                 ]
                                               }
-                                              tintColor="#0073E6"
                                               vbHeight={24}
                                               vbWidth={24}
                                               width={24}

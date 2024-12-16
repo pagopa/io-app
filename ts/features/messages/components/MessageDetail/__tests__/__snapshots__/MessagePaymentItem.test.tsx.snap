@@ -999,7 +999,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1597,7 +1596,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}

@@ -1,6 +1,9 @@
-import { IOFontWeight, IOText } from "@pagopa/io-app-design-system";
+import {
+  IOFontWeight,
+  makeFontStyleObject
+} from "@pagopa/io-app-design-system";
 import React from "react";
-import { TextStyle, useWindowDimensions } from "react-native";
+import { Text, TextStyle, useWindowDimensions } from "react-native";
 
 export type ClaimLabelProps = {
   fontSize?: number;
@@ -27,21 +30,27 @@ export const ClaimLabel: React.FunctionComponent<
   const fontScale = width / 360;
 
   return (
-    <IOText
+    <Text
       {...props}
       allowFontScaling={false}
-      weight={fontWeight}
-      font="TitilliumSansPro"
-      color="black"
       lineBreakMode="head"
       numberOfLines={1}
-      style={{ textTransform }}
-      size={fontSize * fontScale}
       // This text should not be read by the voiceover.
       // If you want to make it accessible use the parent components
       accessible={false}
+      style={{
+        ...makeFontStyleObject(
+          fontSize * fontScale,
+          "TitilliumSansPro",
+          undefined,
+          fontWeight,
+          undefined,
+          false
+        ),
+        textTransform
+      }}
     >
       {props.children}
-    </IOText>
+    </Text>
   );
 };

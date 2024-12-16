@@ -384,7 +384,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               },
                             ]
                           }
-                          tintColor="#475A6D"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
@@ -929,7 +928,6 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               },
                             ]
                           }
-                          tintColor="#475A6D"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
@@ -1474,7 +1472,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               },
                             ]
                           }
-                          tintColor="#475A6D"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}
@@ -2019,7 +2016,6 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               },
                             ]
                           }
-                          tintColor="#475A6D"
                           vbHeight={24}
                           vbWidth={24}
                           width={24}

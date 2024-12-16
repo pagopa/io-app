@@ -462,7 +462,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1001,7 +1000,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1540,7 +1538,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2079,7 +2076,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2618,7 +2614,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2786,7 +2781,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3325,7 +3319,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3493,7 +3486,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4032,7 +4024,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4200,7 +4191,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4739,7 +4729,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4907,7 +4896,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                       },
                                     ]
                                   }
-                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}

@@ -470,6 +470,9 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                               />
                               <View
                                 accessibilityElementsHidden={true}
+                                accessibilityLabel="Inizia"
+                                accessibilityRole="button"
+                                accessible={true}
                                 importantForAccessibility="no-hide-descendants"
                                 pointerEvents="none"
                               >
@@ -480,104 +483,30 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                     }
                                   }
                                 />
-                                <View
-                                  accessibilityLabel="Inizia"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": undefined,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
-                                  }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  hitSlop={
-                                    {
-                                      "bottom": 14,
-                                      "left": 24,
-                                      "right": 24,
-                                      "top": 14,
-                                    }
-                                  }
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
-                                  onTouchEnd={[Function]}
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={false}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.25}
+                                  numberOfLines={1}
                                   style={
-                                    {
-                                      "alignSelf": "flex-start",
-                                    }
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                    ]
                                   }
                                 >
-                                  <View
-                                    style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "elevation": 0,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "textAlignVertical": "center",
-                                        },
-                                        false,
-                                        {},
-                                        {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={false}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
-                                          },
-                                          {
-                                            "color": undefined,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      Inizia
-                                    </Text>
-                                  </View>
-                                </View>
+                                  Inizia
+                                </Text>
                               </View>
                             </View>
                             <View
@@ -615,7 +544,6 @@ exports[`ItwDiscoveryBanner should match snapshot 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={80}

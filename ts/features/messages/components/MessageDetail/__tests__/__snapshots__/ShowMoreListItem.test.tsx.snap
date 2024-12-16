@@ -439,7 +439,6 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -999,7 +998,6 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -1618,7 +1616,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -1933,7 +1930,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2425,7 +2421,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -2691,7 +2686,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2809,7 +2803,6 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3301,7 +3294,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -3616,7 +3608,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3812,7 +3803,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -4304,7 +4294,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -4570,7 +4559,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -4688,7 +4676,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -4835,7 +4822,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -4953,7 +4939,6 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -5445,7 +5430,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -5760,7 +5744,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6006,7 +5989,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6153,7 +6135,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6271,7 +6252,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6517,7 +6497,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6664,7 +6643,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6782,7 +6760,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6978,7 +6955,6 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -7470,7 +7446,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     },
                                   ]
                                 }
-                                tintColor="#0B3EE3"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
@@ -7785,7 +7760,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -8031,7 +8005,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -8178,7 +8151,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -8296,7 +8268,6 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}

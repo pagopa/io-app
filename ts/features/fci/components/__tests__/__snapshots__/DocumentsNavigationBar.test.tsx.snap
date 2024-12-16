@@ -120,7 +120,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        tintColor="#0073E6"
         vbHeight={24}
         vbWidth={24}
         width={24}
@@ -266,7 +265,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        tintColor="#0073E6"
         vbHeight={24}
         vbWidth={24}
         width={24}

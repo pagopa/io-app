@@ -396,7 +396,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -1324,7 +1323,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -2477,7 +2475,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -3519,7 +3516,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -4341,7 +4337,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -5388,7 +5383,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -6324,7 +6318,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -7229,7 +7222,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -8359,7 +8351,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -9378,7 +9369,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -10177,7 +10167,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}
@@ -11201,7 +11190,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   },
                                 ]
                               }
-                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}

@@ -407,7 +407,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -990,7 +989,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -2366,7 +2364,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -3295,7 +3292,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -4224,7 +4220,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -5153,7 +5148,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -6082,7 +6076,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -6665,7 +6658,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -8041,7 +8033,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -8970,7 +8961,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -9899,7 +9889,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -10828,7 +10817,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}

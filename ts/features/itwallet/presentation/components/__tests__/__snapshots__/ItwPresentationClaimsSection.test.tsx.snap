@@ -465,7 +465,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1585,7 +1584,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -2328,7 +2326,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3503,7 +3500,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

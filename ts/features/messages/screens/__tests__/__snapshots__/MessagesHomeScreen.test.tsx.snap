@@ -210,14 +210,13 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                         >
                           This is a mock for TabNavigationContainer
                         </View>
-                        <LEGACY_RNCViewPager
+                        <RNCViewPager
                           layoutDirection="ltr"
                           onMoveShouldSetResponderCapture={[Function]}
                           onPageScroll={[Function]}
                           onPageScrollStateChanged={[Function]}
                           onPageSelected={[Function]}
                           testID="mock_pager_view_container"
-                          useLegacy={true}
                         >
                           <View
                             collapsable={false}
@@ -277,7 +276,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                               Mock Archive
                             </View>
                           </View>
-                        </LEGACY_RNCViewPager>
+                        </RNCViewPager>
                         <View
                           testID="mock_preconditions"
                         >
@@ -457,7 +456,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -579,7 +577,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -704,7 +701,6 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

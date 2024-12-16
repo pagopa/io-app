@@ -744,7 +744,6 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   },
                                 ]
                               }
-                              tintColor="#0066CC"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}

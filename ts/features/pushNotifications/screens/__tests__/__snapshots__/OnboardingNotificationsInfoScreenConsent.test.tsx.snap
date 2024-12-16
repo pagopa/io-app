@@ -437,7 +437,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   },
                                 ]
                               }
-                              tintColor="#0E0F13"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -688,7 +687,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#99A3C1"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -950,7 +948,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#99A3C1"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -1154,7 +1151,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                         },
                                       ]
                                     }
-                                    tintColor="#99A3C1"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

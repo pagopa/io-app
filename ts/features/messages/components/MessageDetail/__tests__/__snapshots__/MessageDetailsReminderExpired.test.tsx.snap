@@ -768,7 +768,6 @@ exports[`MessageDetailsReminderExpired should match snapshot when not loading 1`
                                 },
                               ]
                             }
-                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}

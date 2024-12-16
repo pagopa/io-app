@@ -581,7 +581,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -766,7 +765,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

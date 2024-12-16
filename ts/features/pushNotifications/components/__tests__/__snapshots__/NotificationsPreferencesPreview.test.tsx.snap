@@ -417,7 +417,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -996,7 +995,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -1575,7 +1573,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -2154,7 +2151,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                                 },
                               ]
                             }
-                            tintColor="#475A6D"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}

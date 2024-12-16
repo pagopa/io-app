@@ -387,7 +387,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1096,7 +1095,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1278,7 +1276,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -1727,7 +1724,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2436,7 +2432,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2618,7 +2613,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -3067,7 +3061,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3776,7 +3769,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3958,7 +3950,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -4407,7 +4398,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -5116,7 +5106,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -5298,7 +5287,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -5747,7 +5735,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6456,7 +6443,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6638,7 +6624,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -7087,7 +7072,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -7796,7 +7780,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -7978,7 +7961,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -8427,7 +8409,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -9136,7 +9117,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -9318,7 +9298,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -9767,7 +9746,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -10476,7 +10454,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -10658,7 +10635,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -11107,7 +11083,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -11816,7 +11791,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -11998,7 +11972,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -12447,7 +12420,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -13156,7 +13128,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -13338,7 +13309,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -13787,7 +13757,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -14496,7 +14465,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -14678,7 +14646,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -15127,7 +15094,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -15836,7 +15802,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -16018,7 +15983,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -16467,7 +16431,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -17176,7 +17139,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -17358,7 +17320,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -17807,7 +17768,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -18516,7 +18476,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -18698,7 +18657,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -19147,7 +19105,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -19856,7 +19813,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -20038,7 +19994,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -20487,7 +20442,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -21196,7 +21150,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -21378,7 +21331,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -21827,7 +21779,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -22536,7 +22487,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -22718,7 +22668,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -23167,7 +23116,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -23876,7 +23824,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -24058,7 +24005,6 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

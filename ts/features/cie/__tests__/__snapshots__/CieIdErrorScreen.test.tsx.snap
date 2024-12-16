@@ -74,7 +74,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={120}
@@ -560,7 +559,6 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
               },
             ]
           }
-          tintColor="#00C5CA"
           vbHeight={240}
           vbWidth={240}
           width={120}

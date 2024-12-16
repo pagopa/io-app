@@ -266,7 +266,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -764,7 +763,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1101,7 +1099,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1219,7 +1216,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1358,7 +1354,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1474,7 +1469,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1613,7 +1607,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -1729,7 +1722,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -2378,7 +2370,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -2923,7 +2914,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3260,7 +3250,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3378,7 +3367,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3517,7 +3505,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3633,7 +3620,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3772,7 +3758,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -3888,7 +3873,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -4537,7 +4521,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -5063,7 +5046,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -5400,7 +5382,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -5518,7 +5499,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -5657,7 +5637,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -5773,7 +5752,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -5912,7 +5890,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6028,7 +6005,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -6677,7 +6653,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -7188,7 +7163,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -7525,7 +7499,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -7643,7 +7616,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -7782,7 +7754,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -7898,7 +7869,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -8037,7 +8007,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -8153,7 +8122,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -8802,7 +8770,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -9327,7 +9294,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -9664,7 +9630,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -9782,7 +9747,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -9921,7 +9885,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -10037,7 +10000,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -10176,7 +10138,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -10292,7 +10253,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -10941,7 +10901,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -11537,7 +11496,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -11874,7 +11832,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -11992,7 +11949,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -12131,7 +12087,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -12247,7 +12202,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -12386,7 +12340,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -12502,7 +12455,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -13151,7 +13103,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -13719,7 +13670,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -14056,7 +14006,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -14174,7 +14123,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -14313,7 +14261,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -14429,7 +14376,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -14568,7 +14514,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -14684,7 +14629,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -15333,7 +15277,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -15844,7 +15787,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -16181,7 +16123,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -16299,7 +16240,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -16438,7 +16378,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -16554,7 +16493,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -16693,7 +16631,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -16809,7 +16746,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -17458,7 +17394,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -17919,7 +17854,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -18256,7 +18190,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -18374,7 +18307,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -18513,7 +18445,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -18629,7 +18560,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -18768,7 +18698,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -18884,7 +18813,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -19533,7 +19461,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -20078,7 +20005,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -20415,7 +20341,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -20533,7 +20458,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -20672,7 +20596,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -20788,7 +20711,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -20927,7 +20849,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -21043,7 +20964,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -21692,7 +21612,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -22217,7 +22136,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -22554,7 +22472,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -22672,7 +22589,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -22811,7 +22727,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -22927,7 +22842,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -23066,7 +22980,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -23182,7 +23095,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -23831,7 +23743,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -24376,7 +24287,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -24713,7 +24623,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -24831,7 +24740,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -24970,7 +24878,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -25086,7 +24993,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -25225,7 +25131,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -25341,7 +25246,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -25990,7 +25894,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -26586,7 +26489,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -26923,7 +26825,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -27041,7 +26942,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -27180,7 +27080,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -27296,7 +27195,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -27435,7 +27333,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -27551,7 +27448,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -28200,7 +28096,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -28745,7 +28640,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -29082,7 +28976,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -29200,7 +29093,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -29339,7 +29231,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -29455,7 +29346,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -29594,7 +29484,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -29710,7 +29599,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -30359,7 +30247,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -30904,7 +30791,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -31241,7 +31127,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -31359,7 +31244,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -31498,7 +31382,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -31614,7 +31497,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -31753,7 +31635,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -31869,7 +31750,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -32518,7 +32398,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -33071,7 +32950,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -33408,7 +33286,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -33526,7 +33403,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -33665,7 +33541,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -33781,7 +33656,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -33920,7 +33794,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -34036,7 +33909,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -34685,7 +34557,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -35210,7 +35081,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -35547,7 +35417,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -35665,7 +35534,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -35804,7 +35672,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -35920,7 +35787,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -36059,7 +35925,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -36175,7 +36040,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -36824,7 +36688,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -37422,7 +37285,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -37759,7 +37621,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -37877,7 +37738,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -38016,7 +37876,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -38132,7 +37991,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -38271,7 +38129,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -38387,7 +38244,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -39036,7 +38892,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -39561,7 +39416,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -39898,7 +39752,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -40016,7 +39869,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -40155,7 +40007,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -40271,7 +40122,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -40410,7 +40260,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -40526,7 +40375,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -41175,7 +41023,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -41821,7 +41668,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -42158,7 +42004,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -42276,7 +42121,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -42415,7 +42259,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -42531,7 +42374,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -42670,7 +42512,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -42786,7 +42627,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -43160,7 +43000,6 @@ Se dopo 5 giorni lavorativi non hai ancora ricevuto il rimborso, contatta l’as
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -43553,7 +43392,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -44120,7 +43958,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -44457,7 +44294,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -44575,7 +44411,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -44714,7 +44549,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -44830,7 +44664,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -44969,7 +44802,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -45085,7 +44917,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -45734,7 +45565,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -46333,7 +46163,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -46670,7 +46499,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -46788,7 +46616,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -46927,7 +46754,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -47043,7 +46869,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -47182,7 +47007,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -47298,7 +47122,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -47947,7 +47770,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -48607,7 +48429,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -48944,7 +48765,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -49062,7 +48882,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -49201,7 +49020,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -49317,7 +49135,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -49456,7 +49273,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -49572,7 +49388,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -50221,7 +50036,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -50732,7 +50546,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -51069,7 +50882,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -51187,7 +50999,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -51326,7 +51137,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -51442,7 +51252,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -51581,7 +51390,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -51697,7 +51505,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -52346,7 +52153,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -52899,7 +52705,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -53236,7 +53041,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -53354,7 +53158,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -53493,7 +53296,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -53609,7 +53411,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -53748,7 +53549,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -53864,7 +53664,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -54513,7 +54312,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -55038,7 +54836,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -55375,7 +55172,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -55493,7 +55289,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -55632,7 +55427,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -55748,7 +55542,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -55887,7 +55680,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -56003,7 +55795,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -56652,7 +56443,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     },
                                   ]
                                 }
-                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -57197,7 +56987,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0B3EE3"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -57534,7 +57323,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -57652,7 +57440,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -57791,7 +57578,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -57907,7 +57693,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -58046,7 +57831,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#99A3C1"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
@@ -58162,7 +57946,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}

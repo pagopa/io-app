@@ -345,7 +345,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -939,7 +938,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -1405,7 +1403,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -1812,7 +1809,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2406,7 +2402,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -2873,7 +2868,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -3280,7 +3274,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3874,7 +3867,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -4341,7 +4333,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -4748,7 +4739,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -5342,7 +5332,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -5809,7 +5798,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -6216,7 +6204,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       },
                                     ]
                                   }
-                                  tintColor="#475A6D"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -7102,7 +7089,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       },
                                     ]
                                   }
-                                  tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
                                   width={64}
@@ -7716,7 +7702,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

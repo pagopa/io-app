@@ -1113,7 +1113,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                       },
                                     ]
                                   }
-                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1295,7 +1294,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                         },
                                       ]
                                     }
-                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
