@@ -477,6 +477,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                       ]
                                     }
+                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
@@ -651,6 +652,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                       ]
                                     }
+                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
@@ -1198,6 +1200,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                       ]
                                     }
+                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
@@ -1385,6 +1388,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                       ]
                                     }
+                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}

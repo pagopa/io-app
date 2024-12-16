@@ -396,6 +396,7 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   },
                                 ]
                               }
+                              tintColor="#00C5CA"
                               vbHeight={240}
                               vbWidth={240}
                               width={180}

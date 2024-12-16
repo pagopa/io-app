@@ -1068,6 +1068,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
                               },
                             ]
                           }
+                          tintColor="#00C5CA"
                           vbHeight={240}
                           vbWidth={240}
                           width={120}
@@ -2244,6 +2245,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
                               },
                             ]
                           }
+                          tintColor="#00C5CA"
                           vbHeight={240}
                           vbWidth={240}
                           width={120}

@@ -1731,6 +1731,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       },
                     ]
                   }
+                  tintColor="#0B3EE3"
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
@@ -1899,6 +1900,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       },
                     ]
                   }
+                  tintColor="#0B3EE3"
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
@@ -2109,6 +2111,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                       },
                     ]
                   }
+                  tintColor="#0B3EE3"
                   vbHeight={24}
                   vbWidth={24}
                   width={24}

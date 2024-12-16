@@ -526,6 +526,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         },
                                       ]
                                     }
+                                    tintColor="#99A3C1"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -695,6 +696,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         },
                                       ]
                                     }
+                                    tintColor="#99A3C1"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
@@ -908,6 +910,7 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                         },
                                       ]
                                     }
+                                    tintColor="#99A3C1"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

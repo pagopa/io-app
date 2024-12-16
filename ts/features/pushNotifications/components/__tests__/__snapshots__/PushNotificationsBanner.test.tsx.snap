@@ -546,6 +546,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
                                     },
                                   ]
                                 }
+                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={80}
@@ -754,6 +755,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
                                         },
                                       ]
                                     }
+                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

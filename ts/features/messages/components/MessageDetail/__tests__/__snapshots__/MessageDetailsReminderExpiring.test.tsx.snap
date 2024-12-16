@@ -431,6 +431,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                   },
                                 ]
                               }
+                              tintColor="#614C15"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}

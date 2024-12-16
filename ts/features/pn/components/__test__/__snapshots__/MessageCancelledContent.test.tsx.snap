@@ -399,6 +399,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -878,6 +879,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -1357,6 +1359,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -1836,6 +1839,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -2315,6 +2319,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -2794,6 +2799,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -3273,6 +3279,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -3752,6 +3759,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}
@@ -4231,6 +4239,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                               ]
                             }
+                            tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
                             width={24}

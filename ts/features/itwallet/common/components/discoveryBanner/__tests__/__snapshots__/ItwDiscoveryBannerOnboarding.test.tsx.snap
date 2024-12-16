@@ -862,6 +862,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                     },
                                   ]
                                 }
+                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={80}

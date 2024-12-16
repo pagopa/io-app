@@ -391,6 +391,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                   },
                                 ]
                               }
+                              tintColor="#BBC2D6"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -861,6 +862,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                   },
                                 ]
                               }
+                              tintColor="#BBC2D6"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -2023,6 +2025,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                   },
                                 ]
                               }
+                              tintColor="#BBC2D6"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -2493,6 +2496,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                   },
                                 ]
                               }
+                              tintColor="#BBC2D6"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}

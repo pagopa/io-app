@@ -266,6 +266,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     },
                                   ]
                                 }
+                                tintColor="#00C5CA"
                                 vbHeight={240}
                                 vbWidth={240}
                                 width={120}
@@ -715,6 +716,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                       },
                                     ]
                                   }
+                                  tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -888,6 +890,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                         },
                                       ]
                                     }
+                                    tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}

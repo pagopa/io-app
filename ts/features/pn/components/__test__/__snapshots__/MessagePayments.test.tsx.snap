@@ -737,6 +737,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -1031,6 +1032,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1282,6 +1284,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1533,6 +1536,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -1784,6 +1788,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2035,6 +2040,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2286,6 +2292,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2537,6 +2544,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -2977,6 +2985,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -3271,6 +3280,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3522,6 +3532,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -3773,6 +3784,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4024,6 +4036,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4275,6 +4288,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4526,6 +4540,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -4777,6 +4792,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -5563,6 +5579,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -5824,6 +5841,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6074,6 +6092,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6324,6 +6343,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6574,6 +6594,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -6824,6 +6845,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -7264,6 +7286,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -7525,6 +7548,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -7775,6 +7799,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -8025,6 +8050,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -8275,6 +8301,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -8525,6 +8552,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -8965,6 +8993,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -9226,6 +9255,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -9476,6 +9506,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -9726,6 +9757,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -9976,6 +10008,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -10226,6 +10259,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -10783,6 +10817,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -11044,6 +11079,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -11294,6 +11330,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -11544,6 +11581,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -11794,6 +11832,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -12044,6 +12083,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -12601,6 +12641,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -12862,6 +12903,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
@@ -13302,6 +13344,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   },
                                 ]
                               }
+                              tintColor="#0B3EE3"
                               vbHeight={32}
                               vbWidth={32}
                               width={24}
@@ -13563,6 +13606,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       },
                                     ]
                                   }
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
