@@ -136,7 +136,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "landingBanners": {
     "ITW_DISCOVERY": true,
-    "PUSH_NOTIFICATIONS_REMINDER": false,
+    "PUSH_NOTIFICATIONS_REMINDER": true,
     "SETTINGS_DISCOVERY": true,
   },
   "loginFeatures": {

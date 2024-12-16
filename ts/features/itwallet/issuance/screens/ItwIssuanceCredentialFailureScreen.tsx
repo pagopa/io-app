@@ -26,6 +26,9 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getFullLocale } from "../../../../utils/locale";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -59,6 +62,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
   );
   const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
     selectIssuerConfigurationOption
+  );
+  const locale = getFullLocale();
+  const deferredIssuanceScreenContent = useIOSelector(
+    itwDeferredIssuanceScreenContentSelector
   );
 
   const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
@@ -109,12 +116,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
         // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
         case CredentialIssuanceFailureType.ASYNC_ISSUANCE:
           return {
-            title: I18n.t(
-              "features.itWallet.issuance.asyncCredentialError.title"
-            ),
-            subtitle: I18n.t(
-              "features.itWallet.issuance.asyncCredentialError.body"
-            ),
+            title:
+              deferredIssuanceScreenContent?.title?.[locale] ??
+              I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
+            subtitle:
+              deferredIssuanceScreenContent?.description?.[locale] ??
+              I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
             pictogram: "pending",
             action: {
               label: I18n.t(

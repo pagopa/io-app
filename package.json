@@ -1,11 +1,11 @@
 {
   "name": "italia-app",
-  "version": "2.79.0-rc.10",
+  "version": "2.79.0-rc.11",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v16.4.0-RELEASE/api_backend.yaml",
   "io_session_manager_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/internal.yaml",
   "io_session_manager_public_api": "https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@1.0.0/apps/io-session-manager/api/public.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v16.4.0-RELEASE/api_public.yaml",
-  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.50/definitions.yml",
+  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.51/definitions.yml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v16.4.0-RELEASE/api_cgn.yaml",
   "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v16.4.0-RELEASE/api_cgn_operator_search.yaml",
   "api_fci": "https://raw.githubusercontent.com/pagopa/io-backend/v16.4.0-RELEASE/api_io_sign.yaml",

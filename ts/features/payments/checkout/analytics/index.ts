@@ -85,6 +85,8 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_DUPLICATE_ORDER";
     case WalletPaymentOutcomeEnum.PSP_ERROR:
       return "PAYMENT_PSP_ERROR";
+    case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
+      return "PAYMENT_500_ERROR";
     default:
       return outcome;
   }
