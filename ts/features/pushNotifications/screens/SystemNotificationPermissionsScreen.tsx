@@ -4,12 +4,12 @@ import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { openSystemNotificationSettingsScreen } from "../utils";
 import I18n from "../../../i18n";
 import { useIODispatch } from "../../../store/hooks";
-import { setEngagementScreenShown } from "../store/actions/userBehaviour";
 import {
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "../analytics";
 import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
+import { setEngagementScreenShown } from "../store/actions/environment";
 
 export const SystemNotificationPermissionsScreen = () => {
   const dispatch = useIODispatch();
