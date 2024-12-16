@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (5.9.1)
   - boost (1.84.0)
-  - BVLinearGradient (2.8.3):
-    - React-Core
+  - BVLinearGradient (2.5.6):
+    - React
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.75.4)
   - fmt (9.1.0)
@@ -1450,7 +1450,7 @@ PODS:
     - React-Core
   - react-native-notifications-utils (0.3.0):
     - React-Core
-  - react-native-pager-view (6.6.1):
+  - react-native-pager-view (6.4.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1473,30 +1473,11 @@ PODS:
     - Yoga
   - react-native-pdf (6.7.4):
     - React-Core
-  - react-native-pdf-thumbnail (1.3.1):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
+  - react-native-pdf-thumbnail (1.2.1):
     - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
-  - react-native-render-html (6.3.4):
+  - react-native-render-html (6.3.1):
     - React-Core
-  - react-native-safe-area-context (4.14.1):
+  - react-native-safe-area-context (4.11.1):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -1525,9 +1506,9 @@ PODS:
     - Yoga
   - react-native-slider (3.0.3):
     - React
-  - react-native-splash-screen (3.3.0):
-    - React-Core
-  - react-native-webview (13.12.5):
+  - react-native-splash-screen (3.2.0):
+    - React
+  - react-native-webview (13.12.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1812,9 +1793,9 @@ PODS:
     - React
   - RNCalendarEvents (2.2.0):
     - React
-  - RNCAsyncStorage (2.1.0):
+  - RNCAsyncStorage (2.0.0):
     - React-Core
-  - RNCClipboard (1.15.0):
+  - RNCClipboard (1.14.2):
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
@@ -1841,9 +1822,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNFS (2.20.0):
-    - React-Core
-  - RNGestureHandler (2.21.2):
+  - RNFS (2.18.0):
+    - React
+  - RNGestureHandler (2.20.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1868,9 +1849,9 @@ PODS:
     - React
   - RNKeychain (4.0.5):
     - React
-  - RNPermissions (4.1.5):
+  - RNPermissions (4.0.0):
     - React-Core
-  - RNQrGenerator (1.4.2):
+  - RNQrGenerator (1.4.0):
     - React
     - ZXingObjC
   - RNReactNativeHapticFeedback (2.3.3):
@@ -1894,7 +1875,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated (3.16.5):
+  - RNReanimated (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1914,10 +1895,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.16.5)
-    - RNReanimated/worklets (= 3.16.5)
+    - RNReanimated/reanimated (= 3.16.3)
+    - RNReanimated/worklets (= 3.16.3)
     - Yoga
-  - RNReanimated/reanimated (3.16.5):
+  - RNReanimated/reanimated (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1937,9 +1918,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 3.16.5)
+    - RNReanimated/reanimated/apple (= 3.16.3)
     - Yoga
-  - RNReanimated/reanimated/apple (3.16.5):
+  - RNReanimated/reanimated/apple (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1960,7 +1941,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated/worklets (3.16.5):
+  - RNReanimated/worklets (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2030,16 +2011,16 @@ PODS:
     - React-Core
   - RNStoreReview (0.4.3):
     - React-Core
-  - RNSVG (15.10.1):
+  - RNSVG (15.8.0):
     - React-Core
   - Sentry/HybridSDK (8.41.0)
   - SocketRocket (0.7.0)
   - SwiftCBOR (0.5.0)
-  - VisionCamera (4.6.3):
-    - VisionCamera/Core (= 4.6.3)
-    - VisionCamera/React (= 4.6.3)
-  - VisionCamera/Core (4.6.3)
-  - VisionCamera/React (4.6.3):
+  - VisionCamera (4.5.3):
+    - VisionCamera/Core (= 4.5.3)
+    - VisionCamera/React (= 4.5.3)
+  - VisionCamera/Core (4.5.3)
+  - VisionCamera/React (4.5.3):
     - React-Core
   - Yoga (0.0.0)
   - ZendeskAnswerBotProvidersSDK (5.0.4):
@@ -2445,7 +2426,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 4cb898d0bf20404aab1850c656dcea009429d6c1
-  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
+  BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   FBLazyVector: 430e10366de01d1e3d57374500b1b150fe482e6d
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
@@ -2504,16 +2485,16 @@ SPEC CHECKSUMS:
   react-native-image-picker: 1f5318beec2ebed6695454ffb9bea8c4152f1598
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-notifications-utils: 2684eeb23e47ea5d892b151c28ae07840d1448d1
-  react-native-pager-view: 7fdad1a84ccbfcd639fd815e38e536a271ec7a9f
+  react-native-pager-view: 8bd7d72d1c260ef565952ac617ab6e492c457894
   react-native-pdf: c089a365d5d3b9614cce4a1cca429a71eb037a55
-  react-native-pdf-thumbnail: 49b5612cd48dbf4b7ac371687a96099727caa345
-  react-native-render-html: 5afc4751f1a98621b3009432ef84c47019dcb2bd
-  react-native-safe-area-context: 758e894ca5a9bd1868d2a9cfbca7326a2b6bf9dc
+  react-native-pdf-thumbnail: b811c3676a0799d49e4885817ad79aa1d5c05168
+  react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
+  react-native-safe-area-context: 17a482f540310e2209f884fd49472d9e1c0e73d6
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 3054428a8b83ff083d7036e2bd73cda213326b1a
   react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
-  react-native-splash-screen: 95994222cc95c236bd3cdc59fe45ed5f27969594
-  react-native-webview: 286356dfd10655a87a61f8192037904fec3c4921
+  react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
+  react-native-webview: 1d14b6d22fe11c300bac255eafe1ef5202c8c525
   React-nativeconfig: 8c83d992b9cc7d75b5abe262069eaeea4349f794
   React-NativeModulesApple: 97f606f09fd9840b3868333984d6a0e7bcc425b5
   React-perflogger: 59e1a3182dca2cee7b9f1f7aab204018d46d1914
@@ -2542,28 +2523,28 @@ SPEC CHECKSUMS:
   ReactCommon: 36d48f542b4010786d6b2bcee615fe5f906b7105
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
-  RNCAsyncStorage: c91d753ede6dc21862c4922cd13f98f7cfde578e
-  RNCClipboard: dbcf25b8f666b4685c02eeb65be981d30198e505
+  RNCAsyncStorage: 40367e8d25522dca9c3513c7b9815a184669bd97
+  RNCClipboard: 47593431a9e763a71950798683b28f691f16b98d
   RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
   RNDeviceInfo: 55dd986d234bf6d56469fb70a5a3ae972fc59330
   RNFlashList: 1e697d1f5c2ead424948f8b8ac01e403d77eb861
-  RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
-  RNGestureHandler: 5b24d10761754ad271b714e536c457fd89b17c54
+  RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
+  RNGestureHandler: 27a63f2218affdf1a426d56682f9b174904838b3
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
   RNKeychain: ffd0513e676445c637410b47249460cbf56bc9cb
-  RNPermissions: a9f15dfaa6b8c7be4b33138568cda71740bde8a5
-  RNQrGenerator: 7c604c0eb608af64ff586ab0c040796a04eff247
+  RNPermissions: a4ae2524bd9cfb86f9c490b200b17f8dadb12e5a
+  RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: 00ba111b82aa266bb3ee1aa576831c2ea9a9dfad
-  RNReanimated: ae56eba247f82fa0d8bbf52bb0e7a34a218482de
+  RNReanimated: 26a5a401a5de1c0cf1a3226873825b00ffa85377
   RNScreens: 35bb8e81aeccf111baa0ea01a54231390dbbcfd9
   RNSentry: c5075bc124ebc8afa84e037c7fe257053a0b2cda
   RNShare: 694e19d7f74ac4c04de3a8af0649e9ccc03bd8b1
   RNStoreReview: 613c43e9132998ed41a65946e20c223c91b36464
-  RNSVG: 3421710ac15f4f2dc47e5c122f2c2e4282116830
+  RNSVG: 8542aa11770b27563714bbd8494a8436385fc85f
   Sentry: 54d0fe6c0df448497c8ed4cce66ccf7027e1823e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
-  VisionCamera: 030bcbf22791d698926e7c0e3b804126165e62e3
+  VisionCamera: 5590dbf85b4e7be8894bf0b7db86aa6275cdc228
   Yoga: aa3df615739504eebb91925fc9c58b4922ea9a08
   ZendeskAnswerBotProvidersSDK: 516624907e1c688933dbe727ba6870b8df2237f1
   ZendeskAnswerBotSDK: 44046f6c46ff5e8ea53c920cdf46856a84def279
