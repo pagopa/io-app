@@ -10,4 +10,5 @@ gem 'activesupport', '>= 6.1.7.5', '!= 7.1.0'
 gem "fastlane", "~> 2.223.1"
 
 # fixes an issue on linux env for android release
+# see https://github.com/ffi/ffi/issues/1103#issuecomment-2186974923
 gem "ffi", "< 1.17.0"
