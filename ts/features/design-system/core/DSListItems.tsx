@@ -28,6 +28,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
 import { ListItemMessage } from "../../messages/components/Home/DS/ListItemMessage";
+import { ListItemSearchInstitution } from "../../services/common/components/ListItemSearchInstitution";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -77,6 +78,13 @@ export const DSListItems = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ListItemAction</H4>
           {renderListItemAction()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>
+            ListItemSearchInstitution
+          </H4>
+          {renderListItemSearchInstitution()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -492,6 +500,26 @@ const renderListItemHeader = () => (
       />
     </DSComponentViewerBox>
   </VStack>
+);
+
+/* LIST ITEM SEARCH INSTITUTION */
+
+const renderListItemSearchInstitution = () => (
+  <DSComponentViewerBox name="ListItemSearchInstitution">
+    <ListItemSearchInstitution
+      value={"Comune di Ischia"}
+      numberOfLines={2}
+      onPress={onButtonPress}
+      avatarProps={{ source: { uri: `${cdnPath}643280639.png` } }}
+    />
+    <Divider />
+    <ListItemSearchInstitution
+      value={"Comune di Isolabona"}
+      numberOfLines={2}
+      onPress={onButtonPress}
+      avatarProps={{ source: {} }}
+    />
+  </DSComponentViewerBox>
 );
 
 /* LIST ITEM TRANSACTION */
