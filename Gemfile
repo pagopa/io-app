@@ -8,3 +8,6 @@ ruby '>=2.6.10'
 gem 'cocoapods', '>= 1.13', '!= 1.15.0', '!= 1.15.1'
 gem 'activesupport', '>= 6.1.7.5', '!= 7.1.0'
 gem "fastlane", "~> 2.223.1"
+
+# fixes an issue on linux env for android release
+gem "ffi", "< 1.17.0"
