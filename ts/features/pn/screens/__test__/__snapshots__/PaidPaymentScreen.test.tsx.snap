@@ -525,18 +525,15 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -679,13 +676,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -858,13 +849,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

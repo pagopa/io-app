@@ -10,6 +10,7 @@ import {
   IOVisualCostants,
   Tag,
   useIOTheme,
+  useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import React, { ComponentProps } from "react";
@@ -18,7 +19,6 @@ import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";
 import { AvatarDouble } from "./AvatarDouble";
-import { useListItemSpringAnimation } from "./useListItemSpringAnimation";
 
 export const ListItemMessageStandardHeight = 95;
 export const ListItemMessageEnhancedHeight = 133;
@@ -111,8 +111,8 @@ export const ListItemMessage = ({
 }: ListItemMessage) => {
   const theme = useIOTheme();
 
-  const { onPressIn, onPressOut, animatedScaleStyle, animatedBackgroundStyle } =
-    useListItemSpringAnimation();
+  const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
+    useListItemAnimation();
 
   return (
     <Pressable
@@ -136,12 +136,12 @@ export const ListItemMessage = ({
       <Animated.View
         style={[
           IOListItemStyles.listItem,
-          !selected ? animatedBackgroundStyle : undefined,
+          !selected ? backgroundAnimatedStyle : undefined,
           { flexGrow: 1, justifyContent: "center" }
         ]}
       >
         <Animated.View
-          style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
+          style={[IOListItemStyles.listItemInner, scaleAnimatedStyle]}
         >
           <View style={styles.container}>
             <View style={styles.serviceLogoAndSelectionContainer}>

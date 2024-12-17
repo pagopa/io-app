@@ -421,7 +421,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                     {
                                       "color": "#031344",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -726,13 +726,7 @@ exports[`ItwFeedbackBanner should match the snapshot 1`] = `
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

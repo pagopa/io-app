@@ -1,8 +1,11 @@
+import {
+  PressableBaseProps,
+  useScaleAnimation,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
-import { PressableBaseProps, WithTestID } from "@pagopa/io-app-design-system";
-import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 
 type CardPressableBaseProps = WithTestID<PressableBaseProps>;
 
@@ -12,8 +15,7 @@ export const CardPressableBase = ({
   accessibilityLabel,
   children
 }: React.PropsWithChildren<CardPressableBaseProps>) => {
-  const { onPressIn, onPressOut, animatedScaleStyle } =
-    useSpringPressScaleAnimation();
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
   if (onPress === undefined) {
     return <>{children}</>;
@@ -30,7 +32,7 @@ export const CardPressableBase = ({
       onTouchEnd={onPressOut}
       style={{ flexGrow: 1 }}
     >
-      <Animated.View style={[animatedScaleStyle, { flexGrow: 1 }]}>
+      <Animated.View style={[scaleAnimatedStyle, { flexGrow: 1 }]}>
         {children}
       </Animated.View>
     </Pressable>
