@@ -6,13 +6,12 @@ import {
   IOBannerRadius,
   IOColors,
   IOIcons,
-  IOScaleValues,
-  IOSpringValues,
   IOStyles,
+  useScaleAnimation,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import React from "react";
 import {
   AccessibilityRole,
   GestureResponderEvent,
@@ -20,17 +19,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import Animated, {
-  Extrapolation,
-  FadeIn,
-  FadeOut,
-  interpolate,
-  SharedValue,
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-  withSpring
-} from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 /* Styles */
 const colorContent: IOColors = "grey-700";
@@ -73,6 +62,9 @@ type BannerErrorStateActionProps =
 export type BannerErrorStateProps = BaseBannerErrorStateProps &
   BannerErrorStateActionProps;
 
+/**
+ ** TODO: Move it to the `io-app-design-system` package
+ */
 export const BannerErrorState = ({
   viewRef,
   icon,
@@ -83,39 +75,8 @@ export const BannerErrorState = ({
   accessibilityLabel,
   testID
 }: BannerErrorStateProps) => {
-  const isPressed: SharedValue<number> = useSharedValue(0);
-
-  // Scaling transformation applied when the button is pressed
-  const animationScaleValue = IOScaleValues?.magnifiedButton?.pressedState;
-
-  // Using a spring-based animation for our interpolations
-  const progressPressed = useDerivedValue(() =>
-    withSpring(isPressed.value, IOSpringValues.button)
-  );
-
-  // Interpolate animation values from `isPressed` values
-  const pressedAnimationStyle = useAnimatedStyle(() => {
-    // Scale down button slightly when pressed
-    const scale = interpolate(
-      progressPressed.value,
-      [0, 1],
-      [1, animationScaleValue],
-      Extrapolation.CLAMP
-    );
-
-    return {
-      transform: [{ scale }]
-    };
-  });
-
-  const onPressIn = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isPressed.value = 1;
-  }, [isPressed]);
-  const onPressOut = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isPressed.value = 0;
-  }, [isPressed]);
+  const { onPressIn, onPressOut, scaleAnimatedStyle } =
+    useScaleAnimation("medium");
 
   const renderMainBlock = () => (
     <>
@@ -164,7 +125,7 @@ export const BannerErrorState = ({
       onPressOut={onPressOut}
       accessible={false}
     >
-      <Animated.View style={[styles.container, pressedAnimationStyle]}>
+      <Animated.View style={[styles.container, scaleAnimatedStyle]}>
         {renderMainBlock()}
       </Animated.View>
     </Pressable>

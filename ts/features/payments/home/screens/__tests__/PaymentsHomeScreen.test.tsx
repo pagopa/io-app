@@ -15,6 +15,7 @@ import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
+  useReducedMotion: jest.fn,
   useScrollViewOffset: jest.fn,
   Layout: {
     duration: jest.fn()
@@ -179,7 +180,7 @@ const renderComponent = ({
         home: {
           shouldShowAddMethodsBanner
         },
-        bizEventsTransaction: {
+        receipt: {
           latestTransactions: transactions
         }
       }

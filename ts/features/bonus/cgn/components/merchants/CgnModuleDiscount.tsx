@@ -4,25 +4,17 @@ import {
   HSpacer,
   IOColors,
   IOModuleStyles,
-  IOScaleValues,
-  IOSpringValues,
   IOStyles,
   Icon,
   Tag,
   VSpacer,
-  useIOExperimentalDesign
+  useIOExperimentalDesign,
+  useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-  withSpring
-} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import I18n from "../../../../../i18n";
@@ -73,44 +65,16 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 };
 export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
   const { isExperimental } = useIOExperimentalDesign();
-  const isPressed = useSharedValue(0);
-  // Scaling transformation applied when the button is pressed
-  const animationScaleValue = IOScaleValues?.magnifiedButton?.pressedState;
-
-  const scaleTraversed = useDerivedValue(() =>
-    withSpring(isPressed.value, IOSpringValues.button)
-  );
-
-  // Interpolate animation values from `isPressed` values
-  const animatedStyle = useAnimatedStyle(() => {
-    const scale = interpolate(
-      scaleTraversed.value,
-      [0, 1],
-      [1, animationScaleValue],
-      Extrapolation.CLAMP
-    );
-
-    return {
-      transform: [{ scale }]
-    };
-  });
-
-  const handlePressIn = React.useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isPressed.value = 1;
-  }, [isPressed]);
-  const handlePressOut = React.useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isPressed.value = 0;
-  }, [isPressed]);
+  const { onPressIn, onPressOut, scaleAnimatedStyle } =
+    useScaleAnimation("medium");
 
   return (
     <Pressable
       onPress={onPress}
       accessible={true}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      onTouchEnd={handlePressOut}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessibilityRole="button"
     >
       <Animated.View
@@ -118,7 +82,7 @@ export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
           IOModuleStyles.button,
           styles.moduleButton,
           discount.isNew ? styles.backgroundNewItem : styles.backgroundDefault,
-          animatedStyle
+          scaleAnimatedStyle
         ]}
       >
         <View

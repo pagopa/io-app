@@ -22,6 +22,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { KoState, trackWalletCreationFailed } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 
 const FAQ_URL = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
@@ -47,7 +48,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const toast = useIOToast();
 
   useDebugInfo({
-    failure
+    failure: serializeFailureReason(failure)
   });
 
   const closeIssuance = (errorConfig: KoState) => {

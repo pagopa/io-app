@@ -26,11 +26,12 @@ jest.mock("react-native-reanimated", () => {
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
   // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
-  Reanimated.default.addWhitelistedUIProps = () => { };
+  Reanimated.default.addWhitelistedUIProps = () => {};
 
   return {
     ...Reanimated,
-    useScrollViewOffset: jest.fn
+    useScrollViewOffset: jest.fn,
+    useReducedMotion: jest.fn
   };
 });
 
@@ -105,25 +106,16 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     ...turboModuleRegistry,
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
-      const modulesToMock = ["RNDocumentPicker"];
+      const modulesToMock = [
+        "RNDocumentPicker",
+        "RNHapticFeedback",
+        "RNCWebViewModule"
+      ];
       if (modulesToMock.includes(name)) {
         return null;
       }
       return turboModuleRegistry.getEnforcing(name);
     }
-  };
-});
-
-jest.mock("react-native-webview", () => {
-  const React = require("react");
-  const { View } = require("react-native");
-
-  const WebView = props => <View {...props} />;
-
-  return {
-    WebView,
-    default: WebView,
-    __esModule: true
   };
 });
 

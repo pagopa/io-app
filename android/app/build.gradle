@@ -4,6 +4,7 @@ project.ext.envConfigFiles = [
 ]
 
 apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -23,14 +24,14 @@ if (project.hasProperty(bundleInDebugPropertyName)) {
  
  react {
     /* Folders */
-    //   The root of your project, i.e. where "package.json" lives. Default is '..'
-    // root = file("../")
-    //   The folder where the react-native NPM package is. Default is ../node_modules/react-native
-    // reactNativeDir = file("../node_modules/react-native")
-    //   The folder where the react-native Codegen package is. Default is ../node_modules/@react-native/codegen
-    // codegenDir = file("../node_modules/@react-native/codegen")
-    //   The cli.js file which is the React Native CLI entrypoint. Default is ../node_modules/react-native/cli.js
-    // cliFile = file("../node_modules/react-native/cli.js")
+    //   The root of your project, i.e. where "package.json" lives. Default is '../..'
+    // root = file("../../")
+    //   The folder where the react-native NPM package is. Default is ../../node_modules/react-native
+    // reactNativeDir = file("../../node_modules/react-native")
+    //   The folder where the react-native Codegen package is. Default is ../../node_modules/@react-native/codegen
+    // codegenDir = file("../../node_modules/@react-native/codegen")
+    //   The cli.js file which is the React Native CLI entrypoint. Default is ../../node_modules/react-native/cli.js
+    // cliFile = file("../../node_modules/react-native/cli.js")
  
     /* Variants */
     //   The list of variants to that are debuggable. For those we're going to
@@ -64,6 +65,9 @@ if (project.hasProperty(bundleInDebugPropertyName)) {
     //
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
+
+    /* Autolinking */
+    autolinkLibrariesWithApp()
 }
 
 /**
@@ -87,6 +91,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 apply from: new File(["node", "--print", "require.resolve('@sentry/react-native/package.json')"].execute().text.trim(), "../sentry.gradle")
 android {
     ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
     
     namespace "it.pagopa.io.app"
@@ -113,8 +118,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154893
-        versionName "2.79.0.10"
+        versionCode 100154894
+        versionName "2.79.0.11"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -172,13 +177,6 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
  
-    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
-    }
-    
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
-
     implementation project(':react-native-cie')
 
     implementation ("com.squareup.okhttp3:okhttp:4.9.2")
@@ -191,7 +189,6 @@ dependencies {
     }
     
     implementation project(':react-native-fingerprint-scanner')
-    implementation project(':react-native-art')
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.41"
     implementation('com.google.firebase:firebase-iid:21.1.0') {
         because "Firebase messaging 22.0.0 removes Firebase Instance ID API but out current version of the mixpanel sdk requires it https://github.com/mixpanel/mixpanel-android/issues/744 https://firebase.google.com/support/release-notes/android#messaging_v22-0-0"
@@ -203,4 +200,3 @@ dependencies {
 
 // Add the following line to the bottom of the file:
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

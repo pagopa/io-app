@@ -5,13 +5,12 @@ import {
   VSpacer,
   HSpacer,
   IOSpacer,
-  SpacerOrientation,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 
 type DSSpacerViewerBoxProps = {
   size: IOSpacer;
-  orientation?: SpacerOrientation;
+  orientation?: "horizontal" | "vertical";
 };
 
 type DSSpacerLabelProps = {

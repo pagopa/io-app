@@ -219,6 +219,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -640,18 +642,15 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -769,14 +768,11 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        {},
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "columnGap": 8,
                                         },
+                                        {},
+                                        false,
                                       ]
                                     }
                                   >
