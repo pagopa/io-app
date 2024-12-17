@@ -1,4 +1,3 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as React from "react";
 
 import {
@@ -21,14 +20,12 @@ import I18n from "../../../i18n";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
-import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
-import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { ListItemTransactionStatus } from "../../payments/common/utils/types";
-import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
 import { ListItemMessage } from "../../messages/components/Home/DS/ListItemMessage";
+import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
+import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
+import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 import { ListItemSearchInstitution } from "../../services/common/components/ListItemSearchInstitution";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -90,29 +87,6 @@ export const DSListItems = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ListItemTransaction</H4>
           {renderListItemTransaction()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Specific</H4>
-          <VStack space={24}>
-            <DSComponentViewerBox name="CgnMerchantDiscountItem">
-              <CgnMerchantDiscountItem
-                discount={{
-                  name: "Small Rubber Chips" as NonEmptyString,
-                  id: "28201" as NonEmptyString,
-                  description: undefined,
-                  discount: 25,
-                  discountUrl: "https://localhost",
-                  endDate: new Date(),
-                  isNew: false,
-                  productCategories: [
-                    ProductCategoryEnum.cultureAndEntertainment
-                  ],
-                  startDate: new Date()
-                }}
-              />
-            </DSComponentViewerBox>
-          </VStack>
         </VStack>
       </VStack>
     </DesignSystemScreen>
