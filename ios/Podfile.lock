@@ -2446,7 +2446,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 2e6ec74e7d03cfef7dc6e6eda0df6f1294ef64ac
   pagopa-io-react-native-secure-storage: 0297d41360d93f89e9f89c8412b99916e0dbf520
   pagopa-react-native-zendesk: af3ab0174baaaa7565f2475d43d8c5afafd1a863
-  RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
+  RCT-Folly: 34124ae2e667a0e5f0ea378db071d27548124321
   RCTDeprecation: 726d24248aeab6d7180dac71a936bbca6a994ed1
   RCTRequired: a94e7febda6db0345d207e854323c37e3a31d93b
   RCTTypeSafety: 28e24a6e44f5cbf912c66dde6ab7e07d1059a205
