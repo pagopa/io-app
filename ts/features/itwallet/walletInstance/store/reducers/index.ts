@@ -14,8 +14,8 @@ export type ItwWalletInstanceState = {
   attestation: string | undefined;
   revocation: {
     isRevoked: boolean;
-    revocationReason?: WalletInstanceRevocationReason;
     alertShown: boolean;
+    revocationReason?: WalletInstanceRevocationReason;
   };
 };
 
@@ -23,8 +23,8 @@ export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   revocation: {
     isRevoked: false,
-    revocationReason: undefined,
-    alertShown: false
+    alertShown: false,
+    revocationReason: undefined
   }
 };
 

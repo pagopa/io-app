@@ -134,9 +134,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "attestation": undefined,
       "revocation": {
         "isRevoked": false,
+        "alertShown": false,
         "revocationReason": undefined,
-        "alertShown": false
-      }
+      },
     },
   },
   "landingBanners": {
