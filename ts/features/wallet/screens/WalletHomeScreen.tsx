@@ -1,6 +1,13 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { default as React, useCallback, useMemo, useRef } from "react";
+import {
+  default as React,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import {
   IOScrollView,
@@ -46,10 +53,22 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const dispatch = useIODispatch();
 
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
-  const isRefreshing = useIOSelector(isWalletScreenRefreshingSelector);
+  const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+
+  // We need to use a local state to separate the UI state from the redux state
+  // This prevents to display the refresh indicator when the refresh is triggered by other components
+  // For example, the payments section
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    // Mutate the local state only when the refresh ends
+    if (!isRefreshingContent) {
+      setIsRefreshing(false);
+    }
+  }, [isRefreshingContent]);
 
   useHeaderFirstLevel({
     currentRoute: ROUTES.WALLET_HOME,
@@ -121,6 +140,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     };
   }, [isWalletEmpty, handleAddToWalletButtonPress]);
 
+  const handleRefreshWallet = useCallback(() => {
+    setIsRefreshing(true);
+    dispatch(walletUpdate());
+  }, [dispatch]);
+
   return (
     <IOScrollView
       animatedRef={scrollViewContentRef}
@@ -128,7 +152,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       excludeSafeAreaMargins={true}
       refreshControlProps={{
         refreshing: isRefreshing,
-        onRefresh: () => dispatch(walletUpdate())
+        onRefresh: handleRefreshWallet
       }}
       actions={screenActions}
     >
