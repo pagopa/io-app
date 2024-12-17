@@ -434,13 +434,12 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "paddingVertical": 8,
                                       },
                                       {
+                                        "columnGap": 4,
+                                      },
+                                      false,
+                                      {
                                         "backgroundColor": undefined,
                                         "borderColor": "#BBC2D6",
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
                                       },
                                       false,
                                       false,
@@ -520,13 +519,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       />
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
-                                  <View
-                                    style={
-                                      {
-                                        "width": 4,
-                                      }
-                                    }
-                                  />
                                   <Text
                                     allowFontScaling={false}
                                     dynamicTypeRamp="footnote"
@@ -616,13 +608,12 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         "paddingVertical": 8,
                                       },
                                       {
+                                        "columnGap": 4,
+                                      },
+                                      false,
+                                      {
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
                                       },
                                       false,
                                       false,
@@ -689,13 +680,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       />
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
-                                  <View
-                                    style={
-                                      {
-                                        "width": 4,
-                                      }
-                                    }
-                                  />
                                   <Text
                                     allowFontScaling={false}
                                     dynamicTypeRamp="footnote"
@@ -1169,13 +1153,12 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "paddingVertical": 8,
                                       },
                                       {
+                                        "columnGap": 4,
+                                      },
+                                      false,
+                                      {
                                         "backgroundColor": undefined,
                                         "borderColor": undefined,
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
                                       },
                                       false,
                                       false,
@@ -1268,13 +1251,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       />
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
-                                  <View
-                                    style={
-                                      {
-                                        "width": 4,
-                                      }
-                                    }
-                                  />
                                   <Text
                                     allowFontScaling={false}
                                     dynamicTypeRamp="footnote"
@@ -1364,13 +1340,12 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         "paddingVertical": 8,
                                       },
                                       {
+                                        "columnGap": 4,
+                                      },
+                                      false,
+                                      {
                                         "backgroundColor": undefined,
                                         "borderColor": "#BBC2D6",
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
                                       },
                                       false,
                                       false,
@@ -1437,13 +1412,6 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       />
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
-                                  <View
-                                    style={
-                                      {
-                                        "width": 4,
-                                      }
-                                    }
-                                  />
                                   <Text
                                     allowFontScaling={false}
                                     dynamicTypeRamp="footnote"

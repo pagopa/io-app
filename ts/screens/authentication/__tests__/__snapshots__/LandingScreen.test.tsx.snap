@@ -1269,18 +1269,15 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                     {
                                       "backgroundColor": "#0073E6",
                                     },
+                                    false,
                                     {
                                       "backgroundColor": undefined,
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  entering={[Function]}
                                   style={
                                     [
                                       {
@@ -1459,18 +1456,15 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1651,14 +1645,11 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -2311,7 +2302,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                             {
                                               "color": "#031344",
                                               "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
+                                              "fontSize": 17,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,
@@ -2330,6 +2321,9 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       />
                                       <View
                                         accessibilityElementsHidden={true}
+                                        accessibilityLabel="We give you a hand"
+                                        accessibilityRole="button"
+                                        accessible={true}
                                         importantForAccessibility="no-hide-descendants"
                                         pointerEvents="none"
                                       >
@@ -2340,104 +2334,30 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                             }
                                           }
                                         />
-                                        <View
-                                          accessibilityLabel="We give you a hand"
-                                          accessibilityRole="button"
-                                          accessibilityState={
-                                            {
-                                              "busy": undefined,
-                                              "checked": undefined,
-                                              "disabled": false,
-                                              "expanded": undefined,
-                                              "selected": undefined,
-                                            }
-                                          }
-                                          accessibilityValue={
-                                            {
-                                              "max": undefined,
-                                              "min": undefined,
-                                              "now": undefined,
-                                              "text": undefined,
-                                            }
-                                          }
-                                          accessible={true}
-                                          collapsable={false}
-                                          focusable={true}
-                                          hitSlop={
-                                            {
-                                              "bottom": 14,
-                                              "left": 24,
-                                              "right": 24,
-                                              "top": 14,
-                                            }
-                                          }
-                                          onBlur={[Function]}
-                                          onClick={[Function]}
-                                          onFocus={[Function]}
-                                          onResponderGrant={[Function]}
-                                          onResponderMove={[Function]}
-                                          onResponderRelease={[Function]}
-                                          onResponderTerminate={[Function]}
-                                          onResponderTerminationRequest={[Function]}
-                                          onStartShouldSetResponder={[Function]}
-                                          onTouchEnd={[Function]}
+                                        <Text
+                                          accessibilityElementsHidden={true}
+                                          accessible={false}
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          importantForAccessibility="no-hide-descendants"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
-                                            {
-                                              "alignSelf": "flex-start",
-                                            }
+                                            [
+                                              {},
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": undefined,
+                                              },
+                                            ]
                                           }
                                         >
-                                          <View
-                                            style={
-                                              [
-                                                {
-                                                  "alignItems": "center",
-                                                  "elevation": 0,
-                                                  "flexDirection": "row",
-                                                  "justifyContent": "center",
-                                                  "textAlignVertical": "center",
-                                                },
-                                                false,
-                                                {},
-                                                {
-                                                  "transform": [
-                                                    {
-                                                      "scale": undefined,
-                                                    },
-                                                  ],
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            <Text
-                                              accessibilityElementsHidden={true}
-                                              accessible={false}
-                                              allowFontScaling={false}
-                                              ellipsizeMode="tail"
-                                              importantForAccessibility="no-hide-descendants"
-                                              maxFontSizeMultiplier={1.25}
-                                              numberOfLines={1}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#0E0F13",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 16,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": undefined,
-                                                  },
-                                                  {
-                                                    "color": undefined,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              We give you a hand
-                                            </Text>
-                                          </View>
-                                        </View>
+                                          We give you a hand
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
@@ -2747,13 +2667,7 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -4121,18 +4035,15 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                     {
                                       "backgroundColor": "#0073E6",
                                     },
+                                    false,
                                     {
                                       "backgroundColor": undefined,
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  entering={[Function]}
                                   style={
                                     [
                                       {
@@ -4311,18 +4222,15 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -4503,14 +4411,11 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -5163,7 +5068,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                             {
                                               "color": "#031344",
                                               "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
+                                              "fontSize": 17,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,
@@ -5182,6 +5087,9 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       />
                                       <View
                                         accessibilityElementsHidden={true}
+                                        accessibilityLabel="We give you a hand"
+                                        accessibilityRole="button"
+                                        accessible={true}
                                         importantForAccessibility="no-hide-descendants"
                                         pointerEvents="none"
                                       >
@@ -5192,104 +5100,30 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                             }
                                           }
                                         />
-                                        <View
-                                          accessibilityLabel="We give you a hand"
-                                          accessibilityRole="button"
-                                          accessibilityState={
-                                            {
-                                              "busy": undefined,
-                                              "checked": undefined,
-                                              "disabled": false,
-                                              "expanded": undefined,
-                                              "selected": undefined,
-                                            }
-                                          }
-                                          accessibilityValue={
-                                            {
-                                              "max": undefined,
-                                              "min": undefined,
-                                              "now": undefined,
-                                              "text": undefined,
-                                            }
-                                          }
-                                          accessible={true}
-                                          collapsable={false}
-                                          focusable={true}
-                                          hitSlop={
-                                            {
-                                              "bottom": 14,
-                                              "left": 24,
-                                              "right": 24,
-                                              "top": 14,
-                                            }
-                                          }
-                                          onBlur={[Function]}
-                                          onClick={[Function]}
-                                          onFocus={[Function]}
-                                          onResponderGrant={[Function]}
-                                          onResponderMove={[Function]}
-                                          onResponderRelease={[Function]}
-                                          onResponderTerminate={[Function]}
-                                          onResponderTerminationRequest={[Function]}
-                                          onStartShouldSetResponder={[Function]}
-                                          onTouchEnd={[Function]}
+                                        <Text
+                                          accessibilityElementsHidden={true}
+                                          accessible={false}
+                                          allowFontScaling={false}
+                                          ellipsizeMode="tail"
+                                          importantForAccessibility="no-hide-descendants"
+                                          maxFontSizeMultiplier={1.25}
+                                          numberOfLines={1}
                                           style={
-                                            {
-                                              "alignSelf": "flex-start",
-                                            }
+                                            [
+                                              {},
+                                              {
+                                                "color": "#0B3EE3",
+                                                "fontFamily": "Titillium Sans Pro",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": undefined,
+                                              },
+                                            ]
                                           }
                                         >
-                                          <View
-                                            style={
-                                              [
-                                                {
-                                                  "alignItems": "center",
-                                                  "elevation": 0,
-                                                  "flexDirection": "row",
-                                                  "justifyContent": "center",
-                                                  "textAlignVertical": "center",
-                                                },
-                                                false,
-                                                {},
-                                                {
-                                                  "transform": [
-                                                    {
-                                                      "scale": undefined,
-                                                    },
-                                                  ],
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            <Text
-                                              accessibilityElementsHidden={true}
-                                              accessible={false}
-                                              allowFontScaling={false}
-                                              ellipsizeMode="tail"
-                                              importantForAccessibility="no-hide-descendants"
-                                              maxFontSizeMultiplier={1.25}
-                                              numberOfLines={1}
-                                              style={
-                                                [
-                                                  {},
-                                                  {
-                                                    "color": "#0E0F13",
-                                                    "fontFamily": "Titillium Sans Pro",
-                                                    "fontSize": 16,
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "600",
-                                                    "lineHeight": undefined,
-                                                  },
-                                                  {
-                                                    "color": undefined,
-                                                  },
-                                                ]
-                                              }
-                                            >
-                                              We give you a hand
-                                            </Text>
-                                          </View>
-                                        </View>
+                                          We give you a hand
+                                        </Text>
                                       </View>
                                     </View>
                                     <View
@@ -5599,13 +5433,7 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
