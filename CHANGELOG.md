@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.1](https://github.com/pagopa/io-app/compare/2.80.0-rc.0...2.80.0-rc.1) (2024-12-17)
+
+
+### Bug Fixes
+
+* setup-ruby on CI failure ([#6560](https://github.com/pagopa/io-app/issues/6560)) ([5bcfac6](https://github.com/pagopa/io-app/commit/5bcfac6347a62f62ae701be498900b8f9c88fd05))
+
 ## [2.80.0-rc.0](https://github.com/pagopa/io-app/compare/2.79.0-rc.11...2.80.0-rc.0) (2024-12-17)
 
 
