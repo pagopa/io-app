@@ -11,7 +11,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps, forwardRef, useState } from "react";
+import { ComponentProps, forwardRef, useState } from "react";
+import * as React from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import {
   BackProps,

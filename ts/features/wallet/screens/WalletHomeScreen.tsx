@@ -1,6 +1,11 @@
 import { IOStyles, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { PropsWithChildren, default as React, useCallback } from "react";
+import {
+  useRef,
+  PropsWithChildren,
+  default as React,
+  useCallback
+} from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
@@ -36,7 +41,7 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
+  const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
 
   useFocusEffect(() => {
     trackOpenWalletScreen();

@@ -12,7 +12,8 @@ import {
   useIOTheme,
   useListItemAnimation
 } from "@pagopa/io-app-design-system";
-import React, { ComponentProps, memo, useCallback } from "react";
+import { ComponentProps, memo, useCallback } from "react";
+import * as React from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 

@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import React from "react";
 import { renderComponent } from "../../../components/__tests__/ForceScrollDownView.test";
 import * as profileBannerImport from "../../../features/profileSettings/store/selectors";
 import { GlobalState } from "../../../store/reducers/types";

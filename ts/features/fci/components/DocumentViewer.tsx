@@ -7,7 +7,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
-import React, { useState } from "react";
+import { useState } from "react";
+import * as React from "react";
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";

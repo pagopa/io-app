@@ -1,5 +1,4 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Circle, ClipPath, Defs, Path, Rect, Svg } from "react-native-svg";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";

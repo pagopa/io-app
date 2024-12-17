@@ -1,4 +1,3 @@
-import * as React from "react";
 import { constVoid } from "fp-ts/lib/function";
 import { Alert } from "@pagopa/io-app-design-system";
 import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";

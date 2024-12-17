@@ -17,7 +17,6 @@ import {
   themeStatusColorsLightMode,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

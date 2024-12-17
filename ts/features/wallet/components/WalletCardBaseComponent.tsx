@@ -1,5 +1,5 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
-import React from "react";
+import * as React from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
   FadeIn,

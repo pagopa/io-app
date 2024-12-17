@@ -10,7 +10,7 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import React from "react";
+import * as React from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {

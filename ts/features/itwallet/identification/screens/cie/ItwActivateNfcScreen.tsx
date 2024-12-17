@@ -4,7 +4,7 @@ import {
   ListItemHeader,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Alert } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";

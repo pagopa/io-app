@@ -5,7 +5,6 @@ import {
   H1,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { AnimatedImage } from "../../../../components/AnimatedImage";

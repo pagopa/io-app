@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import PagerView from "react-native-pager-view";
 import { createStore } from "redux";

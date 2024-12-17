@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { H2, H6, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
@@ -34,7 +34,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
   const dispatch = useIODispatch();
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
         idWallet

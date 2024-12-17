@@ -3,7 +3,7 @@ import {
   NavigationContainerRef
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
-import React from "react";
+import * as React from "react";
 import { mixpanelTrack } from "../mixpanel";
 import { AppParamsList } from "./params/AppParamsList";
 

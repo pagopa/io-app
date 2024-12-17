@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { default as React } from "react";
+import { useCallback, useEffect, default as React } from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
@@ -119,7 +119,7 @@ const WalletPaymentConfirmScreen = () => {
       })
     );
 
-  const handleAuthorizationOutcome = React.useCallback(
+  const handleAuthorizationOutcome = useCallback(
     (outcome: WalletPaymentOutcome) => {
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
@@ -143,14 +143,14 @@ const WalletPaymentConfirmScreen = () => {
   const isLoading = isAuthUrlLoading || isPendingAuthorization;
   const isError = isAuthUrlError;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isError) {
       handleAuthorizationOutcome(WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR);
     }
   }, [isError, handleAuthorizationOutcome]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (currentStep !== WalletPaymentStepEnum.CONFIRM_TRANSACTION) {
         return;
       }

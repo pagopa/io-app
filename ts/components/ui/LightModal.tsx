@@ -3,7 +3,7 @@
  * on top of the root component.
  */
 
-import React from "react";
+import * as React from "react";
 import {
   Animated,
   Dimensions,

@@ -14,7 +14,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useState, useMemo } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
@@ -96,12 +96,12 @@ const IdPayBarcodeResultScreen = () => {
 
 const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
   const trx = barcode.trxCode.toUpperCase();
-  const [isBarcodeExpired, setIsBarcodeExpired] = React.useState(false);
+  const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
   // expire check is handled by the progress bar
   // to avoid unnecessary rerenders, which could also be on the
   // heavier side due to barcode generation
 
-  const secondsTillExpire = React.useMemo(
+  const secondsTillExpire = useMemo(
     () => calculateIdPayBarcodeSecondsToExpire(barcode),
     [barcode]
   );

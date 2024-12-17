@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { Body, Divider, H6, WithTestID } from "@pagopa/io-app-design-system";
 

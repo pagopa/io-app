@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
+import * as React from "react";
 import { Text } from "react-native";
 import { Provider } from "react-redux";
 import { createStore } from "redux";

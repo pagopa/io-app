@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import * as React from "react";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../i18n";

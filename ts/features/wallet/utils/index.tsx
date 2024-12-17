@@ -1,4 +1,3 @@
-import * as React from "react";
 import { WalletCard, WalletCardType } from "../types";
 import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
 import { CgnWalletCard } from "../../bonus/cgn/components/CgnWalletCard";

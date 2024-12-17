@@ -10,7 +10,7 @@ import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useRef } from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
@@ -65,7 +65,7 @@ export const IdPayOperationsListScreen = () => {
   } = useInitiativeTimelineFetcher(initiativeId, 10, handleOnError);
 
   // We need to know if this is the first rendering in order to show the loading spinner overlay
-  const isFirstRenderDispatchedRef = React.useRef(false);
+  const isFirstRenderDispatchedRef = useRef(false);
 
   useOnFirstRender(() => {
     fetchPage(0);

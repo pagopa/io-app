@@ -1,4 +1,5 @@
-import React, { ComponentProps, PropsWithChildren } from "react";
+import { ComponentProps, PropsWithChildren } from "react";
+import * as React from "react";
 import { ColorValue, View } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";

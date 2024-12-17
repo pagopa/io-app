@@ -1,5 +1,5 @@
 import { createActorContext } from "@xstate/react";
-import React from "react";
+import * as React from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../store/hooks";
 import { createItwTrustmarkActionsImplementation } from "./actions";

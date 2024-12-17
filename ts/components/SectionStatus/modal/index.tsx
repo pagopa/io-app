@@ -1,4 +1,5 @@
-import React, { ComponentProps, useCallback, useEffect, useRef } from "react";
+import { ComponentProps, useCallback, useEffect, useRef } from "react";
+import * as React from "react";
 import { AccessibilityInfo, View } from "react-native";
 import { Alert, IOColors } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

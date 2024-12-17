@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Alert } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";

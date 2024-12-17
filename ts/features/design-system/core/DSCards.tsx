@@ -7,7 +7,7 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useState } from "react";
 import { Alert, Pressable, ScrollView } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
@@ -446,7 +446,7 @@ const ItwCards = () => (
 );
 
 const ItwSkeumorphicCardPreview = (props: ItwSkeumorphicCardProps) => {
-  const [isFlipped, setIsFlipped] = React.useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   return (
     <Pressable
       onPress={() => setIsFlipped(!isFlipped)}
@@ -461,7 +461,7 @@ const ItwSkeumorphicCardPreview = (props: ItwSkeumorphicCardProps) => {
 // for testing reasons, abi codes can be found here:
 // https://www.comuniecitta.it/elenco-banche-per-codice-abi
 export const DSCards = () => {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = useState(0);
 
   return (
     <DesignSystemScreen title={"Cards"} noMargin={true}>

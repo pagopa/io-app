@@ -1,4 +1,3 @@
-import React from "react";
 import { Linking, Platform } from "react-native";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";

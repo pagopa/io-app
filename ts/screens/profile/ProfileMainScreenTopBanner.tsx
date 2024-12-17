@@ -4,7 +4,7 @@ import {
   ContentWrapper,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { profileBannerToShowSelector } from "../../features/profileSettings/store/selectors";
 import { openSystemNotificationSettingsScreen } from "../../features/pushNotifications/utils";

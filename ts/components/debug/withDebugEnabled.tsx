@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useIOSelector } from "../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 

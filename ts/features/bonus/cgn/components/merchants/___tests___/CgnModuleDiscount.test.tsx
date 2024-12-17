@@ -1,6 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import I18n from "../../../../../../i18n";

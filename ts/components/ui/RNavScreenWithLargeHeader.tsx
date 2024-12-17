@@ -7,7 +7,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps, useLayoutEffect, useState } from "react";
+import { ComponentProps, useLayoutEffect, useState } from "react";
+import * as React from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,

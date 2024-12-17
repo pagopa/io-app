@@ -1,4 +1,3 @@
-import React from "react";
 import { useIOSelector } from "../../../../store/hooks";
 import { shouldShowFooterListComponentSelector } from "../../store/reducers/allPaginated";
 import { MessageListCategory } from "../../types/messageListCategory";

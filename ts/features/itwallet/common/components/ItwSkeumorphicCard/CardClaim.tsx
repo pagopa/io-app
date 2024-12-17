@@ -2,7 +2,7 @@ import { WithTestID } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import React from "react";
+import * as React from "react";
 import { Image, StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {

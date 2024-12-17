@@ -1,4 +1,5 @@
-import React, { ComponentProps, useCallback, useEffect, useRef } from "react";
+import { ComponentProps, useCallback, useEffect, useRef } from "react";
+import * as React from "react";
 import { View } from "react-native";
 import { Alert } from "@pagopa/io-app-design-system";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";

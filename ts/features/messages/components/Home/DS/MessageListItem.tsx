@@ -11,7 +11,6 @@ import {
   useIOTheme,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import I18n from "../../../../../i18n";

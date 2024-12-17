@@ -2,7 +2,6 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps

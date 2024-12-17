@@ -8,7 +8,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
+import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";

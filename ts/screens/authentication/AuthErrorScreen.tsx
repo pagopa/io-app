@@ -3,7 +3,7 @@ import {
   Route,
   useRoute
 } from "@react-navigation/native";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";

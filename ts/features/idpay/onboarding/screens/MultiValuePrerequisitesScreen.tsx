@@ -10,7 +10,7 @@ import {
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { default as React } from "react";
+import { useRef, useEffect, useState, default as React } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
@@ -29,7 +29,7 @@ type ListItemProps = {
 };
 
 const MultiValuePrerequisitesScreen = () => {
-  const pagerRef = React.useRef<PagerView>(null);
+  const pagerRef = useRef<PagerView>(null);
 
   const multiSelfDeclarations = IdPayOnboardingMachineContext.useSelector(
     multiRequiredCriteriaSelector
@@ -38,7 +38,7 @@ const MultiValuePrerequisitesScreen = () => {
     selectCurrentMultiSelfDeclarationPage
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     pagerRef.current?.setPage(currentPage);
   }, [pagerRef, currentPage]);
 
@@ -69,7 +69,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
-  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
     undefined
   );
 

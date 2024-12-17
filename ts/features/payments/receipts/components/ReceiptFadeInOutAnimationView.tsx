@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 

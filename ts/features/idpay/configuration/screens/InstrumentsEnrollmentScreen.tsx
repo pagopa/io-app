@@ -10,7 +10,7 @@ import {
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ScrollView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -52,7 +52,7 @@ export const InstrumentsEnrollmentScreen = () => {
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
   const machine = useActorRef();
 
-  const [stagedWalletId, setStagedWalletId] = React.useState<number>();
+  const [stagedWalletId, setStagedWalletId] = useState<number>();
 
   const isLoading = useSelector(isLoadingSelector);
   const failure = useSelector(failureSelector);
@@ -71,7 +71,7 @@ export const InstrumentsEnrollmentScreen = () => {
     Object.keys(initiativeInstrumentsByIdWallet).length > 0;
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (initiativeId) {
         machine.send({
           type: "start-configuration",
@@ -82,7 +82,7 @@ export const InstrumentsEnrollmentScreen = () => {
     }, [machine, initiativeId])
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     pipe(
       failure,
       O.filter(
@@ -156,7 +156,7 @@ export const InstrumentsEnrollmentScreen = () => {
     175
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (stagedWalletId) {
       enrollmentBottomSheetModal.present();
     } else {

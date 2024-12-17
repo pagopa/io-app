@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Text } from "react-native";
 import { createStore } from "redux";
 import LoadingScreenContent from "../LoadingScreenContent";

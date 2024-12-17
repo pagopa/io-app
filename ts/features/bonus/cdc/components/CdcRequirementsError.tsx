@@ -1,6 +1,5 @@
 import { FooterActions } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
 import { SafeAreaView } from "react-native";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

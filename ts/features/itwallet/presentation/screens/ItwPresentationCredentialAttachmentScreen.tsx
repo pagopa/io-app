@@ -1,5 +1,5 @@
 import { IOColors, IOStyles, useIOToast } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
@@ -44,7 +44,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
   const toast = useIOToast();
 
   const [footerActionsMeasurements, setfooterActionsMeasurements] =
-    React.useState<FooterActionsMeasurements>({
+    useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,
       safeBottomAreaHeight: 0
     });

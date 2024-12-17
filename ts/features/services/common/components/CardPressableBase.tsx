@@ -3,7 +3,7 @@ import {
   useScaleAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import * as React from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 

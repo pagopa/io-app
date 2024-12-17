@@ -4,7 +4,6 @@ import {
   H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";

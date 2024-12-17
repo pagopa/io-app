@@ -1,6 +1,6 @@
 import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
+import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import I18n from "../../../i18n";
@@ -53,14 +53,14 @@ const WalletCardsContainer = () => {
   const shouldRenderLoadingState = isLoading && isWalletEmpty;
 
   // Returns true if no category filter is selected or if the filter matches the given category
-  const shouldRenderCategory = React.useCallback(
+  const shouldRenderCategory = useCallback(
     (filter: WalletCardCategoryFilter): boolean =>
       selectedCategory === undefined || selectedCategory === filter,
     [selectedCategory]
   );
 
   // Content to render in the wallet screen, based on the current state
-  const walletContent = React.useMemo(() => {
+  const walletContent = useMemo(() => {
     if (shouldRenderLoadingState) {
       return <WalletCardsContainerSkeleton />;
     }
@@ -113,14 +113,14 @@ const ItwWalletCardsContainer = () => {
   );
 
   useFocusEffect(
-    React.useCallback(
+    useCallback(
       // Automatically dismiss the bottom sheet when focus is lost
       () => eidInfoBottomSheet.dismiss,
       [eidInfoBottomSheet.dismiss]
     )
   );
 
-  const sectionHeader = React.useMemo((): ListItemHeader | undefined => {
+  const sectionHeader = useMemo((): ListItemHeader | undefined => {
     if (!isItwValid) {
       return undefined;
     }
@@ -175,7 +175,7 @@ const OtherWalletCardsContainer = () => {
   const cards = useIOSelector(selectWalletOtherCards);
   const categories = useIOSelector(selectWalletCategories);
 
-  const sectionHeader = React.useMemo((): ListItemHeader | undefined => {
+  const sectionHeader = useMemo((): ListItemHeader | undefined => {
     // The section header must be displayed only if there are more categories
     if (categories.size <= 1) {
       return undefined;

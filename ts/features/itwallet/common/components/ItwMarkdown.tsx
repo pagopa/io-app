@@ -17,7 +17,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import * as React from "react";
 import { StyleSheet } from "react-native";
 import Markdown, { ASTNode } from "react-native-markdown-display";
 import I18n from "../../../../i18n";

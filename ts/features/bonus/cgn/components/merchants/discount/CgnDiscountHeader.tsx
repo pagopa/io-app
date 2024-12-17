@@ -6,7 +6,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import I18n from "../../../../../../i18n";

@@ -5,7 +5,7 @@ import {
   IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../i18n";
 
@@ -108,6 +108,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwDigitalVersionBadge = React.memo(ItwDigitalVersionBadge);
+const MemoizedItwDigitalVersionBadge = memo(ItwDigitalVersionBadge);
 
 export { MemoizedItwDigitalVersionBadge as ItwDigitalVersionBadge };

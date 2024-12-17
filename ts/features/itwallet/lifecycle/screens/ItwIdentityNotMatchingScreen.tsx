@@ -1,4 +1,3 @@
-import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import {

@@ -5,7 +5,8 @@ import {
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
-import React, { useRef } from "react";
+import { useRef } from "react";
+import * as React from "react";
 import { View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";

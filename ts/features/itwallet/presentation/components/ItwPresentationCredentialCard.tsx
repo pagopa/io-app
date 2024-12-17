@@ -1,5 +1,5 @@
 import { IOSpacingScale, VStack } from "@pagopa/io-app-design-system";
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";

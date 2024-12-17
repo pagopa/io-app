@@ -8,7 +8,7 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import * as React from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import {

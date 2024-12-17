@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import * as S from "fp-ts/lib/string";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";

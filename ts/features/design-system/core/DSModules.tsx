@@ -11,7 +11,6 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert, ImageSourcePropType } from "react-native";
 import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";

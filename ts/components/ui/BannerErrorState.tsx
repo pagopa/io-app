@@ -11,7 +11,7 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import * as React from "react";
 import {
   AccessibilityRole,
   GestureResponderEvent,

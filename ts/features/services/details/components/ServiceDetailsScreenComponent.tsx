@@ -10,7 +10,8 @@ import {
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import React, { ComponentProps, useCallback, useMemo, useState } from "react";
+import { ComponentProps, useCallback, useMemo, useState } from "react";
+import * as React from "react";
 import {
   LayoutChangeEvent,
   LayoutRectangle,

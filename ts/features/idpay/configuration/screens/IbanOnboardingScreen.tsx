@@ -9,7 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { LabelledItem } from "../../../../components/LabelledItem";
@@ -24,12 +24,12 @@ export const IbanOnboardingScreen = () => {
   const machine = IdPayConfigurationMachineContext.useActorRef();
 
   const customGoBack = () => machine.send({ type: "back" });
-  const [iban, setIban] = React.useState<{
+  const [iban, setIban] = useState<{
     text: string;
     value: O.Option<string>;
   }>({ text: "", value: O.none });
 
-  const [ibanName, setIbanName] = React.useState<string>("");
+  const [ibanName, setIbanName] = useState<string>("");
   const isLoading =
     IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
 

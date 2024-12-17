@@ -6,7 +6,7 @@ import {
   BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Placeholder from "rn-placeholder";

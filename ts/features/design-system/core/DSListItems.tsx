@@ -1,5 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as React from "react";
+import { Fragment } from "react";
 
 import {
   Divider,
@@ -442,7 +442,7 @@ const renderListItemTransaction = () => (
     <DSComponentViewerBox name="ListItemTransaction, various states">
       {transactionStatusArray.map(
         ({ status, asset }: mockTransactionStatusData, i) => (
-          <React.Fragment key={`transactionStatus-${status}`}>
+          <Fragment key={`transactionStatus-${status}`}>
             <ListItemTransaction
               title="Title"
               subtitle="subtitle"
@@ -453,7 +453,7 @@ const renderListItemTransaction = () => (
               onPress={onButtonPress}
             />
             {i < transactionStatusArray.length - 1 && <Divider />}
-          </React.Fragment>
+          </Fragment>
         )
       )}
     </DSComponentViewerBox>

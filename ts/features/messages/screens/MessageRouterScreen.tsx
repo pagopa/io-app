@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import * as React from "react";
 import { View } from "react-native";
 import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";

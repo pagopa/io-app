@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";

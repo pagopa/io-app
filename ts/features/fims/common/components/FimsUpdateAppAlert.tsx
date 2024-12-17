@@ -2,7 +2,7 @@ import {
   HeaderActionProps,
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useEffect } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
@@ -36,7 +36,7 @@ const useOnlySupportRequestHeader = () => {
   const navigation = useIONavigation();
   const startSupportRequest = useStartSupportRequest({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel

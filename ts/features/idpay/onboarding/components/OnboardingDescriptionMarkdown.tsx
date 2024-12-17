@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";
@@ -12,7 +12,7 @@ type Props = {
 const OnboardingDescriptionMarkdown = (props: Props) => {
   const { description, onLoadEnd } = props;
 
-  const [isLoaded, setLoaded] = React.useState(false);
+  const [isLoaded, setLoaded] = useState(false);
 
   const handleOnLoadEnd = () => {
     // The markdown component has a different height for some istants after finishing loading

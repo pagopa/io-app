@@ -14,13 +14,14 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, {
+import {
   useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
   useState
 } from "react";
+import * as React from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import _ from "lodash";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { landingScreenBannerToRenderSelector } from "../store/selectors";
 import { updateLandingScreenBannerVisibility } from "../store/actions";
@@ -8,7 +8,7 @@ export const LandingScreenBannerPicker = () => {
   const dispatch = useIODispatch();
   const bannerToRender = useIOSelector(landingScreenBannerToRenderSelector);
 
-  const closeHandler = React.useCallback(() => {
+  const closeHandler = useCallback(() => {
     if (bannerToRender) {
       dispatch(
         updateLandingScreenBannerVisibility({

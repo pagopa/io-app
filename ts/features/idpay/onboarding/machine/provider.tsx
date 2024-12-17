@@ -1,7 +1,7 @@
 import { createActorContext } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import * as React from "react";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   idPayApiBaseUrl,

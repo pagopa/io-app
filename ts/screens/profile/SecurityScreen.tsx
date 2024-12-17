@@ -5,7 +5,8 @@ import {
   ListItemNav,
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import * as React from "react";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { shufflePinPadOnPayment } from "../../config";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";

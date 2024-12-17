@@ -8,7 +8,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { QrCodeImage } from "../../../../components/QrCodeImage";

@@ -2,7 +2,7 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -36,7 +36,7 @@ export const InitiativeDetailsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (params.serviceId !== undefined) {
       machine.send({
         type: "start-onboarding",
@@ -47,7 +47,7 @@ export const InitiativeDetailsScreen = () => {
 
   const initiative = useSelector(selectInitiative);
   const isLoading = useSelector(isLoadingSelector);
-  const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
+  const [isDescriptionLoaded, setDescriptionLoaded] = useState(false);
 
   const handleGoBackPress = () => machine.send({ type: "close" });
   const handleContinuePress = () => machine.send({ type: "next" });

@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { render, RenderOptions } from "@testing-library/react-native";
-import React from "react";
+import * as React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";

@@ -4,7 +4,7 @@
  */
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import React from "react";
+import * as React from "react";
 
 import {
   LightModalConsumer,

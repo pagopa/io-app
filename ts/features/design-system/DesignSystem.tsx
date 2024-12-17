@@ -8,7 +8,6 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { SectionList, StatusBar, useColorScheme } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useScreenEndMargin } from "../../hooks/useScreenEndMargin";

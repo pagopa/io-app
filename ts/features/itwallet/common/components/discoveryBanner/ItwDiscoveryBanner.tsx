@@ -1,6 +1,6 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import React from "react";
+import { createRef, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -32,13 +32,13 @@ export const ItwDiscoveryBanner = ({
   closable,
   handleOnClose
 }: ItwDiscoveryBannerProps) => {
-  const bannerRef = React.createRef<View>();
+  const bannerRef = createRef<View>();
   const dispatch = useIODispatch();
 
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const trackBannerProperties = React.useMemo(
+  const trackBannerProperties = useMemo(
     () => ({
       banner_id: "itwDiscoveryBannerTestID",
       banner_page: route.name,
