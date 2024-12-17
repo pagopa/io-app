@@ -219,6 +219,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -565,6 +567,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -627,6 +630,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -938,6 +942,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1000,6 +1005,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1282,6 +1288,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1344,6 +1351,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1658,6 +1666,7 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1720,6 +1729,7 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
