@@ -219,6 +219,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -353,7 +355,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -587,6 +588,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -772,6 +774,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

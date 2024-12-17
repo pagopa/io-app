@@ -2,15 +2,13 @@
 
 buildscript {
     ext {
-        firebaseMessagingVersion = "23.2.1"
         buildToolsVersion = "34.0.0"
-        kotlinVersion = "1.7.0"
         minSdkVersion = 25
         compileSdkVersion = 34
         targetSdkVersion = 34
-        supportLibVersion = "28.0.0"
-        // We use NDK 24 which has both M1 support and is the side-by-side NDK version from AGP.
-        ndkVersion = "24.0.8215888"
+        ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.24"
+        firebaseMessagingVersion = "23.2.1"
     }
     repositories {
         google()
@@ -21,7 +19,7 @@ buildscript {
         classpath 'com.facebook.react:react-native-gradle-plugin'
         classpath 'com.google.gms:google-services:4.3.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin"
     }
 }
 
@@ -32,3 +30,5 @@ allprojects {
        	maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
     }
 }
+
+apply plugin: "com.facebook.react.rootproject"
