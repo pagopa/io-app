@@ -2,31 +2,32 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../definitions/content/Config";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { RemoteConfigState } from "../../../../store/reducers/backendStatus/remoteConfig";
+import * as configSelectors from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { CredentialType } from "../../../itwallet/common/utils/itwMocksUtils";
-import { ItwLifecycleState } from "../../../itwallet/lifecycle/store/reducers";
+import * as itwSelectors from "../../../itwallet/common/store/selectors";
+import {
+  CredentialType,
+  ItwStoredCredentialsMocks
+} from "../../../itwallet/common/utils/itwMocksUtils";
+import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesUtils";
+import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
+import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
 import { WalletCardsState } from "../../store/reducers/cards";
-import { WalletPlaceholdersState } from "../../store/reducers/placeholders";
+import * as walletSelectors from "../../store/selectors";
 import { WalletCard } from "../../types";
-import { WalletCardsContainer } from "../WalletCardsContainer";
-
-type RenderOptions = {
-  cards?: WalletCardsState;
-  isLoading?: WalletPlaceholdersState["isLoading"];
-  isItwEnabled?: boolean;
-  isItwValid?: boolean;
-  isWalletEmpty?: boolean;
-};
+import {
+  ItwWalletCardsContainer,
+  OtherWalletCardsContainer,
+  WalletCardsContainer
+} from "../WalletCardsContainer";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
+  useReducedMotion: jest.fn,
   Layout: {
     duration: jest.fn()
   }
@@ -65,46 +66,267 @@ const T_CARDS: WalletCardsState = {
     category: "itw",
     type: "itw",
     credentialType: CredentialType.DRIVING_LICENSE
+  },
+  "5": {
+    key: "5",
+    category: "itw",
+    type: "itw",
+    credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
   }
 };
 
-const T_PLACEHOLDERS: WalletCardsState = _.omit(
-  _.mapValues(
-    T_CARDS,
-    card =>
-      ({
-        type: "placeholder",
-        category: card.category,
-        key: card.key
-      } as WalletCard)
-  ),
-  "deletedCard"
+const T_PLACEHOLDERS: WalletCardsState = _.mapValues(
+  T_CARDS,
+  card =>
+    ({
+      type: "placeholder",
+      category: card.category,
+      key: card.key
+    } as WalletCard)
 );
 
 describe("WalletCardsContainer", () => {
   jest.useFakeTimers();
   jest.runAllTimers();
 
-  it("should render the loading screen", async () => {
-    const { queryByTestId } = renderComponent({
-      isLoading: true
-    });
+  it("should render the loading screen", () => {
+    jest
+      .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletCategoryFilter")
+      .mockImplementation(() => undefined);
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+      .mockImplementation(() => true);
 
-    expect(queryByTestId("walletCardSkeletonTestID")).not.toBeNull();
-    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).toBeNull();
-    expect(queryByTestId(`walletCardsCategoryTestID_other`)).toBeNull();
+    const { queryByTestId } = renderComponent(WalletCardsContainer);
+
+    expect(queryByTestId("walletCardSkeletonTestID_1")).not.toBeNull();
+    expect(queryByTestId("walletCardSkeletonTestID_2")).not.toBeNull();
+    expect(queryByTestId("walletCardSkeletonTestID_3")).not.toBeNull();
+    expect(queryByTestId(`itwWalletCardsContainerTestID`)).toBeNull();
+    expect(queryByTestId(`otherWalletCardsContainerTestID`)).toBeNull();
+    expect(queryByTestId(`walletEmptyScreenContentTestID`)).toBeNull();
+    expect(queryByTestId(`walletCardsContainerTestID`)).toBeNull();
+  });
+
+  it("should render the empty screen", () => {
+    jest
+      .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+      .mockImplementation(() => false);
+    jest
+      .spyOn(walletSelectors, "selectWalletCategoryFilter")
+      .mockImplementation(() => undefined);
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+      .mockImplementation(() => true);
+
+    const { queryByTestId } = renderComponent(WalletCardsContainer);
+
+    expect(queryByTestId("walletCardSkeletonTestID_1")).toBeNull();
+    expect(queryByTestId("walletCardSkeletonTestID_2")).toBeNull();
+    expect(queryByTestId("walletCardSkeletonTestID_3")).toBeNull();
+    expect(queryByTestId(`itwWalletCardsContainerTestID`)).toBeNull();
+    expect(queryByTestId(`otherWalletCardsContainerTestID`)).toBeNull();
+    expect(queryByTestId(`walletEmptyScreenContentTestID`)).not.toBeNull();
+    expect(queryByTestId(`walletCardsContainerTestID`)).toBeNull();
+    expect(queryByTestId(`walletCardsContainerTestID`)).toBeNull();
+  });
+
+  it.each([
+    [undefined, ["itw", "other"]],
+    ["itw", ["itw"]],
+    ["other", ["other"]]
+  ] as const)(
+    "when the category filter is %p, the %p cards should be rendered",
+    (categoryFilter, expectedCategories) => {
+      jest
+        .spyOn(walletSelectors, "selectWalletOtherCards")
+        .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
+
+      jest
+        .spyOn(walletSelectors, "selectWalletItwCards")
+        .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
+
+      jest
+        .spyOn(configSelectors, "isItwEnabledSelector")
+        .mockImplementation(() => true);
+      jest
+        .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+        .mockImplementation(() => false);
+      jest
+        .spyOn(walletSelectors, "selectWalletCategoryFilter")
+        .mockImplementation(() => categoryFilter);
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+        .mockImplementation(() => false);
+
+      const { queryByTestId } = renderComponent(WalletCardsContainer);
+
+      expect(queryByTestId("walletCardSkeletonTestID_1")).toBeNull();
+      expect(queryByTestId("walletCardSkeletonTestID_2")).toBeNull();
+      expect(queryByTestId("walletCardSkeletonTestID_3")).toBeNull();
+      expect(queryByTestId(`walletEmptyScreenContentTestID`)).toBeNull();
+      expect(queryByTestId(`walletCardsContainerTestID`)).not.toBeNull();
+
+      expectedCategories.forEach(category => {
+        expect(
+          queryByTestId(`${category}WalletCardsContainerTestID`)
+        ).not.toBeNull();
+      });
+    }
+  );
+
+  it.each([
+    { isLoading: true, isEmpty: false },
+    { isLoading: false, isEmpty: true }
+  ])(
+    "should render the ITW discovery banner if %p",
+    ({ isLoading, isEmpty }) => {
+      jest
+        .spyOn(itwSelectors, "isItwDiscoveryBannerRenderableSelector")
+        .mockImplementation(() => true);
+
+      jest
+        .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+        .mockImplementation(() => isLoading);
+      jest
+        .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+        .mockImplementation(() => isEmpty);
+
+      const { queryByTestId } = renderComponent(WalletCardsContainer);
+
+      expect(
+        queryByTestId("itwDiscoveryBannerStandaloneTestID")
+      ).not.toBeNull();
+    }
+  );
+});
+
+describe("ItwWalletCardsContainer", () => {
+  it("should not render if ITW is not enabled", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(configSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => false);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
+  });
+
+  it("should render the wallet ready banner", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(configSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
+      .mockImplementation(() => true);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
+  });
+
+  it("should render credential cards", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(configSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletItwCards")
+      .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
+  });
+
+  it("should render the feedback banner", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(configSelectors, "isItwEnabledSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderFeedbackBannerSelector")
+      .mockImplementation(() => true);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+    expect(queryByTestId("itwFeedbackBannerTestID")).not.toBeNull();
+  });
+
+  it.each([
+    ["valid", 0],
+    ["jwtExpiring", 1],
+    ["jwtExpired", 1]
+  ])(
+    "if the eid status is %p, the eid lifecycle alert should be rendered %p times",
+    (eidStatus, renderCount) => {
+      jest
+        .spyOn(itwCredentialsSelectors, "itwCredentialsEidSelector")
+        .mockImplementation(() => O.some(ItwStoredCredentialsMocks.eid));
+      jest
+        .spyOn(itwCredentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockImplementation(() => eidStatus as ItwJwtCredentialStatus);
+
+      const { getAllByTestId } = renderComponent(ItwWalletCardsContainer);
+      const alerts = getAllByTestId(`itwEidLifecycleAlertTestID_${eidStatus}`);
+      expect(alerts).toHaveLength(renderCount + 1);
+    }
+  );
+});
+
+describe("OtherWalletCardsContainer", () => {
+  it("should not render if there are no payments or bonuses cards", () => {
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => []);
+
+    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    expect(queryByTestId("otherWalletCardsContainerTestID")).toBeNull();
+  });
+
+  it("should render other cards", () => {
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
+
+    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    expect(queryByTestId(`walletCardsCategoryOtherHeaderTestID`)).toBeNull();
+    expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
+  });
+
+  it("should render header if there are more than one category", () => {
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
+    jest
+      .spyOn(walletSelectors, "selectWalletCategories")
+      .mockImplementation(() => new Set(["itw", "other"]));
+
+    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
+    expect(
+      queryByTestId(`walletCardsCategoryOtherHeaderTestID`)
+    ).not.toBeNull();
   });
 
   it("should render the placeholders", () => {
-    const { queryByTestId } = renderComponent({
-      cards: T_PLACEHOLDERS,
-      isLoading: true
-    });
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => Object.values(T_PLACEHOLDERS));
 
-    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
-
-    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).not.toBeNull();
-    expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
+    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
 
     expect(
       queryByTestId(`walletCardTestID_payment_placeholder_1`)
@@ -117,19 +339,16 @@ describe("WalletCardsContainer", () => {
   });
 
   it("should render placeholders along with available cards", () => {
-    const { queryByTestId } = renderComponent({
-      cards: {
-        "1": T_CARDS["1"],
-        "2": T_PLACEHOLDERS["2"],
-        "3": T_CARDS["3"],
-        "4": T_PLACEHOLDERS["4"]
-      }
-    });
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => [
+        T_CARDS["1"],
+        T_PLACEHOLDERS["2"],
+        T_CARDS["3"],
+        T_PLACEHOLDERS["4"]
+      ]);
 
-    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
-
-    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).not.toBeNull();
-    expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
+    const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
 
     expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
     expect(
@@ -138,102 +357,16 @@ describe("WalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_placeholder_4`)).not.toBeNull();
   });
-
-  it("should not render ITW section if ITW is disabled", () => {
-    const { queryByTestId } = renderComponent({
-      isItwEnabled: false,
-      cards: T_CARDS
-    });
-
-    expect(queryByTestId("walletCardSkeletonTestID")).toBeNull();
-    expect(queryByTestId(`walletCardsCategoryTestID_itw`)).toBeNull();
-    expect(queryByTestId(`walletCardsCategoryTestID_other`)).not.toBeNull();
-
-    expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
-    expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
-    expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
-    expect(queryByTestId(`walletCardTestID_itw_itw_4`)).toBeNull();
-  });
-
-  it("should render the wallet ready banner when the wallet instance is valid and the wallet is empty", () => {
-    const { queryByTestId } = renderComponent({
-      isItwValid: true,
-      cards: T_CARDS
-    });
-    expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
-  });
-
-  test.each([
-    { isItwValid: false },
-    { isItwValid: true, isWalletEmpty: false }
-  ] as ReadonlyArray<RenderOptions>)(
-    "should not render the wallet ready banner when %p",
-    options => {
-      const { queryByTestId } = renderComponent({
-        ...options,
-        cards: T_CARDS
-      });
-      expect(queryByTestId("itwWalletReadyBannerTestID")).toBeNull();
-    }
-  );
 });
 
-const renderComponent = ({
-  cards = {},
-  isItwEnabled = true,
-  isItwValid = true,
-  isLoading = false,
-  isWalletEmpty = true
-}: RenderOptions) => {
+const renderComponent = (component: React.ComponentType<any>) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(
-    _.merge(undefined, globalState, {
-      features: {
-        wallet: {
-          cards,
-          placeholders: { isLoading }
-        },
-        itWallet: {
-          ...(isItwValid && {
-            issuance: {
-              integrityKeyTag: O.some("key-tag")
-            },
-            credentials: {
-              eid: O.some({ parsedCredential: {}, jwt: {} }),
-              credentials: isWalletEmpty
-                ? []
-                : [O.some({ parsedCredential: {} })]
-            },
-            lifecycle: ItwLifecycleState.ITW_LIFECYCLE_VALID
-          })
-        }
-      },
-      remoteConfig: O.some({
-        itw: {
-          enabled: isItwEnabled,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        assistanceTool: { tool: ToolEnum.none },
-        cgn: { enabled: true },
-        newPaymentSection: {
-          enabled: false,
-          min_app_version: {
-            android: "0.0.0.0",
-            ios: "0.0.0.0"
-          }
-        },
-        fims: { enabled: true }
-      } as Config) as RemoteConfigState
-    } as GlobalState)
-  );
+  const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <WalletCardsContainer />,
+    component,
     ROUTES.WALLET_HOME,
     {},
     store

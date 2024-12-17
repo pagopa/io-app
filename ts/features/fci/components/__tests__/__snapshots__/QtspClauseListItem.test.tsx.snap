@@ -219,6 +219,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -378,7 +380,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -422,7 +424,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,
@@ -604,7 +606,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   {
                                     "color": "#0E0F13",
                                     "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 18,
+                                    "fontSize": 17,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 24,

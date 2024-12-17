@@ -1,14 +1,15 @@
 import {
   Badge,
-  ContentWrapper,
+  IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
   VStack
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -25,6 +26,12 @@ import {
 } from "../../../bonus/cgn/store/reducers/details";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 import { PaymentsOnboardingRoutes } from "../../../payments/onboarding/navigation/routes";
+import {
+  trackShowCredentialsList,
+  trackStartAddNewCredential
+} from "../../analytics";
+import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
+import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -33,11 +40,6 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import {
-  CREDENTIALS_MAP,
-  trackShowCredentialsList,
-  trackStartAddNewCredential
-} from "../../analytics";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
 
 // List of available credentials to show to the user
@@ -75,10 +77,11 @@ const WalletCardOnboardingScreen = () => {
       faqCategories={["wallet", "wallet_methods"]}
       headerActionsProp={{ showHelp: true }}
     >
-      <ContentWrapper>
+      <View style={styles.wrapper}>
+        <ItwDiscoveryBannerOnboarding />
         {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
         <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
-      </ContentWrapper>
+      </View>
     </IOScrollViewWithLargeHeader>
   );
 };
@@ -88,6 +91,7 @@ const ItwCredentialOnboardingSection = () => {
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
+  const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -98,7 +102,6 @@ const ItwCredentialOnboardingSection = () => {
 
   const beginCredentialIssuance = useCallback(
     (type: string) => {
-      trackStartAddNewCredential(CREDENTIALS_MAP[type]);
       machineRef.send({
         type: "select-credential",
         credentialType: type,
@@ -120,6 +123,7 @@ const ItwCredentialOnboardingSection = () => {
             type={type}
             isActive={itwCredentialsTypes.includes(type)}
             isDisabled={remotelyDisabledCredentials.includes(type)}
+            isRequested={requestedCredentials.includes(type)}
             isCredentialIssuancePending={isCredentialIssuancePending}
             isSelectedCredential={pipe(
               selectedCredentialOption,
@@ -189,5 +193,13 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingVertical: 16,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    gap: 16
+  }
+});
 
 export { WalletCardOnboardingScreen };

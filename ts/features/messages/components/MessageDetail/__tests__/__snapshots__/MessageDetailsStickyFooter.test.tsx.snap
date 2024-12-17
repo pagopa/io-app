@@ -219,6 +219,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -417,18 +419,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -544,14 +543,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "textAlignVertical": "center",
                                   },
                                   false,
-                                  {},
                                   {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "columnGap": 8,
                                   },
+                                  {},
+                                  false,
                                 ]
                               }
                             >
@@ -818,6 +814,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -880,6 +877,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1016,18 +1014,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1134,14 +1129,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   "backgroundColor": "rgba(0,115,230,0)",
                                   "borderColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
                                   "borderColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
@@ -1254,14 +1245,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "textAlignVertical": "center",
                                   },
                                   false,
-                                  {},
                                   {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "columnGap": 8,
                                   },
+                                  {},
+                                  false,
                                 ]
                               }
                             >
@@ -1528,6 +1516,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1590,6 +1579,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1872,6 +1862,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1934,6 +1925,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2070,18 +2062,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -2356,6 +2345,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2418,6 +2408,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2700,6 +2691,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2762,6 +2754,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2898,18 +2891,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
@@ -3332,6 +3322,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3394,6 +3385,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3530,18 +3522,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -3816,6 +3805,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3878,6 +3868,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4014,18 +4005,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -4141,14 +4129,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     "textAlignVertical": "center",
                                   },
                                   false,
-                                  {},
                                   {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "columnGap": 8,
                                   },
+                                  {},
+                                  false,
                                 ]
                               }
                             >

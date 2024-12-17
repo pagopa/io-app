@@ -1,5 +1,5 @@
-import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import _ from "lodash";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -11,6 +11,8 @@ import { WalletHomeScreen } from "../WalletHomeScreen";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
+  useReducedMotion: jest.fn,
+  useScrollViewOffset: jest.fn,
   Layout: {
     duration: jest.fn()
   }

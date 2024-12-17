@@ -78,6 +78,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -140,6 +141,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -572,13 +574,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -622,6 +618,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -751,13 +748,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -801,6 +792,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -934,6 +926,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -996,6 +989,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1428,13 +1422,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -1478,6 +1466,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1607,13 +1596,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -1657,6 +1640,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1790,6 +1774,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1852,6 +1837,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2229,18 +2215,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -2357,14 +2340,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        {},
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "columnGap": 8,
                                         },
+                                        {},
+                                        false,
                                       ]
                                     }
                                   >
@@ -2498,13 +2478,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -2548,6 +2522,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2677,13 +2652,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -2727,6 +2696,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2860,6 +2830,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2922,6 +2893,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3354,13 +3326,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -3404,6 +3370,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3533,13 +3500,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -3583,6 +3544,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3716,6 +3678,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3778,6 +3741,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4210,13 +4174,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -4260,6 +4218,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4389,13 +4348,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -4439,6 +4392,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

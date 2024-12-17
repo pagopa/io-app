@@ -6,11 +6,10 @@ import {
   OTPInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -25,7 +24,7 @@ import { pinPukHelpUrl } from "../../../../../config";
 import { isCieLoginUatEnabledSelector } from "../../../../../features/cieLogin/store/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
@@ -36,8 +35,6 @@ import {
   trackItWalletCiePinInfo
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/provider";
-import { itwNfcIsEnabled } from "../../store/actions";
-import { itwIsNfcEnabledSelector } from "../../store/selectors";
 
 const CIE_PIN_LENGTH = 8;
 
@@ -62,11 +59,7 @@ const ForgottenPin = () => (
 );
 
 export const ItwCiePinScreen = () => {
-  const dispatch = useIODispatch();
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
-  const isEnabled = useIOSelector(itwIsNfcEnabledSelector);
-  const isNfcEnabled = pot.getOrElse(isEnabled, false);
-
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const [pin, setPin] = useState("");
@@ -80,11 +73,6 @@ export const ItwCiePinScreen = () => {
     title: I18n.t("bottomSheets.ciePin.title")
   });
 
-  const requestNfcEnabledCheck = useCallback(
-    () => dispatch(itwNfcIsEnabled.request()),
-    [dispatch]
-  );
-
   useEffect(() => {
     // Reset the pin when the user leaves the screen.
     if (!isFocused) {
@@ -96,8 +84,7 @@ export const ItwCiePinScreen = () => {
     React.useCallback(() => {
       trackItWalletCiePinEnter();
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
-      requestNfcEnabledCheck();
-    }, [requestNfcEnabledCheck])
+    }, [])
   );
 
   useHeaderSecondLevel({
@@ -111,7 +98,7 @@ export const ItwCiePinScreen = () => {
 
     if (value.length === CIE_PIN_LENGTH) {
       Keyboard.dismiss();
-      machineRef.send({ type: "cie-pin-entered", pin: value, isNfcEnabled });
+      machineRef.send({ type: "cie-pin-entered", pin: value });
     }
   };
 

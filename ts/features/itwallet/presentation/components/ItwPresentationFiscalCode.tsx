@@ -2,13 +2,13 @@ import {
   H3,
   IOAppMargin,
   IOColors,
-  useIOTheme
+  useIOTheme,
+  useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
-import { useScaleAnimation } from "../../../../components/ui/utils/hooks/useScaleAnimation";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";

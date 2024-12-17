@@ -32,7 +32,7 @@ import {
   computeAndTrackDataShareAccepted
 } from "../../common/analytics";
 import { useAutoFetchingServiceByIdPot } from "../../common/hooks";
-import { fimsGetRedirectUrlAndOpenIABAction } from "../store/actions";
+import { fimsAcceptConsentsAction } from "../store/actions";
 import { FimsClaimsList } from "./FimsClaims";
 import { FimsSSOFullScreenError } from "./FimsFullScreenErrors";
 import { FimsPrivacyInfo } from "./FimsPrivacyInfo";
@@ -152,9 +152,9 @@ export const FimsFlowSuccessBody = ({
               const state = store.getState();
               computeAndTrackDataShareAccepted(serviceId, state);
               dispatch(
-                fimsGetRedirectUrlAndOpenIABAction.request(
+                fimsAcceptConsentsAction(
                   // eslint-disable-next-line no-underscore-dangle
-                  { acceptUrl: consents._links.consent.href, serviceId }
+                  { acceptUrl: consents._links.consent.href }
                 )
               );
             }

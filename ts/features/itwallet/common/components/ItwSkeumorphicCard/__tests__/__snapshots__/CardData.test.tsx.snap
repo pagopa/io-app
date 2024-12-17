@@ -211,23 +211,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       Marco
@@ -251,23 +244,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       Rossi
@@ -291,23 +277,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       15/03/90
@@ -331,23 +310,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       10008581
@@ -371,23 +343,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       23/03/32
@@ -425,23 +390,16 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 18.75,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18.75,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       23/01/35
@@ -465,23 +423,16 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 18.75,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18.75,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       16/02/35
@@ -505,23 +456,16 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 18.75,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18.75,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       23/01/35
@@ -545,23 +489,16 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 18.75,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18.75,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       16/02/35
@@ -585,23 +522,16 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 18.75,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18.75,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       78
@@ -625,23 +555,16 @@ exports[`CardData should match snapshot for MDL back data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 18.75,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 18.75,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       71 MS5118113X
@@ -712,23 +635,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       ROSSI
@@ -752,23 +668,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       MARCO
@@ -792,23 +701,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       22/09/92
@@ -832,23 +734,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       MILANO (MI)
@@ -872,23 +767,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "700",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       08/01/2025
@@ -912,23 +800,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       MC-RM
@@ -952,23 +833,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "700",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       16/02/2035
@@ -992,23 +866,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       RM8375131N
@@ -1032,23 +899,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
       accessible={false}
       allowFontScaling={false}
       lineBreakMode="head"
-      maxFontSizeMultiplier={1.25}
       numberOfLines={1}
       style={
-        [
-          {},
-          {
-            "color": "#0E0F13",
-            "fontFamily": "Titillium Sans Pro",
-            "fontSize": 22.916666666666668,
-            "fontStyle": "normal",
-            "fontWeight": "400",
-            "lineHeight": undefined,
-          },
-          {
-            "textTransform": "none",
-          },
-        ]
+        {
+          "fontFamily": "Titillium Sans Pro",
+          "fontSize": 22.916666666666668,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": undefined,
+          "textTransform": "none",
+        }
       }
     >
       AM B

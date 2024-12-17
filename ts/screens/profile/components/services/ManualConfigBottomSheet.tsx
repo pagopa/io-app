@@ -1,8 +1,9 @@
-import { FooterActionsInline } from "@pagopa/io-app-design-system";
+import { FooterActionsInline, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import IOMarkdown from "../../../../components/IOMarkdown";
+
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 const SNAP_POINT_VALUE = 200;
 

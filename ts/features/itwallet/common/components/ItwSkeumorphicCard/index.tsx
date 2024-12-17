@@ -1,4 +1,4 @@
-import { Tag } from "@pagopa/io-app-design-system";
+import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
 import React, { ReactNode, useMemo } from "react";
 import {
   AccessibilityProps,
@@ -9,7 +9,6 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import { useScaleAnimation } from "../../../../../components/ui/utils/hooks/useScaleAnimation";
 import I18n from "../../../../../i18n";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {

@@ -121,15 +121,13 @@ export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
       })
   );
 
-export const fimsDomainSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): string | undefined =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.fims.domain),
-      O.toUndefined
-    )
-);
+export const oidcProviderDomainSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.fims.domain),
+    O.toUndefined
+  );
 
 /**
  * Return the remote config about the Premium Messages opt-in/out
@@ -416,5 +414,18 @@ export const itwDisabledCredentialsSelector = createSelector(
       remoteConfig,
       O.chainNullableK(config => config.itw.disabled_credentials),
       O.getOrElse(() => emptyArray)
+    )
+);
+
+/**
+ * Return the remote config content for the deferred issuance screen content.
+ */
+export const itwDeferredIssuanceScreenContentSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.itw.deferred_issuance_screen_content),
+      O.toUndefined
     )
 );

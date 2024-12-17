@@ -41,7 +41,7 @@ import {
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { getPaymentsLatestBizEventsTransactionsAction } from "../../bizEventsTransaction/store/actions";
+import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { WalletPaymentStepEnum } from "../types";
 import { requestAppReview } from "../../../../utils/storeReview";
@@ -130,7 +130,7 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    dispatch(getPaymentsLatestBizEventsTransactionsAction.request());
+    dispatch(getPaymentsLatestReceiptAction.request());
     if (
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
@@ -479,6 +479,15 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t("wallet.payment.outcome.PSP_ERROR.subtitle"),
           action: closeFailureAction,
           secondaryAction: contactSupportAction
+        };
+      case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t("wallet.payment.outcome.AUTH_REQUEST_ERROR.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
+          ),
+          action: closeFailureAction
         };
     }
   };

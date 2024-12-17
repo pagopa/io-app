@@ -1,25 +1,30 @@
+import cieManager from "@pagopa/react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
+import * as cieUtils from "../../../../utils/cie";
 import { trackItwRequest } from "../../analytics";
 import {
   getAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
-import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
+import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
+import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceReadySelector
 } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import { openUrlAndListenForAuthRedirect } from "../../common/utils/itwOpenUrlAndListenForRedirect";
-import type { AuthenticationContext, IdentificationContext } from "./context";
+import type {
+  AuthenticationContext,
+  CieContext,
+  IdentificationContext
+} from "./context";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
@@ -32,19 +37,8 @@ export type StartAuthFlowActorParams = {
   identification: IdentificationContext | undefined;
 };
 
-export type CompleteAuthFlowActorParams = {
-  authenticationContext: AuthenticationContext | undefined;
-  walletInstanceAttestation: string | undefined;
-};
-
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
-};
-
-export type GetAuthRedirectUrlActorParam = {
-  redirectUri: string | undefined;
-  authUrl: string | undefined;
-  identification: IdentificationContext | undefined;
 };
 
 export const createEidIssuanceActorsImplementation = (
@@ -96,6 +90,14 @@ export const createEidIssuanceActorsImplementation = (
     }
   ),
 
+  getCieStatus: fromPromise<CieContext>(async () => {
+    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
+      cieUtils.isNfcEnabled(),
+      cieManager.isCIEAuthenticationSupported()
+    ]);
+    return { isNFCEnabled, isCIEAuthenticationSupported };
+  }),
+
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
@@ -141,25 +143,6 @@ export const createEidIssuanceActorsImplementation = (
         ...authenticationContext,
         callbackUrl: "" // This is not important in this phase, it will be set after completing the auth flow
       };
-    }
-  ),
-
-  getAuthRedirectUrl: fromPromise<string, GetAuthRedirectUrlActorParam>(
-    async ({ input }) => {
-      assert(
-        input.redirectUri,
-        "redirectUri must be defined to get authRedirectUrl"
-      );
-      assert(input.authUrl, "authUrl must be defined to get authRedirectUrl");
-      assert(input.identification, "identification is undefined");
-
-      const { authRedirectUrl } = await openUrlAndListenForAuthRedirect(
-        input.redirectUri,
-        input.authUrl,
-        input.identification.abortController?.signal
-      );
-
-      return authRedirectUrl;
     }
   ),
 
