@@ -219,6 +219,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -391,13 +393,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 {
                                   "justifyContent": "center",
                                 },
-                                {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
-                                },
+                                false,
                               ]
                             }
                           >
@@ -441,6 +437,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0E0F13"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -531,7 +528,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                         onScrollEndDrag={[Function]}
                         removeClippedSubviews={false}
                         renderItem={[Function]}
-                        scrollEventThrottle={50}
+                        scrollEventThrottle={0.0001}
                         stickyHeaderIndices={[]}
                         viewabilityConfigCallbackPairs={[]}
                       >
@@ -605,7 +602,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -691,6 +688,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#99A3C1"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -862,7 +860,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -952,6 +950,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#99A3C1"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1065,7 +1064,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1155,6 +1154,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#99A3C1"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1220,7 +1220,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1343,18 +1343,15 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {

@@ -219,6 +219,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -359,7 +361,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -624,14 +625,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "textAlignVertical": "center",
                                       },
                                       false,
-                                      {},
                                       {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "columnGap": 8,
                                       },
+                                      {},
+                                      false,
                                     ]
                                   }
                                 >
@@ -859,18 +857,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1146,6 +1141,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1208,6 +1204,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1286,7 +1283,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -1551,14 +1547,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "textAlignVertical": "center",
                                       },
                                       false,
-                                      {},
                                       {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "columnGap": 8,
                                       },
+                                      {},
+                                      false,
                                     ]
                                   }
                                 >
@@ -1786,18 +1779,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1904,14 +1894,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "backgroundColor": "rgba(0,115,230,0)",
                                     "borderColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
                                     "borderColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
@@ -2023,14 +2009,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -2298,6 +2281,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2360,6 +2344,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={11}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2438,7 +2423,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -2703,14 +2687,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "textAlignVertical": "center",
                                       },
                                       false,
-                                      {},
                                       {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "columnGap": 8,
                                       },
+                                      {},
+                                      false,
                                     ]
                                   }
                                 >
@@ -2938,18 +2919,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -3064,14 +3042,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -3339,6 +3314,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3401,6 +3377,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3479,7 +3456,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -3873,18 +3849,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -4160,6 +4133,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4222,6 +4196,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4300,7 +4275,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -4694,18 +4668,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -4812,14 +4783,10 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                     "backgroundColor": "rgba(0,115,230,0)",
                                     "borderColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
                                     "borderColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
@@ -4931,14 +4898,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -5206,6 +5170,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5268,6 +5233,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5346,7 +5312,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -5740,18 +5705,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -5866,14 +5828,11 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -6141,6 +6100,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6203,6 +6163,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6281,7 +6242,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -6523,14 +6483,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "textAlignVertical": "center",
                                       },
                                       false,
-                                      {},
                                       {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "columnGap": 8,
                                       },
+                                      {},
+                                      false,
                                     ]
                                   }
                                 >
@@ -6758,18 +6715,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -7045,6 +6999,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7107,6 +7062,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7185,7 +7141,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -7427,14 +7382,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "textAlignVertical": "center",
                                       },
                                       false,
-                                      {},
                                       {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "columnGap": 8,
                                       },
+                                      {},
+                                      false,
                                     ]
                                   }
                                 >
@@ -7662,18 +7614,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -7780,14 +7729,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "backgroundColor": "rgba(0,115,230,0)",
                                     "borderColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
                                     "borderColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
@@ -7899,14 +7844,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -8174,6 +8116,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8236,6 +8179,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8314,7 +8258,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -8556,14 +8499,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "textAlignVertical": "center",
                                       },
                                       false,
-                                      {},
                                       {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
+                                        "columnGap": 8,
                                       },
+                                      {},
+                                      false,
                                     ]
                                   }
                                 >
@@ -8791,18 +8731,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -8917,14 +8854,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -9192,6 +9126,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9254,6 +9189,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9332,7 +9268,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -9703,18 +9638,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -9990,6 +9922,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10052,6 +9985,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -10130,7 +10064,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -10501,18 +10434,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -10619,14 +10549,10 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                     "backgroundColor": "rgba(0,115,230,0)",
                                     "borderColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
                                     "borderColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
@@ -10738,14 +10664,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -11013,6 +10936,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -11075,6 +10999,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -11153,7 +11078,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -11524,18 +11448,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -11650,14 +11571,11 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >

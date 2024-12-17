@@ -219,6 +219,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -563,6 +565,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -625,6 +628,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -907,6 +911,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -969,6 +974,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1099,18 +1105,15 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1385,6 +1388,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1447,6 +1451,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1578,10 +1583,12 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                   "backgroundColor": "#CCD4DC",
                                 },
                                 false,
+                                false,
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {

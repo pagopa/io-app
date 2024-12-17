@@ -219,6 +219,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={19}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -800,6 +802,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -862,6 +865,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={23}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1192,18 +1196,15 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -1482,6 +1483,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneLoading 1`] 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1544,6 +1546,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneLoading 1`] 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={21}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1826,6 +1829,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneUpdating 1`]
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1888,6 +1892,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneUpdating 1`]
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={22}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2170,6 +2175,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2232,6 +2238,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={25}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2751,6 +2758,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, non-empty 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2813,6 +2821,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, non-empty 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={27}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3095,6 +3104,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3157,6 +3167,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={34}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3676,6 +3687,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, non-e
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3738,6 +3750,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, non-e
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={36}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4020,6 +4033,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4082,6 +4096,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={28}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4601,6 +4616,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, non
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4663,6 +4679,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, non
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={30}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4945,6 +4962,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5007,6 +5025,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={31}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5526,6 +5545,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, no
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5588,6 +5608,7 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, no
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={33}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5870,6 +5891,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5932,6 +5954,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6451,6 +6474,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6513,6 +6537,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6843,18 +6868,15 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -7133,6 +7155,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneLoading 1`] 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7195,6 +7218,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneLoading 1`] 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7477,6 +7501,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneUpdating 1`]
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7539,6 +7564,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneUpdating 1`]
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7821,6 +7847,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7883,6 +7910,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8402,6 +8430,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, non-empty 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8464,6 +8493,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, non-empty 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8746,6 +8776,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8808,6 +8839,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={16}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9327,6 +9359,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, non-e
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9389,6 +9422,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, non-e
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={18}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -9671,6 +9705,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -9733,6 +9768,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -10252,6 +10288,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, non
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10314,6 +10351,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, non
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -10596,6 +10634,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10658,6 +10697,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={13}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -11177,6 +11217,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, no
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -11239,6 +11280,7 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, no
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={15}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
