@@ -178,6 +178,20 @@ const renderListItemNav = () => (
         hideChevron
       />
     </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemNav, with image chevron">
+      <ListItemNav
+        value={"Comune di Ischia"}
+        avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
+        onPress={onButtonPress}
+      />
+      <Divider />
+      <ListItemNav
+        value={"Comune di Ischia"}
+        description="This is a description"
+        avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
       <ListItemNavAlert value={"Value"} onPress={onButtonPress} />
       <Divider />
