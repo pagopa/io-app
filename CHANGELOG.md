@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.0](https://github.com/pagopa/io-app/compare/2.79.0-rc.11...2.80.0-rc.0) (2024-12-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1630](https://pagopa.atlassian.net/browse/SIW-1630)] Identification through direct integration with the CieID app ([#6545](https://github.com/pagopa/io-app/issues/6545)) ([3ac2969](https://github.com/pagopa/io-app/commit/3ac296935f0b278f2d27e6c9941672d86849965e))
+
+
+### Chores
+
+* [[IOPLT-764](https://pagopa.atlassian.net/browse/IOPLT-764)] Upgrade to react-native 0.75 ([#6348](https://github.com/pagopa/io-app/issues/6348)) ([fd27f42](https://github.com/pagopa/io-app/commit/fd27f42c955534813bb7931893fe94faa73bce88)), closes [pagopa/io-cie-sdk#53](https://github.com/pagopa/io-cie-sdk/issues/53) [pagopa/io-react-native-jwt#34](https://github.com/pagopa/io-react-native-jwt/issues/34) [pagopa/io-react-native-crypto#32](https://github.com/pagopa/io-react-native-crypto/issues/32)
+* **Cross:** [[IOAPPX-428](https://pagopa.atlassian.net/browse/IOAPPX-428)] Replace local animation hooks with `useScaleAnimation` and `useListItemAnimation` + Add support for the `reducedMotion` setting ([#6536](https://github.com/pagopa/io-app/issues/6536)) ([10f4351](https://github.com/pagopa/io-app/commit/10f4351a765a8859853f4e2ff68aab4c4c26a77d))
+* **Cross:** [[IOAPPX-442](https://pagopa.atlassian.net/browse/IOAPPX-442)] Fix dark mode text on light backgrounds + Fix overflow text on cards + Extend dark mode support ([#6473](https://github.com/pagopa/io-app/issues/6473)) ([a5f2871](https://github.com/pagopa/io-app/commit/a5f2871db9baee50e2371324da0b988f091d0236))
+* [[IOBP-1050](https://pagopa.atlassian.net/browse/IOBP-1050)] Rename biz events in receipt ([#6540](https://github.com/pagopa/io-app/issues/6540)) ([89e1a80](https://github.com/pagopa/io-app/commit/89e1a80bb7ca77e914d05d828d22882d08b5d1e4))
+* [[IOBP-1064](https://pagopa.atlassian.net/browse/IOBP-1064)] Add payment auth error mixpanel event ([#6535](https://github.com/pagopa/io-app/issues/6535)) ([fc97220](https://github.com/pagopa/io-app/commit/fc97220299daec0467a8ad0a6f342e2940c93dfe))
+* [[IOBP-1085](https://pagopa.atlassian.net/browse/IOBP-1085)] Removed delete transaction API request when closing in-app browser ([#6553](https://github.com/pagopa/io-app/issues/6553)) ([2195185](https://github.com/pagopa/io-app/commit/2195185115024fc27f44ba3a60894f197f48ac84))
+
 ## [2.79.0-rc.11](https://github.com/pagopa/io-app/compare/2.79.0-rc.10...2.79.0-rc.11) (2024-12-13)
 
 
