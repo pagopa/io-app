@@ -290,7 +290,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (>= 6.1.7.5, != 7.1.0)
-  cocoapods (>= 1.13, != 1.15.1, != 1.15.0)
+  cocoapods (>= 1.13, != 1.15.0, != 1.15.1)
   fastlane (~> 2.223.1)
 
 RUBY VERSION
