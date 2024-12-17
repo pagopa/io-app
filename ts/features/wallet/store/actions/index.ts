@@ -8,8 +8,10 @@ import { WalletPreferencesActions } from "./preferences";
  */
 export const walletUpdate = createStandardAction("WALLET_UPDATE")();
 
+type WalletBaseActions = ActionType<typeof walletUpdate>;
+
 export type WalletActions =
-  | ActionType<typeof walletUpdate>
+  | WalletBaseActions
   | WalletCardsActions
   | WalletPreferencesActions
   | WalletPlaceholdersActions;

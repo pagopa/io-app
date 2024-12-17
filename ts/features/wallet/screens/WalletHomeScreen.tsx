@@ -1,6 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { PropsWithChildren, default as React, useCallback } from "react";
+import { default as React, useCallback, useMemo, useRef } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import {
   IOScrollView,
@@ -32,65 +32,21 @@ import {
 } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
+  // Triggers the "New element added" toast display once the user returns to this screen
   newMethodAdded: boolean;
-  keyFrom?: string;
 }>;
 
-type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
+type ScreenProps = IOStackNavigationRouteProps<
+  MainTabParamsList,
+  "WALLET_HOME"
+>;
 
-const WalletHomeScreen = ({ route }: Props) => {
-  const dispatch = useIODispatch();
-  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
-
-  useFocusEffect(() => {
-    trackOpenWalletScreen();
-  });
-
-  useOnFirstRender(() => {
-    fetchWalletSectionData();
-  });
-
-  const fetchWalletSectionData = () => {
-    dispatch(walletToggleLoadingState(true));
-    dispatch(walletUpdate());
-  };
-
-  // Handles the "New element added" toast display once the user returns to this screen
-  useFocusEffect(
-    useCallback(() => {
-      if (isNewElementAdded.current) {
-        IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
-        // eslint-disable-next-line functional/immutable-data
-        isNewElementAdded.current = false;
-      }
-    }, [isNewElementAdded])
-  );
-
-  return (
-    <WalletScrollView>
-      <WalletCategoryFilterTabs />
-      <WalletCardsContainer />
-    </WalletScrollView>
-  );
-};
-
-/**
- * A wrapper which renders a scrollview with an optional CTA based on the wallet state:
- * - If the wallet is empty, it renders the empty state
- * - If the wallet is not empty, it renders the scrollview with the "add to wallet" button
- */
-const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
+const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const isRefreshing = useIOSelector(isWalletScreenRefreshingSelector);
-
-  const handleAddToWalletButtonPress = React.useCallback(() => {
-    trackWalletAdd();
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
-    });
-  }, [navigation]);
+  const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
 
   /* CODE RELATED TO THE HEADER -- START */
 
@@ -107,6 +63,9 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
 
   /* CODE RELATED TO THE HEADER -- END */
 
+  /**
+   * Return to the top of the screen when the tab item is pressed
+   */
   useTabItemPressWhenScreenActive(
     useCallback(() => {
       scrollViewContentRef.current?.scrollTo({ y: 0, animated: true });
@@ -114,10 +73,41 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
     false
   );
 
-  // Returns the CTA props based on the screen state
-  // We need to displayed the CTA only if the wallet is not empty
-  const screenActions = React.useMemo((): IOScrollViewActions | undefined => {
+  /**
+   * Fetch the wallet data and enable the loading state on first render
+   */
+  useOnFirstRender(() => {
+    dispatch(walletToggleLoadingState(true));
+    dispatch(walletUpdate());
+  });
+
+  /**
+   * Handles the "New element added" toast display once the user returns to this screen
+   */
+  useFocusEffect(
+    useCallback(() => {
+      trackOpenWalletScreen();
+      if (isNewElementAdded.current) {
+        IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
+        // eslint-disable-next-line functional/immutable-data
+        isNewElementAdded.current = false;
+      }
+    }, [isNewElementAdded])
+  );
+
+  const handleAddToWalletButtonPress = useCallback(() => {
+    trackWalletAdd();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
+    });
+  }, [navigation]);
+
+  /**
+   * Returns the CTA props based on the screen state
+   */
+  const screenActions = useMemo((): IOScrollViewActions | undefined => {
     if (isWalletEmpty) {
+      // We need to displayed the CTA only if the wallet is not empty
       return undefined;
     }
 
@@ -140,13 +130,12 @@ const WalletScrollView = ({ children }: PropsWithChildren<any>) => {
       excludeSafeAreaMargins={true}
       refreshControlProps={{
         refreshing: isRefreshing,
-        onRefresh: () => {
-          dispatch(walletUpdate());
-        }
+        onRefresh: () => dispatch(walletUpdate())
       }}
       actions={screenActions}
     >
-      {children}
+      <WalletCategoryFilterTabs />
+      <WalletCardsContainer />
     </IOScrollView>
   );
 };
