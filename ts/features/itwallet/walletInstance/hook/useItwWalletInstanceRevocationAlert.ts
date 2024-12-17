@@ -48,7 +48,7 @@ const showWalletRevocationAlert = (
           {
             text: alertCtaText,
             onPress: () => {
-              Linking.openURL(itwMinIntergityReqUrl).catch(() => {
+              Linking.openURL(itwMinIntegrityReqUrl).catch(() => {
                 IOToast.error(I18n.t("global.genericError"));
               });
             }
