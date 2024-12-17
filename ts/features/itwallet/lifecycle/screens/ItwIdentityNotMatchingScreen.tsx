@@ -18,10 +18,12 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { trackItwIdNotMatch, trackWalletNewIdReset } from "../../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
+  useItwDisableGestureNavigation();
 
   useFocusEffect(trackItwIdNotMatch);
 
