@@ -11,7 +11,7 @@ const alertCtaText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.cta"
 );
 
-const itwMinIntergityReqUrl = "https://io.italia.it/documenti-su-io/faq/#n1_12";
+const itwMinIntegrityReqUrl = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
 /**
  * Hook to monitor wallet instance status and display alerts if revoked.
