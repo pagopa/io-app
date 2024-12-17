@@ -1,5 +1,5 @@
 import { differenceInSeconds, isPast } from "date-fns";
-import { assign, fromPromise, setup } from "xstate";
+import { assign, ErrorActorEvent, fromPromise, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
 import {
   GetCredentialTrustmarkUrlActorInput,
@@ -8,6 +8,7 @@ import {
 } from "./actors";
 import { Context } from "./context";
 import { Input } from "./input";
+import { mapEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -17,7 +18,7 @@ export const itwTrustmarkMachine = setup({
   types: {
     context: {} as Context,
     input: {} as Input,
-    events: {} as { type: "" }
+    events: {} as ErrorActorEvent
   },
   actions: {
     onInit: notImplemented,
@@ -31,6 +32,10 @@ export const itwTrustmarkMachine = setup({
       trustmarkUrl: undefined,
       expirationDate: undefined,
       expirationSeconds: undefined
+    }),
+    showFailureToast: notImplemented,
+    setFailure: assign({
+      failure: ({ event }) => mapEventToFailure(event)
     })
   },
   actors: {
@@ -89,7 +94,8 @@ export const itwTrustmarkMachine = setup({
             actions: "handleSessionExpired"
           },
           {
-            target: "Failure"
+            target: "Failure",
+            actions: "setFailure"
           }
         ]
       }
@@ -115,7 +121,8 @@ export const itwTrustmarkMachine = setup({
           ]
         },
         onError: {
-          target: "Failure"
+          target: "Failure",
+          actions: "setFailure"
         }
       }
     },
@@ -147,7 +154,8 @@ export const itwTrustmarkMachine = setup({
       }
     },
     Failure: {
-      description: "This state is reached when an error occurs"
+      description: "This state is reached when an error occurs",
+      entry: "showFailureToast"
     }
   }
 });

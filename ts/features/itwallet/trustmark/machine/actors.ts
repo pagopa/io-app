@@ -5,7 +5,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
-import { getCredentialTrustmark } from "../../common/utils/itwTrustmarkUtils";
+import * as itwTrustmarkUtils from "../../common/utils/itwTrustmarkUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
@@ -20,7 +20,7 @@ export type GetCredentialTrustmarkUrlActorInput = {
 };
 
 export type GetCredentialTrustmarkUrlActorOutput = Awaited<
-  ReturnType<typeof getCredentialTrustmark>
+  ReturnType<typeof itwTrustmarkUtils.getCredentialTrustmark>
 >;
 
 /**
@@ -69,7 +69,7 @@ export const createItwTrustmarkActorsImplementation = (
     assert(input.credential, "credential is undefined");
 
     // Generate trustmark url to be presented
-    return await getCredentialTrustmark(
+    return await itwTrustmarkUtils.getCredentialTrustmark(
       input.walletInstanceAttestation,
       input.credential,
       itwEaaVerifierBaseUrl
