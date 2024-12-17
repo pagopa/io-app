@@ -438,18 +438,15 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -565,14 +562,11 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >
@@ -1403,18 +1397,15 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1530,14 +1521,11 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >

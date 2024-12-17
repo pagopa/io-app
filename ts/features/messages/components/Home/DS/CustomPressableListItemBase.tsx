@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Pressable } from "react-native";
-import Animated from "react-native-reanimated";
 import {
   IOColors,
   IOListItemStyles,
+  useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import { useListItemSpringAnimation } from "./useListItemSpringAnimation";
+import * as React from "react";
+import { Pressable } from "react-native";
+import Animated from "react-native-reanimated";
 
 export type PressableBaseProps = WithTestID<
   Pick<
@@ -30,8 +30,9 @@ export const CustomPressableListItemBase = ({
   selected,
   ...props
 }: React.PropsWithChildren<PressableBaseProps>) => {
-  const { onPressIn, onPressOut, animatedScaleStyle, animatedBackgroundStyle } =
-    useListItemSpringAnimation();
+  const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
+    useListItemAnimation();
+
   return (
     <Pressable
       onPress={onPress}
@@ -53,12 +54,12 @@ export const CustomPressableListItemBase = ({
       <Animated.View
         style={[
           IOListItemStyles.listItem,
-          !selected ? animatedBackgroundStyle : undefined,
+          !selected ? backgroundAnimatedStyle : undefined,
           { flexGrow: 1, justifyContent: "center" }
         ]}
       >
         <Animated.View
-          style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
+          style={[IOListItemStyles.listItemInner, scaleAnimatedStyle]}
         >
           {children}
         </Animated.View>

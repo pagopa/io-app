@@ -457,7 +457,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -557,7 +557,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -747,7 +747,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -1145,18 +1145,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1357,13 +1354,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -1919,7 +1910,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2019,7 +2010,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2209,7 +2200,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2607,13 +2598,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
@@ -2820,13 +2807,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -3382,7 +3363,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3482,7 +3463,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3672,7 +3653,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4070,13 +4051,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
@@ -4283,13 +4260,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -4845,7 +4816,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4945,7 +4916,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5135,7 +5106,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5533,13 +5504,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
@@ -5746,13 +5713,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -6308,7 +6269,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6408,7 +6369,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6744,7 +6705,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         {
                                           "color": "#0E0F13",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -7288,18 +7249,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
@@ -7648,13 +7606,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

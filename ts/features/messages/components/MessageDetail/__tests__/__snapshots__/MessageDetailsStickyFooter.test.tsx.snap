@@ -417,18 +417,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -544,14 +541,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "textAlignVertical": "center",
                                   },
                                   false,
-                                  {},
                                   {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "columnGap": 8,
                                   },
+                                  {},
+                                  false,
                                 ]
                               }
                             >
@@ -1016,18 +1010,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1134,14 +1125,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                   "backgroundColor": "rgba(0,115,230,0)",
                                   "borderColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
                                   "borderColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
@@ -1254,14 +1241,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "textAlignVertical": "center",
                                   },
                                   false,
-                                  {},
                                   {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "columnGap": 8,
                                   },
+                                  {},
+                                  false,
                                 ]
                               }
                             >
@@ -2070,18 +2054,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -2898,18 +2879,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
@@ -3530,18 +3508,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -4014,18 +3989,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 {
                                   "backgroundColor": "#0073E6",
                                 },
+                                false,
                                 {
                                   "backgroundColor": undefined,
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
                                 },
                               ]
                             }
                           >
                             <View
+                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -4141,14 +4113,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     "textAlignVertical": "center",
                                   },
                                   false,
-                                  {},
                                   {
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "columnGap": 8,
                                   },
+                                  {},
+                                  false,
                                 ]
                               }
                             >

@@ -31,6 +31,7 @@ import I18n from "../../../../i18n";
 jest.spyOn(Alert, "alert");
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
+  useReducedMotion: jest.fn,
   Layout: {
     duration: jest.fn()
   }

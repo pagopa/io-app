@@ -900,7 +900,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "color": "#0B3EE3",
                                               "fontFamily": "Titillium Sans Pro",
-                                              "fontSize": 18,
+                                              "fontSize": 17,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
                                               "lineHeight": 24,

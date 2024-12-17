@@ -496,7 +496,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 18,
+                                  "fontSize": 17,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1037,7 +1037,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 18,
+                                  "fontSize": 17,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1578,7 +1578,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 18,
+                                  "fontSize": 17,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2119,7 +2119,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                                 {
                                   "color": "#0E0F13",
                                   "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 18,
+                                  "fontSize": 17,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
