@@ -15,6 +15,14 @@ export const itwUpdateWalletInstanceStatus = createStandardAction(
   "ITW_WALLET_INSTANCE_STATUS_UPDATE"
 )<WalletInstanceStatus>();
 
+/**
+ * This action sets the wallet instance alert shown
+ */
+export const itwWalletInstanceSetAlertShown = createStandardAction(
+  "ITW_WALLET_INSTANCE_SET_ALERT_SHOWN"
+)<void>();
+
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>
-  | ActionType<typeof itwUpdateWalletInstanceStatus>;
+  | ActionType<typeof itwUpdateWalletInstanceStatus>
+  | ActionType<typeof itwWalletInstanceSetAlertShown>;

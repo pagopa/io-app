@@ -29,7 +29,7 @@ import {
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
-import { itwWalletInstanceStatusSelector } from "../../itwallet/walletInstance/store/selectors";
+import { itwWalletInstanceRevocationStatusSelector } from "../../itwallet/walletInstance/store/selectors";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -49,7 +49,9 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
-  const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
+  const walletInstanceStatus = useIOSelector(
+    itwWalletInstanceRevocationStatusSelector
+  );
 
   useItwWalletInstanceRevocationAlert(walletInstanceStatus);
 

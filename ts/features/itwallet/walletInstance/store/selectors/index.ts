@@ -18,16 +18,22 @@ export const itwIsWalletInstanceAttestationValidSelector = createSelector(
   )
 );
 
+/* Selector to get the alert shown status */
+export const itwWalletInstanceAlertShownSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.walletInstance.revocation,
+  revocation => revocation.alertShown
+);
+
 /* Selector to get the wallet instance status */
-export const itwWalletInstanceStatusSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.walletInstance,
-  walletInstance =>
+export const itwWalletInstanceRevocationStatusSelector = createSelector(
+  (state: GlobalState) => state.features.itWallet.walletInstance.revocation,
+  revocation =>
     pipe(
-      O.fromNullable(walletInstance.isRevoked),
+      O.fromNullable(revocation.isRevoked),
       O.filter(Boolean),
       O.map(() => ({
         isRevoked: true,
-        revocationReason: walletInstance.revocationReason
+        revocationReason: revocation.revocationReason
       })),
       O.getOrElse(() => ({ isRevoked: false }))
     )

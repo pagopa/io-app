@@ -364,7 +364,10 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should not show alert if not revoked", () => {
     jest
-      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwWalletInstanceRevocationStatusSelector"
+      )
       .mockImplementation(() => ({
         isRevoked: false,
         revocationReason: ""
@@ -377,7 +380,10 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should show alert for NEW_WALLET_INSTANCE_CREATED", () => {
     jest
-      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwWalletInstanceRevocationStatusSelector"
+      )
       .mockImplementation(() => ({
         isRevoked: true,
         revocationReason: "NEW_WALLET_INSTANCE_CREATED"
@@ -408,7 +414,10 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should show alert for CERTIFICATE_REVOKED_BY_ISSUER", () => {
     jest
-      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwWalletInstanceRevocationStatusSelector"
+      )
       .mockImplementation(() => ({
         isRevoked: true,
         revocationReason: "CERTIFICATE_REVOKED_BY_ISSUER"
@@ -439,7 +448,10 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should show alert for REVOKED_BY_USER", () => {
     jest
-      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
+      .spyOn(
+        itwWalletInstanceSelectors,
+        "itwWalletInstanceRevocationStatusSelector"
+      )
       .mockImplementation(() => ({
         isRevoked: true,
         revocationReason: "REVOKED_BY_USER"

@@ -3,6 +3,9 @@ import React from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { itwWalletInstanceAlertShownSelector } from "../store/selectors";
+import { itwWalletInstanceSetAlertShown } from "../store/actions";
 
 const closeButtonText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.closeButton"
@@ -21,11 +24,15 @@ export const useItwWalletInstanceRevocationAlert = (walletInstanceStatus: {
   isRevoked: boolean;
   revocationReason?: WalletInstanceRevocationReason;
 }) => {
+  const dispatch = useIODispatch();
+  const alertShown = useIOSelector(itwWalletInstanceAlertShownSelector);
+
   React.useEffect(() => {
-    if (walletInstanceStatus.isRevoked) {
+    if (walletInstanceStatus.isRevoked && !alertShown) {
       showWalletRevocationAlert(walletInstanceStatus.revocationReason);
+      dispatch(itwWalletInstanceSetAlertShown());
     }
-  }, [walletInstanceStatus]);
+  }, [walletInstanceStatus, alertShown, dispatch]);
 };
 
 /**
