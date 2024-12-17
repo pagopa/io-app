@@ -219,6 +219,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -729,6 +731,86 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                   >
                                     <View
                                       style={
+                                        {
+                                          "flexShrink": 1,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={16}
+                                        bbWidth={16}
+                                        focusable={false}
+                                        height={16}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 16,
+                                              "width": 16,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={16}
+                                      >
+                                        <RNSVGGroup
+                                          color="#0B3EE3"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M23.3953 14.8922c.4031-.7125.6047-1.4906.6047-2.3297 0-.8906-.225-1.7109-.6703-2.4562-.4453-.74067-1.0453-1.28911-1.7953-1.64536.1781-.48281.2672-1.01719.2672-1.60782 0-1.26562-.4219-2.34374-1.2704-3.23906-.8484-.89531-1.8703-1.34062-3.0656-1.34062-.539 0-1.0453.09844-1.5281.29531-.375-.76875-.9188-1.3875-1.6219-1.86094C13.6125.23906 12.8391 0 12 0s-1.6125.23906-2.31562.7125c-.70782.47344-1.24688 1.09219-1.62188 1.86094-.48281-.19688-.99375-.29532-1.52813-.29532-1.19531 0-2.22187.45-3.07968 1.34063-.85782.89062-1.28438 1.97344-1.28438 3.23906 0 .53438.09844 1.07344.29531 1.60782-.75.35625-1.34999.90468-1.7953 1.64527C.225 10.8516 0 11.6719 0 12.5625c0 .8391.20156 1.6172.6 2.3297.40313.7125.94219 1.2656 1.62188 1.6594-.03282.2531-.05157.45-.05157.5906 0 1.2656.42656 2.3484 1.28438 3.239.85781.8954 1.88437 1.3407 3.07968 1.3407.53907 0 1.04532-.0985 1.52813-.2953.375.7875.90938 1.4109 1.60781 1.875C10.3641 23.7703 11.1422 24 12 24c.8391 0 1.6125-.2344 2.3156-.7125.7078-.4734 1.2469-1.0922 1.6219-1.8609.4828.1968.9937.2953 1.5281.2953 1.1953 0 2.2172-.4453 3.0656-1.3407.8438-.8906 1.2704-1.9687 1.2704-3.239 0-.2672-.0094-.4641-.0282-.5906.6797-.3891 1.2188-.9469 1.6219-1.6594Zm-5.6882-4.1851c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L10 15.5858l-3.29289-3.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L8.58579 17c.78105.7811 2.04741.781 2.82841 0l6.2929-6.2929Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "width": 6,
+                                        }
+                                      }
+                                    />
+                                    <Text
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
+                                      style={
                                         [
                                           {
                                             "alignItems": "center",
@@ -848,34 +930,13 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           ]
                                         }
                                       >
-                                        Legal value
-                                      </Text>
-                                    </View>
-                                    <View
-                                      style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "alignSelf": "flex-start",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 6,
-                                            "borderWidth": 1,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
-                                          },
-                                          {
-                                            "backgroundColor": "#FFFFFF",
-                                            "borderColor": "#E8EBF1",
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      <View
-                                        style={
-                                          {
-                                            "flexShrink": 1,
+                                        <RNSVGGroup
+                                          color="#636B82"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
                                           }
                                         }
                                       >
@@ -1177,6 +1238,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1239,6 +1301,7 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1742,6 +1805,86 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                   >
                                     <View
                                       style={
+                                        {
+                                          "flexShrink": 1,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={16}
+                                        bbWidth={16}
+                                        focusable={false}
+                                        height={16}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#0B3EE3",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 16,
+                                              "width": 16,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#0B3EE3"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={16}
+                                      >
+                                        <RNSVGGroup
+                                          color="#0B3EE3"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M23.3953 14.8922c.4031-.7125.6047-1.4906.6047-2.3297 0-.8906-.225-1.7109-.6703-2.4562-.4453-.74067-1.0453-1.28911-1.7953-1.64536.1781-.48281.2672-1.01719.2672-1.60782 0-1.26562-.4219-2.34374-1.2704-3.23906-.8484-.89531-1.8703-1.34062-3.0656-1.34062-.539 0-1.0453.09844-1.5281.29531-.375-.76875-.9188-1.3875-1.6219-1.86094C13.6125.23906 12.8391 0 12 0s-1.6125.23906-2.31562.7125c-.70782.47344-1.24688 1.09219-1.62188 1.86094-.48281-.19688-.99375-.29532-1.52813-.29532-1.19531 0-2.22187.45-3.07968 1.34063-.85782.89062-1.28438 1.97344-1.28438 3.23906 0 .53438.09844 1.07344.29531 1.60782-.75.35625-1.34999.90468-1.7953 1.64527C.225 10.8516 0 11.6719 0 12.5625c0 .8391.20156 1.6172.6 2.3297.40313.7125.94219 1.2656 1.62188 1.6594-.03282.2531-.05157.45-.05157.5906 0 1.2656.42656 2.3484 1.28438 3.239.85781.8954 1.88437 1.3407 3.07968 1.3407.53907 0 1.04532-.0985 1.52813-.2953.375.7875.90938 1.4109 1.60781 1.875C10.3641 23.7703 11.1422 24 12 24c.8391 0 1.6125-.2344 2.3156-.7125.7078-.4734 1.2469-1.0922 1.6219-1.8609.4828.1968.9937.2953 1.5281.2953 1.1953 0 2.2172-.4453 3.0656-1.3407.8438-.8906 1.2704-1.9687 1.2704-3.239 0-.2672-.0094-.4641-.0282-.5906.6797-.3891 1.2188-.9469 1.6219-1.6594Zm-5.6882-4.1851c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L10 15.5858l-3.29289-3.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L8.58579 17c.78105.7811 2.04741.781 2.82841 0l6.2929-6.2929Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "width": 6,
+                                        }
+                                      }
+                                    />
+                                    <Text
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
+                                      style={
                                         [
                                           {
                                             "alignItems": "center",
@@ -1861,34 +2004,13 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           ]
                                         }
                                       >
-                                        Legal value
-                                      </Text>
-                                    </View>
-                                    <View
-                                      style={
-                                        [
-                                          {
-                                            "alignItems": "center",
-                                            "alignSelf": "flex-start",
-                                            "borderCurve": "continuous",
-                                            "borderRadius": 6,
-                                            "borderWidth": 1,
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
-                                          },
-                                          {
-                                            "backgroundColor": "#FFFFFF",
-                                            "borderColor": "#E8EBF1",
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      <View
-                                        style={
-                                          {
-                                            "flexShrink": 1,
+                                        <RNSVGGroup
+                                          color="#636B82"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
                                           }
                                         }
                                       >
@@ -2190,6 +2312,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2252,6 +2375,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2544,6 +2668,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -2820,6 +2945,86 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                     }
                                   >
                                     <View
+                                      style={
+                                        {
+                                          "flexShrink": 1,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={16}
+                                        bbWidth={16}
+                                        focusable={false}
+                                        height={16}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#427940",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 16,
+                                              "width": 16,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#427940"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={16}
+                                      >
+                                        <RNSVGGroup
+                                          color="#427940"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M0 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12S0 18.627 0 12Zm17.707-1.293a1 1 0 0 0-1.414-1.414L10 15.586l-3.293-3.293a1 1 0 0 0-1.414 1.414L8.586 17a2 2 0 0 0 2.828 0l6.293-6.293Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "width": 6,
+                                        }
+                                      }
+                                    />
+                                    <Text
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
                                       style={
                                         [
                                           {
@@ -3182,6 +3387,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3244,6 +3450,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3536,6 +3743,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -3867,6 +4075,86 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                     }
                                   >
                                     <View
+                                      style={
+                                        {
+                                          "flexShrink": 1,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={16}
+                                        bbWidth={16}
+                                        focusable={false}
+                                        height={16}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "color": "#427940",
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 16,
+                                              "width": 16,
+                                            },
+                                          ]
+                                        }
+                                        tintColor="#427940"
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={16}
+                                      >
+                                        <RNSVGGroup
+                                          color="#427940"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M0 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12S0 18.627 0 12Zm17.707-1.293a1 1 0 0 0-1.414-1.414L10 15.586l-3.293-3.293a1 1 0 0 0-1.414 1.414L8.586 17a2 2 0 0 0 2.828 0l6.293-6.293Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "width": 6,
+                                        }
+                                      }
+                                    />
+                                    <Text
+                                      allowFontScaling={false}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.25}
+                                      numberOfLines={1}
                                       style={
                                         [
                                           {
@@ -4229,6 +4517,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4291,6 +4580,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4583,6 +4873,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -5079,6 +5370,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5141,6 +5433,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5433,6 +5726,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                           width={20}
                                         >
                                           <RNSVGGroup
+                                            color="#0066CC"
                                             fill={
                                               {
                                                 "payload": 4278190080,
@@ -5984,6 +6278,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6046,6 +6341,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -6713,6 +7009,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -6775,6 +7072,7 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

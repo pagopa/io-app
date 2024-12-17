@@ -219,6 +219,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -443,6 +445,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -777,6 +780,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -839,6 +843,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1001,6 +1006,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -1394,6 +1400,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1456,6 +1463,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1618,6 +1626,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -1934,6 +1943,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2199,6 +2209,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2261,6 +2272,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2423,6 +2435,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -2690,6 +2703,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -2807,6 +2821,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -3072,6 +3087,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3134,6 +3150,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3296,6 +3313,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -3612,6 +3630,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -3808,6 +3827,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -4073,6 +4093,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4135,6 +4156,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4297,6 +4319,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -4564,6 +4587,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -4681,6 +4705,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -4828,6 +4853,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -4945,6 +4971,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -5210,6 +5237,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5272,6 +5300,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5434,6 +5463,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -5750,6 +5780,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -5996,6 +6027,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -6143,6 +6175,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -6260,6 +6293,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -6506,6 +6540,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -6653,6 +6688,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -6770,6 +6806,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -6966,6 +7003,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -7231,6 +7269,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7293,6 +7332,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7455,6 +7495,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -7771,6 +7812,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -8017,6 +8059,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -8164,6 +8207,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#99A3C1"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -8281,6 +8325,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,

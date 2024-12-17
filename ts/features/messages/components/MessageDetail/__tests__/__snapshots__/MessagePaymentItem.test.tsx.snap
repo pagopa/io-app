@@ -219,6 +219,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -693,6 +695,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -755,6 +758,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1001,6 +1005,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1263,6 +1268,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1325,6 +1331,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1596,6 +1603,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,

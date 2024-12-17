@@ -219,6 +219,7 @@ exports[`MessageDetailsReminder should match snapshot when the due date is missi
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageDetailsReminder should match snapshot when the due date is missi
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -563,6 +565,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is hidde
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -625,6 +628,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is hidde
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -907,6 +911,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is loadi
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -969,6 +974,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is loadi
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1287,6 +1293,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1349,6 +1356,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1503,6 +1511,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#614C15"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1832,6 +1841,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1894,6 +1904,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2010,6 +2021,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#614C15"
                               fill={
                                 {
                                   "payload": 4278190080,
