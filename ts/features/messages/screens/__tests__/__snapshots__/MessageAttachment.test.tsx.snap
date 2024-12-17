@@ -78,6 +78,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -140,6 +141,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -205,7 +207,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "inset": 0,
                                 "justifyContent": "center",
                                 "left": 0,
                                 "position": "absolute",
@@ -763,6 +764,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -936,6 +938,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1069,6 +1072,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1131,6 +1135,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1606,6 +1611,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0E0F13"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1779,6 +1785,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,
