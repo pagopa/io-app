@@ -393,13 +393,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 {
                                   "justifyContent": "center",
                                 },
-                                {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
-                                },
+                                false,
                               ]
                             }
                           >
@@ -608,7 +602,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -866,7 +860,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1070,7 +1064,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1226,7 +1220,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1349,18 +1343,15 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {

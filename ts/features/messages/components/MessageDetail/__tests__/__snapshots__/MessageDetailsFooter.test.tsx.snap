@@ -499,6 +499,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -1038,6 +1039,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -1577,6 +1579,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -2116,6 +2119,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -2655,6 +2659,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -2823,6 +2828,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -3362,6 +3368,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -3530,6 +3537,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -4069,6 +4077,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -4237,6 +4246,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -4776,6 +4786,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >
@@ -4944,6 +4955,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 style={
                                   {
                                     "flexGrow": 1,
+                                    "flexShrink": 1,
                                   }
                                 }
                               >

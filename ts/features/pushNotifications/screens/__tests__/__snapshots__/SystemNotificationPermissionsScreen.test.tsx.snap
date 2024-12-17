@@ -811,18 +811,15 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -938,14 +935,11 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "textAlignVertical": "center",
                                     },
                                     false,
-                                    {},
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
+                                    {},
+                                    false,
                                   ]
                                 }
                               >

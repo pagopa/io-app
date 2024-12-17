@@ -574,13 +574,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -754,13 +748,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -1434,13 +1422,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -1614,13 +1596,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -2239,18 +2215,15 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -2367,14 +2340,11 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        {},
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "columnGap": 8,
                                         },
+                                        {},
+                                        false,
                                       ]
                                     }
                                   >
@@ -2508,13 +2478,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -2688,13 +2652,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -3368,13 +3326,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -3548,13 +3500,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -4228,13 +4174,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -4408,13 +4348,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

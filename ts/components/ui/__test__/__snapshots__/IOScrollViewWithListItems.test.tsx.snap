@@ -455,7 +455,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -532,7 +532,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -618,7 +618,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -827,18 +827,15 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1464,18 +1461,15 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -2035,7 +2029,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2112,7 +2106,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2198,7 +2192,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2407,18 +2401,15 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {

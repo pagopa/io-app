@@ -413,13 +413,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -535,13 +529,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -660,13 +648,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >

@@ -803,7 +803,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -3051,7 +3051,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -5645,7 +5645,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -5802,7 +5802,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -7352,7 +7352,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -7509,7 +7509,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -9059,7 +9059,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -9216,7 +9216,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -10368,14 +10368,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                {},
                                 {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "columnGap": 8,
                                 },
+                                {},
+                                false,
                               ]
                             }
                           >
@@ -10886,7 +10883,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -11043,7 +11040,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -12195,14 +12192,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "textAlignVertical": "center",
                                 },
                                 false,
-                                {},
                                 {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
+                                  "columnGap": 8,
                                 },
+                                {},
+                                false,
                               ]
                             }
                           >
@@ -12713,7 +12707,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -12870,7 +12864,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -13416,7 +13410,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -13573,7 +13567,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                       {
                                         "color": "#0B3EE3",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,

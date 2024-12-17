@@ -463,7 +463,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
@@ -580,7 +583,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
@@ -605,13 +611,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     >
                                       If you lose your device, log out from the web.
                                     </Text>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 4,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={false}
                                       accessibilityRole="link"
@@ -734,7 +733,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
@@ -759,13 +761,6 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     >
                                       If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
                                     </Text>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 4,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={false}
                                       accessibilityRole="link"
@@ -885,7 +880,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >

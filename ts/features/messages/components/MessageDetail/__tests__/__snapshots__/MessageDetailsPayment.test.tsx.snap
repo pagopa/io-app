@@ -810,7 +810,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
