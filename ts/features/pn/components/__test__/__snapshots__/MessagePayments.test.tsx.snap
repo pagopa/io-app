@@ -219,6 +219,7 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -563,6 +565,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -625,6 +628,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -739,6 +743,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1033,6 +1038,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1284,6 +1290,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1535,6 +1542,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1786,6 +1794,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2037,6 +2046,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2288,6 +2298,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2539,6 +2550,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2801,6 +2813,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2863,6 +2876,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2977,6 +2991,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -3271,6 +3286,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3522,6 +3538,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3773,6 +3790,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4024,6 +4042,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4275,6 +4294,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4526,6 +4546,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -4777,6 +4798,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -5039,6 +5061,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5101,6 +5124,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5383,6 +5407,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5445,6 +5470,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5559,6 +5585,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -5820,6 +5847,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6070,6 +6098,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6320,6 +6349,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6570,6 +6600,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -6820,6 +6851,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7082,6 +7114,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7144,6 +7177,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={10}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7258,6 +7292,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -7519,6 +7554,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -7769,6 +7805,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8019,6 +8056,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8269,6 +8307,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8519,6 +8558,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -8781,6 +8821,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -8843,6 +8884,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={11}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -8957,6 +8999,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -9218,6 +9261,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9468,6 +9512,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9718,6 +9763,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -9968,6 +10014,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -10218,6 +10265,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -10597,6 +10645,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -10659,6 +10708,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={12}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -10773,6 +10823,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -11034,6 +11085,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11284,6 +11336,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11534,6 +11587,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -11784,6 +11838,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -12034,6 +12089,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -12413,6 +12469,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -12475,6 +12532,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -12589,6 +12647,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -12850,6 +12909,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -13112,6 +13172,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -13174,6 +13235,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -13288,6 +13350,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -13549,6 +13612,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -13811,6 +13875,7 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -13873,6 +13938,7 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -14155,6 +14221,7 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -14217,6 +14284,7 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

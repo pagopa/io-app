@@ -219,6 +219,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -463,6 +465,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0073E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -1576,6 +1579,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -2066,6 +2070,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2128,6 +2133,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2310,6 +2316,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0073E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -3478,6 +3485,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
