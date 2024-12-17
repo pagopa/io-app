@@ -120,6 +120,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           width={24}
         >
           <RNSVGGroup
+            color="#5D1313"
             fill={
               {
                 "payload": 4278190080,
@@ -604,6 +605,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               width={24}
             >
               <RNSVGGroup
+                color="#0E0F13"
                 fill={
                   {
                     "payload": 4278190080,
