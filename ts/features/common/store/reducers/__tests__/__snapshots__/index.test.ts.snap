@@ -133,8 +133,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "walletInstance": {
       "attestation": undefined,
       "revocation": {
-        "isRevoked": false,
         "alertShown": false,
+        "isRevoked": false,
         "revocationReason": undefined,
       },
     },
