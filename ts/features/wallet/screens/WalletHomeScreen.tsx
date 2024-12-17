@@ -42,15 +42,13 @@ type ScreenProps = IOStackNavigationRouteProps<
 >;
 
 const WalletHomeScreen = ({ route }: ScreenProps) => {
-  const { newMethodAdded } = route.params;
-
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const isRefreshing = useIOSelector(isWalletScreenRefreshingSelector);
 
-  const isNewElementAdded = useRef(newMethodAdded || false);
+  const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderFirstLevel({
