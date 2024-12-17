@@ -33,7 +33,7 @@ import {
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
-  newMethodAdded: boolean;
+  newMethodAdded?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -42,14 +42,15 @@ type ScreenProps = IOStackNavigationRouteProps<
 >;
 
 const WalletHomeScreen = ({ route }: ScreenProps) => {
+  const { newMethodAdded } = route.params;
+
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const isRefreshing = useIOSelector(isWalletScreenRefreshingSelector);
-  const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
 
-  /* CODE RELATED TO THE HEADER -- START */
-
+  const isNewElementAdded = useRef(newMethodAdded || false);
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderFirstLevel({
@@ -60,8 +61,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       animatedRef: scrollViewContentRef
     }
   });
-
-  /* CODE RELATED TO THE HEADER -- END */
 
   /**
    * Return to the top of the screen when the tab item is pressed
@@ -75,6 +74,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   /**
    * Fetch the wallet data and enable the loading state on first render
+   * ! Note: to add new content to refresh, add an action dispatch to the `walletUpdate` action handler saga
    */
   useOnFirstRender(() => {
     dispatch(walletToggleLoadingState(true));
