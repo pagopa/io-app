@@ -15,6 +15,8 @@ const alertCtaText = I18n.t(
 );
 
 const itwMinIntegrityReqUrl = "https://io.italia.it/documenti-su-io/faq/#n1_12";
+const itwDocsOnIOMultipleDevicesUrl =
+  "https://io.italia.it/documenti-su-io/faq/#n1_14";
 
 /**
  * Hook to monitor wallet instance status and display alerts if revoked.
@@ -77,8 +79,7 @@ const showWalletRevocationAlert = (
           {
             text: alertCtaText,
             onPress: () => {
-              // TODO: Add the correct URL
-              Linking.openURL("").catch(() => {
+              Linking.openURL(itwDocsOnIOMultipleDevicesUrl).catch(() => {
                 IOToast.error(I18n.t("global.genericError"));
               });
             }
