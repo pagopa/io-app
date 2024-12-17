@@ -232,8 +232,7 @@ const renderListItemMessage = () => (
         {...listItemMessageSample}
         serviceName="Richiesta di cittadinanza"
         messageTitle="Hai un nuovo avviso di pagamento"
-        badgeText={I18n.t("messages.badge.paid")}
-        badgeVariant="success"
+        tag={{ variant: "success", text: I18n.t("messages.badge.paid") }}
         isRead={true}
       />
       <Divider />
@@ -241,8 +240,10 @@ const renderListItemMessage = () => (
         {...listItemMessageSample}
         serviceName="Richiesta di cittadinanza"
         messageTitle="Hai acquisito la cittadinanza italiana"
-        badgeText={I18n.t("features.pn.details.badge.legalValue")}
-        badgeVariant="legalMessage"
+        tag={{
+          variant: "legalMessage",
+          text: I18n.t("features.pn.details.badge.legalValue")
+        }}
         isRead={true}
       />
     </DSComponentViewerBox>

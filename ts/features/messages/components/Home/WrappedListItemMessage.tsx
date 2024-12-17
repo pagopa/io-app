@@ -73,19 +73,22 @@ export const WrappedListItemMessage = ({
     message.createdAt,
     I18n.t("messages.yesterday")
   );
+
   const isRead = message.isRead;
-  const badgeText =
+
+  const tag: ListItemMessage["tag"] =
     messageCategoryTag === SENDTagEnum.PN
-      ? I18n.t("features.pn.details.badge.legalValue")
+      ? {
+          variant: "legalMessage",
+          text: I18n.t("features.pn.details.badge.legalValue")
+        }
       : isPaymentMessageWithPaidNotice
-      ? I18n.t("messages.badge.paid")
+      ? {
+          variant: "success",
+          text: I18n.t("messages.badge.paid")
+        }
       : undefined;
-  const badgeVariant =
-    messageCategoryTag === SENDTagEnum.PN
-      ? "legalMessage"
-      : isPaymentMessageWithPaidNotice
-      ? "success"
-      : undefined;
+
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message, isSelected),
     [isSelected, message]
@@ -159,8 +162,7 @@ export const WrappedListItemMessage = ({
   return (
     <ListItemMessage
       accessibilityLabel={accessibilityLabel}
-      badgeText={badgeText}
-      badgeVariant={badgeVariant}
+      tag={tag}
       avatarDouble={avatarDouble}
       formattedDate={messageDate}
       isRead={isRead}

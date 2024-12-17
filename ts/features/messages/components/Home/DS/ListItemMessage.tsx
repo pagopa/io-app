@@ -3,7 +3,7 @@ import {
   Avatar,
   BodySmall,
   H6,
-  HSpacer,
+  HStack,
   IOColors,
   IOListItemStyles,
   IOStyles,
@@ -24,7 +24,6 @@ export const ListItemMessageStandardHeight = 95;
 export const ListItemMessageEnhancedHeight = 133;
 
 const styles = StyleSheet.create({
-  badgeContainer: { flexDirection: "row", marginTop: 8 },
   container: {
     flexDirection: "row",
     paddingHorizontal: 16
@@ -51,10 +50,14 @@ const styles = StyleSheet.create({
   textContainer: { ...IOStyles.flex, marginLeft: 8 }
 });
 
+type ListItemMessageTag = {
+  text: string;
+  variant: Extract<Tag["variant"], "legalMessage" | "success">;
+};
+
 export type ListItemMessage = WithTestID<{
   accessibilityLabel: string;
-  badgeText?: string;
-  badgeVariant?: "legalMessage" | "success";
+  tag?: ListItemMessageTag;
   avatarDouble?: boolean;
   formattedDate: string;
   isRead: boolean;
@@ -76,12 +79,12 @@ export type ListItemMessage = WithTestID<{
     | "accessibilityRole"
   >;
 
-type BadgeComponentProps = {
+type UnreadBadgeProps = {
   color?: IOColors;
   width?: number;
 };
 
-const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
+const UnreadBadge = ({ color, width = 14 }: UnreadBadgeProps) => (
   <Svg width={width} height={width}>
     <Circle
       cx={"50%"}
@@ -95,8 +98,7 @@ const BadgeComponent = ({ color, width = 14 }: BadgeComponentProps) => (
 export const ListItemMessage = ({
   accessibilityLabel,
   accessibilityRole,
-  badgeText,
-  badgeVariant,
+  tag,
   avatarDouble,
   formattedDate,
   isRead,
@@ -127,10 +129,9 @@ export const ListItemMessage = ({
       accessibilityLabel={accessibilityLabel}
       style={{
         backgroundColor: selected ? IOColors["blueIO-50"] : undefined,
-        minHeight:
-          badgeText && badgeVariant
-            ? ListItemMessageEnhancedHeight
-            : ListItemMessageStandardHeight
+        minHeight: tag
+          ? ListItemMessageEnhancedHeight
+          : ListItemMessageStandardHeight
       }}
     >
       <Animated.View
@@ -195,24 +196,25 @@ export const ListItemMessage = ({
                 </BodySmall>
                 {!isRead && (
                   <View style={styles.messageReadContainer}>
-                    <BadgeComponent />
+                    <UnreadBadge />
                   </View>
                 )}
               </View>
-              {badgeText && badgeVariant && (
-                <View style={styles.badgeContainer}>
-                  <Tag text={badgeText} variant={badgeVariant} />
-                  {badgeVariant === "legalMessage" && (
-                    <>
-                      <HSpacer size={8} />
+              {tag && (
+                /* We add a `View` because we need to re-arrange block elements using
+               `VStack` and/or `HStack` */
+                <View style={{ marginTop: 8 }}>
+                  <HStack space={8}>
+                    <Tag text={tag.text} variant={tag.variant} />
+                    {tag.variant === "legalMessage" && (
                       <Tag
                         variant="attachment"
                         iconAccessibilityLabel={I18n.t(
                           "features.pn.details.attachmentsSection.title"
                         )}
                       />
-                    </>
-                  )}
+                    )}
+                  </HStack>
                 </View>
               )}
             </View>
