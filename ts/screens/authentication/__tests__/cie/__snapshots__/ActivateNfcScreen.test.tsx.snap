@@ -358,9 +358,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                       >
                         <View>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="title1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -385,9 +385,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -445,9 +445,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                   importantForAccessibility="yes"
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     role="heading"
                                     style={
                                       [
@@ -483,98 +483,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "marginRight": 12,
-                                    }
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
-                                    focusable={false}
-                                    height={24}
-                                    importantForAccessibility="no-hide-descendants"
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "color": "#99A3C1",
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
-                                        },
-                                      ]
-                                    }
-                                    tintColor="#99A3C1"
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={24}
-                                  >
-                                    <RNSVGGroup
-                                      color="#99A3C1"
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGRect
-                                        fill={
-                                          {
-                                            "payload": 4282486191,
-                                            "type": 0,
-                                          }
-                                        }
-                                        height={24}
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                        rx="8"
-                                        width={24}
-                                        x={0}
-                                        y={0}
-                                      />
-                                      <RNSVGPath
-                                        d="M17.95 12.784c.033-.25.05-.509.05-.784a4.81 4.81 0 0 0-.058-.783L19.633 9.9a.409.409 0 0 0 .1-.508l-1.6-2.767a.407.407 0 0 0-.491-.183l-1.992.8a5.885 5.885 0 0 0-1.35-.783L14 4.342A.403.403 0 0 0 13.6 4h-3.2c-.2 0-.358.142-.392.342l-.3 2.117c-.491.2-.941.475-1.35.783l-1.991-.8a.398.398 0 0 0-.492.183L4.283 9.392c-.1.175-.066.392.1.508l1.692 1.317A4.89 4.89 0 0 0 6 12c0 .259.017.534.058.784L4.367 14.1a.409.409 0 0 0-.1.509l1.6 2.766c.1.184.308.242.491.184l1.992-.8c.417.316.858.583 1.35.783l.3 2.117c.042.2.2.341.4.341h3.2c.2 0 .367-.141.392-.341l.3-2.117c.491-.2.941-.467 1.35-.783l1.991.8c.184.066.392 0 .492-.184l1.6-2.766c.1-.184.058-.392-.1-.509l-1.675-1.316ZM12 15c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3Z"
-                                        fill={
-                                          {
-                                            "payload": 4294967295,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
                                 <View
                                   style={
                                     {
@@ -586,9 +506,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -606,9 +526,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       Step 1
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -653,142 +573,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "marginRight": 12,
-                                    }
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
-                                    focusable={false}
-                                    height={24}
-                                    importantForAccessibility="no-hide-descendants"
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "color": "#99A3C1",
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
-                                        },
-                                      ]
-                                    }
-                                    tintColor="#99A3C1"
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={24}
-                                  >
-                                    <RNSVGGroup
-                                      color="#99A3C1"
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGRect
-                                        fill={
-                                          {
-                                            "payload": 4294417947,
-                                            "type": 0,
-                                          }
-                                        }
-                                        height={24}
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                        rx="8"
-                                        width={24}
-                                        x={0}
-                                        y={0}
-                                      />
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4294967295,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      >
-                                        <RNSVGCircle
-                                          cx="8"
-                                          cy="8"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          r="3"
-                                        />
-                                        <RNSVGCircle
-                                          cx="8"
-                                          cy="16"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          r="3"
-                                        />
-                                        <RNSVGCircle
-                                          cx="16"
-                                          cy="16"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          r="3"
-                                        />
-                                        <RNSVGCircle
-                                          cx="16"
-                                          cy="8"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          r="3"
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
                                 <View
                                   style={
                                     {
@@ -800,9 +596,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -820,9 +616,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       Step 2
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -867,80 +663,18 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "marginRight": 12,
-                                    }
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
-                                    focusable={false}
-                                    height={24}
-                                    importantForAccessibility="no-hide-descendants"
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "color": "#99A3C1",
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
-                                        },
-                                      ]
-                                    }
-                                    tintColor="#99A3C1"
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={24}
-                                  >
-                                    <RNSVGGroup
-                                      color="#99A3C1"
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        d="M18 6.545H6c-3.312 0-6 2.81-6 6.273 0 3.463 2.688 6.273 6 6.273h12c3.312 0 6-2.81 6-6.273 0-3.462-2.688-6.273-6-6.273Zm0 10.037c-1.992 0-3.6-1.681-3.6-3.764 0-2.082 1.608-3.763 3.6-3.763s3.6 1.68 3.6 3.763-1.608 3.764-3.6 3.764Z"
-                                        fill={
-                                          {
-                                            "payload": 4286565757,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
                                 <View
                                   style={
                                     {
@@ -952,9 +686,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -972,9 +706,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       Step 3
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -1206,6 +940,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -1213,10 +950,10 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1317,6 +1054,9 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -1324,10 +1064,10 @@ exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, s
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

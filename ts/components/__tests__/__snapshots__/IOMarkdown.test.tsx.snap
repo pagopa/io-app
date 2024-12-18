@@ -3,9 +3,9 @@
 exports[`IOMarkdown Should match snapshot 1`] = `
 <View>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="largeTitle"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -30,9 +30,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="title1"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -57,9 +57,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -104,9 +104,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -168,9 +168,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
@@ -208,9 +208,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -238,9 +238,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
@@ -278,9 +278,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -308,9 +308,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
@@ -348,9 +348,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -387,9 +387,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -451,9 +451,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
@@ -492,9 +492,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -522,9 +522,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
@@ -563,9 +563,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -593,9 +593,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
@@ -634,9 +634,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
@@ -673,9 +673,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -693,9 +693,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     Here is a link: 
     <Text
       accessibilityRole="link"
-      allowFontScaling={false}
+      allowFontScaling={true}
       dynamicTypeRamp="body"
-      maxFontSizeMultiplier={1.25}
+      maxFontSizeMultiplier={1.5}
       onPress={[Function]}
       style={
         [
@@ -724,9 +724,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
@@ -768,9 +768,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},

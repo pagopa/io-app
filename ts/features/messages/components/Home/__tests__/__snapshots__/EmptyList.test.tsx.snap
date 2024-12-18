@@ -515,9 +515,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -545,9 +545,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1098,9 +1098,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1212,6 +1212,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                           },
+                                          {
+                                            "columnGap": 8,
+                                          },
                                           false,
                                         ]
                                       }
@@ -1219,10 +1222,10 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2471,9 +2474,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -2501,9 +2504,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3400,9 +3403,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3430,9 +3433,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -4329,9 +4332,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -4359,9 +4362,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -5258,9 +5261,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -5288,9 +5291,9 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6187,9 +6190,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6217,9 +6220,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6770,9 +6773,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6884,6 +6887,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                           },
+                                          {
+                                            "columnGap": 8,
+                                          },
                                           false,
                                         ]
                                       }
@@ -6891,10 +6897,10 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -8143,9 +8149,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -8173,9 +8179,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -9072,9 +9078,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -9102,9 +9108,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10001,9 +10007,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10031,9 +10037,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10930,9 +10936,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -10960,9 +10966,9 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},

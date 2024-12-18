@@ -404,6 +404,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                   "columnGap": 8,
                                 },
                                 {},
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                               ]
                             }
@@ -411,10 +414,10 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -565,9 +568,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -592,11 +595,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -605,9 +610,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -790,9 +795,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -817,11 +822,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -830,9 +837,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -1015,9 +1022,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -1042,11 +1049,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -1055,9 +1064,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -1240,9 +1249,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -1267,11 +1276,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -1280,9 +1291,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -1465,9 +1476,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -1492,11 +1503,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -1505,9 +1518,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -1690,9 +1703,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -1717,11 +1730,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -1730,9 +1745,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -1915,9 +1930,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -1942,11 +1957,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -1955,9 +1972,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -2140,9 +2157,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -2167,11 +2184,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -2180,9 +2199,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -2365,9 +2384,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -2392,11 +2411,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -2405,9 +2426,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -2590,9 +2611,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -2617,11 +2638,13 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -2630,9 +2653,9 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [
@@ -3144,6 +3167,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                   "columnGap": 8,
                                 },
                                 {},
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                               ]
                             }
@@ -3151,10 +3177,10 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -3640,6 +3666,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                   "columnGap": 8,
                                 },
                                 {},
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                               ]
                             }
@@ -3647,10 +3676,10 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -3801,9 +3830,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={2}
                                           style={
                                             [
@@ -3828,11 +3857,13 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                               {
                                                 "alignItems": "center",
                                                 "borderCurve": "continuous",
-                                                "borderRadius": 24,
                                                 "flexDirection": "row",
                                                 "justifyContent": "center",
-                                                "paddingHorizontal": 8,
-                                                "paddingVertical": 4,
+                                              },
+                                              {
+                                                "borderRadius": 36,
+                                                "paddingHorizontal": 12,
+                                                "paddingVertical": 6,
                                               },
                                               {
                                                 "backgroundColor": "#F4F5F8",
@@ -3841,9 +3872,9 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                           }
                                         >
                                           <Text
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             ellipsizeMode="tail"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             style={
                                               [

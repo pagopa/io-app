@@ -435,6 +435,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -442,10 +445,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -547,6 +550,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     "columnGap": 8,
                                   },
                                   {},
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -554,10 +560,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1030,6 +1036,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -1037,10 +1046,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1124,6 +1133,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 {
                                   "height": 40,
                                 },
+                                {
+                                  "columnGap": 8,
+                                },
                                 false,
                                 {
                                   "backgroundColor": "rgba(0,115,230,0)",
@@ -1140,10 +1152,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             <Text
                               accessibilityElementsHidden={true}
                               accessible={false}
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               ellipsizeMode="tail"
                               importantForAccessibility="no-hide-descendants"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               numberOfLines={1}
                               style={
                                 [
@@ -1249,6 +1261,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     "columnGap": 8,
                                   },
                                   {},
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -1256,10 +1271,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2078,6 +2093,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -2085,10 +2103,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3538,6 +3556,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -3545,10 +3566,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4021,6 +4042,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -4028,10 +4052,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4133,6 +4157,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     "columnGap": 8,
                                   },
                                   {},
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -4140,10 +4167,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [

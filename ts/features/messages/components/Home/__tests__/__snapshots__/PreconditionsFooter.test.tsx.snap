@@ -456,6 +456,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -463,10 +466,10 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -568,6 +571,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -575,10 +581,10 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1419,6 +1425,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -1426,10 +1435,10 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1531,6 +1540,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -1538,10 +1550,10 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

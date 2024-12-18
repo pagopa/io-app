@@ -358,9 +358,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                       >
                         <View>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="title1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -385,9 +385,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -445,9 +445,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   importantForAccessibility="yes"
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     role="heading"
                                     style={
                                       [
@@ -484,11 +484,16 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
                                 <View
@@ -502,9 +507,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -522,9 +527,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                       Item 1
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -570,11 +575,16 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
                                 <View
@@ -588,9 +598,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -608,9 +618,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                       Item 2
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -843,6 +853,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -850,10 +863,10 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1250,9 +1263,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                       >
                         <View>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="title1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1477,6 +1490,9 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -1484,10 +1500,10 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -1884,9 +1900,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                       >
                         <View>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="title1"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1911,9 +1927,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             }
                           />
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -1932,9 +1948,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1955,9 +1971,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                               Subtitle Part 1
                             </Text>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -2019,9 +2035,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   importantForAccessibility="yes"
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     role="heading"
                                     style={
                                       [
@@ -2058,11 +2074,16 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
                                 <View
@@ -2076,9 +2097,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -2096,9 +2117,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                       Item 1
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -2144,11 +2165,16 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "space-between",
+                                    },
+                                    {
+                                      "columnGap": 18,
+                                    },
+                                  ]
                                 }
                               >
                                 <View
@@ -2162,9 +2188,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                     accessible={true}
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -2182,9 +2208,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                       Item 2
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -2417,6 +2443,9 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -2424,10 +2453,10 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

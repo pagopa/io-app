@@ -182,9 +182,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         />
       </View>
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="title2"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -212,9 +212,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
         }
       />
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -326,6 +326,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       "flexDirection": "row",
                       "justifyContent": "center",
                     },
+                    {
+                      "columnGap": 8,
+                    },
                     false,
                   ]
                 }
@@ -333,10 +336,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                 <Text
                   accessibilityElementsHidden={true}
                   accessible={false}
-                  allowFontScaling={false}
+                  allowFontScaling={true}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
-                  maxFontSizeMultiplier={1.25}
+                  maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
                     [
@@ -440,6 +443,9 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                     "columnGap": 8,
                   },
                   {},
+                  {
+                    "columnGap": 8,
+                  },
                   false,
                 ]
               }
@@ -447,10 +453,10 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               <Text
                 accessibilityElementsHidden={true}
                 accessible={false}
-                allowFontScaling={false}
+                allowFontScaling={true}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.25}
+                maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
                   [
@@ -662,9 +668,9 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         />
       </View>
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="title2"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -692,9 +698,9 @@ exports[`CieIdErrorScreen where device supports NFC Should match the snapshot 1`
         }
       />
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
@@ -808,6 +814,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       "flexDirection": "row",
                       "justifyContent": "center",
                     },
+                    {
+                      "columnGap": 8,
+                    },
                     false,
                   ]
                 }
@@ -815,10 +824,10 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                 <Text
                   accessibilityElementsHidden={true}
                   accessible={false}
-                  allowFontScaling={false}
+                  allowFontScaling={true}
                   ellipsizeMode="tail"
                   importantForAccessibility="no-hide-descendants"
-                  maxFontSizeMultiplier={1.25}
+                  maxFontSizeMultiplier={1.5}
                   numberOfLines={1}
                   style={
                     [
@@ -922,6 +931,9 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                     "columnGap": 8,
                   },
                   {},
+                  {
+                    "columnGap": 8,
+                  },
                   false,
                 ]
               }
@@ -929,10 +941,10 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
               <Text
                 accessibilityElementsHidden={true}
                 accessible={false}
-                allowFontScaling={false}
+                allowFontScaling={true}
                 ellipsizeMode="tail"
                 importantForAccessibility="no-hide-descendants"
-                maxFontSizeMultiplier={1.25}
+                maxFontSizeMultiplier={1.5}
                 numberOfLines={1}
                 style={
                   [
