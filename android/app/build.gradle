@@ -108,6 +108,7 @@ android {
         pickFirst 'lib/arm64-v8a/libc++_shared.so'
         pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        exclude "lib/riscv64/**"  // Exclude riscv64 libraries due to https://github.com/mrousavy/react-native-vision-camera/issues/3177
     }
 
     dexOptions {
