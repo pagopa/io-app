@@ -1,11 +1,6 @@
 import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  Banner,
-  ContentWrapper,
-  FooterActions,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
@@ -60,47 +55,43 @@ export const ItwIdentityNotMatchingScreen = () => {
   };
 
   return (
-    <>
-      <IOScrollViewWithLargeHeader
-        title={{
-          label: I18n.t(
-            "features.itWallet.identification.notMatchingIdentityScreen.title"
-          )
-        }}
-        headerActionsProp={{ showHelp: true }}
-        goBack={handleCancel}
-      >
-        <ContentWrapper>
-          <VStack space={24}>
-            <IOMarkdown
-              content={I18n.t(
-                "features.itWallet.identification.notMatchingIdentityScreen.message"
-              )}
-            />
-            <Banner
-              content={I18n.t(
-                "features.itWallet.identification.notMatchingIdentityScreen.banner.title"
-              )}
-              pictogramName="security"
-              size="small"
-              color="neutral"
-            />
-          </VStack>
-        </ContentWrapper>
-      </IOScrollViewWithLargeHeader>
-      <FooterActions
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: resetWallet
-          },
-          secondary: {
-            label: I18n.t("global.buttons.exit"),
-            onPress: handleCancel
-          }
-        }}
-      />
-    </>
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t(
+          "features.itWallet.identification.notMatchingIdentityScreen.title"
+        )
+      }}
+      headerActionsProp={{ showHelp: true }}
+      goBack={handleCancel}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("global.buttons.continue"),
+          onPress: resetWallet
+        },
+        secondary: {
+          label: I18n.t("global.buttons.exit"),
+          onPress: handleCancel
+        }
+      }}
+    >
+      <ContentWrapper>
+        <VStack space={24}>
+          <IOMarkdown
+            content={I18n.t(
+              "features.itWallet.identification.notMatchingIdentityScreen.message"
+            )}
+          />
+          <Banner
+            content={I18n.t(
+              "features.itWallet.identification.notMatchingIdentityScreen.banner.title"
+            )}
+            pictogramName="security"
+            size="small"
+            color="neutral"
+          />
+        </VStack>
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };
