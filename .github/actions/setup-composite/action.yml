@@ -1,5 +1,5 @@
 name: Actions to setup environment for all workflows
-description: 'This action collects the steps to setup any job'
+description: "This action collects the steps to setup any job"
 runs:
   using: "composite"
   steps:
@@ -9,7 +9,7 @@ runs:
     - id: setup-node
       uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
       with:
-        node-version-file: '.node-version'
+        node-version-file: ".node-version"
     - id: yarn-cache
       uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
       with:
@@ -20,9 +20,18 @@ runs:
           ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           ${{ runner.os }}-yarn-
     - name: Install dependencies
-      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
       shell: bash
     - id: generate-api-client
       run: yarn generate
       shell: bash
+    - id: upload-locales-artifact
+      uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+      with:
+        name: locales
+        path: locales/
+    - id: upload-clients-artifact
+      uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+      with:
+        name: api-client
+        path: definitions/
