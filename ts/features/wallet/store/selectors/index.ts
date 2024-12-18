@@ -2,9 +2,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
+import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
 import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/selectors";
 import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
 import { WalletCard, walletCardCategories } from "../../types";
+import { isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 
 const selectWalletFeature = (state: GlobalState) => state.features.wallet;
 
@@ -116,3 +118,12 @@ export const shouldRenderWalletEmptyStateSelector = (state: GlobalState) =>
   isWalletEmptySelector(state) && // No cards to display
   pot.isSome(paymentsWalletUserMethodsSelector(state)) && // Payment methods are loaded without errors
   !pot.isError(cgnDetailSelector(state)); // CGN is not in error state
+
+/**
+ * Returns true if the wallet screen is refreshing
+ * Extend this selector to add new selectors to the check if the wallet screen is refreshing
+ */
+export const isWalletScreenRefreshingSelector = (state: GlobalState) =>
+  isSomeLoadingOrSomeUpdating(paymentsWalletUserMethodsSelector(state)) ||
+  isSomeLoadingOrSomeUpdating(idPayWalletInitiativeListSelector(state)) ||
+  isSomeLoadingOrSomeUpdating(cgnDetailSelector(state));
