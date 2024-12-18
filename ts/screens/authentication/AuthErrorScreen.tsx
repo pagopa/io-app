@@ -8,6 +8,11 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { CieIdLoginProps } from "../../features/cieLogin/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
+import { useIODispatch } from "../../store/hooks";
+import {
+  incrementNativeLoginNativeAttempts,
+  setStandardLoginInLoadingState
+} from "../../features/spidLogin/store/actions";
 import { UnlockAccessProps } from "./UnlockAccessComponent";
 import AuthErrorComponent from "./components/AuthErrorComponent";
 
@@ -17,12 +22,11 @@ type CommonAuthErrorScreenProps = {
 
 type SpidProps = {
   authMethod: "SPID";
-  onRetry: () => void;
+  isNativeLogin?: boolean;
 };
 
 type CieIdProps = {
   authMethod: "CIE_ID";
-  onRetry?: () => void;
   params: CieIdLoginProps;
 };
 
@@ -40,6 +44,7 @@ const authScreenByAuthMethod = {
 };
 
 const AuthErrorScreen = () => {
+  const dispatch = useIODispatch();
   const route =
     useRoute<Route<typeof ROUTES.AUTH_ERROR_SCREEN, AuthErrorScreenProps>>();
   const { errorCodeOrMessage, authMethod, authLevel } = route.params;
@@ -61,11 +66,15 @@ const AuthErrorScreen = () => {
     }, [authMethod, route.params]);
 
   const onRetry = useCallback(() => {
-    if (authMethod === "SPID" || authMethod === "CIE_ID") {
-      route.params.onRetry?.();
+    if (authMethod === "SPID") {
+      dispatch(
+        route.params.isNativeLogin
+          ? incrementNativeLoginNativeAttempts()
+          : setStandardLoginInLoadingState()
+      );
     }
     navigation.navigate(ROUTES.AUTHENTICATION, getNavigationParams());
-  }, [authMethod, navigation, route.params, getNavigationParams]);
+  }, [authMethod, navigation, route.params, getNavigationParams, dispatch]);
 
   const onCancel = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
