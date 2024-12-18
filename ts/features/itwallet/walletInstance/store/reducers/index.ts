@@ -5,7 +5,7 @@ import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStor
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
-  itwUpdateWalletInstanceStatus,
+  itwUpdateWalletInstanceStatus
 } from "../actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
 
@@ -16,7 +16,7 @@ export type ItwWalletInstanceState = {
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
-  status: undefined,
+  status: undefined
 };
 
 const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = -1;

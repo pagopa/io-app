@@ -2,9 +2,7 @@ import { Alert, AlertButton, Linking } from "react-native";
 import { useCallback } from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import {
-  WalletInstanceRevocationReason,
-} from "../../common/utils/itwTypesUtils";
+import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwWalletInstanceStatusSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -36,7 +34,7 @@ export const useItwWalletInstanceRevocationAlert = () => {
         showWalletRevocationAlert(walletInstanceStatus.revocation_reason);
         dispatch(itwUpdateWalletInstanceStatus(undefined));
       }
-    }, [walletInstanceStatus])
+    }, [walletInstanceStatus, dispatch])
   );
 };
 
