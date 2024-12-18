@@ -16,6 +16,7 @@ import {
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import {
@@ -33,7 +34,6 @@ import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
-import { WalletItwNotAvailableErrorBanner } from "./WalletItwNotAvailableErrorBanner";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -48,6 +48,9 @@ const WalletCardsContainer = () => {
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
+  );
+  const isWalletInstanceStatusUnknown = useIOSelector(
+    itwIsWalletInstanceStatusUnknownSelector
   );
 
   // Loading state is only displayed if there is the initial loading and there are no cards or
@@ -71,17 +74,25 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
-        {shouldRenderCategory("itw") && <ItwWalletCardsContainer />}
+        {!isWalletInstanceStatusUnknown && shouldRenderCategory("itw") && (
+          <ItwWalletCardsContainer />
+        )}
         {shouldRenderCategory("other") && <OtherWalletCardsContainer />}
       </View>
     );
-  }, [shouldRenderEmptyState, shouldRenderCategory, shouldRenderLoadingState]);
+  }, [
+    shouldRenderEmptyState,
+    shouldRenderCategory,
+    shouldRenderLoadingState,
+    isWalletInstanceStatusUnknown
+  ]);
 
   return (
     <Animated.View
       style={IOStyles.flex}
       layout={LinearTransition.duration(200)}
     >
+      <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
@@ -102,7 +113,6 @@ const ItwWalletCardsContainer = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-  const unknownStatus = useIOSelector(itwIsWalletInstanceStatusUnknownSelector);
 
   const isEidExpired = eidStatus === "jwtExpired";
 
@@ -150,11 +160,6 @@ const ItwWalletCardsContainer = () => {
 
   if (!isItwEnabled) {
     return null;
-  }
-
-  // When it's not possible to retrieve the wallet instance status from the backend we disable the wallet
-  if (unknownStatus) {
-    return <WalletItwNotAvailableErrorBanner />;
   }
 
   return (
