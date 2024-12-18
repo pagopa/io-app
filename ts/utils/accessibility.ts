@@ -4,12 +4,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import {
-  AccessibilityInfo,
-  findNodeHandle,
-  Platform,
-  UIManager
-} from "react-native";
+import { AccessibilityInfo, findNodeHandle } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../i18n";
 import { format } from "./dates";
@@ -34,15 +29,7 @@ export const setAccessibilityFocus = <T extends React.Component>(
       O.map(reactTag => {
         // could raise an exception
         try {
-          if (Platform.OS === "android") {
-            UIManager.sendAccessibilityEvent(
-              reactTag,
-              UIManager.AccessibilityEventTypes.typeViewFocused
-            );
-          } else {
-            // ios
-            AccessibilityInfo.setAccessibilityFocus(reactTag);
-          }
+          AccessibilityInfo.setAccessibilityFocus(reactTag);
         } catch {
           // do nothing
         } finally {

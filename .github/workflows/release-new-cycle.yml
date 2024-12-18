@@ -77,7 +77,7 @@ jobs:
       - id: setup-android-sdk
         uses: android-actions/setup-android@00854ea68c109d98c75d956347303bf7c45b0277 #v3.2.1
       - id: setup-ruby
-        uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c #v1.149.0
+        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
         with:
           bundler-cache: true
       - id: build-release-android
@@ -145,7 +145,7 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
-        uses: ruby/setup-ruby@5f19ec79cedfadb78ab837f95b87734d0003c899 #v1.173.0
+        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
         with:
           bundler-cache: true
       - id: prepare-ios-build

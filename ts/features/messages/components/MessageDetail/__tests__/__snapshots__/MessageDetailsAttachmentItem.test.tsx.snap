@@ -219,6 +219,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -856,6 +858,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -918,6 +921,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1158,6 +1162,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1418,6 +1423,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1480,6 +1486,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1679,6 +1686,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#0B3EE3"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1945,6 +1953,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2007,6 +2016,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2247,6 +2257,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
