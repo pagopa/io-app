@@ -10,11 +10,10 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackWalletCategoryFilter } from "../../itwallet/analytics";
 import { walletSetCategoryFilter } from "../store/actions/preferences";
 import {
-  selectWalletCategories,
+  isWalletCategoryFilteringEnabledSelector,
   selectWalletCategoryFilter
 } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
-import { useDebugInfo } from "../../../hooks/useDebugInfo";
 
 /**
  * Renders filter tabs to categorize cards on the wallet home screen.
@@ -25,14 +24,9 @@ const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
-  const categories = useIOSelector(selectWalletCategories);
-
-  useDebugInfo({
-    wallet: {
-      selectedCategory,
-      categories
-    }
-  });
+  const isFilteringEnabled = useIOSelector(
+    isWalletCategoryFilteringEnabledSelector
+  );
 
   const selectedIndex = React.useMemo(
     () =>
@@ -42,7 +36,7 @@ const WalletCategoryFilterTabs = () => {
     [selectedCategory]
   );
 
-  if (categories.size <= 1) {
+  if (!isFilteringEnabled) {
     return null;
   }
 

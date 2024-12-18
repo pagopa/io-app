@@ -27,6 +27,7 @@ export const selectWalletCards = createSelector(
 /**
  * Returns the list of card categories available in the wallet
  * If there are categories other that ITW, they will become "other"
+ * If the ITW is valid, it will be counted as "itw" category, since we do not have eID card anymore
  */
 export const selectWalletCategories = createSelector(
   selectWalletCards,
@@ -143,6 +144,15 @@ export const isWalletScreenRefreshingSelector = (state: GlobalState) =>
   isSomeLoadingOrSomeUpdating(cgnDetailSelector(state));
 
 /**
+ * Selects if the wallet categories can be filtered.
+ * The filter is only enabled if there are more than one category available
+ */
+export const isWalletCategoryFilteringEnabledSelector = createSelector(
+  selectWalletCategories,
+  categories => categories.size > 1
+);
+
+/**
  * Selects the category filter from the wallet preferences
  */
 export const selectWalletCategoryFilter = (state: GlobalState) =>
@@ -150,14 +160,14 @@ export const selectWalletCategoryFilter = (state: GlobalState) =>
 
 /**
  * Checks if a wallet category section should be rendered. A category section is rendered if:
+ * - the category filtering is not enabled, or
  * - no category filter is selected, or
- * - the filter matches the given category, or
- * - the wallet contains only one category
+ * - the filter matches the given category
  */
 export const shouldRenderWalletCategorySelector = createSelector(
+  isWalletCategoryFilteringEnabledSelector,
   selectWalletCategoryFilter,
-  selectWalletCategories,
   (_: GlobalState, category: WalletCardCategoryFilter) => category,
-  (filter, categories, category) =>
-    filter === undefined || filter === category || categories.size <= 0
+  (isFilteringEnabled, filter, category) =>
+    !isFilteringEnabled || filter === undefined || filter === category
 );
