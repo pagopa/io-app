@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.4](https://github.com/pagopa/io-app/compare/2.80.0-rc.3...2.80.0-rc.4) (2024-12-18)
+
+
+### Bug Fixes
+
+* ffi version mismatch on linux environment ([#6563](https://github.com/pagopa/io-app/issues/6563)) ([082241e](https://github.com/pagopa/io-app/commit/082241eec664fb751b5bc7b8289469326b663167))
+
 ## [2.80.0-rc.3](https://github.com/pagopa/io-app/compare/2.80.0-rc.2...2.80.0-rc.3) (2024-12-17)
 
 
