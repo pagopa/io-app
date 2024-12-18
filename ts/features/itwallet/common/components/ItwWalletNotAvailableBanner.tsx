@@ -10,6 +10,10 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsWalletInstanceStatusUnknownSelector } from "../../walletInstance/store/reducers";
 
+/**
+ * Component shown when it is not possible to retrieve the wallet instance status
+ * from the backend. In this scenario the wallet instance status is unknown.
+ */
 export const ItwWalletNotAvailableBanner = () => {
   const isWalletInstanceStatusUnknown = useIOSelector(
     itwIsWalletInstanceStatusUnknownSelector
