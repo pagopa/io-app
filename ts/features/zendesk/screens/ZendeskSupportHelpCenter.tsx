@@ -2,6 +2,7 @@ import {
   AccordionItem,
   Body,
   ButtonLink,
+  ContentWrapper,
   FeatureInfo,
   FooterActions,
   H4,
@@ -396,39 +397,44 @@ const ZendeskSupportHelpCenter = () => {
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       testID={"ZendeskSupportHelpCenterScreen"}
+      includeContentMargins={false}
     >
-      <FaqManager
-        contextualHelpConfig={contextualHelpConfig}
-        faqCategories={faqCategories}
-        startingRoute={startingRoute}
-      />
+      <ContentWrapper>
+        <FaqManager
+          contextualHelpConfig={contextualHelpConfig}
+          faqCategories={faqCategories}
+          startingRoute={startingRoute}
+        />
 
-      {showRequestSupportContacts && (
-        <>
-          <VSpacer size={24} />
-          <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
-          <VSpacer size={8} />
-          <Body>{I18n.t("support.helpCenter.supportComponent.subtitle")}</Body>
-          <VSpacer size={16} />
-          <ButtonLink
-            label={I18n.t("support.askPermissions.privacyLink")}
-            onPress={() => {
-              openWebUrl(zendeskPrivacyUrl, () =>
-                IOToast.error(I18n.t("global.jserror.title"))
-              );
-            }}
-          />
-          <VSpacer size={24} />
-          <FeatureInfo
-            iconName="notice"
-            body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
-          />
-          <FooterActions
-            fixed={false}
-            actions={showRequestSupportContacts ? footerActions : undefined}
-          />
-        </>
-      )}
+        {showRequestSupportContacts && (
+          <>
+            <VSpacer size={24} />
+            <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
+            <VSpacer size={8} />
+            <Body>
+              {I18n.t("support.helpCenter.supportComponent.subtitle")}
+            </Body>
+            <VSpacer size={16} />
+            <ButtonLink
+              label={I18n.t("support.askPermissions.privacyLink")}
+              onPress={() => {
+                openWebUrl(zendeskPrivacyUrl, () =>
+                  IOToast.error(I18n.t("global.jserror.title"))
+                );
+              }}
+            />
+            <VSpacer size={24} />
+            <FeatureInfo
+              iconName="notice"
+              body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+            />
+          </>
+        )}
+      </ContentWrapper>
+      <FooterActions
+        fixed={false}
+        actions={showRequestSupportContacts ? footerActions : undefined}
+      />
     </IOScrollView>
   );
 };
