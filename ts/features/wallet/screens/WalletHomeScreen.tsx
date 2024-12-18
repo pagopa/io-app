@@ -1,12 +1,6 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import {
   IOScrollView,
@@ -50,7 +44,6 @@ type ScreenProps = IOStackNavigationRouteProps<
 const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
 
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
