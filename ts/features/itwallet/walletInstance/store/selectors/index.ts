@@ -18,13 +18,6 @@ export const itwIsWalletInstanceAttestationValidSelector = createSelector(
   )
 );
 
-/* Selector to get the alert shown status */
-export const itwWalletInstanceAlertShownSelector = createSelector(
-  (state: GlobalState) =>
-    state.features.itWallet.walletInstance.revocationAlertShown,
-  revocationAlertShown => revocationAlertShown
-);
-
 /* Selector to get the wallet instance status */
 export const itwWalletInstanceStatusSelector = createSelector(
   (state: GlobalState) => state.features.itWallet.walletInstance.status,

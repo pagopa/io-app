@@ -6,20 +6,17 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus,
-  itwWalletInstanceSetAlertShown
 } from "../actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
 
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
   status: WalletInstanceStatus | undefined;
-  revocationAlertShown: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: undefined,
-  revocationAlertShown: false
 };
 
 const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = -1;
@@ -43,12 +40,6 @@ const reducer = (
       };
     }
 
-    case getType(itwWalletInstanceSetAlertShown):
-      return {
-        ...state,
-        revocationAlertShown: action.payload
-      };
-
     case getType(itwLifecycleStoresReset):
       return { ...itwWalletInstanceInitialState };
 
@@ -60,8 +51,7 @@ const reducer = (
 const itwWalletInstancePersistConfig: PersistConfig = {
   key: "itwWalletInstance",
   storage: itwCreateSecureStorage(),
-  version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
-  blacklist: ["status"]
+  version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION
 };
 
 const persistedReducer = persistReducer(

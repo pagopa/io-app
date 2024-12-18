@@ -19,7 +19,6 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   },
   "walletInstance": {
     "attestation": undefined,
-    "revocationAlertShown": false,
     "status": undefined,
   },
 }
