@@ -41,7 +41,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
-import { itwIsWalletInstanceStatusUnknownSelector } from "../../walletInstance/store/reducers";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/reducers";
 
 // List of available credentials to show to the user
 const availableCredentials = [
@@ -58,8 +58,8 @@ const activeBadge: Badge = {
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
-  const isWalletInstanceStatusUnknown = useIOSelector(
-    itwIsWalletInstanceStatusUnknownSelector
+  const isWalletInstanceStatusFailure = useIOSelector(
+    itwIsWalletInstanceStatusFailureSelector
   );
 
   useFocusEffect(trackShowCredentialsList);
@@ -67,10 +67,10 @@ const WalletCardOnboardingScreen = () => {
   const isItwSectionVisible = React.useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
-      !isWalletInstanceStatusUnknown &&
+      !isWalletInstanceStatusFailure &&
       isItwValid && // An eID has ben obtained and wallet is valid
       isItwEnabled, // Remote FF is enabled
-    [isItwValid, isItwEnabled, isWalletInstanceStatusUnknown]
+    [isItwValid, isItwEnabled, isWalletInstanceStatusFailure]
   );
 
   return (
