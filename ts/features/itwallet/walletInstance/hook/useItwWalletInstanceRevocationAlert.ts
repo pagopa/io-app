@@ -1,12 +1,12 @@
-import { Alert, AlertButton, Linking } from "react-native";
+import { Alert, AlertButton } from "react-native";
 import { useCallback } from "react";
-import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwWalletInstanceStatusSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwUpdateWalletInstanceStatus } from "../store/actions";
+import { openWebUrl } from "../../../../utils/url";
 
 const closeButtonText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.closeButton"
@@ -56,11 +56,7 @@ const showWalletRevocationAlert = (
           { text: closeButtonText },
           {
             text: alertCtaText,
-            onPress: () => {
-              Linking.openURL(itwMinIntegrityReqUrl).catch(() => {
-                IOToast.error(I18n.t("global.genericError"));
-              });
-            }
+            onPress: () => openWebUrl(itwMinIntegrityReqUrl)
           }
         ]
       );
@@ -78,11 +74,7 @@ const showWalletRevocationAlert = (
           { text: closeButtonText },
           {
             text: alertCtaText,
-            onPress: () => {
-              Linking.openURL(itwDocsOnIOMultipleDevicesUrl).catch(() => {
-                IOToast.error(I18n.t("global.genericError"));
-              });
-            }
+            onPress: () => openWebUrl(itwDocsOnIOMultipleDevicesUrl)
           }
         ]
       );
