@@ -14,6 +14,7 @@ import {
   selectWalletCategoryFilter
 } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
+import { useDebugInfo } from "../../../hooks/useDebugInfo";
 
 /**
  * Renders filter tabs to categorize cards on the wallet home screen.
@@ -25,6 +26,13 @@ const WalletCategoryFilterTabs = () => {
 
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
   const categories = useIOSelector(selectWalletCategories);
+
+  useDebugInfo({
+    wallet: {
+      selectedCategory,
+      categories
+    }
+  });
 
   const selectedIndex = React.useMemo(
     () =>
