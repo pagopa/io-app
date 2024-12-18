@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.3](https://github.com/pagopa/io-app/compare/2.80.0-rc.2...2.80.0-rc.3) (2024-12-17)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1927](https://pagopa.atlassian.net/browse/SIW-1927)] Add pull-to-refresh to the wallet screen ([#6556](https://github.com/pagopa/io-app/issues/6556)) ([31f4df0](https://github.com/pagopa/io-app/commit/31f4df055509beab9b05de1ad6f55caa0a8eabc6))
+
+## [2.80.0-rc.2](https://github.com/pagopa/io-app/compare/2.80.0-rc.1...2.80.0-rc.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* align Gemfile.lock ([51c33ac](https://github.com/pagopa/io-app/commit/51c33acb94f77ab8f925946863213c2fb363c49d))
+
 ## [2.80.0-rc.1](https://github.com/pagopa/io-app/compare/2.80.0-rc.0...2.80.0-rc.1) (2024-12-17)
 
 
