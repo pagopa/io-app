@@ -10613,6 +10613,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-ft-flow@npm:latest":
+  version: 3.0.11
+  resolution: "eslint-plugin-ft-flow@npm:3.0.11"
+  dependencies:
+    lodash: ^4.17.21
+    string-natural-compare: ^3.0.1
+  peerDependencies:
+    eslint: ^8.56.0 || ^9.0.0
+    hermes-eslint: ">=0.15.0"
+  checksum: eba55022633424b7c5e491d4939eeba5525f5b1345a9fa0846a47f508885b91a0ee2a008276e4031260d0f9c1d971903b7469d8915ebc668cce67a01cdb808d0
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-functional@npm:^4.1.1":
   version: 4.1.1
   resolution: "eslint-plugin-functional@npm:4.1.1"
@@ -13722,6 +13735,7 @@ __metadata:
     detox: ^19.9.2
     eslint: ^8.19.0
     eslint-config-prettier: ^8.3.0
+    eslint-plugin-ft-flow: latest
     eslint-plugin-functional: ^4.1.1
     eslint-plugin-import: ^2.25.4
     eslint-plugin-jest: ^28.8.3
