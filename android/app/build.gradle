@@ -108,6 +108,7 @@ android {
         pickFirst 'lib/arm64-v8a/libc++_shared.so'
         pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        exclude "lib/riscv64/**"  // Exclude riscv64 libraries due to https://github.com/mrousavy/react-native-vision-camera/issues/3177
     }
 
     dexOptions {
@@ -118,8 +119,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154898
-        versionName "2.80.0.3"
+        versionCode 100154900
+        versionName "2.80.0.5"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
