@@ -398,7 +398,7 @@ const ZendeskSupportHelpCenter = () => {
       animatedRef={animatedScrollViewRef}
       testID={"ZendeskSupportHelpCenterScreen"}
       includeContentMargins={false}
-      excludeEndContentMargin={true}
+      excludeEndContentMargin={showRequestSupportContacts}
     >
       <ContentWrapper>
         <FaqManager
