@@ -36,15 +36,10 @@ const styles = StyleSheet.create({
   }
 });
 
-type BannerErrorStateIcons = Extract<
-  IOIcons,
-  "warningFilled" | "noticeFilled" | "errorFilled"
->;
-
 /* Component Types */
 
 type BaseBannerErrorStateProps = WithTestID<{
-  icon?: BannerErrorStateIcons;
+  icon?: IOIcons;
   label: string;
   viewRef?: React.RefObject<View>;
   // A11y related props
