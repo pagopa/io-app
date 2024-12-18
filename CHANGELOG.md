@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.5](https://github.com/pagopa/io-app/compare/2.80.0-rc.4...2.80.0-rc.5) (2024-12-18)
+
+
+### Bug Fixes
+
+* [[IOPLT-812](https://pagopa.atlassian.net/browse/IOPLT-812)] Exclude lib riscv64 on android build ([#6564](https://github.com/pagopa/io-app/issues/6564)) ([a06dc5f](https://github.com/pagopa/io-app/commit/a06dc5fe334debf7a1e3578982c3acf8748ee454)), closes [/github.com/mrousavy/react-native-vision-camera/issues/3177#issuecomment-2385366758](https://github.com/pagopa//github.com/mrousavy/react-native-vision-camera/issues/3177/issues/issuecomment-2385366758)
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-206](https://pagopa.atlassian.net/browse/IOAPPX-206)] Add dynamic card effect based on device rotation ([#5715](https://github.com/pagopa/io-app/issues/5715)) ([c959d6a](https://github.com/pagopa/io-app/commit/c959d6abcc2d6dc98e02f75f4d8ab5f352325d16))
+* **Cross:** [[IOAPPX-437](https://pagopa.atlassian.net/browse/IOAPPX-437)] Add support for Material You by adding a new adaptive launcher icon for Android ([#6434](https://github.com/pagopa/io-app/issues/6434)) ([db8121f](https://github.com/pagopa/io-app/commit/db8121f10c29843ac706f9fc2bfe2abbab89a4ba))
+
+## [2.80.0-rc.4](https://github.com/pagopa/io-app/compare/2.80.0-rc.3...2.80.0-rc.4) (2024-12-18)
+
+
+### Bug Fixes
+
+* ffi version mismatch on linux environment ([#6563](https://github.com/pagopa/io-app/issues/6563)) ([082241e](https://github.com/pagopa/io-app/commit/082241eec664fb751b5bc7b8289469326b663167))
+
+## [2.80.0-rc.3](https://github.com/pagopa/io-app/compare/2.80.0-rc.2...2.80.0-rc.3) (2024-12-17)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1927](https://pagopa.atlassian.net/browse/SIW-1927)] Add pull-to-refresh to the wallet screen ([#6556](https://github.com/pagopa/io-app/issues/6556)) ([31f4df0](https://github.com/pagopa/io-app/commit/31f4df055509beab9b05de1ad6f55caa0a8eabc6))
+
+## [2.80.0-rc.2](https://github.com/pagopa/io-app/compare/2.80.0-rc.1...2.80.0-rc.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* align Gemfile.lock ([51c33ac](https://github.com/pagopa/io-app/commit/51c33acb94f77ab8f925946863213c2fb363c49d))
+
 ## [2.80.0-rc.1](https://github.com/pagopa/io-app/compare/2.80.0-rc.0...2.80.0-rc.1) (2024-12-17)
 
 
