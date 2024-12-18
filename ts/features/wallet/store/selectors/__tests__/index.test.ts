@@ -5,6 +5,7 @@ import {
   isWalletEmptySelector,
   selectWalletCards,
   selectWalletCategories,
+  shouldRenderCategoryFiltersSelector,
   shouldRenderWalletEmptyStateSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -16,6 +17,7 @@ import {
 import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
 import { WalletCardsState } from "../../reducers/cards";
+import { UNKNOWN_STATUS } from "../../../../itwallet/walletInstance/store/reducers";
 
 const T_CARDS: WalletCardsState = {
   "1": {
@@ -217,6 +219,37 @@ describe("shouldRenderWalletEmptyStateSelector", () => {
         )
       );
       expect(shouldRenderWalletEmptyState).toBe(expected);
+    }
+  );
+});
+
+describe("shouldRenderCategoryFiltersSelector", () => {
+  it.each`
+    walletCards                                   | walletInstanceStatus | expected
+    ${[{ category: "itw" }]}                      | ${undefined}         | ${false}
+    ${[{ category: "itw" }]}                      | ${UNKNOWN_STATUS}    | ${false}
+    ${[{ category: "itw" }, { category: "cgn" }]} | ${undefined}         | ${true}
+    ${[{ category: "itw" }, { category: "cgn" }]} | ${UNKNOWN_STATUS}    | ${false}
+  `(
+    "should return $expected when walletCards are $walletCards.length and walletInstanceStatus is $walletInstanceStatus",
+    ({ walletCards, walletInstanceStatus, expected }) => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+
+      const shouldRenderCategoryFilters = shouldRenderCategoryFiltersSelector(
+        _.merge(
+          globalState,
+          _.set(
+            globalState,
+            "features.itWallet.walletInstance.status",
+            walletInstanceStatus
+          ),
+          _.set(globalState, "features.wallet.cards", walletCards)
+        )
+      );
+      expect(shouldRenderCategoryFilters).toBe(expected);
     }
   );
 });
