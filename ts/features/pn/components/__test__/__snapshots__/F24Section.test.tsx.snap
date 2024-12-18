@@ -219,6 +219,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -395,6 +397,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -819,6 +822,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1043,6 +1047,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                         width={24}
                                       >
                                         <RNSVGGroup
+                                          color="#0B3EE3"
                                           fill={
                                             {
                                               "payload": 4278190080,
@@ -1315,6 +1320,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1377,6 +1383,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1659,6 +1666,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1721,6 +1729,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2003,6 +2012,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2065,6 +2075,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2347,6 +2358,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2409,6 +2421,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2523,6 +2536,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -2802,6 +2816,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -3069,6 +3084,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3131,6 +3147,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
