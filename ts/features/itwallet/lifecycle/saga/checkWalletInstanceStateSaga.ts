@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
-import { UNKNOWN_STATUS } from "../../walletInstance/store/reducers";
+import { FAILURE_STATUS } from "../../walletInstance/store/reducers";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
@@ -30,7 +30,7 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     // Update wallet instance status
     yield* put(itwUpdateWalletInstanceStatus(walletInstanceStatus));
   } catch (_) {
-    yield* put(itwUpdateWalletInstanceStatus(UNKNOWN_STATUS));
+    yield* put(itwUpdateWalletInstanceStatus(FAILURE_STATUS));
   }
 }
 

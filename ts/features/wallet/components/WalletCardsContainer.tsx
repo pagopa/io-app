@@ -28,7 +28,7 @@ import {
   selectWalletOtherCards,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
-import { itwIsWalletInstanceStatusUnknownSelector } from "../../itwallet/walletInstance/store/reducers";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../itwallet/walletInstance/store/reducers";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -49,8 +49,8 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
-  const isWalletInstanceStatusUnknown = useIOSelector(
-    itwIsWalletInstanceStatusUnknownSelector
+  const isWalletInstanceStatusFailure = useIOSelector(
+    itwIsWalletInstanceStatusFailureSelector
   );
 
   // Loading state is only displayed if there is the initial loading and there are no cards or
@@ -74,7 +74,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
-        {!isWalletInstanceStatusUnknown && shouldRenderCategory("itw") && (
+        {!isWalletInstanceStatusFailure && shouldRenderCategory("itw") && (
           <ItwWalletCardsContainer />
         )}
         {shouldRenderCategory("other") && <OtherWalletCardsContainer />}
@@ -84,7 +84,7 @@ const WalletCardsContainer = () => {
     shouldRenderEmptyState,
     shouldRenderCategory,
     shouldRenderLoadingState,
-    isWalletInstanceStatusUnknown
+    isWalletInstanceStatusFailure
   ]);
 
   return (

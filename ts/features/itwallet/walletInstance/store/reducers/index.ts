@@ -14,12 +14,12 @@ import {
 } from "../actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
 
-export const UNKNOWN_STATUS = "unknown";
-export type UnknownStatus = typeof UNKNOWN_STATUS;
+export const FAILURE_STATUS = "failure";
+export type FailureStatus = typeof FAILURE_STATUS;
 
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
-  status: WalletInstanceStatus | UnknownStatus | undefined;
+  status: WalletInstanceStatus | FailureStatus | undefined;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
@@ -82,7 +82,7 @@ export const itwIsWalletInstanceAttestationValidSelector = createSelector(
  * Returns true when it was not possible to retrieve the wallet instance status,
  * for instance because of unexpected errors.
  */
-export const itwIsWalletInstanceStatusUnknownSelector = (state: GlobalState) =>
-  state.features.itWallet.walletInstance.status === UNKNOWN_STATUS;
+export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.status === FAILURE_STATUS;
 
 export default persistedReducer;

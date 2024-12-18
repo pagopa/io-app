@@ -8,18 +8,18 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsWalletInstanceStatusUnknownSelector } from "../../walletInstance/store/reducers";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/reducers";
 
 /**
  * Component shown when it is not possible to retrieve the wallet instance status
- * from the backend. In this scenario the wallet instance status is unknown.
+ * from the backend, because of unexpected errors.
  */
 export const ItwWalletNotAvailableBanner = () => {
-  const isWalletInstanceStatusUnknown = useIOSelector(
-    itwIsWalletInstanceStatusUnknownSelector
+  const isWalletInstanceStatusFailed = useIOSelector(
+    itwIsWalletInstanceStatusFailureSelector
   );
 
-  if (!isWalletInstanceStatusUnknown) {
+  if (!isWalletInstanceStatusFailed) {
     return null;
   }
 

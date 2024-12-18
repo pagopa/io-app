@@ -17,7 +17,7 @@ import {
 import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
 import { WalletCardsState } from "../../reducers/cards";
-import { UNKNOWN_STATUS } from "../../../../itwallet/walletInstance/store/reducers";
+import { FAILURE_STATUS } from "../../../../itwallet/walletInstance/store/reducers";
 
 const T_CARDS: WalletCardsState = {
   "1": {
@@ -227,9 +227,9 @@ describe("shouldRenderCategoryFiltersSelector", () => {
   it.each`
     walletCards                                   | walletInstanceStatus | expected
     ${[{ category: "itw" }]}                      | ${undefined}         | ${false}
-    ${[{ category: "itw" }]}                      | ${UNKNOWN_STATUS}    | ${false}
+    ${[{ category: "itw" }]}                      | ${FAILURE_STATUS}    | ${false}
     ${[{ category: "itw" }, { category: "cgn" }]} | ${undefined}         | ${true}
-    ${[{ category: "itw" }, { category: "cgn" }]} | ${UNKNOWN_STATUS}    | ${false}
+    ${[{ category: "itw" }, { category: "cgn" }]} | ${FAILURE_STATUS}    | ${false}
   `(
     "should return $expected when walletCards are $walletCards.length and walletInstanceStatus is $walletInstanceStatus",
     ({ walletCards, walletInstanceStatus, expected }) => {

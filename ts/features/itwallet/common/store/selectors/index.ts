@@ -8,7 +8,7 @@ import {
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-import { itwIsWalletInstanceStatusUnknownSelector } from "../../../walletInstance/store/reducers";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/reducers";
 import {
   itwIsFeedbackBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector
@@ -58,6 +58,6 @@ export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
-  !itwIsWalletInstanceStatusUnknownSelector(state) &&
+  !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwIsWalletEmptySelector(state);
