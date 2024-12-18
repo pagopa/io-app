@@ -60,7 +60,8 @@ const reducer = (
 const itwWalletInstancePersistConfig: PersistConfig = {
   key: "itwWalletInstance",
   storage: itwCreateSecureStorage(),
-  version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION
+  version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
+  blacklist: ["status"]
 };
 
 const persistedReducer = persistReducer(
