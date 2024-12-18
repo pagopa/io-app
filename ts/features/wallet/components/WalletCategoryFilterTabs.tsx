@@ -14,6 +14,7 @@ import {
   selectWalletCategoryFilter
 } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
+import { useDebugInfo } from "../../../hooks/useDebugInfo";
 
 /**
  * Renders filter tabs to categorize cards on the wallet home screen.
@@ -23,17 +24,24 @@ import { walletCardCategoryFilters } from "../types";
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
-  const selectedCategory = useIOSelector(selectWalletCategoryFilter);
+  const categoryFilter = useIOSelector(selectWalletCategoryFilter);
   const isFilteringEnabled = useIOSelector(
     isWalletCategoryFilteringEnabledSelector
   );
 
+  useDebugInfo({
+    wallet: {
+      isFilteringEnabled,
+      categoryFilter
+    }
+  });
+
   const selectedIndex = React.useMemo(
     () =>
-      selectedCategory
-        ? walletCardCategoryFilters.indexOf(selectedCategory) + 1
+      categoryFilter
+        ? walletCardCategoryFilters.indexOf(categoryFilter) + 1
         : 0,
-    [selectedCategory]
+    [categoryFilter]
   );
 
   if (!isFilteringEnabled) {

@@ -23,7 +23,6 @@ import {
   isWalletEmptySelector,
   selectIsWalletCardsLoading,
   selectWalletCategories,
-  selectWalletCategoryFilter,
   selectWalletItwCards,
   selectWalletOtherCards,
   shouldRenderWalletEmptyStateSelector
@@ -44,8 +43,6 @@ const EID_INFO_BOTTOM_PADDING = 128;
 const WalletCardsContainer = () => {
   const isLoading = useIOSelector(selectIsWalletCardsLoading);
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
-  const categories = useIOSelector(selectWalletCategories);
-  const selectedCategory = useIOSelector(selectWalletCategoryFilter);
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
@@ -53,17 +50,6 @@ const WalletCardsContainer = () => {
   // Loading state is only displayed if there is the initial loading and there are no cards or
   // placeholders in the wallet
   const shouldRenderLoadingState = isLoading && isWalletEmpty;
-
-  useDebugInfo({
-    wallet: {
-      isLoading,
-      isWalletEmpty,
-      categories,
-      selectedCategory,
-      shouldRenderEmptyState,
-      shouldRenderLoadingState
-    }
-  });
 
   // Content to render in the wallet screen, based on the current state
   const walletContent = React.useMemo(() => {
@@ -117,11 +103,10 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   useDebugInfo({
     itw: {
-      cards,
       isItwValid,
       isItwEnabled,
       eidStatus,
-      isEidExpired
+      cards
     }
   });
 
