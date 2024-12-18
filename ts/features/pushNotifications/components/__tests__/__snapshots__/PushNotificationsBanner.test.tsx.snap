@@ -219,6 +219,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -759,6 +761,7 @@ exports[`PushNotificationsBanner should render correctly 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0E0F13"
                                       fill={
                                         {
                                           "payload": 4278190080,

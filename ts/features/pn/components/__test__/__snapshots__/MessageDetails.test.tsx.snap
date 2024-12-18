@@ -219,6 +219,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -430,6 +432,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       width={16}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -537,6 +540,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   width={16}
                                 >
                                   <RNSVGGroup
+                                    color="#475A6D"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -815,6 +819,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -1024,6 +1029,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -1291,6 +1297,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               width={24}
                                             >
                                               <RNSVGGroup
+                                                color="#99A3C1"
                                                 fill={
                                                   {
                                                     "payload": 4278190080,
@@ -1408,6 +1415,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               width={24}
                                             >
                                               <RNSVGGroup
+                                                color="#0B3EE3"
                                                 fill={
                                                   {
                                                     "payload": 4278190080,
@@ -1605,6 +1613,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               width={24}
                                             >
                                               <RNSVGGroup
+                                                color="#99A3C1"
                                                 fill={
                                                   {
                                                     "payload": 4278190080,
@@ -1722,6 +1731,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                               width={24}
                                             >
                                               <RNSVGGroup
+                                                color="#0B3EE3"
                                                 fill={
                                                   {
                                                     "payload": 4278190080,

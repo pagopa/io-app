@@ -27,13 +27,16 @@ const reducer = (
       };
 
     case getType(walletAddCards):
-      return action.payload.reduce(
-        (obj, card) => ({
+      return action.payload.reduce((obj, card) => {
+        if (card.type === "placeholder" && obj[card.key]) {
+          // Do not ovveride card with a placeholder if already present
+          return obj;
+        }
+        return {
           ...obj,
           [card.key]: card
-        }),
-        state
-      );
+        };
+      }, state);
 
     case getType(walletRemoveCards):
       return Object.fromEntries(

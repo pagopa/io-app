@@ -219,6 +219,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2668,6 +2670,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2730,6 +2733,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
