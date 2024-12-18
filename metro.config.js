@@ -13,6 +13,12 @@ const withE2ESourceExts = process.env.RN_SRC_EXT
   ? process.env.RN_SRC_EXT.split(",").concat(sourceExts)
   : sourceExts;
 
+/**
+ * Metro configuration
+ * https://reactnative.dev/docs/metro
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
 const config = {
   serializer: {
     customSerializer: createSentryMetroSerializer()

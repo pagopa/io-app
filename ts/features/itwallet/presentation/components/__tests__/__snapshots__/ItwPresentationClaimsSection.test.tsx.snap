@@ -219,6 +219,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -351,7 +353,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 18,
+                                  "fontSize": 17,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -419,13 +421,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -469,6 +465,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0073E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -559,7 +556,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -642,7 +639,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -725,7 +722,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -808,7 +805,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -891,7 +888,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -974,7 +971,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1057,7 +1054,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1140,7 +1137,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1223,7 +1220,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1306,7 +1303,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1389,7 +1386,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1472,7 +1469,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1538,13 +1535,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -1588,6 +1579,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1678,7 +1670,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2078,6 +2070,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2140,6 +2133,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2210,7 +2204,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 {
                                   "color": "#555C70",
                                   "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 18,
+                                  "fontSize": 17,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2278,13 +2272,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     {
                                       "justifyContent": "center",
                                     },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": undefined,
-                                        },
-                                      ],
-                                    },
+                                    false,
                                   ]
                                 }
                               >
@@ -2328,6 +2316,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   width={24}
                                 >
                                   <RNSVGGroup
+                                    color="#0073E6"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2418,7 +2407,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2501,7 +2490,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2584,7 +2573,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2667,7 +2656,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2750,7 +2739,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2833,7 +2822,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2916,7 +2905,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3054,7 +3043,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3137,7 +3126,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3220,7 +3209,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3303,7 +3292,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3386,7 +3375,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "color": "#0E0F13",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3452,13 +3441,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -3502,6 +3485,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3592,7 +3576,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,

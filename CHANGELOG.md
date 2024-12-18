@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.4](https://github.com/pagopa/io-app/compare/2.80.0-rc.3...2.80.0-rc.4) (2024-12-18)
+
+
+### Bug Fixes
+
+* ffi version mismatch on linux environment ([#6563](https://github.com/pagopa/io-app/issues/6563)) ([082241e](https://github.com/pagopa/io-app/commit/082241eec664fb751b5bc7b8289469326b663167))
+
+## [2.80.0-rc.3](https://github.com/pagopa/io-app/compare/2.80.0-rc.2...2.80.0-rc.3) (2024-12-17)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1927](https://pagopa.atlassian.net/browse/SIW-1927)] Add pull-to-refresh to the wallet screen ([#6556](https://github.com/pagopa/io-app/issues/6556)) ([31f4df0](https://github.com/pagopa/io-app/commit/31f4df055509beab9b05de1ad6f55caa0a8eabc6))
+
+## [2.80.0-rc.2](https://github.com/pagopa/io-app/compare/2.80.0-rc.1...2.80.0-rc.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* align Gemfile.lock ([51c33ac](https://github.com/pagopa/io-app/commit/51c33acb94f77ab8f925946863213c2fb363c49d))
+
+## [2.80.0-rc.1](https://github.com/pagopa/io-app/compare/2.80.0-rc.0...2.80.0-rc.1) (2024-12-17)
+
+
+### Bug Fixes
+
+* setup-ruby on CI failure ([#6560](https://github.com/pagopa/io-app/issues/6560)) ([5bcfac6](https://github.com/pagopa/io-app/commit/5bcfac6347a62f62ae701be498900b8f9c88fd05))
+
+## [2.80.0-rc.0](https://github.com/pagopa/io-app/compare/2.79.0-rc.11...2.80.0-rc.0) (2024-12-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1630](https://pagopa.atlassian.net/browse/SIW-1630)] Identification through direct integration with the CieID app ([#6545](https://github.com/pagopa/io-app/issues/6545)) ([3ac2969](https://github.com/pagopa/io-app/commit/3ac296935f0b278f2d27e6c9941672d86849965e))
+
+
+### Chores
+
+* [[IOPLT-764](https://pagopa.atlassian.net/browse/IOPLT-764)] Upgrade to react-native 0.75 ([#6348](https://github.com/pagopa/io-app/issues/6348)) ([fd27f42](https://github.com/pagopa/io-app/commit/fd27f42c955534813bb7931893fe94faa73bce88)), closes [pagopa/io-cie-sdk#53](https://github.com/pagopa/io-cie-sdk/issues/53) [pagopa/io-react-native-jwt#34](https://github.com/pagopa/io-react-native-jwt/issues/34) [pagopa/io-react-native-crypto#32](https://github.com/pagopa/io-react-native-crypto/issues/32)
+* **Cross:** [[IOAPPX-428](https://pagopa.atlassian.net/browse/IOAPPX-428)] Replace local animation hooks with `useScaleAnimation` and `useListItemAnimation` + Add support for the `reducedMotion` setting ([#6536](https://github.com/pagopa/io-app/issues/6536)) ([10f4351](https://github.com/pagopa/io-app/commit/10f4351a765a8859853f4e2ff68aab4c4c26a77d))
+* **Cross:** [[IOAPPX-442](https://pagopa.atlassian.net/browse/IOAPPX-442)] Fix dark mode text on light backgrounds + Fix overflow text on cards + Extend dark mode support ([#6473](https://github.com/pagopa/io-app/issues/6473)) ([a5f2871](https://github.com/pagopa/io-app/commit/a5f2871db9baee50e2371324da0b988f091d0236))
+* [[IOBP-1050](https://pagopa.atlassian.net/browse/IOBP-1050)] Rename biz events in receipt ([#6540](https://github.com/pagopa/io-app/issues/6540)) ([89e1a80](https://github.com/pagopa/io-app/commit/89e1a80bb7ca77e914d05d828d22882d08b5d1e4))
+* [[IOBP-1064](https://pagopa.atlassian.net/browse/IOBP-1064)] Add payment auth error mixpanel event ([#6535](https://github.com/pagopa/io-app/issues/6535)) ([fc97220](https://github.com/pagopa/io-app/commit/fc97220299daec0467a8ad0a6f342e2940c93dfe))
+* [[IOBP-1085](https://pagopa.atlassian.net/browse/IOBP-1085)] Removed delete transaction API request when closing in-app browser ([#6553](https://github.com/pagopa/io-app/issues/6553)) ([2195185](https://github.com/pagopa/io-app/commit/2195185115024fc27f44ba3a60894f197f48ac84))
+
 ## [2.79.0-rc.11](https://github.com/pagopa/io-app/compare/2.79.0-rc.10...2.79.0-rc.11) (2024-12-13)
 
 
