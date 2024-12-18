@@ -3297,6 +3297,9 @@ features:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
+      walletNotAvailable:
+        message: Abbiamo avuto un problema nel recuperare i tuoi documenti.
+        cta: Chiudi e riapri l'app per riprovare.
     verifiableCredentials:
       claims:
         uniqueId: "ID univoco"

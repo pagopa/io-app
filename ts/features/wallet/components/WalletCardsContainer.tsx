@@ -27,11 +27,13 @@ import {
   selectWalletOtherCards,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
+import { itwIsWalletInstanceStatusUnknownSelector } from "../../itwallet/walletInstance/store/reducers";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+import { WalletItwNotAvailableErrorBanner } from "./WalletItwNotAvailableErrorBanner";
 
 const EID_INFO_BOTTOM_PADDING = 128;
 
@@ -100,6 +102,7 @@ const ItwWalletCardsContainer = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const unknownStatus = useIOSelector(itwIsWalletInstanceStatusUnknownSelector);
 
   const isEidExpired = eidStatus === "jwtExpired";
 
@@ -147,6 +150,11 @@ const ItwWalletCardsContainer = () => {
 
   if (!isItwEnabled) {
     return null;
+  }
+
+  // When it's not possible to retrieve the wallet instance status from the backend we disable the wallet
+  if (unknownStatus) {
+    return <WalletItwNotAvailableErrorBanner />;
   }
 
   return (

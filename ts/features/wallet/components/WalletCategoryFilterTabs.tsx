@@ -10,8 +10,8 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackWalletCategoryFilter } from "../../itwallet/analytics";
 import { walletSetCategoryFilter } from "../store/actions/preferences";
 import {
-  selectWalletCategories,
-  selectWalletCategoryFilter
+  selectWalletCategoryFilter,
+  shouldRenderCategoryFiltersSelector
 } from "../store/selectors";
 import { walletCardCategoryFilters } from "../types";
 
@@ -24,7 +24,7 @@ const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
-  const categories = useIOSelector(selectWalletCategories);
+  const shouldRender = useIOSelector(shouldRenderCategoryFiltersSelector);
 
   const selectedIndex = React.useMemo(
     () =>
@@ -34,7 +34,7 @@ const WalletCategoryFilterTabs = () => {
     [selectedCategory]
   );
 
-  if (categories.size <= 1) {
+  if (!shouldRender) {
     return null;
   }
 

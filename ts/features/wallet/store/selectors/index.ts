@@ -7,6 +7,7 @@ import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/s
 import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
 import { WalletCard, walletCardCategories } from "../../types";
 import { isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
+import { itwIsWalletInstanceStatusUnknownSelector } from "../../../itwallet/walletInstance/store/reducers";
 
 const selectWalletFeature = (state: GlobalState) => state.features.wallet;
 
@@ -127,3 +128,10 @@ export const isWalletScreenRefreshingSelector = (state: GlobalState) =>
   isSomeLoadingOrSomeUpdating(paymentsWalletUserMethodsSelector(state)) ||
   isSomeLoadingOrSomeUpdating(idPayWalletInitiativeListSelector(state)) ||
   isSomeLoadingOrSomeUpdating(cgnDetailSelector(state));
+
+/**
+ * Selector that handles the visibility of the category filter tabs shown on the wallet screen.
+ */
+export const shouldRenderCategoryFiltersSelector = (state: GlobalState) =>
+  selectWalletCategories(state).size > 1 &&
+  !itwIsWalletInstanceStatusUnknownSelector(state);
