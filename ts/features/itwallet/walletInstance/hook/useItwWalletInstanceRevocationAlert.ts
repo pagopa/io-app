@@ -24,7 +24,6 @@ const itwDocsOnIOMultipleDevicesUrl =
  * @param walletInstanceStatus - The status of the wallet instance, including whether it is revoked and the reason for revocation.
  */
 export const useItwWalletInstanceRevocationAlert = () => {
-
   const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
   const dispatch = useIODispatch();
 
