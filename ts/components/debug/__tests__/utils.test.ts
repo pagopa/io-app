@@ -6,9 +6,12 @@ describe("truncateObjectStrings", () => {
     ${"Long string"}                                   | ${4}      | ${"Long..."}
     ${{ outer: { inner: "Long string" }, bool: true }} | ${4}      | ${{ outer: { inner: "Long..." }, bool: true }}
     ${["Long string", "Very long string"]}             | ${4}      | ${["Long...", "Very..."]}
-    ${new Set(["Long string", "Very long string"])}    | ${4}      | ${new Set(["Long...", "Very..."])}
-  `("should truncate strings", ({ input, maxLength, expected }) => {
-    const result = truncateObjectStrings(input, maxLength);
-    expect(result).toEqual(expected);
-  });
+    ${new Set(["Long string", "Very long string"])}    | ${4}      | ${["Long...", "Very..."]}
+  `(
+    "$input should be truncated to $expected",
+    ({ input, maxLength, expected }) => {
+      const result = truncateObjectStrings(input, maxLength);
+      expect(result).toEqual(expected);
+    }
+  );
 });

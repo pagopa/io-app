@@ -1,7 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import * as selectors from "..";
+import {
+  isWalletCategoryFilteringEnabledSelector,
+  isWalletEmptySelector,
+  selectWalletCards,
+  selectWalletCardsByCategory,
+  selectWalletCardsByType,
+  selectWalletCategories,
+  shouldRenderWalletCategorySelector,
+  shouldRenderWalletEmptyStateSelector
+} from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import {
@@ -10,10 +19,25 @@ import {
 } from "../../../../itwallet/common/utils/itwMocksUtils";
 import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
-import { WalletCardsState } from "../../reducers/cards";
 import { walletCardCategoryFilters } from "../../../types";
+import { WalletCardsState } from "../../reducers/cards";
 
-const T_CARDS: WalletCardsState = {
+const T_ITW_CARDS: WalletCardsState = {
+  "4": {
+    key: "4",
+    category: "itw",
+    type: "itw",
+    credentialType: CredentialType.DRIVING_LICENSE
+  },
+  "5": {
+    key: "5",
+    category: "itw",
+    type: "itw",
+    credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  }
+};
+
+const T_OTHER_CARDS: WalletCardsState = {
   "1": {
     key: "1",
     category: "payment",
@@ -36,26 +60,19 @@ const T_CARDS: WalletCardsState = {
     key: "3",
     category: "cgn",
     type: "cgn"
-  },
-  "4": {
-    key: "4",
-    category: "itw",
-    type: "itw",
-    credentialType: CredentialType.DRIVING_LICENSE
-  },
-  "5": {
-    key: "5",
-    category: "itw",
-    type: "itw",
-    credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
   }
+};
+
+const T_CARDS: WalletCardsState = {
+  ...T_ITW_CARDS,
+  ...T_OTHER_CARDS
 };
 
 describe("selectWalletCards", () => {
   it("should return the correct cards", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const cards = selectors.selectWalletCards(
+    const cards = selectWalletCards(
       _.set(globalState, "features.wallet", {
         cards: {
           ...T_CARDS,
@@ -81,7 +98,7 @@ describe("selectWalletCategories", () => {
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockImplementation(() => true);
 
-    const categories = selectors.selectWalletCategories(
+    const categories = selectWalletCategories(
       _.set(globalState, "features.wallet", {
         cards: T_CARDS
       })
@@ -92,7 +109,7 @@ describe("selectWalletCategories", () => {
   it("should return 'itw' and 'other' categories when itw is valid but no ITW cards are present", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const categories = selectors.selectWalletCategories(
+    const categories = selectWalletCategories(
       _.merge(
         globalState,
         _.set(globalState, "features.wallet", {
@@ -115,7 +132,7 @@ describe("selectWalletCategories", () => {
   it("should return only `other` category", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const categories = selectors.selectWalletCategories(
+    const categories = selectWalletCategories(
       _.set(globalState, "features.wallet", {
         cards: [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]
       })
@@ -128,7 +145,7 @@ describe("selectWalletCardsByType", () => {
   it("should return the correct cards", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const cards = selectors.selectWalletCardsByType(
+    const cards = selectWalletCardsByType(
       _.set(globalState, "features.wallet", {
         cards: T_CARDS
       }),
@@ -142,7 +159,7 @@ describe("selectWalletCardsByCategory", () => {
   it("should return the correct cards", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const cards = selectors.selectWalletCardsByCategory(
+    const cards = selectWalletCardsByCategory(
       _.set(globalState, "features.wallet", {
         cards: T_CARDS
       }),
@@ -156,7 +173,7 @@ describe("isWalletEmptySelector", () => {
   it("should return true if there are no categories to display", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const isWalletEmpty = selectors.isWalletEmptySelector(
+    const isWalletEmpty = isWalletEmptySelector(
       _.merge(
         globalState,
         _.set(globalState, "features.wallet", {
@@ -179,7 +196,7 @@ describe("isWalletEmptySelector", () => {
   it("should return false if there are some cards", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const isWalletEmpty = selectors.isWalletEmptySelector(
+    const isWalletEmpty = isWalletEmptySelector(
       _.merge(
         globalState,
         _.set(globalState, "features.wallet", {
@@ -193,7 +210,7 @@ describe("isWalletEmptySelector", () => {
   it("should return false if ITW is valid", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const isWalletEmpty = selectors.isWalletEmptySelector(
+    const isWalletEmpty = isWalletEmptySelector(
       _.merge(
         globalState,
         _.set(globalState, "features.wallet", {
@@ -228,81 +245,123 @@ describe("shouldRenderWalletEmptyStateSelector", () => {
         applicationChangeState("active")
       );
 
-      const shouldRenderWalletEmptyState =
-        selectors.shouldRenderWalletEmptyStateSelector(
-          _.merge(
-            globalState,
-            _.set(globalState, "features.wallet", {
-              cards: walletCards
-            }),
-            _.set(globalState, "features.payments.wallet", {
-              userMethods
-            }),
-            _.set(globalState, "bonus.cgn.detail.information", cgnInformation)
-          )
-        );
+      const shouldRenderWalletEmptyState = shouldRenderWalletEmptyStateSelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: walletCards
+          }),
+          _.set(globalState, "features.payments.wallet", {
+            userMethods
+          }),
+          _.set(globalState, "bonus.cgn.detail.information", cgnInformation)
+        )
+      );
       expect(shouldRenderWalletEmptyState).toBe(expected);
     }
   );
+});
+
+describe("isWalletCategoryFilteringEnabledSelector", () => {
+  it("should return true if the categories are ['itw', 'other']", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const isWalletCategoryFilteringEnabled =
+      isWalletCategoryFilteringEnabledSelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_CARDS
+          })
+        )
+      );
+
+    expect(isWalletCategoryFilteringEnabled).toBe(true);
+  });
+
+  it("should return false if the categories are ['itw']", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const isWalletCategoryFilteringEnabled =
+      isWalletCategoryFilteringEnabledSelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_ITW_CARDS
+          })
+        )
+      );
+
+    expect(isWalletCategoryFilteringEnabled).toBe(false);
+  });
 });
 
 describe("shouldRenderWalletCategorySelector", () => {
   it("should return true if the category filter is undefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    jest
-      .spyOn(selectors, "selectWalletCategoryFilter")
-      .mockImplementation(() => undefined);
+    const shouldRenderWalletCategory = shouldRenderWalletCategorySelector(
+      _.merge(
+        globalState,
+        _.set(globalState, "features.wallet", {
+          cards: T_CARDS,
+          preferences: {
+            categoryFilter: undefined
+          }
+        })
+      ),
+      "itw"
+    );
 
-    jest
-      .spyOn(selectors, "selectWalletCategories")
-      .mockImplementation(() => new Set(["itw", "other"]));
-
-    const shouldRenderWalletCategory =
-      selectors.shouldRenderWalletCategorySelector(globalState, "itw");
     expect(shouldRenderWalletCategory).toBe(true);
   });
 
   it.each(walletCardCategoryFilters)(
-    "should return true if the category filter matches the given category when the category  is %s",
-    category => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-
-      jest
-        .spyOn(selectors, "selectWalletCategoryFilter")
-        .mockImplementation(() => category);
-
-      jest
-        .spyOn(selectors, "selectWalletCategories")
-        .mockImplementation(() => new Set(["itw", "other"]));
-
-      const shouldRenderWalletCategory =
-        selectors.shouldRenderWalletCategorySelector(globalState, category);
-      expect(shouldRenderWalletCategory).toBe(true);
-    }
-  );
-
-  it.each(walletCardCategoryFilters)(
-    "should return true if the given category matches the only category available and the category filter is %s",
+    "should return true if the category filter matches the given category when the category is %s",
     categoryFilter => {
       const globalState = appReducer(
         undefined,
         applicationChangeState("active")
       );
 
-      jest
-        .spyOn(selectors, "selectWalletCategoryFilter")
-        .mockImplementation(() => categoryFilter);
+      const shouldRenderWalletCategory = shouldRenderWalletCategorySelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_CARDS,
+            preferences: {
+              categoryFilter
+            }
+          })
+        ),
+        categoryFilter
+      );
 
-      jest
-        .spyOn(selectors, "selectWalletCategories")
-        .mockImplementation(() => new Set(["itw"]));
+      expect(shouldRenderWalletCategory).toBe(true);
+    }
+  );
 
-      const shouldRenderWalletCategory =
-        selectors.shouldRenderWalletCategorySelector(globalState, "itw");
+  it.each(walletCardCategoryFilters)(
+    "should return true if the category filtering is not enabled and the category filter is %s",
+    categoryFilter => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+
+      const shouldRenderWalletCategory = shouldRenderWalletCategorySelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_ITW_CARDS,
+            preferences: {
+              categoryFilter
+            }
+          })
+        ),
+        categoryFilter
+      );
+
       expect(shouldRenderWalletCategory).toBe(true);
     }
   );
