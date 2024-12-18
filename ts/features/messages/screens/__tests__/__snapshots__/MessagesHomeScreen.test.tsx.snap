@@ -78,6 +78,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -140,6 +141,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -208,13 +210,14 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                         >
                           This is a mock for TabNavigationContainer
                         </View>
-                        <RNCViewPager
+                        <LEGACY_RNCViewPager
                           layoutDirection="ltr"
                           onMoveShouldSetResponderCapture={[Function]}
                           onPageScroll={[Function]}
                           onPageScrollStateChanged={[Function]}
                           onPageSelected={[Function]}
                           testID="mock_pager_view_container"
+                          useLegacy={true}
                         >
                           <View
                             collapsable={false}
@@ -274,7 +277,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                               Mock Archive
                             </View>
                           </View>
-                        </RNCViewPager>
+                        </LEGACY_RNCViewPager>
                         <View
                           testID="mock_preconditions"
                         >
@@ -410,13 +413,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -460,6 +457,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -531,13 +529,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -581,6 +573,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -655,13 +648,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       {
                                         "justifyContent": "center",
                                       },
-                                      {
-                                        "transform": [
-                                          {
-                                            "scale": undefined,
-                                          },
-                                        ],
-                                      },
+                                      false,
                                     ]
                                   }
                                 >
@@ -705,6 +692,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0073E6"
                                       fill={
                                         {
                                           "payload": 4278190080,
