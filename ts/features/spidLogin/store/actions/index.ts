@@ -14,9 +14,11 @@ export const setStandardLoginRequestState = createStandardAction(
 export const setStandardLoginInLoadingState = createStandardAction(
   "SET_STANDARD_LOGIN_IN_LOADING_STATE"
 )();
+export const resetSpidLoginState = createStandardAction("RESET_LOGIN_STATE")();
 
 export type SpidConfigActions =
   | ActionType<typeof setNativeLoginRequestInfo>
   | ActionType<typeof incrementNativeLoginNativeAttempts>
   | ActionType<typeof setStandardLoginRequestState>
-  | ActionType<typeof setStandardLoginInLoadingState>;
+  | ActionType<typeof setStandardLoginInLoadingState>
+  | ActionType<typeof resetSpidLoginState>;

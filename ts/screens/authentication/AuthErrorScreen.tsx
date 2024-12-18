@@ -11,6 +11,7 @@ import { AuthenticationParamsList } from "../../navigation/params/Authentication
 import { useIODispatch } from "../../store/hooks";
 import {
   incrementNativeLoginNativeAttempts,
+  resetSpidLoginState,
   setStandardLoginInLoadingState
 } from "../../features/spidLogin/store/actions";
 import { UnlockAccessProps } from "./UnlockAccessComponent";
@@ -77,10 +78,11 @@ const AuthErrorScreen = () => {
   }, [authMethod, navigation, route.params, getNavigationParams, dispatch]);
 
   const onCancel = useCallback(() => {
+    dispatch(resetSpidLoginState());
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_LANDING
     });
-  }, [navigation]);
+  }, [navigation, dispatch]);
 
   return (
     <AuthErrorComponent

@@ -6,7 +6,8 @@ import {
   incrementNativeLoginNativeAttempts,
   setStandardLoginRequestState,
   setNativeLoginRequestInfo,
-  setStandardLoginInLoadingState
+  setStandardLoginInLoadingState,
+  resetSpidLoginState
 } from "../actions";
 
 export type SpidLoginState = {
@@ -78,6 +79,8 @@ export const spidLoginReducer = (
           }
         }
       };
+    case getType(resetSpidLoginState):
+      return spidLoginInitialState;
     default:
       return state;
   }
