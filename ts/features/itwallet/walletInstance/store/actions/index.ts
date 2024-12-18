@@ -20,7 +20,7 @@ export const itwUpdateWalletInstanceStatus = createStandardAction(
  */
 export const itwWalletInstanceSetAlertShown = createStandardAction(
   "ITW_WALLET_INSTANCE_SET_ALERT_SHOWN"
-)<void>();
+)<boolean>();
 
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>

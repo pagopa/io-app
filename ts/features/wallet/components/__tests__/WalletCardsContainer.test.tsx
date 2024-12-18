@@ -364,13 +364,11 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should not show alert if not revoked", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwWalletInstanceRevocationStatusSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
       .mockImplementation(() => ({
-        isRevoked: false,
-        revocationReason: ""
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: false,
+        revocation_reason: undefined
       }));
 
     renderComponent(WalletCardsContainer);
@@ -380,13 +378,11 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should show alert for NEW_WALLET_INSTANCE_CREATED", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwWalletInstanceRevocationStatusSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
       .mockImplementation(() => ({
-        isRevoked: true,
-        revocationReason: "NEW_WALLET_INSTANCE_CREATED"
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: true,
+        revocation_reason: "NEW_WALLET_INSTANCE_CREATED"
       }));
 
     renderComponent(WalletCardsContainer);
@@ -414,13 +410,11 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should show alert for CERTIFICATE_REVOKED_BY_ISSUER", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwWalletInstanceRevocationStatusSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
       .mockImplementation(() => ({
-        isRevoked: true,
-        revocationReason: "CERTIFICATE_REVOKED_BY_ISSUER"
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: true,
+        revocation_reason: "CERTIFICATE_REVOKED_BY_ISSUER"
       }));
 
     renderComponent(WalletCardsContainer);
@@ -448,13 +442,11 @@ describe("OtherWalletCardsContainer", () => {
 
   it("should show alert for REVOKED_BY_USER", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwWalletInstanceRevocationStatusSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwWalletInstanceStatusSelector")
       .mockImplementation(() => ({
-        isRevoked: true,
-        revocationReason: "REVOKED_BY_USER"
+        id: "39cc62ab-1df0-4a9d-974d-4c58173a1750",
+        is_revoked: true,
+        revocation_reason: "REVOKED_BY_USER"
       }));
 
     renderComponent(WalletCardsContainer);

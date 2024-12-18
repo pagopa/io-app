@@ -8,24 +8,18 @@ import {
   itwUpdateWalletInstanceStatus,
   itwWalletInstanceSetAlertShown
 } from "../actions";
-import { WalletInstanceRevocationReason } from "../../../common/utils/itwTypesUtils";
+import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
 
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
-  revocation: {
-    isRevoked: boolean;
-    alertShown: boolean;
-    revocationReason?: WalletInstanceRevocationReason;
-  };
+  status: WalletInstanceStatus | undefined;
+  revocationAlertShown: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
-  revocation: {
-    isRevoked: false,
-    alertShown: false,
-    revocationReason: undefined
-  }
+  status: undefined,
+  revocationAlertShown: false
 };
 
 const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = -1;
@@ -45,21 +39,14 @@ const reducer = (
     case getType(itwUpdateWalletInstanceStatus): {
       return {
         ...state,
-        revocation: {
-          ...state.revocation,
-          isRevoked: action.payload.is_revoked,
-          revocationReason: action.payload.revocation_reason
-        }
+        status: action.payload
       };
     }
 
     case getType(itwWalletInstanceSetAlertShown):
       return {
         ...state,
-        revocation: {
-          ...state.revocation,
-          alertShown: true
-        }
+        revocationAlertShown: action.payload
       };
 
     case getType(itwLifecycleStoresReset):

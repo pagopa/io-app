@@ -2,7 +2,10 @@ import { Alert, AlertButton, Linking } from "react-native";
 import React from "react";
 import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
+import {
+  WalletInstanceRevocationReason,
+  WalletInstanceStatus
+} from "../../common/utils/itwTypesUtils";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwWalletInstanceAlertShownSelector } from "../store/selectors";
 import { itwWalletInstanceSetAlertShown } from "../store/actions";
@@ -22,17 +25,16 @@ const itwDocsOnIOMultipleDevicesUrl =
  * Hook to monitor wallet instance status and display alerts if revoked.
  * @param walletInstanceStatus - The status of the wallet instance, including whether it is revoked and the reason for revocation.
  */
-export const useItwWalletInstanceRevocationAlert = (walletInstanceStatus: {
-  isRevoked: boolean;
-  revocationReason?: WalletInstanceRevocationReason;
-}) => {
+export const useItwWalletInstanceRevocationAlert = (
+  walletInstanceStatus: WalletInstanceStatus | undefined
+) => {
   const dispatch = useIODispatch();
   const alertShown = useIOSelector(itwWalletInstanceAlertShownSelector);
 
   React.useEffect(() => {
-    if (walletInstanceStatus.isRevoked && !alertShown) {
-      showWalletRevocationAlert(walletInstanceStatus.revocationReason);
-      dispatch(itwWalletInstanceSetAlertShown());
+    if (walletInstanceStatus?.is_revoked && !alertShown) {
+      showWalletRevocationAlert(walletInstanceStatus.revocation_reason);
+      dispatch(itwWalletInstanceSetAlertShown(true));
     }
   }, [walletInstanceStatus, alertShown, dispatch]);
 };
