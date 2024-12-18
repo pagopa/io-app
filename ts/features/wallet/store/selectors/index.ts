@@ -1,23 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
+import { isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
 import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/selectors";
 import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
-import { WalletCard, walletCardCategories } from "../../types";
-import { isSomeLoadingOrSomeUpdating } from "../../../../utils/pot";
+import {
+  WalletCard,
+  WalletCardCategory,
+  WalletCardType,
+  walletCardCategories
+} from "../../types";
+import { WalletCardCategoryFilter } from "../../types/index";
 
 const selectWalletFeature = (state: GlobalState) => state.features.wallet;
-
-export const selectWalletPlaceholders = createSelector(
-  selectWalletFeature,
-  wallet =>
-    Object.entries(wallet.placeholders.items).map(
-      ([key, category]) =>
-        ({ key, category, type: "placeholder" } as WalletCard)
-    )
-);
 
 /**
  * Returns the list of cards excluding hidden cards
@@ -81,26 +78,43 @@ export const selectWalletOtherCards = createSelector(
   cards => cards.filter(({ category }) => category !== "itw")
 );
 
+/**
+ * Selects the cards by their category
+ * @param category - The category of the cards to select
+ */
+export const selectWalletCardsByCategory = createSelector(
+  selectSortedWalletCards,
+  (_: GlobalState, category: WalletCardCategory) => category,
+  (cards, category) =>
+    cards.filter(({ category: cardCategory }) => cardCategory === category)
+);
+
+/**
+ * Selects the cards by their type
+ * @param type - The type of the cards to select
+ */
+export const selectWalletCardsByType = createSelector(
+  selectSortedWalletCards,
+  (_: GlobalState, type: WalletCardType) => type,
+  (cards, type) => cards.filter(({ type: cardType }) => cardType === type)
+);
+
+/**
+ * Selects the loading state of the wallet cards
+ */
 export const selectIsWalletCardsLoading = (state: GlobalState) =>
   state.features.wallet.placeholders.isLoading;
 
-export const selectWalletCategoryFilter = createSelector(
+/**
+ * Selects the placeholders from the wallet
+ */
+export const selectWalletPlaceholders = createSelector(
   selectWalletFeature,
-  wallet => wallet.preferences.categoryFilter
-);
-
-export const selectWalletPaymentMethods = createSelector(
-  selectSortedWalletCards,
-  cards => cards.filter(({ category }) => category === "payment")
-);
-
-export const selectWalletCgnCard = createSelector(
-  selectSortedWalletCards,
-  cards => cards.filter(({ category }) => category === "cgn")
-);
-
-export const selectBonusCards = createSelector(selectSortedWalletCards, cards =>
-  cards.filter(({ category }) => category === "bonus")
+  wallet =>
+    Object.entries(wallet.placeholders.items).map(
+      ([key, category]) =>
+        ({ key, category, type: "placeholder" } as WalletCard)
+    )
 );
 
 /**
@@ -127,3 +141,23 @@ export const isWalletScreenRefreshingSelector = (state: GlobalState) =>
   isSomeLoadingOrSomeUpdating(paymentsWalletUserMethodsSelector(state)) ||
   isSomeLoadingOrSomeUpdating(idPayWalletInitiativeListSelector(state)) ||
   isSomeLoadingOrSomeUpdating(cgnDetailSelector(state));
+
+/**
+ * Selects the category filter from the wallet preferences
+ */
+export const selectWalletCategoryFilter = (state: GlobalState) =>
+  state.features.wallet.preferences.categoryFilter;
+
+/**
+ * Checks if a wallet category section should be rendered. A category section is rendered if:
+ * - no category filter is selected, or
+ * - the filter matches the given category, or
+ * - the wallet contains only one category
+ */
+export const shouldRenderWalletCategorySelector = createSelector(
+  selectWalletCategoryFilter,
+  selectWalletCategories,
+  (_: GlobalState, category: WalletCardCategoryFilter) => category,
+  (filter, categories, category) =>
+    filter === undefined || filter === category || categories.size <= 0
+);
