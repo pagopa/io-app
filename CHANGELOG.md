@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-canary.6552](https://github.com/pagopa/io-app/compare/2.80.0-rc.5...2.80.0-canary.6552) (2024-12-19)
+
+
+### Bug Fixes
+
+* [[IOPLT-814](https://pagopa.atlassian.net/browse/IOPLT-814)] Fixes workflow concatenation after changes due to test improvements ([#6572](https://github.com/pagopa/io-app/issues/6572)) ([d8a8e66](https://github.com/pagopa/io-app/commit/d8a8e660bfc5bf9358e2050763ebeeff5b6b9c4c))
+
+
+### Chores
+
+* [[IOBP-1076](https://pagopa.atlassian.net/browse/IOBP-1076)] FAQ without CTA with sticky buttons ([#6555](https://github.com/pagopa/io-app/issues/6555)) ([a0d562f](https://github.com/pagopa/io-app/commit/a0d562fc949e40ca7b24b714e42e41f53db56f32))
+* [[IOPLT-813](https://pagopa.atlassian.net/browse/IOPLT-813)] Fix android run script and align Gemfile ([#6571](https://github.com/pagopa/io-app/issues/6571)) ([bbe6980](https://github.com/pagopa/io-app/commit/bbe69800a17a8e0b6b88629da9b58fa7f23f95c4))
+* **IT Wallet:** [[SIW-1793](https://pagopa.atlassian.net/browse/SIW-1793)] Update non-matching identity screen ([#6559](https://github.com/pagopa/io-app/issues/6559)) ([5c04708](https://github.com/pagopa/io-app/commit/5c04708efdf2aa82263c947073eb6c9e489f15f7))
+* [[IOPLT-798](https://pagopa.atlassian.net/browse/IOPLT-798)] Split test execution using shards ([#6500](https://github.com/pagopa/io-app/issues/6500)) ([7d9df54](https://github.com/pagopa/io-app/commit/7d9df5479cd9784e2679e5a5188d085cb68dbef5))
+* [[IOPLT-801](https://pagopa.atlassian.net/browse/IOPLT-801)] Improvements to canary release workflow ([#6468](https://github.com/pagopa/io-app/issues/6468)) ([dc66860](https://github.com/pagopa/io-app/commit/dc668601582efbb029b36c58186e7fb9e098b576))
+
 ## [2.80.0-rc.5](https://github.com/pagopa/io-app/compare/2.80.0-rc.4...2.80.0-rc.5) (2024-12-18)
 
 
