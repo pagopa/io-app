@@ -1,4 +1,4 @@
-import { Alert, AlertButton } from "react-native";
+import { Alert } from "react-native";
 import { useCallback } from "react";
 import I18n from "../../../../i18n";
 import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
@@ -44,7 +44,7 @@ const showWalletRevocationAlert = (
 ) => {
   switch (revocationReason) {
     case "CERTIFICATE_REVOKED_BY_ISSUER":
-      showAlert(
+      Alert.alert(
         I18n.t(
           "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.title"
         ),
@@ -62,7 +62,7 @@ const showWalletRevocationAlert = (
       break;
 
     case "NEW_WALLET_INSTANCE_CREATED":
-      showAlert(
+      Alert.alert(
         I18n.t(
           "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.title"
         ),
@@ -79,7 +79,7 @@ const showWalletRevocationAlert = (
       );
       break;
     case "REVOKED_BY_USER":
-      showAlert(
+      Alert.alert(
         I18n.t(
           "features.itWallet.walletInstanceRevoked.alert.revokedByUser.title"
         ),
@@ -98,12 +98,4 @@ const showWalletRevocationAlert = (
     default:
       break;
   }
-};
-
-const showAlert = (
-  title: string,
-  message: string,
-  buttons: Array<AlertButton> = [{ text: closeButtonText }]
-) => {
-  Alert.alert(title, message, buttons);
 };
