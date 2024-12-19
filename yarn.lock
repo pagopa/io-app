@@ -3839,10 +3839,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/react-native-cie@npm:^1.4.0":
+"@pagopa/react-native-cie@https://github.com/pagopa/io-cie-sdk#ioappx-454":
   version: 1.4.0
-  resolution: "@pagopa/react-native-cie@npm:1.4.0"
-  checksum: 742b53251d0bd5a530ee63dcb7a9e604b7a06fc848f4a5643b3fdc841935c92fa5f8453e3c7cb8006bcab7c27563ff88efb53528a1df0256cf53cb7c57f251b1
+  resolution: "@pagopa/react-native-cie@https://github.com/pagopa/io-cie-sdk.git#commit=f6072b47260a8683ee393b78d696498153fe97b7"
+  checksum: 5fef6dec62c2bd6df90b8c97451038acae4f6f9893c466d4bc8e19b306abf6c178ed7ba63eb22c3d6b86b5582bc3f4ab147a2c00c356c3702717059e4327c98d
   languageName: node
   linkType: hard
 
@@ -13569,7 +13569,7 @@ __metadata:
     "@pagopa/io-react-native-wallet": ^0.27.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^14.0.0
-    "@pagopa/react-native-cie": ^1.4.0
+    "@pagopa/react-native-cie": "https://github.com/pagopa/io-cie-sdk#ioappx-454"
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-clipboard/clipboard": ^1.14.0
