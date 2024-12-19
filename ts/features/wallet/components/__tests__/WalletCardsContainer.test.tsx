@@ -91,7 +91,7 @@ describe("WalletCardsContainer", () => {
 
   it("should render the loading screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+      .spyOn(walletSelectors, "selectIsWalletLoading")
       .mockImplementation(() => true);
     jest
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
@@ -113,7 +113,7 @@ describe("WalletCardsContainer", () => {
 
   it("should render the empty screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+      .spyOn(walletSelectors, "selectIsWalletLoading")
       .mockImplementation(() => false);
     jest
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
@@ -146,14 +146,14 @@ describe("WalletCardsContainer", () => {
         .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
 
       jest
-        .spyOn(walletSelectors, "selectWalletItwCards")
+        .spyOn(walletSelectors, "selectWalletCardsByCategory")
         .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
       jest
         .spyOn(configSelectors, "isItwEnabledSelector")
         .mockImplementation(() => true);
       jest
-        .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+        .spyOn(walletSelectors, "selectIsWalletLoading")
         .mockImplementation(() => false);
       jest
         .spyOn(walletSelectors, "selectWalletCategoryFilter")
@@ -189,7 +189,7 @@ describe("WalletCardsContainer", () => {
         .mockImplementation(() => true);
 
       jest
-        .spyOn(walletSelectors, "selectIsWalletCardsLoading")
+        .spyOn(walletSelectors, "selectIsWalletLoading")
         .mockImplementation(() => isLoading);
       jest
         .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
@@ -240,7 +240,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(configSelectors, "isItwEnabledSelector")
       .mockImplementation(() => true);
     jest
-      .spyOn(walletSelectors, "selectWalletItwCards")
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
       .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
     const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
