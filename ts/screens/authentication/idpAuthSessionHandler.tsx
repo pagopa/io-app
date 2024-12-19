@@ -11,7 +11,7 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
@@ -59,6 +59,8 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import { nativeLoginRequestInfoSelector } from "../../features/spidLogin/store/selectors";
+import { setNativeLoginRequestInfo } from "../../features/spidLogin/store/actions";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -115,12 +117,16 @@ const idpAuthSession = (
 
 // This page is used in the native login process.
 export const AuthSessionPage = () => {
-  const [requestInfo, setRequestInfo] = useState<RequestInfo>({
-    requestState: "LOADING",
-    nativeAttempts: 0
-  });
-
+  const dispatch = useIODispatch();
+  const requestInfo = useIOSelector(nativeLoginRequestInfoSelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+
+  const setRequestInfo = useCallback(
+    (reqInfo: RequestInfo) => {
+      dispatch(setNativeLoginRequestInfo(reqInfo));
+    },
+    [dispatch]
+  );
 
   // This is a handler for the browser login. It applies to android only.
   useEffect(() => {
@@ -136,9 +142,7 @@ export const AuthSessionPage = () => {
     return () => {
       subscription.remove();
     };
-  }, [requestInfo.nativeAttempts]);
-
-  const dispatch = useIODispatch();
+  }, [requestInfo.nativeAttempts, setRequestInfo]);
 
   // We call useIOStore beacause we only need some values from store, we don't need any re-render logic
   const store = useIOStore();
@@ -223,7 +227,7 @@ export const AuthSessionPage = () => {
         nativeAttempts: requestInfo.nativeAttempts
       });
     },
-    [choosenTool, dispatch, idp, requestInfo.nativeAttempts]
+    [choosenTool, dispatch, idp, requestInfo.nativeAttempts, setRequestInfo]
   );
 
   const handleLoginSuccess = useCallback(
@@ -237,7 +241,14 @@ export const AuthSessionPage = () => {
         ? dispatch(loginSuccess({ token, idp }))
         : handleLoginFailure("n/a");
     },
-    [choosenTool, dispatch, handleLoginFailure, idp, requestInfo.nativeAttempts]
+    [
+      choosenTool,
+      dispatch,
+      handleLoginFailure,
+      idp,
+      requestInfo.nativeAttempts,
+      setRequestInfo
+    ]
   );
   // This function is executed when the native component resolve with an error or when loginUri is undefined.
   // About the first case, unless there is a problem with the phone crashing for other reasons, this is very unlikely to happen.
@@ -268,7 +279,7 @@ export const AuthSessionPage = () => {
         nativeAttempts: requestInfo.nativeAttempts
       });
     },
-    [dispatch, idp, requestInfo.nativeAttempts]
+    [dispatch, idp, requestInfo.nativeAttempts, setRequestInfo]
   );
 
   // Memoized values/func --end--
@@ -364,13 +375,6 @@ export const AuthSessionPage = () => {
     faqCategories: ["authentication_SPID"],
     canGoBack: isBackButtonEnabled(requestInfo)
   });
-  // It is enough to set the status to loading,
-  // the reload will ensure that the functions necessary for correct functioning are performed.
-  const onRetry = () =>
-    setRequestInfo({
-      requestState: "LOADING",
-      nativeAttempts: requestInfo.nativeAttempts + 1
-    });
 
   if (requestInfo.requestState === "ERROR") {
     navigation.navigate(ROUTES.AUTHENTICATION, {
@@ -379,7 +383,7 @@ export const AuthSessionPage = () => {
         errorCodeOrMessage: requestInfo.errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: "L2",
-        onRetry
+        isNativeLogin: true
       }
     });
   }
