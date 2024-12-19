@@ -1,4 +1,8 @@
-import { Credential, Trust } from "@pagopa/io-react-native-wallet";
+import {
+  Credential,
+  Trust,
+  WalletInstance
+} from "@pagopa/io-react-native-wallet";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -42,6 +46,13 @@ export type ParsedCredential = Awaited<
 export type ParsedStatusAttestation = Awaited<
   ReturnType<typeof Credential.Status.verifyAndParseStatusAttestation>
 >["parsedStatusAttestation"]["payload"];
+
+/**
+ * Alias for the WalletInstanceStatus type
+ */
+export type WalletInstanceStatus = Awaited<
+  ReturnType<typeof WalletInstance.getWalletInstanceStatus>
+>;
 
 export type StoredStatusAttestation =
   | {
