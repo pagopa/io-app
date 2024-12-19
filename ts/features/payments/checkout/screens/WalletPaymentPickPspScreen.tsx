@@ -189,9 +189,11 @@ const WalletPaymentPickPspScreen = () => {
 
   return (
     <GradientScrollView
+      testID="wallet-payment-pick-psp-screen"
       primaryActionProps={
         canContinue
           ? {
+              testID: "wallet-payment-pick-psp-continue-button",
               label: I18n.t("wallet.payment.psp.continueButton"),
               accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
               onPress: handleContinue,
@@ -202,7 +204,9 @@ const WalletPaymentPickPspScreen = () => {
       }
     >
       <SelectPspHeadingContent />
-      {!isLoading && (
+      {isLoading ? (
+        <WalletPspListSkeleton />
+      ) : (
         <RadioGroup<string>
           onPress={handlePspSelection}
           type="radioListItemWithAmount"
@@ -210,7 +214,6 @@ const WalletPaymentPickPspScreen = () => {
           items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
         />
       )}
-      {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
     </GradientScrollView>
   );
