@@ -1,5 +1,5 @@
 import { ColorValue, View } from "react-native";
-import React from "react";
+import { memo } from "react";
 import { AnimatedIcon, IONavIcons } from "@pagopa/io-app-design-system";
 
 type TabIconComponent = {
@@ -13,7 +13,7 @@ type TabIconComponent = {
  *  Generic tab icon with badge indicator
  */
 
-export const TabIconComponent = React.memo(
+export const TabIconComponent = memo(
   ({ focused, iconName, iconNameFocused, color }: TabIconComponent) => (
     // accessibilityLabel={""} in order to read the font icon, without modify the library element
     <View accessibilityLabel={""}>

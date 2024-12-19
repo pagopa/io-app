@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import { View } from "react-native";
 import {
   H2,
@@ -48,10 +48,7 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
 };
 
 const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
-  const isFocused = React.useCallback(
-    (i: number) => state.index === i,
-    [state]
-  );
+  const isFocused = useCallback((i: number) => state.index === i, [state]);
 
   return (
     <View>

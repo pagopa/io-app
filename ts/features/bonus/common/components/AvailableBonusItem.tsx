@@ -1,5 +1,6 @@
 import { Badge, Body, H6, HSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
@@ -63,9 +64,7 @@ const renderBadge = (state: AvailableBonusItemState) => {
  * clicking the item user navigates to the request of the related bonus
  * @param props
  */
-export const AvailableBonusItem: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, state } = props;
   const disabledStyle = state !== "active" ? styles.disabled : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =

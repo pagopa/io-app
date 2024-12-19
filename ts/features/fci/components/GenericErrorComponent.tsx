@@ -1,4 +1,3 @@
-import * as React from "react";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { WithTestID } from "../../../types/WithTestID";
 import ErrorComponent from "./ErrorComponent";

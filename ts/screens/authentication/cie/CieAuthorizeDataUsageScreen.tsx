@@ -7,7 +7,8 @@ import {
   H2,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { PureComponent, ReactNode } from "react";
 import { Alert, ScrollView } from "react-native";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
@@ -24,7 +25,7 @@ type State = {
   isLoadingCompleted: boolean;
 };
 
-class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
+class CieAuthorizeDataUsageScreen extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isLoadingCompleted: false };
@@ -36,7 +37,7 @@ class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
     this.setState({ isLoadingCompleted: true });
   };
 
-  public render(): React.ReactNode {
+  public render(): ReactNode {
     return (
       <TopScreenComponent goBack={true}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

@@ -1,5 +1,5 @@
 import { H3, IOColors, LabelMini, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -78,7 +78,7 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
     : IOColors.blue;
 
   const width = useSharedValue(100);
-  React.useEffect(() => {
+  useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     width.value = progress * 100;
   });

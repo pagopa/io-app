@@ -2,7 +2,6 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";

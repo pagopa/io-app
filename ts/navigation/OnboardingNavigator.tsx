@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
 import { OnboardingNotificationsInfoScreenConsent } from "../features/pushNotifications/screens/OnboardingNotificationsInfoScreenConsent";
 import { OnboardingNotificationsPreferencesScreen } from "../features/pushNotifications/screens/OnboardingNotificationsPreferencesScreen";

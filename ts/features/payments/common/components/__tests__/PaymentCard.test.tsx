@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react-native";
 import { format } from "date-fns";
-import { default as React } from "react";
 import I18n from "../../../../../i18n";
 import { PaymentCard } from "../PaymentCard";
 

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Alert, Body } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";

@@ -11,7 +11,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import { useRef, useState, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
 });
 
 const DocumentWithSignature = (props: Props) => {
-  const pdfRef = React.useRef<Pdf>(null);
-  const [totalPages, setTotalPages] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const pdfRef = useRef<Pdf>(null);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const parsedDocuments = useIOSelector(fciSignatureFieldDrawingSelector);
   const { attrs, currentDoc } = props;
@@ -94,7 +94,7 @@ const DocumentWithSignature = (props: Props) => {
   /**
    * Renders the pdf with the signature field drawn on it.
    */
-  const RenderPdf = React.useCallback(
+  const RenderPdf = useCallback(
     ({ document, page }: { document: string; page: number }) => (
       <Pdf
         ref={pdfRef}
@@ -154,7 +154,7 @@ const DocumentWithSignature = (props: Props) => {
    * Callback to be used when the pdf cannot be loaded or the signature field cannot be drawn.
    * It returns an empty fragment and calls the `onError` callback.
    */
-  const ErrorView = React.useCallback(() => {
+  const ErrorView = useCallback(() => {
     props.onError();
     return <></>;
   }, [props]);
@@ -162,7 +162,7 @@ const DocumentWithSignature = (props: Props) => {
   /**
    * Renders the pdf, a loading view or an error view depending on the state of the pot.
    */
-  const RenderMask = React.useCallback(
+  const RenderMask = useCallback(
     () =>
       pot.fold(
         parsedDocuments,

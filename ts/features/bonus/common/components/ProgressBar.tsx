@@ -1,5 +1,6 @@
 import { IOColors } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { FunctionComponent } from "react";
+
 import { View, StyleSheet, DimensionValue } from "react-native";
 
 type Props = {
@@ -36,7 +37,7 @@ const calculateStylePercentage = (
  * @param props
  * @constructor
  */
-export const ProgressBar: React.FunctionComponent<Props> = props => (
+export const ProgressBar: FunctionComponent<Props> = props => (
   <View style={styles.progressBar}>
     <View
       testID={"progressBar"}

@@ -3,7 +3,6 @@ import {
   IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";

@@ -4,7 +4,7 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { Alert } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
@@ -112,8 +112,6 @@ const ItwPresentationDetailsFooter = ({
   );
 };
 
-const MemoizedItwPresentationDetailsFooter = React.memo(
-  ItwPresentationDetailsFooter
-);
+const MemoizedItwPresentationDetailsFooter = memo(ItwPresentationDetailsFooter);
 
 export { MemoizedItwPresentationDetailsFooter as ItwPresentationDetailsFooter };

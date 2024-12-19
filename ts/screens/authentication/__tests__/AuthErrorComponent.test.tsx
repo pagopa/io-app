@@ -1,4 +1,3 @@
-import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "../../../i18n";
 import AuthErrorComponent from "../components/AuthErrorComponent";

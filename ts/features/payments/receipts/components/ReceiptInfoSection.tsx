@@ -12,7 +12,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { capitalize } from "lodash";
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 

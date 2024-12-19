@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactElement, useEffect, memo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, {
   interpolate,
@@ -10,8 +10,8 @@ import Animated, {
 const DEFAULT_DURATION = 500;
 
 export type FlippableCardProps = {
-  FrontComponent: React.ReactElement;
-  BackComponent: React.ReactElement;
+  FrontComponent: ReactElement;
+  BackComponent: ReactElement;
   duration?: number;
   isFlipped?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
@@ -29,7 +29,7 @@ const FlippableCard = ({
 }: FlippableCardProps) => {
   const isFlipped = useSharedValue(_isFlipped);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     isFlipped.value = _isFlipped;
   }, [isFlipped, _isFlipped]);
@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedFlippableCard = React.memo(FlippableCard);
+const MemoizedFlippableCard = memo(FlippableCard);
 
 export { MemoizedFlippableCard as FlippableCard };

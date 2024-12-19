@@ -1,6 +1,5 @@
 import { H3 } from "@pagopa/io-app-design-system";
 import { render } from "@testing-library/react-native";
-import React from "react";
 import { withWalletCardBaseComponent } from "../WalletCardBaseComponent";
 
 jest.mock("react-native-reanimated", () => ({

@@ -18,19 +18,26 @@ import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+
+import { useFocusEffect } from "@react-navigation/native";
+import {
+  PureComponent,
+  ReactNode,
+  createRef,
+  useCallback,
+  useRef
+} from "react";
 import {
   AccessibilityInfo,
   Platform,
   ScrollView,
+  StyleSheet,
   Text,
   Vibration,
-  View,
-  StyleSheet
+  View
 } from "react-native";
-import { connect } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect } from "@react-navigation/native";
+import { connect } from "react-redux";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../components/cie/CieCardReadingAnimation";
@@ -219,8 +226,8 @@ const getTextForState = (
 /**
  *  This screen shown while reading the card
  */
-class CieCardReaderScreen extends React.PureComponent<Props, State> {
-  private subTitleRef = React.createRef<Text>();
+class CieCardReaderScreen extends PureComponent<Props, State> {
+  private subTitleRef = createRef<Text>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -556,7 +563,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       )
     });
 
-  public render(): React.ReactNode {
+  public render(): ReactNode {
     return (
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
@@ -606,10 +613,10 @@ const ReaderScreen = (props: Props) => (
 );
 
 const Title = (props: { text: string; accessibilityLabel: string }) => {
-  const titleRef = React.useRef<View>(null);
+  const titleRef = useRef<View>(null);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (!titleRef.current && Platform.OS === "android") {
         setAccessibilityFocus(titleRef, accessibityTimeout);
       }

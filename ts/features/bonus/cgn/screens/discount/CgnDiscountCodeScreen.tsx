@@ -9,7 +9,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
@@ -48,8 +48,7 @@ const CgnDiscountCodeScreen = () => {
   const dispatch = useIODispatch();
   const discountCode = useIOSelector(cgnSelectedDiscountCodeSelector);
   const discountOtp = useIOSelector(cgnOtpDataSelector);
-  const [isDiscountCodeExpired, setIsDiscountCodeExpired] =
-    React.useState(false);
+  const [isDiscountCodeExpired, setIsDiscountCodeExpired] = useState(false);
   const navigation = useIONavigation();
   const theme = useIOTheme();
 
@@ -75,7 +74,7 @@ const CgnDiscountCodeScreen = () => {
     clipboardSetStringWithFeedback(discountCode);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isReady(discountOtp)) {
       setIsDiscountCodeExpired(getOtpExpirationTotal(discountOtp.value) <= 0);
     }

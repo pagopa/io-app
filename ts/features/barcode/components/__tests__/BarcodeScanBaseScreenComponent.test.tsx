@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import React from "react";
 import { View } from "react-native";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";

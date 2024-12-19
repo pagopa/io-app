@@ -6,7 +6,6 @@ import {
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert, View } from "react-native";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 

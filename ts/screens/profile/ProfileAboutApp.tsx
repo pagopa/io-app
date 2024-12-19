@@ -6,7 +6,7 @@ import {
   H4,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { createRef, useCallback, useMemo } from "react";
+import { createRef, useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";

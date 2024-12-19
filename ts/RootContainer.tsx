@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { PureComponent } from "react";
 import {
   AppState,
   AppStateStatus,
@@ -43,7 +43,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  * - the UpdateAppModal, if the backend is not compatible with the installed app version
  * - the root for displaying light modals
  */
-class RootContainer extends React.PureComponent<Props> {
+class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);

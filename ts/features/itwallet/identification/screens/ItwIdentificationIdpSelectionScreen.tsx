@@ -1,6 +1,6 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import React from "react";
+import { useRef, useCallback } from "react";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { isReady } from "../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../components/IdpsGrid";
@@ -25,12 +25,12 @@ export const ItwIdentificationIdpSelectionScreen = () => {
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
-  const randomIdps = React.useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
+  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
     randomOrderIdps(idpValue)
   );
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       trackItWalletSpidIDPSelection();
       dispatch(loadIdps.request());
     }, [dispatch])

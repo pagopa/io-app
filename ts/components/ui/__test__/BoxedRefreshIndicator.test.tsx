@@ -1,11 +1,11 @@
-import * as React from "react";
-import { Text } from "react-native";
 import { render } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
+import { ReactNode } from "react";
+import { Text } from "react-native";
 import { Provider } from "react-redux";
-import { appReducer } from "../../../store/reducers";
+import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
+import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import BoxedRefreshIndicator from "../BoxedRefreshIndicator";
 
@@ -22,10 +22,7 @@ describe("BoxedRefreshIndicator", () => {
   });
 });
 
-const renderComponent = (
-  action?: React.ReactNode,
-  caption?: React.ReactNode
-) => {
+const renderComponent = (action?: ReactNode, caption?: ReactNode) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const dsState = appReducer(
     initialState,

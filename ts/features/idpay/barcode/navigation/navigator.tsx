@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import { IdPayBarcodeResultScreen } from "../screens/IdPayBarcodeResultScreen";
 import { IdPayBarcodeParamsList } from "./params";
 import { IdPayBarcodeRoutes } from "./routes";

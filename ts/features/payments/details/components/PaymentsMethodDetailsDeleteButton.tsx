@@ -1,5 +1,4 @@
 import { IOToast, ListItemAction } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert, Platform } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";

@@ -1,6 +1,6 @@
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import React, { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";

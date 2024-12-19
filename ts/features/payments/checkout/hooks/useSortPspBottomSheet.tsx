@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletPaymentPspSortType } from "../types";
@@ -30,8 +30,7 @@ type WalletPaymentSortPspBottomSheetProps = {
 const useSortPspBottomSheet = ({
   onSortChange
 }: WalletPaymentSortPspBottomSheetProps) => {
-  const [sortType, setSortType] =
-    React.useState<WalletPaymentPspSortType>("default");
+  const [sortType, setSortType] = useState<WalletPaymentPspSortType>("default");
 
   const handleChangeSort = (sortType: WalletPaymentPspSortType) => {
     setSortType(sortType);

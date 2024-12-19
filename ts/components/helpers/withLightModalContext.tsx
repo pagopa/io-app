@@ -4,17 +4,17 @@
  */
 
 import hoistNonReactStatics from "hoist-non-react-statics";
-import React from "react";
 
+import { Component, ComponentType } from "react";
 import {
   LightModalConsumer,
   LightModalContextInterface
 } from "../ui/LightModal";
 
 export function withLightModalContext<P>(
-  WrappedComponent: React.ComponentType<P & LightModalContextInterface>
+  WrappedComponent: ComponentType<P & LightModalContextInterface>
 ) {
-  class WithLightModalContext extends React.Component<P> {
+  class WithLightModalContext extends Component<P> {
     public render() {
       return (
         <LightModalConsumer>

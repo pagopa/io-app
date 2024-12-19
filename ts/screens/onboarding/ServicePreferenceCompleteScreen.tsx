@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactElement } from "react";
 import { connect } from "react-redux";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import I18n from "../../i18n";
@@ -13,7 +13,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  * Screen which is displayed when a user requested a service preference change
  * and it has been correctly activated
  */
-const ServicePreferenceCompleteScreen = (props: Props): React.ReactElement => (
+const ServicePreferenceCompleteScreen = (props: Props): ReactElement => (
   <OperationResultScreenContent
     pictogram="success"
     title={I18n.t("services.optIn.preferences.completed.title")}

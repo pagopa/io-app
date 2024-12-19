@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import PagerView from "react-native-pager-view";
 import { fireEvent } from "@testing-library/react-native";

@@ -10,15 +10,10 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import Placeholder from "rn-placeholder";
 import { Route, useRoute } from "@react-navigation/native";
-import * as React from "react";
-import { useCallback, useEffect, useMemo } from "react";
-import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Placeholder from "rn-placeholder";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Image,
   LayoutChangeEvent,
@@ -26,18 +21,23 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { openWebUrl } from "../../../../../utils/url";
+import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
 import { CgnMerchantDiscountItem } from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import { CgnAddressListItem } from "../../components/merchants/CgnAddressListItem";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { openWebUrl } from "../../../../../utils/url";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -51,7 +51,7 @@ const CgnMerchantDetailScreen = () => {
 
   const scrollTranslationY = useSharedValue(0);
 
-  const [titleHeight, setTitleHeight] = React.useState(0);
+  const [titleHeight, setTitleHeight] = useState(0);
 
   const dispatch = useIODispatch();
   const route =
@@ -65,7 +65,7 @@ const CgnMerchantDetailScreen = () => {
     dispatch(cgnSelectedMerchant.request(merchantID));
   }, [merchantID, dispatch]);
 
-  const paddingBottom: number = React.useMemo(
+  const paddingBottom: number = useMemo(
     () =>
       safeAreaInsets.bottom === 0
         ? IOVisualCostants.appMarginDefault

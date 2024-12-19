@@ -1,5 +1,6 @@
 import { createActorContext } from "@xstate/react";
-import React from "react";
+
+import { ReactNode } from "react";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
@@ -15,7 +16,7 @@ import { createActorsImplementation } from "./actors";
 import { idPayPaymentMachine } from "./machine";
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const IdPayPaymentMachineContext =

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStyles, buttonSolidHeight } from "@pagopa/io-app-design-system";
 import { View } from "react-native";

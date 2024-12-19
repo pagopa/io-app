@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";

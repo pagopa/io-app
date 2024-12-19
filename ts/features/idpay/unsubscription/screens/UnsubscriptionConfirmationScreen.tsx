@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import React from "react";
+import { useEffect } from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
@@ -94,7 +94,7 @@ const UnsubscriptionConfirmationScreen = () => {
     dispatch(idPayUnsubscribeAction.request({ initiativeId }));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFailure || isSuccess) {
       navigation.navigate(IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
         screen: IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT

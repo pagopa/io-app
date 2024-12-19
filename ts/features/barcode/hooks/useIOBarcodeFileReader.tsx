@@ -6,7 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState } from "react";
 import { Alert, Linking, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
@@ -113,8 +113,8 @@ const useIOBarcodeFileReader = ({
   barcodeTypes,
   barcodeAnalyticsFlow
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
-  const [isFilePickerVisible, setFilePickerVisible] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isFilePickerVisible, setFilePickerVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {

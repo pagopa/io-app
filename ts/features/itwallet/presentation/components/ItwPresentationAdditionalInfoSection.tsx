@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode";
@@ -20,7 +20,7 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
   }
 };
 
-const MemoizedItwPresentationAdditionalInfoSection = React.memo(
+const MemoizedItwPresentationAdditionalInfoSection = memo(
   ItwPresentationAdditionalInfoSection
 );
 

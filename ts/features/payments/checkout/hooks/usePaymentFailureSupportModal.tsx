@@ -11,7 +11,7 @@ import {
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Linking } from "react-native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import I18n from "../../../../i18n";

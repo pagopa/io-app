@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";

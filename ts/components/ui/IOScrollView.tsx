@@ -14,14 +14,16 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
+
 import {
+  useMemo,
   ComponentProps,
   Fragment,
   PropsWithChildren,
   useLayoutEffect,
   useState
 } from "react";
+
 import {
   ColorValue,
   LayoutChangeEvent,
@@ -246,7 +248,7 @@ export const IOScrollView = ({
     )
   }));
 
-  const ignoreSafeAreaMargin = React.useMemo(() => {
+  const ignoreSafeAreaMargin = useMemo(() => {
     if (alertProps !== undefined) {
       return true;
     }

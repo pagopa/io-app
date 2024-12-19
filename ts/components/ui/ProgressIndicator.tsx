@@ -1,9 +1,9 @@
-import * as React from "react";
 import { ProgressLoader } from "@pagopa/io-app-design-system";
+import { ComponentProps } from "react";
 import { useInteractiveElementDefaultColor } from "../../utils/hooks/theme";
 
 export type ProgressIndicator = Exclude<
-  React.ComponentProps<typeof ProgressLoader>,
+  ComponentProps<typeof ProgressLoader>,
   "color"
 >;
 

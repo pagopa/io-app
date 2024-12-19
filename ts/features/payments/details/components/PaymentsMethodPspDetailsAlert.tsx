@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import I18n from "../../../../i18n";

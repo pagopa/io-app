@@ -1,5 +1,5 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Platform } from "react-native";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";

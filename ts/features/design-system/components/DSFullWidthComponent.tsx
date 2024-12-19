@@ -1,9 +1,9 @@
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { ReactNode } from "react";
+import { StyleSheet, View } from "react-native";
 import customVariables from "../../../theme/variables";
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const styles = StyleSheet.create({

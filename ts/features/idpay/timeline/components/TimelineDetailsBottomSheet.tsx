@@ -4,7 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
-import React from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   ButtonOutline,
@@ -58,7 +58,7 @@ const useTimelineDetailsBottomSheet = (
   const isLoading = pot.isLoading(detailsPot);
   const isError = pot.isError(detailsPot);
 
-  const [title, setTitle] = React.useState<string>();
+  const [title, setTitle] = useState<string>();
 
   const titleComponent = pipe(
     title,

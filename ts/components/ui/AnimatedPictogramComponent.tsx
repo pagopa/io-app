@@ -1,7 +1,7 @@
-import React from "react";
 import LottieView from "lottie-react-native";
+import { ComponentProps } from "react";
 
-export type AnimatedPictogramSource = React.ComponentProps<
+export type AnimatedPictogramSource = ComponentProps<
   typeof LottieView
 >["source"];
 

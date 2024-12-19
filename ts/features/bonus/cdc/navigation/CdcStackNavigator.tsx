@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import CdcBonusRequestInformationTos from "../screens/CdcBonusRequestInformationTos";
 import CdcBonusRequestSelectYear from "../screens/CdcBonusRequestSelectYear";
 import CdcBonusRequestSelectResidence from "../screens/CdcBonusRequestSelectResidence";

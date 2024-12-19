@@ -1,4 +1,4 @@
-import React, { JSXElementConstructor } from "react";
+import { JSXElementConstructor } from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { appReducer } from "../../store/reducers";

@@ -1,4 +1,3 @@
-import React from "react";
 import { ButtonSolid, useIOToast } from "@pagopa/io-app-design-system";
 import { PaymentData } from "../../types";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";

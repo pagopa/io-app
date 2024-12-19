@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { Dimensions, View } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {

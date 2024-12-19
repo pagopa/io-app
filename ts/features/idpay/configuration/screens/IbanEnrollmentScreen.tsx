@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import React from "react";
+import { useState, useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -54,10 +54,10 @@ export const IbanEnrollmentScreen = () => {
   const enrolledIban =
     IdPayConfigurationMachineContext.useSelector(selectEnrolledIban);
 
-  const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
+  const [selectedIban, setSelectedIban] = useState<IbanDTO | undefined>();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (initiativeId !== undefined) {
         machine.send({
           type: "start-configuration",
@@ -68,13 +68,13 @@ export const IbanEnrollmentScreen = () => {
     }, [machine, initiativeId])
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (enrolledIban) {
       setSelectedIban(enrolledIban);
     }
   }, [enrolledIban]);
 
-  const handleSelectIban = React.useCallback(
+  const handleSelectIban = useCallback(
     (iban: IbanDTO) => {
       setSelectedIban(iban);
 

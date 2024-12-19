@@ -1,10 +1,10 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import { default as React, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Dimensions } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { BonusCard } from "./BonusCard";
 
 type BaseProps = {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { LoadingIndicator } from "./LoadingIndicator";
 
@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  action?: React.ReactNode;
-  caption?: React.ReactNode;
+  action?: ReactNode;
+  caption?: ReactNode;
 };
 
 const BoxedRefreshIndicator = ({ action, caption }: Props) => (

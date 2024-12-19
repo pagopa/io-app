@@ -1,5 +1,4 @@
 import { ListItemCheckbox } from "@pagopa/io-app-design-system";
-import React from "react";
 
 type Props = {
   title: string;

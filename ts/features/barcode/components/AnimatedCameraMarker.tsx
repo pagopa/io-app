@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";

@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
 import UnsubscriptionConfirmationScreen from "../screens/UnsubscriptionConfirmationScreen";
 import UnsubscriptionResultScreen from "../screens/UnsubscriptionResultScreen";
 import { IdPayUnsubscriptionParamsList } from "./params";

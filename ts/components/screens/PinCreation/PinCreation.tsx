@@ -9,7 +9,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { View, Alert as NativeAlert, Dimensions, Platform } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { defaultPin } from "../../../config";

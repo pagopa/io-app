@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import { isString } from "lodash";
-import React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";

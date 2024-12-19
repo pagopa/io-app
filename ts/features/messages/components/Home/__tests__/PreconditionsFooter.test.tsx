@@ -1,4 +1,3 @@
-import React from "react";
 import { constUndefined } from "fp-ts/lib/function";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";

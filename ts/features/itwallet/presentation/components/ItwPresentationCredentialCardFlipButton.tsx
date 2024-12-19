@@ -1,5 +1,5 @@
 import { ButtonLink } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const MemoizedItwPresentationCredentialCardFlipButton = React.memo(
+export const MemoizedItwPresentationCredentialCardFlipButton = memo(
   ItwPresentationCredentialCardFlipButton
 );
 

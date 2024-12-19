@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskAskSeeReportsPermissions from "../screens/ZendeskAskSeeReportsPermissions";

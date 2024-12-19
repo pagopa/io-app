@@ -1,5 +1,10 @@
-import * as React from "react";
-import { useEffect } from "react";
+import {
+  createRef,
+  FunctionComponent,
+  isValidElement,
+  ReactNode,
+  useEffect
+} from "react";
 import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
@@ -27,16 +32,16 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  title: string | React.ReactNode;
+  title: string | ReactNode;
   onClose: () => void;
 };
 
-export const BottomSheetHeader: React.FunctionComponent<Props> = ({
+export const BottomSheetHeader: FunctionComponent<Props> = ({
   title,
   onClose
 }: Props) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const headerRef = React.createRef<View>();
+  const headerRef = createRef<View>();
 
   useEffect(() => {
     setAccessibilityFocus(headerRef, 1000 as Millisecond);
@@ -44,7 +49,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
 
   return (
     <View style={styles.bottomSheetHeader} ref={headerRef}>
-      {React.isValidElement(title) ? (
+      {isValidElement(title) ? (
         title
       ) : (
         <View

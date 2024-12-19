@@ -1,5 +1,4 @@
 import { Body, IOVisualCostants } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { ScrollView } from "react-native";
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 

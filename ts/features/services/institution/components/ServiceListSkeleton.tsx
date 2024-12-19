@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { View } from "react-native";
 import {
   Divider,
@@ -24,10 +24,10 @@ type ServiceListSkeletonProps = {
 export const ServiceListSkeleton = ({ size = 3 }: ServiceListSkeletonProps) => (
   <View testID="intitution-services-list-skeleton">
     {Array.from({ length: size }).map((_, index) => (
-      <React.Fragment key={index}>
+      <Fragment key={index}>
         <ServiceListItemSkeleton />
         {index < size - 1 ? <Divider /> : undefined}
-      </React.Fragment>
+      </Fragment>
     ))}
   </View>
 );

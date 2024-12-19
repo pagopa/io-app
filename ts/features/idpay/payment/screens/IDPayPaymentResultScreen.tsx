@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { default as React } from "react";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -16,7 +16,7 @@ const IDPayPaymentResultScreen = () => {
   const failureOption = useSelector(failureSelector);
   const isCancelled = useSelector(isCancelledSelector);
 
-  const defaultCloseAction = React.useMemo(
+  const defaultCloseAction = useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),

@@ -1,6 +1,5 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import CgnDetailScreen from "../screens/CgnDetailScreen";

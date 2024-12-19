@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";

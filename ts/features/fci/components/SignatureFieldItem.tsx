@@ -4,7 +4,7 @@ import {
   IOStyles,
   ListItemCheckbox
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 });
 
 const SignatureFieldItem = (props: Props) => {
-  const [checked, setChecked] = React.useState(props.value || false);
+  const [checked, setChecked] = useState(props.value || false);
   const onChange = (value: boolean) => {
     setChecked(value);
     props.onChange(value);

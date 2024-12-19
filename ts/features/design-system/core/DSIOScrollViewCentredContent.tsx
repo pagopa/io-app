@@ -1,4 +1,3 @@
-import React from "react";
 import { Alert } from "react-native";
 import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";

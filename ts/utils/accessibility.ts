@@ -1,11 +1,10 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { AccessibilityInfo, findNodeHandle } from "react-native";
 import { pipe } from "fp-ts/lib/function";
+import { Component, RefObject, useEffect, useState } from "react";
+import { AccessibilityInfo, findNodeHandle } from "react-native";
 import I18n from "../i18n";
 import { format } from "./dates";
 
@@ -17,8 +16,8 @@ import { format } from "./dates";
  * @param executionDelay
  * @param callback
  */
-export const setAccessibilityFocus = <T extends React.Component>(
-  nodeReference: React.RefObject<T>,
+export const setAccessibilityFocus = <T extends Component>(
+  nodeReference: RefObject<T>,
   executionDelay: Millisecond = 0 as Millisecond, // default: execute immediately,
   callback?: () => void
 ) => {

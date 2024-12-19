@@ -1,5 +1,5 @@
 import { VSpacer, Body } from "@pagopa/io-app-design-system";
-import React, { memo } from "react";
+import { memo } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../i18n";

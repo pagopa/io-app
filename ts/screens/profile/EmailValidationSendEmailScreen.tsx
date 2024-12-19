@@ -5,7 +5,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import React, { useRef, useCallback, useEffect, useState } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,

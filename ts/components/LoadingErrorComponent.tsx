@@ -1,6 +1,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as React from "react";
-import { useEffect } from "react";
+
+import { createRef, FunctionComponent, useEffect } from "react";
 import { ActivityIndicator, SafeAreaView, View } from "react-native";
 import { WithTestID } from "../types/WithTestID";
 import { setAccessibilityFocus } from "../utils/accessibility";
@@ -18,8 +18,8 @@ export type LoadingErrorProps = WithTestID<{
   onAbort?: () => void;
 }>;
 
-const errorRef = React.createRef<View>();
-const loadingRef = React.createRef<View>();
+const errorRef = createRef<View>();
+const loadingRef = createRef<View>();
 
 const renderError = (props: LoadingErrorProps) => (
   <GenericErrorComponent
@@ -67,7 +67,7 @@ const delay = 100 as Millisecond;
  * @deprecated Use `OperationResultScreen` instead
  * @constructor
  */
-export const LoadingErrorComponent: React.FunctionComponent<
+export const LoadingErrorComponent: FunctionComponent<
   LoadingErrorProps
 > = props => {
   useEffect(() => {

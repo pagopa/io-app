@@ -1,4 +1,3 @@
-import * as React from "react";
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { UIMessageId } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";

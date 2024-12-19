@@ -1,5 +1,4 @@
 import { H6, Icon } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Pressable } from "react-native";
 
 type Props = {

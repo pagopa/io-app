@@ -1,5 +1,4 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import React from "react";
 import { Alert } from "react-native";
 import { IOScrollViewWithListItems } from "../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";

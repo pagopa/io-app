@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
 import { Anno } from "../../../../../definitions/cdc/Anno";
 import { isReady } from "../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";

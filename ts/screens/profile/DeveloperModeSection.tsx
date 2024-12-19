@@ -15,8 +15,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as Sentry from "@sentry/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as React from "react";
-import { ComponentProps } from "react";
+import { useContext, ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import I18n from "../../i18n";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -551,7 +550,7 @@ const DeveloperTestEnvironmentSection = ({
 };
 
 const DeveloperModeSection = () => {
-  const { showModal } = React.useContext(LightModalContext);
+  const { showModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 

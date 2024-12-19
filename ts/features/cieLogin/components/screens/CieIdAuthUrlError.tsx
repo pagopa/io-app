@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ROUTES from "../../../../navigation/routes";

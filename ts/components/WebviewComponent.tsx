@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import { createRef, useState } from "react";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -20,7 +19,7 @@ const WebviewComponent = (props: Props) => {
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  const ref = React.createRef<WebView>();
+  const ref = createRef<WebView>();
 
   const handleReload = () => {
     setHasError(false);

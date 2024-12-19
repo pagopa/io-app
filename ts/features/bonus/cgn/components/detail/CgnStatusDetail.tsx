@@ -1,24 +1,22 @@
-import * as React from "react";
 import {
   Divider,
   ListItemHeader,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
+import { FunctionComponent } from "react";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import I18n from "../../../../../i18n";
-import { localeDateFormat } from "../../../../../utils/locale";
+import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
+import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
-import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
-import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
+import I18n from "../../../../../i18n";
+import { localeDateFormat } from "../../../../../utils/locale";
 
 type Props = {
   cgnDetail: Card;
 };
 
-const CgnStatusDetail: React.FunctionComponent<Props> = ({
-  cgnDetail
-}: Props) => (
+const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
   <>
     <ListItemHeader label={I18n.t("bonus.cgn.detail.status.title")} />
     {!CardPending.is(cgnDetail) && (

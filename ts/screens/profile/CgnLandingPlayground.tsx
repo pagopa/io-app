@@ -6,7 +6,7 @@ import {
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
 });
 
 const CgnLandingPlayground = () => {
-  const [navigationURI, setNavigationUri] = React.useState("https://");
-  const [refererValue, setRefererValue] = React.useState("");
-  const [loadUri, setLoadUri] = React.useState("https://google.com");
-  const [reloadKey, setReloadKey] = React.useState(0);
+  const [navigationURI, setNavigationUri] = useState("https://");
+  const [refererValue, setRefererValue] = useState("");
+  const [loadUri, setLoadUri] = useState("https://google.com");
+  const [reloadKey, setReloadKey] = useState(0);
 
   useHeaderSecondLevel({
     title: "CGN Landing Playground"

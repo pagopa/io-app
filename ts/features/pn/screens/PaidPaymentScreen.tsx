@@ -1,4 +1,3 @@
-import React from "react";
 import { PnParamsList } from "../navigation/params";
 import {
   IOStackNavigationRouteProps,

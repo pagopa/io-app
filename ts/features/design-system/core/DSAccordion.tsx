@@ -5,7 +5,6 @@ import {
   useIOTheme,
   Body
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 

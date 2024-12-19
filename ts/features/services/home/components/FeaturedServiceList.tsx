@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
