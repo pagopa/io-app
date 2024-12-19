@@ -10,7 +10,7 @@ import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
 import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
-import { WrappedMessageListItem } from "../WrappedMessageListItem";
+import { WrappedListItemMessage } from "../WrappedListItemMessage";
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
@@ -34,7 +34,7 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
-describe("WrappedMessageListItem", () => {
+describe("WrappedListItemMessage", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -172,7 +172,7 @@ const renderComponent = (
   } as GlobalState;
   const store = createStore(appReducer, stateWithPayment as any);
   return renderScreenWithNavigationStoreContext(
-    () => <WrappedMessageListItem index={0} message={message} source="INBOX" />,
+    () => <WrappedListItemMessage index={0} message={message} source="INBOX" />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

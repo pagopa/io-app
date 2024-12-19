@@ -1,14 +1,16 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import {
   IOColors,
   IOStyles,
   IOVisualCostants,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
+import { ListItemMessageStandardHeight } from "./ListItemMessage";
 
-export const SkeletonHeight = 95 + StyleSheet.hairlineWidth;
+export const SkeletonHeight =
+  ListItemMessageStandardHeight + StyleSheet.hairlineWidth;
 
 const styles = StyleSheet.create({
   container: {
@@ -39,13 +41,13 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessageListItemSkeletonProps = WithTestID<{
+type ListItemMessageSkeletonProps = WithTestID<{
   accessibilityLabel: string;
 }>;
 
-export const MessageListItemSkeleton = ({
+export const ListItemMessageSkeleton = ({
   accessibilityLabel
-}: MessageListItemSkeletonProps) => (
+}: ListItemMessageSkeletonProps) => (
   <View accessibilityLabel={accessibilityLabel} style={styles.container}>
     <View style={styles.serviceLogo}>
       <Placeholder.Box

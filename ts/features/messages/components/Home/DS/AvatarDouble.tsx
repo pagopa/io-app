@@ -17,7 +17,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
-type DoubleAvatarProps = {
+type AvatarDoubleProps = {
   backgroundLogoUri?:
     | ImageRequireSource
     | ImageURISource
@@ -74,12 +74,12 @@ const getImageState = (
 };
 
 /**
- * DoubleAvatar component is used to display the background logo of an organization, with a fixed pagoPA icon on top. It accepts the following props:
+ * `AvatarDouble` component is used to display the background logo of an organization, with a fixed pagoPA icon on top. It accepts the following props:
  * - `backgroundLogoUri`: the uri of the image to display. If not provided, a placeholder icon will be displayed. It can be a single uri or an array of uris, in which case the first one that is available will be used.
- * @param DoubleAvatarProps
+ * @param AvatarDoubleProps
  * @returns
  */
-export const DoubleAvatar = ({ backgroundLogoUri }: DoubleAvatarProps) => {
+export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   const theme = useIOTheme();
   const indexValue = React.useRef<number>(0);
 
