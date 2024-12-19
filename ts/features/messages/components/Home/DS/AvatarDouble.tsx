@@ -1,3 +1,11 @@
+import {
+  IOColors,
+  IOSpacingScale,
+  IOVisualCostants,
+  Icon,
+  hexToRgba,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import {
   Image,
@@ -6,15 +14,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import {
-  IOColors,
-  IOIconSizeScale,
-  IOSpacingScale,
-  IOVisualCostants,
-  Icon,
-  hexToRgba,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
 type AvatarDoubleProps = {
@@ -24,7 +23,7 @@ type AvatarDoubleProps = {
     | ReadonlyArray<ImageURISource>;
 };
 
-const avatarContainerSize: IOIconSizeScale = 30;
+const avatarContainerSize = 30;
 const avatarDoubleRadiusSizeSmall: number = 6;
 const internalSpaceDefaultSize: number = 3;
 const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;

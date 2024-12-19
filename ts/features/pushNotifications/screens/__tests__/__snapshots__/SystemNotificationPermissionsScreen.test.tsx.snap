@@ -569,9 +569,9 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -592,9 +592,9 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                   Don't miss any important messages!
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -827,6 +827,9 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "flexDirection": "row",
                                       "justifyContent": "center",
                                     },
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -834,10 +837,10 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
@@ -939,6 +942,9 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -946,10 +952,10 @@ exports[`SystemNotificationPermissionsScreen Should match snapshot 1`] = `
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [

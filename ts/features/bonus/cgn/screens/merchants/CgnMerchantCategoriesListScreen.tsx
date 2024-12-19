@@ -95,7 +95,13 @@ export const CgnMerchantCategoriesListScreen = () => {
             key={i}
             value={
               countAvailable ? (
-                <View style={IOStyles.rowSpaceBetween}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
                   <H6>{I18n.t(s.nameKey)}</H6>
                   <Badge text={`${category.newDiscounts}`} variant="purple" />
                 </View>

@@ -509,9 +509,9 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                           }
                         />
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
@@ -611,6 +611,9 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                     "justifyContent": "center",
                                   },
                                   {
+                                    "columnGap": 8,
+                                  },
+                                  {
                                     "flexDirection": "row-reverse",
                                   },
                                 ]
@@ -621,10 +624,10 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                 accessibilityLabel=""
                                 accessible={false}
                                 align="xMidYMid"
-                                bbHeight={20}
-                                bbWidth={20}
+                                bbHeight={30}
+                                bbWidth={30}
                                 focusable={false}
-                                height={20}
+                                height={30}
                                 importantForAccessibility="no-hide-descendants"
                                 meetOrSlice={0}
                                 minX={0}
@@ -640,15 +643,15 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                     },
                                     {
                                       "flex": 0,
-                                      "height": 20,
-                                      "width": 20,
+                                      "height": 30,
+                                      "width": 30,
                                     },
                                   ]
                                 }
                                 tintColor="#FFFFFF"
                                 vbHeight={24}
                                 vbWidth={24}
-                                width={20}
+                                width={30}
                               >
                                 <RNSVGGroup
                                   color="#FFFFFF"
@@ -677,20 +680,13 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
                                   />
                                 </RNSVGGroup>
                               </RNSVGSvgView>
-                              <View
-                                style={
-                                  {
-                                    "width": 8,
-                                  }
-                                }
-                              />
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [

@@ -594,9 +594,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -619,9 +619,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -650,9 +650,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -672,9 +672,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -692,9 +692,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -736,12 +736,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                             "alignItems": "center",
                                             "alignSelf": "flex-start",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 6,
                                             "borderWidth": 1,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
+                                          },
+                                          {
+                                            "borderRadius": 9,
+                                            "columnGap": 9,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 9,
                                           },
                                           {
                                             "backgroundColor": "#FFFFFF",
@@ -762,10 +765,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           accessibilityLabel=""
                                           accessible={false}
                                           align="xMidYMid"
-                                          bbHeight={16}
-                                          bbWidth={16}
+                                          bbHeight={24}
+                                          bbWidth={24}
                                           focusable={false}
-                                          height={16}
+                                          height={24}
                                           importantForAccessibility="no-hide-descendants"
                                           meetOrSlice={0}
                                           minX={0}
@@ -781,15 +784,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                               },
                                               {
                                                 "flex": 0,
-                                                "height": 16,
-                                                "width": 16,
+                                                "height": 24,
+                                                "width": 24,
                                               },
                                             ]
                                           }
                                           tintColor="#0B3EE3"
                                           vbHeight={24}
                                           vbWidth={24}
-                                          width={16}
+                                          width={24}
                                         >
                                           <RNSVGGroup
                                             color="#0B3EE3"
@@ -819,17 +822,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           </RNSVGGroup>
                                         </RNSVGSvgView>
                                       </View>
-                                      <View
-                                        style={
-                                          {
-                                            "width": 6,
-                                          }
-                                        }
-                                      />
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -861,12 +857,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                             "alignItems": "center",
                                             "alignSelf": "flex-start",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 6,
                                             "borderWidth": 1,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
+                                          },
+                                          {
+                                            "borderRadius": 9,
+                                            "columnGap": 9,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 9,
                                           },
                                           {
                                             "backgroundColor": "#FFFFFF",
@@ -887,10 +886,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                           accessibilityLabel="Allegati"
                                           accessible={true}
                                           align="xMidYMid"
-                                          bbHeight={16}
-                                          bbWidth={16}
+                                          bbHeight={24}
+                                          bbWidth={24}
                                           focusable={false}
-                                          height={16}
+                                          height={24}
                                           importantForAccessibility="auto"
                                           meetOrSlice={0}
                                           minX={0}
@@ -906,15 +905,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, read message 1
                                               },
                                               {
                                                 "flex": 0,
-                                                "height": 16,
-                                                "width": 16,
+                                                "height": 24,
+                                                "width": 24,
                                               },
                                             ]
                                           }
                                           tintColor="#636B82"
                                           vbHeight={24}
                                           vbWidth={24}
-                                          width={16}
+                                          width={24}
                                         >
                                           <RNSVGGroup
                                             color="#636B82"
@@ -1556,9 +1555,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -1581,9 +1580,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1612,9 +1611,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -1634,9 +1633,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -1654,9 +1653,9 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -1753,12 +1752,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                             "alignItems": "center",
                                             "alignSelf": "flex-start",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 6,
                                             "borderWidth": 1,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
+                                          },
+                                          {
+                                            "borderRadius": 9,
+                                            "columnGap": 9,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 9,
                                           },
                                           {
                                             "backgroundColor": "#FFFFFF",
@@ -1779,10 +1781,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           accessibilityLabel=""
                                           accessible={false}
                                           align="xMidYMid"
-                                          bbHeight={16}
-                                          bbWidth={16}
+                                          bbHeight={24}
+                                          bbWidth={24}
                                           focusable={false}
-                                          height={16}
+                                          height={24}
                                           importantForAccessibility="no-hide-descendants"
                                           meetOrSlice={0}
                                           minX={0}
@@ -1798,15 +1800,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                               },
                                               {
                                                 "flex": 0,
-                                                "height": 16,
-                                                "width": 16,
+                                                "height": 24,
+                                                "width": 24,
                                               },
                                             ]
                                           }
                                           tintColor="#0B3EE3"
                                           vbHeight={24}
                                           vbWidth={24}
-                                          width={16}
+                                          width={24}
                                         >
                                           <RNSVGGroup
                                             color="#0B3EE3"
@@ -1836,17 +1838,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           </RNSVGGroup>
                                         </RNSVGSvgView>
                                       </View>
-                                      <View
-                                        style={
-                                          {
-                                            "width": 6,
-                                          }
-                                        }
-                                      />
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1878,12 +1873,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                             "alignItems": "center",
                                             "alignSelf": "flex-start",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 6,
                                             "borderWidth": 1,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
+                                          },
+                                          {
+                                            "borderRadius": 9,
+                                            "columnGap": 9,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 9,
                                           },
                                           {
                                             "backgroundColor": "#FFFFFF",
@@ -1904,10 +1902,10 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                           accessibilityLabel="Allegati"
                                           accessible={true}
                                           align="xMidYMid"
-                                          bbHeight={16}
-                                          bbWidth={16}
+                                          bbHeight={24}
+                                          bbWidth={24}
                                           focusable={false}
-                                          height={16}
+                                          height={24}
                                           importantForAccessibility="auto"
                                           meetOrSlice={0}
                                           minX={0}
@@ -1923,15 +1921,15 @@ exports[`WrappedListItemMessage should match snapshot, from SEND, unread message
                                               },
                                               {
                                                 "flex": 0,
-                                                "height": 16,
-                                                "width": 16,
+                                                "height": 24,
+                                                "width": 24,
                                               },
                                             ]
                                           }
                                           tintColor="#636B82"
                                           vbHeight={24}
                                           vbWidth={24}
-                                          width={16}
+                                          width={24}
                                         >
                                           <RNSVGGroup
                                             color="#636B82"
@@ -2695,9 +2693,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -2720,9 +2718,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -2751,9 +2749,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -2773,9 +2771,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -2793,9 +2791,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -2837,12 +2835,15 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                             "alignItems": "center",
                                             "alignSelf": "flex-start",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 6,
                                             "borderWidth": 1,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
+                                          },
+                                          {
+                                            "borderRadius": 9,
+                                            "columnGap": 9,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 9,
                                           },
                                           {
                                             "backgroundColor": "#FFFFFF",
@@ -2863,10 +2864,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           accessibilityLabel=""
                                           accessible={false}
                                           align="xMidYMid"
-                                          bbHeight={16}
-                                          bbWidth={16}
+                                          bbHeight={24}
+                                          bbWidth={24}
                                           focusable={false}
-                                          height={16}
+                                          height={24}
                                           importantForAccessibility="no-hide-descendants"
                                           meetOrSlice={0}
                                           minX={0}
@@ -2882,15 +2883,15 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               },
                                               {
                                                 "flex": 0,
-                                                "height": 16,
-                                                "width": 16,
+                                                "height": 24,
+                                                "width": 24,
                                               },
                                             ]
                                           }
                                           tintColor="#427940"
                                           vbHeight={24}
                                           vbWidth={24}
-                                          width={16}
+                                          width={24}
                                         >
                                           <RNSVGGroup
                                             color="#427940"
@@ -2920,17 +2921,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           </RNSVGGroup>
                                         </RNSVGSvgView>
                                       </View>
-                                      <View
-                                        style={
-                                          {
-                                            "width": 6,
-                                          }
-                                        }
-                                      />
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -3691,9 +3685,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -3716,9 +3710,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -3747,9 +3741,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -3769,9 +3763,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -3789,9 +3783,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -3888,12 +3882,15 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                             "alignItems": "center",
                                             "alignSelf": "flex-start",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 6,
                                             "borderWidth": 1,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 6,
+                                          },
+                                          {
+                                            "borderRadius": 9,
+                                            "columnGap": 9,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 9,
                                           },
                                           {
                                             "backgroundColor": "#FFFFFF",
@@ -3914,10 +3911,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           accessibilityLabel=""
                                           accessible={false}
                                           align="xMidYMid"
-                                          bbHeight={16}
-                                          bbWidth={16}
+                                          bbHeight={24}
+                                          bbWidth={24}
                                           focusable={false}
-                                          height={16}
+                                          height={24}
                                           importantForAccessibility="no-hide-descendants"
                                           meetOrSlice={0}
                                           minX={0}
@@ -3933,15 +3930,15 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                               },
                                               {
                                                 "flex": 0,
-                                                "height": 16,
-                                                "width": 16,
+                                                "height": 24,
+                                                "width": 24,
                                               },
                                             ]
                                           }
                                           tintColor="#427940"
                                           vbHeight={24}
                                           vbWidth={24}
-                                          width={16}
+                                          width={24}
                                         >
                                           <RNSVGGroup
                                             color="#427940"
@@ -3971,17 +3968,10 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains p
                                           </RNSVGGroup>
                                         </RNSVGSvgView>
                                       </View>
-                                      <View
-                                        style={
-                                          {
-                                            "width": 6,
-                                          }
-                                        }
-                                      />
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -4742,9 +4732,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -4767,9 +4757,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4798,9 +4788,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -4820,9 +4810,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -4840,9 +4830,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -5595,9 +5585,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -5620,9 +5610,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -5651,9 +5641,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -5673,9 +5663,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -5693,9 +5683,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, contains u
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -6381,9 +6371,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -6406,9 +6396,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -6437,9 +6427,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -6459,9 +6449,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -6479,9 +6469,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -7112,9 +7102,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -7137,9 +7127,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                     Organization name
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -7168,9 +7158,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={2}
                                     style={
                                       [
@@ -7190,9 +7180,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -7210,9 +7200,9 @@ exports[`WrappedListItemMessage should match snapshot, not from SEND, not a paym
                                       Service name · 
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},

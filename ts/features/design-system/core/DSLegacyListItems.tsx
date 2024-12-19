@@ -77,7 +77,7 @@ export const DSLegacyListItems = () => {
           <DSComponentViewerBox name="ListItemComponent (custom icon)">
             <ListItemComponent
               title={"Title"}
-              iconSize={12}
+              iconSize={16}
               iconName={"checkTickBig"}
               onPress={onListItemPress}
             />
