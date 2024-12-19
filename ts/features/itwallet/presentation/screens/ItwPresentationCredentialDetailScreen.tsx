@@ -1,41 +1,40 @@
 import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/lib/function";
-import React from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import * as O from "fp-ts/Option";
+import React from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import {
+  CREDENTIALS_MAP,
+  trackCredentialDetail,
+  trackWalletCredentialShowFAC_SIMILE
+} from "../../analytics";
+import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   itwCredentialByTypeSelector,
   itwCredentialStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection";
+import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
+import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
+import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader";
 import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase";
-import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection";
-import { ItwCredentialTrustmark } from "../components/ItwCredentialTrustmark";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
-import I18n from "../../../../i18n";
-import {
-  CREDENTIALS_MAP,
-  trackCredentialDetail,
-  trackWalletCredentialShowFAC_SIMILE
-} from "../../analytics";
-import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert";
-import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert";
-import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired";
+import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
+import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -46,44 +45,49 @@ type Props = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_DETAIL"
 >;
 
+/**
+ * Component that renders the credential detail screen.
+ */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const { credentialType } = route.params;
-  const navigation = useIONavigation();
   const credentialOption = useIOSelector(
     itwCredentialByTypeSelector(credentialType)
   );
-  const { status } = useIOSelector(state =>
-    itwCredentialStatusSelector(state, credentialType)
+
+  if (O.isNone(credentialOption)) {
+    // If the credential is not found, we render a screen that allows the user to request that credential.
+    return <ItwCredentialNotFound credentialType={credentialType} />;
+  }
+
+  return (
+    <ItwPresentationCredentialDetail credential={credentialOption.value} />
+  );
+};
+
+type ItwPresentationCredentialDetailProps = {
+  credential: StoredCredential;
+};
+
+/**
+ * Component that renders the credential detail content.
+ */
+const ItwPresentationCredentialDetail = ({
+  credential
+}: ItwPresentationCredentialDetailProps) => {
+  const navigation = useIONavigation();
+  const { status = "valid" } = useIOSelector(state =>
+    itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  useDebugInfo({
-    parsedCredential: pipe(
-      credentialOption,
-      O.map(credential => credential.parsedCredential),
-      O.toUndefined
-    )
-  });
+  useDebugInfo(credential);
 
   useFocusEffect(() => {
-    if (O.isNone(credentialOption)) {
-      return;
-    }
-    const credential = credentialOption.value;
-
     trackCredentialDetail({
       credential: CREDENTIALS_MAP[credential.credentialType],
       credential_status:
         credential.storedStatusAttestation?.credentialStatus || "not_valid"
     });
   });
-
-  if (O.isNone(credentialOption)) {
-    // This is unlikely to happen, but we want to handle the case where the credential is not found
-    // because of inconsistencies in the state, and assert that the credential is O.some
-    return <ItwGenericErrorContent />;
-  }
-
-  const credential = credentialOption.value;
 
   if (status === "jwtExpired") {
     return (
@@ -105,8 +109,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             <ItwPresentationAdditionalInfoSection credential={credential} />
             <ItwPresentationCredentialStatusAlert credential={credential} />
             <ItwPresentationCredentialInfoAlert credential={credential} />
-            <ItwCredentialTrustmark credential={credential} />
             <ItwPresentationClaimsSection credential={credential} />
+            <ItwCredentialTrustmark credential={credential} />
           </VStack>
         </ContentWrapper>
         <ItwPresentationDetailsFooter credential={credential} />

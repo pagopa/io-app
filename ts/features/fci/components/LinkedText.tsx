@@ -1,4 +1,4 @@
-import { H4, H6, Label, WithTestID } from "@pagopa/io-app-design-system";
+import { Body, H4, H6, WithTestID } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 
@@ -63,7 +63,8 @@ const LinkedText = (props: Props) => {
       const textToBeLinked = splitted[1];
       const url = splitted[2];
       return (
-        <Label
+        <Body
+          weight="Semibold"
           asLink
           key={index}
           onPress={() =>
@@ -71,7 +72,7 @@ const LinkedText = (props: Props) => {
           }
         >
           {textToBeLinked}
-        </Label>
+        </Body>
       );
     };
 

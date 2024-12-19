@@ -4,7 +4,7 @@ import { H4, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 import { ItwStoredCredentialsMocks } from "../../itwallet/common/utils/itwMocksUtils";
-import { ItwCredentialTrustmark } from "../../itwallet/presentation/components/ItwCredentialTrustmark";
+import { ItwCredentialTrustmark } from "../../itwallet/trustmark/components/ItwCredentialTrustmark";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSIridescentTrustmark = () => {

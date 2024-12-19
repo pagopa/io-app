@@ -21,7 +21,6 @@ import {
   ItwStoredCredentialsMocks
 } from "../../itwallet/common/utils/itwMocksUtils";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
-import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
 import {
   PaymentCardsCarousel,
@@ -208,49 +207,6 @@ const PaymentCards = () => (
             </HStack>
           </ScrollView>
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={{ marginHorizontal: -IOVisualCostants.appMarginDefault }}
-            contentContainerStyle={{
-              paddingHorizontal: IOVisualCostants.appMarginDefault
-            }}
-          >
-            <HStack space={cardHorizontalScrollGap}>
-              <PaymentCardBig
-                cardType={"PAGOBANCOMAT"}
-                expirationDate={new Date()}
-                holderName="A very very very long citizen name"
-                abiCode="03069"
-              />
-              <PaymentCardBig
-                cardType={"PAYPAL"}
-                holderEmail="userPaypalEmail@email.com"
-              />
-              <PaymentCardBig
-                cardType={"COBADGE"}
-                holderName="Mario Rossi"
-                abiCode="08509"
-                expirationDate={new Date()}
-                cardIcon="visa"
-              />
-              <PaymentCardBig
-                cardType={"COBADGE"}
-                holderName="Mario Rossi"
-                abiCode="08508"
-                expirationDate={new Date()}
-                cardIcon="visa"
-              />
-              <PaymentCardBig
-                cardType={"BANCOMATPAY"}
-                holderName="Mario Rossi"
-                phoneNumber="+39 1234567890"
-              />
-              <PaymentCardBig isLoading={true} />
-            </HStack>
-          </ScrollView>
-        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="PaymentCardSmall">
@@ -389,12 +345,6 @@ const ItwCards = () => (
   <VStack space={blockMargin}>
     <DesignSystemSection title="Driving License">
       <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard credentialType={CredentialType.DRIVING_LICENSE} />
         </DSComponentViewerBox>
@@ -435,18 +385,13 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Valid">
           <ItwSkeumorphicCardPreview
             credential={ItwStoredCredentialsMocks.mdl}
+            status="valid"
           />
         </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Disability Card">
       <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
@@ -471,18 +416,13 @@ const ItwCards = () => (
         <DSComponentViewerBox name="Valid">
           <ItwSkeumorphicCardPreview
             credential={ItwStoredCredentialsMocks.dc}
+            status="valid"
           />
         </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Health Insurance Card">
       <VStack space={componentMargin}>
-        <DSComponentViewerBox name="Preview">
-          <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
-            isPreview={true}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="Valid">
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}

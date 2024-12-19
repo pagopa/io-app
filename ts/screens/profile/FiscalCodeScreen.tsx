@@ -1,28 +1,28 @@
-import React, { useState, useCallback, useRef } from "react";
-import { View, StyleSheet } from "react-native";
 import {
-  IOColors,
-  VSpacer,
-  ContentWrapper,
   H3,
-  LabelSmall
+  BodySmall,
+  IOColors,
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import Barcode from "react-native-barcode-builder";
-import { useFocusEffect } from "@react-navigation/native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import Barcode from "react-native-barcode-builder";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
+import { useIOSelector } from "../../store/hooks";
 import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
-import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
-import { FAQsCategoriesType } from "../../utils/faq";
-import { useIOSelector } from "../../store/hooks";
-import { useMaxBrightness } from "../../utils/brightness";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { useMaxBrightness } from "../../utils/brightness";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { FAQsCategoriesType } from "../../utils/faq";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = ["profile"];
 
@@ -36,6 +36,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const FiscalCodeScreen = () => {
   useMaxBrightness();
+
+  const theme = useIOTheme();
 
   const titleRef = useRef<View>(null);
   const [isCFCopied, setIsCFCopied] = useState(false);
@@ -61,6 +63,7 @@ const FiscalCodeScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      includeContentMargins
       ref={titleRef}
       title={{
         label: I18n.t("profile.fiscalCode.fiscalCode")
@@ -82,38 +85,38 @@ const FiscalCodeScreen = () => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={FAQ_CATEGORIES}
     >
-      <VSpacer size={24} />
+      <VSpacer size={8} />
       {fiscalCode && (
-        <ContentWrapper>
-          <View
-            accessible
-            accessibilityLabel={I18n.t(
-              "profile.fiscalCode.accessibility.fiscalCodeHint"
-            )}
-            style={styles.box}
-            testID="barcode-box"
-          >
-            <LabelSmall weight="Semibold" color="black">
-              {nameSurname}
-            </LabelSmall>
-            <Barcode
-              value={fiscalCode}
-              width={1.3}
-              height={80}
-              lineColor={IOColors.black}
-            />
-            <H3 testID="fiscal-code">{fiscalCode}</H3>
-          </View>
-        </ContentWrapper>
+        <View
+          accessible
+          accessibilityLabel={I18n.t(
+            "profile.fiscalCode.accessibility.fiscalCodeHint"
+          )}
+          style={[
+            styles.card,
+            { borderColor: IOColors[theme["cardBorder-default"]] }
+          ]}
+          testID="barcode-box"
+        >
+          <BodySmall weight="Semibold">{nameSurname}</BodySmall>
+          <Barcode
+            value={fiscalCode}
+            width={1.3}
+            height={80}
+            background={"transparent"}
+            lineColor={IOColors[theme["textHeading-default"]]}
+          />
+          <H3 testID="fiscal-code">{fiscalCode}</H3>
+        </View>
       )}
     </IOScrollViewWithLargeHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  box: {
+  card: {
     borderRadius: 8,
-    borderColor: IOColors.bluegreyLight,
+    borderCurve: "continuous",
     borderStyle: "solid",
     borderWidth: 1,
     display: "flex",

@@ -1,7 +1,9 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActions,
+  FooterActionsInline,
   H4,
+  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -47,36 +49,24 @@ const GenericErrorComponent = (props: Props) => {
 
   const renderFooterButtons = () =>
     props.onCancel ? (
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
-            accessibilityLabel:
-              props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
-            onPress: props.onCancel
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
+          onPress: props.onCancel
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
-            accessibilityLabel:
-              props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
-            onPress: props.onRetry
-          }
+        endAction={{
+          color: "primary",
+          label: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
+          onPress: props.onRetry
         }}
       />
     ) : (
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
-            accessibilityLabel:
-              props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
             onPress: props.onRetry
           }
         }}
@@ -110,13 +100,11 @@ const GenericErrorComponent = (props: Props) => {
       >
         <View style={IOStyles.alignCenter}>
           <VSpacer size={40} />
-          <Image
-            accessibilityIgnoresInvertColors
-            source={
-              props.image ||
-              require("../../../img/wallet/errors/generic-error-icon.png")
-            }
-          />
+          {props.image ? (
+            <Image accessibilityIgnoresInvertColors source={props.image} />
+          ) : (
+            <Pictogram name="umbrellaNew" />
+          )}
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>
             <H4 ref={ref}>

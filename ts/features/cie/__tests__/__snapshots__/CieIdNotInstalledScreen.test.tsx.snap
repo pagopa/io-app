@@ -296,18 +296,15 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                   {
                     "backgroundColor": "#0073E6",
                   },
+                  false,
                   {
                     "backgroundColor": undefined,
-                    "transform": [
-                      {
-                        "scale": undefined,
-                      },
-                    ],
                   },
                 ]
               }
             >
               <View
+                entering={[Function]}
                 style={
                   [
                     {
@@ -335,7 +332,7 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                       {
@@ -425,14 +422,11 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  {},
                   {
-                    "transform": [
-                      {
-                        "scale": undefined,
-                      },
-                    ],
+                    "columnGap": 8,
                   },
+                  {},
+                  false,
                 ]
               }
             >
@@ -452,7 +446,7 @@ exports[`CieIdNotInstalledScreen Should match snapshot 1`] = `
                       "fontFamily": "Titillium Sans Pro",
                       "fontSize": 16,
                       "fontStyle": "normal",
-                      "fontWeight": "700",
+                      "fontWeight": "600",
                       "lineHeight": undefined,
                     },
                     {

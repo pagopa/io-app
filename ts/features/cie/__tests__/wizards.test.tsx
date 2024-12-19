@@ -31,7 +31,9 @@ jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: jest.fn,
   useSelector: jest.fn,
-  useStore: jest.fn
+  useStore: () => ({
+    getState: jest.fn()
+  })
 }));
 jest.mock("react-native-safe-area-context", () => ({
   useSafeAreaInsets: jest.fn
@@ -51,6 +53,7 @@ jest.mock("../../../hooks/useNavigateToLoginMethod", () => ({
 jest.mock("@gorhom/bottom-sheet", () =>
   jest.requireActual("../../../__mocks__/@gorhom/bottom-sheet.ts")
 );
+jest.mock("../analytics");
 
 describe(CieIdWizard, () => {
   afterEach(jest.clearAllMocks);

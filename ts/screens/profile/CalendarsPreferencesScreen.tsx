@@ -44,6 +44,7 @@ const CalendarsPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      includeContentMargins
       title={{
         label: I18n.t("profile.preferences.list.preferred_calendar.title")
       }}

@@ -204,6 +204,7 @@ exports[`IngressScreen Should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`IngressScreen Should match the snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`IngressScreen Should match the snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -341,11 +344,15 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                         testID="ingress-screen-loader-id"
                       >
@@ -360,6 +367,9 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -392,13 +402,6 @@ exports[`IngressScreen Should match the snapshot 1`] = `
                                 useNativeLooping={false}
                               />
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="We are getting ready for your experience on IO"
                               allowFontScaling={false}

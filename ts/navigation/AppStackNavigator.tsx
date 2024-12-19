@@ -7,7 +7,6 @@ import {
 } from "@react-navigation/native";
 import React, { useRef } from "react";
 import { View } from "react-native";
-import { ReactNavigationInstrumentation } from "@sentry/react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
@@ -19,10 +18,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
-import {
-  isCGNEnabledSelector,
-  isNewPaymentSectionEnabledSelector
-} from "../store/reducers/backendStatus/remoteConfig";
+import { isCGNEnabledSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -35,6 +31,7 @@ import {
 } from "../utils/navigation";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
+import { ReactNavigationInstrumentation } from "../App";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -89,9 +86,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const store = useIOStore();
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewPaymentSectionEnabledSelector
-  );
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
@@ -108,11 +102,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             [MESSAGES_ROUTES.MESSAGES_HOME]: "messages",
             [ROUTES.WALLET_HOME]: "wallet",
             [SERVICES_ROUTES.SERVICES_HOME]: "services",
-            // [ROUTES.BARCODE_SCAN]: "scan",
-            ...(isNewWalletSectionEnabled
-              ? { [ROUTES.PAYMENTS_HOME]: "payments" }
-              : {}),
-            [ROUTES.PROFILE_MAIN]: "profile"
+            [ROUTES.PAYMENTS_HOME]: "payments"
           }
         },
         [ROUTES.PROFILE_NAVIGATOR]: {

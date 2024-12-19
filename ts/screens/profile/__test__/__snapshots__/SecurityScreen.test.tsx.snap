@@ -204,6 +204,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -352,7 +355,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <View
@@ -468,6 +470,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                               testID="reset-unlock-code"
                             >
                               <View
@@ -519,7 +522,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -570,7 +573,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -579,12 +582,13 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -652,6 +656,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                               testID="fims-history"
                             >
                               <View
@@ -703,7 +708,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -754,7 +759,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -763,12 +768,13 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,

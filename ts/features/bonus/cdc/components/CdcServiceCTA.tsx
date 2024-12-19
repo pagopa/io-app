@@ -1,4 +1,5 @@
 import {
+  Alert,
   ButtonOutline,
   ButtonSolid,
   VSpacer
@@ -12,7 +13,6 @@ import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBenef
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import { fold } from "../../../../common/model/RemoteValue";
 import SectionStatusComponent from "../../../../components/SectionStatus";
-import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -84,17 +84,13 @@ const ErrorButton = (props: ErrorButtonProp) => {
 
   return (
     <View>
-      <StatusContent
-        accessibilityLabel={`${I18n.t(
-          "bonus.cdc.serviceCta.error.status"
-        )} ${I18n.t("global.accessibility.alert")}`}
-        backgroundColor={"orange"}
-        foregroundColor={"white"}
-        iconName={"notice"}
+      <Alert
         ref={viewRef}
-      >
-        {I18n.t("bonus.cdc.serviceCta.error.status")}
-      </StatusContent>
+        variant="warning"
+        content={I18n.t("bonus.cdc.serviceCta.error.status")}
+        accessibilityHint={I18n.t("global.accessibility.alert")}
+        testID={"errorAlert"}
+      />
       <VSpacer size={16} />
       <ButtonOutline
         fullWidth

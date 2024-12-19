@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { memo, useCallback, useEffect, useState } from "react";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import {
-  ContentWrapper,
   ListItemHeader,
   RadioGroup,
   VSpacer,
@@ -132,25 +131,21 @@ const CalendarsListContainer = ({
   }, [fetchCalendars]);
 
   return (
-    <ContentWrapper>
-      {pot.isSome(calendarsByAccount) &&
-        calendarsByAccount.value.map((section, index) => (
-          <React.Fragment key={index}>
-            <ListItemHeader label={section.title} />
-            <RadioGroup<string>
-              type="radioListItem"
-              key={`radio_group_${index}`}
-              items={mapData(section.data)}
-              selectedItem={selectedCalendar?.id}
-              onPress={onPressRadio}
-            />
-            {/* not show the end spacer if the element is the last */}
-            {index < calendarsByAccount.value.length - 1 && (
-              <VSpacer size={24} />
-            )}
-          </React.Fragment>
-        ))}
-    </ContentWrapper>
+    pot.isSome(calendarsByAccount) &&
+    calendarsByAccount.value.map((section, index) => (
+      <React.Fragment key={index}>
+        <ListItemHeader label={section.title} />
+        <RadioGroup<string>
+          type="radioListItem"
+          key={`radio_group_${index}`}
+          items={mapData(section.data)}
+          selectedItem={selectedCalendar?.id}
+          onPress={onPressRadio}
+        />
+        {/* not show the end spacer if the element is the last */}
+        {index < calendarsByAccount.value.length - 1 && <VSpacer size={24} />}
+      </React.Fragment>
+    ))
   );
 };
 

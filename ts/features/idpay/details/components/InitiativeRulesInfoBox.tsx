@@ -6,7 +6,6 @@ import {
   HSpacer,
   IOColors,
   Icon,
-  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -60,9 +59,9 @@ const InitiativeRulesInfoBox = (props: Props) => {
         <View style={IOStyles.row}>
           <Icon name="categLearning" color="blue" />
           <HSpacer size={8} />
-          <Label asLink onPress={() => present()}>
+          <Body weight="Semibold" asLink onPress={() => present()}>
             {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}
-          </Label>
+          </Body>
         </View>
       </View>
       <VSpacer size={16} />

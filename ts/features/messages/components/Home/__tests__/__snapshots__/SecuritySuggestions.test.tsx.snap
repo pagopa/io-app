@@ -204,6 +204,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -424,6 +427,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -459,13 +463,16 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -473,10 +480,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -543,6 +550,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -575,13 +583,16 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -589,10 +600,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -600,18 +611,12 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     >
                                       If you lose your device, log out from the web.
                                     </Text>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 4,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={false}
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="footnote"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
@@ -623,10 +628,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -692,6 +697,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -727,13 +733,16 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -741,10 +750,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -752,18 +761,12 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     >
                                       If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
                                     </Text>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 4,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={false}
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={false}
+                                      dynamicTypeRamp="footnote"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.25}
                                       onPress={[Function]}
@@ -775,10 +778,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }
@@ -844,6 +847,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     width={24}
                                   >
                                     <RNSVGGroup
+                                      color="#BBC2D6"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -876,13 +880,16 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
+                                        "display": "flex",
+                                        "flexDirection": "column",
                                         "flexShrink": 1,
+                                        "gap": 4,
                                       }
                                     }
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      dynamicTypeRamp="body"
+                                      dynamicTypeRamp="footnote"
                                       maxFontSizeMultiplier={1.25}
                                       style={
                                         [
@@ -890,10 +897,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 16,
+                                            "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
-                                            "lineHeight": 24,
+                                            "lineHeight": 21,
                                           },
                                         ]
                                       }

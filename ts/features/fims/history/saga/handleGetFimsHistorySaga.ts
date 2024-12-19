@@ -23,7 +23,7 @@ export function* handleGetFimsHistorySaga(
   );
 
   const getHistoryRequest = getFimsHistory({
-    Bearer: bearerToken,
+    Bearer: `Bearer ${bearerToken}`,
     "Accept-Language": preferredLanguage,
     page: action.payload.continuationToken
   });
@@ -42,7 +42,7 @@ export function* handleGetFimsHistorySaga(
     trackFailureIfNeeded(resultAction);
     yield* put(resultAction);
   } catch (e) {
-    const reason = JSON.stringify(e);
+    const reason = `${e} ${JSON.stringify(e)}`;
     trackHistoryFailure(reason);
     yield* put(fimsHistoryGet.failure(reason));
   }

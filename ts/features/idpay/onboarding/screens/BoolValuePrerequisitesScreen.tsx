@@ -1,8 +1,7 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActionsInline,
   H2,
-  Label,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -17,13 +16,13 @@ import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../utils/url";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
-import { isLoadingSelector } from "../../common/machine/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -64,9 +63,13 @@ const InitiativeSelfDeclarationsScreen = () => {
           <H2>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H2>
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-          <Label asLink onPress={() => openWebUrl(dpr28Dec2000Url)}>
+          <Body
+            weight="Semibold"
+            asLink
+            onPress={() => openWebUrl(dpr28Dec2000Url)}
+          >
             {I18n.t("idpay.onboarding.boolPrerequisites.link")}
-          </Label>
+          </Body>
           <VSpacer size={24} />
           {selfCriteriaBool.map((criteria, index) => (
             <View key={criteria.code}>
@@ -86,24 +89,16 @@ const InitiativeSelfDeclarationsScreen = () => {
           ))}
         </View>
       </ScrollView>
-      <FooterWithButtons
-        type="TwoButtonsInlineHalf"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            label: I18n.t("global.buttons.back"),
-            accessibilityLabel: I18n.t("global.buttons.back"),
-            onPress: goBackOnPress
-          }
+      <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.back"),
+          onPress: goBackOnPress
         }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: continueOnPress,
-            disabled: !areAllSelfCriteriaBoolAccepted
-          }
+        endAction={{
+          label: I18n.t("global.buttons.continue"),
+          onPress: continueOnPress,
+          disabled: !areAllSelfCriteriaBoolAccepted
         }}
       />
     </LoadingSpinnerOverlay>

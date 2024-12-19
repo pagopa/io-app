@@ -15,7 +15,6 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",
@@ -32,15 +31,12 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
   >
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "flex": 1,
-            "height": 100,
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "height": 100,
+          "justifyContent": "center",
+        }
       }
     >
       <View
@@ -269,24 +265,67 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
     }
   >
     <View
-      allowsInlineMediaPlayback={true}
-      androidCameraAccessDisabled={true}
-      androidMicrophoneAccessDisabled={true}
-      mediaPlaybackRequiresUserAction={true}
-      onError={[Function]}
-      onHttpError={[Function]}
-      onLoadEnd={[Function]}
-      source={
-        {
-          "uri": "https://google.com",
-        }
-      }
       style={
-        {
-          "flex": 1,
-        }
+        [
+          {
+            "flex": 1,
+            "overflow": "hidden",
+          },
+          undefined,
+        ]
       }
-    />
+    >
+      <RNCWebView
+        allowsInlineMediaPlayback={true}
+        allowsPictureInPictureMediaPlayback={true}
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
+        cacheEnabled={true}
+        fraudulentWebsiteWarningEnabled={true}
+        hasOnFileDownload={false}
+        hasOnOpenWindowEvent={false}
+        injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
+        injectedJavaScriptForMainFrameOnly={true}
+        javaScriptEnabled={true}
+        mediaPlaybackRequiresUserAction={true}
+        messagingEnabled={false}
+        messagingModuleName=""
+        newSource={
+          {
+            "uri": "https://google.com",
+          }
+        }
+        onContentProcessDidTerminate={[Function]}
+        onHttpError={[Function]}
+        onLoadingError={[Function]}
+        onLoadingFinish={[Function]}
+        onLoadingProgress={[Function]}
+        onLoadingStart={[Function]}
+        onMessage={[Function]}
+        onShouldStartLoadWithRequest={[Function]}
+        source={
+          {
+            "uri": "https://google.com",
+          }
+        }
+        style={
+          [
+            {
+              "flex": 1,
+              "overflow": "hidden",
+            },
+            {
+              "backgroundColor": "#ffffff",
+            },
+            {
+              "flex": 1,
+            },
+          ]
+        }
+        textInteractionEnabled={true}
+        useSharedProcessPool={true}
+      />
+    </View>
   </View>
 </View>
 `;

@@ -3,7 +3,7 @@ import {
   H6,
   Icon,
   IOColors,
-  LabelSmall
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -12,20 +12,18 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as O from "fp-ts/Option";
 import I18n from "../../../../i18n";
-import { localeDateFormat } from "../../../../utils/locale";
 import {
+  BoolClaim,
   ClaimDisplayFormat,
   ClaimValue,
-  DateWithoutTimezoneClaim,
   DrivingPrivilegesClaim,
   EmptyStringClaim,
-  EvidenceClaim,
   extractFiscalCode,
   FiscalCodeClaim,
   getSafeText,
   ImageClaim,
-  BoolClaim,
   PlaceOfBirthClaim,
+  SimpleDateClaim,
   StringClaim
 } from "../../common/utils/itwClaimsUtils";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
@@ -51,11 +49,11 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => (
           <View style={styles.dataItem}>
             <View>
               <ClaimText claim={claim} />
-              <LabelSmall weight="Regular" color="grey-700">
+              <BodySmall weight="Regular" color="grey-700">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
                 })}
-              </LabelSmall>
+              </BodySmall>
             </View>
             <Icon name="checkTickBig" size={24} color="grey-300" />
           </View>
@@ -94,13 +92,8 @@ export const getClaimDisplayValue = (
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
           return `${decoded.locality} (${decoded.country})`;
-        } else if (DateWithoutTimezoneClaim.is(decoded)) {
-          return localeDateFormat(
-            decoded,
-            I18n.t("global.dateFormats.shortFormat")
-          );
-        } else if (EvidenceClaim.is(decoded)) {
-          return decoded[0].record.source.organization_name;
+        } else if (SimpleDateClaim.is(decoded)) {
+          return decoded.toString();
         } else if (ImageClaim.is(decoded)) {
           return decoded;
         } else if (DrivingPrivilegesClaim.is(decoded)) {

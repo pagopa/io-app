@@ -1,7 +1,6 @@
 import {
   Body,
   Divider,
-  GradientScrollView,
   H3,
   IOSpacingScale,
   ListItemInfo,
@@ -26,6 +25,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -37,6 +37,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
@@ -44,6 +45,9 @@ import {
 } from "../../../../utils/stringBuilder";
 import { formatPaymentNoticeNumber } from "../../common/utils";
 import { storeNewPaymentAttemptAction } from "../../history/store/actions";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
+import * as analytics from "../analytics";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
@@ -51,17 +55,13 @@ import {
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentUserMethodsAction
 } from "../store/actions/networking";
-import { walletPaymentDetailsSelector } from "../store/selectors";
-import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import { paymentsInitOnboardingWithRptIdToResume } from "../../onboarding/store/actions";
-import * as analytics from "../analytics";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
+import { walletPaymentDetailsSelector } from "../store/selectors";
 import { walletPaymentEnabledUserWalletsSelector } from "../store/selectors/paymentMethods";
 import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { isDueDateValid } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
@@ -306,14 +306,16 @@ const WalletPaymentDetailContent = ({
   };
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        testID: "wallet-payment-detail-make-payment-button",
-        label: "Vai al pagamento",
-        accessibilityLabel: "Vai al pagmento",
-        onPress: navigateToMakePaymentScreen,
-        loading: pot.isLoading(userWalletsPots),
-        disabled: pot.isLoading(userWalletsPots)
+    <IOScrollView
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: "Vai al pagamento",
+          onPress: navigateToMakePaymentScreen,
+          loading: pot.isLoading(userWalletsPots),
+          disabled: pot.isLoading(userWalletsPots),
+          testID: "wallet-payment-detail-make-payment-button"
+        }
       }}
     >
       <ListItemInfo
@@ -371,7 +373,7 @@ const WalletPaymentDetailContent = ({
         onPress={() => handleOnCopy(orgFiscalCode)}
       />
       {amountInfoBottomSheet.bottomSheet}
-    </GradientScrollView>
+    </IOScrollView>
   );
 };
 

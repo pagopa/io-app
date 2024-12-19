@@ -204,6 +204,7 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -547,6 +550,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -561,6 +565,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -623,6 +628,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -744,6 +750,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0066CC"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -803,7 +810,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -844,9 +851,9 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -864,7 +871,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "display": "flex",
                                     "flexDirection": "column",
-                                    "rowGap": 4,
+                                    "gap": 4,
                                   }
                                 }
                               >

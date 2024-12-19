@@ -204,6 +204,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -341,11 +344,15 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -359,6 +366,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -547,13 +557,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
@@ -801,6 +804,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -815,6 +819,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -877,6 +882,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -938,11 +944,15 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -956,6 +966,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -1144,13 +1157,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
@@ -1398,6 +1404,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1412,6 +1419,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1474,6 +1482,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1535,11 +1544,15 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -1553,6 +1566,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -1741,13 +1757,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}
@@ -1992,6 +2001,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2006,6 +2016,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2068,6 +2079,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2129,11 +2141,15 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                           }
                         }
                         style={
-                          {
-                            "backgroundColor": "#FFFFFF",
-                            "flex": 1,
-                            "justifyContent": "center",
-                          }
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
                         }
                       >
                         <View
@@ -2147,6 +2163,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             style={
                               {
                                 "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 24,
                               }
                             }
                           >
@@ -2335,13 +2354,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
                             <Text
                               accessibilityLabel="Test Content Title"
                               allowFontScaling={false}

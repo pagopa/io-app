@@ -15,7 +15,6 @@ exports[`PdfViewer should match the snapshot 1`] = `
         {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",
@@ -32,15 +31,12 @@ exports[`PdfViewer should match the snapshot 1`] = `
   >
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "flex": 1,
-            "height": 100,
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "height": 100,
+          "justifyContent": "center",
+        }
       }
     >
       <View

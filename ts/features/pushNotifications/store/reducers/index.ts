@@ -1,16 +1,37 @@
-import { combineReducers } from "redux";
-import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { combineReducers } from "redux";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  PersistPartial,
+  persistReducer
+} from "redux-persist";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { InstallationState, installationReducer } from "./installation";
-import { PendingMessageState, pendingMessageReducer } from "./pendingMessage";
-import { EnvironmentState, environmentReducer } from "./environment";
+import { isDevEnv } from "../../../../utils/environment";
+import { userFromSuccessLoginSelector } from "../../../login/info/store/selectors";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
+import { environmentReducer, EnvironmentState } from "./environment";
+import { installationReducer, InstallationState } from "./installation";
+import { pendingMessageReducer, PendingMessageState } from "./pendingMessage";
 import { userBehaviourReducer, UserBehaviourState } from "./userBehaviour";
 
-export const NOTIFICATIONS_STORE_VERSION = -1;
+export const NOTIFICATIONS_STORE_VERSION = 0;
 
 export type PersistedNotificationsState = NotificationsState & PersistPartial;
+
+const migrations: MigrationManifest = {
+  // Add new push notifications banner dismissal feature, also removal of old engagement screen logic
+  "0": (state: PersistedState) => ({
+    ...state,
+    userBehaviour: {
+      pushNotificationBannerDismissalCount: 0,
+      pushNotificationBannerForceDismissionDate: undefined
+    }
+  })
+};
 
 export type NotificationsState = {
   installation: InstallationState;
@@ -23,6 +44,7 @@ export const notificationsPersistConfig: PersistConfig = {
   key: "notifications",
   storage: AsyncStorage,
   version: NOTIFICATIONS_STORE_VERSION,
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
   whitelist: ["installation", "pendingMessage", "userBehaviour"]
 };
 
@@ -41,7 +63,8 @@ export const persistedNotificationsReducer = persistReducer<
 >(notificationsPersistConfig, notificationsReducer);
 
 export const shouldShowEngagementScreenSelector = (state: GlobalState) =>
+  userFromSuccessLoginSelector(state) &&
   !state.notifications.environment.systemNotificationsEnabled &&
-  !state.notifications.userBehaviour.engagementScreenShown &&
+  !hasUserSeenSystemNotificationsPromptSelector(state) &&
   state.notifications.environment.applicationInitialized &&
   !state.notifications.environment.onboardingInstructionsShown;

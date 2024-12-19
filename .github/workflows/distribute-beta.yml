@@ -1,0 +1,73 @@
+name: Distribute latest uploaded beta
+on: workflow_dispatch
+jobs:
+  distribute-android:
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: setup-ruby
+        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
+        with:
+          bundler-cache: true
+      - id: build-release-android
+        run: |
+          ./scripts/android-release.sh ./android/app
+          cd android
+          bundle exec fastlane promote_internal_to_alpha
+        shell: bash
+        env:
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
+  distribute-ios:
+    environment: prod
+    runs-on: macos-13-xlarge
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: setup-ruby
+        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
+        with:
+          bundler-cache: true
+      - id: prepare-ios-build
+        run: ./scripts/ios-release-build.sh
+        env:
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
+      - id: distribute-app-testflight
+        name: Distribute beta to specific groupd
+        run: |
+          cd ios
+          bundle exec fastlane distribute_beta_testflight
+        env:
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
+  notify-new-version:
+    environment: dev
+    runs-on: ubuntu-latest
+    needs:
+        - distribute-android
+        - distribute-ios
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+      - id: setup-node
+        uses: ./.github/actions/setup-composite
+      - id: send-notification
+        run: 'yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+        env: 
+          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}

@@ -1,7 +1,7 @@
 import React from "react";
-import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
+import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { WalletCardPressableBase } from "../../../newWallet/components/WalletCardPressableBase";
+import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 

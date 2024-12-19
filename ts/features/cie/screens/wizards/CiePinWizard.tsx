@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   ButtonLink,
   ContentWrapper,
@@ -17,12 +17,19 @@ import useNavigateToLoginMethod from "../../../../hooks/useNavigateToLoginMethod
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../../utils/url";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import {
+  trackCiePinWizardScreen,
+  trackWizardCiePinInfoSelected,
+  trackWizardCiePinSelected
+} from "../../analytics";
+import { useIOStore } from "../../../../store/hooks";
 
 export const CIE_PIN_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/";
 
 const CiePinWizard = () => {
   const buttonRef = useRef<View>(null);
+  const store = useIOStore();
   const { navigate } = useIONavigation();
   const { error } = useIOToast();
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
@@ -57,6 +64,10 @@ const CiePinWizard = () => {
     }
   });
 
+  useEffect(() => {
+    void trackCiePinWizardScreen();
+  }, []);
+
   // eslint-disable-next-line arrow-body-style
   useFocusEffect(() => {
     return () => {
@@ -71,7 +82,10 @@ const CiePinWizard = () => {
       label: I18n.t(
         "authentication.wizards.cie_pin_wizard.actions.primary.label"
       ),
-      onPress: navigateToCiePinInsertion
+      onPress: () => {
+        void trackWizardCiePinSelected(store.getState());
+        navigateToCiePinInsertion();
+      }
     },
     secondary: {
       testID: "cie-pin-wizard-navigate-to-spid-wizard",
@@ -85,6 +99,11 @@ const CiePinWizard = () => {
       }
     }
   });
+
+  const handlePresent = () => {
+    void trackWizardCiePinInfoSelected();
+    present();
+  };
 
   return (
     <IOScrollViewWithLargeHeader
@@ -100,7 +119,7 @@ const CiePinWizard = () => {
             "authentication.wizards.cie_pin_wizard.bottom_sheet.cta.label"
           )}
           ref={buttonRef}
-          onPress={present}
+          onPress={handlePresent}
         />
       </ContentWrapper>
       {bottomSheet}

@@ -24,21 +24,24 @@ import { ZendeskState } from "../index";
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: pot.none
+  ticketNumber: pot.none,
+  zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
 const mockCategory: ZendeskCategory = {
   value: "mock_value",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 const mockSubcategory: ZendeskSubCategory = {
   value: "mock_value",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 

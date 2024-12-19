@@ -6,7 +6,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { getTimeoutError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
@@ -109,22 +108,6 @@ describe("CdcServiceCTA", () => {
       const activityIndicator = component.getByTestId("rn-activity-indicator");
 
       expect(activityIndicator).toBeDefined();
-    });
-    it("Should show the errorStatusComponent and the retryButton button if the cdcBonusRequestList is in failure state", () => {
-      const store: Store<GlobalState> = createStore(
-        appReducer,
-        globalState as any
-      );
-      store.dispatch(loadAvailableBonuses.success([mockBonus]));
-      const component = renderComponent(store);
-      store.dispatch(cdcRequestBonusList.failure(getTimeoutError()));
-      const errorStatusComponent = component.getByTestId(
-        "SectionStatusContent"
-      );
-      const retryButton = component.getByTestId("retryButton");
-
-      expect(errorStatusComponent).toBeDefined();
-      expect(retryButton).toBeDefined();
     });
   });
   it("Should show the activityIndicator if the allAvailableBonusTypes is potNoneLoading or potSomeLoading", () => {

@@ -70,7 +70,7 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
     case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
       return "PAYMENT_METHOD_AUTHORIZATION_ERROR";
     case WalletPaymentOutcomeEnum.BE_NODE_KO:
-      return "PAYMENT_SLOWDOWN_ERROR";
+      return "PAYMENT_99_ERROR";
     case WalletPaymentOutcomeEnum.INSUFFICIENT_AVAILABILITY_ERROR:
       return "PAYMENT_INSUFFICIENT_AVAILABILITY_ERROR";
     case WalletPaymentOutcomeEnum.CVV_ERROR:
@@ -83,6 +83,10 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
       return "PAYMENT_ORDER_NOT_PRESENT";
     case WalletPaymentOutcomeEnum.DUPLICATE_ORDER:
       return "PAYMENT_DUPLICATE_ORDER";
+    case WalletPaymentOutcomeEnum.PSP_ERROR:
+      return "PAYMENT_PSP_ERROR";
+    case WalletPaymentOutcomeEnum.AUTH_REQUEST_ERROR:
+      return "PAYMENT_500_ERROR";
     default:
       return outcome;
   }

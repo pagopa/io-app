@@ -1,8 +1,8 @@
+import { Body, H2, VSpacer } from "@pagopa/io-app-design-system";
+import { EmailString } from "@pagopa/ts-commons/lib/strings";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
-import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { Body, H2, Label, VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import themeVariables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 
@@ -35,9 +35,13 @@ const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
           {email && <> </>}
         </Body>
         {email && (
-          <Label asLink onPress={() => Linking.openURL(`mailto:${email}`)}>
+          <Body
+            weight="Semibold"
+            asLink
+            onPress={() => Linking.openURL(`mailto:${email}`)}
+          >
             {email}
-          </Label>
+          </Body>
         )}
       </>
     );

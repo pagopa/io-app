@@ -25,6 +25,7 @@ import { Banner } from "../../../../definitions/content/Banner";
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
 const initialRemoteConfigState: RemoteConfigState = O.none;
+const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
 export default function remoteConfigReducer(
   state: RemoteConfigState = initialRemoteConfigState,
@@ -120,15 +121,13 @@ export const fimsRequiresAppUpdateSelector = (state: GlobalState) =>
       })
   );
 
-export const fimsDomainSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): string | undefined =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.fims.domain),
-      O.toUndefined
-    )
-);
+export const oidcProviderDomainSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.fims.domain),
+    O.toUndefined
+  );
 
 /**
  * Return the remote config about the Premium Messages opt-in/out
@@ -298,44 +297,6 @@ export const isIdPayEnabledSelector = createSelector(
 );
 
 /**
- * Return the remote config about the new payment section enabled/disabled
- * If the local feature flag is enabled, the remote config is ignored
- */
-export const isNewPaymentSectionEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
-      remoteConfig,
-      O.map(config =>
-        isVersionSupported(
-          Platform.OS === "ios"
-            ? config.newPaymentSection.min_app_version.ios
-            : config.newPaymentSection.min_app_version.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
-/*
-This selector checks that both the new wallet section and the
-new document scan section are included in the tab bar.
-In this case, the navigation to the profile section in the tab bar
-is replaced with the 'settings' section accessed by clicking
-on the icon in the headers of the top-level screens.
-It will be possible to delete this control and all the code it carries
-it carries when isNewPaymentSectionEnabledSelector and
-isNewScanSectionLocallyEnabled will be deleted.
-
-NOTE: Since there is a lot of logic attached to this selector,
-this reassignment of its value has been done for the moment,
-but as soon as the FF can be eliminated, all the logic on which
-it depends and both selectors will also be eliminated.
- */
-export const isSettingsVisibleAndHideProfileSelector =
-  isNewPaymentSectionEnabledSelector;
-
-/**
  * Return the remote config about IT-WALLET enabled/disabled
  * if there is no data or the local Feature Flag is disabled,
  * false is the default value -> (IT-WALLET disabled)
@@ -355,6 +316,20 @@ export const isItwEnabledSelector = createSelector(
           ) && config.itw.enabled
       ),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Returns the authentication methods that are disabled.
+ * If there is no data, an empty array is returned as the default value.
+ */
+export const itwDisabledIdentificationMethodsSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): ReadonlyArray<string> =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_identification_methods),
+      O.getOrElse(() => emptyArray)
     )
 );
 
@@ -392,7 +367,6 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
-const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -401,3 +375,57 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
   );
+
+/**
+ * Return whether the IT Wallet feedback banner is remotely enabled.
+ */
+export const isItwFeedbackBannerEnabledSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.itw.feedback_banner_visible),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return whether the Wallet activation is disabled.
+ * This is purely a "cosmetic" configuration to disable UI elements,
+ * it does not disable the entire IT Wallet feature.
+ */
+export const isItwActivationDisabledSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.wallet_activation_disabled),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Return IT Wallet credentials that have been disabled remotely.
+ */
+export const itwDisabledCredentialsSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config => config.itw.disabled_credentials),
+      O.getOrElse(() => emptyArray)
+    )
+);
+
+/**
+ * Return the remote config content for the deferred issuance screen content.
+ */
+export const itwDeferredIssuanceScreenContentSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.itw.deferred_issuance_screen_content),
+      O.toUndefined
+    )
+);

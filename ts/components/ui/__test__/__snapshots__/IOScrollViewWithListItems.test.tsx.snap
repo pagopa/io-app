@@ -204,6 +204,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -352,7 +355,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <Text
@@ -453,7 +455,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -530,7 +532,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -616,7 +618,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -825,18 +827,15 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -864,7 +863,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -1097,6 +1096,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1111,6 +1111,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1173,6 +1174,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1245,7 +1247,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <Text
@@ -1460,18 +1461,15 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1499,7 +1497,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {
@@ -1732,6 +1730,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1746,6 +1745,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1808,6 +1808,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1880,7 +1881,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                             0,
                           ]
                         }
-                        style={{}}
                       >
                         <View>
                           <Text
@@ -2029,7 +2029,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 18,
+                                          "fontSize": 17,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2106,7 +2106,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2192,7 +2192,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                           {
                                             "color": "#0E0F13",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2401,18 +2401,15 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                   {
                                     "backgroundColor": "#0073E6",
                                   },
+                                  false,
                                   {
                                     "backgroundColor": undefined,
-                                    "transform": [
-                                      {
-                                        "scale": undefined,
-                                      },
-                                    ],
                                   },
                                 ]
                               }
                             >
                               <View
+                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -2440,7 +2437,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                                         "fontFamily": "Titillium Sans Pro",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "fontWeight": "600",
                                         "lineHeight": 20,
                                       },
                                       {

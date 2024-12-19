@@ -5,11 +5,12 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useEffect } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../utils/url";
+import { trackIdpActivationWizardScreen } from "../../analytics";
 
 export const REQUEST_CIE_URL =
   "https://www.cartaidentita.interno.gov.it/richiedi/";
@@ -21,6 +22,10 @@ const IDActivationWizard = () => {
   const { popToTop } = useIONavigation();
   const { error } = useIOToast();
   const label = I18n.t("authentication.wizards.id_activation_wizard.title");
+
+  useEffect(() => {
+    void trackIdpActivationWizardScreen();
+  }, []);
 
   const handleOpenLink = (url: string) => () => {
     openWebUrl(url, () => {

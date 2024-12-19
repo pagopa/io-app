@@ -1,0 +1,36 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { GlobalState } from "../../../../store/reducers/types";
+import { UIMessage } from "../../../messages/types";
+
+const NEW_MESSAGES_COUNT_TO_RESET_FORCE_DISMISS = 4;
+
+export const pushNotificationsBannerForceDismissionDateSelector = (
+  state: GlobalState
+) =>
+  state.notifications.userBehaviour.pushNotificationBannerForceDismissionDate;
+
+export const timesPushNotificationBannerDismissedSelector = (
+  state: GlobalState
+) => state.notifications.userBehaviour.pushNotificationBannerDismissalCount;
+
+export const shouldResetNotificationBannerDismissStateSelector = (
+  state: GlobalState
+) => {
+  const forceDismissDate =
+    pushNotificationsBannerForceDismissionDateSelector(state);
+
+  const messagesList = pot.toUndefined(
+    state.entities.messages.allPaginated.inbox.data
+  )?.page;
+
+  if (messagesList === undefined || forceDismissDate === undefined) {
+    return false;
+  }
+
+  const newUnreadCount = messagesList.filter(
+    (message: UIMessage) =>
+      message.createdAt.getTime() > forceDismissDate && !message.isRead
+  ).length;
+
+  return newUnreadCount >= NEW_MESSAGES_COUNT_TO_RESET_FORCE_DISMISS;
+};

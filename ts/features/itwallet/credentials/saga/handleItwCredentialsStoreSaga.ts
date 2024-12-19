@@ -1,7 +1,7 @@
 import { put } from "typed-redux-saga/macro";
-import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { itwCredentialsStore } from "../store/actions";
-import { getCredentialStatus } from "../../common/utils/itwClaimsUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 /**

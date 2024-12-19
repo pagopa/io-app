@@ -9,7 +9,6 @@ import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
-import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 
 import "react-native-get-random-values";
@@ -20,23 +19,19 @@ jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
-jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
 
-/**
- * adds as for documentation suggestion
- * https://docs.swmansion.com/react-native-reanimated/docs/1.x.x/getting_started/#testing
- */
 jest.mock("react-native-reanimated", () => {
   const Reanimated = require("react-native-reanimated/mock");
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
   // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function, prettier/prettier
-  Reanimated.default.addWhitelistedUIProps = () => { };
+  Reanimated.default.addWhitelistedUIProps = () => {};
 
   return {
     ...Reanimated,
-    useScrollViewOffset: jest.fn
+    useScrollViewOffset: jest.fn,
+    useReducedMotion: jest.fn
   };
 });
 
@@ -111,25 +106,16 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     ...turboModuleRegistry,
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
-      const modulesToMock = ["RNDocumentPicker"];
+      const modulesToMock = [
+        "RNDocumentPicker",
+        "RNHapticFeedback",
+        "RNCWebViewModule"
+      ];
       if (modulesToMock.includes(name)) {
         return null;
       }
       return turboModuleRegistry.getEnforcing(name);
     }
-  };
-});
-
-jest.mock("react-native-webview", () => {
-  const React = require("react");
-  const { View } = require("react-native");
-
-  const WebView = props => <View {...props} />;
-
-  return {
-    WebView,
-    default: WebView,
-    __esModule: true
   };
 });
 

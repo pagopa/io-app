@@ -1,6 +1,3 @@
-import * as E from "fp-ts/lib/Either";
-import React from "react";
-import { StyleSheet, View } from "react-native";
 import {
   Badge,
   H3,
@@ -9,11 +6,12 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { pipe } from "fp-ts/lib/function";
-import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import { CategoryTag } from "../CgnModuleDiscount";
 import I18n from "../../../../../../i18n";
+import { CategoryTag } from "../CgnModuleDiscount";
+import { isValidDiscount, normalizedDiscountPercentage } from "../utils";
 
 type CgnDiscountHeaderProps = {
   onLayout: (event: any) => void;
@@ -28,13 +26,9 @@ export const CgnDiscountHeader = ({
     ? styles.backgroundNewItem
     : styles.backgroundDefault;
 
-  const normalizedDiscountValue = pipe(
-    WithinRangeInteger(0, 100).decode(discountDetails.discount),
-    E.map(v => v.toString()),
-    E.getOrElse(() => "-")
-  );
-
   const headerHeight = useHeaderHeight();
+
+  const { isNew, discount, name, productCategories } = discountDetails;
 
   return (
     <View
@@ -49,30 +43,30 @@ export const CgnDiscountHeader = ({
       ]}
     >
       <View>
-        {(discountDetails.isNew || discountDetails.discount) && (
+        {(isNew || isValidDiscount(discount)) && (
           <>
             <View style={[IOStyles.row, { gap: 8 }]}>
-              {discountDetails.isNew && (
+              {isNew && (
                 <Badge
                   variant="purple"
                   text={I18n.t("bonus.cgn.merchantsList.news")}
                 />
               )}
-              {discountDetails.discount ? (
+              {isValidDiscount(discount) && (
                 <Badge
                   variant="purple"
                   outline
-                  text={`-${normalizedDiscountValue}%`}
+                  text={`-${normalizedDiscountPercentage(discount)}%`}
                 />
-              ) : null}
+              )}
             </View>
             <VSpacer size={12} />
           </>
         )}
-        <H3>{discountDetails.name}</H3>
+        <H3>{name}</H3>
         <VSpacer size={12} />
         <View style={[{ flexWrap: "wrap" }, IOStyles.row]}>
-          {discountDetails.productCategories.map(categoryKey => (
+          {productCategories.map(categoryKey => (
             <CategoryTag key={categoryKey} category={categoryKey} />
           ))}
         </View>

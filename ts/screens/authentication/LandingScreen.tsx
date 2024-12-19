@@ -42,7 +42,7 @@ import { mixpanelTrack } from "../../mixpanel";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { resetAuthenticationState } from "../../store/actions/authentication";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -53,7 +53,16 @@ import { tosConfigSelector } from "../../features/tos/store/selectors";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { cieIDDisableTourGuide } from "../../features/cieLogin/store/actions";
-import { trackMethodInfo } from "./analytics";
+import { SpidLevel } from "../../features/cieLogin/utils";
+import {
+  loginCieWizardSelected,
+  trackCieBottomSheetScreenView,
+  trackCieIDLoginSelected,
+  trackCieLoginSelected,
+  trackCiePinLoginSelected,
+  trackMethodInfo,
+  trackSpidLoginSelected
+} from "./analytics";
 import { Carousel } from "./carousel/Carousel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -63,8 +72,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
+const SPID_LEVEL: SpidLevel = "SpidL2";
 
 export const LandingScreen = () => {
+  const store = useIOStore();
+  const insets = useSafeAreaInsets();
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
   );
@@ -76,7 +88,17 @@ export const LandingScreen = () => {
     navigateToCieIdLoginScreen,
     isCieSupported
   } = useNavigateToLoginMethod();
-  const insets = useSafeAreaInsets();
+
+  const handleNavigateToCiePinScreen = useCallback(() => {
+    void trackCiePinLoginSelected(store.getState());
+    navigateToCiePinInsertion();
+  }, [store, navigateToCiePinInsertion]);
+
+  const handleNavigateToCieIdLoginScreen = useCallback(() => {
+    void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
+    navigateToCieIdLoginScreen(SPID_LEVEL);
+  }, [store, navigateToCieIdLoginScreen]);
+
   const {
     present,
     dismiss: dismissBottomSheet,
@@ -94,7 +116,7 @@ export const LandingScreen = () => {
           )}
           icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
-          onPress={navigateToCiePinInsertion}
+          onPress={handleNavigateToCiePinScreen}
         />
         <VSpacer size={8} />
         <ModuleNavigation
@@ -112,15 +134,17 @@ export const LandingScreen = () => {
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
           }}
-          onPress={() => navigateToCieIdLoginScreen("SpidL2")}
+          onPress={handleNavigateToCieIdLoginScreen}
         />
         <VSpacer size={24} />
         <Banner
-          onPress={() =>
+          onPress={() => {
+            void loginCieWizardSelected();
+
             navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.AUTHENTICATION_CIE_ID_WIZARD
-            })
-          }
+            });
+          }}
           testID="bottom-sheet-login-wizards"
           pictogramName="help"
           color="turquoise"
@@ -214,20 +238,22 @@ export const LandingScreen = () => {
 
   const handleLegacyCieLogin = useCallback(() => {
     if (isCieSupported) {
-      navigateToCiePinInsertion();
+      handleNavigateToCiePinScreen();
     } else {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.CIE_NOT_SUPPORTED
       });
     }
-  }, [isCieSupported, navigation, navigateToCiePinInsertion]);
+  }, [isCieSupported, navigation, handleNavigateToCiePinScreen]);
 
   const navigateToCiePinScreen = useCallback(() => {
+    void trackCieLoginSelected();
     if (isCieIDFFEnabled) {
       if (isCieSupported) {
+        void trackCieBottomSheetScreenView();
         present();
       } else {
-        navigateToCieIdLoginScreen("SpidL2");
+        handleNavigateToCieIdLoginScreen();
       }
     } else {
       handleLegacyCieLogin();
@@ -237,7 +263,7 @@ export const LandingScreen = () => {
     isCieSupported,
     isCieIDFFEnabled,
     handleLegacyCieLogin,
-    navigateToCieIdLoginScreen
+    handleNavigateToCieIdLoginScreen
   ]);
 
   const navigateToPrivacyUrl = useCallback(() => {
@@ -287,7 +313,10 @@ export const LandingScreen = () => {
         // but we navigate to the CIE unsupported info screen.
         label={I18n.t("authentication.landing.loginSpid")}
         icon="spid"
-        onPress={navigateToIdpSelection}
+        onPress={() => {
+          void trackSpidLoginSelected();
+          navigateToIdpSelection();
+        }}
       />
     );
 

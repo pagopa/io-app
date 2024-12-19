@@ -51,7 +51,7 @@ type ProfileProperties = {
   ITW_PG_V2: ItwPg;
   ITW_TS_V2: ItwTs;
   ITW_CED_V2: ItwCed;
-  SAVED_PAYMENT_METHOD: number;
+  SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   WELFARE_STATUS: ReadonlyArray<string>;
 };

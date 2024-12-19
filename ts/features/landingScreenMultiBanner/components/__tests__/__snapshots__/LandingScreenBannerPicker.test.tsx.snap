@@ -204,6 +204,7 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -607,6 +610,7 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -621,6 +625,7 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -683,6 +688,7 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

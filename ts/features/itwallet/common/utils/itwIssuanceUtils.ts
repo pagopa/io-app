@@ -1,18 +1,14 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
-  type AuthorizationContext,
   createCryptoContextFor,
   Credential,
   AuthorizationDetail
 } from "@pagopa/io-react-native-wallet";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import uuid from "react-native-uuid";
-import { URL } from "react-native-url-polyfill";
 import {
   itwPidProviderBaseUrl,
   itWalletIssuanceRedirectUri,
-  itWalletIssuanceRedirectUriCie,
   itwIdpHintTest
 } from "../../../../config";
 import { type IdentificationContext } from "../../machine/eid/context";
@@ -29,34 +25,31 @@ type AccessToken = Awaited<
 
 type IssuerConf = Parameters<Credential.Issuance.ObtainCredential>[0];
 
-// This can be any URL, as long as it has http or https as its protocol, otherwise it cannot be managed by the webview.
-const CIE_L3_REDIRECT_URI = "https://wallet.io.pagopa.it/index.html";
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
-// Different scheme to avoid conflicts with the scheme handled by io-react-native-login-utils's activity
-const getRedirectUri = (identificationMode: IdentificationContext["mode"]) =>
-  identificationMode === "cieId"
-    ? itWalletIssuanceRedirectUriCie
-    : itWalletIssuanceRedirectUri;
-
-type StartCieAuthFlowParams = {
+type StartAuthFlowParams = {
   walletAttestation: string;
+  identification: IdentificationContext;
 };
 
 /**
- * Function to start the authentication flow when using CIE + PIN. It must be invoked before
- * reading the card to get the `authUrl` to launch the CIE web view, and other params that are needed later.
- * After successfully reading the card, the flow must be completed invoking `completeCieAuthFlow`.
+ * Function to start the authentication flow. It must be invoked before
+ * proceeding with the authentication process to get the `authUrl` and other parameters needed later.
+ * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
+ * the flow must be completed by invoking `completeAuthFlow`.
  * @param walletAttestation - The wallet attestation.
  * @returns Authentication params to use when completing the flow.
  */
-const startCieAuthFlow = async ({
-  walletAttestation
-}: StartCieAuthFlowParams) => {
+const startAuthFlow = async ({
+  walletAttestation,
+  identification
+}: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: itwPidProviderBaseUrl,
     credentialType: CREDENTIAL_TYPE
   });
+
+  const idpHint = getIdpHint(identification);
 
   const { issuerUrl, credentialType } = startFlow();
 
@@ -72,141 +65,66 @@ const startCieAuthFlow = async ({
       credentialType,
       {
         walletInstanceAttestation: walletAttestation,
-        redirectUri: CIE_L3_REDIRECT_URI,
+        redirectUri: itWalletIssuanceRedirectUri,
         wiaCryptoContext
       }
     );
 
-  const authzRequestEndpoint =
-    issuerConf.oauth_authorization_server.authorization_endpoint;
-
-  const params = new URLSearchParams({
-    client_id: clientId,
-    request_uri: issuerRequestUri,
-    idphint: getIdpHint({ mode: "ciePin", pin: "" }) // PIN is not needed for the hint
-  });
+  // Obtain the Authorization URL
+  const { authUrl } = await Credential.Issuance.buildAuthorizationUrl(
+    issuerRequestUri,
+    clientId,
+    issuerConf,
+    idpHint
+  );
 
   return {
-    authUrl: `${authzRequestEndpoint}?${params}`,
+    authUrl,
     issuerConf,
     clientId,
     codeVerifier,
-    credentialDefinition
+    credentialDefinition,
+    redirectUri: itWalletIssuanceRedirectUri
   };
 };
 
-type CompleteCieAuthFlowParams = {
+type CompleteAuthFlowParams = {
   callbackUrl: string;
   issuerConf: IssuerConf;
   clientId: string;
   codeVerifier: string;
   walletAttestation: string;
+  redirectUri: string;
 };
 
-export type CompleteCieAuthFlowResult = Awaited<
-  ReturnType<typeof completeCieAuthFlow>
+export type CompleteAuthFlowResult = Awaited<
+  ReturnType<typeof completeAuthFlow>
 >;
 
 /**
- * Function to complete the CIE + PIN authentication flow. It must be invoked after `startCieAuthFlow`
- * and after reading the card to get the final `callbackUrl`. The rest of the parameters are those obtained from
- * `startCieAuthFlow` + the wallet attestation.
+ * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
+ * and after obtaining the final `callbackUrl` from the WebView (CIE + PIN & SPID) or Browser (CIEID).
+ * The rest of the parameters are those obtained from `startAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns Authentication tokens.
  */
-const completeCieAuthFlow = async ({
+const completeAuthFlow = async ({
   callbackUrl,
   clientId,
   codeVerifier,
   issuerConf,
-  walletAttestation
-}: CompleteCieAuthFlowParams) => {
-  const query = Object.fromEntries(new URL(callbackUrl).searchParams);
-  const { code } = Credential.Issuance.parseAuthroizationResponse(query);
-
-  await regenerateCryptoKey(DPOP_KEYTAG);
-  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
-  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-
-  const { accessToken } = await Credential.Issuance.authorizeAccess(
-    issuerConf,
-    code,
-    clientId,
-    CIE_L3_REDIRECT_URI,
-    codeVerifier,
-    {
-      walletInstanceAttestation: walletAttestation,
-      wiaCryptoContext,
-      dPopCryptoContext
-    }
-  );
-
-  return { accessToken, dPoPContext: dPopCryptoContext };
-};
-
-type FullAuthFlowParams = {
-  walletAttestation: string;
-  identification: Exclude<IdentificationContext, { mode: "ciePin" }>;
-};
-
-/**
- * Full authentication flow completely handled by `io-react-native-wallet`. The consumer of the library
- * does not need to implement any authentication screen or logic. Only compatible with SPID and CieID.
- * @param walletAttestation - The wallet attestation.
- * @param identification - Object that contains details on the selected identification mode.
- * @returns Authentication tokens and other params needed to get the PID.
- */
-const startAndCompleteFullAuthFlow = async ({
   walletAttestation,
-  identification
-}: FullAuthFlowParams) => {
-  const authorizationContext: AuthorizationContext | undefined =
-    identification.mode === "spid"
-      ? { authorize: openAuthenticationSession }
-      : undefined;
-
-  const idpHint = getIdpHint(identification);
-
-  const startFlow: Credential.Issuance.StartFlow = () => ({
-    issuerUrl: itwPidProviderBaseUrl,
-    credentialType: CREDENTIAL_TYPE
-  });
-
-  const { issuerUrl, credentialType } = startFlow();
-
-  const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
-    issuerUrl
-  );
-
-  const redirectUri = getRedirectUri(identification.mode);
-
-  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-
-  const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
-    await Credential.Issuance.startUserAuthorization(
-      issuerConf,
-      credentialType,
-      {
-        walletInstanceAttestation: walletAttestation,
-        redirectUri,
-        wiaCryptoContext
-      }
-    );
-
+  redirectUri
+}: CompleteAuthFlowParams) => {
   const { code } =
     await Credential.Issuance.completeUserAuthorizationWithQueryMode(
-      issuerRequestUri,
-      clientId,
-      issuerConf,
-      idpHint,
-      redirectUri,
-      authorizationContext,
-      identification.abortController?.signal
+      callbackUrl
     );
 
   await regenerateCryptoKey(DPOP_KEYTAG);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const { accessToken } = await Credential.Issuance.authorizeAccess(
     issuerConf,
@@ -221,13 +139,7 @@ const startAndCompleteFullAuthFlow = async ({
     }
   );
 
-  return {
-    accessToken,
-    dPoPContext: dPopCryptoContext,
-    credentialDefinition,
-    clientId,
-    issuerConf
-  };
+  return { accessToken, dPoPContext: dPopCryptoContext };
 };
 
 type PidIssuanceParams = {
@@ -240,9 +152,7 @@ type PidIssuanceParams = {
 
 /**
  * Function to get the PID, parse it and return it in {@link StoredCredential} format.
- * It must be called after either one of the following:
- * - `startCieAuthFlow` and `completeCieAuthFlow`
- * - `startAndCompleteFullAuthFlow`
+ * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
 const getPid = async ({
@@ -289,12 +199,7 @@ const getPid = async ({
   };
 };
 
-export {
-  startCieAuthFlow,
-  completeCieAuthFlow,
-  startAndCompleteFullAuthFlow,
-  getPid
-};
+export { startAuthFlow, completeAuthFlow, getPid };
 
 /**
  * Consts for the IDP hints in test for SPID and CIE and in production for CIE.
@@ -330,7 +235,6 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
  * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
  * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
- * @returns the IDP hint to be provided to the {@link openAuthenticationSession} function
  */
 const getIdpHint = (idCtx: IdentificationContext) => {
   const isSpidMode = idCtx.mode === "spid";

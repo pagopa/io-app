@@ -1,15 +1,19 @@
 import {
+  H3,
   IOAppMargin,
   IOColors,
-  makeFontStyleObject,
-  useIOTheme
+  useIOTheme,
+  useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import Animated from "react-native-reanimated";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
@@ -19,54 +23,78 @@ import { selectFiscalCodeFromEid } from "../../credentials/store/selectors";
  */
 const ENCODED_FISCAL_CODE_LENGTH_CODE39 = 288;
 
+/**
+ * For the barcode width, we start from the window width and subtract the horizontal padding.
+ */
+const windowWidth = Dimensions.get("window").width;
+
+/**
+ * The total width is the window width minus the horizontal screen padding and the fiscal code button padding.
+ */
+const barcodeTotalWidth =
+  windowWidth -
+  IOAppMargin[4] - // Subtracting the horizontal screen padding
+  IOAppMargin[3]; // Subtracting the fiscal code button padding
+
+/**
+ * The barcode width is the total width divided by the encoded fiscal code length.
+ */
+const barcodeWidth = barcodeTotalWidth / ENCODED_FISCAL_CODE_LENGTH_CODE39;
+
 const ItwPresentationFiscalCode = () => {
-  const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
+  const navigation = useIONavigation();
   const theme = useIOTheme();
-  const barCodeWidth =
-    (Dimensions.get("window").width - IOAppMargin[4]) / // Subtracting the horizontal padding which is 24 but has to be multiplied by 2 for each side
-    ENCODED_FISCAL_CODE_LENGTH_CODE39;
+  const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
+
+  const handleOnPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL
+    });
+  };
+
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[styles.label, { color: IOColors[theme["textBody-tertiary"]] }]}
-      >
-        {I18n.t("features.itWallet.presentation.credentialDetails.fiscalCode")}
-      </Text>
-      <Text
-        style={[styles.value, { color: IOColors[theme["textBody-default"]] }]}
-      >
-        {fiscalCode}
-      </Text>
-      <View
-        accessible={true}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.fiscalCodeBarcode"
-        )}
-        accessibilityRole="image"
-      >
+    <Pressable
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityHint={I18n.t(
+        "features.itWallet.presentation.credentialDetails.fiscalCode.action"
+      )}
+      accessibilityLabel={I18n.t(
+        "features.itWallet.presentation.credentialDetails.fiscalCode.label"
+      )}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onPress={handleOnPress}
+    >
+      <Animated.View style={[styles.button, scaleAnimatedStyle]}>
         <Barcode
           value={fiscalCode}
-          width={barCodeWidth}
-          height={50}
+          width={barcodeWidth}
+          height={80}
           format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
           background={IOColors[theme["appBackground-primary"]]}
           lineColor={IOColors[theme["textBody-default"]]}
         />
-      </View>
-    </View>
+        <H3 style={styles.fiscalCode}>{fiscalCode}</H3>
+      </Animated.View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 12
+  button: {
+    paddingTop: 8,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    rowGap: 0,
+    borderColor: IOColors["grey-100"],
+    borderWidth: 1,
+    borderRadius: 8
   },
-  label: {
-    ...makeFontStyleObject(14, "TitilliumSansPro", 21, "Regular")
-  },
-  value: {
-    ...makeFontStyleObject(16, "DMMono", 24, "Regular")
+  fiscalCode: {
+    alignSelf: "center"
   }
 });
 

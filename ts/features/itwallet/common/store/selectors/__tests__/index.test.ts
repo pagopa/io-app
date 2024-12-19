@@ -5,8 +5,10 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwIsWalletEmptySelector } from "../../../../credentials/store/selectors";
 import { itwIsFeedbackBannerHiddenSelector } from "../preferences";
-import { isItwEnabledSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
-import { isItwTrialActiveSelector } from "../../../../../trialSystem/store/reducers";
+import {
+  isItwEnabledSelector,
+  isItwFeedbackBannerEnabledSelector
+} from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import { itwLifecycleIsValidSelector } from "../../../../lifecycle/store/selectors";
 
 type JestMock = ReturnType<typeof jest.fn>;
@@ -25,15 +27,10 @@ jest.mock("../preferences", () => ({
 jest.mock(
   "../../../../../../store/reducers/backendStatus/remoteConfig",
   () => ({
-    isItwEnabledSelector: jest.fn()
+    isItwEnabledSelector: jest.fn(),
+    isItwFeedbackBannerEnabledSelector: jest.fn()
   })
 );
-jest.mock("../../../../lifecycle/store/selectors", () => ({
-  itwLifecycleIsValidSelector: jest.fn()
-}));
-jest.mock("../../../../../trialSystem/store/reducers", () => ({
-  isItwTrialActiveSelector: jest.fn()
-}));
 
 describe("itwDiscoveryBannerSelector", () => {
   beforeEach(() => {
@@ -42,24 +39,17 @@ describe("itwDiscoveryBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | lifecycleValid | trialActive | expected
-    ${true}    | ${true}        | ${true}     | ${false}
-    ${true}    | ${true}        | ${false}    | ${false}
-    ${true}    | ${false}       | ${true}     | ${true}
-    ${true}    | ${false}       | ${false}    | ${false}
-    ${false}   | ${true}        | ${true}     | ${false}
-    ${false}   | ${true}        | ${false}    | ${false}
-    ${false}   | ${false}       | ${true}     | ${false}
-    ${false}   | ${false}       | ${false}    | ${false}
+    itwEnabled | lifecycleValid | expected
+    ${true}    | ${true}        | ${false}
+    ${true}    | ${false}       | ${true}
+    ${false}   | ${true}        | ${false}
+    ${false}   | ${false}       | ${false}
   `(
-    "should return $expected when isItwEnabled is $itwEnabled, trialActive is $trialActive, and lifecycleValid is $lifecycleValid",
-    ({ itwEnabled, trialActive, lifecycleValid, expected }) => {
+    "should return $expected when isItwEnabled is $itwEnabled, and lifecycleValid is $lifecycleValid",
+    ({ itwEnabled, lifecycleValid, expected }) => {
       (isItwEnabledSelector as unknown as JestMock).mockReturnValue(itwEnabled);
       (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(
         lifecycleValid
-      );
-      (isItwTrialActiveSelector as unknown as JestMock).mockReturnValue(
-        trialActive
       );
       expect(
         isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
@@ -74,18 +64,35 @@ describe("itwShouldRenderFeedbackBannerSelector", () => {
     jest.clearAllMocks();
   });
   it.each`
-    hasValidWallet | walletIsEmpty | bannerIsHidden | expected
-    ${true}        | ${true}       | ${true}        | ${false}
-    ${true}        | ${true}       | ${false}       | ${false}
-    ${true}        | ${false}      | ${true}        | ${false}
-    ${true}        | ${false}      | ${false}       | ${true}
-    ${false}       | ${true}       | ${true}        | ${false}
-    ${false}       | ${true}       | ${false}       | ${false}
-    ${false}       | ${false}      | ${true}        | ${false}
-    ${false}       | ${false}      | ${false}       | ${false}
+    remotelyEnabled | hasValidWallet | walletIsEmpty | bannerIsHidden | expected
+    ${true}         | ${true}        | ${true}       | ${true}        | ${false}
+    ${true}         | ${true}        | ${true}       | ${false}       | ${false}
+    ${true}         | ${true}        | ${false}      | ${true}        | ${false}
+    ${true}         | ${true}        | ${false}      | ${false}       | ${true}
+    ${true}         | ${false}       | ${true}       | ${true}        | ${false}
+    ${true}         | ${false}       | ${true}       | ${false}       | ${false}
+    ${true}         | ${false}       | ${false}      | ${true}        | ${false}
+    ${true}         | ${false}       | ${false}      | ${false}       | ${false}
+    ${false}        | ${true}        | ${true}       | ${true}        | ${false}
+    ${false}        | ${true}        | ${true}       | ${false}       | ${false}
+    ${false}        | ${true}        | ${false}      | ${true}        | ${false}
+    ${false}        | ${true}        | ${false}      | ${false}       | ${false}
+    ${false}        | ${false}       | ${true}       | ${true}        | ${false}
+    ${false}        | ${false}       | ${true}       | ${false}       | ${false}
+    ${false}        | ${false}       | ${false}      | ${true}        | ${false}
+    ${false}        | ${false}       | ${false}      | ${false}       | ${false}
   `(
-    "should return $expected when hasValidWallet is $hasValidWallet, walletIsEmpty is $walletIsEmpty, and bannerIsHidden is $bannerIsHidden",
-    ({ hasValidWallet, walletIsEmpty, bannerIsHidden, expected }) => {
+    "should return $expected when remotelyEnabled is $remotelyEnabled, hasValidWallet is $hasValidWallet, walletIsEmpty is $walletIsEmpty, and bannerIsHidden is $bannerIsHidden",
+    ({
+      hasValidWallet,
+      walletIsEmpty,
+      bannerIsHidden,
+      expected,
+      remotelyEnabled
+    }) => {
+      (
+        isItwFeedbackBannerEnabledSelector as unknown as JestMock
+      ).mockReturnValue(remotelyEnabled);
       (itwLifecycleIsValidSelector as unknown as JestMock).mockReturnValue(
         hasValidWallet
       );

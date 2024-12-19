@@ -204,6 +204,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -357,9 +360,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                           style={
                             {
                               "alignItems": "center",
-                              "columnGap": 8,
                               "display": "flex",
                               "flexDirection": "row",
+                              "gap": 8,
                             }
                           }
                         >
@@ -371,12 +374,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                 "flexDirection": "column",
                                 "flexGrow": 1,
                                 "flexShrink": 1,
-                                "rowGap": 4,
+                                "gap": 4,
                               }
                             }
                           >
                             <Text
                               allowFontScaling={false}
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -839,6 +843,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -853,6 +858,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -915,6 +921,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1033,9 +1040,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -1047,12 +1054,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >
                               <Text
                                 allowFontScaling={false}
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -1154,6 +1162,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -1399,6 +1408,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1413,6 +1423,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1475,6 +1486,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1552,9 +1564,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                           style={
                             {
                               "alignItems": "center",
-                              "columnGap": 8,
                               "display": "flex",
                               "flexDirection": "row",
+                              "gap": 8,
                             }
                           }
                         >
@@ -1566,12 +1578,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 "flexDirection": "column",
                                 "flexGrow": 1,
                                 "flexShrink": 1,
-                                "rowGap": 4,
+                                "gap": 4,
                               }
                             }
                           >
                             <Text
                               allowFontScaling={false}
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.25}
                               numberOfLines={2}
                               style={
@@ -1673,6 +1686,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                             width={24}
                           >
                             <RNSVGGroup
+                              color="#0B3EE3"
                               fill={
                                 {
                                   "payload": 4278190080,
@@ -1924,6 +1938,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1938,6 +1953,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2000,6 +2016,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2118,9 +2135,9 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                             style={
                               {
                                 "alignItems": "center",
-                                "columnGap": 8,
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "gap": 8,
                               }
                             }
                           >
@@ -2132,12 +2149,13 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   "flexDirection": "column",
                                   "flexGrow": 1,
                                   "flexShrink": 1,
-                                  "rowGap": 4,
+                                  "gap": 4,
                                 }
                               }
                             >
                               <Text
                                 allowFontScaling={false}
+                                dynamicTypeRamp="body"
                                 maxFontSizeMultiplier={1.25}
                                 numberOfLines={2}
                                 style={
@@ -2239,6 +2257,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#0B3EE3"
                                 fill={
                                   {
                                     "payload": 4278190080,

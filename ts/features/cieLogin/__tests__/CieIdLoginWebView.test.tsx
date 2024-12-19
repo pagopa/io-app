@@ -47,6 +47,21 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+jest.mock("react-native-webview", () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const React = require("react");
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { View } = require("react-native");
+
+  const WebView = (props: any) => <View {...props} />;
+
+  return {
+    WebView,
+    default: WebView,
+    __esModule: true
+  };
+});
+
 describe(CieIdLoginWebView, () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -181,7 +196,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginFailure({ idp: "cie", error: expect.any(Error) })
+      loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
     expect(mockReplace).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
@@ -211,7 +226,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledTimes(0);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ idp: "cie", token: "my-secret-token" as SessionToken })
+      loginSuccess({ idp: "cieid", token: "my-secret-token" as SessionToken })
     );
   });
   it("Shouldn't execute the login because of missing token", () => {
@@ -232,7 +247,7 @@ describe(CieIdLoginWebView, () => {
     expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginFailure({ idp: "cie", error: expect.any(Error) })
+      loginFailure({ idp: "cieid", error: expect.any(Error) })
     );
     expect(mockReplace).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,

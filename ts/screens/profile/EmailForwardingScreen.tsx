@@ -1,28 +1,27 @@
 /**
  * A screens to express the preferences related to email forwarding.
  */
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import {
   BodyProps,
-  ContentWrapper,
   ListItemSwitch,
   useIOToast
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
+import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
+import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isEmailEnabledSelector,
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { profileUpsert } from "../../store/actions/profile";
-import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -129,21 +128,20 @@ const EmailForwardingScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      includeContentMargins
       title={{ label: I18n.t("send_email_messages.title") }}
       description={bodyPropsArray}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
       canGoback={true}
     >
-      <ContentWrapper>
-        <ListItemSwitch
-          label={I18n.t("send_email_messages.switch.title")}
-          description={I18n.t("send_email_messages.switch.subtitle")}
-          onSwitchValueChange={handleSwitchValueChange}
-          value={isEmailEnabled}
-          isLoading={isLoading}
-        />
-      </ContentWrapper>
+      <ListItemSwitch
+        label={I18n.t("send_email_messages.switch.title")}
+        description={I18n.t("send_email_messages.switch.subtitle")}
+        onSwitchValueChange={handleSwitchValueChange}
+        value={isEmailEnabled}
+        isLoading={isLoading}
+      />
     </IOScrollViewWithLargeHeader>
   );
 };

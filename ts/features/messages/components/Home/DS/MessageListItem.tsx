@@ -1,15 +1,14 @@
 import {
   AnimatedMessageCheckbox,
   Avatar,
-  Body,
   H6,
   HSpacer,
   IOColors,
   IOStyles,
   IOVisualCostants,
-  Label,
-  LabelSmall,
+  BodySmall,
   Tag,
+  useIOTheme,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import React from "react";
@@ -97,80 +96,92 @@ export const MessageListItem = ({
   selected,
   serviceLogos,
   testID
-}: MessageListItemProps) => (
-  <CustomPressableListItemBase
-    onPress={onPress}
-    onLongPress={onLongPress}
-    selected={selected}
-    testID={testID}
-    accessibilityLabel={accessibilityLabel}
-    minHeight={badgeText && badgeVariant ? EnhancedHeight : StandardHeight}
-  >
-    <View style={styles.container}>
-      <View style={styles.serviceLogoAndSelectionContainer}>
-        <View
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
-          style={styles.serviceLogoContainer}
-        >
-          {doubleAvatar ? (
-            <DoubleAvatar backgroundLogoUri={serviceLogos} />
-          ) : (
-            <Avatar logoUri={serviceLogos} size="small" />
-          )}
+}: MessageListItemProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <CustomPressableListItemBase
+      onPress={onPress}
+      onLongPress={onLongPress}
+      selected={selected}
+      testID={testID}
+      accessibilityLabel={accessibilityLabel}
+      minHeight={badgeText && badgeVariant ? EnhancedHeight : StandardHeight}
+    >
+      <View style={styles.container}>
+        <View style={styles.serviceLogoAndSelectionContainer}>
           <View
-            style={[
-              StyleSheet.absoluteFill,
-              {
-                pointerEvents: "none"
-              }
-            ]}
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no-hide-descendants"
+            style={styles.serviceLogoContainer}
           >
-            <AnimatedMessageCheckbox checked={selected} />
+            {doubleAvatar ? (
+              <DoubleAvatar backgroundLogoUri={serviceLogos} />
+            ) : (
+              <Avatar logoUri={serviceLogos} size="small" />
+            )}
+            <View
+              style={[
+                StyleSheet.absoluteFill,
+                {
+                  pointerEvents: "none"
+                }
+              ]}
+            >
+              <AnimatedMessageCheckbox checked={selected} />
+            </View>
           </View>
         </View>
-      </View>
-      <View style={styles.textContainer}>
-        <View style={styles.organizationContainer}>
-          <H6 numberOfLines={1} color="black" style={IOStyles.flex}>
-            {organizationName}
-          </H6>
-          <LabelSmall
-            color="grey-700"
-            weight="Regular"
-            style={{ marginLeft: 8 }}
-          >
-            {formattedDate}
-          </LabelSmall>
-        </View>
-        <View style={styles.serviceNameAndMessageTitleContainer}>
-          <Body numberOfLines={2} style={IOStyles.flex}>
-            <Label weight="Semibold">{`${serviceName} · `}</Label>
-            <Label weight="Regular">{messageTitle}</Label>
-          </Body>
-          {!isRead && (
-            <View style={styles.messageReadContainer}>
-              <BadgeComponent />
+        <View style={styles.textContainer}>
+          <View style={styles.organizationContainer}>
+            {/* We use 'flexGrow: 1, flexShrink: 1' instead of 'flex: 1'
+                in order to keep a consistent styling approach between
+                react and react-native (on react-native, 'flex: 1' does
+                something similar to 'flex-grow') */}
+            <H6
+              numberOfLines={1}
+              color={theme["textBody-default"]}
+              style={{ flexGrow: 1, flexShrink: 1 }}
+            >
+              {organizationName}
+            </H6>
+            <BodySmall
+              color={theme["textBody-tertiary"]}
+              weight="Regular"
+              style={{ marginLeft: 8 }}
+            >
+              {formattedDate}
+            </BodySmall>
+          </View>
+          <View style={styles.serviceNameAndMessageTitleContainer}>
+            <BodySmall numberOfLines={2} style={IOStyles.flex}>
+              <BodySmall weight="Semibold">{`${serviceName} · `}</BodySmall>
+              <BodySmall weight="Regular">{messageTitle}</BodySmall>
+            </BodySmall>
+            {!isRead && (
+              <View style={styles.messageReadContainer}>
+                <BadgeComponent />
+              </View>
+            )}
+          </View>
+          {badgeText && badgeVariant && (
+            <View style={styles.badgeContainer}>
+              <Tag text={badgeText} variant={badgeVariant} />
+              {badgeVariant === "legalMessage" && (
+                <>
+                  <HSpacer size={8} />
+                  <Tag
+                    variant="attachment"
+                    iconAccessibilityLabel={I18n.t(
+                      "features.pn.details.attachmentsSection.title"
+                    )}
+                  />
+                </>
+              )}
             </View>
           )}
         </View>
-        {badgeText && badgeVariant && (
-          <View style={styles.badgeContainer}>
-            <Tag text={badgeText} variant={badgeVariant} />
-            {badgeVariant === "legalMessage" && (
-              <>
-                <HSpacer size={8} />
-                <Tag
-                  variant="attachment"
-                  iconAccessibilityLabel={I18n.t(
-                    "features.pn.details.attachmentsSection.title"
-                  )}
-                />
-              </>
-            )}
-          </View>
-        )}
       </View>
-    </View>
-  </CustomPressableListItemBase>
-);
+    </CustomPressableListItemBase>
+  );
+};

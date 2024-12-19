@@ -1,19 +1,23 @@
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import React from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { trackWalletCreationFailed } from "../../analytics";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
+import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
-  CredentialIssuanceFailureType,
-  CredentialIssuanceFailureTypeEnum,
-  isCredentialInvalidStatusError
+  CredentialIssuanceFailureType
 } from "../../machine/credential/failure";
 import {
   selectCredentialTypeOption,
@@ -21,20 +25,11 @@ import {
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  CREDENTIALS_MAP,
-  trackAddCredentialFailure,
-  trackAddCredentialTimeout,
-  trackCredentialInvalidStatusFailure,
-  trackCredentialNotEntitledFailure,
-  trackItWalletDeferredIssuing,
-  trackWalletCreationFailed
-} from "../../analytics";
-import ROUTES from "../../../../navigation/routes";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
+import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getFullLocale } from "../../../../utils/locale";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -49,6 +44,13 @@ export const ItwIssuanceCredentialFailureScreen = () => {
   );
 };
 
+const defaultInvalidStatusMessage = {
+  title: I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
+  description: I18n.t(
+    "features.itWallet.issuance.notEntitledCredentialError.body"
+  )
+};
+
 type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /**
@@ -59,8 +61,18 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
+    selectIssuerConfigurationOption
+  );
+  const locale = getFullLocale();
+  const deferredIssuanceScreenContent = useIOSelector(
+    itwDeferredIssuanceScreenContentSelector
+  );
 
-  const invalidStatusMessage = useCredentialInvalidStatusMessage(failure);
+  const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
+    credentialType,
+    issuerConf
+  });
 
   const closeIssuance = (cta_id: string) => {
     machineRef.send({ type: "close" });
@@ -72,136 +84,130 @@ const ContentView = ({ failure }: ContentViewProps) => {
   };
   const closeAsyncIssuance = () => {
     machineRef.send({
-      type: "close",
-      navigateTo: [ROUTES.MAIN, { screen: MESSAGES_ROUTES.MESSAGES_HOME }]
+      type: "close"
     });
   };
 
   useDebugInfo({
-    failure
+    failure: serializeFailureReason(failure)
   });
 
-  const resultScreensMap: Record<
-    CredentialIssuanceFailureType,
-    OperationResultScreenContentProps
-  > = {
-    GENERIC: {
-      title: I18n.t("features.itWallet.issuance.genericError.title"),
-      subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-      pictogram: "umbrellaNew",
-      action: {
-        label: I18n.t("features.itWallet.issuance.genericError.primaryAction"),
-        onPress: () =>
-          closeIssuance(
-            I18n.t("features.itWallet.issuance.genericError.primaryAction")
-          )
+  const getOperationResultScreenContentProps =
+    (): OperationResultScreenContentProps => {
+      switch (failure.type) {
+        case CredentialIssuanceFailureType.UNEXPECTED:
+        case CredentialIssuanceFailureType.ISSUER_GENERIC:
+        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC:
+          return {
+            title: I18n.t("features.itWallet.issuance.genericError.title"),
+            subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+            pictogram: "umbrellaNew",
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.genericError.primaryAction"
+              ),
+              onPress: () =>
+                closeIssuance(
+                  I18n.t(
+                    "features.itWallet.issuance.genericError.primaryAction"
+                  )
+                )
+            }
+          };
+        // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
+        case CredentialIssuanceFailureType.ASYNC_ISSUANCE:
+          return {
+            title:
+              deferredIssuanceScreenContent?.title?.[locale] ??
+              I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
+            subtitle:
+              deferredIssuanceScreenContent?.description?.[locale] ??
+              I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
+            pictogram: "pending",
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.asyncCredentialError.primaryAction"
+              ),
+              onPress: closeAsyncIssuance
+            }
+          };
+        // Dynamic errors extracted from the entity configuration, with fallback
+        case CredentialIssuanceFailureType.INVALID_STATUS:
+          return {
+            title:
+              invalidStatusDetails.message?.title ??
+              defaultInvalidStatusMessage.title,
+            subtitle:
+              invalidStatusDetails.message?.description ??
+              defaultInvalidStatusMessage.description,
+            pictogram: "accessDenied",
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+              ),
+              onPress: () =>
+                closeIssuance(
+                  I18n.t(
+                    "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+                  )
+                )
+            }
+          };
       }
-    },
-    // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
-    ASYNC_ISSUANCE: {
-      title: I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
-      subtitle: I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
-      pictogram: "pending",
-      action: {
-        label: I18n.t(
-          "features.itWallet.issuance.asyncCredentialError.primaryAction"
-        ),
-        onPress: closeAsyncIssuance
-      }
-    },
-    // Dynamic errors extracted from the entity configuration
-    INVALID_STATUS: {
-      title:
-        invalidStatusMessage?.title ??
-        I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
-      subtitle:
-        invalidStatusMessage?.description ??
-        I18n.t("features.itWallet.issuance.notEntitledCredentialError.body"),
-      pictogram: "accessDenied",
-      action: {
-        label: I18n.t(
-          "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-        ),
-        onPress: () =>
-          closeIssuance(
-            I18n.t(
-              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-            )
-          )
-      }
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (O.isNone(credentialType)) {
-      return;
-    }
+  useCredentialEventsTracking({
+    failure,
+    credentialType: O.toUndefined(credentialType),
+    invalidErrorCode: invalidStatusDetails.errorCode
+  });
 
-    if (failure.type === CredentialIssuanceFailureTypeEnum.ASYNC_ISSUANCE) {
-      trackItWalletDeferredIssuing(CREDENTIALS_MAP[credentialType.value]);
-      return;
-    }
-
-    if (failure.type === CredentialIssuanceFailureTypeEnum.INVALID_STATUS) {
-      const error = failure.reason as Errors.CredentialInvalidStatusError;
-
-      const trackingFunction =
-        error.errorCode === "credential_not_found"
-          ? trackCredentialNotEntitledFailure
-          : trackCredentialInvalidStatusFailure;
-
-      trackingFunction({
-        reason: error.errorCode,
-        type: failure.type,
-        credential: CREDENTIALS_MAP[credentialType.value]
-      });
-      return;
-    }
-
-    if (failure.type === CredentialIssuanceFailureTypeEnum.GENERIC) {
-      trackAddCredentialFailure({
-        reason: failure.reason,
-        type: failure.type,
-        credential: CREDENTIALS_MAP[credentialType.value]
-      });
-      return;
-    }
-    trackAddCredentialTimeout({
-      reason: failure.reason,
-      type: failure.type,
-      credential: CREDENTIALS_MAP[credentialType.value]
-    });
-  }, [credentialType, failure]);
-
-  const resultScreenProps = resultScreensMap[failure.type];
+  const resultScreenProps = getOperationResultScreenContentProps();
   return <OperationResultScreenContent {...resultScreenProps} />;
 };
 
+type GetCredentialInvalidStatusDetailsParams = {
+  credentialType: O.Option<string>;
+  issuerConf: O.Option<IssuerConfiguration>;
+};
+
 /**
- * Hook used to safely extract the localized message from an invalid status error.
- * This message is dynamic and must be extracted from the EC.
+ * Utility to safely extract details from an invalid status failure, including the localized message.
+ * **Note:** The message is dynamic and is extracted from the EC.
  */
-const useCredentialInvalidStatusMessage = (
-  failure: CredentialIssuanceFailure
+const getCredentialInvalidStatusDetails = (
+  failure: CredentialIssuanceFailure,
+  { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
-  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
-  const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
-    selectIssuerConfigurationOption
+  const errorCodeOption = pipe(
+    failure,
+    O.fromPredicate(isInvalidStatusFailure),
+    O.chainEitherK(x => StatusAttestationError.decode(x.reason?.reason)),
+    O.map(x => x.error)
   );
 
-  return pipe(
+  const localizedMessage = pipe(
     sequenceS(O.Monad)({
-      failure: pipe(failure, O.fromPredicate(isCredentialInvalidStatusError)),
+      errorCode: errorCodeOption,
       credentialType,
       issuerConf
     }),
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    O.map(({ failure, ...rest }) =>
-      Errors.extractErrorMessageFromIssuerConf(failure.reason.errorCode, rest)
+    O.map(({ errorCode, ...rest }) =>
+      Errors.extractErrorMessageFromIssuerConf(errorCode, rest)
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined
   );
+
+  return {
+    message: localizedMessage,
+    errorCode: pipe(errorCodeOption, O.toUndefined)
+  };
 };
+
+const isInvalidStatusFailure = (
+  failure: CredentialIssuanceFailure
+): failure is Extract<
+  CredentialIssuanceFailure,
+  { type: CredentialIssuanceFailureType.INVALID_STATUS }
+> => failure.type === CredentialIssuanceFailureType.INVALID_STATUS;

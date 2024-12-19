@@ -1,19 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`itWalletReducer should match snapshot 1`] = `
+exports[`itWalletReducer should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot] 1`] = `
 {
   "credentials": {
     "credentials": [],
     "eid": {
       "_tag": "None",
-    },
-  },
-  "identification": {
-    "isCieSupported": {
-      "kind": "PotNone",
-    },
-    "isNfcEnabled": {
-      "kind": "PotNone",
     },
   },
   "issuance": {
@@ -22,7 +14,9 @@ exports[`itWalletReducer should match snapshot 1`] = `
     },
   },
   "lifecycle": 0,
-  "preferences": {},
+  "preferences": {
+    "requestedCredentials": {},
+  },
   "walletInstance": {
     "attestation": undefined,
   },

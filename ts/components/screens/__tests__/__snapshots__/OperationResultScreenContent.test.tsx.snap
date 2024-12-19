@@ -204,6 +204,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -502,18 +505,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -541,7 +541,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -630,14 +630,11 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        {},
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "columnGap": 8,
                                         },
+                                        {},
+                                        false,
                                       ]
                                     }
                                   >
@@ -657,7 +654,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {

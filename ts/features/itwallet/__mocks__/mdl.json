@@ -758,5 +758,9 @@
       ]
     }
   },
-  "keyTag": "de68e737-b264-4f5d-affb-65f7bbc5c397"
+  "keyTag": "de68e737-b264-4f5d-affb-65f7bbc5c397",
+  "jwt": {
+    "expiration": "2030-11-22T14:09:41Z",
+    "issuedAt": "2024-11-13T14:09:41Z"
+  }
 }

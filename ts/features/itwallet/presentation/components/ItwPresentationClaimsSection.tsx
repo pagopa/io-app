@@ -10,12 +10,9 @@ import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
 import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
-import {
-  getCredentialStatus,
-  parseClaims,
-  WellKnownClaim
-} from "../../common/utils/itwClaimsUtils";
+import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 
 type ItwPresentationClaimsSectionProps = {
   credential: StoredCredential;

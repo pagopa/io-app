@@ -1,15 +1,15 @@
-import { Tag } from "@pagopa/io-app-design-system";
+import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
 import React, { ReactNode, useMemo } from "react";
 import {
   AccessibilityProps,
+  Pressable,
   StyleProp,
   StyleSheet,
   View,
   ViewStyle
 } from "react-native";
+import Animated from "react-native-reanimated";
 import I18n from "../../../../../i18n";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
   borderColorByStatus,
@@ -25,48 +25,19 @@ import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
 
-type CardSideBaseProps = {
-  status: ItwCredentialStatus;
-  children: ReactNode;
-};
-
-const CardSideBase = ({ status, children }: CardSideBaseProps) => {
-  const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorByStatus[status];
-
-  const dynamicStyle: StyleProp<ViewStyle> = {
-    borderColor,
-    backgroundColor: validCredentialStatuses.includes(status)
-      ? undefined
-      : "rgba(255,255,255,0.7)"
-  };
-
-  return (
-    <View>
-      {statusTagProps && (
-        <View style={styles.tag}>
-          <Tag {...statusTagProps} />
-        </View>
-      )}
-      <View style={[styles.faded, dynamicStyle]} />
-      {children}
-    </View>
-  );
-};
-
 export type ItwSkeumorphicCardProps = {
   credential: StoredCredential;
+  status: ItwCredentialStatus;
   isFlipped?: boolean;
+  onPress?: () => void;
 };
 
 const ItwSkeumorphicCard = ({
   credential,
-  isFlipped = false
+  status,
+  isFlipped = false,
+  onPress
 }: ItwSkeumorphicCardProps) => {
-  const { status = "valid" } = useIOSelector(state =>
-    itwCredentialStatusSelector(state, credential.credentialType)
-  );
-
   const FrontSide = useMemo(
     () => (
       <CardSideBase status={status}>
@@ -104,26 +75,79 @@ const ItwSkeumorphicCard = ({
             ? "features.itWallet.presentation.credentialDetails.card.back"
             : "features.itWallet.presentation.credentialDetails.card.front"
         )}`,
-        accessibilityRole: "image",
         accessibilityValue: { text: accessibilityLabelByStatus[status] }
       } as AccessibilityProps),
     [credential.credentialType, isFlipped, status]
   );
 
-  return (
+  const card = (
     <FlippableCard
-      containerStyle={styles.card}
+      containerStyle={[styles.card]}
       FrontComponent={FrontSide}
       BackComponent={BackSide}
       isFlipped={isFlipped}
-      {...accessibilityProps}
     />
+  );
+
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
+
+  if (onPress) {
+    return (
+      <Pressable
+        onPress={onPress}
+        {...accessibilityProps}
+        accessibilityRole="button"
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+      >
+        <Animated.View style={scaleAnimatedStyle}>{card}</Animated.View>
+      </Pressable>
+    );
+  }
+
+  return (
+    <View {...accessibilityProps} accessibilityRole="image">
+      {card}
+    </View>
   );
 };
 
+type CardSideBaseProps = {
+  status: ItwCredentialStatus;
+  children: ReactNode;
+};
+
+const CardSideBase = ({ status, children }: CardSideBaseProps) => {
+  const statusTagProps = tagPropsByStatus[status];
+  const borderColor = borderColorByStatus[status];
+
+  const dynamicStyle: StyleProp<ViewStyle> = {
+    borderColor,
+    backgroundColor: validCredentialStatuses.includes(status)
+      ? undefined
+      : "rgba(255,255,255,0.7)"
+  };
+
+  return (
+    <View>
+      {statusTagProps && (
+        <View style={styles.tag}>
+          <Tag {...statusTagProps} />
+        </View>
+      )}
+      <View style={[styles.faded, dynamicStyle]} />
+      {children}
+    </View>
+  );
+};
+
+// Magic number for the aspect ratio of the card
+// extracted from the design
+export const SKEUMORPHIC_CARD_ASPECT_RATIO = 16 / 10.09;
+
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: 16 / 10.09
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",

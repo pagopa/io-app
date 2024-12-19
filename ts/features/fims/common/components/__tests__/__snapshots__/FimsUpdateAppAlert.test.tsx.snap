@@ -204,6 +204,7 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -640,18 +643,15 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                         {
                                           "backgroundColor": "#0073E6",
                                         },
+                                        false,
                                         {
                                           "backgroundColor": undefined,
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
                                         },
                                       ]
                                     }
                                   >
                                     <View
+                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -679,7 +679,7 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                               "fontFamily": "Titillium Sans Pro",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
-                                              "fontWeight": "700",
+                                              "fontWeight": "600",
                                               "lineHeight": 20,
                                             },
                                             {
@@ -769,14 +769,11 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                           "textAlignVertical": "center",
                                         },
                                         false,
-                                        {},
                                         {
-                                          "transform": [
-                                            {
-                                              "scale": undefined,
-                                            },
-                                          ],
+                                          "columnGap": 8,
                                         },
+                                        {},
+                                        false,
                                       ]
                                     }
                                   >
@@ -796,7 +793,7 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                             "fontFamily": "Titillium Sans Pro",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
-                                            "fontWeight": "700",
+                                            "fontWeight": "600",
                                             "lineHeight": undefined,
                                           },
                                           {

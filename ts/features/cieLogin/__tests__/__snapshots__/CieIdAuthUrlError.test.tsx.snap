@@ -295,18 +295,15 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
                   {
                     "backgroundColor": "#0073E6",
                   },
+                  false,
                   {
                     "backgroundColor": undefined,
-                    "transform": [
-                      {
-                        "scale": undefined,
-                      },
-                    ],
                   },
                 ]
               }
             >
               <View
+                entering={[Function]}
                 style={
                   [
                     {
@@ -334,7 +331,7 @@ exports[`CieIdAuthUrlError Should match the snapshot 1`] = `
                         "fontFamily": "Titillium Sans Pro",
                         "fontSize": 16,
                         "fontStyle": "normal",
-                        "fontWeight": "700",
+                        "fontWeight": "600",
                         "lineHeight": 20,
                       },
                       {

@@ -5,7 +5,6 @@ import { getType } from "typesafe-actions";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
-import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackFciAction from "../../features/fci/analytics";
 import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
 import trackZendesk from "../../features/zendesk/analytics/index";
@@ -191,7 +190,6 @@ export const actionTracking =
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
       void trackServicesAction(mixpanel)(action);
-      void trackEuCovidCertificateActions(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
       void trackCdc(mixpanel)(action);
 

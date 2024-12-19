@@ -78,23 +78,3 @@ export const requestMediaPermission = async () => {
       return false;
   }
 };
-
-/**
- * Wrapper function to request permission to save an image to the library
- * @returns boolean that indicates wether the user has granted the permission or not
- */
-export const requestSaveToGalleryPermission = async (
-  rationale?: RNPermissions.Rationale
-) =>
-  Platform.select({
-    android: requestIOPermission(
-      RNPermissions.PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-      rationale
-    ),
-    // on iOS the permission is handled by adding NSPhotoLibraryAddUsageDescription and NSPhotoLibraryUsageDescription
-    // into the Info.plist file and the permission request is automatically handled by the system when using the
-    // Cameraroll.save method. Asking for the PHOTO_LIBRARY_ADD_ONLY permission results in an "unavailable" response
-    // from the react-native-permissions library (even if the library documentation declares that it is supported) so
-    // it cannot be used to determine the permission status.
-    default: Promise.resolve(true)
-  });

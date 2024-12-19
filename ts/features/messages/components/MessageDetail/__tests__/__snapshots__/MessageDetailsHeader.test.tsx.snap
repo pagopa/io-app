@@ -204,6 +204,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -431,6 +434,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         >
                           <Text
                             allowFontScaling={false}
+                            dynamicTypeRamp="body"
                             maxFontSizeMultiplier={1.25}
                             style={
                               [
@@ -461,7 +465,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                   "fontFamily": "Titillium Sans Pro",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
-                                  "fontWeight": "700",
+                                  "fontWeight": "600",
                                   "lineHeight": 21,
                                 },
                               ]

@@ -6,7 +6,7 @@ import {
   H2,
   HeaderSecondLevel,
   IOStyles,
-  LabelSmall,
+  BodySmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -40,6 +40,7 @@ type Props = WithTestID<
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreSafeAreaMargin"];
+    includeContentMargins?: boolean;
     headerActionsProp?: HeaderActionsProps;
     canGoback?: boolean;
     excludeEndContentMargin?: boolean;
@@ -64,6 +65,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       contextualHelpMarkdown,
       faqCategories,
       ignoreSafeAreaMargin = false,
+      includeContentMargins = false,
       headerActionsProp = {},
       excludeEndContentMargin,
       testID
@@ -117,9 +119,9 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
           onLayout={getTitleHeight}
         >
           {title.section && (
-            <LabelSmall weight="Semibold" color={theme["textBody-tertiary"]}>
+            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
               {title.section}
-            </LabelSmall>
+            </BodySmall>
           )}
           <H2
             color={theme["textHeading-default"]}
@@ -144,7 +146,11 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         {children && (
           <>
             <VSpacer size={16} />
-            {children}
+            {includeContentMargins ? (
+              <ContentWrapper>{children}</ContentWrapper>
+            ) : (
+              children
+            )}
           </>
         )}
       </IOScrollView>

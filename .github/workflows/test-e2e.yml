@@ -21,7 +21,7 @@ jobs:
         with:
           use-cache: 'true'
       - id: setup-ruby
-        uses: ruby/setup-ruby@5f19ec79cedfadb78ab837f95b87734d0003c899 #v1.173.0
+        uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
         with:
           bundler-cache: true
       - id: prepare-dependencies
@@ -72,8 +72,6 @@ jobs:
             name: "cgn_e2e"
           - test: "ts/features/messages/__e2e__/"
             name: "messages_e2e"
-          - test: "ts/features/euCovidCert/__e2e__/"
-            name: "eucovidcert_e2e"
           - test: "ts/features/wallet/onboarding/__e2e__/"
             name: "wallet_onboarding_e2e"
     steps:

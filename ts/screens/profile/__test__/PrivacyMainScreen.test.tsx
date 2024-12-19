@@ -88,6 +88,12 @@ describe("PrivacyMainScreen", () => {
 
   it("should show alert after click on ListItemComponent if delete profile is pending", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
+    jest.spyOn(hooks, "usePrevious").mockImplementation(() => ({
+      [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.none,
+      [UserDataProcessingChoiceEnum.DELETE]: pot.toLoading({
+        kind: "PotNoneLoading"
+      })
+    }));
     const screen = renderComponentMockStore({
       ...globalState,
       userDataProcessing: {

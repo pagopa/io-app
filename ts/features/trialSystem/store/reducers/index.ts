@@ -1,21 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-import { TrialId } from "../../../../../definitions/trial_system/TrialId";
+import { getType } from "typesafe-actions";
 import {
   SubscriptionState,
   SubscriptionStateEnum
 } from "../../../../../definitions/trial_system/SubscriptionState";
+import { TrialId } from "../../../../../definitions/trial_system/TrialId";
 import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { TrialSystemError } from "../../utils/error";
 import {
   trialSystemActivationStatus,
   trialSystemActivationStatusReset,
   trialSystemActivationStatusUpsert
 } from "../actions";
-import { GlobalState } from "../../../../store/reducers/types";
-import { itwTrialId } from "../../../../config";
-import { TrialSystemError } from "../../utils/error";
 
 export type TrialSystemState = Record<
   TrialId,
@@ -130,8 +129,3 @@ export const isTrialActiveSelector = (id: TrialId) =>
     trialStatusSelector(id),
     status => status === SubscriptionStateEnum.ACTIVE
   );
-
-/**
- * Allows to know if the user has the acces to the IT Wallet features
- */
-export const isItwTrialActiveSelector = isTrialActiveSelector(itwTrialId);

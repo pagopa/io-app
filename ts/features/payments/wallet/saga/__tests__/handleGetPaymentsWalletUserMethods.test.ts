@@ -5,8 +5,8 @@ import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { getPaymentsWalletUserMethods } from "../../store/actions";
 import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
-import { WalletCard } from "../../../../newWallet/types";
-import { walletAddCards } from "../../../../newWallet/store/actions/cards";
+import { WalletCard } from "../../../../wallet/types";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { getDateFromExpiryDate } from "../../../../../utils/dates";

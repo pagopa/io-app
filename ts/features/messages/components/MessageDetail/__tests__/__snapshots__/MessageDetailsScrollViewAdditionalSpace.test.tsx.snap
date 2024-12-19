@@ -204,6 +204,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -555,6 +558,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -569,6 +573,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -631,6 +636,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -906,6 +912,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -920,6 +927,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -982,6 +990,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1257,6 +1266,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1271,6 +1281,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1333,6 +1344,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1608,6 +1620,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1622,6 +1635,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1684,6 +1698,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1959,6 +1974,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -1973,6 +1989,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2035,6 +2052,7 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

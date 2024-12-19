@@ -32,7 +32,6 @@ const routesToNavigationLink: Record<string, string> = {
   [ROUTES.PROFILE_PREFERENCES_HOME]: "/profile/preferences",
   [ROUTES.WALLET_HOME]: "/main/wallet",
   [SERVICES_ROUTES.SERVICES_HOME]: "/main/services",
-  [ROUTES.PROFILE_MAIN]: "/main/profile",
   [ROUTES.PROFILE_PRIVACY]: "/profile/privacy",
   [ROUTES.PROFILE_PRIVACY_MAIN]: "/profile/privacy-main"
 };

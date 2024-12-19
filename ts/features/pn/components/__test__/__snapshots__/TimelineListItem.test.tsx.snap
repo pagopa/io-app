@@ -204,6 +204,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -441,6 +444,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -471,6 +475,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -485,7 +490,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -567,7 +572,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -671,7 +676,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -744,7 +749,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -846,7 +851,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -919,7 +924,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1021,7 +1026,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1094,7 +1099,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1196,7 +1201,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1269,7 +1274,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1371,7 +1376,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1444,7 +1449,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1546,7 +1551,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1619,7 +1624,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1721,7 +1726,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1794,7 +1799,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1896,7 +1901,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1969,7 +1974,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2071,7 +2076,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2144,7 +2149,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2248,7 +2253,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2510,6 +2515,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -2524,6 +2530,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2586,6 +2593,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2747,6 +2755,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -2777,6 +2786,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -2791,7 +2801,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -2873,7 +2883,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2977,7 +2987,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3050,7 +3060,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3152,7 +3162,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3225,7 +3235,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3327,7 +3337,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3400,7 +3410,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3502,7 +3512,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3575,7 +3585,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3677,7 +3687,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3750,7 +3760,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3852,7 +3862,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3925,7 +3935,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4027,7 +4037,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4100,7 +4110,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4202,7 +4212,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4275,7 +4285,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4377,7 +4387,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4450,7 +4460,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4554,7 +4564,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                                       {
                                         "color": "#555C70",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -4816,6 +4826,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -4830,6 +4841,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4892,6 +4904,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5053,6 +5066,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -5083,6 +5097,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -5097,7 +5112,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]
@@ -5367,6 +5382,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -5381,6 +5397,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5443,6 +5460,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5604,6 +5622,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -5634,6 +5653,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -5648,7 +5668,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                                       "fontFamily": "Titillium Sans Pro",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
-                                      "fontWeight": "700",
+                                      "fontWeight": "600",
                                       "lineHeight": 20,
                                     },
                                   ]

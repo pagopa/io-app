@@ -23,10 +23,12 @@ export enum WalletPaymentOutcomeEnum {
   PAYPAL_REMOVED_ERROR = "19", // error while executing the payment with PayPal
   PAYMENT_METHODS_NOT_AVAILABLE = "20", // payment methods not available
   IN_APP_BROWSER_CLOSED_BY_USER = "24", // in-app browser closed by user (24 because from 19 to 23 are already used by backend)
+  PSP_ERROR = "25", // PSP error
   BE_NODE_KO = "99", // Backend error when the node service is down
   INSUFFICIENT_AVAILABILITY_ERROR = "116", // insufficient availability
   CVV_ERROR = "117", // CVV error
-  PLAFOND_LIMIT_ERROR = "121" // plafond limit error
+  PLAFOND_LIMIT_ERROR = "121", // plafond limit error
+  AUTH_REQUEST_ERROR = "1000" // authorization request is in error
 }
 
 export type WalletPaymentOutcome = t.TypeOf<typeof WalletPaymentOutcome>;

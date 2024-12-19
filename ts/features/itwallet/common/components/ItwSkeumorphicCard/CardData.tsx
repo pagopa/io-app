@@ -1,12 +1,10 @@
 /* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/dot-notation */
-import { parse } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Fragment, default as React } from "react";
+import { default as React, Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
-import { localeDateFormat } from "../../../../../utils/locale";
 import {
   DrivingPrivilegesClaim,
   StringClaim
@@ -50,7 +48,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
       <CardClaim
         claim={claims["birth_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[2]}%` }}
-        dateFormat="%d/%m/%y"
+        dateFormat="DD/MM/YY"
       />
       <CardClaim
         claim={claims["place_of_birth"]}
@@ -60,6 +58,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         claim={claims["issue_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[3]}%` }}
         fontWeight={"Bold"}
+        dateFormat={"DD/MM/YYYY"}
       />
       <CardClaim
         claim={claims["issuing_authority"]}
@@ -69,6 +68,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         claim={claims["expiry_date"]}
         position={{ left: `${cols[0]}%`, top: `${rows[4]}%` }}
         fontWeight={"Bold"}
+        dateFormat={"DD/MM/YYYY"}
       />
       <CardClaim
         claim={claims["document_number"]}
@@ -134,7 +134,7 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
                   }}
                 >
                   <ClaimLabel fontSize={9}>
-                    {localeDateFormat(parse(issue_date), "%d/%m/%y")}
+                    {issue_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
                 <CardClaimContainer
@@ -145,7 +145,7 @@ const MdlBackData = ({ claims }: DataComponentProps) => {
                   }}
                 >
                   <ClaimLabel fontSize={9}>
-                    {localeDateFormat(parse(expiry_date), "%d/%m/%y")}
+                    {expiry_date.toString("DD/MM/YY")}
                   </ClaimLabel>
                 </CardClaimContainer>
                 {restrictions_conditions && (

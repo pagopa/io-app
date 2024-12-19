@@ -20,7 +20,7 @@ const renderComponent = (component: React.ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => component,
-    ROUTES.PROFILE_MAIN,
+    ROUTES.SETTINGS_MAIN,
     {},
     createStore(appReducer, globalState as any)
   );

@@ -2,23 +2,17 @@
  * Utility functions for working with credential claims.
  */
 
-import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { NonEmptyString, PatternString } from "@pagopa/ts-commons/lib/strings";
 import { differenceInCalendarDays, isValid } from "date-fns";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import * as E from "fp-ts/lib/Either";
 import { truncate } from "lodash";
 import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
-import { removeTimezoneFromDate } from "../../../../utils/dates";
 import { JsonFromString } from "./ItwCodecUtils";
-import {
-  ParsedCredential,
-  StoredCredential,
-  ItwCredentialStatus
-} from "./itwTypesUtils";
+import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
 /**
  *
@@ -55,7 +49,19 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the fiscal code, used for checks based on the user's identity.
    */
-  tax_id_code = "tax_id_code"
+  tax_id_code = "tax_id_code",
+  /**
+   * Claims that contains the document number, if applicable for the credential
+   */
+  document_number = "document_number",
+  /**
+   * Claim that contains the first name, if applicable for the credential
+   */
+  given_name = "given_name",
+  /**
+   * Claim that contains the family name, if applicable for the credential
+   */
+  family_name = "family_name"
 }
 
 /**
@@ -105,6 +111,81 @@ export const parseClaims = (
  *
  *
  */
+
+export const SimpleDateFormat = {
+  DDMMYYYY: "DD/MM/YYYY",
+  DDMMYY: "DD/MM/YY"
+} as const;
+
+export type SimpleDateFormat =
+  (typeof SimpleDateFormat)[keyof typeof SimpleDateFormat];
+
+/**
+ * A simpler Date class with day, month and year properties
+ * It simplifies dates handling by removing Date overhead
+ * @property year - the year
+ * @property month - the month (0-11)
+ * @property day - the day (1-31)
+ * @function toDate - returns a Date object
+ * @function toString - returns a string in the format "DD/MM/YYYY"
+ */
+export class SimpleDate {
+  private year: number;
+  private month: number;
+  private day: number;
+
+  constructor(year: number, month: number, day: number) {
+    this.year = year;
+    this.month = month;
+    this.day = day;
+  }
+
+  /**
+   * Returns a string in the format specified by the format parameter
+   */
+  toString(format: SimpleDateFormat = "DD/MM/YYYY"): string {
+    const dayString = this.day.toString().padStart(2, "0");
+    const monthString = (this.month + 1).toString().padStart(2, "0");
+    const yearString = this.year.toString();
+    return format
+      .replace("DD", dayString)
+      .replace("MM", monthString)
+      .replace("YYYY", yearString)
+      .replace("YY", yearString.slice(-2));
+  }
+
+  /**
+   * Returns a Date object
+   */
+  toDate(): Date {
+    return new Date(this.year, this.month, this.day);
+  }
+
+  toDateWithoutTimezone(): Date {
+    return new Date(Date.UTC(this.year, this.month, this.day));
+  }
+
+  /**
+   * Returns the year
+   */
+  getFullYear(): number {
+    return this.year;
+  }
+
+  /**
+   * Returns the month (0-11)
+   */
+  getMonth(): number {
+    return this.month;
+  }
+
+  /**
+   * Returns the day (1-31)
+   */
+  getDate(): number {
+    return this.day;
+  }
+}
 
 /**
  * Enum for the claims locales.
@@ -173,44 +254,31 @@ const FISCAL_CODE_WITH_PREFIX =
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
  * This is needed because a generic date decoder would accept invalid dates like numbers,
  * thus decoding properly and returning a wrong claim item to be displayed.
- * It also removes the timezone from the date given that the date must be displayed regardless of the timezone of the device.
+ * The returned date is a SimpleDate object, which is a simpler date class with day, month and year properties.
  */
-export const DateWithoutTimezoneClaim = new t.Type<Date, string, unknown>(
-  "DateWithoutTimezone",
-  (input: unknown): input is Date => input instanceof Date,
+export const SimpleDateClaim = new t.Type<SimpleDate, string, unknown>(
+  "SimpleDateClaim",
+  (input: unknown): input is SimpleDate => input instanceof SimpleDate,
   (input, context) =>
     pipe(
-      patternDateFromString(DATE_FORMAT_REGEX, "DateClaim").validate(
-        input,
-        context
-      ),
+      PatternString(DATE_FORMAT_REGEX).validate(input, context),
       E.fold(
         () => t.failure(input, context, "Date is not in the correct format"),
         str => {
-          const date = new Date(str);
-          return t.success(removeTimezoneFromDate(date));
+          const date = new SimpleDate(
+            +str.slice(0, 4),
+            +str.slice(5, 7) - 1,
+            +str.slice(8, 10)
+          );
+          return t.success(date);
         }
       )
     ),
-  (date: Date) =>
-    `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`
-);
-
-/**
- * io-ts decoder for the evidence claim field of the credential.
- */
-export const EvidenceClaim = t.array(
-  t.type({
-    type: t.string,
-    record: t.type({
-      type: t.string,
-      source: t.type({
-        organization_name: t.string,
-        organization_id: t.string,
-        country_code: t.string
-      })
-    })
-  })
+  (date: SimpleDate) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`
 );
 
 /**
@@ -227,8 +295,8 @@ export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
  */
 const DrivingPrivilegeClaim = t.type({
   driving_privilege: t.string,
-  issue_date: DateWithoutTimezoneClaim,
-  expiry_date: DateWithoutTimezoneClaim,
+  issue_date: SimpleDateClaim,
+  expiry_date: SimpleDateClaim,
   restrictions_conditions: t.union([t.string, t.null])
 });
 
@@ -293,10 +361,8 @@ export const ClaimValue = t.union([
   PlaceOfBirthClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
-  // Parse an object representing the claim evidence
-  EvidenceClaim,
-  // Otherwise parse a date
-  DateWithoutTimezoneClaim,
+  // Otherwise parse a date as string
+  SimpleDateClaim,
   // Otherwise parse an image
   ImageClaim,
   // Otherwise parse a PDF
@@ -357,76 +423,6 @@ export const getCredentialExpireDays = (
   return differenceInCalendarDays(expireDate, Date.now());
 };
 
-type GetCredentialStatusOptions = {
-  /**
-   * Number of days before expiration required to mark a credential as "EXPIRING".
-   */
-  expiringDays?: number;
-};
-
-/**
- * Get the overall status of the credential, taking into account the status attestation,
- * the physical document's expiration date and the JWT's expiration date.
- * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
- *
- * @param credential the stored credential
- * @param options see {@link GetCredentialStatusOptions}
- * @returns ItwCredentialStatus
- */
-export const getCredentialStatus = (
-  credential: StoredCredential,
-  options: GetCredentialStatusOptions = {}
-): ItwCredentialStatus => {
-  const { expiringDays = 14 } = options;
-  const {
-    jwt,
-    parsedCredential,
-    storedStatusAttestation: statusAttestation
-  } = credential;
-  const now = Date.now();
-
-  const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);
-
-  // Not all credentials have an expiration date
-  const documentExpireDays = pipe(
-    getCredentialExpireDate(parsedCredential),
-    O.fromNullable,
-    O.map(expireDate => differenceInCalendarDays(expireDate, now)),
-    O.getOrElse(() => NaN)
-  );
-
-  const isIssuerAttestedExpired =
-    statusAttestation?.credentialStatus === "invalid" &&
-    statusAttestation.errorCode === "credential_expired";
-
-  if (isIssuerAttestedExpired || documentExpireDays <= 0) {
-    return "expired";
-  }
-
-  // Invalid must prevail over non-expired statuses
-  if (statusAttestation?.credentialStatus === "invalid") {
-    return "invalid";
-  }
-
-  if (jwtExpireDays <= 0) {
-    return "jwtExpired";
-  }
-
-  const isSameDayExpiring =
-    documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
-
-  // When both credentials are expiring the digital one wins unless they expire the same day
-  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
-    return "jwtExpiring";
-  }
-
-  if (documentExpireDays <= expiringDays) {
-    return "expiring";
-  }
-
-  return "valid";
-};
-
 const FISCAL_CODE_REGEX =
   /([A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])/g;
 
@@ -438,19 +434,6 @@ const FISCAL_CODE_REGEX =
 export const extractFiscalCode = (s: string) =>
   pipe(s.match(FISCAL_CODE_REGEX), match => O.fromNullable(match?.[0]));
 
-export const getFiscalCodeFromCredential = (
-  credential: StoredCredential | undefined
-) =>
-  pipe(
-    credential?.parsedCredential,
-    O.fromNullable,
-    O.chain(x => O.fromNullable(x[WellKnownClaim.tax_id_code]?.value)),
-    O.map(t.string.decode),
-    O.chain(O.fromEither),
-    O.chain(extractFiscalCode),
-    O.getOrElse(() => "")
-  );
-
 /**
  * Truncate long strings to avoid performance issues when rendering claims.
  */
@@ -458,3 +441,76 @@ export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
   claim.id === WellKnownClaim.expiry_date;
+
+/**
+ *
+ *
+ * Claim extractors
+ *
+ *
+ */
+
+/**
+ * Function that extracts a claim from a credential.
+ * @param claimId - the claim id / name to extract
+ * @param decoder - optional decoder for the claim value, defaults to decoding a string
+ * @returns a function that extracts a claim from a credential
+ */
+export const extractClaim =
+  <T = string>(
+    claimId: string,
+    decoder: (i: unknown) => t.Validation<T> = t.string.decode as (
+      i: unknown
+    ) => t.Validation<T>
+  ) =>
+  (credential: ParsedCredential): O.Option<T> =>
+    pipe(
+      credential,
+      O.fromNullable,
+      O.chainNullableK(x => x[claimId]?.value),
+      O.map(decoder),
+      O.chain(O.fromEither)
+    );
+
+/**
+ * Returns the fiscal code from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the fiscal code
+ */
+export const getFiscalCodeFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.tax_id_code)),
+    O.chain(extractFiscalCode),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Returns the first name from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the first name
+ */
+export const getFirstNameFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.given_name)),
+    O.getOrElse(() => "")
+  );
+
+/**
+ * Returns the family name from a credential (if applicable)
+ * @param credential - the credential
+ * @returns the family name
+ */
+export const getFamilyNameFromCredential = (
+  credential: StoredCredential | undefined
+) =>
+  pipe(
+    O.fromNullable(credential?.parsedCredential),
+    O.chain(extractClaim(WellKnownClaim.family_name)),
+    O.getOrElse(() => "")
+  );

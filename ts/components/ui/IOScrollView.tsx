@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable functional/immutable-data */
 import {
   ButtonLink,
@@ -44,6 +45,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { WithTestID } from "../../types/WithTestID";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 export type IOScrollViewActions =
   | {
@@ -153,13 +155,14 @@ export const IOScrollView = ({
   excludeSafeAreaMargins = false,
   excludeEndContentMargin = false,
   includeContentMargins = true,
-  animatedRef,
   debugMode = false,
+  animatedRef,
   centerContent,
   refreshControlProps,
   contentContainerStyle,
   testID
 }: IOScrollView) => {
+  const alertProps = useStatusAlertProps();
   const theme = useIOTheme();
 
   /* Navigation */
@@ -243,6 +246,13 @@ export const IOScrollView = ({
     )
   }));
 
+  const ignoreSafeAreaMargin = React.useMemo(() => {
+    if (alertProps !== undefined) {
+      return true;
+    }
+    return headerConfig?.ignoreSafeAreaMargin;
+  }, [headerConfig?.ignoreSafeAreaMargin, alertProps]);
+
   /* Set custom header with `react-navigation` library using
      `useLayoutEffect` hook */
 
@@ -255,12 +265,22 @@ export const IOScrollView = ({
     if (headerConfig) {
       navigation.setOptions({
         header: () => (
-          <HeaderSecondLevel {...headerConfig} scrollValues={scrollValues} />
+          <HeaderSecondLevel
+            {...headerConfig}
+            ignoreSafeAreaMargin={ignoreSafeAreaMargin}
+            scrollValues={scrollValues}
+          />
         ),
         headerTransparent: headerConfig.transparent
       });
     }
-  }, [headerConfig, navigation, scrollPositionAbsolute, snapOffset]);
+  }, [
+    headerConfig,
+    navigation,
+    scrollPositionAbsolute,
+    snapOffset,
+    ignoreSafeAreaMargin
+  ]);
 
   const RefreshControlComponent = refreshControlProps ? (
     <RefreshControl {...refreshControlProps} />
@@ -273,7 +293,11 @@ export const IOScrollView = ({
         testID={testID}
         onScroll={handleScroll}
         scrollEventThrottle={8}
-        snapToOffsets={[0, snapOffset || 0]}
+        snapToOffsets={
+          // If there is a refresh control, don't snap to offsets
+          // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
+          RefreshControlComponent ? undefined : [0, snapOffset || 0]
+        }
         snapToEnd={false}
         decelerationRate="normal"
         refreshControl={RefreshControlComponent}

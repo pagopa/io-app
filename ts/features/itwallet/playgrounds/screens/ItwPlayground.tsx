@@ -10,13 +10,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { isDevEnv } from "../../../../utils/environment";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-import { ItwTrialSystemSection } from "../components/ItwTrialSystemSection";
 
 // Sample markdown text
 const sampleMarkdown = `
@@ -62,8 +60,7 @@ const ItwPlayground = () => {
     (credentialType: CredentialType) => () => {
       credentialMachineRef.send({
         type: "select-credential",
-        credentialType,
-        skipNavigation: false
+        credentialType
       });
     };
 
@@ -101,15 +98,6 @@ const ItwPlayground = () => {
         <VSpacer size={16} />
         <ItwLifecycleSection />
         <VSpacer size={16} />
-        {
-          /* F&F Experimentation */
-          isDevEnv ? (
-            <>
-              <ItwTrialSystemSection />
-              <VSpacer size={16} />
-            </>
-          ) : null
-        }
         {/* Other Playgrounds */}
         <ListItemHeader label="Miscellaneous" />
         <H3>{"IT Wallet markdown preview"}</H3>

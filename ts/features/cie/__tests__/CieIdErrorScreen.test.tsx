@@ -2,29 +2,31 @@ import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import CieIdErrorScreen from "../screens/errors/CieIdErrorScreen";
 import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
+import ROUTES from "../../../navigation/routes";
 
-const mockNavigateToCiePinInsertion = jest.fn();
-const mockNavigateToIdpSelection = jest.fn();
-const mockNavigateToCieIdScreen = jest.fn();
 const mockReplace = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
-      replace: mockReplace
+      replace: mockReplace,
+      navigate: mockNavigate
     })
   };
 });
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useDispatch: jest.fn
+}));
 
 describe("CieIdErrorScreen where device supports NFC", () => {
   afterEach(jest.clearAllMocks);
   beforeEach(() => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
-      navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
-      navigateToIdpSelection: mockNavigateToIdpSelection,
-      navigateToCieIdLoginScreen: mockNavigateToCieIdScreen,
+      ...jest.requireActual("../../../hooks/useNavigateToLoginMethod"),
       isCieSupported: true
     }));
   });
@@ -37,9 +39,9 @@ describe("CieIdErrorScreen where device supports NFC", () => {
 
     fireEvent.press(primaryAction);
 
-    expect(mockNavigateToCiePinInsertion).toHaveBeenCalled();
-    expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.CIE_PIN_SCREEN
+    });
     expect(mockReplace).not.toHaveBeenCalled();
   });
   it("Should properly call replace", testReplace);
@@ -48,9 +50,7 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
   afterEach(jest.clearAllMocks);
   beforeEach(() => {
     jest.spyOn(useNavigateToLoginMethod, "default").mockImplementation(() => ({
-      navigateToCiePinInsertion: mockNavigateToCiePinInsertion,
-      navigateToIdpSelection: mockNavigateToIdpSelection,
-      navigateToCieIdLoginScreen: mockNavigateToCieIdScreen,
+      ...jest.requireActual("../../../hooks/useNavigateToLoginMethod"),
       isCieSupported: false
     }));
   });
@@ -63,9 +63,9 @@ describe("CieIdErrorScreen where device doesn't support NFC", () => {
 
     fireEvent.press(primaryAction);
 
-    expect(mockNavigateToIdpSelection).toHaveBeenCalled();
-    expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-    expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+    });
     expect(mockReplace).not.toHaveBeenCalled();
   });
   it("Should properly call pop-to-top", testReplace);
@@ -89,8 +89,6 @@ function testReplace() {
 
   fireEvent.press(primaryAction);
 
-  expect(mockNavigateToCiePinInsertion).not.toHaveBeenCalled();
-  expect(mockNavigateToIdpSelection).not.toHaveBeenCalled();
-  expect(mockNavigateToCieIdScreen).not.toHaveBeenCalled();
+  expect(mockNavigate).not.toHaveBeenCalled();
   expect(mockReplace).toHaveBeenCalled();
 }

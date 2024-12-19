@@ -1,17 +1,22 @@
-import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
-import { Errors } from "@pagopa/io-react-native-wallet";
+import * as O from "fp-ts/lib/Option";
+import _ from "lodash";
+import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  getFamilyNameFromCredential,
+  getFirstNameFromCredential,
+  getFiscalCodeFromCredential
+} from "../../../common/utils/itwClaimsUtils";
+import {
+  getCredentialStatus,
+  getCredentialStatusObject
+} from "../../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
-import {
-  getCredentialStatus,
-  getFiscalCodeFromCredential
-} from "../../../common/utils/itwClaimsUtils";
 
 export const itwCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
@@ -47,12 +52,38 @@ export const itwCredentialsTypesSelector = createSelector(
   credentials => Object.keys(credentials)
 );
 
+/**
+ * Returns the fiscal code from the stored eID.
+ */
 export const selectFiscalCodeFromEid = createSelector(
   itwCredentialsSelector,
   credentials =>
     pipe(
       credentials.eid,
       O.map(getFiscalCodeFromCredential),
+      O.getOrElse(() => "")
+    )
+);
+
+/**
+ * Returns the name and surname from the stored eID.
+ */
+export const selectNameSurnameFromEid = createSelector(
+  itwCredentialsSelector,
+  credentials =>
+    pipe(
+      credentials.eid,
+      O.map(getFirstNameFromCredential),
+      O.chain(firstName =>
+        pipe(
+          credentials.eid,
+          O.map(getFamilyNameFromCredential),
+          O.map(
+            familyName =>
+              `${_.capitalize(firstName)} ${_.capitalize(familyName)}`
+          )
+        )
+      ),
       O.getOrElse(() => "")
     )
 );
@@ -85,23 +116,7 @@ export const itwCredentialStatusSelector = createSelector(
       return { status: undefined, message: undefined };
     }
 
-    const { storedStatusAttestation, issuerConf, credentialType } =
-      credentialOption.value;
-
-    const errorCode =
-      storedStatusAttestation?.credentialStatus === "invalid"
-        ? storedStatusAttestation.errorCode
-        : undefined;
-
-    return {
-      status: getCredentialStatus(credentialOption.value),
-      message: errorCode
-        ? Errors.extractErrorMessageFromIssuerConf(errorCode, {
-            issuerConf,
-            credentialType
-          })
-        : undefined
-    };
+    return getCredentialStatusObject(credentialOption.value);
   }
 );
 

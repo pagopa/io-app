@@ -1,10 +1,10 @@
 import {
   Body,
-  FooterWithButtons,
+  FooterActions,
   H2,
   HSpacer,
   Icon,
-  LabelSmall,
+  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -16,8 +16,6 @@ import { LabelledItem } from "../../../../components/LabelledItem";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { isSettingsVisibleAndHideProfileSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
@@ -34,9 +32,6 @@ export const IbanOnboardingScreen = () => {
   const [ibanName, setIbanName] = React.useState<string>("");
   const isLoading =
     IdPayConfigurationMachineContext.useSelector(isLoadingSelector);
-  const isSettingsVisibleAndHideProfile = useIOSelector(
-    isSettingsVisibleAndHideProfileSelector
-  );
 
   const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
 
@@ -90,18 +85,15 @@ export const IbanOnboardingScreen = () => {
         >
           <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
-          <LabelSmall color="bluegrey" weight="Regular">
-            {isSettingsVisibleAndHideProfile
-              ? I18n.t("idpay.configuration.iban.onboarding.bottomLabel")
-              : I18n.t("idpay.configuration.iban.onboarding.legacyBottomLabel")}
-          </LabelSmall>
+          <BodySmall color="bluegrey" weight="Regular">
+            {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+          </BodySmall>
         </View>
       </ScrollView>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
             label: I18n.t("global.buttons.continue"),
             loading: isLoading,
             disabled: isLoading || !isInputValid,

@@ -45,15 +45,13 @@ import { PaymentsMethodDetailsNavigator } from "../features/payments/details/nav
 import { PaymentsMethodDetailsRoutes } from "../features/payments/details/navigation/routes";
 import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/navigation/navigator";
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
-import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
-import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
-import { PaymentsTransactionBizEventsRoutes } from "../features/payments/bizEventsTransaction/navigation/routes";
-import { PaymentsTransactionBizEventsNavigator } from "../features/payments/bizEventsTransaction/navigation/navigator";
+import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
+import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -343,18 +341,8 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR}
-        component={PaymentsTransactionNavigator}
-        options={{
-          gestureEnabled: isGestureEnabled,
-          ...hideHeaderOptions
-        }}
-      />
-      <Stack.Screen
-        name={
-          PaymentsTransactionBizEventsRoutes.PAYMENT_TRANSACTION_BIZ_EVENTS_NAVIGATOR
-        }
-        component={PaymentsTransactionBizEventsNavigator}
+        name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR}
+        component={PaymentsReceiptNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions

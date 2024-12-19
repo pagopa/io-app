@@ -118,10 +118,10 @@ const renderTag = () => (
     <DSComponentViewerBox name={"Tag · Custom icon (with custom color)"}>
       <Tag
         text={"Custom icon"}
-        variant="customIcon"
-        customIconProps={{
-          iconName: "categTravel",
-          iconColor: "grey-700"
+        variant="custom"
+        icon={{
+          name: "categTravel",
+          color: "grey"
         }}
       />
     </DSComponentViewerBox>

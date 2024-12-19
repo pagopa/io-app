@@ -204,6 +204,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -218,6 +219,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -280,6 +282,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -494,7 +497,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -726,6 +729,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
               "position": "absolute",
               "right": 0,
               "top": 0,
+              "zIndex": undefined,
             }
           }
         >
@@ -740,6 +744,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -802,6 +807,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1019,7 +1025,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       {
                                         "color": "#1A0744",
                                         "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 18,
+                                        "fontSize": 17,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,

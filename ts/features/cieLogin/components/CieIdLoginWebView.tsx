@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState
 } from "react";
+import { URL } from "react-native-url-polyfill";
 import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { Linking, Platform, StyleSheet, View } from "react-native";
 import WebView, { type WebViewNavigation } from "react-native-webview";
@@ -30,10 +31,18 @@ import { IdpSuccessfulAuthentication } from "../../../components/IdpSuccessfulAu
 import { isDevEnv } from "../../../utils/environment";
 import { onLoginUriChanged } from "../../../utils/login";
 import { apiUrlPrefix } from "../../../config";
+import { trackLoginSpidError } from "../../../screens/authentication/analytics/spidAnalytics";
+import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../hooks/useHeaderSecondLevel";
+import {
+  CIE_ID_ERROR,
+  CIE_ID_ERROR_MESSAGE,
+  IO_LOGIN_CIE_SOURCE_APP,
+  IO_LOGIN_CIE_URL_SCHEME
+} from "../../../utils/cie";
 
 export type WebViewLoginNavigationProps = {
   spidLevel: SpidLevel;
@@ -52,12 +61,8 @@ const originSchemasWhiteList = [
   "iologin://*",
   ...(isDevEnv ? ["http://*"] : [])
 ];
-const IO_LOGIN_CIE_SOURCE_APP = "iologincie";
-const IO_LOGIN_CIE_URL_SCHEME = `${IO_LOGIN_CIE_SOURCE_APP}:`;
-const CIE_ID_ERROR = "cieiderror";
-const CIE_ID_ERROR_MESSAGE = "cieid_error_message=";
 
-const WHITELISTED_URLS = [
+const WHITELISTED_DOMAINS = [
   "https://idserver.servizicie.interno.gov.it",
   "https://oidc.idserver.servizicie.interno.gov.it",
   "https://mtls.oidc.idserver.servizicie.interno.gov.it",
@@ -111,14 +116,19 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
   const checkIfUrlIsWhitelisted = useCallback(
     (url: string) => {
       // Checks if the URL starts with one of the valid URLs
-      const isUrlValid = WHITELISTED_URLS.some(baseUrl =>
-        url.startsWith(baseUrl)
-      );
-      // Checks whether the URL starts with the specified string
-      if (isUrlValid) {
-        // Set the URL as valid
-        setAuthenticatedUrl(url);
-      } else {
+
+      try {
+        const { origin } = new URL(url);
+        const isDomainValid = WHITELISTED_DOMAINS.includes(origin);
+
+        if (isDomainValid) {
+          // Set the URL as valid
+          setAuthenticatedUrl(url);
+        } else {
+          // Redirects the user to the error screen
+          navigateToCieIdAuthUrlError(url);
+        }
+      } catch (error) {
         // Redirects the user to the error screen
         navigateToCieIdAuthUrlError(url);
       }
@@ -131,13 +141,17 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      // TODO: Check missing SAML response (error message) https://pagopa.atlassian.net/browse/IOPID-2406
+      // TODO: move the error tracking in the `AuthErrorScreen`
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {})
+      });
       dispatch(
         loginFailure({
           error: new Error(
             `login failure with code ${code || message || "n/a"}`
           ),
-          idp: "cie"
+          idp: "cieid"
         })
       );
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
@@ -192,7 +206,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
-      dispatch(loginSuccess({ token, idp: "cie" }));
+      dispatch(loginSuccess({ token, idp: "cieid" }));
     },
     [dispatch]
   );
@@ -239,7 +253,7 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
     const isLoginUrlWithToken = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,
-      "CIE_ID"
+      "cieid"
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
