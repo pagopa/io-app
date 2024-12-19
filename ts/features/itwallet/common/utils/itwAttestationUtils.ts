@@ -23,6 +23,7 @@ export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
 /**
  * Register a new wallet instance with hardwareKeyTag.
  * @param hardwareKeyTag - the hardware key tag of the integrity Context
+ * @param sessionToken - the session token to use for the API calls
  */
 export const registerWalletInstance = async (
   hardwareKeyTag: string,
@@ -42,6 +43,7 @@ export const registerWalletInstance = async (
 /**
  * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
  * @param hardwareKeyTag - the hardware key tag of the wallet instance
+ * @param sessionToken - the session token to use for the API calls
  * @return the wallet attestation and the related key tag
  */
 export const getAttestation = async (
@@ -81,6 +83,7 @@ export const isWalletInstanceAttestationValid = (
  * Get the wallet instance status from the Wallet Provider.
  * This operation is more lightweight than getting a new attestation to check the status.
  * @param hardwareKeyTag The hardware key tag used to create the wallet instance
+ * @param sessionToken The session token to use for the API calls
  */
 export const getWalletInstanceStatus = (
   hardwareKeyTag: string,
