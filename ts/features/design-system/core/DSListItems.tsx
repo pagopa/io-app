@@ -1,5 +1,3 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { Fragment } from "react";
 import {
   Divider,
   H4,
@@ -15,6 +13,7 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { Fragment } from "react";
 import { Alert } from "react-native";
 import I18n from "../../../i18n";
 
