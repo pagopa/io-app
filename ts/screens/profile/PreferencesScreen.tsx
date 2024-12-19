@@ -63,6 +63,12 @@ const PreferencesScreen = () => {
     });
   }, [navigation]);
 
+  const navigateToAppearancePreferenceScreen = useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.PROFILE_PREFERENCES_APPEARANCE
+    });
+  }, [navigation]);
+
   const checkPermissionThenGoCalendar = async () => {
     await requestWriteCalendarPermission({
       title: I18n.t("permissionRationale.calendar.title"),
@@ -108,6 +114,12 @@ const PreferencesScreen = () => {
       value: I18n.t("profile.preferences.list.notifications.title"),
       description: I18n.t("profile.preferences.list.notifications.subtitle"),
       onPress: navigateToNotificationPreferenceScreen
+    },
+    {
+      // Appearance
+      value: I18n.t("profile.preferences.list.appearance.title"),
+      description: I18n.t("profile.preferences.list.appearance.subtitle"),
+      onPress: navigateToAppearancePreferenceScreen
     },
     {
       // Calendar
