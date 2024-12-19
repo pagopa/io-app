@@ -1,5 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
+import { FailureStatus } from "../reducers";
 
 /**
  * This action stores the Wallet Instance Attestation
@@ -13,7 +14,7 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
  */
 export const itwUpdateWalletInstanceStatus = createStandardAction(
   "ITW_WALLET_INSTANCE_STATUS_UPDATE"
-)<WalletInstanceStatus | undefined>();
+)<WalletInstanceStatus | FailureStatus | undefined>();
 
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>

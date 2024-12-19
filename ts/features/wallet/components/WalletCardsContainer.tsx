@@ -16,6 +16,7 @@ import {
 import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLifecycleAlert";
 import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
+import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import {
@@ -27,6 +28,7 @@ import {
   selectWalletOtherCards,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../itwallet/walletInstance/store/reducers";
 import { WalletCardCategoryFilter } from "../types";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
@@ -47,6 +49,9 @@ const WalletCardsContainer = () => {
   const selectedCategory = useIOSelector(selectWalletCategoryFilter);
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
+  );
+  const isWalletInstanceStatusFailure = useIOSelector(
+    itwIsWalletInstanceStatusFailureSelector
   );
 
   useItwWalletInstanceRevocationAlert();
@@ -72,17 +77,25 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
-        {shouldRenderCategory("itw") && <ItwWalletCardsContainer />}
+        {!isWalletInstanceStatusFailure && shouldRenderCategory("itw") && (
+          <ItwWalletCardsContainer />
+        )}
         {shouldRenderCategory("other") && <OtherWalletCardsContainer />}
       </View>
     );
-  }, [shouldRenderEmptyState, shouldRenderCategory, shouldRenderLoadingState]);
+  }, [
+    shouldRenderEmptyState,
+    shouldRenderCategory,
+    shouldRenderLoadingState,
+    isWalletInstanceStatusFailure
+  ]);
 
   return (
     <Animated.View
       style={IOStyles.flex}
       layout={LinearTransition.duration(200)}
     >
+      <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>

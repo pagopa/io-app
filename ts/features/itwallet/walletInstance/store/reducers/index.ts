@@ -9,9 +9,12 @@ import {
 } from "../actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
 
+export const FAILURE_STATUS = "failure";
+export type FailureStatus = typeof FAILURE_STATUS;
+
 export type ItwWalletInstanceState = {
   attestation: string | undefined;
-  status: WalletInstanceStatus | undefined;
+  status: WalletInstanceStatus | FailureStatus | undefined;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
