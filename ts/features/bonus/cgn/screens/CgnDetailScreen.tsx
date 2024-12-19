@@ -7,7 +7,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
+
+import { ReactElement } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Card } from "../../../../../definitions/cgn/Card";
@@ -83,7 +84,7 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
 /**
  * Screen to display all the information about the active CGN
  */
-const CgnDetailScreen = (props: Props): React.ReactElement => {
+const CgnDetailScreen = (props: Props): ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
 

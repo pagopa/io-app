@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactNode } from "react";
 import {
   Directions,
   Gesture,
@@ -14,7 +14,7 @@ const directions = {
 type FlipsGestureDetectorProps = {
   isFlipped: boolean;
   setIsFlipped: (isFlipped: boolean) => void;
-  children: React.ReactNode;
+  children: ReactNode;
   direction?: keyof typeof directions;
 };
 

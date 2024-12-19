@@ -1,18 +1,18 @@
-import * as React from "react";
-import configureMockStore from "redux-mock-store";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { ComponentProps } from "react";
+import configureMockStore from "redux-mock-store";
+import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { MessageDetails } from "../MessageDetails";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { PNMessage } from "../../store/types/types";
-import { thirdPartyMessage } from "../../__mocks__/message";
-import { toPNMessage } from "../../store/types/transformers";
-import I18n from "../../../../i18n";
 import { serviceId_1 } from "../../../messages/__mocks__/messages";
 import { UIMessageId } from "../../../messages/types";
+import { thirdPartyMessage } from "../../__mocks__/message";
+import { toPNMessage } from "../../store/types/transformers";
+import { PNMessage } from "../../store/types/types";
+import { MessageDetails } from "../MessageDetails";
 
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
@@ -58,9 +58,7 @@ const generateComponentProperties = (message: PNMessage) => ({
   serviceId: serviceId_1
 });
 
-const renderComponent = (
-  props: React.ComponentProps<typeof MessageDetails>
-) => {
+const renderComponent = (props: ComponentProps<typeof MessageDetails>) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);

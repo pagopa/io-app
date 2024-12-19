@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import * as React from "react";
+import { ReactNode, useEffect } from "react";
+
 import { StyleSheet, View, ColorValue } from "react-native";
 import Animated, {
   useAnimatedProps,
@@ -16,7 +16,7 @@ type CircularProgressProps = {
   strokeColor: ColorValue;
   strokeBgColor: ColorValue;
   strokeWidth: number;
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
 
 export const CircularProgress = ({

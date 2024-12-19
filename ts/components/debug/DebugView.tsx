@@ -3,7 +3,8 @@ import {
   IOVisualCostants,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { PropsWithChildren } from "react";
 import { View } from "react-native";
 import { withDebugEnabled } from "./withDebugEnabled";
 
@@ -20,7 +21,7 @@ export const DebugView = withDebugEnabled(
     children,
     title = "Debug",
     ignoreHorizontalMargins = false
-  }: React.PropsWithChildren<DebugViewProps>) => (
+  }: PropsWithChildren<DebugViewProps>) => (
     <View
       testID="DebugViewTestID"
       style={{

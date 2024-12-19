@@ -5,8 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
-import * as React from "react";
-import { useMemo, useState } from "react";
+
+import { FunctionComponent, useMemo, useState } from "react";
 import {
   FlatList,
   Keyboard,
@@ -34,7 +34,7 @@ type Props = {
 /**
  * This component is unused and could be deprecated since it's not used in the app.
  */
-const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
+const CgnMerchantsFilters: FunctionComponent<Props> = (props: Props) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [checkedCategories, setCheckedCategories] = useState<

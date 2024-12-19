@@ -10,8 +10,14 @@ import {
   VSpacer,
   hexToRgba
 } from "@pagopa/io-app-design-system";
-import { ComponentProps, useCallback, useMemo, useState } from "react";
-import * as React from "react";
+import {
+  ComponentProps,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useState
+} from "react";
+
 import {
   LayoutChangeEvent,
   LayoutRectangle,
@@ -109,7 +115,7 @@ export type ServiceActionsProps =
     };
 
 type ServiceDetailsScreenComponentProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   actionsProps?: ServiceActionsProps;
   debugMode?: boolean;
   title?: string;

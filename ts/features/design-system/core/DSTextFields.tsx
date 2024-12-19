@@ -6,7 +6,8 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ComponentProps, useState } from "react";
 import { View } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -102,12 +103,11 @@ export const DSTextFields = () => {
 };
 
 const InputComponentWrapper = (
-  props: Omit<
-    React.ComponentProps<typeof TextInput>,
-    "value" | "onChangeText"
-  > & { value?: string }
+  props: Omit<ComponentProps<typeof TextInput>, "value" | "onChangeText"> & {
+    value?: string;
+  }
 ) => {
-  const [inputValue, setInputValue] = React.useState(props.value ?? "");
+  const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
     <TextInput {...props} value={inputValue} onChangeText={setInputValue} />
@@ -116,11 +116,11 @@ const InputComponentWrapper = (
 
 const InputValidationComponentWrapper = (
   props: Omit<
-    React.ComponentProps<typeof TextInputValidation>,
+    ComponentProps<typeof TextInputValidation>,
     "value" | "onChangeText" | "errorMessage"
   > & { value?: string; errorMessage?: string }
 ) => {
-  const [inputValue, setInputValue] = React.useState(props.value ?? "");
+  const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
     <TextInputValidation
@@ -134,11 +134,11 @@ const InputValidationComponentWrapper = (
 
 const InputPasswordComponentWrapper = (
   props: Omit<
-    React.ComponentProps<typeof TextInputPassword>,
+    ComponentProps<typeof TextInputPassword>,
     "value" | "onChangeText"
   > & { value?: string }
 ) => {
-  const [inputValue, setInputValue] = React.useState(props.value ?? "");
+  const [inputValue, setInputValue] = useState(props.value ?? "");
 
   return (
     <TextInputPassword

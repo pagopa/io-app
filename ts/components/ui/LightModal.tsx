@@ -3,7 +3,7 @@
  * on top of the root component.
  */
 
-import * as React from "react";
+import { Component, createContext } from "react";
 import {
   Animated,
   Dimensions,
@@ -13,7 +13,6 @@ import {
   View
 } from "react-native";
 import { isScreenReaderEnabled } from "../../utils/accessibility";
-
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
@@ -27,16 +26,15 @@ export type LightModalContextInterface = Readonly<{
   setOnHiddenModal: (callback: () => void) => void;
 }>;
 
-export const LightModalContext =
-  React.createContext<LightModalContextInterface>({
-    component: null,
-    showModal: () => undefined,
-    showModalFadeInAnimation: () => undefined,
-    showAnimatedModal: () => undefined,
-    hideModal: () => undefined,
-    onHiddenModal: () => undefined,
-    setOnHiddenModal: () => undefined
-  });
+export const LightModalContext = createContext<LightModalContextInterface>({
+  component: null,
+  showModal: () => undefined,
+  showModalFadeInAnimation: () => undefined,
+  showAnimatedModal: () => undefined,
+  hideModal: () => undefined,
+  onHiddenModal: () => undefined,
+  setOnHiddenModal: () => undefined
+});
 
 type Props = Record<string, unknown>;
 
@@ -134,7 +132,7 @@ export type AnimationLightModal =
 
 export const LightModalConsumer = LightModalContext.Consumer;
 
-export class LightModalProvider extends React.Component<
+export class LightModalProvider extends Component<
   React.PropsWithChildren<Props>,
   State
 > {

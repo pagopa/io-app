@@ -11,7 +11,8 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { RefObject } from "react";
+
 import {
   AccessibilityRole,
   GestureResponderEvent,
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
 type BaseBannerErrorStateProps = WithTestID<{
   icon?: IOIcons;
   label: string;
-  viewRef?: React.RefObject<View>;
+  viewRef?: RefObject<View>;
   // A11y related props
   accessibilityLabel?: string;
   accessibilityHint?: string;

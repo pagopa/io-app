@@ -6,7 +6,8 @@ import {
   IOVisualCostants,
   buttonSolidHeight
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { Fragment, ReactNode, useMemo } from "react";
 import Animated, {
   Easing,
   useAnimatedRef,
@@ -24,7 +25,7 @@ export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
 export type ItwPresentationDetailsScreenBaseProps = {
   credential: StoredCredential;
-  children?: React.ReactNode;
+  children?: ReactNode;
   ctaProps?: CredentialCtaProps;
 };
 
@@ -45,7 +46,7 @@ const ItwPresentationDetailsScreenBase = ({
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
 
-  const bottomMargin: number = React.useMemo(
+  const bottomMargin: number = useMemo(
     () =>
       safeAreaInsets.bottom === 0
         ? IOVisualCostants.appMarginDefault
@@ -53,12 +54,12 @@ const ItwPresentationDetailsScreenBase = ({
     [safeAreaInsets]
   );
 
-  const safeBottomAreaHeight: number = React.useMemo(
+  const safeBottomAreaHeight: number = useMemo(
     () => bottomMargin + buttonSolidHeight + contentEndMargin,
     [bottomMargin]
   );
 
-  const gradientAreaHeight: number = React.useMemo(
+  const gradientAreaHeight: number = useMemo(
     () => bottomMargin + buttonSolidHeight + gradientSafeArea,
     [bottomMargin]
   );
@@ -112,7 +113,7 @@ const ItwPresentationDetailsScreenBase = ({
   );
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Animated.ScrollView
         ref={animatedScrollViewRef}
         contentContainerStyle={{
@@ -127,7 +128,7 @@ const ItwPresentationDetailsScreenBase = ({
         {children}
       </Animated.ScrollView>
       {footerComponent}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

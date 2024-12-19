@@ -1,14 +1,13 @@
-import { default as React } from "react";
-import { StyleSheet, View } from "react-native";
 import {
+  BodySmall,
   ButtonSolid,
   ButtonSolidProps,
-  VSpacer,
-  Pictogram,
-  IOPictograms,
   H6,
-  BodySmall
+  IOPictograms,
+  Pictogram,
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
 
 type Props = {
   title: string;

@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { useMemo, default as React } from "react";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps

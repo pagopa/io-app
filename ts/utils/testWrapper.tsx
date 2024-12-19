@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { render, RenderOptions } from "@testing-library/react-native";
-import * as React from "react";
+
+import { ComponentType } from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
@@ -15,7 +16,7 @@ import * as linkingSubscription from "../navigation/linkingSubscription";
  * @param renderOptions
  */
 export const renderScreenWithNavigationStoreContext = <S,>(
-  screen: React.ComponentType<any>, // I need any to avoid passing navigation
+  screen: ComponentType<any>, // I need any to avoid passing navigation
   route: string,
   params: Record<string, any>,
   store: Store<S>,

@@ -4,13 +4,14 @@ import {
   useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { ComponentProps, PropsWithChildren } from "react";
+
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
 export type PressableBaseProps = WithTestID<
   Pick<
-    React.ComponentProps<typeof Pressable>,
+    ComponentProps<typeof Pressable>,
     | "onPress"
     | "onLongPress"
     | "accessibilityLabel"
@@ -29,7 +30,7 @@ export const CustomPressableListItemBase = ({
   minHeight,
   selected,
   ...props
-}: React.PropsWithChildren<PressableBaseProps>) => {
+}: PropsWithChildren<PressableBaseProps>) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 

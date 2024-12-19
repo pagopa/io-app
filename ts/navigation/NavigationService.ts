@@ -3,12 +3,12 @@ import {
   NavigationContainerRef
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
-import * as React from "react";
+
+import { createRef, RefObject } from "react";
 import { mixpanelTrack } from "../mixpanel";
 import { AppParamsList } from "./params/AppParamsList";
 
-export const navigationRef =
-  React.createRef<NavigationContainerRef<AppParamsList>>();
+export const navigationRef = createRef<NavigationContainerRef<AppParamsList>>();
 // eslint-disable-next-line functional/no-let
 let isNavigationReady: boolean = false;
 
@@ -38,9 +38,8 @@ const withLogging =
   };
 
 // NavigationContainerComponent
-const getNavigator = (): React.RefObject<
-  NavigationContainerRef<AppParamsList>
-> => navigationRef;
+const getNavigator = (): RefObject<NavigationContainerRef<AppParamsList>> =>
+  navigationRef;
 
 // NavigationParams
 // This definition comes from react-navigation navigate definition.

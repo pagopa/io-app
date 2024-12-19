@@ -7,8 +7,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { ComponentProps, useLayoutEffect, useState } from "react";
-import * as React from "react";
+import { ComponentProps, ReactNode, useLayoutEffect, useState } from "react";
+
 import { LayoutChangeEvent, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -30,8 +30,8 @@ export type LargeHeaderTitleProps = {
 };
 
 type Props = {
-  children: React.ReactNode;
-  fixedBottomSlot?: React.ReactNode;
+  children: ReactNode;
+  fixedBottomSlot?: ReactNode;
   title: LargeHeaderTitleProps;
   description?: string;
   goBack?: BackProps["goBack"];

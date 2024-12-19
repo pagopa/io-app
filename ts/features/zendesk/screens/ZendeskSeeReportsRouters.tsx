@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
-import * as React from "react";
+
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../i18n";
@@ -78,7 +78,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskToken]);
 
-  const handleContactSupportPress = React.useCallback(
+  const handleContactSupportPress = useCallback(
     () =>
       handleContactSupport(
         navigation,

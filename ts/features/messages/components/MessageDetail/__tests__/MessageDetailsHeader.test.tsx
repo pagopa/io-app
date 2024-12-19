@@ -1,5 +1,5 @@
 import { ComponentProps } from "react";
-import * as React from "react";
+
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { MessageDetailsHeader } from "../MessageDetailsHeader";
@@ -38,7 +38,7 @@ describe("MessageDetailsHeader component", () => {
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof MessageDetailsHeader>
+  props: ComponentProps<typeof MessageDetailsHeader>
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),

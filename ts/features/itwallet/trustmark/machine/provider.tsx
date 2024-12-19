@@ -1,5 +1,6 @@
 import { createActorContext } from "@xstate/react";
-import * as React from "react";
+
+import { PropsWithChildren } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../store/hooks";
 import { createItwTrustmarkActionsImplementation } from "./actions";
@@ -7,7 +8,7 @@ import { createItwTrustmarkActorsImplementation } from "./actors";
 import { createItwTrustmarkGuardsImplementation } from "./guards";
 import { itwTrustmarkMachine } from "./machine";
 
-type Props = React.PropsWithChildren<{
+type Props = PropsWithChildren<{
   credentialType: string;
 }>;
 

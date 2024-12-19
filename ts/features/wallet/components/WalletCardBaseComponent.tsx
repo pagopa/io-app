@@ -1,5 +1,6 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { ComponentType } from "react";
+
 import { StyleSheet } from "react-native";
 import Animated, {
   FadeIn,
@@ -18,7 +19,7 @@ export const withWalletCardBaseComponent =
     CardProps extends object,
     ContentProps extends WalletCardComponentBaseProps<CardProps>
   >(
-    CardContent: React.ComponentType<CardProps>
+    CardContent: ComponentType<CardProps>
   ) =>
   ({ cardProps, isStacked = true, testID }: ContentProps) =>
     (

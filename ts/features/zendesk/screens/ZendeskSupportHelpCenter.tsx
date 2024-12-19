@@ -21,7 +21,7 @@ import {
   useMemo,
   useState
 } from "react";
-import * as React from "react";
+
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import _ from "lodash";
@@ -288,7 +288,7 @@ const ZendeskSupportHelpCenter = () => {
     ]
   );
 
-  const handleButtonPress = React.useCallback(
+  const handleButtonPress = useCallback(
     (value: ButtonPressedEnum) => {
       setPressedButton(value);
       if (isUserLoggedIn) {

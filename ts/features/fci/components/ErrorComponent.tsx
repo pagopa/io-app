@@ -102,7 +102,7 @@ const ErrorComponent = (props: Props) => {
 
   /**
    * Render the footer buttons as vertical stacked buttons
-   * @returns {React.ReactElement}
+   * @returns {ReactElement}
    */
   const footerButtons = () => {
     if (props.retry && props.assistance) {

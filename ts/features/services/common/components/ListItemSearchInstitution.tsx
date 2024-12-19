@@ -12,20 +12,20 @@ import {
   useIOTheme,
   useListItemAnimation
 } from "@pagopa/io-app-design-system";
-import { ComponentProps, memo, useCallback } from "react";
-import * as React from "react";
+import { ComponentProps, ReactNode, memo, useCallback } from "react";
+
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 export type ListItemSearchInstitutionProps = WithTestID<
   {
-    value: string | React.ReactNode;
+    value: string | ReactNode;
     avatarProps: AvatarSearchProps;
     /**
      * The maximum number of lines to display for the value.
      */
     numberOfLines?: number;
-    description?: string | React.ReactNode;
+    description?: string | ReactNode;
     onPress: (event: GestureResponderEvent) => void;
   } & Pick<
     ComponentProps<typeof Pressable>,

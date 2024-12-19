@@ -1,5 +1,11 @@
-import { ComponentProps, useCallback, useEffect, useRef } from "react";
-import * as React from "react";
+import {
+  ComponentProps,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef
+} from "react";
+
 import { View } from "react-native";
 import { Alert } from "@pagopa/io-app-design-system";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
@@ -18,7 +24,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 type Props = {
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: React.RefObject<View>) => void;
+  onSectionRef?: (ref: RefObject<View>) => void;
 };
 
 const statusVariantMap: Record<

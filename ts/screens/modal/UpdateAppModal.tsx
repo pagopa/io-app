@@ -3,9 +3,8 @@
  *
  */
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-import * as React from "react";
 import {
   AccessibilityInfo,
   Linking,
@@ -32,7 +31,7 @@ import { OperationResultScreenContent } from "../../components/screens/Operation
 import { Dismissable } from "../../components/ui/Dismissable";
 import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";
 
-const UpdateAppModal: React.FC = () => {
+const UpdateAppModal: FC = () => {
   // Disable Android back button
   useHardwareBackButton(() => true);
   trackForcedUpdateScreen();

@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useEffect, default as React } from "react";
+import { useCallback, useEffect } from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";

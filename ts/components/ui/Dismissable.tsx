@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactNode } from "react";
 import { Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -16,7 +16,7 @@ const windowWidth = Dimensions.get("window").width;
 type Dismissable = WithTestID<{
   onDismiss?: () => void;
   dismissThreshold?: number;
-  children: React.ReactNode;
+  children: ReactNode;
 }>;
 
 /**

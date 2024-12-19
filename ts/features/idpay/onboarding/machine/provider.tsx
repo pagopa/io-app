@@ -1,7 +1,8 @@
 import { createActorContext } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+
+import { ReactNode } from "react";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   idPayApiBaseUrl,
@@ -22,7 +23,7 @@ import { createActorsImplementation } from "./actors";
 import { idPayOnboardingMachine } from "./machine";
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const IdPayOnboardingMachineContext = createActorContext(

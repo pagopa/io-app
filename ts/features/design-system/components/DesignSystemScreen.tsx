@@ -3,13 +3,14 @@ import {
   IOVisualCostants,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactNode } from "react";
 import { ScrollView, StatusBar, View, useColorScheme } from "react-native";
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 
 type Props = {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
   noMargin?: boolean;
 };
 

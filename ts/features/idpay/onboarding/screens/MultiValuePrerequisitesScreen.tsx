@@ -10,7 +10,7 @@ import {
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useRef, useEffect, useState, default as React } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";

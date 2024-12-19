@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import * as React from "react";
+
+import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -359,7 +360,7 @@ describe("OtherWalletCardsContainer", () => {
   });
 });
 
-const renderComponent = (component: React.ComponentType<any>) => {
+const renderComponent = (component: ComponentType<any>) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();

@@ -1,6 +1,6 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { useRef, default as React } from "react";
+import { useRef } from "react";
 import { View } from "react-native";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIOSelector } from "../../../../store/hooks";

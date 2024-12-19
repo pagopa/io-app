@@ -10,7 +10,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as React from "react";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
@@ -349,7 +349,7 @@ export const AuthSessionPage = () => {
   const navigation = useIONavigation();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       navigation.setOptions({
         gestureEnabled: isBackButtonEnabled(requestInfo)
       });

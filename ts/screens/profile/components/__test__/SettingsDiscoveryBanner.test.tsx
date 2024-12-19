@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactElement } from "react";
 import { createStore } from "redux";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -16,7 +16,7 @@ describe("settingsDiscoveryBanner", () => {
   });
 });
 
-const renderComponent = (component: React.ReactElement) => {
+const renderComponent = (component: ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => component,

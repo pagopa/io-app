@@ -1,4 +1,4 @@
-import * as React from "react";
+import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { gapBetweenItemsInAGrid } from "../../utils";
 
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsTagBoxProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const MessageDetailsTagBox = ({

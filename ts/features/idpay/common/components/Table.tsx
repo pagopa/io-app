@@ -1,11 +1,11 @@
-import { Fragment } from "react";
-import * as React from "react";
+import { Fragment, ReactNode } from "react";
+
 import { StyleSheet, View } from "react-native";
 import { Body, Divider, H6, WithTestID } from "@pagopa/io-app-design-system";
 
 export type TableRow = WithTestID<{
   label: string;
-  value: string | React.ReactNode;
+  value: string | ReactNode;
 }>;
 
 type TableProps = {
@@ -13,7 +13,7 @@ type TableProps = {
   rows: ReadonlyArray<TableRow>;
 };
 
-const renderTable = (data: ReadonlyArray<TableRow>): React.ReactNode =>
+const renderTable = (data: ReadonlyArray<TableRow>): ReactNode =>
   data.map((item, index) => {
     const isLast = data.length === index + 1;
 

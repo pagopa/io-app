@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { ComponentProps, useState } from "react";
+
 import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import { IOColors } from "@pagopa/io-app-design-system";
@@ -17,7 +17,7 @@ type OwnProps = {
   downloadPath: string;
 };
 
-type Props = OwnProps & Omit<React.ComponentProps<typeof Pdf>, "source">;
+type Props = OwnProps & Omit<ComponentProps<typeof Pdf>, "source">;
 
 export const PdfViewer = ({
   style,
