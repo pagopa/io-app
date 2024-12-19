@@ -18,7 +18,7 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   PAGOPA_SUPPORT_PHONE_NUMBER,
   addTicketCustomField,
@@ -173,7 +173,7 @@ const usePaymentFailureSupportModal = ({
     "$1.$2.$3"
   );
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal({
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     component: (
       <>
         <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />

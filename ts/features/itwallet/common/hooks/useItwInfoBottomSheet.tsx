@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import ItwMarkdown from "../components/ItwMarkdown";
 
 /**
@@ -43,7 +43,7 @@ export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
     </View>
   );
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title,
     component: <BottomSheetBody />
   });
