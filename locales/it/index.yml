@@ -3364,9 +3364,13 @@ features:
         primaryAction: Apri impostazioni
         secondaryAction: Continua
       notMatchingIdentityScreen:
-        title: "Tutti i documenti saranno rimossi da IO"
-        subtitle: "Se accedi con una nuova identità, le versioni digitali dei documenti che hai aggiunto al Portafoglio saranno rimosse e Documenti su IO disattivata."
-        action: "Continua con la nuova identità"
+        title: "Stai accedendo con un nuovo dispositivo"
+        message: "Quando accedi all'app IO da un dispositivo diverso da quello abituale (ad esempio quello di un'altra persona) per motivi di sicurezza queste funzionalità vengono reimpostate:\n\n- Documenti su IO"
+        banner:
+          title: Ti suggeriamo di accedere all'app solo dal tuo dispositivo.
+        alert:
+          title: Vuoi davvero uscire?
+          message: Dovrai entrare di nuovo con SPID o CIE per usare l'app.
       loading:
         cieId:
           title: Connessione con la tua app CieID in corso...
