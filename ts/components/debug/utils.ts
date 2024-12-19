@@ -1,12 +1,17 @@
 type Primitive = string | number | boolean | null | undefined;
 
-type TruncatableValue = Primitive | TruncatableObject | TruncatableArray;
+type TruncatableValue =
+  | Primitive
+  | TruncatableObject
+  | TruncatableArray
+  | TruncatableSet;
 
 interface TruncatableObject {
   [key: string]: TruncatableValue;
 }
 
 type TruncatableArray = Array<TruncatableValue>;
+type TruncatableSet = Set<TruncatableValue>;
 
 /**
  * Truncates all string values in an object or array structure to a specified maximum length.
@@ -37,6 +42,14 @@ export const truncateObjectStrings = <T extends TruncatableValue>(
   }
 
   if (typeof value === "object" && value !== null) {
+    if (value instanceof Set) {
+      // Set could not be serialized to JSON because values are not stored as properties
+      // For display purposes, we convert it to an array
+      return Array.from(value).map(item =>
+        truncateObjectStrings(item, maxLength)
+      ) as T;
+    }
+
     return Object.entries(value).reduce(
       (acc, [key, val]) => ({
         ...acc,

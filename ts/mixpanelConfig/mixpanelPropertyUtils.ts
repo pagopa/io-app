@@ -4,10 +4,7 @@ import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesP
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { LoginSessionDuration } from "../features/fastLogin/analytics/optinAnalytics";
 import { fastLoginOptInSelector } from "../features/fastLogin/store/selectors";
-import {
-  selectBonusCards,
-  selectWalletCgnCard
-} from "../features/wallet/store/selectors";
+import { selectWalletCardsByType } from "../features/wallet/store/selectors";
 import { WalletCardBonus } from "../features/wallet/types";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
@@ -91,17 +88,16 @@ export const paymentMethodsHandler = (state: GlobalState): number | undefined =>
   paymentsWalletUserMethodsNumberFromPotSelector(state)?.length;
 
 export const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
-  const cgnCard = selectWalletCgnCard(state);
+  const cgnCard = selectWalletCardsByType(state, "cgn");
   return cgnCard.length > 0 ? "active" : "not_active";
 };
 
 export const welfareStatusHandler = (
   state: GlobalState
 ): ReadonlyArray<string> => {
-  const bonusCards = selectBonusCards(state);
-  const idPayCards = bonusCards.filter(
-    card => card.type === "idPay"
+  const idPayCards = selectWalletCardsByType(
+    state,
+    "idPay"
   ) as Array<WalletCardBonus>;
-
   return idPayCards.map(card => card.name);
 };

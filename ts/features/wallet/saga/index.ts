@@ -10,7 +10,7 @@ import {
 import { walletUpdate } from "../store/actions";
 import { walletAddCards } from "../store/actions/cards";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { selectWalletPlaceholders } from "../store/selectors";
+import { selectWalletPlaceholderCards } from "../store/selectors";
 import { handleWalletAnalyticsSaga } from "./handleWalletAnalyticsSaga";
 import { handleWalletPlaceholdersTimeout } from "./handleWalletLoadingPlaceholdersTimeout";
 import { handleWalletLoadingStateSaga } from "./handleWalletLoadingStateSaga";
@@ -21,7 +21,7 @@ const LOADING_STATE_TIMEOUT = 2000 as Millisecond;
 export function* watchWalletSaga(): SagaIterator {
   // Adds persisted placeholders as cards in the wallet
   // to be displayed while waiting for the actual cards
-  const placeholders = yield* select(selectWalletPlaceholders);
+  const placeholders = yield* select(selectWalletPlaceholderCards);
   yield* put(walletAddCards(placeholders));
 
   yield* takeLatest(

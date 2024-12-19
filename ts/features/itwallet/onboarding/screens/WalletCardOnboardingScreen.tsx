@@ -112,7 +112,7 @@ const ItwCredentialOnboardingSection = () => {
   );
 
   return (
-    <>
+    <View>
       <ListItemHeader
         label={I18n.t("features.wallet.onboarding.sections.itw")}
       />
@@ -134,7 +134,7 @@ const ItwCredentialOnboardingSection = () => {
           />
         ))}
       </VStack>
-    </>
+    </View>
   );
 };
 
@@ -175,7 +175,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   );
 
   return (
-    <>
+    <View>
       {props.showTitle && (
         <ListItemHeader
           label={I18n.t("features.wallet.onboarding.sections.other")}
@@ -190,7 +190,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
           onPress={navigateToPaymentMethodOnboarding}
         />
       </VStack>
-    </>
+    </View>
   );
 };
 
