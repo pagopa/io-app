@@ -11,7 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps } from "react";
+import { ComponentProps } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";

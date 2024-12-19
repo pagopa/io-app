@@ -1,4 +1,11 @@
-import React, { ComponentProps, useCallback, useEffect, useRef } from "react";
+import {
+  ComponentProps,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef
+} from "react";
+
 import { AccessibilityInfo, View } from "react-native";
 import { Alert, IOColors } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -20,7 +27,7 @@ import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/r
 
 type Props = {
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: React.RefObject<View>) => void;
+  onSectionRef?: (ref: RefObject<View>) => void;
   trackingAction?: () => void;
   sticky?: boolean;
 };

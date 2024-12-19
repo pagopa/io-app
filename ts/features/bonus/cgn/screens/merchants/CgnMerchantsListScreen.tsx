@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useCallback, useMemo } from "react";
+import { FunctionComponent, useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -43,9 +42,7 @@ export type MerchantsAll = OfflineMerchant | OnlineMerchant;
  * @param props
  * @constructor
  */
-const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+const CgnMerchantsListScreen: FunctionComponent<Props> = (props: Props) => {
   const { navigateToMerchantDetail } = props;
 
   // Mixes online and offline merchants to render on the same list
@@ -68,14 +65,14 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 
   useFocusEffect(initLoadingLists);
 
-  const onItemPress = React.useCallback(
+  const onItemPress = useCallback(
     (id: Merchant["id"]) => {
       navigateToMerchantDetail(id);
     },
     [navigateToMerchantDetail]
   );
 
-  const renderItem = React.useMemo(
+  const renderItem = useMemo(
     () => CgnMerchantListViewRenderItem({ onItemPress }),
     [onItemPress]
   );

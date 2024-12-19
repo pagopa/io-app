@@ -1,4 +1,3 @@
-import React from "react";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";

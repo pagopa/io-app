@@ -1,6 +1,5 @@
 import { Avatar, Body, H3, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import I18n from "../../../../i18n";

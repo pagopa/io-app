@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from "react";
+import { useMemo, memo } from "react";
 import { Badge, IOIcons, ModuleCredential } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";

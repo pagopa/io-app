@@ -1,16 +1,17 @@
 import { Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
-import * as React from "react";
+
+import { FunctionComponent, ReactNode, createRef, useCallback } from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 
 type Props = {
-  image: React.ReactNode;
+  image: ReactNode;
   title: string;
   // this is necessary in order to render text with different formatting
-  body?: string | React.ReactNode;
+  body?: string | ReactNode;
   email?: EmailString;
 };
 
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
+const renderNode = (body: string | ReactNode, email?: EmailString) => {
   if (typeof body === "string") {
     return (
       <>
@@ -55,10 +56,10 @@ const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
  * @param props
  * @constructor
  */
-export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
-  const elementRef = React.createRef<Text>();
+export const InfoScreenComponent: FunctionComponent<Props> = props => {
+  const elementRef = createRef<Text>();
   useFocusEffect(
-    React.useCallback(() => setAccessibilityFocus(elementRef), [elementRef])
+    useCallback(() => setAccessibilityFocus(elementRef), [elementRef])
   );
   return (
     <View style={styles.main} testID="InfoScreenComponent">

@@ -1,4 +1,3 @@
-import React from "react";
 import Placeholder from "rn-placeholder";
 import { View } from "react-native";
 import { H3, H6, IOStyles, useIOTheme } from "@pagopa/io-app-design-system";

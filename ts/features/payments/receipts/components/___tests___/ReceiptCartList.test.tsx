@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import { ReceiptCartList } from "../ReceiptCartList";
 import { CartItem } from "../../../../../../definitions/pagopa/biz-events/CartItem";

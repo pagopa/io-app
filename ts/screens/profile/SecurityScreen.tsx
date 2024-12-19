@@ -5,7 +5,8 @@ import {
   ListItemNav,
   ListItemSwitch
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
+
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { shufflePinPadOnPayment } from "../../config";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
@@ -46,7 +47,7 @@ const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
   "authentication_SPID"
 ];
 
-const SecurityScreen = (): React.ReactElement => {
+const SecurityScreen = (): ReactElement => {
   const dispatch = useIODispatch();
   const isFingerprintEnabled = useIOSelector(isFingerprintEnabledSelector);
   const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);

@@ -1,5 +1,5 @@
 import debounce from "lodash/debounce";
-import * as React from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 
 import { pipe } from "fp-ts/lib/function";
@@ -33,7 +33,7 @@ type State = {
   debouncedSearchText: O.Option<string>;
 };
 
-class SearchButton extends React.Component<Props, State> {
+class SearchButton extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {

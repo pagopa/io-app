@@ -4,7 +4,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";

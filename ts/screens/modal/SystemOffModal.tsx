@@ -3,7 +3,7 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
-import * as React from "react";
+import { useMemo, memo } from "react";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
 import _ from "lodash";
@@ -15,7 +15,7 @@ const SystemOffModal = () => {
   const backendInfoMessage = useSelector(backendInfoMessageSelector, _.isEqual);
   const locale = getFullLocale();
 
-  const subtitle = React.useMemo(() => {
+  const subtitle = useMemo(() => {
     const message = backendInfoMessage && backendInfoMessage[locale];
 
     return `${message ? message + "\n" : ""}${I18n.t("systemsOff.closeApp")}`;
@@ -32,4 +32,4 @@ const SystemOffModal = () => {
   );
 };
 
-export default React.memo(SystemOffModal);
+export default memo(SystemOffModal);

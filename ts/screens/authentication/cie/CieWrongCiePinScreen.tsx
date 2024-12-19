@@ -1,7 +1,7 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import * as React from "react";
+import { useCallback, useMemo } from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
@@ -27,26 +27,26 @@ const CieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
-  const navigateToCiePinScreen = React.useCallback(() => {
+  const navigateToCiePinScreen = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.CIE_PIN_SCREEN
     });
   }, [navigation]);
 
-  const navigateToAuthenticationScreen = React.useCallback(() => {
+  const navigateToAuthenticationScreen = useCallback(() => {
     navigation.reset({
       index: 0,
       routes: [{ name: ROUTES.AUTHENTICATION }]
     });
   }, [navigation]);
 
-  const didYouForgetPin = React.useCallback(() => {
+  const didYouForgetPin = useCallback(() => {
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
     ).catch(constNull);
   }, []);
 
-  const didYouForgetPuk = React.useCallback(() => {
+  const didYouForgetPuk = useCallback(() => {
     Linking.openURL(
       "https://www.cartaidentita.interno.gov.it/info-utili/recupero-puk/"
     ).catch(constNull);
@@ -70,7 +70,7 @@ const CieWrongCiePinScreen = () => {
     [key: number]: Message;
   };
 
-  const createMessageAction = React.useCallback(
+  const createMessageAction = useCallback(
     <T extends string>({
       label,
       onPress
@@ -86,7 +86,7 @@ const CieWrongCiePinScreen = () => {
     []
   );
 
-  const messages: Messages = React.useMemo(
+  const messages: Messages = useMemo(
     () => ({
       2: {
         pictogram: "attention",
@@ -142,7 +142,7 @@ const CieWrongCiePinScreen = () => {
   // This should never happen,
   // but it's a good practice to have a default message
   // in case of unexpected values of `remainingCount`.
-  const defaultMessageThatShouldNeverHappen: Message = React.useMemo(
+  const defaultMessageThatShouldNeverHappen: Message = useMemo(
     () => ({
       pictogram: "attention",
       title: I18n.t("global.genericError"),
@@ -164,7 +164,7 @@ const CieWrongCiePinScreen = () => {
     ]
   );
 
-  const getMessage = React.useCallback(
+  const getMessage = useCallback(
     (key: number) =>
       key in messages ? messages[key] : defaultMessageThatShouldNeverHappen,
     [defaultMessageThatShouldNeverHappen, messages]

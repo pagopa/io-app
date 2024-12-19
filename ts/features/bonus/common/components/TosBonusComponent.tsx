@@ -7,7 +7,8 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { FunctionComponent, useEffect, useState } from "react";
 import {
   BackHandler,
   SafeAreaView,
@@ -51,14 +52,14 @@ const styles = StyleSheet.create({
 /**
  * Component to show the TOS for the bonus activation flow
  */
-const TosBonusComponent: React.FunctionComponent<Props> = props => {
+const TosBonusComponent: FunctionComponent<Props> = props => {
   const handleBackPressed = () => {
     props.onClose();
     return true;
   };
-  const [isLoadEnd, setOnLoadEnd] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
-  React.useEffect(() => {
+  const [isLoadEnd, setOnLoadEnd] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  useEffect(() => {
     const subscription = BackHandler.addEventListener(
       "hardwareBackPress",
       handleBackPressed

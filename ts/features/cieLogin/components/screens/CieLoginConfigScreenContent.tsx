@@ -1,4 +1,3 @@
-import React from "react";
 import { Divider, ListItemCheckbox } from "@pagopa/io-app-design-system";
 import { CieEntityIds } from "../../../../components/cie/CieRequestAuthenticationOverlay";
 import { cieLoginDisableUat, cieLoginEnableUat } from "../../store/actions";

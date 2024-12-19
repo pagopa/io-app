@@ -1,5 +1,12 @@
-import * as React from "react";
-import { createRef, useEffect } from "react";
+import {
+  createRef,
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 import { View, Platform, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
@@ -118,8 +125,8 @@ type RequestInfoLoadingState = {
 type RequestInfo = RequestInfoLoadingState | RequestInfoAuthorizedState;
 
 function retryRequest(
-  setInternalState: React.Dispatch<React.SetStateAction<InternalState>>,
-  setRequestInfo: React.Dispatch<React.SetStateAction<RequestInfo>>
+  setInternalState: Dispatch<SetStateAction<InternalState>>,
+  setRequestInfo: Dispatch<SetStateAction<RequestInfo>>
 ) {
   setInternalState(generateRetryState);
   setRequestInfo(requestInfo => ({
@@ -134,11 +141,11 @@ export enum CieEntityIds {
 }
 
 const CieWebView = (props: Props) => {
-  const [internalState, setInternalState] = React.useState<InternalState>(
+  const [internalState, setInternalState] = useState<InternalState>(
     generateResetState()
   );
 
-  const [requestInfo, setRequestInfo] = React.useState<RequestInfo>({
+  const [requestInfo, setRequestInfo] = useState<RequestInfo>({
     requestState: "LOADING",
     nativeAttempts: 0
   });
@@ -157,7 +164,7 @@ const CieWebView = (props: Props) => {
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
-  const handleOnError = React.useCallback(
+  const handleOnError = useCallback(
     (
       e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
     ) => {
@@ -333,9 +340,7 @@ const ErrorComponent = (
  * @param props
  * @constructor
  */
-export const CieRequestAuthenticationOverlay = (
-  props: Props
-): React.ReactElement => {
+export const CieRequestAuthenticationOverlay = (props: Props): ReactElement => {
   // Disable android back button
   useHardwareBackButton(() => {
     props.onClose();

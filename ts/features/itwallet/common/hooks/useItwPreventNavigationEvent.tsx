@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -14,7 +14,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 export const useItwPreventNavigationEvent = () => {
   const navigation = useNavigation<StackNavigationProp<ItwParamsList>>();
 
-  React.useEffect(
+  useEffect(
     () =>
       navigation.addListener("beforeRemove", e => {
         e.preventDefault();

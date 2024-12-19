@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import { cgnActivationCancel } from "../../store/actions/activation";
 import I18n from "../../../../../i18n";
 import { useIODispatch } from "../../../../../store/hooks";
@@ -14,7 +14,7 @@ const CgnAlreadyActiveScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const navigateToDetail = React.useCallback(() => {
+  const navigateToDetail = useCallback(() => {
     dispatch(cgnActivationCancel());
     navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
       screen: CGN_ROUTES.DETAILS.DETAILS

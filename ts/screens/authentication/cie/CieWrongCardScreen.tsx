@@ -1,7 +1,7 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import * as React from "react";
+import { useCallback } from "react";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
@@ -10,13 +10,13 @@ import { OperationResultScreenContent } from "../../../components/screens/Operat
 const CieWrongCardScreen = () => {
   const navigation = useIONavigation();
 
-  const navigateToCiePinScreen = React.useCallback(() => {
+  const navigateToCiePinScreen = useCallback(() => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.CIE_PIN_SCREEN
     });
   }, [navigation]);
 
-  const navigateToAuthenticationScreen = React.useCallback(() => {
+  const navigateToAuthenticationScreen = useCallback(() => {
     navigation.reset({
       index: 0,
       routes: [{ name: ROUTES.AUTHENTICATION }]

@@ -1,6 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import { IOToast } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -28,7 +28,7 @@ export const FimsHistoryScreen = () => {
   const historyErrorState = useIOSelector(fimsHistoryErrorSelector);
   const isHistoryLoading = useIOSelector(isFimsHistoryLoadingSelector);
 
-  const lastErrorToastDate = React.useRef<number | null>(null);
+  const lastErrorToastDate = useRef<number | null>(null);
 
   const shouldShowErrorToast = historyErrorState === "ALERT_ONLY";
   // ---------- HOOKS
@@ -39,7 +39,7 @@ export const FimsHistoryScreen = () => {
     supportRequest: true
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!requiresAppUpdate) {
       trackHistoryScreen();
       dispatch(fimsHistoryGet.request({ shouldReloadFromScratch: true }));
@@ -52,7 +52,7 @@ export const FimsHistoryScreen = () => {
     };
   }, [dispatch, requiresAppUpdate]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldShowErrorToast) {
       // needed to avoid multiple state changes simultaneously
       lastErrorToastDate.current = Date.now();
@@ -60,7 +60,7 @@ export const FimsHistoryScreen = () => {
     }
   }, [shouldShowErrorToast]);
 
-  const fetchMoreHistoryItems = React.useCallback(() => {
+  const fetchMoreHistoryItems = useCallback(() => {
     const hasErrorTimeoutExpired = lastErrorToastDate.current
       ? Date.now() - lastErrorToastDate.current >= 500
       : true;

@@ -1,5 +1,4 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-import React from "react";
 import Svg, { Path } from "react-native-svg";
 
 export const ReceiptDivider = () => {

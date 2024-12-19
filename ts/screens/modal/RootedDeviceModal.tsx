@@ -7,7 +7,7 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useCallback } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -26,7 +26,7 @@ const RootedDeviceModal = () => {
   const dispatch = useDispatch();
   const navigation = useIONavigation();
 
-  const handleContinueWithRootOrJailbreak = React.useCallback(() => {
+  const handleContinueWithRootOrJailbreak = useCallback(() => {
     dispatch(continueWithRootOrJailbreak(true));
     navigation.goBack();
   }, [dispatch, navigation]);

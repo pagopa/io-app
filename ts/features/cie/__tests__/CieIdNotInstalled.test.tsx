@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
 import CieIdNotInstalled, {
   CIE_ID_ANDROID_COLL_LINK,
   CIE_ID_ANDROID_LINK,

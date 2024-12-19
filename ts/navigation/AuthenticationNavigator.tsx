@@ -2,7 +2,6 @@ import {
   TransitionPresets,
   createStackNavigator
 } from "@react-navigation/stack";
-import * as React from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Platform } from "react-native";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";

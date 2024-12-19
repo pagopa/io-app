@@ -1,5 +1,5 @@
 import { IOAppMargin, WithTestID } from "@pagopa/io-app-design-system";
-import React, {
+import {
   JSXElementConstructor,
   ReactElement,
   Ref,

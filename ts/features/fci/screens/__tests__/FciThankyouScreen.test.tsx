@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore, Store } from "redux";
 import { fireEvent } from "@testing-library/react-native";

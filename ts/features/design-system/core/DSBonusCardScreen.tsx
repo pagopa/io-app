@@ -4,7 +4,6 @@ import {
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert } from "react-native";
 import { BonusCardScreenComponent } from "../../../components/BonusCard";
 import I18n from "../../../i18n";

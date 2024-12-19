@@ -13,7 +13,6 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import {
   DSAssetViewerBox,

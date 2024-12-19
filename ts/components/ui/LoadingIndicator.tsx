@@ -1,14 +1,11 @@
-import * as React from "react";
 import { LoadingSpinner } from "@pagopa/io-app-design-system";
+import { ComponentProps } from "react";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { useInteractiveElementDefaultColor } from "../../utils/hooks/theme";
 
 export type LoadingIndicator = WithTestID<
-  Exclude<
-    React.ComponentProps<typeof LoadingSpinner>,
-    "size" | "color" | "duration"
-  >
+  Exclude<ComponentProps<typeof LoadingSpinner>, "size" | "color" | "duration">
 >;
 
 export const LoadingIndicator = ({

@@ -8,7 +8,7 @@ import {
   IOPictograms,
   Pictogram
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { PureComponent } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
 import { CircularProgress } from "../ui/CircularProgress";
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CieCardReadingAnimation extends React.PureComponent<
+export default class CieCardReadingAnimation extends PureComponent<
   Props,
   State
 > {

@@ -1,5 +1,4 @@
 import { fireEvent } from "@testing-library/react-native";
-import React from "react";
 import { createStore } from "redux";
 import { openWebUrl } from "../../../../utils/url";
 import { ShareDataComponent } from "../ShareDataComponent";

@@ -8,7 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -22,7 +22,7 @@ import { isDevEnv } from "../../../utils/environment";
 
 const IdPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const [serviceId, setServiceId] = React.useState<string | undefined>();
+  const [serviceId, setServiceId] = useState<string | undefined>();
 
   const navigateToIDPayOnboarding = (serviceId: string) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {

@@ -8,7 +8,6 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TranslationKeys } from "../../../../locales/locales";
 import I18n from "../../../i18n";

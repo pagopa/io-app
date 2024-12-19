@@ -1,6 +1,5 @@
 import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
 import { ComponentProps } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";

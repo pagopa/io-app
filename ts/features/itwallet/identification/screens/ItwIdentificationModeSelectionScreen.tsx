@@ -4,7 +4,7 @@ import {
   ModuleNavigation,
   VStack
 } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";

@@ -3,7 +3,6 @@ import {
   createStackNavigator,
   StackNavigationProp
 } from "@react-navigation/stack";
-import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { WalletPaymentDetailScreen } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentFailureScreen } from "../screens/WalletPaymentFailureScreen";

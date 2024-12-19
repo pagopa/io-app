@@ -17,7 +17,7 @@ import {
   useSVG,
   vec
 } from "@shopify/react-native-skia";
-import { default as React, useState } from "react";
+import { useState } from "react";
 import {
   ColorValue,
   Image,

@@ -5,7 +5,6 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import React from "react";
+import { useCallback } from "react";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { isDebugModeEnabledSelector } from "../store/reducers/debug";
@@ -13,7 +13,7 @@ export const useDebugInfo = (data: Record<string, any>) => {
   const isDebug = useIOSelector(isDebugModeEnabledSelector);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       // Avoids storing debug data if debug is disabled
       if (!isDebug) {
         return undefined;

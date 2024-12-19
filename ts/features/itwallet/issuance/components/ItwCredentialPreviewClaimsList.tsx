@@ -1,5 +1,5 @@
 import { Divider } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { View } from "react-native";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
@@ -42,7 +42,7 @@ const ItwCredentialPreviewClaimsList = ({
   );
 };
 
-const MemoizedItwCredentialPreviewClaimsList = React.memo(
+const MemoizedItwCredentialPreviewClaimsList = memo(
   ItwCredentialPreviewClaimsList
 );
 

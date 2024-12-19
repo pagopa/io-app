@@ -6,7 +6,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
 import { Anno } from "../../../../../definitions/cdc/Anno";

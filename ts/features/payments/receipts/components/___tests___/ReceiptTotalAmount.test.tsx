@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import React from "react";
 import I18n from "../../../../../i18n";
 import { ReceiptTotalAmount } from "../ReceiptTotalAmount";
 import { formatAmountText } from "../../utils";

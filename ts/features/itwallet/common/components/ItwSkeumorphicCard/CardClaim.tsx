@@ -2,7 +2,8 @@ import { WithTestID } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import React from "react";
+
+import { ReactElement, ReactNode, memo, useMemo } from "react";
 import { Image, StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
@@ -63,7 +64,7 @@ const CardClaim = ({
   dateFormat = "DD/MM/YY",
   ...labelProps
 }: WithTestID<CardClaimProps>) => {
-  const claimContent = React.useMemo(
+  const claimContent = useMemo(
     () =>
       pipe(
         claim?.value,
@@ -119,7 +120,7 @@ export type CardClaimRendererProps<T> = {
   // Function that check that the proviced claim is of the correct type
   is: (value: unknown) => value is T;
   // Function that renders a component with the decoded provided claim
-  component: (decoded: T) => React.ReactElement | Iterable<React.ReactElement>;
+  component: (decoded: T) => ReactElement | Iterable<ReactElement>;
 };
 
 /**
@@ -144,7 +145,7 @@ const CardClaimRenderer = <T,>({
 export type CardClaimContainerProps = WithTestID<{
   position?: ClaimPosition;
   dimensions?: ClaimDimensions;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }>;
 
 /**
@@ -167,9 +168,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedCardClaim = React.memo(CardClaim) as typeof CardClaim;
+const MemoizedCardClaim = memo(CardClaim) as typeof CardClaim;
 
-const MemoizedCardClaimRenderer = React.memo(
+const MemoizedCardClaimRenderer = memo(
   CardClaimRenderer
 ) as typeof CardClaimRenderer;
 

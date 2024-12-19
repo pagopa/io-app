@@ -1,6 +1,5 @@
 import { Divider, IOStyles } from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
-import * as React from "react";
 import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
 import * as RemoteValue from "../../../../common/model/RemoteValue";
 import { FooterActions } from "../../../../components/ui/FooterActions";

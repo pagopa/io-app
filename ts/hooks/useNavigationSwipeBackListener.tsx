@@ -1,6 +1,6 @@
 import { EventListenerCallback } from "@react-navigation/native";
 import { StackNavigationEventMap } from "@react-navigation/stack/lib/typescript/src/types";
-import React from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 
 /**
@@ -23,9 +23,9 @@ import { useIONavigation } from "../navigation/params/AppParamsList";
  */
 export const useNavigationSwipeBackListener = (handler: () => void) => {
   const navigation = useIONavigation();
-  const [withGesture, setWithGesture] = React.useState(false);
+  const [withGesture, setWithGesture] = useState(false);
 
-  const handleTransitionEnd = React.useCallback<
+  const handleTransitionEnd = useCallback<
     EventListenerCallback<StackNavigationEventMap, "transitionEnd">
   >(
     ({ data }) => {
@@ -43,7 +43,7 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
     [handler]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     // `transitionEnd` event is triggered everytime there is a screen transition, even if not triggered by a gesture.
     //  We need to listen the `transitionEnd` event only after a gesture is started
     if (withGesture) {
@@ -54,14 +54,14 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
     return undefined;
   }, [navigation, withGesture, handleTransitionEnd]);
 
-  const handleGestureEnd = React.useCallback<
+  const handleGestureEnd = useCallback<
     EventListenerCallback<StackNavigationEventMap, "gestureEnd">
   >(() => {
     // Everytime the user ands a swipe gesture (any direction), we save it to the state by mutating `setWithGesture` to true
     setWithGesture(true);
   }, [setWithGesture]);
 
-  React.useEffect(
+  useEffect(
     () => navigation.addListener("gestureEnd", handleGestureEnd),
     [navigation, handleGestureEnd]
   );

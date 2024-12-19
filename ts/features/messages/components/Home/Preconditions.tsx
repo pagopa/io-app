@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Keyboard } from "react-native";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {

@@ -1,18 +1,14 @@
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as J from "fp-ts/lib/Json";
-import I18n from "../../../i18n";
+import * as O from "fp-ts/lib/Option";
+import { ReactElement, useEffect } from "react";
+import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { FciParamsList } from "../navigation/params";
-import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
-import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
-import SuccessComponent from "../components/SuccessComponent";
-import GenericErrorComponent from "../components/GenericErrorComponent";
 import { isFciEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import {
@@ -20,9 +16,13 @@ import {
   getErrorFromNetworkError,
   getGenericError
 } from "../../../utils/errors";
-import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
 import ErrorComponent from "../components/ErrorComponent";
+import GenericErrorComponent from "../components/GenericErrorComponent";
 import LoadingComponent from "../components/LoadingComponent";
+import SuccessComponent from "../components/SuccessComponent";
+import { FciParamsList } from "../navigation/params";
+import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
+import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -30,7 +30,7 @@ export type FciRouterScreenNavigationParams = Readonly<{
 
 const FciSignatureScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
-): React.ReactElement => {
+): ReactElement => {
   // TODO: add a check to validate signatureRequestId using io-ts
   // https://pagopa.atlassian.net/browse/SFEQS-1705?atlOrigin=eyJpIjoiOWY2NDA4YmQ0ZTQ0NGRjZTk5MGNlZDczZGIxMDllMmIiLCJwIjoiaiJ9
   const signatureRequestId = props.route.params.signatureRequestId;
@@ -39,7 +39,7 @@ const FciSignatureScreen = (
   const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
   const fciEnabled = isTestEnv || fciEnabledSelector;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (fciEnabled) {
       dispatch(fciSignatureRequestFromId.request(signatureRequestId));
     }

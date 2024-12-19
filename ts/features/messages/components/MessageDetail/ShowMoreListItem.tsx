@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { View } from "react-native";
 import {
   Divider,
@@ -34,13 +34,13 @@ export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
       component: (
         <>
           {sections.map((section, sectionIndex) => (
-            <React.Fragment key={`SMLI_F${sectionIndex}`}>
+            <Fragment key={`SMLI_F${sectionIndex}`}>
               <ListItemHeader
                 key={`SMLI_S${sectionIndex}`}
                 label={section.title}
               />
               {section.items.map((item, itemIndex, items) => (
-                <React.Fragment key={`SMLI_F${sectionIndex}_F${itemIndex}`}>
+                <Fragment key={`SMLI_F${sectionIndex}_F${itemIndex}`}>
                   <ListItemInfoCopy
                     key={`SMLI_F${sectionIndex}_I${itemIndex}`}
                     accessibilityLabel={item.accessibilityLabel}
@@ -56,9 +56,9 @@ export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
                   {itemIndex < items.length - 1 && (
                     <Divider key={`SMLI_F${sectionIndex}_D${itemIndex}`} />
                   )}
-                </React.Fragment>
+                </Fragment>
               ))}
-            </React.Fragment>
+            </Fragment>
           ))}
         </>
       ),

@@ -5,7 +5,7 @@ import {
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import { useEffect, useCallback, Fragment } from "react";
 import { View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
@@ -55,7 +55,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       pot.isSome(latestTransactionsPot) &&
       !pot.isLoading(latestTransactionsPot)
@@ -66,7 +66,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     }
   }, [dispatch, latestTransactionsPot]);
 
-  const handleNavigateToTransactionDetails = React.useCallback(
+  const handleNavigateToTransactionDetails = useCallback(
     ({ eventId, isPayer }: NoticeListItem) => {
       if (eventId === undefined) {
         return;
@@ -100,7 +100,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
           {latestTransactionsPot.value.map((latestTransaction, index) => (
-            <React.Fragment key={`transaction_${latestTransaction.eventId}`}>
+            <Fragment key={`transaction_${latestTransaction.eventId}`}>
               <ReceiptListItemTransaction
                 key={`transaction_${latestTransaction.eventId}`}
                 onPress={() =>
@@ -109,7 +109,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
                 transaction={latestTransaction}
               />
               {index < latestTransactionsPot.value.length - 1 && <Divider />}
-            </React.Fragment>
+            </Fragment>
           ))}
         </View>
       );

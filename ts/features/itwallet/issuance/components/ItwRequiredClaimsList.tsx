@@ -8,7 +8,6 @@ import {
 import * as E from "fp-ts/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as O from "fp-ts/Option";
 import I18n from "../../../../i18n";

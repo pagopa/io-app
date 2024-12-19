@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
+import { useState, useCallback, useEffect } from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { selectPaymentOnboardingRequestResult } from "../store/selectors";
@@ -40,11 +40,11 @@ export const useWalletOnboardingWebView = ({
   const onboardingUrlPot = useIOSelector(selectPaymentOnboardingRequestResult);
 
   const [isPendingOnboarding, setIsPendingOnboarding] =
-    React.useState<boolean>(false);
+    useState<boolean>(false);
   const isLoading = pot.isLoading(onboardingUrlPot);
   const isError = pot.isError(onboardingUrlPot);
 
-  const handleOnboardingResult = React.useCallback(
+  const handleOnboardingResult = useCallback(
     (resultUrl: string) => {
       const url = new URLParse(resultUrl, true);
 
@@ -59,7 +59,7 @@ export const useWalletOnboardingWebView = ({
     [onOnboardingOutcome]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPendingOnboarding) {
       return;
     }
@@ -94,7 +94,7 @@ export const useWalletOnboardingWebView = ({
     dispatch
   ]);
 
-  React.useEffect(
+  useEffect(
     () => () => {
       setIsPendingOnboarding(false);
       dispatch(paymentsStartOnboardingAction.cancel());

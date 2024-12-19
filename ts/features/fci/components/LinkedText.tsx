@@ -1,6 +1,6 @@
 import { Body, H4, H6, WithTestID } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import { Fragment } from "react";
 
 type Props = WithTestID<{
   text: string;
@@ -90,10 +90,10 @@ const LinkedText = (props: Props) => {
     <H4>
       {textWithSeparator.split("$@").map((text, index) =>
         O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             <H6>{text}</H6>
             {arrayOfLinkedText[index]}
-          </React.Fragment>
+          </Fragment>
         ) : (
           <H6 key={index}>{text}</H6>
         )

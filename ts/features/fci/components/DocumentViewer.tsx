@@ -7,7 +7,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
-import React, { useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
@@ -104,14 +105,14 @@ type Props = {
   onError: () => void;
 };
 
-export const DocumentViewer = (props: Props): React.ReactElement => {
+export const DocumentViewer = (props: Props): ReactElement => {
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
   const dispatch = useIODispatch();
   const fciDownloadSelector = useIOSelector(fciDownloadPreviewSelector);
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fciDownloadPreview.request({ url: documentUrl }));
   }, [documentUrl, dispatch]);
 

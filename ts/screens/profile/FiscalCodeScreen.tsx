@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";

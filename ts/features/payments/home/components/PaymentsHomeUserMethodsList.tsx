@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import { createRef, useMemo, useEffect, useCallback } from "react";
 import { View } from "react-native";
 import * as analytics from "../analytics";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -37,7 +37,7 @@ type Props = {
 const PAYMENTS_HOME_USER_METHODS_BACKOFF = "PAYMENTS_HOME_USER_METHODS_BACKOFF";
 
 const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
-  const bannerRef = React.createRef<View>();
+  const bannerRef = createRef<View>();
 
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
@@ -51,7 +51,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const { canRetryRequest } = usePaymentsBackoffRetry(
     PAYMENTS_HOME_USER_METHODS_BACKOFF
   );
-  const isError = React.useMemo(
+  const isError = useMemo(
     () => pot.isError(paymentMethodsPot) && !pot.isSome(paymentMethodsPot),
     [paymentMethodsPot]
   );
@@ -67,7 +67,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pot.isSome(paymentMethodsPot) && !pot.isLoading(paymentMethodsPot)) {
       dispatch(clearPaymentsBackoffRetry(PAYMENTS_HOME_USER_METHODS_BACKOFF));
     }
@@ -98,7 +98,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     });
   };
 
-  const handleOnRetry = React.useCallback(() => {
+  const handleOnRetry = useCallback(() => {
     if (canRetryRequest()) {
       dispatch(getPaymentsWalletUserMethods.request());
     }
@@ -111,7 +111,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     })
   );
 
-  const PaymentCardsCarouselContent = React.useMemo(
+  const PaymentCardsCarouselContent = useMemo(
     () =>
       isError ? (
         <BannerErrorState

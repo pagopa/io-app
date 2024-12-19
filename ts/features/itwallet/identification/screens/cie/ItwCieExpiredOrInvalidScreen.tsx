@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../../i18n";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -13,7 +13,7 @@ export const ItwCieExpiredOrInvalidScreen = () => {
 
   useFocusEffect(trackItWalletCieCardVerifyFailure);
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     machineRef.send({ type: "close" });
   }, [machineRef]);
 

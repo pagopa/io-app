@@ -1,5 +1,5 @@
-import * as React from "react";
 import type { IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { ComponentProps, PropsWithChildren, PureComponent } from "react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
@@ -31,19 +31,16 @@ type BaseScreenComponentProps =
   | "hideSafeArea";
 
 type Props = OwnProps &
-  Pick<
-    React.ComponentProps<typeof BaseScreenComponent>,
-    BaseScreenComponentProps
-  >;
+  Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
 
-export type TopScreenComponentProps = React.PropsWithChildren<Props>;
+export type TopScreenComponentProps = PropsWithChildren<Props>;
 
 /**
  * It wraps a `BaseScreenComponent` with a title and an optional subtitle
  * @deprecated This component wraps the `BaseScreenComponent` component, which is marked as deprecated.
  * Please read the `BaseScreenComponent` deprecation note to understand how to replace it.
  */
-class TopScreenComponent extends React.PureComponent<TopScreenComponentProps> {
+class TopScreenComponent extends PureComponent<TopScreenComponentProps> {
   public render() {
     const {
       dark,

@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import { FeatureInfo, H4, VSpacer } from "@pagopa/io-app-design-system";
 import {

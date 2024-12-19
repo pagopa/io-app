@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import NotificationWhiteBg from "../../../../img/onboarding/notification_white.png";
 import { NotificationPreviewSample } from "./NotificationPreviewSample";

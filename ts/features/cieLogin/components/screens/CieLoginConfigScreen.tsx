@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { ContentWrapper, OTPInput } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -23,8 +23,8 @@ const PinView = (props: PinViewProps) => (
 );
 
 const CieLoginConfigScreen = () => {
-  const [locked, setLocked] = React.useState(true);
-  const [pin, setPin] = React.useState("");
+  const [locked, setLocked] = useState(true);
+  const [pin, setPin] = useState("");
 
   // constant day containig the current day in the format YYMMDD
   useEffect(() => {

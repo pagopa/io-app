@@ -5,7 +5,7 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

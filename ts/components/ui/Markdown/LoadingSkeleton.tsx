@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
@@ -36,7 +36,7 @@ export const LoadingSkeleton = ({
       accessibilityElementsHidden={true}
     >
       {[...Array(lines)].map((_, i) => (
-        <React.Fragment key={`MD_SK_RF_${i}`}>
+        <Fragment key={`MD_SK_RF_${i}`}>
           <Placeholder.Box
             width={skeletonLineWidths[i % skeletonLineWidths.length]}
             animate={"fade"}
@@ -46,7 +46,7 @@ export const LoadingSkeleton = ({
             key={`MD_SK_PB_${i}`}
           />
           {i + 1 < lines && <VSpacer size={8} key={`MD_SK_VS_${i}`} />}
-        </React.Fragment>
+        </Fragment>
       ))}
     </View>
   </View>

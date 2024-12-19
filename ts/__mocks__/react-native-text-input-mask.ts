@@ -1,9 +1,9 @@
 /**
  * Mocked version of TextInputMask
  */
-import React from "react";
+import { Component } from "react";
 
-class TextInputMask extends React.Component {
+class TextInputMask extends Component {
   public render() {
     return null;
   }

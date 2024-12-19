@@ -17,7 +17,7 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import React from "react";
+import { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
@@ -59,7 +59,7 @@ export const InitiativeConfigurationIntroScreen = () => {
   );
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (!!initiativeId && !!mode) {
         machine.send({
           type: "start-configuration",

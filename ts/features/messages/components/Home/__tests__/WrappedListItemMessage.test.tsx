@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";

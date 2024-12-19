@@ -1,5 +1,5 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
-import React, { createRef } from "react";
+import { useCallback, createRef } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -26,7 +26,7 @@ export const SettingsDiscoveryBanner = ({
       screen: ROUTES.SETTINGS_MAIN
     });
   };
-  const closeHandler = React.useCallback(() => {
+  const closeHandler = useCallback(() => {
     dispatch(setHasUserAcknowledgedSettingsBanner(true));
     handleOnClose();
   }, [dispatch, handleOnClose]);

@@ -1,11 +1,11 @@
-import * as React from "react";
-import { Text } from "react-native";
 import { render } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
+import { ReactNode } from "react";
+import { Text } from "react-native";
 import { Provider } from "react-redux";
-import { appReducer } from "../../store/reducers";
+import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../store/actions/persistedPreferences";
+import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import LoadingSpinnerOverlay from "../LoadingSpinnerOverlay";
 
@@ -50,7 +50,7 @@ describe("LoadingSpinnerOverlay", () => {
 
 const renderComponent = (
   isLoading: boolean,
-  children?: React.ReactNode,
+  children?: ReactNode,
   loadingCaption?: string,
   loadingOpacity?: number,
   onCancel?: () => void

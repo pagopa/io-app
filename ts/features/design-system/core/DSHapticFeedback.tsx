@@ -4,7 +4,6 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";

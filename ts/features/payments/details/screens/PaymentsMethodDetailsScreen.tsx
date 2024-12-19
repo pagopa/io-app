@@ -1,7 +1,7 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as React from "react";
+import { useEffect } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { capitalize } from "../../../../utils/strings";
@@ -44,7 +44,7 @@ const PaymentsMethodDetailsScreen = () => {
     pot.isUpdating(walletDetailsPot) ||
     areIdpayInitiativesLoading;
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
     if (isIdpayEnabled) {
       dispatch(

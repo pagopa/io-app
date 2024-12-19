@@ -1,5 +1,4 @@
 import { Divider, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
-import * as React from "react";
 
 import { Alert } from "react-native";
 import ListItemComponent from "../../../components/screens/ListItemComponent";

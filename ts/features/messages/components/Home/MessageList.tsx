@@ -1,5 +1,5 @@
 import { Divider, IOColors } from "@pagopa/io-app-design-system";
-import React, { useCallback, useMemo } from "react";
+import { forwardRef, useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import {
   useSafeAreaFrame,
@@ -47,7 +47,7 @@ type MessageListProps = {
 const topBarHeight = 108;
 const bottomTabHeight = 54;
 
-export const MessageList = React.forwardRef<FlatList, MessageListProps>(
+export const MessageList = forwardRef<FlatList, MessageListProps>(
   ({ category }: MessageListProps, ref) => {
     const store = useIOStore();
     const dispatch = useIODispatch();

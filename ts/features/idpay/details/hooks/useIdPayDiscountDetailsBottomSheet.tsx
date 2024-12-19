@@ -1,6 +1,5 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
 import {
   AppParamsList,
   IOStackNavigationProp

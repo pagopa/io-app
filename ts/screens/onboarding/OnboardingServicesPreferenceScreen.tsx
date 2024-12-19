@@ -6,7 +6,7 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";

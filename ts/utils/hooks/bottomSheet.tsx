@@ -12,8 +12,16 @@ import {
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
-import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
+
+import {
+  FunctionComponent,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import {
   AccessibilityInfo,
   Dimensions,
@@ -34,8 +42,8 @@ import { isIos } from "../platform";
 const screenHeight = Dimensions.get("window").height;
 
 type Props = {
-  children: React.ReactNode;
-  footer?: React.ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
 } & TestID;
 
 const styles = StyleSheet.create({
@@ -51,7 +59,7 @@ const styles = StyleSheet.create({
 /**
  * Build the base content of a BottomSheet including content padding and a ScrollView
  */
-const BottomSheetContent: React.FunctionComponent<Props> = ({
+const BottomSheetContent: FunctionComponent<Props> = ({
   children,
   testID
 }: Props) => (
@@ -67,9 +75,9 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
 );
 
 export type BottomSheetModalProps = {
-  content: React.ReactNode;
+  content: ReactNode;
   config: {
-    handleComponent: React.ReactElement;
+    handleComponent: ReactElement;
   };
 };
 
@@ -88,13 +96,13 @@ export type IOBottomSheetModal = {
  * @param onClose
  */
 export const bottomSheetContent = (
-  content: React.ReactNode,
-  title: string | React.ReactNode,
+  content: ReactNode,
+  title: string | ReactNode,
   onClose: () => void
 ): BottomSheetModalProps => {
   const header = <BottomSheetHeader title={title} onClose={onClose} />;
 
-  const bottomSheetBody: React.ReactNode = (
+  const bottomSheetBody: ReactNode = (
     <BottomSheetContent>{content}</BottomSheetContent>
   );
 
@@ -109,17 +117,17 @@ export const bottomSheetContent = (
 /**
  * @typedef BottomSheetOptions
  * @type {BottomSheetOptions}
- * @property {component} component The React.Element to be rendered inside the bottom sheet body
- * @property {title} title String or React.Element to be rendered as bottom-sheet header title
- * @property {footer} footer React.Element or undefined to be rendered as sticky footer of our bottom sheet
+ * @property {component} component The Element to be rendered inside the bottom sheet body
+ * @property {title} title String or Element to be rendered as bottom-sheet header title
+ * @property {footer} footer Element or undefined to be rendered as sticky footer of our bottom sheet
  * @property {snapPoint} snapPoint The array of points used to pin the height of the bottom sheet
  * @property {onDismiss} onDismiss The possible function to be used as an effect of the dismissal of the bottom sheet
  */
 type BottomSheetOptions = {
-  component: React.ReactNode;
-  title: string | React.ReactNode;
+  component: ReactNode;
+  title: string | ReactNode;
   snapPoint: NonEmptyArray<number | string>;
-  footer?: React.ReactElement;
+  footer?: ReactElement;
   fullScreen?: boolean;
   onDismiss?: () => void;
 };
@@ -138,7 +146,7 @@ export const useIOBottomSheetModal = ({
 }: Omit<BottomSheetOptions, "fullScreen">): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
   const { dismissAll } = useBottomSheetModal();
-  const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
@@ -246,12 +254,12 @@ export const useIOBottomSheetAutoresizableModal = (
   // We should find a way to make the autoresizable bottom sheet work with the footer!
   bottomPadding: number = DEFAULT_BOTTOM_PADDING
 ) => {
-  const [snapPoint, setSnapPoint] = React.useState<number>(
+  const [snapPoint, setSnapPoint] = useState<number>(
     DEFAULT_AUTORESIZABLE_SNAP_POINT
   );
   const insets = useSafeAreaInsets();
 
-  const handleContentOnLayout = React.useCallback(
+  const handleContentOnLayout = useCallback(
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
       const snapPoint = insets.bottom + bottomPadding + height;
@@ -288,10 +296,10 @@ export const useIOBottomSheetAutoresizableModal = (
  * TODO remove once all the occurencies of `useLegacyIOBottomSheetModal` will be replaced by `useIOBottomSheetModal`
  */
 export const useLegacyIOBottomSheetModal = (
-  component: React.ReactNode,
-  title: string | React.ReactNode,
+  component: ReactNode,
+  title: string | ReactNode,
   snapPoint: number,
-  footer?: React.ReactElement,
+  footer?: ReactElement,
   onDismiss?: () => void
 ): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();

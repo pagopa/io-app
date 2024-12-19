@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import I18n from "../../../../../i18n";
 import { cgnActivationCancel } from "../../store/actions/activation";
 import { useIODispatch } from "../../../../../store/hooks";
@@ -10,10 +10,7 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
  */
 const CgnActivationPendingScreen = () => {
   const dispatch = useIODispatch();
-  const onExit = React.useCallback(
-    () => dispatch(cgnActivationCancel()),
-    [dispatch]
-  );
+  const onExit = useCallback(() => dispatch(cgnActivationCancel()), [dispatch]);
 
   return (
     <OperationResultScreenContent

@@ -2,7 +2,7 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation

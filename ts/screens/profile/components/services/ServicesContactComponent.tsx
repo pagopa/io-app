@@ -1,5 +1,5 @@
 import { BodySmall, RadioGroup } from "@pagopa/io-app-design-system";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../../../i18n";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";

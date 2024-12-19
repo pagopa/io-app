@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore, Store } from "redux";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";

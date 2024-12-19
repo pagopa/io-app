@@ -1,4 +1,3 @@
-import React from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { RouteProp, useRoute } from "@react-navigation/native";

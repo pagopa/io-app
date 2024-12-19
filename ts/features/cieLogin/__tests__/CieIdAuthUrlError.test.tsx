@@ -1,4 +1,3 @@
-import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import i18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";

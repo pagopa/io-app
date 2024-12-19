@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import { createRef, PureComponent, Fragment } from "react";
 import {
   ActivityIndicator,
   AppState,
@@ -208,8 +208,8 @@ type State = {
 /**
  * A component to render the message markdown as HTML inside a WebView
  */
-class LegacyMarkdown extends React.PureComponent<Props, State> {
-  private webViewRef = React.createRef<WebView>();
+class LegacyMarkdown extends PureComponent<Props, State> {
+  private webViewRef = createRef<WebView>();
   private subscription: NativeEventSubscription | undefined;
 
   constructor(props: Props) {
@@ -294,7 +294,7 @@ class LegacyMarkdown extends React.PureComponent<Props, State> {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         {this.state.isLoading && (
           <ActivityIndicator
             testID={this.props.testID}
@@ -333,7 +333,7 @@ class LegacyMarkdown extends React.PureComponent<Props, State> {
             </View>
           </ScrollView>
         )}
-      </React.Fragment>
+      </Fragment>
     );
   }
 

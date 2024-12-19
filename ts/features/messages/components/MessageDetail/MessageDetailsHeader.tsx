@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 import { Divider, H3, BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";

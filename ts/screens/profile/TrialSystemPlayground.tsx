@@ -5,7 +5,6 @@ import {
   H3,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useEffect } from "react";
 import { constNull } from "fp-ts/lib/function";

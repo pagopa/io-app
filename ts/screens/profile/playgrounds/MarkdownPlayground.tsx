@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback } from "react";
+import { useState, useCallback } from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
 import I18n from "../../../i18n";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
@@ -88,8 +88,8 @@ Ordered list:
 `;
 
 const MarkdownPlayground = () => {
-  const [markdownText, setMarkdownText] = React.useState("");
-  const [inputText, setInputText] = React.useState("");
+  const [markdownText, setMarkdownText] = useState("");
+  const [inputText, setInputText] = useState("");
 
   const setMarkdown = (markdownString: string) => {
     setMarkdownText(markdownString);

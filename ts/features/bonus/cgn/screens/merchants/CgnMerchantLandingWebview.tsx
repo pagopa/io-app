@@ -1,10 +1,11 @@
 import { Route, useRoute } from "@react-navigation/core";
-import * as React from "react";
+
+import { FunctionComponent } from "react";
 import { SafeAreaView } from "react-native";
-import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import WebviewComponent from "../../../../../components/WebviewComponent";
+import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { CgnDetailsParamsList } from "../../navigation/params";
 
@@ -20,9 +21,7 @@ type Props = {
   >;
 };
 
-const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+const CgnMerchantLandingWebview: FunctionComponent<Props> = (props: Props) => {
   const route =
     useRoute<
       Route<

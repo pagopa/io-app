@@ -5,7 +5,8 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, {
+import {
+  useContext,
   createRef,
   useCallback,
   useEffect,
@@ -53,7 +54,7 @@ const LanguagesPreferencesScreen = () => {
   const toast = useIOToast();
   const selectedLanguage = useRef<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
-  const { showModal } = React.useContext(LightModalContext);
+  const { showModal } = useContext(LightModalContext);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const bannerInfoSelector = useIOSelector(

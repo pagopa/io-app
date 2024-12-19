@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore } from "redux";
 import { render } from "@testing-library/react-native";
 import I18n from "../../../../i18n";

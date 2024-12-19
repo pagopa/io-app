@@ -7,7 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
+import { useState } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   RadioButtonList,
@@ -43,7 +43,7 @@ const CdcBonusRequestSelectResidence = () => {
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
   const dispatch = useIODispatch();
-  const [isResidentInItaly, setIsResidentInItaly] = React.useState<
+  const [isResidentInItaly, setIsResidentInItaly] = useState<
     Record<string, ResidentChoice>
   >({});
   const cdcSelectedBonus = useIOSelector(cdcSelectedBonusSelector);

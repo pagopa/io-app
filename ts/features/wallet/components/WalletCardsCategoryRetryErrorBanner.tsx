@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
 import { View } from "react-native";
 import { BannerErrorState } from "../../../components/ui/BannerErrorState";
 import I18n from "../../../i18n";

@@ -1,6 +1,6 @@
 import { BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../../../i18n";
 import { ProgressBar } from "../../../../common/components/ProgressBar";
@@ -16,9 +16,9 @@ export const CgnDiscountExpireProgressBar = ({
   secondsExpirationTotal,
   setIsExpired
 }: Props) => {
-  const [seconds, setSeconds] = React.useState(secondsToExpiration);
+  const [seconds, setSeconds] = useState(secondsToExpiration);
   const isCodeExpired = seconds <= 0;
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       setSeconds(currentSecs => currentSecs - 1);
     }, 1000);

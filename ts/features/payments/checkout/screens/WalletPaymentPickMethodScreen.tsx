@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useState, useCallback, useEffect } from "react";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -67,10 +67,10 @@ const WalletPaymentPickMethodScreen = () => {
     walletPaymentSelectedPaymentMethodIdOptionSelector
   );
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
-    React.useState(false);
+    useState(false);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(
         paymentsGetPaymentMethodsAction.request({
           amount: pot.toUndefined(pot.map(paymentDetailsPot, el => el.amount))
@@ -83,7 +83,7 @@ const WalletPaymentPickMethodScreen = () => {
     dispatch(paymentsGetRecentPaymentMethodUsedAction.request());
   });
 
-  const calculateFeesForSelectedPaymentMethod = React.useCallback(() => {
+  const calculateFeesForSelectedPaymentMethod = useCallback(() => {
     pipe(
       sequenceT(O.Monad)(
         pot.toOption(paymentAmountPot),
@@ -158,7 +158,7 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isError(userWalletsPots) ||
     pot.isError(pspListPot);
 
-  const getFirstPotError = React.useCallback(() => {
+  const getFirstPotError = useCallback(() => {
     if (pot.isError(transactionPot)) {
       return transactionPot.error;
     }
@@ -197,7 +197,7 @@ const WalletPaymentPickMethodScreen = () => {
     () => !isLoading && !!paymentAnalyticsData
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isError) {
       const error = getFirstPotError();
       navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {

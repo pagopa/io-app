@@ -1,4 +1,4 @@
-import React from "react";
+import { ReactNode } from "react";
 import { ViewStyle } from "react-native";
 import Animated, {
   AnimateStyle,
@@ -14,7 +14,7 @@ type Props = {
   springConfig?: WithSpringConfig;
   delayOut?: number;
   delayIn?: number;
-  children: React.ReactNode;
+  children: ReactNode;
   style?: ViewStyle;
 };
 

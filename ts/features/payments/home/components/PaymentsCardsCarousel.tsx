@@ -3,7 +3,6 @@ import {
   IOSpacingScale,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { FlatListProps, StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { WithTestID } from "../../../../types/WithTestID";

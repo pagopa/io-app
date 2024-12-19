@@ -1,5 +1,6 @@
 import { IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { FC, useState } from "react";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
@@ -12,9 +13,9 @@ type Props = { paymentMethod: WalletInfo };
  * Represent the capability to pay in PagoPa of a payment method.
  * @param props
  */
-const WalletDetailsPagoPaPaymentCapability: React.FC<Props> = props => {
+const WalletDetailsPagoPaPaymentCapability: FC<Props> = props => {
   const dispatch = useIODispatch();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSwitchSuccess = () => {
     setLoading(false);

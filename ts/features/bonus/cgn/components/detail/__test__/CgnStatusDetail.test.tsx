@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import * as React from "react";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import I18n from "../../../../../../i18n";

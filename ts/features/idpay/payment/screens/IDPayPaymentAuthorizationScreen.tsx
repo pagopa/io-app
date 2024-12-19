@@ -12,7 +12,7 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { useEffect } from "react";
 import { SafeAreaView, View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -51,7 +51,7 @@ const IDPayPaymentAuthorizationScreen = () => {
   const machine = useActorRef();
   const dispatch = useIODispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     pipe(
       params.trxCode,
       O.fromNullable,

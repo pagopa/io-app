@@ -4,7 +4,6 @@ import {
   ListItemTransactionLogo,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum

@@ -7,7 +7,6 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
