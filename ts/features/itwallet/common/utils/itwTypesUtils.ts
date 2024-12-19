@@ -54,6 +54,12 @@ export type WalletInstanceStatus = Awaited<
   ReturnType<typeof WalletInstance.getWalletInstanceStatus>
 >;
 
+/**
+ * Alias for the WalletInstanceRevocationReason type
+ */
+export type WalletInstanceRevocationReason =
+  WalletInstanceStatus["revocation_reason"];
+
 export type StoredStatusAttestation =
   | {
       credentialStatus: "valid";

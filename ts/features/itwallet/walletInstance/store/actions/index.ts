@@ -14,7 +14,7 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
  */
 export const itwUpdateWalletInstanceStatus = createStandardAction(
   "ITW_WALLET_INSTANCE_STATUS_UPDATE"
-)<WalletInstanceStatus | FailureStatus>();
+)<WalletInstanceStatus | FailureStatus | undefined>();
 
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>

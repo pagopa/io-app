@@ -30,6 +30,7 @@ import {
 } from "../store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../itwallet/walletInstance/store/reducers";
 import { WalletCardCategoryFilter } from "../types";
+import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -52,6 +53,8 @@ const WalletCardsContainer = () => {
   const isWalletInstanceStatusFailure = useIOSelector(
     itwIsWalletInstanceStatusFailureSelector
   );
+
+  useItwWalletInstanceRevocationAlert();
 
   // Loading state is only displayed if there is the initial loading and there are no cards or
   // placeholders in the wallet

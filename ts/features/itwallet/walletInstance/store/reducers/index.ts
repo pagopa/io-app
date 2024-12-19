@@ -1,16 +1,11 @@
-import * as O from "fp-ts/lib/Option";
-import { flow } from "fp-ts/lib/function";
 import { PersistConfig, persistReducer } from "redux-persist";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
-import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
-  itwUpdateWalletInstanceStatus,
-  itwWalletInstanceAttestationStore
+  itwWalletInstanceAttestationStore,
+  itwUpdateWalletInstanceStatus
 } from "../actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
 
@@ -36,16 +31,17 @@ const reducer = (
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
-        ...state,
+        status: undefined,
         attestation: action.payload
       };
     }
 
-    case getType(itwUpdateWalletInstanceStatus):
+    case getType(itwUpdateWalletInstanceStatus): {
       return {
         ...state,
         status: action.payload
       };
+    }
 
     case getType(itwLifecycleStoresReset):
       return { ...itwWalletInstanceInitialState };
@@ -65,24 +61,5 @@ const persistedReducer = persistReducer(
   itwWalletInstancePersistConfig,
   reducer
 );
-
-export const itwWalletInstanceAttestationSelector = (state: GlobalState) =>
-  state.features.itWallet.walletInstance.attestation;
-
-export const itwIsWalletInstanceAttestationValidSelector = createSelector(
-  itwWalletInstanceAttestationSelector,
-  flow(
-    O.fromNullable,
-    O.map(isWalletInstanceAttestationValid),
-    O.getOrElse(() => false)
-  )
-);
-
-/**
- * Returns true when it was not possible to retrieve the wallet instance status,
- * for instance because of unexpected errors.
- */
-export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
-  state.features.itWallet.walletInstance.status === FAILURE_STATUS;
 
 export default persistedReducer;
