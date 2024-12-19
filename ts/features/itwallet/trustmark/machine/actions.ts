@@ -1,3 +1,4 @@
+import { useIOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { AnyEventObject, assign } from "xstate";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -6,15 +7,17 @@ import { useIOStore } from "../../../../store/hooks";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
 import { Context } from "./context";
+import { TrustmarkEvents } from "./events";
 
 export const createItwTrustmarkActionsImplementation = (
   store: ReturnType<typeof useIOStore>,
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  toast: ReturnType<typeof useIOToast>
 ) => {
   /**
    * Initializes the trustmark machine
    */
-  const onInit = assign<Context, AnyEventObject, unknown, { type: "" }, any>(
+  const onInit = assign<Context, AnyEventObject, unknown, TrustmarkEvents, any>(
     ({ context }) => ({
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(
         store.getState()
@@ -33,5 +36,9 @@ export const createItwTrustmarkActionsImplementation = (
     navigation.pop();
   };
 
-  return { onInit, handleSessionExpired };
+  const showFailureToast = () => {
+    toast.error("Errore");
+  };
+
+  return { onInit, handleSessionExpired, showFailureToast };
 };
