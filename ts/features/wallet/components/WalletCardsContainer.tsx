@@ -7,7 +7,7 @@ import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
   ItwEidInfoBottomSheetContent,
@@ -32,8 +32,6 @@ import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
-
-const EID_INFO_BOTTOM_PADDING = 128;
 
 /**
  * A component which renders the wallet cards container
@@ -103,14 +101,11 @@ const ItwWalletCardsContainer = () => {
 
   const isEidExpired = eidStatus === "jwtExpired";
 
-  const eidInfoBottomSheet = useIOBottomSheetAutoresizableModal(
-    {
-      title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-      // Navigation does not seem to work when the bottom sheet's component is not inline
-      component: <ItwEidInfoBottomSheetContent navigation={navigation} />
-    },
-    EID_INFO_BOTTOM_PADDING
-  );
+  const eidInfoBottomSheet = useIOBottomSheetModal({
+    title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
+    // Navigation does not seem to work when the bottom sheet's component is not inline
+    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
+  });
 
   useFocusEffect(
     React.useCallback(

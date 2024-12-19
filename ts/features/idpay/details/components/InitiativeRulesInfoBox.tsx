@@ -14,7 +14,7 @@ import Placeholder from "rn-placeholder";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 type Props = {
   content: string;
@@ -23,29 +23,24 @@ type Props = {
 const InitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      component: <LegacyMarkdown>{content}</LegacyMarkdown>,
-      title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
-      footer: (
-        <ContentWrapper>
-          <VSpacer size={24} />
-          <ButtonSolid
-            label={I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            )}
-            onPress={() => dismiss()}
-            accessibilityLabel={I18n.t(
-              "idpay.initiative.beneficiaryDetails.infoModal.button"
-            )}
-            fullWidth={true}
-          />
-          <VSpacer size={24} />
-        </ContentWrapper>
-      )
-    },
-    170
-  );
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    component: <LegacyMarkdown>{content}</LegacyMarkdown>,
+    title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
+    footer: (
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <ButtonSolid
+          label={I18n.t("idpay.initiative.beneficiaryDetails.infoModal.button")}
+          onPress={() => dismiss()}
+          accessibilityLabel={I18n.t(
+            "idpay.initiative.beneficiaryDetails.infoModal.button"
+          )}
+          fullWidth={true}
+        />
+        <VSpacer size={24} />
+      </ContentWrapper>
+    )
+  });
 
   return (
     <>
