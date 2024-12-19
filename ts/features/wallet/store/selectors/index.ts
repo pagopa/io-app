@@ -14,13 +14,11 @@ import {
 } from "../../types";
 import { WalletCardCategoryFilter } from "../../types/index";
 
-const selectWalletFeature = (state: GlobalState) => state.features.wallet;
-
 /**
  * Returns the list of cards excluding hidden cards
  */
 export const selectWalletCards = createSelector(
-  selectWalletFeature,
+  (state: GlobalState) => state.features.wallet,
   ({ cards }) => Object.values(cards).filter(({ hidden }) => !hidden)
 );
 
@@ -64,22 +62,6 @@ export const selectSortedWalletCards = createSelector(
 );
 
 /**
- * Only gets cards which are part of the IT Wallet
- */
-export const selectWalletItwCards = createSelector(
-  selectSortedWalletCards,
-  cards => cards.filter(({ category }) => category === "itw")
-);
-
-/**
- * Only gets cards which are not part of the IT Wallet
- */
-export const selectWalletOtherCards = createSelector(
-  selectSortedWalletCards,
-  cards => cards.filter(({ category }) => category !== "itw")
-);
-
-/**
  * Selects the cards by their category
  * @param category - The category of the cards to select
  */
@@ -101,16 +83,25 @@ export const selectWalletCardsByType = createSelector(
 );
 
 /**
+ * Currently, if a card is not part of the IT Wallet, it is considered as "other"
+ * This selector returns the cards which are not part of the IT Wallet which must be displayed in the "other" section
+ */
+export const selectWalletOtherCards = createSelector(
+  selectSortedWalletCards,
+  cards => cards.filter(({ category }) => category !== "itw")
+);
+
+/**
  * Selects the loading state of the wallet cards
  */
-export const selectIsWalletCardsLoading = (state: GlobalState) =>
+export const selectIsWalletLoading = (state: GlobalState) =>
   state.features.wallet.placeholders.isLoading;
 
 /**
  * Selects the placeholders from the wallet
  */
-export const selectWalletPlaceholders = createSelector(
-  selectWalletFeature,
+export const selectWalletPlaceholderCards = createSelector(
+  (state: GlobalState) => state.features.wallet,
   wallet =>
     Object.entries(wallet.placeholders.items).map(
       ([key, category]) =>
@@ -120,8 +111,9 @@ export const selectWalletPlaceholders = createSelector(
 
 /**
  * Gets if the wallet can be considered empty.
- * The wallet is empty if there are no categories to display
- * @see selectWalletCategories
+ * The wallet is empty if there are no categories to display (@see selectWalletCategories)
+ *
+ * Note: we check categories because if ITW is valid, it is considered as one category even if there are no cards
  */
 export const isWalletEmptySelector = (state: GlobalState) =>
   selectWalletCategories(state).size === 0;

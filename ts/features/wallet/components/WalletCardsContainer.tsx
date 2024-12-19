@@ -21,9 +21,9 @@ import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/stor
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import {
   isWalletEmptySelector,
-  selectIsWalletCardsLoading,
+  selectIsWalletLoading,
+  selectWalletCardsByCategory,
   selectWalletCategories,
-  selectWalletItwCards,
   selectWalletOtherCards,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
@@ -41,7 +41,7 @@ const EID_INFO_BOTTOM_PADDING = 128;
  * and the empty state
  */
 const WalletCardsContainer = () => {
-  const isLoading = useIOSelector(selectIsWalletCardsLoading);
+  const isLoading = useIOSelector(selectIsWalletLoading);
   const isWalletEmpty = useIOSelector(isWalletEmptySelector);
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
@@ -94,7 +94,9 @@ const WalletCardsContainerSkeleton = () => (
  */
 const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();
-  const cards = useIOSelector(selectWalletItwCards);
+  const cards = useIOSelector(state =>
+    selectWalletCardsByCategory(state, "itw")
+  );
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
