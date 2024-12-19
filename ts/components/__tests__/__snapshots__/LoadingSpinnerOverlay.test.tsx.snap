@@ -15,7 +15,6 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
         {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",
@@ -321,14 +320,10 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   "backgroundColor": "rgba(0,115,230,0)",
                   "borderColor": "#0073E6",
                 },
+                false,
                 {
                   "backgroundColor": undefined,
                   "borderColor": undefined,
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
                 },
               ]
             }
@@ -432,7 +427,6 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
         {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",

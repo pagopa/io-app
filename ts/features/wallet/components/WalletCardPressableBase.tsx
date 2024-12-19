@@ -1,8 +1,11 @@
-import { PressableBaseProps, WithTestID } from "@pagopa/io-app-design-system";
+import {
+  PressableBaseProps,
+  useScaleAnimation,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
-import { useSpringPressScaleAnimation } from "../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 
 export type WalletCardPressableBaseProps = WithTestID<PressableBaseProps>;
 
@@ -12,8 +15,7 @@ export const WalletCardPressableBase = ({
   accessibilityLabel,
   children
 }: React.PropsWithChildren<WalletCardPressableBaseProps>) => {
-  const { onPressIn, onPressOut, animatedScaleStyle } =
-    useSpringPressScaleAnimation();
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
   if (onPress === undefined) {
     return <>{children}</>;
@@ -30,7 +32,7 @@ export const WalletCardPressableBase = ({
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
     >
-      <Animated.View style={animatedScaleStyle}>{children}</Animated.View>
+      <Animated.View style={scaleAnimatedStyle}>{children}</Animated.View>
     </Pressable>
   );
 };

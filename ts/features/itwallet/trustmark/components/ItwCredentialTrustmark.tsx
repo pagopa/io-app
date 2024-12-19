@@ -1,5 +1,10 @@
 /* eslint-disable functional/immutable-data */
-import { Caption, hexToRgba, WithTestID } from "@pagopa/io-app-design-system";
+import {
+  Caption,
+  hexToRgba,
+  useScaleAnimation,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import {
   Canvas,
   ImageSVG,
@@ -32,8 +37,6 @@ import Animated, {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
@@ -255,8 +258,7 @@ export const ItwCredentialTrustmark = ({
     </Canvas>
   );
 
-  const { onPressIn, onPressOut, animatedScaleStyle } =
-    useSpringPressScaleAnimation();
+  const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
   // Hide trustmark when the credential is not valid
   if (!validCredentialStatuses.includes(status)) {
@@ -305,7 +307,7 @@ export const ItwCredentialTrustmark = ({
       onTouchEnd={onPressOut}
     >
       <Animated.View
-        style={[styles.container, animatedScaleStyle]}
+        style={[styles.container, scaleAnimatedStyle]}
         onLayout={getButtonSize}
       >
         <LinearGradient

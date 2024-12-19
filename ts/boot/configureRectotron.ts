@@ -1,17 +1,18 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Reactotron } from "reactotron-core-client";
-import ReactotronReactNative from "reactotron-react-native";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import ReactotronFlipper from "reactotron-react-native/dist/flipper";
-import { reactotronRedux } from "reactotron-redux";
-import sagaPlugin from "reactotron-redux-saga";
+
+// using require import instead of static import due to library issue
+// https://github.com/infinitered/reactotron/issues/1430#issuecomment-2180872830
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ReactotronReactNative = require("reactotron-react-native").default;
+// import ReactotronReactNative from "reactotron-react-native";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { reactotronRedux } = require("reactotron-redux");
 
 // add a regex to avoid tracing specific urls in Reactotron timeline
 const ignoredUrls: RegExp | undefined = /symbolicate/;
-export const configureReactotron = (): Reactotron => {
+
+export const configureReactotron = () => {
   const rtt = ReactotronReactNative.configure({
-    createSocket: path => new ReactotronFlipper(path),
     host: "127.0.0.1"
   })
     .useReactNative({
@@ -20,11 +21,9 @@ export const configureReactotron = (): Reactotron => {
       }
     })
     .use(reactotronRedux())
-    .use(sagaPlugin({ except: [] }))
+    .setAsyncStorageHandler(AsyncStorage)
     .connect();
-  if (rtt.setAsyncStorageHandler) {
-    rtt.setAsyncStorageHandler(AsyncStorage);
-  }
+
   // Let's clear Reactotron on every app loading
   if (rtt.clear) {
     rtt.clear();

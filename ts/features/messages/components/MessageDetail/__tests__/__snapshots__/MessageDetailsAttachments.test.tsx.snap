@@ -219,6 +219,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -395,6 +397,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -441,7 +444,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -687,6 +690,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -749,6 +753,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -863,6 +868,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -909,7 +915,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -1155,6 +1161,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1217,6 +1224,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1499,6 +1507,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1561,6 +1570,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 5 attachments that
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={9}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1843,6 +1853,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1905,6 +1916,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2019,6 +2031,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -2065,7 +2078,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -2311,6 +2324,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2373,6 +2387,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2487,6 +2502,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                               width={24}
                             >
                               <RNSVGGroup
+                                color="#BBC2D6"
                                 fill={
                                   {
                                     "payload": 4278190080,
@@ -2533,7 +2549,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                     {
                                       "color": "#555C70",
                                       "fontFamily": "Titillium Sans Pro",
-                                      "fontSize": 18,
+                                      "fontSize": 17,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
                                       "lineHeight": 24,
@@ -2779,6 +2795,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2841,6 +2858,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments 1`]
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3123,6 +3141,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3185,6 +3204,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments and
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3467,6 +3487,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3529,6 +3550,7 @@ exports[`MessageDetailsAttachments Should match snapshot with no attachments, wh
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}

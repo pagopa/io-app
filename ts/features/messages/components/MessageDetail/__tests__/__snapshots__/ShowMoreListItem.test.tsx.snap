@@ -219,6 +219,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -281,6 +282,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -443,6 +445,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -473,6 +476,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -778,6 +782,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -840,6 +845,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1002,6 +1008,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -1032,6 +1039,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -1132,7 +1140,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1395,6 +1403,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -1457,6 +1466,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={3}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -1619,6 +1629,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -1649,6 +1660,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -1749,7 +1761,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1795,6 +1807,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -1866,9 +1879,9 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1906,7 +1919,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -1915,12 +1928,13 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -2199,6 +2213,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -2261,6 +2276,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={4}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -2423,6 +2439,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -2453,6 +2470,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -2553,7 +2571,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2599,6 +2617,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -2676,6 +2695,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#99A3C1"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -2738,9 +2758,9 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -2778,7 +2798,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -2787,12 +2807,13 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -3071,6 +3092,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -3133,6 +3155,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -3295,6 +3318,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -3325,6 +3349,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -3425,7 +3450,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -3471,6 +3496,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -3542,9 +3568,9 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -3582,7 +3608,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -3591,12 +3617,13 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -3666,6 +3693,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -3737,9 +3765,9 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -3777,7 +3805,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -3786,12 +3814,13 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -4070,6 +4099,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -4132,6 +4162,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -4294,6 +4325,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -4324,6 +4356,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -4424,7 +4457,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -4470,6 +4503,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -4547,6 +4581,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#99A3C1"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -4609,9 +4644,9 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -4649,7 +4684,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -4658,12 +4693,13 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -4733,6 +4769,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -4810,6 +4847,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#99A3C1"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -4872,9 +4910,9 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -4912,7 +4950,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -4921,12 +4959,13 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -5205,6 +5244,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -5267,6 +5307,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -5429,6 +5470,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -5459,6 +5501,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -5559,7 +5602,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -5605,6 +5648,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -5676,9 +5720,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -5716,7 +5760,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -5725,12 +5769,13 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -5804,7 +5849,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -5850,6 +5895,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -5921,9 +5967,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -5961,7 +6007,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -5970,12 +6016,13 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -6045,6 +6092,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -6122,6 +6170,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#99A3C1"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -6184,9 +6233,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -6224,7 +6273,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -6233,12 +6282,13 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -6312,7 +6362,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -6358,6 +6408,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -6429,9 +6480,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -6469,7 +6520,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -6478,12 +6529,13 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -6553,6 +6605,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -6630,6 +6683,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#99A3C1"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -6692,9 +6746,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -6732,7 +6786,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -6741,12 +6795,13 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -6816,6 +6871,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -6887,9 +6943,9 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -6927,7 +6983,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -6936,12 +6992,13 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -7220,6 +7277,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
           <View
             accessibilityElementsHidden={false}
             closing={false}
+            collapsable={false}
             gestureVelocityImpact={0.3}
             importantForAccessibility="auto"
             onClose={[Function]}
@@ -7282,6 +7340,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
             >
               <View
                 collapsable={false}
+                enabled={false}
                 handlerTag={7}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
@@ -7444,6 +7503,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                 width={24}
                               >
                                 <RNSVGGroup
+                                  color="#0B3EE3"
                                   fill={
                                     {
                                       "payload": 4278190080,
@@ -7474,6 +7534,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               style={
                                 {
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -7574,7 +7635,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -7620,6 +7681,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -7691,9 +7753,9 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -7731,7 +7793,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -7740,12 +7802,13 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -7819,7 +7882,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           {
                                             "color": "#555C70",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -7865,6 +7928,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -7936,9 +8000,9 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -7976,7 +8040,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -7985,12 +8049,13 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -8060,6 +8125,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
                             >
                               <View
                                 accessibilityElementsHidden={true}
@@ -8137,6 +8203,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#99A3C1"
                                         fill={
                                           {
                                             "payload": 4278190080,
@@ -8199,9 +8266,9 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                         [
                                           {},
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                             "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 18,
+                                            "fontSize": 17,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -8239,7 +8306,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                             "borderWidth": 0,
                                           },
                                           {
-                                            "color": "#0073E6",
+                                            "color": "#0B3EE3",
                                           },
                                           {
                                             "flex": 0,
@@ -8248,12 +8315,13 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                           },
                                         ]
                                       }
-                                      tintColor="#0073E6"
+                                      tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
                                       width={24}
                                     >
                                       <RNSVGGroup
+                                        color="#0B3EE3"
                                         fill={
                                           {
                                             "payload": 4278190080,

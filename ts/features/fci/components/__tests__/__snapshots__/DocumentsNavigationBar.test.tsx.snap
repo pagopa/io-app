@@ -76,13 +76,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           {
             "justifyContent": "center",
           },
-          {
-            "transform": [
-              {
-                "scale": undefined,
-              },
-            ],
-          },
+          false,
         ]
       }
     >
@@ -126,6 +120,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         width={24}
       >
         <RNSVGGroup
+          color="#0073E6"
           fill={
             {
               "payload": 4278190080,
@@ -163,7 +158,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
-          "fontSize": 18,
+          "fontSize": 17,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -221,13 +216,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           {
             "justifyContent": "center",
           },
-          {
-            "transform": [
-              {
-                "scale": undefined,
-              },
-            ],
-          },
+          false,
         ]
       }
     >
@@ -271,6 +260,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         width={24}
       >
         <RNSVGGroup
+          color="#0073E6"
           fill={
             {
               "payload": 4278190080,
@@ -315,7 +305,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         {
           "color": "#0E0F13",
           "fontFamily": "Titillium Sans Pro",
-          "fontSize": 18,
+          "fontSize": 17,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,

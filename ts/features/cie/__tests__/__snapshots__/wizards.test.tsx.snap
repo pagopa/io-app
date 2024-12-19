@@ -23,7 +23,6 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -175,14 +174,11 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "textAlignVertical": "center",
                 },
                 false,
-                {},
                 {
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
+                  "columnGap": 8,
                 },
+                {},
+                false,
               ]
             }
           >
@@ -410,18 +406,15 @@ To enter the IO app without physically using the Electronic Identity Card, you m
               {
                 "backgroundColor": "#0073E6",
               },
+              false,
               {
                 "backgroundColor": undefined,
-                "transform": [
-                  {
-                    "scale": undefined,
-                  },
-                ],
               },
             ]
           }
         >
           <View
+            entering={[Function]}
             style={
               [
                 {
@@ -537,14 +530,11 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   "textAlignVertical": "center",
                 },
                 false,
-                {},
                 {
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
+                  "columnGap": 8,
                 },
+                {},
+                false,
               ]
             }
           >
@@ -606,7 +596,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -756,14 +745,11 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "textAlignVertical": "center",
                 },
                 false,
-                {},
                 {
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
+                  "columnGap": 8,
                 },
+                {},
+                false,
               ]
             }
           >
@@ -1100,14 +1086,11 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  {},
                   {
-                    "transform": [
-                      {
-                        "scale": undefined,
-                      },
-                    ],
+                    "columnGap": 8,
                   },
+                  {},
+                  false,
                 ]
               }
             >
@@ -1343,18 +1326,15 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
               {
                 "backgroundColor": "#0073E6",
               },
+              false,
               {
                 "backgroundColor": undefined,
-                "transform": [
-                  {
-                    "scale": undefined,
-                  },
-                ],
               },
             ]
           }
         >
           <View
+            entering={[Function]}
             style={
               [
                 {
@@ -1470,14 +1450,11 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   "textAlignVertical": "center",
                 },
                 false,
-                {},
                 {
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
+                  "columnGap": 8,
                 },
+                {},
+                false,
               ]
             }
           >
@@ -1539,7 +1516,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -1640,7 +1616,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {
                 "color": "#0E0F13",
                 "fontFamily": "Titillium Sans Pro",
-                "fontSize": 18,
+                "fontSize": 17,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -1768,6 +1744,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0B3EE3"
                     fill={
                       {
                         "payload": 4278190080,
@@ -1798,6 +1775,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 style={
                   {
                     "flexGrow": 1,
+                    "flexShrink": 1,
                   }
                 }
               >
@@ -1935,6 +1913,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0B3EE3"
                     fill={
                       {
                         "payload": 4278190080,
@@ -2007,6 +1986,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 style={
                   {
                     "flexGrow": 1,
+                    "flexShrink": 1,
                   }
                 }
               >
@@ -2144,6 +2124,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                   width={24}
                 >
                   <RNSVGGroup
+                    color="#0B3EE3"
                     fill={
                       {
                         "payload": 4278190080,
@@ -2174,6 +2155,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 style={
                   {
                     "flexGrow": 1,
+                    "flexShrink": 1,
                   }
                 }
               >
@@ -2394,18 +2376,15 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
               {
                 "backgroundColor": "#0073E6",
               },
+              false,
               {
                 "backgroundColor": undefined,
-                "transform": [
-                  {
-                    "scale": undefined,
-                  },
-                ],
               },
             ]
           }
         >
           <View
+            entering={[Function]}
             style={
               [
                 {
@@ -2475,7 +2454,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         0,
       ]
     }
-    style={{}}
   >
     <View>
       <View
@@ -2739,18 +2717,15 @@ exports[`SpidWizard Should match the snapshot 1`] = `
               {
                 "backgroundColor": "#0073E6",
               },
+              false,
               {
                 "backgroundColor": undefined,
-                "transform": [
-                  {
-                    "scale": undefined,
-                  },
-                ],
               },
             ]
           }
         >
           <View
+            entering={[Function]}
             style={
               [
                 {
@@ -2866,14 +2841,11 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   "textAlignVertical": "center",
                 },
                 false,
-                {},
                 {
-                  "transform": [
-                    {
-                      "scale": undefined,
-                    },
-                  ],
+                  "columnGap": 8,
                 },
+                {},
+                false,
               ]
             }
           >
