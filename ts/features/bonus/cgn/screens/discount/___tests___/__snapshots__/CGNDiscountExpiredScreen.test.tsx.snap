@@ -563,9 +563,9 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -677,6 +677,9 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                             "flexDirection": "row",
                                             "justifyContent": "center",
                                           },
+                                          {
+                                            "columnGap": 8,
+                                          },
                                           false,
                                         ]
                                       }
@@ -684,10 +687,10 @@ exports[`CGNDiscountExpiredScreen should render correctly 1`] = `
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
