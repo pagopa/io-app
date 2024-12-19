@@ -1,24 +1,24 @@
 import {
-  ContentWrapper,
   ListItemAction,
-  useIOToast,
-  VSpacer
+  WithTestID,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
+import NavigationService from "../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { itwCredentialsRemove } from "../../credentials/store/actions";
+import { FIMS_ROUTES } from "../../../fims/common/navigation";
 import {
   CREDENTIALS_MAP,
   trackCredentialDeleteProperties,
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { itwCredentialsRemove } from "../../credentials/store/actions";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -80,9 +80,29 @@ const ItwPresentationDetailsFooter = ({
     startSupportRequest();
   };
 
+  /**
+   * Credential specific actions
+   */
+  const credentialCtas = React.useMemo(() => {
+    if (credential.credentialType === "MDL") {
+      return [
+        <FimsListItemAction
+          key="openIPatenteAction"
+          testID="openIPatenteActionTestID"
+          url="https://licences.ipatente.io.pagopa.it/licences"
+          label={I18n.t(
+            "features.itWallet.presentation.credentialDetails.actions.openIPatente"
+          )}
+        />
+      ];
+    }
+
+    return [];
+  }, [credential.credentialType]);
+
   return (
-    <ContentWrapper>
-      <VSpacer size={8} />
+    <View>
+      {credentialCtas}
       <ListItemAction
         variant="primary"
         icon="message"
@@ -94,23 +114,56 @@ const ItwPresentationDetailsFooter = ({
         )}
         onPress={startAndTrackSupportRequest}
       />
-      {credential.credentialType !== CredentialType.PID ? (
-        <ListItemAction
-          testID="removeCredentialActionTestID"
-          variant="danger"
-          icon="trashcan"
-          label={I18n.t(
-            "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-          )}
-          accessibilityLabel={I18n.t(
-            "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-          )}
-          onPress={showRemoveCredentialDialog}
-        />
-      ) : null}
-    </ContentWrapper>
+      <ListItemAction
+        testID="removeCredentialActionTestID"
+        variant="danger"
+        icon="trashcan"
+        label={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
+        )}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
+        )}
+        onPress={showRemoveCredentialDialog}
+      />
+    </View>
   );
 };
+
+type FimsListItemActionProps = {
+  url: string;
+  label: string;
+};
+
+/**
+ * ListItemAction which handles an url using FIMS
+ * @param url - The url to handle
+ * @param label - The label of the action
+ * @param testID - The testID of the action
+ * @returns A ListItemAction which handles an url using FIMS
+ */
+const FimsListItemAction = ({
+  url,
+  label,
+  testID
+}: WithTestID<FimsListItemActionProps>) => (
+  <ListItemAction
+    testID={testID}
+    variant="primary"
+    icon="externalLink"
+    label={label}
+    accessibilityLabel={label}
+    onPress={() => {
+      NavigationService.navigate(FIMS_ROUTES.MAIN, {
+        screen: FIMS_ROUTES.CONSENTS,
+        params: {
+          ctaText: label,
+          ctaUrl: url
+        }
+      });
+    }}
+  />
+);
 
 const MemoizedItwPresentationDetailsFooter = React.memo(
   ItwPresentationDetailsFooter

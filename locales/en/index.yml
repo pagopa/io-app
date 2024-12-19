@@ -3517,6 +3517,7 @@ features:
           requestAssistance: "Something wrong?"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
+          openIPatente: "Vai al servizio punti patente"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?
