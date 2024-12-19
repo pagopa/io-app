@@ -56,7 +56,7 @@ export const renderWalletCardFn = (
  * @returns The component or null if the category filter does not match
  */
 export const withWalletCategoryFilter =
-  <P,>(
+  <P extends Record<string, unknown>>(
     category: WalletCardCategoryFilter,
     WrappedComponent: React.ComponentType<P>
   ) =>
@@ -67,5 +67,5 @@ export const withWalletCategoryFilter =
     if (!shouldRenderCategory) {
       return null;
     }
-    return <WrappedComponent {...(props as any)} />;
+    return <WrappedComponent {...props} />;
   };
