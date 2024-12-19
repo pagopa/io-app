@@ -11,8 +11,11 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Alert, ImageSourcePropType } from "react-native";
+import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
+import { ModuleCgnDiscount } from "../../bonus/cgn/components/merchants/ModuleCgnDiscount";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -72,6 +75,11 @@ export const DSModules = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ModuleSummary</H4>
           {renderModuleSummary()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ModuleCgnDiscount</H4>
+          {renderModuleCgnDiscount()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -270,6 +278,52 @@ const renderModuleSummary = () => (
         label={"A very looong loooooooong looooooooooooooong label"}
         description={"This is a very looooooong description of the element"}
         onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+  </VStack>
+);
+
+const mockModuleCgnDiscountData = {
+  name: "Small Rubber Chips" as NonEmptyString,
+  id: "28201" as NonEmptyString,
+  description: undefined,
+  discount: undefined,
+  discountUrl: "https://localhost",
+  endDate: new Date(),
+  isNew: false,
+  productCategories: [ProductCategoryEnum.cultureAndEntertainment],
+  startDate: new Date()
+};
+
+const renderModuleCgnDiscount = () => (
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="CgnMerchantDiscountItem, basic configuration">
+      <ModuleCgnDiscount
+        onPress={onButtonPress}
+        discount={{ ...mockModuleCgnDiscountData }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="CgnMerchantDiscountItem, with discount indicator">
+      <ModuleCgnDiscount
+        onPress={onButtonPress}
+        discount={{
+          ...mockModuleCgnDiscountData,
+          discount: 25
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="CgnMerchantDiscountItem, new variant">
+      <ModuleCgnDiscount
+        onPress={onButtonPress}
+        discount={{
+          ...mockModuleCgnDiscountData,
+          isNew: true,
+          discount: 25,
+          productCategories: [
+            ProductCategoryEnum.cultureAndEntertainment,
+            ProductCategoryEnum.health
+          ]
+        }}
       />
     </DSComponentViewerBox>
   </VStack>

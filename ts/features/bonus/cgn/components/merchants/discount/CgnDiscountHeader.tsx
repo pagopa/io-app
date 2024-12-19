@@ -1,6 +1,7 @@
 import {
   Badge,
   H3,
+  HStack,
   IOColors,
   IOStyles,
   VSpacer
@@ -9,7 +10,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import I18n from "../../../../../../i18n";
-import { CategoryTag } from "../CgnModuleDiscount";
+import { CategoryTag } from "../ModuleCgnDiscount";
 import { isValidDiscount, normalizedDiscountPercentage } from "../utils";
 
 type CgnDiscountHeaderProps = {
@@ -64,11 +65,11 @@ export const CgnDiscountHeader = ({
         )}
         <H3>{name}</H3>
         <VSpacer size={12} />
-        <View style={[{ flexWrap: "wrap" }, IOStyles.row]}>
+        <HStack space={4} style={{ flexWrap: "wrap" }}>
           {productCategories.map(categoryKey => (
             <CategoryTag key={categoryKey} category={categoryKey} />
           ))}
-        </View>
+        </HStack>
       </View>
     </View>
   );

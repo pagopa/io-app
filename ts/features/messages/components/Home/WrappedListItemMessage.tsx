@@ -30,19 +30,19 @@ import {
   accessibilityLabelForMessageItem,
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
-import { MessageListItem } from "./DS/MessageListItem";
+import { ListItemMessage } from "./DS/ListItemMessage";
 
-type WrappedMessageListItemProps = {
+type WrappedListItemMessage = {
   index: number;
   message: UIMessage;
   source: MessageListCategory | "SEARCH";
 };
 
-export const WrappedMessageListItem = ({
+export const WrappedListItemMessage = ({
   index,
   message,
   source
-}: WrappedMessageListItemProps) => {
+}: WrappedListItemMessage) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const store = useIOStore();
@@ -59,7 +59,7 @@ export const WrappedMessageListItem = ({
   );
 
   const messageCategoryTag = message.category.tag;
-  const doubleAvatar = messageCategoryTag === PaymentTagEnum.PAYMENT;
+  const avatarDouble = messageCategoryTag === PaymentTagEnum.PAYMENT;
   const serviceLogoUriSources = useMemo(
     () => logoForService(serviceId, organizationFiscalCode),
     [serviceId, organizationFiscalCode]
@@ -73,19 +73,22 @@ export const WrappedMessageListItem = ({
     message.createdAt,
     I18n.t("messages.yesterday")
   );
+
   const isRead = message.isRead;
-  const badgeText =
+
+  const tag: ListItemMessage["tag"] =
     messageCategoryTag === SENDTagEnum.PN
-      ? I18n.t("features.pn.details.badge.legalValue")
+      ? {
+          variant: "legalMessage",
+          text: I18n.t("features.pn.details.badge.legalValue")
+        }
       : isPaymentMessageWithPaidNotice
-      ? I18n.t("messages.badge.paid")
+      ? {
+          variant: "success",
+          text: I18n.t("messages.badge.paid")
+        }
       : undefined;
-  const badgeVariant =
-    messageCategoryTag === SENDTagEnum.PN
-      ? "legalMessage"
-      : isPaymentMessageWithPaidNotice
-      ? "success"
-      : undefined;
+
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message, isSelected),
     [isSelected, message]
@@ -157,11 +160,10 @@ export const WrappedMessageListItem = ({
   ]);
 
   return (
-    <MessageListItem
+    <ListItemMessage
       accessibilityLabel={accessibilityLabel}
-      badgeText={badgeText}
-      badgeVariant={badgeVariant}
-      doubleAvatar={doubleAvatar}
+      tag={tag}
+      avatarDouble={avatarDouble}
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
@@ -177,9 +179,9 @@ export const WrappedMessageListItem = ({
 };
 
 export const isInboxOrArchiveSource = (
-  source: WrappedMessageListItemProps["source"]
+  source: WrappedListItemMessage["source"]
 ) => source === "ARCHIVE" || isInboxSource(source);
-export const isInboxSource = (source: WrappedMessageListItemProps["source"]) =>
+export const isInboxSource = (source: WrappedListItemMessage["source"]) =>
   source === "INBOX";
-export const isSearchSource = (source: WrappedMessageListItemProps["source"]) =>
+export const isSearchSource = (source: WrappedListItemMessage["source"]) =>
   source === "SEARCH";

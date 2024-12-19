@@ -17,7 +17,7 @@ import { ComponentProps, ReactNode, memo, useCallback } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-export type ListItemSearchInstitutionProps = WithTestID<
+export type ListItemSearchInstitution = WithTestID<
   {
     value: string | ReactNode;
     avatarProps: AvatarSearchProps;
@@ -43,7 +43,7 @@ export const ListItemSearchInstitution = memo(
     accessibilityHint,
     testID,
     numberOfLines
-  }: ListItemSearchInstitutionProps) => {
+  }: ListItemSearchInstitution) => {
     const { isExperimental } = useIOExperimentalDesign();
     const theme = useIOTheme();
 

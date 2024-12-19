@@ -68,7 +68,7 @@ export type BannerErrorStateProps = BaseBannerErrorStateProps &
  */
 export const BannerErrorState = ({
   viewRef,
-  icon,
+  icon = "warningFilled",
   label,
   actionText,
   onPress,

@@ -105,7 +105,7 @@ const H4Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H4>Header H4</H4>
       <H4 color={theme["interactiveElem-default"]}>Header H4</H4>
       <View
@@ -121,7 +121,7 @@ const H5Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H5>Header H5</H5>
       <H5 color={theme["textHeading-tertiary"]}>Header H5</H5>
       <H5 color={theme["interactiveElem-default"]}>Header H5</H5>
@@ -133,7 +133,7 @@ const H6Row = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <H6>Header H6</H6>
       <H6 color={theme["textHeading-tertiary"]}>Header H6</H6>
       <H6 color={theme["interactiveElem-default"]}>Header H6</H6>
@@ -145,7 +145,7 @@ const ButtonTextRow = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <ButtonText color={theme["textBody-tertiary"]}>ButtonText</ButtonText>
       <ButtonText color={theme["interactiveElem-default"]}>
         ButtonText
@@ -163,7 +163,7 @@ const CaptionRow = () => {
   const theme = useIOTheme();
 
   return (
-    <HStack space={16}>
+    <HStack space={16} style={{ flexWrap: "wrap" }}>
       <Caption>Caption</Caption>
       <Caption color={theme["textBody-tertiary"]}>Caption</Caption>
       <Caption color={theme["interactiveElem-default"]}>Caption</Caption>
@@ -221,7 +221,7 @@ export const BodySmallRow = () => {
           Body small SB asLink
         </BodySmall>
       </HStack>
-      <HStack space={typographicStyleMargin}>
+      <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Regular">Body small Regular</BodySmall>
         <BodySmall weight="Regular" color={"red"}>
           Body small Regular

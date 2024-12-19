@@ -9,6 +9,7 @@ import {
 import { Alert } from "react-native";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { BannerErrorState } from "../../../components/ui/BannerErrorState";
 
 const onLinkPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -35,6 +36,11 @@ export const DSAdvice = () => {
         </VStack>
 
         <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>BannerErrorState</H4>
+          {renderBannerErrorState()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Banner</H4>
           {renderBanner()}
         </VStack>
@@ -42,6 +48,26 @@ export const DSAdvice = () => {
     </DesignSystemScreen>
   );
 };
+
+const renderBannerErrorState = () => (
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="BannerErrorState, default icon">
+      <BannerErrorState
+        label="Il caricamento delle ricevute è fallito."
+        actionText={"Riprova"}
+        onPress={onLinkPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="BannerErrorState, custom icon">
+      <BannerErrorState
+        icon="errorFilled"
+        label="Il caricamento delle ricevute è fallito."
+        actionText={"Riprova"}
+        onPress={onLinkPress}
+      />
+    </DSComponentViewerBox>
+  </VStack>
+);
 
 const renderFeatureInfo = () => (
   <VStack space={componentMargin}>
