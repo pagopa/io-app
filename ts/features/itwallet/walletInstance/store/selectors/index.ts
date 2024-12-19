@@ -19,7 +19,5 @@ export const itwIsWalletInstanceAttestationValidSelector = createSelector(
 );
 
 /* Selector to get the wallet instance status */
-export const itwWalletInstanceStatusSelector = createSelector(
-  (state: GlobalState) => state.features.itWallet.walletInstance.status,
-  status => status
-);
+export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.status;

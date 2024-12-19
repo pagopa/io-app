@@ -28,7 +28,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
-        ...state,
+        status: undefined,
         attestation: action.payload
       };
     }

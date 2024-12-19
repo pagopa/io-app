@@ -21,7 +21,6 @@ const itwDocsOnIOMultipleDevicesUrl =
 
 /**
  * Hook to monitor wallet instance status and display alerts if revoked.
- * @param walletInstanceStatus - The status of the wallet instance, including whether it is revoked and the reason for revocation.
  */
 export const useItwWalletInstanceRevocationAlert = () => {
   const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
