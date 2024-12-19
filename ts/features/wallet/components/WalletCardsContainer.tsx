@@ -19,6 +19,7 @@ import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWallet
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
+import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
   isWalletEmptySelector,
   selectIsWalletLoading,
@@ -46,6 +47,8 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
+
+  useItwWalletInstanceRevocationAlert();
 
   // Loading state is only displayed if there is the initial loading and there are no cards or
   // placeholders in the wallet
