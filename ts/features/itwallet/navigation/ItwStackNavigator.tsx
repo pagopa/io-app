@@ -217,7 +217,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         component={ItwIdentityNotMatchingScreen}
-        options={{ headerShown: false, gestureEnabled: false }}
+        options={{ gestureEnabled: false }}
       />
       <Stack.Screen
         name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}

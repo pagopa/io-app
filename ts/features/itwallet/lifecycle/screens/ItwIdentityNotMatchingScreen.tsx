@@ -1,17 +1,23 @@
 import { useFocusEffect } from "@react-navigation/native";
+import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { Alert } from "react-native";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import {
   itwLifecycleIdentityCheckCompleted,
   itwLifecycleWalletReset
 } from "../store/actions";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { logoutRequest } from "../../../../store/actions/authentication";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { trackItwIdNotMatch, trackWalletNewIdReset } from "../../analytics";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
+  useItwDisableGestureNavigation();
 
   useFocusEffect(trackItwIdNotMatch);
 
@@ -25,33 +31,66 @@ export const ItwIdentityNotMatchingScreen = () => {
   };
 
   const handleCancel = () => {
-    dispatch(logoutRequest({ withApiCall: true }));
+    Alert.alert(
+      I18n.t(
+        "features.itWallet.identification.notMatchingIdentityScreen.alert.title"
+      ),
+      I18n.t(
+        "features.itWallet.identification.notMatchingIdentityScreen.alert.message"
+      ),
+      [
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "destructive",
+          onPress: () => dispatch(logoutRequest({ withApiCall: true }))
+        },
+        {
+          text: I18n.t("global.buttons.cancel"),
+          onPress: constNull // Do nothing, just dismiss the alert
+        }
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
-    <OperationResultScreenContent
-      pictogram="attention"
-      title={I18n.t(
-        "features.itWallet.identification.notMatchingIdentityScreen.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.identification.notMatchingIdentityScreen.subtitle"
-      )}
-      isHeaderVisible={false}
-      action={{
+    <IOScrollViewWithLargeHeader
+      title={{
         label: I18n.t(
-          "features.itWallet.identification.notMatchingIdentityScreen.action"
-        ),
-        accessibilityLabel: I18n.t(
-          "features.itWallet.identification.notMatchingIdentityScreen.action"
-        ),
-        onPress: resetWallet
+          "features.itWallet.identification.notMatchingIdentityScreen.title"
+        )
       }}
-      secondaryAction={{
-        label: I18n.t("global.buttons.cancel"),
-        accessibilityLabel: I18n.t("global.buttons.cancel"),
-        onPress: handleCancel
+      headerActionsProp={{ showHelp: true }}
+      goBack={handleCancel}
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("global.buttons.continue"),
+          onPress: resetWallet
+        },
+        secondary: {
+          label: I18n.t("global.buttons.exit"),
+          onPress: handleCancel
+        }
       }}
-    />
+    >
+      <ContentWrapper>
+        <VStack space={24}>
+          <IOMarkdown
+            content={I18n.t(
+              "features.itWallet.identification.notMatchingIdentityScreen.message"
+            )}
+          />
+          <Banner
+            content={I18n.t(
+              "features.itWallet.identification.notMatchingIdentityScreen.banner.title"
+            )}
+            pictogramName="security"
+            size="small"
+            color="neutral"
+          />
+        </VStack>
+      </ContentWrapper>
+    </IOScrollViewWithLargeHeader>
   );
 };
