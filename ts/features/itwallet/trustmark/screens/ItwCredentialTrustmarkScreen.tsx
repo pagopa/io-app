@@ -8,7 +8,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
@@ -24,6 +24,7 @@ import {
 } from "../machine/provider";
 import {
   selectExpirationSeconds,
+  selectFailure,
   selectTrustmarkUrl
 } from "../machine/selectors";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -68,8 +69,10 @@ export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
 const TrustmarkQrCode = () => {
   const trustmarkUrl =
     ItwTrustmarkMachineContext.useSelector(selectTrustmarkUrl);
+  const failure = ItwTrustmarkMachineContext.useSelector(selectFailure);
+  const [qrCodeError, setQrCodeError] = useState<Error | undefined>(undefined);
 
-  useDebugInfo({ trustmarkUrl });
+  useDebugInfo({ trustmarkUrl, failure, qrCodeError });
 
   return (
     <View style={styles.qrCodeContainer}>
@@ -78,6 +81,7 @@ const TrustmarkQrCode = () => {
         value={trustmarkUrl}
         correctionLevel="L"
         accessibilityLabel={I18n.t("features.itWallet.trustmark.qrCode")}
+        onError={setQrCodeError}
       />
     </View>
   );

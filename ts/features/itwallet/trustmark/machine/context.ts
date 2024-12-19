@@ -1,4 +1,5 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { TrustmarkFailure } from "./failure";
 
 export type Context = {
   /**
@@ -25,4 +26,8 @@ export type Context = {
    * The trustmark url
    */
   trustmarkUrl?: string;
+  /**
+   * The failure of the trustmark machine
+   */
+  failure?: TrustmarkFailure;
 };
