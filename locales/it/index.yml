@@ -3532,6 +3532,10 @@ features:
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
+      statusAttestationUnknown:
+        title: Non siamo riusciti a caricare {{credentialName}}
+        content: Chiudi e riapri l'app per riprovare.
+        primaryAction: Ho capito
     trustmark:
       cta: Mostra certificato di autenticità
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
