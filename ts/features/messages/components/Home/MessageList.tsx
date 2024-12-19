@@ -20,9 +20,9 @@ import {
 import { UIMessage } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import {
-  MessageListItemSkeleton,
+  ListItemMessageSkeleton,
   SkeletonHeight
-} from "./DS/MessageListItemSkeleton";
+} from "./DS/ListItemMessageSkeleton";
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 import {
@@ -32,7 +32,7 @@ import {
   LayoutInfo,
   trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
-import { WrappedMessageListItem } from "./WrappedMessageListItem";
+import { WrappedListItemMessage } from "./WrappedListItemMessage";
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -127,13 +127,13 @@ export const MessageList = React.forwardRef<FlatList, MessageListProps>(
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (
-              <MessageListItemSkeleton
+              <ListItemMessageSkeleton
                 accessibilityLabel={I18n.t("messages.loading")}
               />
             );
           } else {
             return (
-              <WrappedMessageListItem
+              <WrappedListItemMessage
                 index={index}
                 message={item}
                 source={category}

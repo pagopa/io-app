@@ -755,6 +755,7 @@ authentication:
       title: Non riusciamo a trovare l'app CieID
       description: Per accedere, devi avere l'app installata sul tuo dispositivo.
       primary_action_label: Scarica CieID
+      link_error: Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID
   cie:
     genericTitle: Entra con CIE
     cie: CIE
