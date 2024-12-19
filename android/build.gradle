@@ -9,6 +9,7 @@ buildscript {
         ndkVersion = "26.1.10909125"
         kotlinVersion = "1.9.24"
         firebaseMessagingVersion = "23.2.1"
+        okhttpVersion = "4.9.2"
     }
     repositories {
         google()

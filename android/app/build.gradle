@@ -192,8 +192,8 @@ dependencies {
  
     implementation project(':react-native-cie')
 
-    implementation ("com.squareup.okhttp3:okhttp:4.9.2")
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
+    implementation ("com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpVersion}")
+    implementation ("com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okhttpVersion}")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
