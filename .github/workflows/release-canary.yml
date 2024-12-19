@@ -1,51 +1,58 @@
 name: Canary release
 on:
-  workflow_dispatch:
   issue_comment:                                     
-    types: [created, edited, deleted]
+    types: [created]
 jobs:
   run-static-checks:
     if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/canary')
     uses: ./.github/workflows/staticcheck.yaml
   prepare-canary-release:
     needs: run-static-checks
-    environment: canary
     runs-on: ubuntu-latest
     outputs:
-      currentAppVersion: ${{ steps.store-current-version.outputs.CURRENT_APP_VERSION }}
-      currentAppBuildCode: ${{ steps.store-current-version.outputs.CURRENT_APP_BUILD_CODE }}
+      canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-      - id: store-current-version
-        run: |
-          APP_VERSION=$(node -p -e "require('./package.json').version")
-          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
-          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
-          echo "CURRENT_APP_BUILD_CODE=$BUILD_CODE" >> $GITHUB_OUTPUT
+      - id: setup-node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
       - id: replace-version-with-canary
         run: |
-          node scripts/canary/replaceCanaryVersion.js ${{ vars.CANARY_VERSION }} ${{ vars.CANARY_BUILD_CODE }}
-          bash ./.github/scripts/package-name-replacer.sh it.pagopa.io.app it.pagopa.io.app.canary android
-          bash ./.github/scripts/package-name-replacer.sh it.pagopa.app.io it.pagopa.app.io.canary ios
-          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-certs.git" "git\@github.com:pagopa\/IO-App-canary-certs.git" ios
+          UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
+          node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
+          mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
+          mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add .; git commit -m "Replace Matchfile for canary" --no-verify;
           yarn release-canary
       - id: push-tags
         run: |
-          git push --no-verify --follow-tags origin HEAD:${{ github.head_ref }}
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          git push --no-verify origin tag $APP_VERSION
       - id: github-release-creation
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release create "(Canary) $APP_VERSION" --generate-notes
-          gh variable set CANARY_VERSION -b "$APP_VERSION" -e canary
-          BUILD_CODE=$(node ./scripts/canary/readAndroidBuildCode.js)
-          gh variable set CANARY_BUILD_CODE -b "$BUILD_CODE" -e canary
+          gh release create $APP_VERSION --generate-notes
+          echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
     needs: prepare-canary-release
     environment: canary
@@ -55,9 +62,31 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
-      - id: setup
-        uses: ./.github/actions/setup-composite
+          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+      - id: setup-node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: download-locales
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: locales
+          path: locales/
+      - id: download-api-client
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: api-client
+          path: definitions/
       - id: setup-jdk-17
         uses: actions/setup-java@5ffc13f4174014e2d4d4572b3d74c3fa61aeb2c2 #v3.11.0
         with:
@@ -73,7 +102,7 @@ jobs:
       - id: build-release-android
         run: |
           ./scripts/android-release.sh ./android/app
-          cd android && bundle exec fastlane alpha
+          cd android && bundle exec fastlane alpha_canary
         shell: bash
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
@@ -93,7 +122,7 @@ jobs:
           cd android
           VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-          bundle exec fastlane download_apk
+          bundle exec fastlane download_canary_apk
         env:
           RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}          
@@ -103,20 +132,20 @@ jobs:
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: io-app-universal.apk
-          path: android/io-app-universal.apk
+          name: io-app-canary-universal.apk
+          path: android/io-app-canary-universal.apk
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
         with:
-          name: app-release.aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          name: app-canary-release.aab
+          path: android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload "(Canary) $APP_VERSION" android/app/build/outputs/bundle/release/app-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
@@ -131,9 +160,31 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.prepare-canary-release.outputs.currentAppVersion }}
-      - id: setup
-        uses: ./.github/actions/setup-composite
+          ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+      - id: setup-node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: download-locales
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: locales
+          path: locales/
+      - id: download-api-client
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: api-client
+          path: definitions/
       - id: setup-ruby
         uses: ruby/setup-ruby@401c19e14f474b54450cd3905bb8b86e2c8509cf #v1.204.0
         with:
@@ -158,7 +209,7 @@ jobs:
         name: Build & submit to App store
         run: |
           cd ios
-          bundle exec fastlane beta_circleci_testflight
+          bundle exec fastlane canary_ci_testflight
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
@@ -189,7 +240,7 @@ jobs:
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
-          gh release upload "(Canary) $APP_VERSION" ios/IO.ipa#IO-iOS.ipa
+          gh release upload $APP_VERSION ios/IO.ipa#IO-canary-iOS.ipa
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
@@ -201,20 +252,9 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - id: revert-package-and-version
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          node scripts/canary/replaceCanaryVersion.js ${{ needs.prepare-canary-release.outputs.currentAppVersion }} ${{ needs.prepare-canary-release.outputs.currentAppBuildCode }}
-          bash ./.github/scripts/package-name-restore.sh it.pagopa.io.app.canary it.pagopa.io.app android
-          bash ./.github/scripts/package-name-restore.sh it.pagopa.app.io.canary it.pagopa.app.io ios
-          bash ./.github/scripts/package-name-replacer.sh "git\@github.com:pagopa\/IO-App-canary-certs.git" "git\@github.com:pagopa\/IO-App-certs.git" ios
-          git add .
-          git commit -m "revert: restoring repository to default package name and version" --no-verify
-          git push --no-verify origin HEAD:${{ github.head_ref }}
       - id: comment-process-end
         if: github.event.issue.number
         run: |
-          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, check it at the [release list](https://github.com/pagopa/io-app/releases)"
+          gh issue comment ${{ github.event.issue.number }} -b "Release correctly created, [${{ needs.prepare-canary-release.outputs.canaryVersion }}](https://github.com/pagopa/io-app/releases/tag/${{ needs.prepare-canary-release.outputs.canaryVersion }})"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

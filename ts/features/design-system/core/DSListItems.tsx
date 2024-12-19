@@ -1,4 +1,3 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as React from "react";
 
 import {
@@ -17,14 +16,16 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
+import I18n from "../../../i18n";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
-import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
-import { CgnMerchantDiscountItem } from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
+import { ListItemMessage } from "../../messages/components/Home/DS/ListItemMessage";
+import { ListItemMessageSkeleton } from "../../messages/components/Home/DS/ListItemMessageSkeleton";
 import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
+import { ListItemSearchInstitution } from "../../services/common/components/ListItemSearchInstitution";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -33,6 +34,8 @@ const onButtonPress = () => {
 const onCopyButtonPress = () => {
   Alert.alert("Copied!", "Value copied");
 };
+
+const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 
 const sectionTitleMargin = 16;
 const sectionMargin = 48;
@@ -47,6 +50,11 @@ export const DSListItems = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>ListItemNav</H4>
           {renderListItemNav()}
+        </VStack>
+
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>ListItemMessage</H4>
+          {renderListItemMessage()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
@@ -70,31 +78,15 @@ export const DSListItems = () => {
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemTransaction</H4>
-          {renderListItemTransaction()}
+          <H4 color={theme["textHeading-default"]}>
+            ListItemSearchInstitution
+          </H4>
+          {renderListItemSearchInstitution()}
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Specific</H4>
-          <VStack space={24}>
-            <DSComponentViewerBox name="CgnMerchantDiscountItem">
-              <CgnMerchantDiscountItem
-                discount={{
-                  name: "Small Rubber Chips" as NonEmptyString,
-                  id: "28201" as NonEmptyString,
-                  description: undefined,
-                  discount: 25,
-                  discountUrl: "https://localhost",
-                  endDate: new Date(),
-                  isNew: false,
-                  productCategories: [
-                    ProductCategoryEnum.cultureAndEntertainment
-                  ],
-                  startDate: new Date()
-                }}
-              />
-            </DSComponentViewerBox>
-          </VStack>
+          <H4 color={theme["textHeading-default"]}>ListItemTransaction</H4>
+          {renderListItemTransaction()}
         </VStack>
       </VStack>
     </DesignSystemScreen>
@@ -160,6 +152,20 @@ const renderListItemNav = () => (
         hideChevron
       />
     </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemNav, with image chevron">
+      <ListItemNav
+        value={"Comune di Ischia"}
+        avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
+        onPress={onButtonPress}
+      />
+      <Divider />
+      <ListItemNav
+        value={"Comune di Ischia"}
+        description="This is a description"
+        avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
       <ListItemNavAlert value={"Value"} onPress={onButtonPress} />
       <Divider />
@@ -176,6 +182,99 @@ const renderListItemNav = () => (
         value={"Value"}
         description="Description"
         onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+  </VStack>
+);
+
+const listItemMessageSample: ListItemMessage = {
+  formattedDate: "09 dic",
+  isRead: false,
+  messageTitle: "Il tuo appuntamento",
+  organizationName: "Ministero dell'Interno",
+  serviceName: "Carta d'Identità Elettronica",
+  accessibilityLabel: "Leggi il messaggio inviato dal Ministero dell'Interno",
+  serviceLogos: [{ uri: `${cdnPath}80215430580.png` }],
+  onLongPress: () => {
+    Alert.alert("Long press");
+  },
+  onPress: () => {
+    Alert.alert("Pressed");
+  }
+};
+
+const renderListItemMessage = () => (
+  <VStack space={componentMargin}>
+    <DSComponentViewerBox name="ListItemMessageSkeleton">
+      <ListItemMessageSkeleton accessibilityLabel="Loading message…" />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, read/unread">
+      <ListItemMessage {...listItemMessageSample} isRead={false} />
+      <Divider />
+      <ListItemMessage {...listItemMessageSample} isRead={true} />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, selected">
+      <ListItemMessage
+        {...listItemMessageSample}
+        isRead={true}
+        selected={true}
+      />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, with badge">
+      <ListItemMessage
+        {...listItemMessageSample}
+        serviceName="Richiesta di cittadinanza"
+        messageTitle="Hai un nuovo avviso di pagamento"
+        tag={{ variant: "success", text: I18n.t("messages.badge.paid") }}
+        isRead={true}
+      />
+      <Divider />
+      <ListItemMessage
+        {...listItemMessageSample}
+        serviceName="Richiesta di cittadinanza"
+        messageTitle="Hai acquisito la cittadinanza italiana"
+        tag={{
+          variant: "legalMessage",
+          text: I18n.t("features.pn.details.badge.legalValue")
+        }}
+        isRead={true}
+      />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, avatar undefined & double">
+      <ListItemMessage
+        {...listItemMessageSample}
+        organizationName="Comune di Isolabona"
+        serviceName="Servizi cimiteriali"
+        messageTitle="Hai un nuovo avviso di pagamento"
+        serviceLogos={undefined}
+        isRead={true}
+      />
+      <Divider />
+      <ListItemMessage
+        {...listItemMessageSample}
+        avatarDouble={true}
+        organizationName={"Comune di Milano"}
+        serviceName="Tassa sui rifiuti (TARI)"
+        messageTitle="Hai un pagamento in scadenza"
+        serviceLogos={[{ uri: `${cdnPath}1199250158.png` }]}
+        isRead={true}
+      />
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ListItemMessage, stress test">
+      <ListItemMessage
+        {...listItemMessageSample}
+        organizationName={"Nome dell'ente molto molto molto lungo"}
+        serviceName="Nome del servizio mooolto lungo"
+        messageTitle={
+          "Titolo del messaggio scritto da una persona davvero prolissa"
+        }
+        serviceLogos={[{ uri: `${cdnPath}5779711000.png` }]}
+        isRead={true}
       />
     </DSComponentViewerBox>
   </VStack>
@@ -391,10 +490,29 @@ const renderListItemHeader = () => (
   </VStack>
 );
 
+/* LIST ITEM SEARCH INSTITUTION */
+
+const renderListItemSearchInstitution = () => (
+  <DSComponentViewerBox name="ListItemSearchInstitution">
+    <ListItemSearchInstitution
+      value={"Comune di Ischia"}
+      numberOfLines={2}
+      onPress={onButtonPress}
+      avatarProps={{ source: { uri: `${cdnPath}643280639.png` } }}
+    />
+    <Divider />
+    <ListItemSearchInstitution
+      value={"Comune di Isolabona"}
+      numberOfLines={2}
+      onPress={onButtonPress}
+      avatarProps={{ source: {} }}
+    />
+  </DSComponentViewerBox>
+);
+
 /* LIST ITEM TRANSACTION */
 
 /* Mock assets */
-const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
 const organizationLogoURI = {
   imageSource: `${cdnPath}82003830161.png`,
   name: "Comune di Milano"
