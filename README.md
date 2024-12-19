@@ -434,7 +434,7 @@ Then, from your command line, run these commands:
 $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
 
 # Run Android build
-$ yarn run-android
+$ yarn dev:run-android
 ```
 
 ### iOS Simulator
