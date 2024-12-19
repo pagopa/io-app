@@ -31,8 +31,11 @@ import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { EnhancedHeight, StandardHeight } from "./DS/MessageListItem";
-import { SkeletonHeight } from "./DS/MessageListItemSkeleton";
+import {
+  ListItemMessageEnhancedHeight,
+  ListItemMessageStandardHeight
+} from "./DS/ListItemMessage";
+import { SkeletonHeight } from "./DS/ListItemMessageSkeleton";
 
 export type LayoutInfo = {
   index: number;
@@ -247,7 +250,9 @@ export const generateMessageListLayoutInfo = (
         isPaymentMessageWithPaidNoticeSelector(state, message.category);
       const itemLayoutInfo: LayoutInfo = {
         index: i,
-        length: messageHasBadge ? EnhancedHeight : StandardHeight,
+        length: messageHasBadge
+          ? ListItemMessageEnhancedHeight
+          : ListItemMessageStandardHeight,
         offset:
           i > 0
             ? messageListLayoutInfo[i - 1].offset +
