@@ -7,13 +7,11 @@ import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
-  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
   shownPreconditionStatusAction,
   toErrorPayload,
   toIdlePayload,
-  toLoadingContentPayload,
   toRetrievingDataPayload,
   toScheduledPayload,
   toShownPayload,
@@ -35,7 +33,6 @@ import {
   shouldPresentPreconditionsBottomSheetSelector,
   toErrorMPS,
   toIdleMPS,
-  toLoadingContentMPS,
   toRetrievingDataMPS,
   toScheduledMPS,
   toShownMPS,
@@ -57,7 +54,6 @@ const messagePreconditionStatusesGenerator = (
 ) => [
   toErrorMPS(messageId, inputCategoryTag, errorReason),
   toIdleMPS(),
-  toLoadingContentMPS(messageId, inputCategoryTag, content),
   toRetrievingDataMPS(messageId, inputCategoryTag),
   toScheduledMPS(messageId, inputCategoryTag),
   toShownMPS(messageId, inputCategoryTag, content),
@@ -69,7 +65,6 @@ const computeExpectedOutput = (
   withAction: ActionType<
     | typeof errorPreconditionStatusAction
     | typeof idlePreconditionStatusAction
-    | typeof loadingContentPreconditionStatusAction
     | typeof retrievingDataPreconditionStatusAction
     | typeof scheduledPreconditionStatusAction
     | typeof shownPreconditionStatusAction
@@ -97,7 +92,7 @@ const computeExpectedOutput = (
           );
       }
       break;
-    case "loadingContent":
+    case "retrievingData":
       switch (withAction.type) {
         case "TO_IDLE_PRECONDITION_STATUS":
           return toIdleMPS();
@@ -109,24 +104,6 @@ const computeExpectedOutput = (
           );
         case "TO_SHOWN_PRECONDITION_STATUS":
           return toShownMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            fromStatus.content
-          );
-      }
-      break;
-    case "retrievingData":
-      switch (withAction.type) {
-        case "TO_IDLE_PRECONDITION_STATUS":
-          return toIdleMPS();
-        case "TO_ERROR_PRECONDITION_STATUS":
-          return toErrorMPS(
-            fromStatus.messageId,
-            fromStatus.categoryTag,
-            withAction.payload.reason
-          );
-        case "TO_LOADING_CONTENT_PRECONDITION_STATUS":
-          return toLoadingContentMPS(
             fromStatus.messageId,
             fromStatus.categoryTag,
             withAction.payload.content
@@ -159,12 +136,11 @@ describe("messagePrecondition reducer", () => {
   const changeStatusActions = [
     errorPreconditionStatusAction(toErrorPayload(errorReason)),
     idlePreconditionStatusAction(toIdlePayload()),
-    loadingContentPreconditionStatusAction(toLoadingContentPayload(content)),
     retrievingDataPreconditionStatusAction(toRetrievingDataPayload()),
     scheduledPreconditionStatusAction(
       toScheduledPayload(messageId, categoryTag)
     ),
-    shownPreconditionStatusAction(toShownPayload()),
+    shownPreconditionStatusAction(toShownPayload(content)),
     updateRequiredPreconditionStatusAction(toUpdateRequiredPayload())
   ];
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(initialStatus =>
@@ -204,23 +180,6 @@ describe("Message precondition status generators", () => {
       state: "idle"
     };
     const mps = toIdleMPS();
-    expect(mps).toStrictEqual(expectedMPS);
-  });
-  it("should return proper istance for 'toLoadingContentMPS'", () => {
-    const expectedMPS = {
-      state: "loadingContent",
-      messageId,
-      categoryTag,
-      content: {
-        title: "A title",
-        markdown: "A markdown content"
-      }
-    };
-    const mps = toLoadingContentMPS(
-      expectedMPS.messageId,
-      expectedMPS.categoryTag,
-      expectedMPS.content
-    );
     expect(mps).toStrictEqual(expectedMPS);
   });
   it("should return proper istance for 'toRetrievingDataMPS'", () => {
@@ -274,7 +233,6 @@ describe("foldPreconditionStatus", () => {
     jest.fn(),
     jest.fn(),
     jest.fn(),
-    jest.fn(),
     jest.fn()
   ];
 
@@ -291,8 +249,7 @@ describe("foldPreconditionStatus", () => {
           mocks[2],
           mocks[3],
           mocks[4],
-          mocks[5],
-          mocks[6]
+          mocks[5]
         )(status);
         mocks.forEach((mock, mockIndex) => {
           if (statusIndex === mockIndex) {
@@ -373,7 +330,6 @@ describe("preconditionsTitleContentSelector", () => {
   const expectedOutput = [
     "empty",
     undefined,
-    "header",
     "loading",
     undefined,
     "header",
@@ -398,9 +354,7 @@ describe("preconditionsTitleContentSelector", () => {
 describe("preconditionsTitleSelector", () => {
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
-      status.state === "loadingContent" || status.state === "shown"
-        ? status.content.title
-        : undefined;
+      status.state === "shown" ? status.content.title : undefined;
     it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
       const globalStatus = {
         entities: {
@@ -419,7 +373,6 @@ describe("preconditionsContentSelector", () => {
   const expectedOutput = [
     "error",
     undefined,
-    "content",
     "loading",
     undefined,
     "content",
@@ -444,9 +397,7 @@ describe("preconditionsContentSelector", () => {
 describe("preconditionsContentMarkdownSelector", () => {
   messagePreconditionStatusesGenerator(TagEnum.GENERIC).forEach(status => {
     const expectedOutput =
-      status.state === "loadingContent" || status.state === "shown"
-        ? status.content.markdown
-        : undefined;
+      status.state === "shown" ? status.content.markdown : undefined;
     it(`should return '${expectedOutput}' for status '${status.state}'`, () => {
       const globalStatus = {
         entities: {
@@ -466,7 +417,6 @@ describe("preconditionsFooterSelector", () => {
   const expectedOutput = [
     "view",
     undefined,
-    "view",
     "view",
     undefined,
     "content",
