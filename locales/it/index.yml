@@ -524,6 +524,9 @@ profile:
       send_email_messages:
         title: Inoltro dei messaggi via email
         subtitle: Ricevi un’anteprima dei messaggi
+      appearance:
+        title: Aspetto
+        subtitle: Personalizza la tua esperienza in app
       language:
         title: Lingua
         subtitle: Scegli la lingua

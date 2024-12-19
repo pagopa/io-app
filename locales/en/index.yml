@@ -524,6 +524,9 @@ profile:
       send_email_messages:
         title: Forwarding messages by email
         subtitle: Receive message previews
+      appearance:
+        title: Appearance
+        subtitle: Customise your app experience
       language:
         title: Language
         subtitle: Choose language
