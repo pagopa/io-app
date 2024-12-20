@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
  */
 const IdpLoginScreen = () => {
   const dispatch = useIODispatch();
+  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
+  // ensuring the re-execution of the `useLollipopLoginSource` hook.
   const { replace } = useIONavigation();
   const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
   const selectedIdpTextData = useIOSelector(
@@ -264,6 +266,8 @@ const IdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
+    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
+    // ensuring the re-execution of the `useLollipopLoginSource` hook.
     replace(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
