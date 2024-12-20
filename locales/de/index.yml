@@ -58,6 +58,7 @@ date:
     - "am"
     - "pm"
 global:
+  why: "Warum?"
   you: "DU"
   id: "ID"
   badges:
@@ -1796,10 +1797,12 @@ wallet:
       noticeNumber:
         title: "Gib den Zahlungskodex ein"
         subtitle: "Er hat 18 Ziffern und ist neben dem QR-Code zu finden."
+        validationError: "18 Ziffern, die mit 0, 1 oder 3 beginnen."
         placeholder: "Zahlungskodex"
       fiscalCode:
         title: "Gib die Steuernummer der Körperschaft ein"
         subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
+        validationError: "11 Ziffern eingeben."
         placeholder: "Steuernummer der Körperschaft"
     abortDialog:
       title: "Möchtest du den Vorgang abbrechen?"
@@ -1907,6 +1910,40 @@ wallet:
       METHOD_NOT_ENABLED:
         title: "Zahlungsmethode in der App aktivieren"
         subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
+      PAYMENT_METHODS_NOT_AVAILABLE:
+        title: "Möchtest du mit Karte bezahlen? Füg sie jetzt hinzu!"
+        subtitle: "Die Methode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
+        primaryAction: "Karte hinzufügen"
+        secondaryAction: "Andere Methoden verwenden"
+      PAYMENT_REVERSED:
+        title: "Die Zahlung ist fehlgeschlagen"
+        subtitle: "Der autorisierte Betrag wurde auf deine Zahlungsmethode zurücküberwiesen. Die Überweisung kann einige Zeit dauern."
+        primaryAction: "Mehr erfahren"
+        secondaryAction: "Schließen"
+      PAYPAL_REMOVED_ERROR:
+        title: "Autorisierung abgelehnt"
+        subtitle: "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche erneut, die Zahlung durchzuführen."
+      IN_APP_BROWSER_CLOSED_BY_USER:
+        title: "Du hast die Zahlung abgebrochen"
+        subtitle: "Überprüfe das Ergebnis im Tab Zahlungen. Wenn du eine Zahlung vornehmen möchtest, warte bitte mindestens 15 Minuten, bevor du es erneut versuchst."
+      INSUFFICIENT_AVAILABILITY_ERROR:
+        title: "Dein Guthaben auf der Karte ist nicht ausreichend."
+        subtitle: "Es wurde kein Betrag abgebucht. Bevor du es erneut versuchst, lade die Karte auf oder verwende eine andere Zahlungsmethode."
+      CVV_ERROR:
+        title: "Der eingegebene Sicherheitscode ist falsch"
+        subtitle: "Es wurde kein Betrag abgebucht. Der Code (CVV oder CVC) ist 3-stellig und befindet sich auf der Rückseite der Karte. Bei American Express hat der Code (CID) 4 Ziffern und befindet sich auf der Vorderseite."
+      PLAFOND_LIMIT_ERROR:
+        title: "Du hast das Ausgabenlimit Ihrer Karte überschritten"
+        subtitle: "Es wurde kein Betrag abgebucht. Bevor du es erneut versuchst, ändere das Ausgabenlimit oder verwende eine andere Zahlungsmethode."
+      BE_NODE_KO:
+        title: "Wir haben einige Probleme mit den Zahlungssystemen"
+        subtitle: "Überprüfe das Ergebnis der Zahlung im Tab Zahlungen, andernfalls warte einige Minuten, bevor du es erneut versuchst."
+      PSP_ERROR:
+        title: "Die Zahlung ist fehlgeschlagen"
+        subtitle: "Es wurde kein Betrag abgebucht. Sollte das Problem weiterhin bestehen, versuche es mit einer anderen Methode oder einem anderen Zahlungsanbieter."
+      AUTH_REQUEST_ERROR:
+        title: "Wir haben einige Probleme mit den Zahlungssystemen"
+        subtitle: "Versuche es später erneut."
     support:
       button: "Support kontaktieren"
       supportTitle: "Support kontaktieren"
@@ -1946,6 +1983,7 @@ messages:
       description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "erhalten am"
       received_at: "erhalten um"
+      selected: "ausgewählt"
   contextualHelpTitle: "Mitteilungen verwenden"
   counting:
     one: "Du hast eine Mitteilung"
@@ -1990,6 +2028,8 @@ messages:
     reminderRemoveFailure: "Fehler beim Entfernen der Erinnerung, bitte versuche es erneut"
     preferenceCalendarSelect: "Wähle deinen Standardkalender"
     calendarPermDenied:
+      title: "Zugriff zulassen"
+      description: "Wir haben keinen Zugang zu deinem Kalender. Bitte aktiviere die Berechtigungen, um fortzufahren."
       ok: "Berechtigungen freigeben"
       cancel: "Abbrechen"
     errors:
@@ -2012,9 +2052,19 @@ messages:
     archive:
       success: "Erfolgreich archiviert!"
       failure: "Die Archivierung ist fehlgeschlagen"
+    generic:
+      failure: "Der Vorgang ist fehlgeschlagen"
+      success: "Vorgang erfolgreich!"
     restore:
       success: "Wiederherstellung durchgeführt."
       failure: "Die Wiederherstellung ist fehlgeschlagen"
+  search:
+    emptyState:
+      title: "Mindestens drei Zeichen eingeben"
+    input:
+      cancel: "Abbrechen"
+      clear: "Löschen"
+      placeholderShort: "Text eingeben"
 messageDetails:
   accessibilityAttachmentIcon: "Enthält Anhänge"
   contextualHelpTitle: "Mitteilungsdetails"
@@ -2052,6 +2102,11 @@ messageDetails:
   bottomSheet:
     title: "Was ist eine dynamische Mitteilung?"
     body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
+    bodyPt1: "Es handelt sich um eine Mitteilung, die die Körperschaft "
+    bodyPt2: "nach dem Senden ändern kann"
+    bodyPt3: ". Auf diese Weise sind die darin enthaltenen Informationen immer korrekt.\nEine Körperschaft kann die Informationen in einer dynamischen Mitteilung "
+    bodyPt4: "nur in bestimmten Fällen"
+    bodyPt5: " ändern, zum Beispiel um alte Informationen zu ändern oder eine nicht mehr gültige Anlage zu aktualisieren.\nWenn sie dir neue Informationen oder wichtige Aktualisierungen mitteilen muss, schickt sie dir eine neue Mitteilung."
   footer:
     contacts: "Absender kontaktieren"
     showMoreData: "Mehr anzeigen"
@@ -2089,9 +2144,17 @@ messagePDFPreview:
     opening: "Beim Öffnen des Dokuments ist ein Fehler aufgetreten. Möglicherweise hast du keine PDF-App installiert."
     saving: "Beim Speichern des Dokuments ist ein Fehler aufgetreten."
 notifications:
+  profileBanner:
+    title: "Aktiviere Push-Benachrichtigungen, damit du weißt, wenn du eine Mitteilung auf IO erhältst."
+    cta: "Push-Benachrichtigungen aktivieren"
   installation:
     errorTitle: "Push-Benachrichtigungen"
     errorMessage: "Bei der Registrierung des Push-Benachrichtigungsdienstes ist ein Fehler unterlaufen"
+  modal:
+    content: "Aktiviere Push-Benachrichtigungen, um sofort zu erfahren, wenn du eine neue Mitteilung in der App erhältst."
+    primaryButton: "Push-Benachrichtigungen aktivieren"
+    secondaryButton: "Jetzt nicht"
+    title: "Verpasse keine wichtigen Nachrichten!"
 biometric_recognition:
   contextualHelpTitle: "So funktioniert die biometrische Erkennung"
   switchLabel: "Biometrische Erkennung aktiveren"
@@ -2100,6 +2163,10 @@ biometric_recognition:
   needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
 send_email_messages:
   title: "Mitteilungen mittels E-Mail weiterleiten"
+  subtitle: "Möchtest du, dass IO eine Vorschau der Mitteilung an die E-Mail-Adresse sendet:"
+  switch:
+    title: "Eine Vorschau per E-Mail senden"
+    subtitle: "Du erhältst eine Vorschau der Mitteilung an deine E-Mail-Adresse, sofern der Dienst dies zulässt."
 services:
   optIn:
     preferences:
@@ -2150,7 +2217,7 @@ services:
         title: "Hervorgehobene Körperschaften"
     institutions:
       title: "National"
-    searchLink: "Suche nach allen verfügbaren lokalen Diensten"
+    searchLink: "Suche nach allen verfügbaren Diensten"
   institution:
     failure:
       title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut"
@@ -2209,6 +2276,7 @@ identification:
     congiunction: "oder"
   title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
+  titleValidation: "Vorgang genehmigen"
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
@@ -2253,6 +2321,7 @@ openMaps:
 genericError: "Ein Fehler ist aufgetreten"
 titleUpdateApp: "Aktualisiere IO!"
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
+messageUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, ist es notwendig, sie auf die neueste Version zu aktualisieren."
 titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
 messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
 openStore: "Öffne {{storeName}}"
@@ -2299,20 +2368,37 @@ bonus:
       code: "Durch Tippen auf das Elements wird der Code kopiert"
     name: "Nationale Jugendkarte"
     departmentName: "Präsidium des italienischen Ministerrates, Abteilung für Jugendpolitik und Zivildienst"
+    merchantSearch:
+      goToSearchAccessibilityLabel: "Zur Suche der Teilnehmer gehen"
+      emptyList:
+        shortQuery:
+          titleWithCount: "Suche unter {{merchantCount}} Partnern der Nationalen Jugendkarte"
+          titleWithoutCount: "Suche bei den Partnern der Nationalen Jugendkarte"
+        noResults:
+          title: "Wir haben nichts gefunden"
+          subtitle: "Versuche, mit anderen Begriffen zu suchen.\nWenn du nicht fündig wirst, ist der Partner möglicherweise nicht beigetreten oder hat keine aktiven Angebote."
+      input:
+        placeholder: "Suchen"
+        cancel: "Abbrechen"
+        clear: "Löschen"
     merchantsList:
       news: "Neu"
       online: "Online"
       places: "Orte"
       navigationTitle: "Rabatte und Ermäßigungen"
-      screenTitle: Scopri le opportunità
-      merchantsAll: Tutti i partner
+      screenTitle: "Alle Vorteile entdecken"
+      merchantsAll: "Alle Partner"
       tabs:
-        perInitiative: Per categoria
-        perMerchant: Per partner
+        perInitiative: "Nach Kategorie"
+        perMerchant: "Nach Partner"
       cta:
         filter: "Filtern"
       categoriesList:
         title: "Wähle eine Kategorie und entdecke Rabatte und Ermäßigungen"
+        bottomSheet:
+          cta: "Wie sind die Kategorien angeordnet?"
+          title: "Wie sind die Kategorien angeordnet?"
+          content: "Um deine Suche zu erleichtern und deine Erfahrung zu verbessern, haben wir die Kategorien nach der Häufigkeit der Nutzung geordnet. Diese Informationen sind nicht mit deinem Profil verknüpft, sondern beruhen auf den Gesamtdaten aller Nutzer, die die Nationale Jugendkarte nutzen und der Verarbeitung ihrer Daten zugestimmt haben."
       filter:
         title: "Anbieter filtern"
         searchTitle: "Suche nach Name"
@@ -2334,11 +2420,11 @@ bonus:
           byName: "Alphabetisch geordnet"
     merchantDetail:
       title:
-        deals: Opportunità
+        deals: "Rabatt"
         description: "Beschreibung"
         contactInfo: "Adressen"
       cta:
-        website: Vai al sito del partner
+        website: "Geh zur Webseite des Partners"
       categories:
         counting: "und weitere {{count}}"
         cultureAndEntertainment: "Kultur und Freizeit"
@@ -2351,20 +2437,39 @@ bonus:
         travel: "Reisen und Transport"
         mobility: "Nachhaltige Mobilität"
         job: "Jobs und Ausbildungsplätze"
+      information:
+        address: "Adresse"
+        allNational: "Alle Verkaufsstellen landesweit"
+      discount:
+        description: "Beschreibung"
+        conditions: "Bedingungen"
+        validity: "Gültigkeit"
+        cta:
+          api: "Rabattcode aktivieren"
+          static: "Zum Rabattcode"
+          bucket: "Zum Rabattcode"
+          landingpage: "Zum Rabatt gehen"
+          createNew: "Neuer Rabattcode"
+        secondaryCta: "Zum Rabatt gehen"
+        title: "Hier ist der Rabattcode!"
+        expired: "Der Code ist abgelaufen"
+        copyButton: "Rabattcode kopieren"
+        error: "Zurzeit ist es nicht möglich, einen Code zu generieren."
     cta:
-      activeBonus: Attiva Carta Giovani Nazionale
-      back: Non ora
+      activeBonus: "Nationale Jugendkarte aktivieren"
+      back: "Jetzt nicht"
       deactivateBonus: "Aus dem Konto entfernen"
-      goToDetail: Usa la Carta
+      goToDetail: "Karte benützen"
     detail:
       cta:
-        buyers: Scopri le opportunità CGN
+        buyers: "CGN-Vorteile entdecken"
+        discover: "Vorteile entdecken"
         otp: "Code generieren"
         eyca:
           copy: "EYCA Kartennummer kopieren"
-          pending: Scopri le opportunità EYCA
+          pending: "EYCA-Vorteile entdecken"
           bottomSheet: "Besuche die EYCA Website"
-          showEycaDiscounts: Scopri le opportunità EYCA
+          showEycaDiscounts: "EYCA-Vorteile entdecken"
       information:
         active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
         warning: "Achtung! "
@@ -2378,19 +2483,20 @@ bonus:
         eycaNumber: "Kartennummer"
         eycaPending: "Wir verknüpfen deine nationale Jugendkarte mit einer EYCA Nummer."
         eycaError: "Wir hatten Probleme mit den EYCA Systemen."
-        eycaBottomSheetTitle: "Cos’è il circuito EYCA?"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nPuoi usare la Carta presso i partner aderenti, per usufruire delle opportunità disponibili per attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        eycaBottomSheetTitle: "Was ist EYCA?"
+        eycaDescription: "Bis zum Alter von 31 Jahren ist **deine Nationale Jugendkarte Mitglied der EYCA** (European Youth Card Association).\nDu kannst die Karte bei den teilnehmenden Partnern verwenden, um die Vorteile für kulturelle Aktivitäten, Einkaufen, Transport, Verpflegung und Unterkunft auch in den europäischen Ländern, die an dem Programm teilnehmen, zu nutzen."
         badge:
           active: "Aktiv"
           revoked: "Widerrufen"
           expired: "Abgelaufen"
         date:
+          valid_until: "Gültig bis {{date}}"
           activated: "Aktiviert am"
           expired: "Abgelaufen am"
           revoked: "Widerrufen am"
         expiration:
-          cgn: "Aktiv bis"
-          eyca: "Aktiv bis"
+          cgn: "Gültig bis"
+          eyca: "Gültig bis"
     activation:
       eyca:
         loading:
@@ -2401,19 +2507,19 @@ bonus:
           body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
       loading:
         caption: "Wir aktivieren deine Nationale Jugendkarte"
-        subCaption: "Attendi qualche secondo..."
+        subCaption: "Bitte warte ein paar Sekunden..."
       error:
         title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
-        body: "Ci dispiace, riprova più tardi."
+        body: "Es tut uns leid, bitte versuche es später noch einmal."
       ineligible:
         title: "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte."
         body: "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
       timeout:
-        title: "Stiamo lavorando la tua richiesta."
+        title: "Wir bearbeiten deine Anfrage."
         body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
         title: "Deine Nationale Jugendkarte ist bereits aktiv!"
-        body: "Puoi trovare la tua Carta nella sezione Portafoglio."
+        body: "Du findest sie im Tab Konto der App."
       pending:
         title: "Deine Nationale Jugendkarte wird gerade aktiviert."
         body: "Du erhältst eine Nachricht, wenn sie aktiviert ist."
@@ -2424,8 +2530,8 @@ bonus:
         toast: "Zahlungsmethode von deinem Konto entfernt!"
         alert:
           title: "Karte deaktivieren"
-          message: "La Carta verrà disattivata e non potrai più accedere alle opportunità disponibili."
-        expired: Rimuovi dal Portafoglio
+          message: "Die Karte wird deaktiviert und du hast keinen Zugang mehr zu den verfügbaren Vorteilen."
+        expired: "Vom Konto entfernen"
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
       code:
@@ -2439,6 +2545,16 @@ bonus:
           other: "{{seconds}} Sekunden"
 features:
   messages:
+    pushNotifications:
+      banner:
+        title: "Verpasse keine wichtigen Mitteilungen"
+        body: "Aktiviere Push-Benachrichtigungen, damit du weißt, wenn du eine Mitteilung auf IO erhältst"
+        CTA: "Push-Benachrichtigungen aktivieren"
+        bottomSheet:
+          title: "Möchtest du diesen Hinweis nicht mehr sehen?"
+          body: "Bitte beachte, dass die Aktivierung von Push-Benachrichtigungen dazu beitragen kann, dass du wichtige Mitteilungen und Zahlungsfristen nicht verpasst."
+          cta: "Später erinnern"
+          cta2: "Nicht erneut anzeigen"
     attachmentDownloadFeedback: "Download läuft"
     attachments: "Anhänge"
     loading:
@@ -2457,6 +2573,9 @@ features:
       title: "pagoPA-Zahlungsmitteilungen"
       noticeCode: "Zahlungskodex"
       pay: "Zahlen"
+  greenPass:
+    button: "Zurück"
+    title: "Dieser Dienst ist auf IO nicht mehr aktiv"
   pn:
     service:
       activate: "Aktiviere den Dienst"
@@ -2475,6 +2594,7 @@ features:
       cancelledMessage:
         body: "Diese Zustellung wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
         unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
+        unpaidPaymentsNew: "Für die Erstattung von Zahlungen wende dich bitte an die Körperschaft."
         payments: "Zahlungen"
       paymentSection:
         title: "pagoPA-Zahlungsmitteilungen"
@@ -2522,6 +2642,11 @@ features:
         title: "Möchtest du eine Aufforderung bezahlen?"
         action: "Geh zum Bereich Zahlungen"
         close: "Schließen"
+      otherMethods:
+        error:
+          banner:
+            label: "Wir konnten einige Elemente der Liste nicht laden."
+            cta: "Erneut versuchen"
     cards:
       categories:
         all: "Alle"
@@ -2532,11 +2657,24 @@ features:
         other: "Mehr"
     onboarding:
       title: "Was möchtest du deinem Konto hinzufügen?"
+      sections:
+        itw: "Dokumente"
+        other: "Mehr"
+      badge:
+        active: "Bereits vorhanden"
+        unavailable: "Nicht verfügbar"
+        requested: "In Bearbeitung"
       options:
         cgn: "Nationale Jugendkarte"
         welfare: "Initiativen für das Gemeinwohl"
         payments: "Zahlungsmethoden"
   payments:
+    backoff:
+      second: "1 Sekunde"
+      seconds: "{{seconds}} Sekunden"
+      minute: "1 minuto"
+      minutes: "{{minutes}} Minuten"
+      retryCountDown: "Du kannst es in {{time}} erneut versuchen."
     title: "Zahlungen"
     cta: "Aufforderung bezahlen"
     remoteAlert:
@@ -2549,6 +2687,10 @@ features:
         action: "Zahlungsmethode hinzufügen"
       status:
         expired: "Abgelaufen"
+      error:
+        banner:
+          label: "Das Laden der Zahlungsmethoden ist fehlgeschlagen."
+          retryButton: "Erneut versuchen"
     transactions:
       multiplePayment: "Mehrfache Zahlung"
       title: "Transaktionsverlauf"
@@ -2565,17 +2707,30 @@ features:
         shareButton: "Speichern oder teilen"
         error: "Die Quittung konnte nicht abgerufen werden."
         download: "Quittung abrufen"
-        hideFromList: Von der Liste verstecken
+        hideFromList: "Von der Liste verstecken"
         delete:
           successful: "Die Quittung wurde ausgeblendet"
           failed: "Es ist ein Fehler aufgetreten, bitte versuche es erneut"
         hideBanner: 
           title: "Möchtest du diese Quittung aus deiner Liste ausblenden?"
           content: "Dieser Vorgang ist unwiderruflich. Die Quittung wird nicht mehr in deiner Quittungsliste angezeigt."    
-          accept: "Ausblenden"
+          accept: "Ja, ausblenden"
       details:
         totalFeeUnknown: "Der Gesamtbetrag enthält keine Provisionskosten: du findest diese in dem Dokument, das du von {{pspName}} erhalten hast."
         totalFeeUnknownPsp: "Die Gesamtsumme enthält keine Provisionskosten: du findest diese in dem Dokument, das du vom Zahlungsdienstleister (PSP) erhalten hast."
+      error:
+        banner:
+          label: "Das Laden der Qittungen ist fehlgeschlagen."
+          retryButton: "Erneut versuchen"
+      filters:
+        tabs:
+          all: "Alle"
+          payer: "In-App-Zahlung"
+          debtor: "Auf mich lautend"
+      list:
+        empty:
+          title: "Keine Quittung gefunden"
+          subtitle: "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, den du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
     details:
       payPal:
         banner:
@@ -2588,6 +2743,13 @@ features:
         explainationContent: "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über 'PayPal-Schnellzahlung' abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
     errors:
       transactionCreationError: "Es gibt ein Problem mit den Bezahlsystemen."
+    checkout:
+      bottomSheet:
+        PAYMENT_REVERSED:
+          title: "Was tun, wenn die Zahlung fehlschlägt?"
+          payNotice: "**Bezahle die Zahlungsmitteilung**\nDenke daran, die Zahlungsmitteilung innerhalb der von der Körperschaft gesetzten Fristen zu bezahlen. Wenn du nicht über IO zahlen kannst, [entdecke andere pagoPA-fähige Kanäle]({{url}})"
+          waitRefund: "**Warte auf die Erstattung**\nNormalerweise wird der Betrag innerhalb weniger Minuten wieder gutgeschrieben. In anderen Fällen kann die Geldüberweisung auf dein Konto oder deine Karte länger dauern."
+          contactSupport: "**Kontaktiere den Support**\nWenn du nach 5 Werktagen immer noch keine Rückerstattung erhalten hast, kontaktiere bitte den Support."  
 support:
   ticketList:
     noTicket:
@@ -2605,6 +2767,9 @@ support:
   panicMode:
     title: "Leider können wir dir zur Zeit nicht helfen"
     body: "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
+  errorGetZendeskToken:
+    title: "Wir können derzeit keine Ticket öffnen"
+    subtitle: "Versuche es später erneut"
   askPermissions:
     nameSurname: "Vor- und Nachname"
     fiscalCode: "Steuernummer"
@@ -2720,6 +2885,8 @@ transaction:
     totalFee: "Der Gesamtbetrag umfasst "
     totalFeePsp: "Provision, berechnet von {{pspName}}."
     totalFeeNoPsp: "Provision, die vom Transaktionsdienstleister (PSP) erhoben wird."
+    bannerImported:
+      content: "Die pagoPA-Quittung ist nicht verfügbar. Wende dich an die Stelle des Zahlungsempfängers, wenn du den Zahlungsbeleg, d. h. das Dokument, das die Begleichung einer Schuld bescheinigt, benötigst."
     info:
       title: "Informationen zur Transaktion"
       pspName: "Zahlungsdienstleister (PSP)"
@@ -2758,3 +2925,27 @@ permissionRequest:
         2: "Wähle 'IO'"
         3: "Wähle 'Fotos' und erlaube den Zugriff"
     cta: "Öffne Einstellungen"
+FIMS:
+  updateApp:
+    header: "Aktualisiere die App, um fortzufahren"
+    body: "Um weiterhin alle Funktionen nutzen zu können, lade die neue Version von IO aus dem Store herunter."
+  history:
+    errorStates:
+      dataUnavailable: "Daten nicht verfügbar"
+      ko:
+        title: "Es gibt ein vorübergehendes Problem"
+        body: "Hier kannst du den Verlauf deiner Zugriffe auf externe Dienste über IO einsehen und eine Kopie per E-Mail anfordern."
+      toast: "Beim Laden der Liste ist ein Problem aufgetreten. Bitte versuche es erneut"
+    emptyBody: "Du hast noch keine Dienste Dritter in Anspruch genommen"
+    exportData:
+      alerts:
+        areYouSure: "Willst du wirklich eine Kopie aller Zugänge exportieren?"
+        alreadyExporting:
+          title: "Wir bearbeiten bereits einen Exportantrag."
+          body: "Wenn die Bearbeitung abgeschlossen ist, erhältst du eine E-Mail mit allen Informationen zum Zugriffsverlauf."
+      CTA: "Eine Kopie per E-Mail anfordern"
+      successToast: "Erledigt! Prüfe dein Postfach."
+      errorToast: "Beim Senden der Anfrage ist ein Problem aufgetreten. Bitte versuche es erneut"
+    profileCTA:
+      title: "Kontrolle deiner Zugriffe"
+      subTitle: "Zugriffshistorie mit IO anzeigen"
