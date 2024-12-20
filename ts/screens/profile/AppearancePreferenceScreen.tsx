@@ -22,20 +22,19 @@ const AppearancePreferenceScreen = (): ReactElement => {
     useState<TypefaceChoice>("comfortable");
 
   const [selectedColorMode, setSelectedColorMode] =
-    useState<ColorModeChoice>("system");
+    useState<ColorModeChoice>("light");
 
   // Options for typeface
   const typefaceOptions = [
     {
       id: "comfortable" as TypefaceChoice,
       value: "Confortevole",
-      description:
-        "Progettato per migliorare la leggibilità e accessibilità del testo"
+      description: "Progettato per una migliore leggibilità dei testi"
     },
     {
       id: "traditional" as TypefaceChoice,
-      value: "Tradizionale",
-      description: "Utilizzato nella versione precedente dell'interfaccia"
+      value: "Standard",
+      description: "Lo stile di sempre, con forme strette e geometriche"
     }
   ];
 
@@ -43,18 +42,18 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const colorModeOptions = [
     {
       id: "system" as ColorModeChoice,
-      value: "Automatica",
+      value: "Automatico",
       description: "Cambia in base alle impostazioni di sistema",
       disabled: true
     },
     {
       id: "dark" as ColorModeChoice,
-      value: "Scura",
+      value: "Scuro",
       disabled: true
     },
     {
       id: "light" as ColorModeChoice,
-      value: "Chiara",
+      value: "Chiaro",
       disabled: true
     }
   ];
@@ -69,7 +68,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
     >
       <VStack space={24}>
         <View>
-          <ListItemHeader label={"Carattere"} />
+          <ListItemHeader label={"Stile carattere"} />
           <RadioGroup<TypefaceChoice>
             type="radioListItem"
             items={typefaceOptions}
@@ -80,7 +79,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
         <View>
           <ListItemHeader
-            label={"Modalità cromatica"}
+            label={"Tema"}
             endElement={{
               type: "badge",
               componentProps: {
