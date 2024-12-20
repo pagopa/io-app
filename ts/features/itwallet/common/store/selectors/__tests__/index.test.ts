@@ -4,12 +4,12 @@ import {
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwIsWalletEmptySelector } from "../../../../credentials/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../../../lifecycle/store/selectors";
 import { itwIsFeedbackBannerHiddenSelector } from "../preferences";
 import {
   isItwEnabledSelector,
   isItwFeedbackBannerEnabledSelector
-} from "../../../../../../store/reducers/backendStatus/remoteConfig";
-import { itwLifecycleIsValidSelector } from "../../../../lifecycle/store/selectors";
+} from "../remoteConfig";
 
 type JestMock = ReturnType<typeof jest.fn>;
 
@@ -24,13 +24,10 @@ jest.mock("../preferences", () => ({
   itwIsFeedbackBannerHiddenSelector: jest.fn()
 }));
 
-jest.mock(
-  "../../../../../../store/reducers/backendStatus/remoteConfig",
-  () => ({
-    isItwEnabledSelector: jest.fn(),
-    isItwFeedbackBannerEnabledSelector: jest.fn()
-  })
-);
+jest.mock("../remoteConfig", () => ({
+  isItwEnabledSelector: jest.fn(),
+  isItwFeedbackBannerEnabledSelector: jest.fn()
+}));
 
 describe("itwDiscoveryBannerSelector", () => {
   beforeEach(() => {
