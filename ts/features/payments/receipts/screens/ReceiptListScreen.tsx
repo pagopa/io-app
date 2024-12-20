@@ -1,5 +1,6 @@
 import {
   Divider,
+  IOPictograms,
   IOStyles,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
@@ -59,7 +60,6 @@ const ReceiptListScreen = () => {
 
   const transactionsPot = useIOSelector(walletReceiptListPotSelector);
   const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
-
   const isLoading = pot.isLoading(transactionsPot);
 
   const handleNavigateToTransactionDetails = (transaction: NoticeListItem) => {
@@ -163,14 +163,27 @@ const ReceiptListScreen = () => {
     </>
   );
 
+  const emptyProps: {
+    title: string;
+    subtitle?: string;
+    pictogram: IOPictograms;
+  } =
+    noticeCategory === "payer"
+      ? {
+          title: I18n.t("features.payments.transactions.list.emptyPayer.title"),
+          pictogram: "empty"
+        }
+      : {
+          title: I18n.t("features.payments.transactions.list.empty.title"),
+          subtitle: I18n.t(
+            "features.payments.transactions.list.empty.subtitle"
+          ),
+          pictogram: "emptyArchive"
+        };
+
   const EmptyStateList = isEmpty ? (
     <ReceiptFadeInOutAnimationView>
-      <OperationResultScreenContent
-        isHeaderVisible
-        title={I18n.t("features.payments.transactions.list.empty.title")}
-        subtitle={I18n.t("features.payments.transactions.list.empty.subtitle")}
-        pictogram="emptyArchive"
-      />
+      <OperationResultScreenContent isHeaderVisible {...emptyProps} />
     </ReceiptFadeInOutAnimationView>
   ) : undefined;
 
