@@ -18,6 +18,7 @@ import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/d
 import { isItwEnabledSelector } from "../../itwallet/common/store/selectors/remoteConfig";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
+import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
   isWalletEmptySelector,
   selectIsWalletCardsLoading,
@@ -29,7 +30,6 @@ import {
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
-import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
