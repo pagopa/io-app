@@ -2219,7 +2219,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {

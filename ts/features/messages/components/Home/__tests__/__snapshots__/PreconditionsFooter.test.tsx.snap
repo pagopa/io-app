@@ -448,7 +448,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1417,7 +1416,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {

@@ -398,7 +398,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
                           }
                         >
                           <View
-                            entering={[Function]}
                             exiting={[Function]}
                             style={
                               {
@@ -999,7 +998,6 @@ exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] 
                           }
                         >
                           <View
-                            entering={[Function]}
                             style={
                               [
                                 {

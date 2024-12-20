@@ -318,7 +318,6 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
               }
             >
               <View
-                entering={[Function]}
                 style={
                   [
                     {
@@ -806,7 +805,6 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
               }
             >
               <View
-                entering={[Function]}
                 style={
                   [
                     {

@@ -650,7 +650,6 @@ exports[`CgnDiscountCodeScreen should render correctly 1`] = `
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {

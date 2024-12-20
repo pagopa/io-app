@@ -1204,7 +1204,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -6879,7 +6878,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {

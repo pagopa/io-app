@@ -535,7 +535,6 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {

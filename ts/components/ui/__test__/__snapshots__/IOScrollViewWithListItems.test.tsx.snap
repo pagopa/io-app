@@ -845,7 +845,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1482,7 +1481,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -2435,7 +2433,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {

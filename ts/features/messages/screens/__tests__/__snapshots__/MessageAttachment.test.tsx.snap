@@ -580,7 +580,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {

@@ -417,7 +417,6 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
@@ -1342,7 +1341,6 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
@@ -2383,7 +2381,6 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {
@@ -2727,7 +2724,6 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           }
         >
           <View
-            entering={[Function]}
             style={
               [
                 {

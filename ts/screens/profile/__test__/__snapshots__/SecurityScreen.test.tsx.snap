@@ -496,9 +496,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         "justifyContent": "space-between",
                                       },
                                       {
-                                        "columnGap": 18,
-                                      },
-                                      {
                                         "transform": [
                                           {
                                             "scale": undefined,
@@ -511,7 +508,8 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   <View
                                     style={
                                       {
-                                        "flex": 1,
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
                                       }
                                     }
                                   >
@@ -685,9 +683,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         "justifyContent": "space-between",
                                       },
                                       {
-                                        "columnGap": 18,
-                                      },
-                                      {
                                         "transform": [
                                           {
                                             "scale": undefined,
@@ -700,7 +695,8 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   <View
                                     style={
                                       {
-                                        "flex": 1,
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
                                       }
                                     }
                                   >

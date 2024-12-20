@@ -868,7 +868,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -1796,7 +1795,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -2948,7 +2946,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -3884,7 +3881,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -4706,7 +4702,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -5752,7 +5747,6 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -6771,7 +6765,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -7676,7 +7669,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -8805,7 +8797,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -9718,7 +9709,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -10517,7 +10507,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -11540,7 +11529,6 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {

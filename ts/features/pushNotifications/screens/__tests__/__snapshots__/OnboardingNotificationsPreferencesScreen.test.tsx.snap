@@ -1159,7 +1159,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -7295,7 +7294,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <View
-                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {

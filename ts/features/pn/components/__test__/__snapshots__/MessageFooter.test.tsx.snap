@@ -1113,7 +1113,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1591,7 +1590,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                             }
                           >
                             <View
-                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {

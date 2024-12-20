@@ -607,7 +607,6 @@ exports[`MessageGreenPassScreen Should match snapshost 1`] = `
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {

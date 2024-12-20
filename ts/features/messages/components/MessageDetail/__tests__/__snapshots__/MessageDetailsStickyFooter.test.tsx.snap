@@ -427,7 +427,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -1028,7 +1027,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -2085,7 +2083,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -2917,7 +2914,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                             }
                           >
                             <View
-                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
@@ -3548,7 +3544,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
@@ -4034,7 +4029,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {

@@ -510,7 +510,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -2444,7 +2443,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -4359,7 +4357,6 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -6259,7 +6256,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -8173,7 +8169,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -10043,7 +10038,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -12000,7 +11994,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -14015,7 +14008,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -15865,7 +15857,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -17799,7 +17790,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -19713,7 +19703,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -21647,7 +21636,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -23517,7 +23505,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -25566,7 +25553,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -27500,7 +27486,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -29442,7 +29427,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -31356,7 +31340,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -33228,7 +33211,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -35257,7 +35239,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -37177,7 +37158,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -39360,7 +39340,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -41233,7 +41212,6 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -43282,7 +43260,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -45297,7 +45274,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -47239,7 +47215,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -49153,7 +49128,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
@@ -51087,7 +51061,6 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {

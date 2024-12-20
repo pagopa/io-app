@@ -1279,7 +1279,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                                 }
                               >
                                 <View
-                                  entering={[Function]}
                                   style={
                                     [
                                       {
@@ -1458,7 +1457,6 @@ exports[`LandingScreen with CieID FF enabled Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -3924,7 +3922,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                                 }
                               >
                                 <View
-                                  entering={[Function]}
                                   style={
                                     [
                                       {
@@ -4103,7 +4100,6 @@ exports[`LandingScreen with both local and remote CieID FF disabled Should match
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
