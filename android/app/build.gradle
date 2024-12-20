@@ -119,8 +119,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154900
-        versionName "2.80.0.5"
+        versionCode 100154901
+        versionName "2.80.0.6"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -152,6 +152,18 @@ android {
         }
     }
 
+    flavorDimensions += "version"
+    productFlavors {
+        create("production") {
+            applicationIdSuffix = "" // Nessun suffisso per la produzione
+            versionNameSuffix = ""
+        }
+        create("canary") {
+            applicationIdSuffix = ".canary" // Suffix per identificare la build Canary
+            versionNameSuffix = ""
+        }
+    }
+    
     // The Android App Bundle read this section to create different bundles
     bundle {
         language {

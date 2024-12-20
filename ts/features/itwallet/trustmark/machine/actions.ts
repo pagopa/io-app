@@ -4,7 +4,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIOStore } from "../../../../store/hooks";
 import { itwCredentialByTypeSelector } from "../../credentials/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/reducers";
+import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
 
 export const createItwTrustmarkActionsImplementation = (
