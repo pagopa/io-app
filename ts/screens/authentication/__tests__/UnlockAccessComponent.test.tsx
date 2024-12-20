@@ -5,7 +5,7 @@ import { createStore } from "redux";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../authentication/UnlockAccessComponent";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
@@ -19,7 +19,7 @@ jest.mock("../../../utils/url");
 jest.mock("../../../navigation/params/AppParamsList");
 
 const mockedUseIOBottomSheetAutoresizableModal =
-  useIOBottomSheetAutoresizableModal as jest.Mock;
+  useIOBottomSheetModal as jest.Mock;
 const mockedOpenWebUrl = openWebUrl as jest.Mock;
 const mockedUseIONavigation = useIONavigation as jest.Mock;
 
