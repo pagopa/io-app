@@ -1,15 +1,15 @@
-import {
-  ListItemAction,
-  WithTestID,
-  useIOToast
-} from "@pagopa/io-app-design-system";
-import React from "react";
+import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
+import React, { useMemo } from "react";
 import { Alert, View } from "react-native";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
 import {
   CREDENTIALS_MAP,
@@ -17,6 +17,7 @@ import {
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
+import { itwIsIPatenteCtaEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
 
@@ -80,25 +81,10 @@ const ItwPresentationDetailsFooter = ({
     startSupportRequest();
   };
 
-  /**
-   * Credential specific actions
-   */
-  const credentialCtas = React.useMemo(() => {
-    if (credential.credentialType === "MDL") {
-      return [
-        <FimsListItemAction
-          key="openIPatenteAction"
-          testID="openIPatenteActionTestID"
-          url="https://licences.ipatente.io.pagopa.it/licences"
-          label={I18n.t(
-            "features.itWallet.presentation.credentialDetails.actions.openIPatente"
-          )}
-        />
-      ];
-    }
-
-    return [];
-  }, [credential.credentialType]);
+  const credentialCtas = useMemo(
+    () => getCredentialCtas(credential.credentialType),
+    [credential.credentialType]
+  );
 
   return (
     <View>
@@ -130,40 +116,48 @@ const ItwPresentationDetailsFooter = ({
   );
 };
 
-type FimsListItemActionProps = {
-  url: string;
-  label: string;
-};
+/**
+ * Returns custom CTAs for a credential
+ */
+const getCredentialCtas = (credentialType: string): React.ReactNode =>
+  ({
+    MDL: [<IPatenteListItemAction key="iPatenteActionMdl" />],
+    EuropeanHealthInsuranceCard: [],
+    EuropeanDisabilityCard: []
+  }[credentialType]);
 
 /**
- * ListItemAction which handles an url using FIMS
- * @param url - The url to handle
- * @param label - The label of the action
- * @param testID - The testID of the action
- * @returns A ListItemAction which handles an url using FIMS
+ * Renders the IPatente service action item
  */
-const FimsListItemAction = ({
-  url,
-  label,
-  testID
-}: WithTestID<FimsListItemActionProps>) => (
-  <ListItemAction
-    testID={testID}
-    variant="primary"
-    icon="externalLink"
-    label={label}
-    accessibilityLabel={label}
-    onPress={() => {
-      NavigationService.navigate(FIMS_ROUTES.MAIN, {
-        screen: FIMS_ROUTES.CONSENTS,
-        params: {
-          ctaText: label,
-          ctaUrl: url
-        }
-      });
-    }}
-  />
-);
+const IPatenteListItemAction = () => {
+  const isIPatenteEnabled = useIOSelector(itwIsIPatenteCtaEnabledSelector);
+
+  if (!isIPatenteEnabled) {
+    return null;
+  }
+
+  const label = I18n.t(
+    "features.itWallet.presentation.credentialDetails.actions.openIPatente"
+  );
+
+  return (
+    <ListItemAction
+      testID="openIPatenteActionTestID"
+      variant="primary"
+      icon="externalLink"
+      label={label}
+      onPress={() => {
+        NavigationService.navigate(FIMS_ROUTES.MAIN, {
+          screen: FIMS_ROUTES.CONSENTS,
+          params: {
+            ctaText: label,
+            ctaUrl: "https://licences.ipatente.io.pagopa.it/licences"
+          }
+        });
+      }}
+    />
+  );
+};
 
 const MemoizedItwPresentationDetailsFooter = React.memo(
   ItwPresentationDetailsFooter

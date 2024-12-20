@@ -110,7 +110,7 @@ export const itwDeferredIssuanceScreenContentSelector = createSelector(
 /**
  * Return the remote config content for the deferred issuance screen content.
  */
-export const itwIPatenteCtaEnabledSelector = createSelector(
+export const itwIsIPatenteCtaEnabledSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
     pipe(
