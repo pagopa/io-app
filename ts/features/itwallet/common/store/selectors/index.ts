@@ -8,7 +8,7 @@ import {
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/reducers";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsFeedbackBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector

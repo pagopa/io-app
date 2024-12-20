@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
-import { FAILURE_STATUS } from "../../walletInstance/store/reducers";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils";
@@ -10,6 +9,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { itwIntegritySetServiceIsReady } from "../../issuance/store/actions";
+import { getNetworkError } from "../../../../utils/errors";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
@@ -17,6 +17,8 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   assert(sessionToken, "Missing session token");
 
   try {
+    yield* put(itwUpdateWalletInstanceStatus.request());
+
     const walletInstanceStatus = yield* call(
       getWalletInstanceStatus,
       integrityKeyTag,
@@ -28,9 +30,9 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
     }
 
     // Update wallet instance status
-    yield* put(itwUpdateWalletInstanceStatus(walletInstanceStatus));
-  } catch (_) {
-    yield* put(itwUpdateWalletInstanceStatus(FAILURE_STATUS));
+    yield* put(itwUpdateWalletInstanceStatus.success(walletInstanceStatus));
+  } catch (e) {
+    yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
   }
 }
 

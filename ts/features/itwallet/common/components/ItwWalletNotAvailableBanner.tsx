@@ -15,11 +15,11 @@ import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/s
  * from the backend, because of unexpected errors.
  */
 export const ItwWalletNotAvailableBanner = () => {
-  const isWalletInstanceStatusFailed = useIOSelector(
+  const isWalletInstanceStatusFailure = useIOSelector(
     itwIsWalletInstanceStatusFailureSelector
   );
 
-  if (!isWalletInstanceStatusFailed) {
+  if (!isWalletInstanceStatusFailure) {
     return null;
   }
 

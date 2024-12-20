@@ -1,6 +1,10 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createStandardAction,
+  createAsyncAction
+} from "typesafe-actions";
 import { WalletInstanceStatus } from "../../../common/utils/itwTypesUtils";
-import { FailureStatus } from "../reducers";
+import { NetworkError } from "../../../../../utils/errors";
 
 /**
  * This action stores the Wallet Instance Attestation
@@ -12,9 +16,11 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
 /**
  * This action update the Wallet Instance Status
  */
-export const itwUpdateWalletInstanceStatus = createStandardAction(
-  "ITW_WALLET_INSTANCE_STATUS_UPDATE"
-)<WalletInstanceStatus | FailureStatus | undefined>();
+export const itwUpdateWalletInstanceStatus = createAsyncAction(
+  "ITW_WALLET_INSTANCE_STATUS_REQUEST",
+  "ITW_WALLET_INSTANCE_STATUS_SUCCESS",
+  "ITW_WALLET_INSTANCE_STATUS_FAILURE"
+)<void, WalletInstanceStatus, NetworkError>();
 
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>
