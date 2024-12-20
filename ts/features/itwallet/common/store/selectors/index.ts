@@ -1,7 +1,3 @@
-import {
-  isItwEnabledSelector,
-  isItwFeedbackBannerEnabledSelector
-} from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   itwCredentialsEidStatusSelector,
@@ -9,9 +5,13 @@ import {
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import {
-  itwIsFeedbackBannerHiddenSelector,
-  itwIsDiscoveryBannerHiddenSelector
+  itwIsDiscoveryBannerHiddenSelector,
+  itwIsFeedbackBannerHiddenSelector
 } from "./preferences";
+import {
+  isItwEnabledSelector,
+  isItwFeedbackBannerEnabledSelector
+} from "./remoteConfig";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:

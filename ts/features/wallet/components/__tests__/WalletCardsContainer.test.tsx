@@ -5,10 +5,10 @@ import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import * as configSelectors from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
+import * as configSelectors from "../../../itwallet/common/store/selectors/remoteConfig";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
