@@ -12,24 +12,24 @@ import * as selectors from "../../store/selectors";
 import { WalletCategoryFilterTabs } from "../WalletCategoryFilterTabs";
 
 describe("WalletCategoryFilterTabs", () => {
-  it("should not render the component when its rendering conditions are not met", () => {
+  it("should not render the component if category filtering is not enabled", () => {
     jest
       .spyOn(selectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
     jest
-      .spyOn(selectors, "shouldRenderCategoryFiltersSelector")
+      .spyOn(selectors, "isWalletCategoryFilteringEnabledSelector")
       .mockImplementation(() => false);
 
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("CategoryTabsContainerTestID")).toBeNull();
   });
 
-  it("should render the component when its rendering conditions are met", () => {
+  it("should render the component if category filtering is enabled", () => {
     jest
       .spyOn(selectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
     jest
-      .spyOn(selectors, "shouldRenderCategoryFiltersSelector")
+      .spyOn(selectors, "isWalletCategoryFilteringEnabledSelector")
       .mockImplementation(() => true);
 
     const { queryByTestId } = renderComponent();
@@ -45,7 +45,7 @@ describe("WalletCategoryFilterTabs", () => {
       .spyOn(selectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
     jest
-      .spyOn(selectors, "shouldRenderCategoryFiltersSelector")
+      .spyOn(selectors, "isWalletCategoryFilteringEnabledSelector")
       .mockImplementation(() => true);
 
     const { getByTestId } = renderComponent();

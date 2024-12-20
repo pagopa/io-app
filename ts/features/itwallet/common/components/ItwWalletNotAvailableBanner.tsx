@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/reducers";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/selectors";
 
 /**
  * Component shown when it is not possible to retrieve the wallet instance status

@@ -1,11 +1,14 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import {
+  isWalletCategoryFilteringEnabledSelector,
   isWalletEmptySelector,
   selectWalletCards,
+  selectWalletCardsByCategory,
+  selectWalletCardsByType,
   selectWalletCategories,
-  shouldRenderCategoryFiltersSelector,
+  shouldRenderWalletCategorySelector,
   shouldRenderWalletEmptyStateSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -16,10 +19,26 @@ import {
 } from "../../../../itwallet/common/utils/itwMocksUtils";
 import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
+import { walletCardCategoryFilters } from "../../../types";
 import { WalletCardsState } from "../../reducers/cards";
 import { FAILURE_STATUS } from "../../../../itwallet/walletInstance/store/reducers";
 
-const T_CARDS: WalletCardsState = {
+const T_ITW_CARDS: WalletCardsState = {
+  "4": {
+    key: "4",
+    category: "itw",
+    type: "itw",
+    credentialType: CredentialType.DRIVING_LICENSE
+  },
+  "5": {
+    key: "5",
+    category: "itw",
+    type: "itw",
+    credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  }
+};
+
+const T_OTHER_CARDS: WalletCardsState = {
   "1": {
     key: "1",
     category: "payment",
@@ -42,19 +61,12 @@ const T_CARDS: WalletCardsState = {
     key: "3",
     category: "cgn",
     type: "cgn"
-  },
-  "4": {
-    key: "4",
-    category: "itw",
-    type: "itw",
-    credentialType: CredentialType.DRIVING_LICENSE
-  },
-  "5": {
-    key: "5",
-    category: "itw",
-    type: "itw",
-    credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
   }
+};
+
+const T_CARDS: WalletCardsState = {
+  ...T_ITW_CARDS,
+  ...T_OTHER_CARDS
 };
 
 describe("selectWalletCards", () => {
@@ -127,6 +139,34 @@ describe("selectWalletCategories", () => {
       })
     );
     expect(categories).toEqual(new Set(["other"]));
+  });
+});
+
+describe("selectWalletCardsByType", () => {
+  it("should return the correct cards", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const cards = selectWalletCardsByType(
+      _.set(globalState, "features.wallet", {
+        cards: T_CARDS
+      }),
+      "idPay"
+    );
+    expect(cards).toEqual([T_CARDS["2"]]);
+  });
+});
+
+describe("selectWalletCardsByCategory", () => {
+  it("should return the correct cards", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const cards = selectWalletCardsByCategory(
+      _.set(globalState, "features.wallet", {
+        cards: T_CARDS
+      }),
+      "itw"
+    );
+    expect(cards).toEqual([T_CARDS["4"], T_CARDS["5"]]);
   });
 });
 
@@ -223,33 +263,107 @@ describe("shouldRenderWalletEmptyStateSelector", () => {
   );
 });
 
-describe("shouldRenderCategoryFiltersSelector", () => {
-  it.each`
-    walletCards                                   | walletInstanceStatus | expected
-    ${[{ category: "itw" }]}                      | ${undefined}         | ${false}
-    ${[{ category: "itw" }]}                      | ${FAILURE_STATUS}    | ${false}
-    ${[{ category: "itw" }, { category: "cgn" }]} | ${undefined}         | ${true}
-    ${[{ category: "itw" }, { category: "cgn" }]} | ${FAILURE_STATUS}    | ${false}
-  `(
-    "should return $expected when walletCards are $walletCards.length and walletInstanceStatus is $walletInstanceStatus",
-    ({ walletCards, walletInstanceStatus, expected }) => {
+describe("isWalletCategoryFilteringEnabledSelector", () => {
+  it("should return true if the categories are ['itw', 'other']", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const isWalletCategoryFilteringEnabled =
+      isWalletCategoryFilteringEnabledSelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_CARDS
+          })
+        )
+      );
+
+    expect(isWalletCategoryFilteringEnabled).toBe(true);
+  });
+
+  it("should return false if the categories are ['itw']", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const isWalletCategoryFilteringEnabled =
+      isWalletCategoryFilteringEnabledSelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_ITW_CARDS
+          })
+        )
+      );
+
+    expect(isWalletCategoryFilteringEnabled).toBe(false);
+  });
+});
+
+describe("shouldRenderWalletCategorySelector", () => {
+  it("should return true if the category filter is undefined", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const shouldRenderWalletCategory = shouldRenderWalletCategorySelector(
+      _.merge(
+        globalState,
+        _.set(globalState, "features.wallet", {
+          cards: T_CARDS,
+          preferences: {
+            categoryFilter: undefined
+          }
+        })
+      ),
+      "itw"
+    );
+
+    expect(shouldRenderWalletCategory).toBe(true);
+  });
+
+  it.each(walletCardCategoryFilters)(
+    "should return true if the category filter matches the given category when the category is %s",
+    categoryFilter => {
       const globalState = appReducer(
         undefined,
         applicationChangeState("active")
       );
 
-      const shouldRenderCategoryFilters = shouldRenderCategoryFiltersSelector(
+      const shouldRenderWalletCategory = shouldRenderWalletCategorySelector(
         _.merge(
           globalState,
-          _.set(
-            globalState,
-            "features.itWallet.walletInstance.status",
-            walletInstanceStatus
-          ),
-          _.set(globalState, "features.wallet.cards", walletCards)
-        )
+          _.set(globalState, "features.wallet", {
+            cards: T_CARDS,
+            preferences: {
+              categoryFilter
+            }
+          })
+        ),
+        categoryFilter
       );
-      expect(shouldRenderCategoryFilters).toBe(expected);
+
+      expect(shouldRenderWalletCategory).toBe(true);
+    }
+  );
+
+  it.each(walletCardCategoryFilters)(
+    "should return true if the category filtering is not enabled and the category filter is %s",
+    categoryFilter => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+
+      const shouldRenderWalletCategory = shouldRenderWalletCategorySelector(
+        _.merge(
+          globalState,
+          _.set(globalState, "features.wallet", {
+            cards: T_ITW_CARDS,
+            preferences: {
+              categoryFilter
+            }
+          })
+        ),
+        categoryFilter
+      );
+
+      expect(shouldRenderWalletCategory).toBe(true);
     }
   );
 });
