@@ -14,7 +14,7 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
 )<string>();
 
 /**
- * This action update the Wallet Instance Status
+ * This action handles the Wallet Instance Status fetch
  */
 export const itwUpdateWalletInstanceStatus = createAsyncAction(
   "ITW_WALLET_INSTANCE_STATUS_REQUEST",
