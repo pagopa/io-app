@@ -1,9 +1,11 @@
 import React from "react";
-import { Linking, Platform } from "react-native";
+import { Platform } from "react-native";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import I18n from "../../../i18n";
 import { trackCieIdNotInstalledDownloadAction } from "../analytics";
+import { openWebUrl } from "../../../utils/url";
 
 export const CIE_ID_IOS_LINK =
   "https://apps.apple.com/it/app/cieid/id1504644677";
@@ -17,6 +19,7 @@ export type CieIdNotInstalledProps = {
 
 const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
   const { popToTop } = useIONavigation();
+  const { error } = useIOToast();
 
   return (
     <OperationResultScreenContent
@@ -30,12 +33,17 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
         ),
         onPress: () => {
           void trackCieIdNotInstalledDownloadAction();
-          void Linking.openURL(
+          openWebUrl(
             Platform.select({
               ios: CIE_ID_IOS_LINK,
               android: isUat ? CIE_ID_ANDROID_COLL_LINK : CIE_ID_ANDROID_LINK,
               default: ""
-            })
+            }),
+            () => {
+              error(
+                I18n.t("authentication.cie_id.cie_not_installed.link_error")
+              );
+            }
           );
         }
       }}

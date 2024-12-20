@@ -8,6 +8,7 @@ import { ensureIntegrityServiceIsReady } from "../../common/utils/itwIntegrityUt
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { itwIntegritySetServiceIsReady } from "../../issuance/store/actions";
+import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
@@ -23,6 +24,9 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   if (walletInstanceStatus.is_revoked) {
     yield* call(handleWalletInstanceResetSaga);
   }
+
+  // Update wallet instance status
+  yield* put(itwUpdateWalletInstanceStatus(walletInstanceStatus));
 }
 
 /**
