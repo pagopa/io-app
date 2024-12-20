@@ -21,7 +21,6 @@ import { ItwLifecycleState } from "../../../../itwallet/lifecycle/store/reducers
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
 import { walletCardCategoryFilters } from "../../../types";
 import { WalletCardsState } from "../../reducers/cards";
-import { FAILURE_STATUS } from "../../../../itwallet/walletInstance/store/reducers";
 
 const T_ITW_CARDS: WalletCardsState = {
   "4": {

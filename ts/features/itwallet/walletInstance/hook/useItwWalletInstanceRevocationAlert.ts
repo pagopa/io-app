@@ -30,7 +30,7 @@ export const useItwWalletInstanceRevocationAlert = () => {
     useCallback(() => {
       if (walletInstanceStatus?.is_revoked) {
         showWalletRevocationAlert(walletInstanceStatus.revocation_reason);
-        dispatch(itwUpdateWalletInstanceStatus.cancel);
+        dispatch(itwUpdateWalletInstanceStatus.cancel());
       }
     }, [walletInstanceStatus, dispatch])
   );

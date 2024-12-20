@@ -19,8 +19,9 @@ export const itwWalletInstanceAttestationStore = createStandardAction(
 export const itwUpdateWalletInstanceStatus = createAsyncAction(
   "ITW_WALLET_INSTANCE_STATUS_REQUEST",
   "ITW_WALLET_INSTANCE_STATUS_SUCCESS",
-  "ITW_WALLET_INSTANCE_STATUS_FAILURE"
-)<void, WalletInstanceStatus, NetworkError>();
+  "ITW_WALLET_INSTANCE_STATUS_FAILURE",
+  "ITW_WALLET_INSTANCE_STATUS_CANCEL"
+)<void, WalletInstanceStatus, NetworkError, undefined>();
 
 export type ItwWalletInstanceActions =
   | ActionType<typeof itwWalletInstanceAttestationStore>
