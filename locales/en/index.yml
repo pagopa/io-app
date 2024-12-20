@@ -3530,14 +3530,19 @@ features:
           content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
           primaryAction: Inizia
       ctas:
-        openPdf: "Show document"
+        trustmark: Mostra certificato di autenticità
+        openPdf: Show document
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
     trustmark:
-      cta: Mostra certificato di autenticità
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
-      expiration: Il QR Code si rinnova tra
       qrCode: QR code autenticità credenziale
+      timer:
+        expiresIn: Il QR Code si rinnova tra {{time}}
+        expired: Il QR Code è scaduto
+      failure:
+        description: Abbiamo avuto un problema nel generare il nuovo QR Code.
+        action: Riprova
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
@@ -3560,7 +3565,7 @@ features:
         cta: Scopri di più
         closeButton: Chiudi
         closeButtonAlt: Ho capito
-        revokedByWalletProvider: 
+        revokedByWalletProvider:
           title: Documenti su IO è stata disattivata
           content: Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi "Scopri di più".
         newWalletInstanceCreated:

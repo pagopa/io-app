@@ -1,5 +1,5 @@
 import { differenceInSeconds, isPast } from "date-fns";
-import { assign, ErrorActorEvent, fromPromise, setup } from "xstate";
+import { assign, fromPromise, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
 import {
   GetCredentialTrustmarkUrlActorInput,
@@ -7,8 +7,9 @@ import {
   GetWalletAttestationActorOutput
 } from "./actors";
 import { Context } from "./context";
-import { Input } from "./input";
+import { TrustmarkEvents } from "./events";
 import { mapEventToFailure } from "./failure";
+import { Input } from "./input";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -18,7 +19,7 @@ export const itwTrustmarkMachine = setup({
   types: {
     context: {} as Context,
     input: {} as Input,
-    events: {} as ErrorActorEvent
+    events: {} as TrustmarkEvents
   },
   actions: {
     onInit: notImplemented,
@@ -155,7 +156,12 @@ export const itwTrustmarkMachine = setup({
     },
     Failure: {
       description: "This state is reached when an error occurs",
-      entry: "showFailureToast"
+      entry: "showFailureToast",
+      on: {
+        retry: {
+          target: "RefreshingTrustmark"
+        }
+      }
     }
   }
 });
