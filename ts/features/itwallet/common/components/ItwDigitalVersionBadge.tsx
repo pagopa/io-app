@@ -5,13 +5,16 @@ import {
   IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import Color from "color";
+import React, { useMemo } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../i18n";
 
+export type TagColorScheme = "default" | "faded" | "greyscale";
+
 type DigitalVersionBadgeProps = {
   credentialType: string;
-  isFaded?: boolean;
+  colorScheme: TagColorScheme;
 };
 
 type CredentialTypesProps = {
@@ -19,29 +22,39 @@ type CredentialTypesProps = {
   foreground: string;
 };
 
+const mapCredentialTypes: Record<string, CredentialTypesProps> = {
+  MDL: {
+    foreground: "#5E303E",
+    background: "#FADCF5"
+  },
+  EuropeanDisabilityCard: {
+    foreground: "#01527F",
+    background: "#E8EEF4"
+  },
+  EuropeanHealthInsuranceCard: {
+    foreground: "#032D5C",
+    background: "#ABD8F2"
+  }
+};
+
 const ItwDigitalVersionBadge = ({
   credentialType,
-  isFaded = false
+  colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
-  const mapCredentialTypes: Record<
-    NonNullable<string>,
-    CredentialTypesProps
-  > = {
-    MDL: {
-      foreground: "#5E303E",
-      background: "#FADCF5"
-    },
-    EuropeanDisabilityCard: {
-      foreground: "#01527F",
-      background: "#E8EEF4"
-    },
-    EuropeanHealthInsuranceCard: {
-      foreground: "#032D5C",
-      background: "#ABD8F2"
+  const colorProps = useMemo(() => {
+    const baseColorProps = mapCredentialTypes[credentialType];
+    if (!baseColorProps) {
+      return;
     }
-  };
+    if (colorScheme === "greyscale") {
+      return {
+        foreground: Color(baseColorProps.foreground).grayscale().hex(),
+        background: Color(baseColorProps.background).grayscale().hex()
+      };
+    }
+    return baseColorProps;
+  }, [credentialType, colorScheme]);
 
-  const colorProps = mapCredentialTypes[credentialType];
   if (!colorProps) {
     // If a credential does not have the color configuration means that we should not display the badge
     return null;
@@ -52,7 +65,7 @@ const ItwDigitalVersionBadge = ({
   return (
     <View style={styles.wrapper}>
       <View style={[styles.badge, { backgroundColor: background }]}>
-        {isFaded && <View style={styles.faded} />}
+        {colorScheme !== "default" && <View style={styles.faded} />}
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"

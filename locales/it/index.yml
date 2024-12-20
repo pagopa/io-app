@@ -3281,6 +3281,7 @@ features:
         invalid: Non valida
         verificationExpiring: Verifica
         verificationExpired: Verifica
+        unknown: Non disponibile
       digital: Versione digitale
     generic:
       error:
