@@ -4,6 +4,7 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type Props = {
   credential: StoredCredential;
@@ -18,6 +19,11 @@ export const ItwPresentationCredentialUnknownStatus = ({
 }: Props) => {
   const navigation = useIONavigation();
   const credentialName = getCredentialNameFromType(credential.credentialType);
+
+  useHeaderSecondLevel({
+    title: "",
+    headerShown: false
+  });
 
   return (
     <OperationResultScreenContent
