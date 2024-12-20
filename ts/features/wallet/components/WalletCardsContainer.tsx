@@ -29,6 +29,7 @@ import {
 } from "../store/selectors";
 import { WalletCardCategoryFilter } from "../types";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
+import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
@@ -47,6 +48,8 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
+
+  useItwWalletInstanceRevocationAlert();
 
   // Loading state is only displayed if there is the initial loading and there are no cards or
   // placeholders in the wallet

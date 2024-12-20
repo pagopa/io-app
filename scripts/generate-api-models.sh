@@ -60,6 +60,6 @@ for elem in "${apisNoClient[@]}"; do
 done
 wait
 
-cp mock-google-services.json ./android/app/google-services.json
+cp google-services-dev.json ./android/app/google-services.json
 
 yarn generate:locales

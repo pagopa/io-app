@@ -7,7 +7,7 @@ import CGN_ROUTES from "../../navigation/routes";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import { useIODispatch } from "../../../../../store/hooks";
 import { selectMerchantDiscount } from "../../store/actions/merchants";
-import { CgnModuleDiscount } from "./CgnModuleDiscount";
+import { ModuleCgnDiscount } from "./ModuleCgnDiscount";
 
 type Props = {
   discount: Discount;
@@ -38,7 +38,7 @@ export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
 
   return (
     <View style={styles.container}>
-      <CgnModuleDiscount onPress={onDiscountPress} discount={discount} />
+      <ModuleCgnDiscount onPress={onDiscountPress} discount={discount} />
     </View>
   );
 };

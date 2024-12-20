@@ -752,6 +752,7 @@ authentication:
       title: We can't find the CieID app
       description: To login, you must have the app installed on your device.
       primary_action_label: Get the app
+      link_error: We could not direct you to the store. Open it manually and search for CieID
   cie:
     genericTitle: Login with CIE
     cie: CIE
@@ -3555,6 +3556,20 @@ features:
         title: Dicci cosa ne pensi
         content: Raccontaci la tua esperienza con la funzionalità Documenti su IO.
         action: Inizia
+    walletInstanceRevoked:
+      alert:
+        cta: Scopri di più
+        closeButton: Chiudi
+        closeButtonAlt: Ho capito
+        revokedByWalletProvider: 
+          title: Documenti su IO è stata disattivata
+          content: Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi "Scopri di più".
+        newWalletInstanceCreated:
+          title: Documenti su IO è stata disattivata su questo dispositivo
+          content: Puoi usare i tuoi documenti su IO su un solo dispositivo alla volta per ragioni di sicurezza.
+        revokedByUser:
+          title: Hai disattivato Documenti su IO
+          content: Se cambi idea, potrai riattivare Documenti su IO in futuro.
 support:
   ticketList:
     noTicket:
