@@ -303,7 +303,8 @@ export const baseRawBackendStatus: BackendStatus = {
       },
       feedback_banner_visible: true,
       disabled_identification_methods: [],
-      disabled_credentials: []
+      disabled_credentials: [],
+      ipatente_cta_visible: true
     }
   }
 };
@@ -395,6 +396,7 @@ export const baseBackendConfig: Config = {
     },
     feedback_banner_visible: true,
     disabled_credentials: [],
-    disabled_identification_methods: []
+    disabled_identification_methods: [],
+    ipatente_cta_visible: true
   }
 };
