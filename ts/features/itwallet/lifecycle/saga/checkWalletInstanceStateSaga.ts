@@ -17,8 +17,6 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   assert(sessionToken, "Missing session token");
 
   try {
-    yield* put(itwUpdateWalletInstanceStatus.request());
-
     const walletInstanceStatus = yield* call(
       getWalletInstanceStatus,
       integrityKeyTag,

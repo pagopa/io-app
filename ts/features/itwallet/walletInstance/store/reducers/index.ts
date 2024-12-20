@@ -35,13 +35,6 @@ const reducer = (
       };
     }
 
-    case getType(itwUpdateWalletInstanceStatus.request): {
-      return {
-        ...state,
-        status: pot.toLoading(state.status)
-      };
-    }
-
     case getType(itwUpdateWalletInstanceStatus.success): {
       return {
         ...state,
