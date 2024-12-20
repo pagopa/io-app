@@ -18,8 +18,8 @@ import { WalletCardCategoryFilter } from "../../types/index";
  * Returns the list of cards excluding hidden cards
  */
 export const selectWalletCards = createSelector(
-  (state: GlobalState) => state.features.wallet,
-  ({ cards }) => Object.values(cards).filter(({ hidden }) => !hidden)
+  (state: GlobalState) => state.features.wallet.cards,
+  cards => Object.values(cards).filter(({ hidden }) => !hidden)
 );
 
 /**
@@ -101,9 +101,9 @@ export const selectIsWalletLoading = (state: GlobalState) =>
  * Selects the placeholders from the wallet
  */
 export const selectWalletPlaceholderCards = createSelector(
-  (state: GlobalState) => state.features.wallet,
-  wallet =>
-    Object.entries(wallet.placeholders.items).map(
+  (state: GlobalState) => state.features.wallet.placeholders.items,
+  placeholders =>
+    Object.entries(placeholders).map(
       ([key, category]) =>
         ({ key, category, type: "placeholder" } as WalletCard)
     )
