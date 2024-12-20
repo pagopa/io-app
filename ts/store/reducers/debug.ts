@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import _ from "lodash";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -38,7 +39,7 @@ function debugReducer(
     case getType(setDebugData):
       return {
         ...state,
-        debugData: action.payload
+        debugData: _.merge(state.debugData, action.payload)
       };
     case getType(resetDebugData):
       return {
