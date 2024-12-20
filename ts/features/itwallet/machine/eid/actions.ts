@@ -9,7 +9,10 @@ import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { itwCredentialsStore } from "../../credentials/store/actions";
-import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import {
+  itwRemoveIntegrityKeyTag,
+  itwStoreIntegrityKeyTag
+} from "../../issuance/store/actions";
 import {
   itwLifecycleStateUpdated,
   itwLifecycleWalletReset
@@ -166,6 +169,11 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.integrityKeyTag, "integrityKeyTag is undefined");
     store.dispatch(itwStoreIntegrityKeyTag(context.integrityKeyTag));
+  },
+
+  cleanupIntegrityKeyTag: () => {
+    // Remove the integrity key tag from the store
+    store.dispatch(itwRemoveIntegrityKeyTag());
   },
 
   storeWalletInstanceAttestation: ({
