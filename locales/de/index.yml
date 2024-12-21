@@ -2749,7 +2749,317 @@ features:
           title: "Was tun, wenn die Zahlung fehlschlägt?"
           payNotice: "**Bezahle die Zahlungsmitteilung**\nDenke daran, die Zahlungsmitteilung innerhalb der von der Körperschaft gesetzten Fristen zu bezahlen. Wenn du nicht über IO zahlen kannst, [entdecke andere pagoPA-fähige Kanäle]({{url}})"
           waitRefund: "**Warte auf die Erstattung**\nNormalerweise wird der Betrag innerhalb weniger Minuten wieder gutgeschrieben. In anderen Fällen kann die Geldüberweisung auf dein Konto oder deine Karte länger dauern."
-          contactSupport: "**Kontaktiere den Support**\nWenn du nach 5 Werktagen immer noch keine Rückerstattung erhalten hast, kontaktiere bitte den Support."  
+          contactSupport: "**Kontaktiere den Support**\nWenn du nach 5 Werktagen immer noch keine Rückerstattung erhalten hast, kontaktiere bitte den Support."
+  itWallet:
+    credentialName:
+      eid: "Digitale Identität"
+      mdl: "Führerschein"
+      dc: "Europäische Behindertenkarte"
+      ts: "Gesundheitskarte - Europäische Krankenversicherungskarte"
+    ipzsPrivacy:
+      title: "Deine Dokumente in IO sind sicher"
+      warning: "Indem du auf **Fortfahren** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast."
+      button:
+        label: "Fortfahren"
+    wallet:
+      active: "Aktiv"
+      inactive: "Nicht aktiv"
+    card:
+      status:
+        expired: "Abgelaufen"
+        expiring: "Ablaufend"
+        pending: "In Bearbeitung"
+        invalid: "Ungültig"
+        verificationExpiring: "Überprüfen"
+        verificationExpired: "Überprüfen"
+      digital: "Digitale Version"
+    generic:
+      error:
+        title: "Es gibt ein Problem mit unseren Systemen"
+        body: "Versuche es in ein paar Minuten erneut. Wenn das Problem erneut auftritt, wende dich an den Support."
+      alert:
+        title: "Möchtest du den Vorgang abbrechen?"
+        body: "Du musst alle Schritte erneut durchführen"
+        confirm: "Ja, unterbrechen"
+        cancel: "Nein, fortfahren"
+      dataSource:
+        multi: "Bereitgestellt von {{credentialSource}}"
+        single: "Bereitgestellt von {{credentialSource}}"
+      placeholders:
+        claimNotAvailable: "Eigenschaft nicht erkannt"
+        claimLabelNotAvailable: "Eigenschaft nicht vorhanden"
+        organizationName: "Körperschaft nicht verfügbar"
+    verifiableCredentials:
+      claims:
+        uniqueId: "Eindeutige ID"
+        givenName: "Name"
+        familyName: "Nachname"
+        taxIdCode: "Steuernummer"
+        birthdate: "Geburtsdatum"
+        placeOfBirth: "Geburtsort"
+        expirationDate: "Ablaufdatum"
+        securityLevel: "Sicherheitsstufe"
+        info: "Mehr über diese Daten"
+        releasedBy: "Ausstellung der digitalen Version"
+        attachments: "Anhänge"
+        authenticSource: "Quelle der Daten"
+        mdl:
+          category: "Führerschein {{category}}"
+          issuedDate: "Gültig von"
+          expirationDate: "Gültig bis"
+          restrictionConditions: "Beschränkungen"
+    discovery:
+      banner:
+        home:
+          title: "Neu: Dokumente in IO"
+          content: "Du kannst jetzt die digitale Version deiner Dokumente in dein IO-Konto aufnehmen!"
+          action: "Start"
+        onboarding:
+          content: "Aktiviere Dokumente in IO, um die digitale Version deiner Dokumente zum Konto hinzuzufügen"
+          action: "Start"
+      title: "Die digitale Version deiner Dokumente, in IO"
+      content: "###### Dokumente in IO: So funktioniert es \n Du kannst jetzt die **digitale Version deiner persönlichen Dokumente**, wie z. B. deinen Führerschein und deine Gesundheitskarte, zu deinem IO-Konto hinzufügen.\n\nAktiviere die Funktion **Dokumente in IO**, um sie immer auf deinem Gerät zur Hand zu haben.  \n ###### Es geht schnell und einfach \n Du benötigst deine **SPID** oder **CIE** (Elektronische Identitätskarte) Zugangsdaten, um die Aktivierung abzuschließen: dies ist ein notwendiger Sicherheitsschritt, um die Sicherheit deiner Daten zu gewährleisten."
+      tos: "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzbestimmungen und Nutzungsbedingungen]({{privacyAndTosUrl}}) gelesen und verstanden hast."
+      upcomingWalletBanner:
+        title: "Demnächst: deine Dokumente in IO"
+        content: "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!"
+        action: "Mehr erfahren"
+      alreadyActive:
+        title: "Dokumente in IO ist bereits aktiv"
+        content: "Füge weiterhin digitale Versionen deiner Dokumente zu deinem Konto hinzu."
+        action: "Gehe zum Konto"
+    identification:
+      mode:
+        title: "Überprüfe deine Identität"
+        description: "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten."
+        header: "Wähle, wie du dich identifizieren willst"
+        method:
+          spid:
+            title: "SPID"
+            subtitle: "Zugangsdaten und App (oder SMS) verwenden"
+          ciePin:
+            title: "CIE + PIN"
+            subtitle: "Elektronische Identitätskarte und PIN verwenden"
+          cieId:
+            title: "CieID"
+            subtitle: "CieID-Zugangsdaten und -Anwendungen verwenden"
+      nfc:
+        title: "NFC aktivieren, um fortzufahren"
+        description: "Damit IO deine CIE lesen kann, aktiviere NFC in den Einstellungen deines Geräts."
+        header: "Wie geht das"
+        steps:
+          label: "Schritt {{value}}"
+          1: "Öffne 'Einstellungen'"
+          2: "Suche nach 'NFC'"
+          3: "Aktiviere die Funktion"
+        primaryAction: "Einstellungen öffnen"
+        secondaryAction: "Weiter"
+      notMatchingIdentityScreen:
+        title: "Du meldest dich mit einem neuen Gerät an"
+        message: "Wenn du dich von einem anderen Gerät als dem üblichen (z. B. dem einer anderen Person) in IO anmeldest, werden aus Sicherheitsgründen diese Funktionalitäten zurückgesetzt:\n\n- Dokumente in IO"
+        banner:
+          title: "Wir empfehlen, dass du nur von deinem Gerät aus auf die App zugreifst."
+        alert:
+          title: "Möchtest du dich wirklich abmelden?"
+          message: "Du musst dich erneut mit SPID oder CIE anmelden, um die App nutzen zu können."
+      loading:
+        cieId:
+          title: "Verbindung mit der CieID-App läuft..."
+          subtitle: "Bestätige den Zugang in der CieID-App, um die Verbindung fortzusetzen oder abzubrechen"
+          cancel: "Verbindung abbrechen"
+    issuance:
+      credentialAuth:
+        title: "{{credentialName}}: erforderliche Daten"
+        subtitle: "Sie werden mit **{{organization}}** für die Bereitstellung der digitalen Version des Dokuments geteilt."
+        requiredClaims: "Erforderliche Daten"
+        disclaimer:
+          0: "Deine Daten sind sicher und werden nur zu den in der Datenschutzrichtlinie beschriebenen Zwecken verarbeitet."
+          1: "Die Daten werden nur so lange weitergegeben, wie es dauert, bis die digitale Version des Dokuments bereitgestellt wird."
+        tos: "Indem du auf **Fortfahren** tippst, bestätigst du, dass du die [Datenschutzrichtlinie]({{privacyUrl}}) gelesen und verstanden hast."
+      eidPreview:
+        title: "Identität verifiziert"
+        subtitle: "Du aktivierst **Dokumente in IO** als:"
+        actions:
+          primary: "Fortfahren"
+          secondary: "Abbrechen"
+      credentialPreview:
+        loading: "Warte noch ein paar Sekunden, ohne die App zu beenden."
+        title: "{{credential}}: Hier eine Vorschau deiner Daten"
+        bottomSheet:
+          about:
+            title: "Wer ist das?"
+            subtitle: "Das ist die Körperschaft, die dir die digitale Version deiner Dokumente zur Verfügung stellt.\n\nUm zu erfahren, wie sie deine Daten verarbeitet, konsultiere bitte die [Datenschutzrichtlinie]({{privacyUrl}})."
+          authSource:
+            title: "Wer ist das?"
+            subtitle: "Es ist die Körperschaft, die die in deinem Dokument enthaltenen Daten bereitstellt."
+        actions:
+          primary: "Dem Konto hinzufügen"
+          secondary: "Abbrechen"
+      eidResult:
+        success:
+          title: "Alles ist bereit!"
+          subtitle: "Du kannst nun das erste Dokument in das IO-Konto aufnehmen."
+          toast: "Erledigt!"
+          actions:
+            continue: "Erstes Dokument hinzufügen"
+            continueAlt: "Dokument hinzufügen"
+            close: "Später fortfahren"
+      credentialResult:
+        toast: "Erledigt!"
+      notMatchingIdentityError:
+        title: "Unerkannte Identität"
+        body: "Aktiviere Dokumente in IO mit der gleichen Identität, die du für den Zugriff auf die IO-App verwendest. Überprüfe deine Anmeldedaten und versuche es erneut."
+        primaryAction: "Zugriff wiederholen"
+        secondaryAction: "Schließen"
+      genericError:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        body: "Die Körperschaft, die digitale Versionen von Dokumenten ausgibt, hat Probleme und arbeitet bereits an deren Lösung: Versuche es später noch einmal."
+        primaryAction: "Schließen"
+      notEntitledCredentialError:
+        title: "Das Dokument kann nicht hinzugefügt werden"
+        body: "Vergewissere dich, dass du im Besitz des gültigen physischen Dokuments bist, bevor du dessen digitale Version anforderst."
+        primaryAction: "Verstanden"
+      asyncCredentialError:
+        title: "Das Führerscheinamt bearbeitet deinen Antrag"
+        body: "Du erhältst in der App eine Mitteilung, dass du fortfahren kannst, sobald dein Antrag bearbeitet ist."
+        primaryAction: "Verstanden"
+      credentialAlreadyAdded:
+        title: "Du hast dieses Dokument bereits"
+        body: "Die digitale Version des Dokuments befindet sich bereits in deinem Konto."
+        primaryAction: "Gehe zum Dokument"
+      walletInstanceNotActive:
+        title: "Aktiviere Dokumente in IO, um fortzufahren"
+        body: "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: "
+        bodyBold: "Dokumente in IO"
+        primaryAction: "Start"
+        secondaryAction: "Jetzt nicht"
+      credentialNotFound:
+        title: "Dokument zum Konto hinzufügen"
+        subtitle: "Um Dokumente in IO zu verwenden, füge sie zunächst dem Konto hinzu. Das geht schnell und einfach."
+    unsupportedDevice:
+      text: "Ab dem 02.07.2024 ist dein Gerät möglicherweise nicht mehr mit IO kompatibel."
+      moreInfo: "Mehr erfahren"
+      error:
+        title: "Dein Gerät unterstützt Dokumente in IO nicht"
+        body: "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion."
+        primaryAction: "Schließen"
+        secondaryAction: "Mehr erfahren"
+    presentation:
+      alerts:
+        statusAction: "Was kann ich tun?"
+        mdl:
+          content: "Du kannst deinen Führerschein nur in Italien verwenden, um bei einer Polizeikontrolle deine Fahrtauglichkeit nachzuweisen."
+        ehc:
+          content: "Du kannst deine Gesundheitskarte - Europäische Krankenversicherungskarte auf IO verwenden, um Dienstleistungen des nationalen Gesundheitsdienstes in Anspruch zu nehmen."
+        edc:
+          content: "Du kannst deinen Europäischen Behindertenausweis auf IO verwenden, um Dienstleistungen auf italienischem Gebiet in Anspruch zu nehmen, und zwar in denselben Verwendungszusammenhängen wie dein physisches Dokument."
+        expired:
+          content: "Das Dokument ist nicht mehr gültig. Wenn du das neue gültige Dokument bereits hast, kannst du die digitale Version im Konto aktualisieren"
+          action: "Dokument aktualisieren"
+        expiring:
+          content: "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
+        verificationExpiring:
+          content: "Überprüfe die digitale Version deines Dokuments bis zum {{date}}."
+      bottomSheets:
+        eidInfo:
+          title: "Documenti su IO:\nidentità verificata"
+          titleExpired: "Documenti su IO:\nverifica la tua identità"
+          contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
+          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
+          triggerLabel: Cos'è?
+          alert:
+            valid: L'ultima verifica è del {{date}}.
+            expiring: Verifica la tua identità entro il {{date}}.
+            expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+        MDL:
+          expiring:
+            title: "Patente su IO: documento in scadenza"
+            content: "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
+        EuropeanHealthInsuranceCard:
+          expiring:
+            title: "Tessera Sanitaria su IO: documento in scadenza"
+            content: "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata."
+        EuropeanDisabilityCard:
+          expiring:
+            title: "Carta europea della disabilità su IO: documento in scadenza"
+            content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
+      credentialDetails:
+        card:
+          front: "Fronte"
+          back: "Retro"
+          showFront: "Mostra fronte"
+          showBack: "Mostra retro"
+        personalDataTitle: "Dati personali"
+        documentDataTitle: "Dati del documento"
+        lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+        boolClaim:
+          true: Sì
+          false: No
+        hiddenClaim: "Nascosto"
+        fiscalCode:
+          label: Il tuo Codice Fiscale
+          action: Premi per ingrandire e visualizzare il codice a barre a tutto schermo
+        status:
+          valid: Valida
+          invalid: Non valida
+          expired: Scaduta
+          expiring: In scadenza
+        actions:
+          removeFromWallet: "Rimuovi dal Portafoglio"
+          requestAssistance: "Qualcosa non torna?"
+          showClaimValues: "Mostra gli attributi del documento"
+          hideClaimValues: "Nascondi gli attributi del documento"
+        dialogs:
+          remove:
+            title: Vuoi rimuovere il documento dal Portafoglio?
+            content: Se cambi idea, potrai riaggiungerlo in seguito.
+            confirm: Sì, rimuovi
+        toast:
+          removed: Fatto!
+        verificationExpired:
+          title: Verifica la versione digitale del documento
+          content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
+          primaryAction: Inizia
+      ctas:
+        openPdf: "Mostra documento"
+        shareButton: Salva o condividi
+        fiscalCode: Il tuo Codice Fiscale
+    trustmark:
+      cta: Mostra certificato di autenticità
+      description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
+      expiration: Il QR Code si rinnova tra
+      qrCode: QR code autenticità credenziale
+    walletRevocation:
+      cta: Disattiva Documenti su IO
+      confirmScreen:
+        title: Vuoi davvero disattivare Documenti su IO?
+        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
+        action: Conferma e continua
+      loadingScreen:
+        title: Stiamo disattivando Documenti su IO...
+        subtitle: Attendi qualche secondo
+      failureScreen:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato possibile disattivare il servizio. Riprova.
+    feedback:
+      banner:
+        title: Dicci cosa ne pensi
+        content: Raccontaci la tua esperienza con la funzionalità Documenti su IO.
+        action: Inizia
+    walletInstanceRevoked:
+      alert:
+        cta: Scopri di più
+        closeButton: Chiudi
+        closeButtonAlt: Ho capito
+        revokedByWalletProvider: 
+          title: Documenti su IO è stata disattivata
+          content: Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi "Scopri di più".
+        newWalletInstanceCreated:
+          title: Documenti su IO è stata disattivata su questo dispositivo
+          content: Puoi usare i tuoi documenti su IO su un solo dispositivo alla volta per ragioni di sicurezza.
+        revokedByUser:
+          title: Hai disattivato Documenti su IO
+          content: Se cambi idea, potrai riattivare Documenti su IO in futuro.
 support:
   ticketList:
     noTicket:
