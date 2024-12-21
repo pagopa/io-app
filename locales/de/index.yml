@@ -1091,7 +1091,7 @@ payment:
   IUV: "IUV"
   IUV_extended: "Einheitlicher Zahlungskodex (IUV)"
   notice: "Zahlungsmitteilung"
-  noticeCode: "Zahlungskodex"
+  noticeCode: "Zahlungsmitteilungskodex"
   recipientFiscalCode: "Steuernummer des Empfängers"
   paidConfirm: "Du hast {{amount}} gezahlt"
   details:
@@ -1555,7 +1555,7 @@ wallet:
     title: "Was möchtest du bezahlen?"
     info: "Gib die Daten ein, die auf der Zahlungsmitteilung angegeben sind."
     link: "Wo finde ich die Daten?"
-    noticeCode: "Zahlungskodex"
+    noticeCode: "Zahlungsmitteilungskodex"
     entityCode: "Steuernummer der Körperschaft"
     amount: "Betrag (€)"
     proceed: "Mit der Transaktion fortfahren"
@@ -1679,7 +1679,7 @@ wallet:
     chooser: "Bild aus der Galerie wählen"
     wrongQrCode: "QR-Code nicht gültig. Gib die Daten manuell ein."
     byCameraTitle: "QR-Code scannen"
-    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungskodex und Steuernummer Körperschaft) manuell ein"
+    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungsmitteilungskodex und Steuernummer Körperschaft) manuell ein"
     setManually: "Manuell eingeben"
     enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü 'Einstellungen' deines Geräts tun."
     readStorageDisclosure:
@@ -1795,10 +1795,10 @@ wallet:
         title: "Es wurden mehrere Codes entdeckt. Welchen möchtest du verwenden?"
     manual:
       noticeNumber:
-        title: "Gib den Zahlungskodex ein"
+        title: "Gib den Zahlungsmitteilungskodex ein"
         subtitle: "Er hat 18 Ziffern und ist neben dem QR-Code zu finden."
         validationError: "18 Ziffern, die mit 0, 1 oder 3 beginnen."
-        placeholder: "Zahlungskodex"
+        placeholder: "Zahlungsmitteilungskodex"
       fiscalCode:
         title: "Gib die Steuernummer der Körperschaft ein"
         subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
@@ -1911,7 +1911,7 @@ wallet:
         title: "Zahlungsmethode in der App aktivieren"
         subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
       PAYMENT_METHODS_NOT_AVAILABLE:
-        title: "Möchtest du mit Karte bezahlen? Füg sie jetzt hinzu!"
+        title: "Möchtest du mit Karte bezahlen? Füge sie jetzt hinzu!"
         subtitle: "Die Methode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
         primaryAction: "Karte hinzufügen"
         secondaryAction: "Andere Methoden verwenden"
@@ -1933,16 +1933,16 @@ wallet:
         title: "Der eingegebene Sicherheitscode ist falsch"
         subtitle: "Es wurde kein Betrag abgebucht. Der Code (CVV oder CVC) ist 3-stellig und befindet sich auf der Rückseite der Karte. Bei American Express hat der Code (CID) 4 Ziffern und befindet sich auf der Vorderseite."
       PLAFOND_LIMIT_ERROR:
-        title: "Du hast das Ausgabenlimit Ihrer Karte überschritten"
+        title: "Du hast das Ausgabenlimit deiner Karte überschritten"
         subtitle: "Es wurde kein Betrag abgebucht. Bevor du es erneut versuchst, ändere das Ausgabenlimit oder verwende eine andere Zahlungsmethode."
       BE_NODE_KO:
-        title: "Wir haben einige Probleme mit den Zahlungssystemen"
+        title: "Wir haben Probleme mit den Zahlungssystemen"
         subtitle: "Überprüfe das Ergebnis der Zahlung im Tab Zahlungen, andernfalls warte einige Minuten, bevor du es erneut versuchst."
       PSP_ERROR:
         title: "Die Zahlung ist fehlgeschlagen"
         subtitle: "Es wurde kein Betrag abgebucht. Sollte das Problem weiterhin bestehen, versuche es mit einer anderen Methode oder einem anderen Zahlungsanbieter."
       AUTH_REQUEST_ERROR:
-        title: "Wir haben einige Probleme mit den Zahlungssystemen"
+        title: "Wir haben Probleme mit den Zahlungssystemen"
         subtitle: "Versuche es später erneut."
     support:
       button: "Support kontaktieren"
@@ -1952,7 +1952,7 @@ wallet:
       additionalDataTitle: "Zusätzliche Daten"
       copyAll: "Alles kopieren"
       errorCode: "Fehlercode"
-      noticeNumber: "Zahlungskodex"
+      noticeNumber: "Zahlungsmitteilungskodex"
       entityCode: "Steuernummer Körperschaft"
 saveCard:
   saveCard: "Karte speichern"
@@ -2029,7 +2029,7 @@ messages:
     preferenceCalendarSelect: "Wähle deinen Standardkalender"
     calendarPermDenied:
       title: "Zugriff zulassen"
-      description: "Wir haben keinen Zugang zu deinem Kalender. Bitte aktiviere die Berechtigungen, um fortzufahren."
+      description: "Wir haben keinen Zugriff auf deinen Kalender. Bitte aktiviere die Berechtigungen, um fortzufahren."
       ok: "Berechtigungen freigeben"
       cancel: "Abbrechen"
     errors:
@@ -2115,8 +2115,8 @@ messageDetails:
     messageId: "MitteilungsID"
     messageIdAccessibility: "MitteilungsID kopieren"
     pagoPAHeader: "pagoPA Zahlungsmitteilung"
-    noticeCode: "Zahlungskodex"
-    noticeCodeAccessibility: "Zahlungskodex, kopieren"
+    noticeCode: "Zahlungsmitteilungskodex"
+    noticeCodeAccessibility: "Zahlungsmitteilungskodex, kopieren"
     entityFiscalCode: "Steuernummer Körperschaft"
     entityFiscalCodeAccessibility: "Steuernummer Körperschaft, kopieren"
   contactsBottomSheet:
@@ -2154,7 +2154,7 @@ notifications:
     content: "Aktiviere Push-Benachrichtigungen, um sofort zu erfahren, wenn du eine neue Mitteilung in der App erhältst."
     primaryButton: "Push-Benachrichtigungen aktivieren"
     secondaryButton: "Jetzt nicht"
-    title: "Verpasse keine wichtigen Nachrichten!"
+    title: "Verpasse keine wichtigen Mitteilungen!"
 biometric_recognition:
   contextualHelpTitle: "So funktioniert die biometrische Erkennung"
   switchLabel: "Biometrische Erkennung aktiveren"
@@ -2420,7 +2420,7 @@ bonus:
           byName: "Alphabetisch geordnet"
     merchantDetail:
       title:
-        deals: "Rabatt"
+        deals: "Vorteil"
         description: "Beschreibung"
         contactInfo: "Adressen"
       cta:
@@ -2439,7 +2439,7 @@ bonus:
         job: "Jobs und Ausbildungsplätze"
       information:
         address: "Adresse"
-        allNational: "Alle Verkaufsstellen landesweit"
+        allNational: "Alle landesweiten Verkaufsstellen"
       discount:
         description: "Beschreibung"
         conditions: "Bedingungen"
@@ -2571,7 +2571,7 @@ features:
       content: "Läuft am {{date}} um {{time}} ab"
     payments:
       title: "pagoPA-Zahlungsmitteilungen"
-      noticeCode: "Zahlungskodex"
+      noticeCode: "Zahlungsmitteilungskodex"
       pay: "Zahlen"
   greenPass:
     button: "Zurück"
@@ -2587,7 +2587,7 @@ features:
       badge:
         legalValue: "Rechtsgültig"
       title: "Details der Mitteilung"
-      noticeCode: "Zahlungskodex"
+      noticeCode: "Zahlungsmitteilungskodex"
       loadError:
         title: "Etwas ist schief gelaufen"
         body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
@@ -2672,7 +2672,7 @@ features:
     backoff:
       second: "1 Sekunde"
       seconds: "{{seconds}} Sekunden"
-      minute: "1 minuto"
+      minute: "1 Minute"
       minutes: "{{minutes}} Minuten"
       retryCountDown: "Du kannst es in {{time}} erneut versuchen."
     title: "Zahlungen"
@@ -2730,7 +2730,7 @@ features:
       list:
         empty:
           title: "Keine Quittung gefunden"
-          subtitle: "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, den du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
+          subtitle: "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
     details:
       payPal:
         banner:
@@ -2768,7 +2768,7 @@ support:
     title: "Leider können wir dir zur Zeit nicht helfen"
     body: "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
   errorGetZendeskToken:
-    title: "Wir können derzeit keine Ticket öffnen"
+    title: "Wir können derzeit kein Ticket erstellen"
     subtitle: "Versuche es später erneut"
   askPermissions:
     nameSurname: "Vor- und Nachname"
@@ -2886,7 +2886,7 @@ transaction:
     totalFeePsp: "Provision, berechnet von {{pspName}}."
     totalFeeNoPsp: "Provision, die vom Transaktionsdienstleister (PSP) erhoben wird."
     bannerImported:
-      content: "Die pagoPA-Quittung ist nicht verfügbar. Wende dich an die Stelle des Zahlungsempfängers, wenn du den Zahlungsbeleg, d. h. das Dokument, das die Begleichung einer Schuld bescheinigt, benötigst."
+      content: "Die pagoPA-Quittung ist nicht verfügbar. Wende dich an den Zahlungsempfängers, wenn du den Zahlungsbeleg, d. h. das Dokument, das die Begleichung einer Schuld bescheinigt, benötigst."
     info:
       title: "Informationen zur Transaktion"
       pspName: "Zahlungsdienstleister (PSP)"
