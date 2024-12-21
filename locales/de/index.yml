@@ -2949,3 +2949,41 @@ FIMS:
     profileCTA:
       title: "Kontrolle deiner Zugriffe"
       subTitle: "Zugriffshistorie mit IO anzeigen"
+    historyScreen:
+      header: "Deine Zugänge auf Dienste Dritter"
+      body: "Hier kannst du die Historie deiner Zugänge auf externe Dienste über IO einsehen und eine Kopie per E-Mail anfordern."
+  loadingScreen:
+    abort:
+      title: "Du hast den Zugang zu diesem Dienst abgebrochen"
+    consents:
+      title: "Warte ein paar Sekunden"
+    idle:
+      title: "Warte ein paar Sekunden"
+    fastLogin_forced_restart:
+      title: "Warte ein paar Sekunden"
+    in-app-browser-loading:
+      title: "Wir leiten dich zum Dienst weiter"
+    subtitle: "Warte ein paar Sekunden"
+  consentsScreen:
+    errorStates:
+      authentication:
+        body: "Der Webservice der Körperschaft ist derzeit nicht verfügbar"
+        title: "Der Dienst konnte nicht erreicht werden"
+      general:
+        body: "Es gab ein Problem beim Abrufen der Daten: Wir arbeiten daran, es so schnell wie möglich zu lösen"
+        title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es später noch einmal."
+      missingInAppBrowser:
+        body: "Um einen sicheren Zugriff zu gewährleisten, lade den auf deinem Gerät installierten Browser herunter oder aktualisiere ihn."
+        title: "Aktualisiere deinen Browser, um fortzufahren"
+    inAppBrowserError: "Beim Senden der Anfrage ist ein Problem aufgetreten. Bitte versuche es erneut"
+    title: "Um auf den Dienst zugreifen zu können, müssen die folgenden Daten freigegeben werden"
+    subtitle: "IO wird die erforderlichen Daten an "
+    subtitle2: " weitergeben für deine Authentifizierung bei "
+    requiredData: "Erforderliche Daten"
+    privacy1: "Für weitere Informationen lies bitte die "
+    privacyCta: "Datenschutzrichtlinie  "
+    bottomSheet:
+      title: "Dienste von Drittanbietern über IO: So funktioniert es"
+      body: "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter."
+      body2: "Deine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind."
+      bodyPrivacy: "Datenschutzrichtlinie"
