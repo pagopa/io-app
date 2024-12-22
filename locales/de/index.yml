@@ -2962,104 +2962,104 @@ features:
           content: "Überprüfe die digitale Version deines Dokuments bis zum {{date}}."
       bottomSheets:
         eidInfo:
-          title: "Documenti su IO:\nidentità verificata"
-          titleExpired: "Documenti su IO:\nverifica la tua identità"
-          contentTop: Con **Documenti su IO** salvi nel Portafoglio di IO le versioni digitali dei tuoi documenti.
-          contentBottom: "###### Come funziona?\n\nLa tua **identità è verificata** in fase di attivazione tramite SPID o CIE."
-          triggerLabel: Cos'è?
+          title: "Dokumente in IO:\nIdentität verifiziert"
+          titleExpired: "Dokumente in IO:\nVerifiziere deine Identität"
+          contentTop: "Mit **Dokumente in IO** speicherst du digitale Versionen deiner Dokumente im IO-Konto."
+          contentBottom: "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**."
+          triggerLabel: "Was ist das?"
           alert:
-            valid: L'ultima verifica è del {{date}}.
-            expiring: Verifica la tua identità entro il {{date}}.
-            expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+            valid: "Die letzte Überprüfung ist vom {{date}}."
+            expiring: "Überprüfe deine Identität bis {{date}}."
+            expired: "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
         MDL:
           expiring:
-            title: "Patente su IO: documento in scadenza"
-            content: "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nDovrai effettuare una visita medica con un medico abilitato e completare il pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\n - La Patente di guida in scadenza o scaduta \n - Un documento di identità \n - Il Codice fiscale \n - Una foto recente formato tessera"
+            title: "Führerschein in IO: ablaufendes Dokument"
+            content: "Verlängere deinen Führerschein in den Büros des Ministeriums für Infrastruktur und Verkehr - Generaldirektion für Motorisierung oder bei einer autorisierten Stelle in deiner Nähe.\n\nDu musst dich einer medizinischen Untersuchung bei einem qualifizierten Arzt unterziehen und die vorgeschriebenen Formulare ausfüllen.\n\n###### Welche Dokumente sollte ich bereithalten?\n\n - den ablaufenden oder abgelaufenen Führerschein\n - ein Ausweisdokument\n - die Steuernummer\n - ein aktuelles Foto in Passgröße"
         EuropeanHealthInsuranceCard:
           expiring:
-            title: "Tessera Sanitaria su IO: documento in scadenza"
-            content: "La tua Tessera Sanitaria viene rinnovata in automatico e poi spedita al tuo indirizzo di residenza registrato presso l'Agenzia delle Entrate.\n\nSe l'hai già ricevuta, puoi eliminare questo documento dal Portafoglio e aggiungere la nuova versione digitale aggiornata."
+            title: "Gesundheitskarte in IO: ablaufendes Dokument"
+            content: "Deine Gesundheitskarte wird automatisch erneuert und dann an deine bei der Agentur der Einnahmen registrierte Adresse geschickt.\n\nWenn du sie bereits erhalten hast, kannst du dieses Dokument aus deinem Konto löschen und die neue, aktualisierte digitale Version hinzufügen."
         EuropeanDisabilityCard:
           expiring:
-            title: "Carta europea della disabilità su IO: documento in scadenza"
-            content: "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
+            title: "Europäische Behindertencharta in IO: ablaufendes Dokument"
+            content: "Du kannst die Verlängerung deines Europäischen Behindertenausweises (EBA) bei der Stelle beantragen, die ihn ausgestellt hat.\n\n Informiere dich auf der offiziellen Website des INPS oder wende dich an deinen Sanitätsbetrieb, da die Verlängerung je nach Art der Behinderung und den Vorschriften in deinem Gebiet unterschiedlich ausfallen kann."
       credentialDetails:
         card:
-          front: "Fronte"
-          back: "Retro"
-          showFront: "Mostra fronte"
-          showBack: "Mostra retro"
-        personalDataTitle: "Dati personali"
-        documentDataTitle: "Dati del documento"
-        lastUpdated: "Dati aggiornati al {{lastUpdateTime}}"
+          front: "Vorderseite "
+          back: "Rückseite"
+          showFront: "Zeige Vorderseite "
+          showBack: "Zeige Rückseite"
+        personalDataTitle: "Persönliche Daten"
+        documentDataTitle: "Daten des Dokuments"
+        lastUpdated: "Daten zum {{lastUpdateTime}}"
         boolClaim:
-          true: Sì
-          false: No
-        hiddenClaim: "Nascosto"
+          true: "Ja"
+          false: "Nein"
+        hiddenClaim: "Ausgeblendet"
         fiscalCode:
-          label: Il tuo Codice Fiscale
-          action: Premi per ingrandire e visualizzare il codice a barre a tutto schermo
+          label: "Deine Steuernummer"
+          action: "Tippe, um den Barcode zu vergrößern und im Vollbildmodus anzuzeigen."
         status:
-          valid: Valida
-          invalid: Non valida
-          expired: Scaduta
-          expiring: In scadenza
+          valid: "Gültig"
+          invalid: "Ungültig"
+          expired: "Abgelaufen"
+          expiring: "Ablaufend"
         actions:
-          removeFromWallet: "Rimuovi dal Portafoglio"
-          requestAssistance: "Qualcosa non torna?"
-          showClaimValues: "Mostra gli attributi del documento"
-          hideClaimValues: "Nascondi gli attributi del documento"
+          removeFromWallet: "Vom Konto entfernen"
+          requestAssistance: "Stimmt etwas nicht?"
+          showClaimValues: "Dokumentattribute anzeigen"
+          hideClaimValues: "Dokumentattribute ausblenden"
         dialogs:
           remove:
-            title: Vuoi rimuovere il documento dal Portafoglio?
-            content: Se cambi idea, potrai riaggiungerlo in seguito.
-            confirm: Sì, rimuovi
+            title: "Möchtest du das Dokument aus dem Konto entfernen?"
+            content: "Wenn du deine Meinung änderst, kannst du es später wieder hinzufügen."
+            confirm: "Ja, entfernen"
         toast:
-          removed: Fatto!
+          removed: "Erledigt!"
         verificationExpired:
-          title: Verifica la versione digitale del documento
-          content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
-          primaryAction: Inizia
+          title: "Überprüfe die digitale Version des Dokuments"
+          content: "Dies ist ein notwendiger Sicherheitsschritt, um das Dokument '{{credentialName}}' in IO weiter zu verwenden."
+          primaryAction: "Start"
       ctas:
-        openPdf: "Mostra documento"
-        shareButton: Salva o condividi
-        fiscalCode: Il tuo Codice Fiscale
+        openPdf: "Dokument anzeigen"
+        shareButton: "Speichern oder freigeben"
+        fiscalCode: "Deine Steuernummer"
     trustmark:
-      cta: Mostra certificato di autenticità
-      description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
-      expiration: Il QR Code si rinnova tra
-      qrCode: QR code autenticità credenziale
+      cta: "Echtheitszertifikat anzeigen"
+      description: "Zeige den QR-Code vor, um die Echtheit des Dokuments zu bestätigen, wenn du dazu aufgefordert wirst."
+      expiration: "Der QR-Code erneuert sich in"
+      qrCode: "QR-Code zur Authentizität von Dokumenten"
     walletRevocation:
-      cta: Disattiva Documenti su IO
+      cta: "Dokumente in IO deaktivieren"
       confirmScreen:
-        title: Vuoi davvero disattivare Documenti su IO?
-        subtitle: "Eliminerai i documenti che hai aggiunto al Portafoglio.\nSe cambi idea, potrai riattivare Documenti su IO in futuro."
-        action: Conferma e continua
+        title: "Möchtest du Dokumente in IO wirklich deaktivieren?"
+        subtitle: "Du löschst die Dokumente, die du dem Konto hinzugefügt hast.\nWenn du deine Meinung änderst, kannst du Dokumente in IO in Zukunft wieder aktivieren."
+        action: "Bestätige und fortfahren"
       loadingScreen:
-        title: Stiamo disattivando Documenti su IO...
-        subtitle: Attendi qualche secondo
+        title: "Wir deaktivieren Dokumente in IO..."
+        subtitle: "Warte ein paar Sekunden"
       failureScreen:
-        title: Si è verificato un errore imprevisto
-        subtitle: Non è stato possibile disattivare il servizio. Riprova.
+        title: "Ein unerwarteter Fehler ist aufgetreten"
+        subtitle: "Der Dienst konnte nicht deaktiviert werden. Bitte versuche es erneut."
     feedback:
       banner:
-        title: Dicci cosa ne pensi
-        content: Raccontaci la tua esperienza con la funzionalità Documenti su IO.
-        action: Inizia
+        title: "Sag uns, was du denkst"
+        content: "Erzähle uns von deinen Erfahrungen mit der Funktion Dokumente in IO."
+        action: "Start"
     walletInstanceRevoked:
       alert:
-        cta: Scopri di più
-        closeButton: Chiudi
-        closeButtonAlt: Ho capito
+        cta: "Mehr erfahren"
+        closeButton: "Schließen"
+        closeButtonAlt: "Verstanden"
         revokedByWalletProvider: 
-          title: Documenti su IO è stata disattivata
-          content: Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi "Scopri di più".
+          title: "Dokumente in IO wurde deaktiviert"
+          content: "Um die Voraussetzungen für die weitere Nutzung der Funktionen auf deinem Gerät zu prüfen, tippe auf 'Mehr erfahren'."
         newWalletInstanceCreated:
-          title: Documenti su IO è stata disattivata su questo dispositivo
-          content: Puoi usare i tuoi documenti su IO su un solo dispositivo alla volta per ragioni di sicurezza.
+          title: "Dokumente in IO wurde auf diesem Gerät deaktiviert"
+          content: "Aus Sicherheitsgründen kannst du deine IO-Dokumente immer nur auf einem Gerät gleichzeitig verwenden."
         revokedByUser:
-          title: Hai disattivato Documenti su IO
-          content: Se cambi idea, potrai riattivare Documenti su IO in futuro.
+          title: "Du hast Dokumente in IO deaktiviert"
+          content: "Wenn du deine Meinung änderst, kannst du Dokumente in IO in Zukunft wieder aktivieren."
 support:
   ticketList:
     noTicket:
