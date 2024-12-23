@@ -93,7 +93,7 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
       onInit: assign(onInit),
-      setIsReissuing : assign({
+      setIsReissuing: assign({
         isReissuing: true
       })
     },
@@ -987,14 +987,13 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should obtain an eID (SPID), reissuing mode", async () => {
-
     //The wallet instance and attestation already exist
     const initialContext = {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
-      walletInstanceAttestation: T_WIA,
+      walletInstanceAttestation: T_WIA
     };
-    
+
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -1004,9 +1003,9 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-  
+
     actor.send({ type: "start-reissuing" });
-  
+
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "ModeSelection"
     });
@@ -1122,21 +1121,21 @@ describe("itwEidIssuanceMachine", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
-  
+
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" },
       context: {
         isReissuing: true
       }
     } as MachineSnapshot);
-  
+
     const actor = createActor(mockedMachine, {
       snapshot
     });
     actor.start();
-  
+
     actor.send({ type: "back" });
-  
+
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
@@ -1144,21 +1143,21 @@ describe("itwEidIssuanceMachine", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
-  
+
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { UserIdentification: "ModeSelection" },
       context: {
         isReissuing: false
       }
     } as MachineSnapshot);
-  
+
     const actor = createActor(mockedMachine, {
       snapshot
     });
     actor.start();
-  
+
     actor.send({ type: "back" });
-  
+
     expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
   });
 });
