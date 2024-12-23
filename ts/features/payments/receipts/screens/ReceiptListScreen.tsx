@@ -1,6 +1,5 @@
 import {
   Divider,
-  IOPictograms,
   IOStyles,
   ListItemHeader
 } from "@pagopa/io-app-design-system";
@@ -13,25 +12,28 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { PaymentsReceiptParamsList } from "../navigation/params";
-import { getPaymentsReceiptAction } from "../store/actions";
-import { walletReceiptListPotSelector } from "../store/selectors";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
-import { ReceiptListItemTransaction } from "../components/ReceiptListItemTransaction";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { groupTransactionsByMonth } from "../utils";
-import I18n from "../../../../i18n";
-import { PaymentsReceiptRoutes } from "../navigation/routes";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
+import {
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isPaymentsTransactionsEmptySelector } from "../../home/store/selectors";
 import * as analytics from "../analytics";
-import { ReceiptsCategoryFilter } from "../types";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { ReceiptFadeInOutAnimationView } from "../components/ReceiptFadeInOutAnimationView";
+import { ReceiptListItemTransaction } from "../components/ReceiptListItemTransaction";
 import { ReceiptLoadingList } from "../components/ReceiptLoadingList";
 import { ReceiptSectionListHeader } from "../components/ReceiptSectionListHeader";
+import { PaymentsReceiptParamsList } from "../navigation/params";
+import { PaymentsReceiptRoutes } from "../navigation/routes";
+import { getPaymentsReceiptAction } from "../store/actions";
+import { walletReceiptListPotSelector } from "../store/selectors";
+import { ReceiptsCategoryFilter } from "../types";
+import { groupTransactionsByMonth } from "../utils";
 
 export type ReceiptListScreenProps = RouteProp<
   PaymentsReceiptParamsList,
@@ -163,11 +165,12 @@ const ReceiptListScreen = () => {
     </>
   );
 
-  const emptyProps: {
-    title: string;
-    subtitle?: string;
-    pictogram: IOPictograms;
-  } =
+  type OperationResultEmptyProps = Pick<
+    OperationResultScreenContentProps,
+    "title" | "subtitle" | "pictogram"
+  >;
+
+  const emptyProps: OperationResultEmptyProps =
     noticeCategory === "payer"
       ? {
           title: I18n.t("features.payments.transactions.list.emptyPayer.title"),
