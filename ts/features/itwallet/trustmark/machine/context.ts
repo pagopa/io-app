@@ -30,4 +30,12 @@ export type Context = {
    * The failure of the trustmark machine
    */
   failure?: TrustmarkFailure;
+  /**
+   * The number of attempts made by the user to get the trustmark
+   */
+  attempts?: number;
+  /**
+   * Time after which the user can attempt again to get the trustmark
+   */
+  nextAttemptAt?: Date;
 };

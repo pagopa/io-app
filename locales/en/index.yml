@@ -3543,6 +3543,7 @@ features:
       failure:
         description: Abbiamo avuto un problema nel generare il nuovo QR Code.
         action: Riprova
+        toast: Puoi riprovare tra {{ time }}
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:

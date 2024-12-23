@@ -1,6 +1,8 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
+import { differenceInSeconds } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { ActionArgs, assign } from "xstate";
+import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { checkCurrentSession } from "../../../../store/actions/authentication";
 import { useIOStore } from "../../../../store/hooks";
@@ -54,14 +56,28 @@ export const createItwTrustmarkActionsImplementation = (
     navigation.pop();
   };
 
-  const showFailureToast = () => {
-    toast.error("Errore");
+  /**
+   * Shows a failure toast
+   */
+  const showRetryFailureToast = ({
+    context
+  }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
+    const timeDiffInSeconds = differenceInSeconds(
+      new Date(),
+      context.nextAttemptAt || new Date()
+    );
+
+    toast.error(
+      I18n.t("features.itWallet.trustmark.failure.toast", {
+        time: timeDiffInSeconds
+      })
+    );
   };
 
   return {
     onInit,
     storeWalletInstanceAttestation,
     handleSessionExpired,
-    showFailureToast
+    showRetryFailureToast
   };
 };
