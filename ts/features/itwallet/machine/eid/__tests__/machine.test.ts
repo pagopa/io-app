@@ -1117,4 +1117,48 @@ describe("itwEidIssuanceMachine", () => {
       eid: ItwStoredCredentialsMocks.eid
     });
   });
+
+  it("Should go back to Idle state if isReissuing is true", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+  
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        isReissuing: true
+      }
+    } as MachineSnapshot);
+  
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+  
+    actor.send({ type: "back" });
+  
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+  });
+
+  it("Should go back to IpzsPrivacyAcceptance state if isReissuing is false", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+  
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "ModeSelection" },
+      context: {
+        isReissuing: false
+      }
+    } as MachineSnapshot);
+  
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+  
+    actor.send({ type: "back" });
+  
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+  });
 });
