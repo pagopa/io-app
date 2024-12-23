@@ -26,20 +26,26 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
   const bodyPropsArray: Array<BodyProps> = useMemo(
     () => [
       {
-        text: I18n.t("features.itWallet.presentation.eid.verificationExpired.contentStart"),
+        text: I18n.t(
+          "features.itWallet.presentation.eid.verificationExpired.contentStart"
+        ),
         style: {
           textAlign: "center"
         }
       },
       {
-        text: I18n.t("features.itWallet.presentation.eid.verificationExpired.contentBold"),
+        text: I18n.t(
+          "features.itWallet.presentation.eid.verificationExpired.contentBold"
+        ),
         style: {
           textAlign: "center",
           fontWeight: "bold"
         }
       },
       {
-        text: I18n.t("features.itWallet.presentation.eid.verificationExpired.contentEnd"),
+        text: I18n.t(
+          "features.itWallet.presentation.eid.verificationExpired.contentEnd"
+        ),
         style: {
           textAlign: "center"
         }

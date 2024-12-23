@@ -75,7 +75,7 @@ export const itwEidIssuanceMachine = setup({
     setIsReissuing: assign(({ context }) => ({
       ...context,
       isReissuing: true
-    })),
+    }))
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -127,7 +127,7 @@ export const itwEidIssuanceMachine = setup({
         "revoke-wallet-instance": {
           target: "WalletInstanceRevocation"
         },
-        'start-reissuing': {
+        "start-reissuing": {
           target: "UserIdentification",
           actions: "setIsReissuing"
         }
@@ -289,7 +289,7 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.Idle"
               },
               {
-                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance",
+                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
             ]
           }
@@ -573,12 +573,12 @@ export const itwEidIssuanceMachine = setup({
           on: {
             "add-to-wallet": [
               {
-                guard: "isReissuing", 
+                guard: "isReissuing",
                 actions: [
                   "storeEidCredential",
                   "setWalletInstanceToValid",
                   "trackWalletInstanceCreation",
-                  "navigateToWallet" 
+                  "navigateToWallet"
                 ]
               },
               {

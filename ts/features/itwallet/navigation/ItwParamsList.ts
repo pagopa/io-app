@@ -14,7 +14,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
+  [ITW_ROUTES.IDENTIFICATION
+    .MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
   // IDENTIFICATION SPID
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;

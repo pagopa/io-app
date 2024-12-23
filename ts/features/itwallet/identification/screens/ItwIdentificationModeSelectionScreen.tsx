@@ -20,9 +20,11 @@ import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selector
 import { Route, useRoute } from "@react-navigation/native";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-export type ItwIdentificationModeSelectionScreenNavigationParams = {
-  eidReissuing?: boolean;
-} | undefined;
+export type ItwIdentificationModeSelectionScreenNavigationParams =
+  | {
+      eidReissuing?: boolean;
+    }
+  | undefined;
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -58,7 +60,6 @@ export const ItwIdentificationModeSelectionScreen = () => {
         ItwIdentificationModeSelectionScreenNavigationParams
       >
     >();
-
 
   const { eidReissuing } = route.params || {};
 

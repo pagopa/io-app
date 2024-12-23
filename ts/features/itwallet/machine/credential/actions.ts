@@ -107,7 +107,7 @@ export default (
     cred = {
       ...cred,
       jwt: {
-        expiration: '2024-12-22T23:59:59Z',
+        expiration: "2024-12-22T23:59:59Z"
       }
     };
 

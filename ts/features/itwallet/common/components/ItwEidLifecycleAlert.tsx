@@ -87,7 +87,9 @@ export const ItwEidLifecycleAlert = ({
             date: format(eid.jwt.expiration, "DD-MM-YYYY")
           }
         ),
-        action: I18n.t("features.itWallet.presentation.bottomSheets.eidInfo.alert.action"),
+        action: I18n.t(
+          "features.itWallet.presentation.bottomSheets.eidInfo.alert.action"
+        ),
         onPress: startEidReissuing
       },
       jwtExpired: {
@@ -96,7 +98,9 @@ export const ItwEidLifecycleAlert = ({
         content: I18n.t(
           "features.itWallet.presentation.bottomSheets.eidInfo.alert.expired"
         ),
-        action: I18n.t("features.itWallet.presentation.bottomSheets.eidInfo.alert.action"),
+        action: I18n.t(
+          "features.itWallet.presentation.bottomSheets.eidInfo.alert.action"
+        ),
         onPress: startEidReissuing
       }
     };
