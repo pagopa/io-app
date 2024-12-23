@@ -40,6 +40,11 @@ export type ReceiptListScreenProps = RouteProp<
   "PAYMENT_RECEIPT_DETAILS"
 >;
 
+type OperationResultEmptyProps = Pick<
+  OperationResultScreenContentProps,
+  "title" | "subtitle" | "pictogram"
+>;
+
 const AnimatedSectionList = Animated.createAnimatedComponent(
   SectionList as new () => SectionList<NoticeListItem>
 );
@@ -164,11 +169,6 @@ const ReceiptListScreen = () => {
       )}
     </>
   );
-
-  type OperationResultEmptyProps = Pick<
-    OperationResultScreenContentProps,
-    "title" | "subtitle" | "pictogram"
-  >;
 
   const emptyProps: OperationResultEmptyProps =
     noticeCategory === "payer"
