@@ -40,6 +40,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
+  const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeEidCredential = jest.fn();
   const closeIssuance = jest.fn();
@@ -82,6 +83,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       storeIntegrityKeyTag,
+      cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
       storeEidCredential,
       closeIssuance,
@@ -981,5 +983,50 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(handleSessionExpired).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
+  });
+
+  it("should cleanup integrity key tag and fail when obtaining Wallet Instance Attestation fails", async () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    /**
+     * Start eID issuance
+     */
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * Accept TOS and request WIA
+     */
+
+    createWalletInstance.mockImplementation(() =>
+      Promise.resolve(T_INTEGRITY_KEY)
+    );
+    getWalletAttestation.mockImplementation(() => Promise.reject({})); // Simulate failure
+    isSessionExpired.mockImplementation(() => false); // Session not expired
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("WalletInstanceCreation");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+
+    // Wallet Instance Attestation failure triggers cleanupIntegrityKeyTag
+    expect(cleanupIntegrityKeyTag).toHaveBeenCalledTimes(1);
+
+    // Check that the machine transitions to Failure state
+    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
   });
 });
