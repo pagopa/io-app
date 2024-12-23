@@ -63,8 +63,7 @@ export const itwTrustmarkMachine = setup({
   states: {
     CheckingWalletInstanceAttestation: {
       tags: [ItwTags.Loading],
-      description:
-        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      description: "Checks the WIA and decide weather to get a new one or not",
       always: [
         {
           guard: "hasValidWalletInstanceAttestation",
@@ -76,8 +75,7 @@ export const itwTrustmarkMachine = setup({
       ]
     },
     ObtainingWalletInstanceAttestation: {
-      description:
-        "This state obtains the wallet instance attestation and stores it in the context for later use in the issuance flow.",
+      description: "Obtains the WIA and stores it in the context",
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestationActor",
@@ -102,8 +100,7 @@ export const itwTrustmarkMachine = setup({
       }
     },
     RefreshingTrustmark: {
-      description:
-        "This state obtains the trustmark url and stores it in the context for later use in the displaying flow.",
+      description: "Obtains the Trustmark and stores it to the context",
       tags: [ItwTags.Loading],
       invoke: {
         src: "getCredentialTrustmarkActor",
@@ -128,8 +125,7 @@ export const itwTrustmarkMachine = setup({
       }
     },
     DisplayingTrustmark: {
-      description:
-        "This state displays the trustmark QR Code and checks if it has expired or not.",
+      description: "Displays the QR Code and checks if it has expired",
       initial: "Idle",
       states: {
         Idle: {
