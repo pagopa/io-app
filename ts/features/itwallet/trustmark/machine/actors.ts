@@ -5,7 +5,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
-import * as itwTrustmarkUtils from "../../common/utils/itwTrustmarkUtils";
+import * as itwTrustmarkUtils from "../utils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
