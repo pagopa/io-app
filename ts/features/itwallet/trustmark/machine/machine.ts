@@ -23,6 +23,7 @@ export const itwTrustmarkMachine = setup({
   },
   actions: {
     onInit: notImplemented,
+    storeWalletInstanceAttestation: notImplemented,
     handleSessionExpired: notImplemented,
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
@@ -84,7 +85,8 @@ export const itwTrustmarkMachine = setup({
           actions: [
             assign(({ event }) => ({
               walletInstanceAttestation: event.output
-            }))
+            })),
+            "storeWalletInstanceAttestation"
           ]
         },
         onError: [
