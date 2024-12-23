@@ -2758,9 +2758,9 @@ features:
       ts: "Gesundheitskarte - Europäische Krankenversicherungskarte"
     ipzsPrivacy:
       title: "Deine Dokumente in IO sind sicher"
-      warning: "Indem du auf **Fortfahren** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast."
+      warning: "Indem du auf **Weiter** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast."
       button:
-        label: "Fortfahren"
+        label: "Weiter"
     wallet:
       active: "Aktiv"
       inactive: "Nicht aktiv"
@@ -2817,7 +2817,7 @@ features:
         onboarding:
           content: "Aktiviere Dokumente in IO, um die digitale Version deiner Dokumente zum Konto hinzuzufügen"
           action: "Start"
-      title: "Die digitale Version deiner Dokumente, in IO"
+      title: "Die digitale Version deiner Dokumente in IO"
       content: "###### Dokumente in IO: So funktioniert es \n Du kannst jetzt die **digitale Version deiner persönlichen Dokumente**, wie z. B. deinen Führerschein und deine Gesundheitskarte, zu deinem IO-Konto hinzufügen.\n\nAktiviere die Funktion **Dokumente in IO**, um sie immer auf deinem Gerät zur Hand zu haben.  \n ###### Es geht schnell und einfach \n Du benötigst deine **SPID** oder **CIE** (Elektronische Identitätskarte) Zugangsdaten, um die Aktivierung abzuschließen: dies ist ein notwendiger Sicherheitsschritt, um die Sicherheit deiner Daten zu gewährleisten."
       tos: "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzbestimmungen und Nutzungsbedingungen]({{privacyAndTosUrl}}) gelesen und verstanden hast."
       upcomingWalletBanner:
@@ -2842,7 +2842,7 @@ features:
             subtitle: "Elektronische Identitätskarte und PIN verwenden"
           cieId:
             title: "CieID"
-            subtitle: "CieID-Zugangsdaten und -Anwendungen verwenden"
+            subtitle: "CieID-Zugangsdaten und -App verwenden"
       nfc:
         title: "NFC aktivieren, um fortzufahren"
         description: "Damit IO deine CIE lesen kann, aktiviere NFC in den Einstellungen deines Geräts."
@@ -2875,12 +2875,12 @@ features:
         disclaimer:
           0: "Deine Daten sind sicher und werden nur zu den in der Datenschutzrichtlinie beschriebenen Zwecken verarbeitet."
           1: "Die Daten werden nur so lange weitergegeben, wie es dauert, bis die digitale Version des Dokuments bereitgestellt wird."
-        tos: "Indem du auf **Fortfahren** tippst, bestätigst du, dass du die [Datenschutzrichtlinie]({{privacyUrl}}) gelesen und verstanden hast."
+        tos: "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzrichtlinie]({{privacyUrl}}) gelesen und verstanden hast."
       eidPreview:
         title: "Identität verifiziert"
         subtitle: "Du aktivierst **Dokumente in IO** als:"
         actions:
-          primary: "Fortfahren"
+          primary: "Weiter"
           secondary: "Abbrechen"
       credentialPreview:
         loading: "Warte noch ein paar Sekunden, ohne die App zu beenden."
@@ -2981,8 +2981,8 @@ features:
             content: "Deine Gesundheitskarte wird automatisch erneuert und dann an deine bei der Agentur der Einnahmen registrierte Adresse geschickt.\n\nWenn du sie bereits erhalten hast, kannst du dieses Dokument aus deinem Konto löschen und die neue, aktualisierte digitale Version hinzufügen."
         EuropeanDisabilityCard:
           expiring:
-            title: "Europäische Behindertencharta in IO: ablaufendes Dokument"
-            content: "Du kannst die Verlängerung deines Europäischen Behindertenausweises (EBA) bei der Stelle beantragen, die ihn ausgestellt hat.\n\n Informiere dich auf der offiziellen Website des INPS oder wende dich an deinen Sanitätsbetrieb, da die Verlängerung je nach Art der Behinderung und den Vorschriften in deinem Gebiet unterschiedlich ausfallen kann."
+            title: "Europäischer Behindertenausweis in IO: ablaufendes Dokument"
+            content: "Du kannst die Verlängerung deines Europäischen Behindertenausweises bei der Stelle beantragen, die ihn ausgestellt hat.\n\n Informiere dich auf der offiziellen Website des INPS oder wende dich an deinen Sanitätsbetrieb, da die Verlängerung je nach Art der Behinderung und den Vorschriften in deinem Gebiet unterschiedlich ausfallen kann."
       credentialDetails:
         card:
           front: "Vorderseite "
@@ -3284,7 +3284,7 @@ FIMS:
         title: "Es liegt ein vorübergehendes Problem vor, bitte versuche es später noch einmal."
       missingInAppBrowser:
         body: "Um einen sicheren Zugriff zu gewährleisten, lade den auf deinem Gerät installierten Browser herunter oder aktualisiere ihn."
-        title: "Aktualisiere deinen Browser, um fortzufahren"
+        title: "Aktualisiere deinen Browser um fortzufahren"
     inAppBrowserError: "Beim Senden der Anfrage ist ein Problem aufgetreten. Bitte versuche es erneut"
     title: "Um auf den Dienst zugreifen zu können, müssen die folgenden Daten freigegeben werden"
     subtitle: "IO wird die erforderlichen Daten an "
