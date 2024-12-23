@@ -101,17 +101,7 @@ export default (
     CredentialIssuanceEvents
   >) => {
     assert(context.credential, "credential is undefined");
-
-    let cred = context.credential;
-
-    cred = {
-      ...cred,
-      jwt: {
-        expiration: "2024-12-22T23:59:59Z"
-      }
-    };
-
-    store.dispatch(itwCredentialsStore([cred]));
+    store.dispatch(itwCredentialsStore([context.credential]));
   },
 
   flagCredentialAsRequested: ({
