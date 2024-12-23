@@ -12,25 +12,25 @@ import * as selectors from "../../store/selectors";
 import { WalletCategoryFilterTabs } from "../WalletCategoryFilterTabs";
 
 describe("WalletCategoryFilterTabs", () => {
-  it("should not render the component if there is only one cards category in the wallet", () => {
+  it("should not render the component if category filtering is not enabled", () => {
     jest
       .spyOn(selectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
     jest
-      .spyOn(selectors, "selectWalletCategories")
-      .mockImplementation(() => new Set(["itw"]));
+      .spyOn(selectors, "isWalletCategoryFilteringEnabledSelector")
+      .mockImplementation(() => false);
 
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("CategoryTabsContainerTestID")).toBeNull();
   });
 
-  it("should render the component if there is more than one cards category in the wallet", () => {
+  it("should render the component if category filtering is enabled", () => {
     jest
       .spyOn(selectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
     jest
-      .spyOn(selectors, "selectWalletCategories")
-      .mockImplementation(() => new Set(["itw", "other"]));
+      .spyOn(selectors, "isWalletCategoryFilteringEnabledSelector")
+      .mockImplementation(() => true);
 
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("CategoryTabsContainerTestID")).not.toBeNull();
@@ -45,8 +45,8 @@ describe("WalletCategoryFilterTabs", () => {
       .spyOn(selectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
     jest
-      .spyOn(selectors, "selectWalletCategories")
-      .mockImplementation(() => new Set(["itw", "other"]));
+      .spyOn(selectors, "isWalletCategoryFilteringEnabledSelector")
+      .mockImplementation(() => true);
 
     const { getByTestId } = renderComponent();
     const itwTab = getByTestId("CategoryTabTestID-itw");
