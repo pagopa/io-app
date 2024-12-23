@@ -17,6 +17,12 @@ import {
 import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
+import { Route, useRoute } from "@react-navigation/native";
+import { ITW_ROUTES } from "../../navigation/routes";
+
+export type ItwIdentificationModeSelectionScreenNavigationParams = {
+  eidReissuing?: boolean;
+} | undefined;
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -43,6 +49,25 @@ export const ItwIdentificationModeSelectionScreen = () => {
   const isCieSupported = useMemo(
     () => cieFlowForDevServerEnabled || isCieAuthenticationSupported,
     [isCieAuthenticationSupported]
+  );
+
+  const route =
+    useRoute<
+      Route<
+        typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+        ItwIdentificationModeSelectionScreenNavigationParams
+      >
+    >();
+
+
+  const { eidReissuing } = route.params || {};
+
+  useFocusEffect(
+    useCallback(() => {
+      if (eidReissuing) {
+        machineRef.send({ type: "start-reissuing" });
+      }
+    }, [eidReissuing, machineRef])
   );
 
   useFocusEffect(trackItWalletIDMethod);

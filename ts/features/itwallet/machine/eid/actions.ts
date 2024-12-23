@@ -184,7 +184,15 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.eid, "eID is undefined");
-    store.dispatch(itwCredentialsStore([context.eid]));
+
+    let eid = context.eid;
+    eid = {
+      ...eid,
+      jwt: {
+        expiration: '2024-12-22T23:59:59Z',
+      }
+    };
+    store.dispatch(itwCredentialsStore([eid]));
   },
 
   requestAssistance: () => {},

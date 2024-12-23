@@ -161,6 +161,7 @@ const ItwWalletCardsContainer = () => {
             <ItwWalletReadyBanner />
             <ItwEidLifecycleAlert
               lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+              navigation={navigation}
             />
           </>
         }

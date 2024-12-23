@@ -42,6 +42,7 @@ import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredential
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
+import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/screens/ItwPresentationEidVerificationExpiredScreen";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
@@ -224,6 +225,10 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
         component={ItwLifecycleWalletRevocationScreen}
         options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
+        component={ItwPresentationEidVerificationExpiredScreen}
       />
     </Stack.Navigator>
   );

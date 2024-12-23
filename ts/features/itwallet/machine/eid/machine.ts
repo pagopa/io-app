@@ -71,7 +71,11 @@ export const itwEidIssuanceMachine = setup({
           callbackUrl: event.authRedirectUrl
         }
       };
-    })
+    }),
+    setIsReissuing: assign(({ context }) => ({
+      ...context,
+      isReissuing: true
+    })),
   },
   actors: {
     createWalletInstance: fromPromise<string>(notImplemented),
@@ -92,7 +96,8 @@ export const itwEidIssuanceMachine = setup({
     isSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false
+    isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
+    isReissuing: ({ context }) => context.isReissuing === true
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -121,6 +126,10 @@ export const itwEidIssuanceMachine = setup({
         },
         "revoke-wallet-instance": {
           target: "WalletInstanceRevocation"
+        },
+        'start-reissuing': {
+          target: "UserIdentification",
+          actions: "setIsReissuing"
         }
       }
     },
@@ -274,7 +283,15 @@ export const itwEidIssuanceMachine = setup({
                 target: "CieID"
               }
             ],
-            back: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
+            back: [
+              {
+                guard: "isReissuing",
+                target: "#itwEidIssuanceMachine.Idle"
+              },
+              {
+                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance",
+              }
+            ]
           }
         },
         CieID: {
@@ -554,14 +571,25 @@ export const itwEidIssuanceMachine = setup({
         },
         DisplayingPreview: {
           on: {
-            "add-to-wallet": {
-              actions: [
-                "storeEidCredential",
-                "setWalletInstanceToValid",
-                "trackWalletInstanceCreation"
-              ],
-              target: "#itwEidIssuanceMachine.Success"
-            },
+            "add-to-wallet": [
+              {
+                guard: "isReissuing", 
+                actions: [
+                  "storeEidCredential",
+                  "setWalletInstanceToValid",
+                  "trackWalletInstanceCreation",
+                  "navigateToWallet" 
+                ]
+              },
+              {
+                actions: [
+                  "storeEidCredential",
+                  "setWalletInstanceToValid",
+                  "trackWalletInstanceCreation"
+                ],
+                target: "#itwEidIssuanceMachine.Success"
+              }
+            ],
             close: {
               actions: ["closeIssuance"]
             }

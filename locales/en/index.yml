@@ -3475,6 +3475,7 @@ features:
             valid: L'ultima verifica è del {{date}}.
             expiring: Verifica la tua identità entro il {{date}}.
             expired: È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.
+            action: Inizia
         MDL:
           expiring:
             title: "Patente su IO: documento in scadenza"
@@ -3528,6 +3529,13 @@ features:
         openPdf: "Show document"
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
+      eid: 
+        verificationExpired:
+          title: Verifica la tua identità
+          contentStart: "È un passaggio di sicurezza necessario per continuare ad usare "
+          contentBold: Documenti su IO
+          contentEnd: "."
+          primaryAction: Inizia
     trustmark:
       cta: Mostra certificato di autenticità
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
