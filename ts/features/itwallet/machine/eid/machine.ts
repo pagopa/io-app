@@ -43,6 +43,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     storeIntegrityKeyTag: notImplemented,
+    cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeEidCredential: notImplemented,
     closeIssuance: notImplemented,
@@ -234,7 +235,7 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.TosAcceptance"
           },
           {
-            actions: "setFailure",
+            actions: ["setFailure", "cleanupIntegrityKeyTag"],
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]

@@ -12,9 +12,9 @@ import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUti
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { sessionTokenSelector } from "../../../../../store/reducers/authentication";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
-import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/reducers";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
 import { itwIntegrityServiceReadySelector } from "../../../issuance/store/selectors";
+import { itwIsWalletInstanceAttestationValidSelector } from "../../../walletInstance/store/selectors";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
