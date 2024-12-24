@@ -36,7 +36,8 @@ export const borderColorByStatus: { [key in ItwCredentialStatus]: string } = {
   expired: IOColors["error-600"],
   expiring: IOColors["warning-700"],
   jwtExpired: IOColors["error-600"],
-  jwtExpiring: IOColors["warning-700"]
+  jwtExpiring: IOColors["warning-700"],
+  unknown: IOColors["grey-300"]
 };
 
 export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
@@ -59,6 +60,11 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
   jwtExpiring: {
     variant: "warning",
     text: I18n.t("features.itWallet.card.status.verificationExpiring")
+  },
+  unknown: {
+    variant: "custom",
+    icon: { name: "infoFilled", color: "grey" },
+    text: I18n.t("features.itWallet.card.status.unknown")
   }
 };
 

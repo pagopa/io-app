@@ -31,6 +31,12 @@ export const getCredentialStatus = (
     parsedCredential,
     storedStatusAttestation: statusAttestation
   } = credential;
+  // We could not determine the status of the credential.
+  // This happens when the status attestation API call fails.
+  if (statusAttestation?.credentialStatus === "unknown") {
+    return "unknown";
+  }
+
   const now = Date.now();
 
   const jwtExpireDays = differenceInCalendarDays(jwt.expiration, now);

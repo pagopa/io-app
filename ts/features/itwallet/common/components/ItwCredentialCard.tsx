@@ -1,6 +1,7 @@
 import { HStack, IOColors, IOText, Tag } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useMemo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import Color from "color";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
 import {
   borderColorByStatus,
@@ -11,11 +12,21 @@ import {
 import { CredentialType } from "../utils/itwMocksUtils";
 import { getThemeColorByCredentialType } from "../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
-import { ItwDigitalVersionBadge } from "./ItwDigitalVersionBadge";
+import {
+  ItwDigitalVersionBadge,
+  TagColorScheme
+} from "./ItwDigitalVersionBadge";
 
 export type ItwCredentialCard = {
   credentialType: string;
   status?: ItwCredentialStatus;
+};
+
+type StyleProps = {
+  cardBackgroundSource: ImageSourcePropType;
+  titleColor: string;
+  titleOpacity: number;
+  tagColorScheme: TagColorScheme;
 };
 
 export const ItwCredentialCard = ({
@@ -23,18 +34,42 @@ export const ItwCredentialCard = ({
   credentialType
 }: ItwCredentialCard) => {
   const isValid = validCredentialStatuses.includes(status);
-  const theme = getThemeColorByCredentialType(credentialType);
-  const labelOpacity = isValid ? 1 : 0.5;
 
-  const cardBackgroundSource =
-    credentialCardBackgrounds[credentialType][isValid ? 0 : 1];
+  const styleProps = useMemo((): StyleProps => {
+    const theme = getThemeColorByCredentialType(credentialType);
+    const [on, off, na] = credentialCardBackgrounds[credentialType];
+
+    if (status === "unknown") {
+      return {
+        cardBackgroundSource: na,
+        titleColor: Color(theme.textColor).grayscale().hex(),
+        titleOpacity: 0.5,
+        tagColorScheme: "greyscale"
+      };
+    }
+    if (isValid) {
+      return {
+        cardBackgroundSource: on,
+        titleColor: theme.textColor,
+        titleOpacity: 1,
+        tagColorScheme: "default"
+      };
+    }
+    return {
+      cardBackgroundSource: off,
+      titleColor: theme.textColor,
+      titleOpacity: 0.5,
+      tagColorScheme: "faded"
+    };
+  }, [credentialType, status, isValid]);
+
   const statusTagProps = tagPropsByStatus[status];
 
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
         <AnimatedImage
-          source={cardBackgroundSource}
+          source={styleProps.cardBackgroundSource}
           style={styles.cardBackground}
         />
       </View>
@@ -48,8 +83,8 @@ export const ItwCredentialCard = ({
             maxFontSizeMultiplier={1.25}
             style={{
               letterSpacing: 0.25,
-              color: theme.textColor,
-              opacity: labelOpacity,
+              color: styleProps.titleColor,
+              opacity: styleProps.titleOpacity,
               flex: 1,
               flexShrink: 1
             }}
@@ -61,7 +96,7 @@ export const ItwCredentialCard = ({
       </View>
       <ItwDigitalVersionBadge
         credentialType={credentialType}
-        isFaded={!isValid}
+        colorScheme={styleProps.tagColorScheme}
       />
       <View
         style={[styles.border, { borderColor: borderColorByStatus[status] }]}
@@ -71,19 +106,26 @@ export const ItwCredentialCard = ({
 };
 
 const credentialCardBackgrounds: {
-  [type: string]: [ImageSourcePropType, ImageSourcePropType];
+  [type: string]: [
+    ImageSourcePropType,
+    ImageSourcePropType,
+    ImageSourcePropType
+  ];
 } = {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: [
     require("../../../../../img/features/itWallet/cards/dc.png"),
-    require("../../../../../img/features/itWallet/cards/dc_off.png")
+    require("../../../../../img/features/itWallet/cards/dc_off.png"),
+    require("../../../../../img/features/itWallet/cards/dc_na.png")
   ],
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: [
     require("../../../../../img/features/itWallet/cards/ts.png"),
-    require("../../../../../img/features/itWallet/cards/ts_off.png")
+    require("../../../../../img/features/itWallet/cards/ts_off.png"),
+    require("../../../../../img/features/itWallet/cards/ts_na.png")
   ],
   [CredentialType.DRIVING_LICENSE]: [
     require("../../../../../img/features/itWallet/cards/mdl.png"),
-    require("../../../../../img/features/itWallet/cards/mdl_off.png")
+    require("../../../../../img/features/itWallet/cards/mdl_off.png"),
+    require("../../../../../img/features/itWallet/cards/mdl_na.png")
   ]
 };
 
