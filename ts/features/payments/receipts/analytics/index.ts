@@ -1,6 +1,7 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { PaymentsAnalyticsReceiptUser } from "../../common/types/PaymentAnalytics";
+import { ReceiptsCategoryFilter } from "../types";
 
 export type PaymentReceiptAnalyticsProps = {
   organization_name: string;
@@ -109,5 +110,14 @@ export const trackHideReceiptFailure = (
   void mixpanelTrack(
     "HIDE_RECEIPT_FAILURE",
     buildEventProperties("KO", undefined, props)
+  );
+};
+
+export const trackReceiptFilterUsage = (
+  filter: Partial<ReceiptsCategoryFilter>
+) => {
+  void mixpanelTrack(
+    "PAYMENTS_RECEIPT_LISTING_FILTER",
+    buildEventProperties("UX", "action", { filter })
   );
 };
