@@ -35,7 +35,8 @@ export const trackPaymentsOpenReceipt = (
   void mixpanelTrack(
     "OPEN_RECEIPT",
     buildEventProperties("UX", "screen_view", {
-      ...props
+      ...props,
+      receipt_entry_point: "payments_receipt_listing"
     })
   );
 };
