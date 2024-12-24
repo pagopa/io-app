@@ -209,9 +209,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -236,9 +236,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -452,9 +452,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -472,9 +472,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     You have a notice due soon
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -544,6 +544,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -551,10 +552,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -632,9 +633,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -660,9 +661,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -734,6 +735,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -741,10 +743,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -822,9 +824,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -884,9 +886,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -1045,9 +1047,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1157,13 +1159,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   false,
                                 ]
@@ -1172,10 +1176,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1272,8 +1276,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -1301,14 +1305,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -1372,10 +1374,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1391,15 +1393,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -1667,9 +1669,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1694,9 +1696,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -1910,9 +1912,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -1930,9 +1932,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     You have a new message
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -2002,6 +2004,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -2009,10 +2012,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -2090,9 +2093,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -2118,9 +2121,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -2192,6 +2195,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -2199,10 +2203,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -2280,9 +2284,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -2342,9 +2346,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -2503,9 +2507,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -2623,6 +2627,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -2630,10 +2637,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2730,8 +2737,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2759,14 +2766,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -2830,10 +2835,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -2849,15 +2854,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -3125,9 +3130,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3152,9 +3157,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3368,9 +3373,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -3388,9 +3393,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     You have a notice due tomorrow
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -3460,6 +3465,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -3467,10 +3473,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -3548,9 +3554,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -3576,9 +3582,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -3650,6 +3656,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -3657,10 +3664,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -3738,9 +3745,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -3800,9 +3807,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -3961,9 +3968,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4081,6 +4088,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -4088,10 +4098,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4188,8 +4198,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -4217,14 +4227,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -4288,10 +4296,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -4307,15 +4315,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -4583,9 +4591,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -4610,9 +4618,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -4826,9 +4834,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4846,9 +4854,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     Comune di Ipazia
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -4918,6 +4926,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -4925,10 +4934,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -5006,9 +5015,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -5034,9 +5043,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -5108,6 +5117,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -5115,10 +5125,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -5196,9 +5206,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -5258,9 +5268,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -5419,9 +5429,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -5539,6 +5549,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -5546,10 +5559,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5646,8 +5659,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -5675,14 +5688,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -5746,10 +5757,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -5765,15 +5776,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -6041,9 +6052,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6068,9 +6079,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -6284,9 +6295,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -6304,9 +6315,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     You have a notice due soon
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -6376,6 +6387,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -6383,10 +6395,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 >
                                   <Text
                                     accessible={true}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -6610,9 +6622,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -6638,9 +6650,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -6712,6 +6724,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -6719,10 +6732,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 >
                                   <Text
                                     accessible={true}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -6946,9 +6959,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
@@ -7008,9 +7021,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -7169,9 +7182,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
@@ -7281,7 +7294,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <View
-                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
@@ -7544,8 +7556,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -7573,14 +7585,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -7644,10 +7654,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -7663,15 +7673,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

@@ -235,12 +235,15 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "alignItems": "center",
                                         "alignSelf": "flex-start",
                                         "borderCurve": "continuous",
-                                        "borderRadius": 6,
                                         "borderWidth": 1,
                                         "flexDirection": "row",
                                         "justifyContent": "center",
-                                        "paddingHorizontal": 8,
-                                        "paddingVertical": 6,
+                                      },
+                                      {
+                                        "borderRadius": 9,
+                                        "columnGap": 9,
+                                        "paddingHorizontal": 12,
+                                        "paddingVertical": 9,
                                       },
                                       {
                                         "backgroundColor": "#FFFFFF",
@@ -261,10 +264,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       accessibilityLabel=""
                                       accessible={false}
                                       align="xMidYMid"
-                                      bbHeight={16}
-                                      bbWidth={16}
+                                      bbHeight={24}
+                                      bbWidth={24}
                                       focusable={false}
-                                      height={16}
+                                      height={24}
                                       importantForAccessibility="no-hide-descendants"
                                       meetOrSlice={0}
                                       minX={0}
@@ -280,15 +283,15 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           },
                                           {
                                             "flex": 0,
-                                            "height": 16,
-                                            "width": 16,
+                                            "height": 24,
+                                            "width": 24,
                                           },
                                         ]
                                       }
                                       tintColor="#0B3EE3"
                                       vbHeight={24}
                                       vbWidth={24}
-                                      width={16}
+                                      width={24}
                                     >
                                       <RNSVGGroup
                                         color="#0B3EE3"
@@ -318,17 +321,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       </RNSVGGroup>
                                     </RNSVGSvgView>
                                   </View>
-                                  <View
-                                    style={
-                                      {
-                                        "width": 6,
-                                      }
-                                    }
-                                  />
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
@@ -439,9 +435,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -467,9 +463,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -519,9 +515,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
@@ -539,9 +535,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   Ċentru tas-Saħħa
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   onPress={[Function]}
                                   style={
                                     [
@@ -637,9 +633,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -687,72 +683,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 <View
                                   style={
                                     {
-                                      "marginRight": 8,
-                                    }
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
-                                    focusable={false}
-                                    height={24}
-                                    importantForAccessibility="no-hide-descendants"
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "color": "#BBC2D6",
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
-                                        },
-                                      ]
-                                    }
-                                    tintColor="#BBC2D6"
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={24}
-                                  >
-                                    <RNSVGGroup
-                                      color="#BBC2D6"
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        d="M22.95 9.5997a.9999.9999 0 0 0-.707-.29279c-.2651 0-.5195.10532-.707.29279l-10.892 10.939a4.99896 4.99896 0 0 1-1.62212 1.084 4.99813 4.99813 0 0 1-1.9135.3808 5.00017 5.00017 0 0 1-3.53586-1.4643 5.00042 5.00042 0 0 1-1.4648-3.5357 5.00026 5.00026 0 0 1 1.4643-3.5358L14.121 2.8757a3.00005 3.00005 0 0 1 4.2253.0167 2.99985 2.99985 0 0 1 .8789 2.109 2.99996 2.99996 0 0 1-.8612 2.1163L7.81502 17.7097a1.0218 1.0218 0 0 1-.707.284 1.02182 1.02182 0 0 1-.707-.284.99989.99989 0 0 1-.29278-.707c0-.2652.10531-.5195.29278-.707l9.39198-9.435a.99975.99975 0 0 0 .2807-.7034 1.00018 1.00018 0 0 0-.2929-.69842.99994.99994 0 0 0-1.4018-.01218l-9.39198 9.435a3.00022 3.00022 0 0 0-.65045.9733 3.00027 3.00027 0 0 0 0 2.2964c.1508.364.37182.6947.65045.9733a3.07287 3.07287 0 0 0 2.1215.8498 3.07287 3.07287 0 0 0 2.1215-.8498L19.778 8.5317a5.0001 5.0001 0 0 0 1.4196-3.52223 4.99983 4.99983 0 0 0-1.4646-3.50375A5.0001 5.0001 0 0 0 16.229.0416a5.00012 5.00012 0 0 0-3.522 1.4201L2.15802 12.0537C.8452 13.3665.10767 15.1471.10767 17.0037c0 1.8566.73753 3.6372 2.05035 4.95 1.31282 1.3128 3.09339 2.0504 4.95 2.0504 1.85661 0 3.63718-.7376 4.94998-2.0504l10.892-10.936a.99968.99968 0 0 0 .2948-.709c0-.1318-.026-.2623-.0766-.38392a.999.999 0 0 0-.2182-.32508Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                                <View
-                                  style={
-                                    {
                                       "flex": 1,
                                     }
                                   }
@@ -763,9 +693,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     importantForAccessibility="yes"
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       role="heading"
                                       style={
                                         [
@@ -873,9 +803,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="body"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -900,11 +830,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 24,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
+                                          },
+                                          {
+                                            "borderRadius": 36,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 6,
                                           },
                                           {
                                             "backgroundColor": "#F4F5F8",
@@ -913,9 +845,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1098,9 +1030,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="body"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={2}
                                       style={
                                         [
@@ -1125,11 +1057,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           {
                                             "alignItems": "center",
                                             "borderCurve": "continuous",
-                                            "borderRadius": 24,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "paddingHorizontal": 8,
-                                            "paddingVertical": 4,
+                                          },
+                                          {
+                                            "borderRadius": 36,
+                                            "paddingHorizontal": 12,
+                                            "paddingVertical": 6,
                                           },
                                           {
                                             "backgroundColor": "#F4F5F8",
@@ -1138,9 +1072,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1322,6 +1256,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "justifyContent": "space-between",
                                       },
                                       {
+                                        "columnGap": 18,
+                                      },
+                                      {
                                         "transform": [
                                           {
                                             "scale": undefined,
@@ -1331,75 +1268,67 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     ]
                                   }
                                 >
-                                  <View
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
                                     style={
-                                      {
-                                        "marginRight": 12,
-                                      }
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
                                     }
+                                    tintColor="#0B3EE3"
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
                                   >
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
+                                    <RNSVGGroup
+                                      color="#0B3EE3"
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
                                       }
-                                      tintColor="#0B3EE3"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
                                     >
-                                      <RNSVGGroup
-                                        color="#0B3EE3"
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
                                         fill={
                                           {
-                                            "payload": 4278190080,
-                                            "type": 0,
+                                            "type": 2,
                                           }
                                         }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M3.5 1.50002v2.02943a11.99996 11.99996 0 0 1 17.3502.36667 11.99962 11.99962 0 0 1 3.0426 6.50368 11.99893 11.99893 0 0 1-1.2153 7.0765 11.99986 11.99986 0 0 1-5.038 5.116 12.00093 12.00093 0 0 1-7.0571 1.3237 12.0008 12.0008 0 0 1-6.54956-2.9424c-.413-.3667-.45055-.9988-.08387-1.4118.36668-.413.99873-.4505 1.41173-.0838a9.99994 9.99994 0 0 0 5.458 2.452 10.00032 10.00032 0 0 0 5.8809-1.1031 10 10 0 0 0 4.1983-4.2633 9.99951 9.99951 0 0 0 1.0128-5.8971 9.99999 9.99999 0 0 0-2.5355-5.41974 10.0002 10.0002 0 0 0-5.1759-3.00192 10.00016 10.00016 0 0 0-5.96336.49061 9.99978 9.99978 0 0 0-3.3774 2.26457H7c.55228 0 1 .44771 1 1 0 .55228-.44772 1-1 1H2.5a1 1 0 0 1-1-1v-4.5c0-.55229.44772-1 1-1s1 .44771 1 1ZM12 7c.5523 0 1 .44772 1 1v4.5858l2.7071 2.7071c.3905.3905.3905 1.0237 0 1.4142-.3905.3905-1.0237.3905-1.4142 0l-3-3A1.0001 1.0001 0 0 1 11 13V8c0-.55228.4477-1 1-1Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
-                                            [
-                                              "fill",
-                                              "fillRule",
-                                            ]
-                                          }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                  </View>
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
                                   <View
                                     style={
                                       {
@@ -1409,8 +1338,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
-                                      maxFontSizeMultiplier={1.25}
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -1532,6 +1461,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "justifyContent": "space-between",
                                       },
                                       {
+                                        "columnGap": 18,
+                                      },
+                                      {
                                         "transform": [
                                           {
                                             "scale": undefined,
@@ -1541,75 +1473,67 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     ]
                                   }
                                 >
-                                  <View
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
                                     style={
-                                      {
-                                        "marginRight": 12,
-                                      }
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
                                     }
+                                    tintColor="#0B3EE3"
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
                                   >
-                                    <RNSVGSvgView
-                                      accessibilityElementsHidden={true}
-                                      accessibilityLabel=""
-                                      accessible={false}
-                                      align="xMidYMid"
-                                      bbHeight={24}
-                                      bbWidth={24}
-                                      focusable={false}
-                                      height={24}
-                                      importantForAccessibility="no-hide-descendants"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
-                                      style={
-                                        [
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                          },
-                                          {
-                                            "flex": 0,
-                                            "height": 24,
-                                            "width": 24,
-                                          },
-                                        ]
+                                    <RNSVGGroup
+                                      color="#0B3EE3"
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
                                       }
-                                      tintColor="#0B3EE3"
-                                      vbHeight={24}
-                                      vbWidth={24}
-                                      width={24}
                                     >
-                                      <RNSVGGroup
-                                        color="#0B3EE3"
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M23.0692 1H16.1192C14.4002 1 12.9076 1.55894 12.0012 2.43149C11.0924 1.55894 9.59977 1 7.88084 1H0.928523C0.415514 1 0 1.41429 0 1.92578V20.3349C0 20.8464 0.415514 21 0.928523 21H7.88084C9.70655 21 11 21.5454 11 22.2999C11 22.8114 11.4858 23 11.9988 23C12.5118 23 13 22.8114 13 22.2999C13 21.5454 14.2911 21 16.1168 21H23.0692C23.5822 21 23.9977 20.8464 23.9977 20.3349V1.92578C23.9977 1.41429 23.5822 1 23.0692 1ZM11 19.5C10.1365 19.0244 9.10185 19 7.882 19H2.25C2.11193 19 2 18.8881 2 18.75V3.25C2 3.11193 2.11193 3 2.25 3H4.86894H7.88084C9.70655 3 11.0703 3.69633 11.0703 4.45084L11 12.309V19.5ZM22 18.75C22 18.8881 21.8881 19 21.75 19H16.1192C14.8982 19 13.8635 19.0244 13 19.5V12.3096V4.45084C13 3.69633 14.2935 3 16.1192 3H21.75C21.8881 3 22 3.11193 22 3.25V18.75ZM15 6C15 5.44772 15.4477 5 16 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H16C15.4477 7 15 6.55228 15 6ZM16 8C15.4477 8 15 8.44772 15 9C15 9.55229 15.4477 10 16 10H19C19.5523 10 20 9.55229 20 9C20 8.44772 19.5523 8 19 8H16Z"
                                         fill={
                                           {
-                                            "payload": 4278190080,
-                                            "type": 0,
+                                            "type": 2,
                                           }
                                         }
-                                      >
-                                        <RNSVGPath
-                                          clipRule={0}
-                                          d="M23.0692 1H16.1192C14.4002 1 12.9076 1.55894 12.0012 2.43149C11.0924 1.55894 9.59977 1 7.88084 1H0.928523C0.415514 1 0 1.41429 0 1.92578V20.3349C0 20.8464 0.415514 21 0.928523 21H7.88084C9.70655 21 11 21.5454 11 22.2999C11 22.8114 11.4858 23 11.9988 23C12.5118 23 13 22.8114 13 22.2999C13 21.5454 14.2911 21 16.1168 21H23.0692C23.5822 21 23.9977 20.8464 23.9977 20.3349V1.92578C23.9977 1.41429 23.5822 1 23.0692 1ZM11 19.5C10.1365 19.0244 9.10185 19 7.882 19H2.25C2.11193 19 2 18.8881 2 18.75V3.25C2 3.11193 2.11193 3 2.25 3H4.86894H7.88084C9.70655 3 11.0703 3.69633 11.0703 4.45084L11 12.309V19.5ZM22 18.75C22 18.8881 21.8881 19 21.75 19H16.1192C14.8982 19 13.8635 19.0244 13 19.5V12.3096V4.45084C13 3.69633 14.2935 3 16.1192 3H21.75C21.8881 3 22 3.11193 22 3.25V18.75ZM15 6C15 5.44772 15.4477 5 16 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H16C15.4477 7 15 6.55228 15 6ZM16 8C15.4477 8 15 8.44772 15 9C15 9.55229 15.4477 10 16 10H19C19.5523 10 20 9.55229 20 9C20 8.44772 19.5523 8 19 8H16Z"
-                                          fill={
-                                            {
-                                              "type": 2,
-                                            }
-                                          }
-                                          fillRule={0}
-                                          propList={
-                                            [
-                                              "fill",
-                                              "fillRule",
-                                            ]
-                                          }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
-                                  </View>
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
                                   <View
                                     style={
                                       {
@@ -1619,8 +1543,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
-                                      maxFontSizeMultiplier={1.25}
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
@@ -1717,9 +1641,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             importantForAccessibility="yes"
                                           >
                                             <Text
-                                              allowFontScaling={false}
+                                              allowFontScaling={true}
                                               dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.25}
+                                              maxFontSizeMultiplier={1.5}
                                               role="heading"
                                               style={
                                                 [
@@ -1800,6 +1724,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                 "justifyContent": "space-between",
                                               },
                                               {
+                                                "columnGap": 18,
+                                              },
+                                              {
                                                 "transform": [
                                                   {
                                                     "scale": undefined,
@@ -1812,83 +1739,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           <View
                                             style={
                                               {
-                                                "marginRight": 12,
-                                              }
-                                            }
-                                          >
-                                            <RNSVGSvgView
-                                              accessibilityElementsHidden={true}
-                                              accessibilityLabel=""
-                                              accessible={false}
-                                              align="xMidYMid"
-                                              bbHeight={24}
-                                              bbWidth={24}
-                                              focusable={false}
-                                              height={24}
-                                              importantForAccessibility="no-hide-descendants"
-                                              meetOrSlice={0}
-                                              minX={0}
-                                              minY={0}
-                                              style={
-                                                [
-                                                  {
-                                                    "backgroundColor": "transparent",
-                                                    "borderWidth": 0,
-                                                  },
-                                                  {
-                                                    "color": "#99A3C1",
-                                                  },
-                                                  {
-                                                    "flex": 0,
-                                                    "height": 24,
-                                                    "width": 24,
-                                                  },
-                                                ]
-                                              }
-                                              tintColor="#99A3C1"
-                                              vbHeight={24}
-                                              vbWidth={24}
-                                              width={24}
-                                            >
-                                              <RNSVGGroup
-                                                color="#99A3C1"
-                                                fill={
-                                                  {
-                                                    "payload": 4278190080,
-                                                    "type": 0,
-                                                  }
-                                                }
-                                              >
-                                                <RNSVGPath
-                                                  clipRule={0}
-                                                  d="M5 2C3.34315 2 2 3.34315 2 5V19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V10H17C15.3431 10 14 8.65685 14 7V2H5ZM16 2.49902V7C16 7.55229 16.4477 8 17 8H21.501C21.3911 7.83409 21.2641 7.67835 21.1213 7.53553L16.4645 2.87868C16.3216 2.73586 16.1659 2.60893 16 2.49902ZM0 5C0 2.23858 2.23858 0 5 0H14.3431C15.6692 0 16.941 0.526784 17.8787 1.46447L22.5355 6.12132C23.4732 7.059 24 8.33077 24 9.65685V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5ZM5 6.5C5 5.67157 5.67157 5 6.5 5H9.5C10.3284 5 11 5.67157 11 6.5C11 7.32843 10.3284 8 9.5 8H6.5C5.67157 8 5 7.32843 5 6.5ZM6 13C5.44772 13 5 13.4477 5 14C5 14.5523 5.44772 15 6 15H18C18.5523 15 19 14.5523 19 14C19 13.4477 18.5523 13 18 13H6ZM5 18C5 17.4477 5.44772 17 6 17H18C18.5523 17 19 17.4477 19 18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z"
-                                                  fill={
-                                                    {
-                                                      "type": 2,
-                                                    }
-                                                  }
-                                                  fillRule={0}
-                                                  propList={
-                                                    [
-                                                      "fill",
-                                                      "fillRule",
-                                                    ]
-                                                  }
-                                                />
-                                              </RNSVGGroup>
-                                            </RNSVGSvgView>
-                                          </View>
-                                          <View
-                                            style={
-                                              {
                                                 "flex": 1,
                                               }
                                             }
                                           >
                                             <Text
-                                              allowFontScaling={false}
+                                              allowFontScaling={true}
                                               dynamicTypeRamp="footnote"
-                                              maxFontSizeMultiplier={1.25}
+                                              maxFontSizeMultiplier={1.5}
                                               style={
                                                 [
                                                   {},
@@ -1906,9 +1764,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               Codice IUN
                                             </Text>
                                             <Text
-                                              allowFontScaling={false}
+                                              allowFontScaling={true}
                                               dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.25}
+                                              maxFontSizeMultiplier={1.5}
                                               numberOfLines={2}
                                               style={
                                                 [
@@ -1927,75 +1785,67 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               731143-7-0317-8200-0
                                             </Text>
                                           </View>
-                                          <View
+                                          <RNSVGSvgView
+                                            accessibilityElementsHidden={true}
+                                            accessibilityLabel=""
+                                            accessible={false}
+                                            align="xMidYMid"
+                                            bbHeight={36}
+                                            bbWidth={36}
+                                            focusable={false}
+                                            height={36}
+                                            importantForAccessibility="no-hide-descendants"
+                                            meetOrSlice={0}
+                                            minX={0}
+                                            minY={0}
                                             style={
-                                              {
-                                                "marginLeft": 12,
-                                              }
+                                              [
+                                                {
+                                                  "backgroundColor": "transparent",
+                                                  "borderWidth": 0,
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                },
+                                                {
+                                                  "flex": 0,
+                                                  "height": 36,
+                                                  "width": 36,
+                                                },
+                                              ]
                                             }
+                                            tintColor="#0B3EE3"
+                                            vbHeight={24}
+                                            vbWidth={24}
+                                            width={36}
                                           >
-                                            <RNSVGSvgView
-                                              accessibilityElementsHidden={true}
-                                              accessibilityLabel=""
-                                              accessible={false}
-                                              align="xMidYMid"
-                                              bbHeight={24}
-                                              bbWidth={24}
-                                              focusable={false}
-                                              height={24}
-                                              importantForAccessibility="no-hide-descendants"
-                                              meetOrSlice={0}
-                                              minX={0}
-                                              minY={0}
-                                              style={
-                                                [
-                                                  {
-                                                    "backgroundColor": "transparent",
-                                                    "borderWidth": 0,
-                                                  },
-                                                  {
-                                                    "color": "#0B3EE3",
-                                                  },
-                                                  {
-                                                    "flex": 0,
-                                                    "height": 24,
-                                                    "width": 24,
-                                                  },
-                                                ]
+                                            <RNSVGGroup
+                                              color="#0B3EE3"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
                                               }
-                                              tintColor="#0B3EE3"
-                                              vbHeight={24}
-                                              vbWidth={24}
-                                              width={24}
                                             >
-                                              <RNSVGGroup
-                                                color="#0B3EE3"
+                                              <RNSVGPath
+                                                clipRule={0}
+                                                d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
                                                 fill={
                                                   {
-                                                    "payload": 4278190080,
-                                                    "type": 0,
+                                                    "type": 2,
                                                   }
                                                 }
-                                              >
-                                                <RNSVGPath
-                                                  clipRule={0}
-                                                  d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
-                                                  fill={
-                                                    {
-                                                      "type": 2,
-                                                    }
-                                                  }
-                                                  fillRule={0}
-                                                  propList={
-                                                    [
-                                                      "fill",
-                                                      "fillRule",
-                                                    ]
-                                                  }
-                                                />
-                                              </RNSVGGroup>
-                                            </RNSVGSvgView>
-                                          </View>
+                                                fillRule={0}
+                                                propList={
+                                                  [
+                                                    "fill",
+                                                    "fillRule",
+                                                  ]
+                                                }
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGSvgView>
                                         </View>
                                       </View>
                                     </View>
@@ -2033,9 +1883,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                             importantForAccessibility="yes"
                                           >
                                             <Text
-                                              allowFontScaling={false}
+                                              allowFontScaling={true}
                                               dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.25}
+                                              maxFontSizeMultiplier={1.5}
                                               role="heading"
                                               style={
                                                 [
@@ -2116,6 +1966,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                                 "justifyContent": "space-between",
                                               },
                                               {
+                                                "columnGap": 18,
+                                              },
+                                              {
                                                 "transform": [
                                                   {
                                                     "scale": undefined,
@@ -2128,83 +1981,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           <View
                                             style={
                                               {
-                                                "marginRight": 12,
-                                              }
-                                            }
-                                          >
-                                            <RNSVGSvgView
-                                              accessibilityElementsHidden={true}
-                                              accessibilityLabel=""
-                                              accessible={false}
-                                              align="xMidYMid"
-                                              bbHeight={24}
-                                              bbWidth={24}
-                                              focusable={false}
-                                              height={24}
-                                              importantForAccessibility="no-hide-descendants"
-                                              meetOrSlice={0}
-                                              minX={0}
-                                              minY={0}
-                                              style={
-                                                [
-                                                  {
-                                                    "backgroundColor": "transparent",
-                                                    "borderWidth": 0,
-                                                  },
-                                                  {
-                                                    "color": "#99A3C1",
-                                                  },
-                                                  {
-                                                    "flex": 0,
-                                                    "height": 24,
-                                                    "width": 24,
-                                                  },
-                                                ]
-                                              }
-                                              tintColor="#99A3C1"
-                                              vbHeight={24}
-                                              vbWidth={24}
-                                              width={24}
-                                            >
-                                              <RNSVGGroup
-                                                color="#99A3C1"
-                                                fill={
-                                                  {
-                                                    "payload": 4278190080,
-                                                    "type": 0,
-                                                  }
-                                                }
-                                              >
-                                                <RNSVGPath
-                                                  clipRule={0}
-                                                  d="M5 2C3.34315 2 2 3.34315 2 5V19C2 20.6569 3.34315 22 5 22H19C20.6569 22 22 20.6569 22 19V10H17C15.3431 10 14 8.65685 14 7V2H5ZM16 2.49902V7C16 7.55229 16.4477 8 17 8H21.501C21.3911 7.83409 21.2641 7.67835 21.1213 7.53553L16.4645 2.87868C16.3216 2.73586 16.1659 2.60893 16 2.49902ZM0 5C0 2.23858 2.23858 0 5 0H14.3431C15.6692 0 16.941 0.526784 17.8787 1.46447L22.5355 6.12132C23.4732 7.059 24 8.33077 24 9.65685V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5ZM5 6.5C5 5.67157 5.67157 5 6.5 5H9.5C10.3284 5 11 5.67157 11 6.5C11 7.32843 10.3284 8 9.5 8H6.5C5.67157 8 5 7.32843 5 6.5ZM6 13C5.44772 13 5 13.4477 5 14C5 14.5523 5.44772 15 6 15H18C18.5523 15 19 14.5523 19 14C19 13.4477 18.5523 13 18 13H6ZM5 18C5 17.4477 5.44772 17 6 17H18C18.5523 17 19 17.4477 19 18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18Z"
-                                                  fill={
-                                                    {
-                                                      "type": 2,
-                                                    }
-                                                  }
-                                                  fillRule={0}
-                                                  propList={
-                                                    [
-                                                      "fill",
-                                                      "fillRule",
-                                                    ]
-                                                  }
-                                                />
-                                              </RNSVGGroup>
-                                            </RNSVGSvgView>
-                                          </View>
-                                          <View
-                                            style={
-                                              {
                                                 "flex": 1,
                                               }
                                             }
                                           >
                                             <Text
-                                              allowFontScaling={false}
+                                              allowFontScaling={true}
                                               dynamicTypeRamp="footnote"
-                                              maxFontSizeMultiplier={1.25}
+                                              maxFontSizeMultiplier={1.5}
                                               style={
                                                 [
                                                   {},
@@ -2222,9 +2006,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               Message ID
                                             </Text>
                                             <Text
-                                              allowFontScaling={false}
+                                              allowFontScaling={true}
                                               dynamicTypeRamp="headline"
-                                              maxFontSizeMultiplier={1.25}
+                                              maxFontSizeMultiplier={1.5}
                                               numberOfLines={2}
                                               style={
                                                 [
@@ -2243,75 +2027,67 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                               FAT00001
                                             </Text>
                                           </View>
-                                          <View
+                                          <RNSVGSvgView
+                                            accessibilityElementsHidden={true}
+                                            accessibilityLabel=""
+                                            accessible={false}
+                                            align="xMidYMid"
+                                            bbHeight={36}
+                                            bbWidth={36}
+                                            focusable={false}
+                                            height={36}
+                                            importantForAccessibility="no-hide-descendants"
+                                            meetOrSlice={0}
+                                            minX={0}
+                                            minY={0}
                                             style={
-                                              {
-                                                "marginLeft": 12,
-                                              }
+                                              [
+                                                {
+                                                  "backgroundColor": "transparent",
+                                                  "borderWidth": 0,
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                },
+                                                {
+                                                  "flex": 0,
+                                                  "height": 36,
+                                                  "width": 36,
+                                                },
+                                              ]
                                             }
+                                            tintColor="#0B3EE3"
+                                            vbHeight={24}
+                                            vbWidth={24}
+                                            width={36}
                                           >
-                                            <RNSVGSvgView
-                                              accessibilityElementsHidden={true}
-                                              accessibilityLabel=""
-                                              accessible={false}
-                                              align="xMidYMid"
-                                              bbHeight={24}
-                                              bbWidth={24}
-                                              focusable={false}
-                                              height={24}
-                                              importantForAccessibility="no-hide-descendants"
-                                              meetOrSlice={0}
-                                              minX={0}
-                                              minY={0}
-                                              style={
-                                                [
-                                                  {
-                                                    "backgroundColor": "transparent",
-                                                    "borderWidth": 0,
-                                                  },
-                                                  {
-                                                    "color": "#0B3EE3",
-                                                  },
-                                                  {
-                                                    "flex": 0,
-                                                    "height": 24,
-                                                    "width": 24,
-                                                  },
-                                                ]
+                                            <RNSVGGroup
+                                              color="#0B3EE3"
+                                              fill={
+                                                {
+                                                  "payload": 4278190080,
+                                                  "type": 0,
+                                                }
                                               }
-                                              tintColor="#0B3EE3"
-                                              vbHeight={24}
-                                              vbWidth={24}
-                                              width={24}
                                             >
-                                              <RNSVGGroup
-                                                color="#0B3EE3"
+                                              <RNSVGPath
+                                                clipRule={0}
+                                                d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
                                                 fill={
                                                   {
-                                                    "payload": 4278190080,
-                                                    "type": 0,
+                                                    "type": 2,
                                                   }
                                                 }
-                                              >
-                                                <RNSVGPath
-                                                  clipRule={0}
-                                                  d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
-                                                  fill={
-                                                    {
-                                                      "type": 2,
-                                                    }
-                                                  }
-                                                  fillRule={0}
-                                                  propList={
-                                                    [
-                                                      "fill",
-                                                      "fillRule",
-                                                    ]
-                                                  }
-                                                />
-                                              </RNSVGGroup>
-                                            </RNSVGSvgView>
-                                          </View>
+                                                fillRule={0}
+                                                propList={
+                                                  [
+                                                    "fill",
+                                                    "fillRule",
+                                                  ]
+                                                }
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGSvgView>
                                         </View>
                                       </View>
                                     </View>
@@ -2432,10 +2208,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -2451,15 +2227,15 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
                                   tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
                                     color="#0E0F13"
@@ -2506,8 +2282,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -2535,14 +2311,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -2606,10 +2380,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -2625,15 +2399,15 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -3114,9 +2888,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3144,9 +2918,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -3279,10 +3053,10 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -3298,15 +3072,15 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
                                   tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
                                     color="#0E0F13"
@@ -3353,8 +3127,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
@@ -3382,14 +3156,12 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -3453,10 +3225,10 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -3472,15 +3244,15 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

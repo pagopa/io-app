@@ -353,9 +353,9 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                           testID="QtspClauseLinkedTextTestID"
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="title3"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
@@ -371,9 +371,9 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -392,9 +392,9 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             </Text>
                             <Text
                               accessibilityRole="link"
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               onPress={[Function]}
                               style={
                                 [
@@ -415,9 +415,9 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               QUADRO E - AUTOCERTIFICAZIONE E SOTTOSCRIZIONE DA PARTE DEL TITOLARE.
                             </Text>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
@@ -483,15 +483,13 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                         >
                           <View
                             style={
-                              [
-                                {
-                                  "flexDirection": "row",
-                                },
-                                {
-                                  "alignItems": "center",
-                                  "width": "100%",
-                                },
-                              ]
+                              {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "row",
+                                "gap": 12,
+                                "width": "100%",
+                              }
                             }
                           >
                             <View
@@ -536,8 +534,8 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                 onStartShouldSetResponder={[Function]}
                                 style={
                                   {
-                                    "height": 24,
-                                    "width": 24,
+                                    "height": 36,
+                                    "width": 36,
                                   }
                                 }
                                 testID="AnimatedCheckboxInput"
@@ -547,13 +545,15 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                     [
                                       {
                                         "borderCurve": "continuous",
-                                        "borderRadius": 5,
                                         "borderWidth": 2,
-                                        "height": 24,
                                         "left": 0,
                                         "position": "absolute",
                                         "top": 0,
-                                        "width": 24,
+                                      },
+                                      {
+                                        "borderRadius": 7.5,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                       {
                                         "borderColor": "#475A6D",
@@ -566,12 +566,14 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                     [
                                       {
                                         "borderCurve": "continuous",
-                                        "borderRadius": 5,
-                                        "height": 24,
                                         "left": 0,
                                         "position": "absolute",
                                         "top": 0,
-                                        "width": 24,
+                                      },
+                                      {
+                                        "borderRadius": 7.5,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                       {
                                         "backgroundColor": "#0073E6",
@@ -589,17 +591,10 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                 />
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "width": 8,
-                                }
-                              }
-                            />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="headline"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
