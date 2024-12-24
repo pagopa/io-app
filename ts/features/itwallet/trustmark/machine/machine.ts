@@ -7,6 +7,8 @@ import {
   GetWalletAttestationActorOutput
 } from "./actors";
 import { Context } from "./context";
+import { TrustmarkEvents } from "./events";
+import { mapEventToFailure } from "./failure";
 import { Input } from "./input";
 
 const notImplemented = () => {
@@ -17,10 +19,11 @@ export const itwTrustmarkMachine = setup({
   types: {
     context: {} as Context,
     input: {} as Input,
-    events: {} as { type: "" }
+    events: {} as TrustmarkEvents
   },
   actions: {
     onInit: notImplemented,
+    storeWalletInstanceAttestation: notImplemented,
     handleSessionExpired: notImplemented,
     updateExpirationSeconds: assign(({ context }) => ({
       expirationSeconds: context.expirationDate
@@ -31,6 +34,10 @@ export const itwTrustmarkMachine = setup({
       trustmarkUrl: undefined,
       expirationDate: undefined,
       expirationSeconds: undefined
+    }),
+    showFailureToast: notImplemented,
+    setFailure: assign({
+      failure: ({ event }) => mapEventToFailure(event)
     })
   },
   actors: {
@@ -57,8 +64,7 @@ export const itwTrustmarkMachine = setup({
   states: {
     CheckingWalletInstanceAttestation: {
       tags: [ItwTags.Loading],
-      description:
-        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not",
+      description: "Checks the WIA and decide weather to get a new one or not",
       always: [
         {
           guard: "hasValidWalletInstanceAttestation",
@@ -70,8 +76,7 @@ export const itwTrustmarkMachine = setup({
       ]
     },
     ObtainingWalletInstanceAttestation: {
-      description:
-        "This state obtains the wallet instance attestation and stores it in the context for later use in the issuance flow.",
+      description: "Obtains the WIA and stores it in the context",
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestationActor",
@@ -80,7 +85,8 @@ export const itwTrustmarkMachine = setup({
           actions: [
             assign(({ event }) => ({
               walletInstanceAttestation: event.output
-            }))
+            })),
+            "storeWalletInstanceAttestation"
           ]
         },
         onError: [
@@ -89,14 +95,14 @@ export const itwTrustmarkMachine = setup({
             actions: "handleSessionExpired"
           },
           {
-            target: "Failure"
+            target: "Failure",
+            actions: "setFailure"
           }
         ]
       }
     },
     RefreshingTrustmark: {
-      description:
-        "This state obtains the trustmark url and stores it in the context for later use in the displaying flow.",
+      description: "Obtains the Trustmark and stores it to the context",
       tags: [ItwTags.Loading],
       invoke: {
         src: "getCredentialTrustmarkActor",
@@ -115,13 +121,13 @@ export const itwTrustmarkMachine = setup({
           ]
         },
         onError: {
-          target: "Failure"
+          target: "Failure",
+          actions: "setFailure"
         }
       }
     },
     DisplayingTrustmark: {
-      description:
-        "This state displays the trustmark QR Code and checks if it has expired or not.",
+      description: "Displays the QR Code and checks if it has expired",
       initial: "Idle",
       states: {
         Idle: {
@@ -147,7 +153,13 @@ export const itwTrustmarkMachine = setup({
       }
     },
     Failure: {
-      description: "This state is reached when an error occurs"
+      description: "This state is reached when an error occurs",
+      entry: "showFailureToast",
+      on: {
+        retry: {
+          target: "RefreshingTrustmark"
+        }
+      }
     }
   }
 });

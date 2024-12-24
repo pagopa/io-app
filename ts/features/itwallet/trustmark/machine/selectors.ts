@@ -8,3 +8,5 @@ export const selectTrustmarkUrl = ({ context }: MachineSnapshot) =>
 
 export const selectExpirationSeconds = ({ context }: MachineSnapshot) =>
   context.expirationSeconds;
+
+export const selectFailure = ({ context }: MachineSnapshot) => context.failure;
