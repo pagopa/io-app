@@ -1,12 +1,14 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { PaymentsAnalyticsReceiptUser } from "../../common/types/PaymentAnalytics";
+import { ReceiptsCategoryFilter } from "../types";
 
 export type PaymentReceiptAnalyticsProps = {
   organization_name: string;
   payment_status: string;
   first_time_opening: boolean;
   user: PaymentsAnalyticsReceiptUser;
+  organization_fiscal_code: string;
 };
 
 export const trackPaymentsReceiptListing = () => {
@@ -33,7 +35,8 @@ export const trackPaymentsOpenReceipt = (
   void mixpanelTrack(
     "OPEN_RECEIPT",
     buildEventProperties("UX", "screen_view", {
-      ...props
+      ...props,
+      receipt_entry_point: "payments_receipt_listing"
     })
   );
 };
@@ -56,10 +59,13 @@ export const trackPaymentsOpenSubReceipt = () => {
   );
 };
 
-export const trackPaymentsSaveAndShareReceipt = () => {
+export const trackPaymentsSaveAndShareReceipt = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
   void mixpanelTrack(
     "SAVE_AND_SHARE_RECEIPT",
     buildEventProperties("UX", "action", {
+      ...props,
       receipt_entry_point: "payments_receipt_listing"
     })
   );
@@ -109,5 +115,14 @@ export const trackHideReceiptFailure = (
   void mixpanelTrack(
     "HIDE_RECEIPT_FAILURE",
     buildEventProperties("KO", undefined, props)
+  );
+};
+
+export const trackReceiptFilterUsage = (
+  filter: Partial<ReceiptsCategoryFilter>
+) => {
+  void mixpanelTrack(
+    "PAYMENTS_RECEIPT_LISTING_FILTER",
+    buildEventProperties("UX", "action", { filter })
   );
 };

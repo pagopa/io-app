@@ -108,8 +108,11 @@ const ReceiptDetailsScreen = () => {
   const handleDownloadPdfReceipt = () => {
     analytics.trackPaymentsDownloadReceiptAction({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      payment_status: "paid"
     });
     dispatch(
       getPaymentsReceiptDownloadAction.request({

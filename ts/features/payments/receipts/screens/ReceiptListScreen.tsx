@@ -124,6 +124,7 @@ const ReceiptListScreen = () => {
   const handleCategorySelected = React.useCallback(
     (category: ReceiptsCategoryFilter) => {
       setNoticeCategory(category);
+      analytics.trackReceiptFilterUsage(category);
       dispatch(
         getPaymentsReceiptAction.request({
           firstLoad: true,
