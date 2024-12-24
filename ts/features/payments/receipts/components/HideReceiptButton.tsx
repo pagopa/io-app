@@ -34,7 +34,7 @@ const HideReceiptButton = (props: Props) => {
       user: paymentAnalyticsData?.receiptUser,
       organization_fiscal_code:
         paymentAnalyticsData?.verifiedData?.paFiscalCode,
-      payment_status: paymentAnalyticsData?.paymentsHomeStatus
+      payment_status: "paid"
     });
   };
 
