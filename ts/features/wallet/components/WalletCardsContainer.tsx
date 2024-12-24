@@ -28,6 +28,8 @@ import {
   selectWalletOtherCards,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../itwallet/walletInstance/store/selectors";
+import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { withWalletCategoryFilter } from "../utils";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
@@ -47,6 +49,9 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
+  const isWalletInstanceStatusFailure = useIOSelector(
+    itwIsWalletInstanceStatusFailureSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -64,17 +69,22 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
-        <ItwWalletCardsContainer />
+        {!isWalletInstanceStatusFailure && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
     );
-  }, [shouldRenderEmptyState, shouldRenderLoadingState]);
+  }, [
+    shouldRenderEmptyState,
+    shouldRenderLoadingState,
+    isWalletInstanceStatusFailure
+  ]);
 
   return (
     <Animated.View
       style={IOStyles.flex}
       layout={LinearTransition.duration(200)}
     >
+      <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>

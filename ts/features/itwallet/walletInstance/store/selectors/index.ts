@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { flow } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttestationUtils";
@@ -20,4 +21,11 @@ export const itwIsWalletInstanceAttestationValidSelector = createSelector(
 
 /* Selector to get the wallet instance status */
 export const itwWalletInstanceStatusSelector = (state: GlobalState) =>
-  state.features.itWallet.walletInstance.status;
+  pot.toUndefined(state.features.itWallet.walletInstance.status);
+
+/**
+ * Returns true when it was not possible to retrieve the wallet instance status because of unexpected errors,
+ * hence we cannot know whether the wallet instance is valid or has been revoked.
+ */
+export const itwIsWalletInstanceStatusFailureSelector = (state: GlobalState) =>
+  pot.isError(state.features.itWallet.walletInstance.status);
