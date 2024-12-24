@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import React, { MutableRefObject } from "react";
+import { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   ButtonLink,

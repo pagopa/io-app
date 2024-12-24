@@ -1,26 +1,26 @@
-import * as React from "react";
+import { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import {
   isAppSupportedSelector,
   versionInfoDataSelector
 } from "../../common/versionInfo/store/reducers/versionInfo";
-import UnsupportedDeviceScreen from "../../features/lollipop/screens/UnsupportedDeviceScreen";
-import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
-import { mixpanelTrack } from "../../mixpanel";
-import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus/backendInfo";
-import {
-  isFastLoginUserInteractionNeededForSessionExpiredSelector,
-  tokenRefreshSelector
-} from "../../features/fastLogin/store/selectors";
-import { GlobalState } from "../../store/reducers/types";
-import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
 import {
   trackLoginSessionTimeoutPostPin,
   trackLoginSessionTimeoutPrePin
 } from "../../features/fastLogin/analytics";
-import { startupTransientErrorSelector } from "../../store/reducers/startup";
+import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
+import {
+  isFastLoginUserInteractionNeededForSessionExpiredSelector,
+  tokenRefreshSelector
+} from "../../features/fastLogin/store/selectors";
+import UnsupportedDeviceScreen from "../../features/lollipop/screens/UnsupportedDeviceScreen";
+import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { GetProfileEndpointTransientError } from "../../features/startup/screens/errors/GetProfileEndpointTransientError";
 import { GetSessionEndpointTransientError } from "../../features/startup/screens/errors/GetSessionEndpointTransientError";
+import { mixpanelTrack } from "../../mixpanel";
+import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus/backendInfo";
+import { startupTransientErrorSelector } from "../../store/reducers/startup";
+import { GlobalState } from "../../store/reducers/types";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -33,7 +33,7 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - UpdateAppModal -> when the backend is not compliant anymore with the app, this modal is shown to force an update
  * - IdentificationModal -> the default case. It renders itself only if an identification action is required
  */
-const RootModal: React.FunctionComponent<Props> = (props: Props) => {
+const RootModal: FunctionComponent<Props> = (props: Props) => {
   if (!props.isDeviceSupported) {
     return <UnsupportedDeviceScreen />;
   }

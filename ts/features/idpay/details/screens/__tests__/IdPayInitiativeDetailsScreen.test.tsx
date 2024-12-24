@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { IDPayDetailsRoutes } from "../../navigation";

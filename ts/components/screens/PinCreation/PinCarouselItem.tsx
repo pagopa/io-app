@@ -6,7 +6,7 @@ import {
   Body,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React, { RefObject, memo } from "react";
+import { RefObject, memo } from "react";
 import { Dimensions, View } from "react-native";
 
 const { width } = Dimensions.get("screen");

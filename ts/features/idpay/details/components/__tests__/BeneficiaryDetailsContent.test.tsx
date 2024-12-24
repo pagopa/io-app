@@ -1,5 +1,4 @@
 import { render, within } from "@testing-library/react-native";
-import * as React from "react";
 import {
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum

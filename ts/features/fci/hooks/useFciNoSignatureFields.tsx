@@ -1,7 +1,6 @@
 import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
-import * as React from "react";
 import { ComponentProps } from "react";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";

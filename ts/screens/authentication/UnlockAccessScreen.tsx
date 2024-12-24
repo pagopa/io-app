@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import ROUTES from "../../navigation/routes";
 import UnlockAccessComponent, {

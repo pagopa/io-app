@@ -2,7 +2,6 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import React from "react";
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";

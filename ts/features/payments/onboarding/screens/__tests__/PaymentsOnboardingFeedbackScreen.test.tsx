@@ -1,4 +1,3 @@
-import React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";

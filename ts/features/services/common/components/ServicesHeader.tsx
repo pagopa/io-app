@@ -9,7 +9,6 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 

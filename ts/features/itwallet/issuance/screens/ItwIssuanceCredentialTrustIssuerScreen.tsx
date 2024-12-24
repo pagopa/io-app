@@ -12,7 +12,7 @@ import {
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { FooterActions } from "../../../../components/ui/FooterActions";

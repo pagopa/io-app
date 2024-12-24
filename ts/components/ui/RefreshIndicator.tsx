@@ -1,4 +1,3 @@
-import * as React from "react";
 import { View, ActivityIndicator, Platform, StyleSheet } from "react-native";
 
 import { IOColors } from "@pagopa/io-app-design-system";

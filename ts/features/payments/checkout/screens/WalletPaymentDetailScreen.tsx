@@ -20,7 +20,7 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps, useLayoutEffect } from "react";
+import { useCallback, ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
@@ -81,7 +81,7 @@ const WalletPaymentDetailScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       dispatch(paymentsGetPaymentDetailsAction.request(rptId));
     }, [dispatch, rptId])
   );

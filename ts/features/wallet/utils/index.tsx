@@ -1,14 +1,14 @@
-import * as React from "react";
-import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
-import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
-import { CgnWalletCard } from "../../bonus/cgn/components/CgnWalletCard";
-import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
-import { PaymentWalletCard } from "../../payments/wallet/components/PaymentWalletCard";
-import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
-import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
-import { shouldRenderWalletCategorySelector } from "../store/selectors";
+import { ComponentType } from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { GlobalState } from "../../../store/reducers/types";
+import { CgnWalletCard } from "../../bonus/cgn/components/CgnWalletCard";
+import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
+import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
+import { PaymentWalletCard } from "../../payments/wallet/components/PaymentWalletCard";
+import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
+import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
+import { shouldRenderWalletCategorySelector } from "../store/selectors";
+import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
 
 /**
  * Wallet card component mapper which translates a WalletCardType to a
@@ -58,7 +58,7 @@ export const renderWalletCardFn = (
 export const withWalletCategoryFilter =
   <P extends Record<string, unknown>>(
     category: WalletCardCategoryFilter,
-    WrappedComponent: React.ComponentType<P>
+    WrappedComponent: ComponentType<P>
   ) =>
   (props: P) => {
     const shouldRenderCategory = useIOSelector((state: GlobalState) =>

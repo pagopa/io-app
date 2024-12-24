@@ -1,4 +1,4 @@
-import React, { ComponentProps, useCallback } from "react";
+import { ComponentProps, useCallback } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import {
   Divider,

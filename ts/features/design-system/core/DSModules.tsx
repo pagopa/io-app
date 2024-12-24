@@ -12,7 +12,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as React from "react";
 import { Alert, ImageSourcePropType } from "react-native";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";

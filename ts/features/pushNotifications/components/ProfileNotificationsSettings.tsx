@@ -4,7 +4,6 @@ import {
   ListItemSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
 import I18n from "../../../i18n";
 import { usePreviewMoreInfo } from "../hooks/usePreviewMoreInfo";
 import { NotificationsPreferencesPreview } from "./NotificationsPreferencesPreview";

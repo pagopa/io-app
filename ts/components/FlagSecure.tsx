@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import FlagSecure from "react-native-flag-secure-android";
 import { connect } from "react-redux";
 import { isAllowedSnapshotCurrentScreen } from "../store/reducers/allowedSnapshotScreens";
@@ -14,7 +13,7 @@ type Props = ReturnType<typeof mapStateToProps>;
  * @param props
  * @constructor
  */
-const FlagSecureComponent: React.FunctionComponent<Props> = props => {
+const FlagSecureComponent: FunctionComponent<Props> = props => {
   useEffect(() => {
     if (props.isAllowedSnapshotCurrentScreen) {
       FlagSecure.deactivate();

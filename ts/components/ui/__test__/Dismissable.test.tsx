@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-import React from "react";
 import { PanGesture, State } from "react-native-gesture-handler";
 import {
   fireGestureHandler,

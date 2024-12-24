@@ -1,15 +1,15 @@
-import * as React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image as NativeImage,
-  ImageSourcePropType,
-  ImageBackground
-} from "react-native";
 import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
+import {
+  ImageBackground,
+  ImageSourcePropType,
+  Image as NativeImage,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
 
 /* Fake Transparent BG */
+import { ReactNode } from "react";
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
 
 export const assetItemGutter = 16;
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
 type DSAssetViewerBoxProps = {
   name: string;
-  image: React.ReactNode;
+  image: ReactNode;
   /* "bleed" shows the pictogram without padding
   "hasBleed" shows the pictgram label on top right */
   type?: "vector" | "raster" | "bleed" | "hasBleed";

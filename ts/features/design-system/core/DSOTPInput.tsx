@@ -11,8 +11,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
-import * as React from "react";
-import { useCallback, useMemo, useRef, useState } from "react";
+
+import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 
@@ -63,8 +63,8 @@ const OTPWrapper = ({
 };
 
 const scrollVerticallyToView = (
-  scrollViewRef: React.RefObject<ScrollView>,
-  targetViewRef: React.RefObject<View>
+  scrollViewRef: RefObject<ScrollView>,
+  targetViewRef: RefObject<View>
 ) => {
   if (targetViewRef.current && scrollViewRef.current) {
     targetViewRef.current.measureLayout(

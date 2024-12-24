@@ -1,5 +1,4 @@
 /* eslint-disable functional/no-let */
-import React from "react";
 import { createStore } from "redux";
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createActor } from "xstate";

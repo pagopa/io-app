@@ -1,5 +1,4 @@
 import { within } from "@testing-library/react-native";
-import { default as React } from "react";
 import { createStore } from "redux";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";

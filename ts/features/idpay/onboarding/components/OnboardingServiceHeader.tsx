@@ -1,7 +1,6 @@
 import { Body, H4, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";

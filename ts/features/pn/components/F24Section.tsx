@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { UIMessageId } from "../../messages/types";

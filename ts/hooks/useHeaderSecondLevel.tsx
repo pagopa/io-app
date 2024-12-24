@@ -3,7 +3,7 @@ import {
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
+
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
 import {
   ContextualHelpProps,
@@ -40,7 +40,7 @@ type HeaderHookManagedProps = Pick<
 >;
 
 type HeaderActionConfigProps = Pick<
-  React.ComponentProps<typeof HeaderSecondLevel>,
+  ComponentProps<typeof HeaderSecondLevel>,
   "type" | "firstAction" | "secondAction" | "thirdAction"
 >;
 

@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-import * as React from "react";
 import { ReactNode } from "react";
 import { H6, IOColors, Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../variables/IOStyles";

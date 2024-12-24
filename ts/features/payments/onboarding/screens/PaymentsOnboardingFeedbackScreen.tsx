@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import { useRef, useEffect } from "react";
 import { View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
@@ -76,7 +76,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     outcome,
     isOnboarding: true
   });
-  const paymentMethodSelectedRef = React.useRef<string | undefined>();
+  const paymentMethodSelectedRef = useRef<string | undefined>();
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
     Object.values(WalletOnboardingOutcomeEnum).indexOf(outcome)
@@ -91,7 +91,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
     analytics.trackAddOnboardingPaymentMethod(outcome, payment_method_selected);
   });
 
-  React.useEffect(
+  useEffect(
     () => () => {
       dispatch(paymentsResetRptIdToResume());
     },
@@ -102,7 +102,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   useAvoidHardwareBackButton();
 
   // Disables the swipe back gesture on iOS to the parent stack navigator
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.getParent()?.setOptions({ gestureEnabled: false });
     // Re-enable swipe after going back
     return () => {

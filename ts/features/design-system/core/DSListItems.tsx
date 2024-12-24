@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Divider,
   H4,
@@ -15,6 +13,7 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { Fragment } from "react";
 import { Alert } from "react-native";
 import I18n from "../../../i18n";
 
@@ -560,7 +559,7 @@ const renderListItemTransaction = () => (
     <DSComponentViewerBox name="ListItemTransaction, various states">
       {transactionStatusArray.map(
         ({ status, asset }: mockTransactionStatusData, i) => (
-          <React.Fragment key={`transactionStatus-${status}`}>
+          <Fragment key={`transactionStatus-${status}`}>
             <ListItemTransaction
               title="Title"
               subtitle="subtitle"
@@ -571,7 +570,7 @@ const renderListItemTransaction = () => (
               onPress={onButtonPress}
             />
             {i < transactionStatusArray.length - 1 && <Divider />}
-          </React.Fragment>
+          </Fragment>
         )
       )}
     </DSComponentViewerBox>

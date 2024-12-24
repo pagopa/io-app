@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { ViewStyle } from "react-native";
 import {
   AnimatedStyleProp,
@@ -37,7 +37,7 @@ const useSineWaveAnimation = ({
     ]
   }));
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (enabled) {
       // eslint-disable-next-line functional/immutable-data
       translate.value = withRepeat(

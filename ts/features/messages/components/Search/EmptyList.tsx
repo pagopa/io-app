@@ -6,7 +6,6 @@ import {
   VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import React from "react";
 
 export type EmptyListProps = WithTestID<{
   pictogram: IOPictograms;

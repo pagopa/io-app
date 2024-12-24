@@ -4,7 +4,7 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useState, useLayoutEffect, memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
@@ -38,12 +38,12 @@ type Props = IOStackNavigationRouteProps<
 const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const { credential, status } = route.params;
   const safeAreaInsets = useSafeAreaInsets();
-  const [isFlipped, setFlipped] = React.useState(false);
+  const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
 
   useMaxBrightness({ useSmoothTransition: true });
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationCredentialCardModal = React.memo(
+const MemoizedItwPresentationCredentialCardModal = memo(
   ItwPresentationCredentialCardModal
 );
 

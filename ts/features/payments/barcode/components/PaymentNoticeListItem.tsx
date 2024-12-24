@@ -3,7 +3,6 @@ import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { toInteger } from "lodash";
-import React from "react";
 import {
   centsToAmount,
   formatNumberAmount

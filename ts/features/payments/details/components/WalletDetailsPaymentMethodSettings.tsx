@@ -1,5 +1,6 @@
 import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactElement } from "react";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import WalletDetailsPagoPaPaymentCapability from "./WalletDetailsPagoPaPaymentCapability";
@@ -11,9 +12,7 @@ type Props = { paymentMethod: WalletInfo };
  * @param props
  * @constructor
  */
-const WalletDetailsPaymentMethodSettings = (
-  props: Props
-): React.ReactElement => (
+const WalletDetailsPaymentMethodSettings = (props: Props): ReactElement => (
   <>
     <ListItemHeader label={I18n.t("global.buttons.settings")} />
     <WalletDetailsPagoPaPaymentCapability paymentMethod={props.paymentMethod} />

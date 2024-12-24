@@ -3,7 +3,7 @@ import {
   TabItem,
   TabNavigation
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -36,7 +36,7 @@ const WalletCategoryFilterTabs = () => {
     }
   });
 
-  const selectedIndex = React.useMemo(
+  const selectedIndex = useMemo(
     () =>
       categoryFilter
         ? walletCardCategoryFilters.indexOf(categoryFilter) + 1

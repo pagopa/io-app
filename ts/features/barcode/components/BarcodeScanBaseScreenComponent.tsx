@@ -10,7 +10,14 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import React from "react";
+
+import {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -134,7 +141,7 @@ const BarcodeScanBaseScreenComponent = ({
 
   const currentScreenName = useIOSelector(currentRouteSelector);
 
-  const [isAppInBackground, setIsAppInBackground] = React.useState(
+  const [isAppInBackground, setIsAppInBackground] = useState(
     AppState.currentState !== "active"
   );
 
@@ -150,7 +157,7 @@ const BarcodeScanBaseScreenComponent = ({
    *
    * @returns {void}
    */
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = AppState.addEventListener("change", nextAppState => {
       setIsAppInBackground(nextAppState !== "active");
     });
@@ -161,7 +168,7 @@ const BarcodeScanBaseScreenComponent = ({
   }, []);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       trackBarcodeScanScreenView(barcodeAnalyticsFlow);
     }, [barcodeAnalyticsFlow])
   );
@@ -224,12 +231,12 @@ const BarcodeScanBaseScreenComponent = ({
     />
   );
 
-  const openAppSetting = React.useCallback(async () => {
+  const openAppSetting = useCallback(async () => {
     // Open the custom settings if the app has one
     await openCameraSettings();
   }, [openCameraSettings]);
 
-  const cameraView = React.useMemo(() => {
+  const cameraView = useMemo(() => {
     if (cameraPermissionStatus === "granted") {
       return cameraComponent;
     }
@@ -288,15 +295,14 @@ const BarcodeScanBaseScreenComponent = ({
   const shouldDisplayTorchButton =
     cameraPermissionStatus === "granted" && hasTorch;
 
-  const torchIconButton: React.ComponentProps<
-    typeof BaseHeader
-  >["customRightIcon"] = {
-    iconName: isTorchOn ? "lightFilled" : "light",
-    accessibilityLabel: isTorchOn
-      ? I18n.t("accessibility.buttons.torch.turnOff")
-      : I18n.t("accessibility.buttons.torch.turnOn"),
-    onPress: handleTorchToggle
-  };
+  const torchIconButton: ComponentProps<typeof BaseHeader>["customRightIcon"] =
+    {
+      iconName: isTorchOn ? "lightFilled" : "light",
+      accessibilityLabel: isTorchOn
+        ? I18n.t("accessibility.buttons.torch.turnOff")
+        : I18n.t("accessibility.buttons.torch.turnOn"),
+      onPress: handleTorchToggle
+    };
 
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>

@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
-import * as React from "react";
+
+import { ReactElement } from "react";
 import { createStore } from "redux";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -100,7 +101,7 @@ describe("PushNotificationsBanner", () => {
   });
 });
 
-const renderTestingComponent = (component: React.ReactElement) => {
+const renderTestingComponent = (component: ReactElement) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   return renderScreenWithNavigationStoreContext(

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { serviceByIdPotSelector } from "../../../services/details/store/reducers";
@@ -11,7 +11,7 @@ export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {
     serviceByIdPotSelector(state, serviceId)
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const shouldFetchServiceData =
       isStrictNone(serviceData) || serviceData.kind === "PotNoneError";
 

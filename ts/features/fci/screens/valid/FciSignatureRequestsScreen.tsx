@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { SectionList, ScrollView } from "react-native";
 import { H2, IOStyles } from "@pagopa/io-app-design-system";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
@@ -58,7 +58,7 @@ const FciSignatureRequestsScreen = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fciSignaturesListRequest.request());
   }, [dispatch]);
 

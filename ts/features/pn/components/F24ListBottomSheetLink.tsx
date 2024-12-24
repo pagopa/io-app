@@ -1,4 +1,3 @@
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ButtonLink } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";

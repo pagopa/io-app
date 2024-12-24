@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import { ComponentType, Dispatch, SetStateAction, useState } from "react";
+
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 
 export type TabBarItemPressType = {
-  setTabPressCallback: React.Dispatch<React.SetStateAction<() => void>>;
-  setHasInternalTab: React.Dispatch<React.SetStateAction<boolean>>;
+  setTabPressCallback: Dispatch<SetStateAction<() => void>>;
+  setHasInternalTab: Dispatch<SetStateAction<boolean>>;
 };
 
 export function withUseTabItemPressWhenScreenActive<P>(
-  WrappedComponent: React.ComponentType<P>
+  WrappedComponent: ComponentType<P>
 ) {
   return (props: any) => {
     const [callback, setTabPressCallback] = useState<() => void>(() => void 0);

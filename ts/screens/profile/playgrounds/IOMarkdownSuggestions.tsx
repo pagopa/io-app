@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import {
   ButtonOutline,
   ButtonSolid,

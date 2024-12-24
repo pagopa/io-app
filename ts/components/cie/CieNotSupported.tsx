@@ -11,7 +11,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Platform, View } from "react-native";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";

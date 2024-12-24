@@ -1,5 +1,5 @@
 import { CommonActions } from "@react-navigation/native";
-import * as React from "react";
+import { PureComponent } from "react";
 import { BackHandler, NativeEventSubscription, Platform } from "react-native";
 import { IconButton } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
@@ -13,7 +13,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-class GoBackButton extends React.PureComponent<Props> {
+class GoBackButton extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
   public static defaultProps: Partial<Props> = {
     white: false

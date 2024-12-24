@@ -1,5 +1,4 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import * as React from "react";
 import {
   AppParamsList,
   IOStackNavigationProp

@@ -1,5 +1,4 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import React from "react";
 import { Provider } from "react-redux";
 import { PreloadedState, createStore } from "redux";
 import { Alert } from "react-native";

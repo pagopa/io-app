@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../../../definitions/content/Config";

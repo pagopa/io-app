@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 
 type ConfirmationChecks = {
   values: ReadonlyArray<boolean>;
@@ -14,7 +14,7 @@ export const useConfirmationChecks = (length: number): ConfirmationChecks => {
   /**
    * State that holds an array of booleans, indicating whether the corresponding index contains a confirmed check.
    */
-  const [values, setValues] = React.useState<ReadonlyArray<boolean>>(
+  const [values, setValues] = useState<ReadonlyArray<boolean>>(
     Array.from({ length }, () => false)
   );
 

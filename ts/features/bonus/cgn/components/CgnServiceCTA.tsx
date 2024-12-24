@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Alert, Platform } from "react-native";
 import { ButtonSolid, IOToast } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";

@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore } from "redux";
 import { OrganizationHeader } from "../OrganizationHeader";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";

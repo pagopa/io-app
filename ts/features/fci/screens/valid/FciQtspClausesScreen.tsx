@@ -7,8 +7,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import { ComponentProps } from "react";
+import { useState, useEffect, ComponentProps } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -44,7 +43,7 @@ import {
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const [clausesChecked, setClausesChecked] = React.useState(0);
+  const [clausesChecked, setClausesChecked] = useState(0);
   const servicePreferencePot = useIOSelector(servicePreferencePotSelector);
   const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);
@@ -65,7 +64,7 @@ const FciQtspClausesScreen = () => {
     isServicePreferenceResponseSuccess(servicePreferenceValue) &&
     servicePreferenceValue.value.inbox;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (fciServiceId) {
       dispatch(loadServicePreference.request(fciServiceId as ServiceId));
     }

@@ -11,7 +11,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React, { ComponentProps, forwardRef, useState } from "react";
+import { ComponentProps, forwardRef, ReactNode, useState } from "react";
+
 import { LayoutChangeEvent, View } from "react-native";
 import {
   BackProps,
@@ -32,7 +33,7 @@ export type LargeHeaderTitleProps = {
 
 type Props = WithTestID<
   {
-    children?: React.ReactNode;
+    children?: ReactNode;
     actions?: ComponentProps<typeof IOScrollView>["actions"];
     title: LargeHeaderTitleProps;
     description?: string | Array<BodyProps>;

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
 import SignatureRequestItem from "../SignatureRequestItem";

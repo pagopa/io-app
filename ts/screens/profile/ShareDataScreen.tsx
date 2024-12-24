@@ -1,5 +1,5 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { AccessibilityInfo, SafeAreaView, View } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { ButtonSolid, IOToast } from "@pagopa/io-app-design-system";
 import { constNull, identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";

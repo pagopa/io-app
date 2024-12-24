@@ -1,5 +1,5 @@
 import { IOColors } from "@pagopa/io-app-design-system";
-import React from "react";
+import { memo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import { StoredCredential } from "../../utils/itwTypesUtils";
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedCardBackground = React.memo(CardBackground);
+const MemoizedCardBackground = memo(CardBackground);
 
 export { MemoizedCardBackground as CardBackground };

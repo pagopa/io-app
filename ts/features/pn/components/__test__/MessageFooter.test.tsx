@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";

@@ -1,8 +1,9 @@
 import { H3, VStack, useIOTheme } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { PropsWithChildren } from "react";
+
 import { View } from "react-native";
 
-type OwnProps = React.PropsWithChildren<{
+type OwnProps = PropsWithChildren<{
   title: string;
 }>;
 

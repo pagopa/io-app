@@ -9,8 +9,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as React from "react";
-import { useMemo } from "react";
+
+import { createRef, Fragment, RefObject, useCallback, useMemo } from "react";
 import {
   Image,
   ImageSourcePropType,
@@ -33,7 +33,7 @@ type Props = WithTestID<
     subText?: string;
     retryButtonTitle?: string;
     cancelButtonTitle?: string;
-    ref?: React.RefObject<View>;
+    ref?: RefObject<View>;
   }>
 >;
 
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
  ** @deprecated Use `OperationResultScreen` instead
  */
 const GenericErrorComponent = (props: Props) => {
-  const ref = useMemo(() => props.ref ?? React.createRef<View>(), [props.ref]);
+  const ref = useMemo(() => props.ref ?? createRef<View>(), [props.ref]);
 
   const renderFooterButtons = () =>
     props.onCancel ? (
@@ -84,7 +84,7 @@ const GenericErrorComponent = (props: Props) => {
   );
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (props.avoidNavigationEvents !== true) {
         setAccessibilityFocus(ref);
       }
@@ -92,7 +92,7 @@ const GenericErrorComponent = (props: Props) => {
   );
 
   return (
-    <React.Fragment>
+    <Fragment>
       <ScrollView
         bounces={false}
         testID={props.testID}
@@ -121,7 +121,7 @@ const GenericErrorComponent = (props: Props) => {
         </View>
       </ScrollView>
       {renderFooterButtons()}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

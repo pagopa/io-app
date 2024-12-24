@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { H4, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 

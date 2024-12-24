@@ -8,7 +8,8 @@ import {
   hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
+
+import { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { CircularProgress } from "../../../components/ui/CircularProgress";
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
 
 type SpinnerViewerBox = {
   name: string;
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: "default" | "primary";
 };
 
@@ -70,8 +71,8 @@ const SpinnerViewerBox = ({
 );
 
 const ProgressLoaderViewerBox = () => {
-  const [progress, setProgress] = React.useState(0);
-  React.useEffect(() => {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
     const interval = setInterval(() => {
       // console.log("progress", progress, (progress + 10) % 100);
       setProgress(prev => (prev + 10) % 100);

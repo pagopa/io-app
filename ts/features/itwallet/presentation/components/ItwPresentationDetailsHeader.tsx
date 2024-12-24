@@ -3,7 +3,7 @@ import {
   makeFontStyleObject,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import { useMemo, memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -34,7 +34,7 @@ const ItwPresentationDetailsHeader = ({
   const { backgroundColor, textColor, statusBarStyle } =
     getThemeColorByCredentialType(credential.credentialType as CredentialType);
 
-  const headerContent = React.useMemo(() => {
+  const headerContent = useMemo(() => {
     if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
       return <ItwPresentationCredentialCard credential={credential} />;
     }
@@ -84,8 +84,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwPresentationDetailsHeader = React.memo(
-  ItwPresentationDetailsHeader
-);
+const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 
 export { MemoizedItwPresentationDetailsHeader as ItwPresentationDetailsHeader };

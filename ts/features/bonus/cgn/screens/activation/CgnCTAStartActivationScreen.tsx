@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
-import { useRef } from "react";
+
+import { FC, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -26,7 +26,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
+const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   const isFirstRender = useRef<boolean>(true);
 
   // load available bonus when component is focused
@@ -34,7 +34,7 @@ const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
 
   const { availableBonus, startCgn, cgnBonus } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
     if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();

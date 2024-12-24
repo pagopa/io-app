@@ -1,4 +1,3 @@
-import React from "react";
 import WebView from "react-native-webview";
 import { Point, generateRandomSvgMovement } from "../utils/svgBackground";
 import { playSvg } from "./detail/CardSvgPayload";

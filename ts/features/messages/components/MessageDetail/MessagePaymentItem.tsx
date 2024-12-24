@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
 import I18n from "../../../../i18n";

@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback } from "react";
+import { useState, useCallback } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
@@ -32,8 +32,7 @@ const INITIAL_STATE = {
 };
 
 const LollipopPlayground = () => {
-  const [state, setState] =
-    React.useState<LollipopPlaygroundState>(INITIAL_STATE);
+  const [state, setState] = useState<LollipopPlaygroundState>(INITIAL_STATE);
 
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);

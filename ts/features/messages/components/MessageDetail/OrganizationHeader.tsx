@@ -6,7 +6,7 @@ import {
   BodySmall,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

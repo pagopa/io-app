@@ -16,7 +16,7 @@ import {
   useImage,
   vec
 } from "@shopify/react-native-skia";
-import * as React from "react";
+
 import { useState } from "react";
 import {
   ColorValue,

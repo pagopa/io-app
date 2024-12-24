@@ -6,7 +6,6 @@ import {
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const sectionTitleMargin = 16;

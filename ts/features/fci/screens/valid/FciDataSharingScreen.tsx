@@ -12,8 +12,8 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { ComponentProps } from "react";
+
+import { ComponentProps, ReactElement } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 const iconSize = 24;
 
-const FciDataSharingScreen = (): React.ReactElement => {
+const FciDataSharingScreen = (): ReactElement => {
   const profile = useIOSelector(profileSelector);
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);

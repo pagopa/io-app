@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useMemo, useCallback } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -17,7 +17,7 @@ export const FimsSSOFullScreenError = () => {
   const errorTag = useIOSelector(fimsAuthenticationErrorTagSelector);
   const debugData = useIOSelector(fimsDebugDataSelector);
 
-  const debugInfo = React.useMemo(
+  const debugInfo = useMemo(
     () => ({
       fimsFailure: `${errorTag}: ${debugData}`
     }),
@@ -25,7 +25,7 @@ export const FimsSSOFullScreenError = () => {
   );
   useDebugInfo(debugInfo);
 
-  const handleClose = React.useCallback(
+  const handleClose = useCallback(
     () => dispatch(fimsCancelOrAbortAction()),
     [dispatch]
   );
