@@ -57,10 +57,13 @@ export const trackPaymentsOpenSubReceipt = () => {
   );
 };
 
-export const trackPaymentsSaveAndShareReceipt = () => {
+export const trackPaymentsSaveAndShareReceipt = (
+  props: Partial<PaymentReceiptAnalyticsProps>
+) => {
   void mixpanelTrack(
     "SAVE_AND_SHARE_RECEIPT",
     buildEventProperties("UX", "action", {
+      ...props,
       receipt_entry_point: "payments_receipt_listing"
     })
   );
