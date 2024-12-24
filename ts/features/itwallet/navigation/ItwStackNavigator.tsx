@@ -40,6 +40,7 @@ import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginSc
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
+import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -224,6 +225,10 @@ const InnerNavigator = () => {
         name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
         component={ItwLifecycleWalletRevocationScreen}
         options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
+        component={ItwPresentationEidVerificationExpiredScreen}
       />
     </Stack.Navigator>
   );

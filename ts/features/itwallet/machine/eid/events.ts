@@ -82,6 +82,10 @@ export type ExternalErrorEvent = {
   error?: Error;
 };
 
+export type StartReissuing = {
+  type: "start-reissuing";
+};
+
 export type EidIssuanceEvents =
   | Reset
   | Start
@@ -101,4 +105,5 @@ export type EidIssuanceEvents =
   | Abort
   | RevokeWalletInstance
   | ErrorActorEvent
-  | ExternalErrorEvent;
+  | ExternalErrorEvent
+  | StartReissuing;

@@ -41,6 +41,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 // List of available credentials to show to the user
 const availableCredentials = [
@@ -100,15 +101,24 @@ const ItwCredentialOnboardingSection = () => {
 
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
 
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const navigation = useIONavigation();
+
   const beginCredentialIssuance = useCallback(
     (type: string) => {
-      machineRef.send({
-        type: "select-credential",
-        credentialType: type,
-        skipNavigation: true
-      });
+      if (!isWalletValid) {
+        navigation.navigate(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
+        });
+      } else {
+        machineRef.send({
+          type: "select-credential",
+          credentialType: type,
+          skipNavigation: true
+        });
+      }
     },
-    [machineRef]
+    [machineRef, isWalletValid, navigation]
   );
 
   return (
