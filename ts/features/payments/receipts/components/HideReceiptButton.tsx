@@ -23,7 +23,10 @@ const HideReceiptButton = (props: Props) => {
     analytics.trackHideReceipt({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      payment_status: "paid"
     });
   };
 
