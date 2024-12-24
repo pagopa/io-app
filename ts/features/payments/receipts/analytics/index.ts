@@ -8,6 +8,7 @@ export type PaymentReceiptAnalyticsProps = {
   payment_status: string;
   first_time_opening: boolean;
   user: PaymentsAnalyticsReceiptUser;
+  organization_fiscal_code: string;
 };
 
 export const trackPaymentsReceiptListing = () => {
