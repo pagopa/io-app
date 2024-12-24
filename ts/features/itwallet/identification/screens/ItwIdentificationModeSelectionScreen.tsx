@@ -5,7 +5,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import React, { useCallback, useMemo } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
@@ -17,7 +17,6 @@ import {
 import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
-import { Route, useRoute } from "@react-navigation/native";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwIdentificationModeSelectionScreenNavigationParams =

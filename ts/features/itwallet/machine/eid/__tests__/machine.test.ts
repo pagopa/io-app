@@ -989,7 +989,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should obtain an eID (SPID), reissuing mode", async () => {
-    //The wallet instance and attestation already exist
+    // The wallet instance and attestation already exist
     const initialContext = {
       ...InitialContext,
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -999,6 +999,7 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
+    // eslint-disable-next-line functional/immutable-data
     actor.getSnapshot().context = initialContext;
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
@@ -1091,6 +1092,7 @@ describe("itwEidIssuanceMachine", () => {
 
     // EID obtained
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         Issuance: "DisplayingPreview"

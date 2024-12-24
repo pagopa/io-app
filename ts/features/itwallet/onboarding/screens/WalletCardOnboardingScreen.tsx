@@ -118,7 +118,7 @@ const ItwCredentialOnboardingSection = () => {
         });
       }
     },
-    [machineRef]
+    [machineRef, isWalletValid, navigation]
   );
 
   return (

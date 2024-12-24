@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
+import { BodyProps } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { BodyProps } from "@pagopa/io-app-design-system";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {

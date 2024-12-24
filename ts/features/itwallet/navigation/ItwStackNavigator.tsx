@@ -40,9 +40,9 @@ import ItwCieIdLoginScreen from "../identification/screens/cieId/ItwCieIdLoginSc
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
+import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
-import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/screens/ItwPresentationEidVerificationExpiredScreen";
 
 const Stack = createStackNavigator<ItwParamsList>();
 
