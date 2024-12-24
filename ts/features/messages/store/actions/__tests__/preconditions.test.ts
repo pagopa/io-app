@@ -4,13 +4,11 @@ import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
-  loadingContentPreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
   scheduledPreconditionStatusAction,
   shownPreconditionStatusAction,
   toErrorPayload,
   toIdlePayload,
-  toLoadingContentPayload,
   toRetrievingDataPayload,
   toScheduledPayload,
   toShownPayload,
@@ -29,15 +27,6 @@ describe("Action payload generators", () => {
     const idlePayload = toIdlePayload();
     expect(idlePayload.nextStatus).toStrictEqual("idle");
   });
-  it("should generate proper payload with 'toLoadingContentPayload'", () => {
-    const content: ThirdPartyMessagePrecondition = {
-      title: "The title",
-      markdown: "The content"
-    };
-    const loadingContentPayload = toLoadingContentPayload(content);
-    expect(loadingContentPayload.nextStatus).toStrictEqual("loadingContent");
-    expect(loadingContentPayload.content).toStrictEqual(content);
-  });
   it("should generate proper payload with 'toRetrievingDataPayload'", () => {
     const retrievingDataPayload = toRetrievingDataPayload();
     expect(retrievingDataPayload.nextStatus).toStrictEqual("retrievingData");
@@ -51,8 +40,13 @@ describe("Action payload generators", () => {
     expect(scheduledPayload.categoryTag).toStrictEqual(categoryTag);
   });
   it("should generate proper payload with 'toShownPayload'", () => {
-    const shownPayload = toShownPayload();
+    const content: ThirdPartyMessagePrecondition = {
+      title: "A title",
+      markdown: "A markdown"
+    };
+    const shownPayload = toShownPayload(content);
     expect(shownPayload.nextStatus).toStrictEqual("shown");
+    expect(shownPayload.content).toBe(content);
   });
   it("should generate proper payload with 'toUpdateRequiredPayload'", () => {
     const updateRequiredPayload = toUpdateRequiredPayload();
@@ -73,19 +67,6 @@ describe("Action generators", () => {
     expect(idlePSA.type).toStrictEqual("TO_IDLE_PRECONDITION_STATUS");
     expect(idlePSA.payload).toStrictEqual(idlePayload);
   });
-  it("should return the proper action data for 'loadingContentPreconditionStatusAction'", () => {
-    const loadingContentPayload = toLoadingContentPayload({
-      title: "",
-      markdown: ""
-    });
-    const loadingContentPSA = loadingContentPreconditionStatusAction(
-      loadingContentPayload
-    );
-    expect(loadingContentPSA.type).toStrictEqual(
-      "TO_LOADING_CONTENT_PRECONDITION_STATUS"
-    );
-    expect(loadingContentPSA.payload).toStrictEqual(loadingContentPayload);
-  });
   it("should return the proper action data for 'retrievingDataPreconditionStatusAction'", () => {
     const retrievingDatPayload = toRetrievingDataPayload();
     const rerievingDataPSA =
@@ -105,7 +86,11 @@ describe("Action generators", () => {
     expect(scheduledPSA.payload).toStrictEqual(scheduledPayload);
   });
   it("should return the proper action data for 'shownPreconditionStatusAction'", () => {
-    const shownPayload = toShownPayload();
+    const content: ThirdPartyMessagePrecondition = {
+      title: "A title",
+      markdown: "A markdown"
+    };
+    const shownPayload = toShownPayload(content);
     const shownPSA = shownPreconditionStatusAction(shownPayload);
     expect(shownPSA.type).toStrictEqual("TO_SHOWN_PRECONDITION_STATUS");
     expect(shownPSA.payload).toStrictEqual(shownPayload);
