@@ -81,14 +81,14 @@ const ItwPresentationDetailsFooter = ({
     startSupportRequest();
   };
 
-  const credentialCtas = useMemo(
-    () => getCredentialCtas(credential.credentialType),
+  const credentialActions = useMemo(
+    () => getCredentialActions(credential.credentialType),
     [credential.credentialType]
   );
 
   return (
     <View>
-      {credentialCtas}
+      {credentialActions}
       <ListItemAction
         variant="primary"
         icon="message"
@@ -119,7 +119,7 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialCtas = (credentialType: string): React.ReactNode =>
+const getCredentialActions = (credentialType: string): React.ReactNode =>
   ({
     MDL: [<IPatenteListItemAction key="iPatenteActionMdl" />],
     EuropeanHealthInsuranceCard: [],
