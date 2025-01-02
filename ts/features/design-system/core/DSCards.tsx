@@ -378,6 +378,12 @@ const ItwCards = () => (
             status="jwtExpiring"
           />
         </DSComponentViewerBox>
+        <DSComponentViewerBox name="Unknown Status">
+          <ItwCredentialCard
+            credentialType={CredentialType.DRIVING_LICENSE}
+            status="unknown"
+          />
+        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Skeumorphic Driving License">
@@ -409,6 +415,12 @@ const ItwCards = () => (
             status="expiring"
           />
         </DSComponentViewerBox>
+        <DSComponentViewerBox name="Unknown Status">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
+            status="unknown"
+          />
+        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Skeumorphic Disability Card">
@@ -438,6 +450,12 @@ const ItwCards = () => (
           <ItwCredentialCard
             credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
             status="expiring"
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="Unknown Status">
+          <ItwCredentialCard
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
+            status="unknown"
           />
         </DSComponentViewerBox>
       </VStack>
