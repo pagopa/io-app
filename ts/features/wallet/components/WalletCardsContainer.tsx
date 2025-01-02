@@ -16,6 +16,7 @@ import { ItwEidLifecycleAlert } from "../../itwallet/common/components/ItwEidLif
 import { ItwFeedbackBanner } from "../../itwallet/common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../itwallet/common/components/ItwWalletReadyBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { isItwEnabledSelector } from "../../itwallet/common/store/selectors/remoteConfig";
 import { itwCredentialsEidStatusSelector } from "../../itwallet/credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
