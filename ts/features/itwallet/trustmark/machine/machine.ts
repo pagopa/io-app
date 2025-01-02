@@ -18,7 +18,7 @@ const notImplemented = () => {
 /**
  * Amount in seconds to wait before retrying
  */
-const backoffTimeAmounts = [1, 3, 60, 180];
+const backoffTimeAmounts = [1, 10, 60, 180];
 
 export const itwTrustmarkMachine = setup({
   types: {

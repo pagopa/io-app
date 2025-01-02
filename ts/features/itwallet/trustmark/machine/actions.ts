@@ -63,13 +63,23 @@ export const createItwTrustmarkActionsImplementation = (
     context
   }: ActionArgs<Context, TrustmarkEvents, TrustmarkEvents>) => {
     const timeDiffInSeconds = differenceInSeconds(
-      new Date(),
-      context.nextAttemptAt || new Date()
+      context.nextAttemptAt || new Date(),
+      new Date()
     );
+
+    const time =
+      timeDiffInSeconds > 60
+        ? Math.ceil(timeDiffInSeconds / 60)
+        : timeDiffInSeconds;
+    const timeUnit =
+      timeDiffInSeconds > 60
+        ? I18n.t(`date.time.minute${time > 1 ? "s" : ""}`)
+        : I18n.t(`date.time.second${time > 1 ? "s" : ""}`);
 
     toast.error(
       I18n.t("features.itWallet.trustmark.failure.toast", {
-        time: timeDiffInSeconds
+        time,
+        timeUnit
       })
     );
   };

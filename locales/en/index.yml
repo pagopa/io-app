@@ -57,6 +57,11 @@ date:
   meridian:
     - "am"
     - "pm"
+  time:
+    minute: "minute"
+    minutes: "minutes"
+    second: "second"
+    seconds: "seconds"
 global:
   why: "Perché?"
   you: "YOU"
@@ -3538,12 +3543,12 @@ features:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
       timer:
-        expiresIn: Il QR Code si rinnova tra {{time}}
+        expiresIn: Il QR Code si rinnova tra **{{time}}**
         expired: Il QR Code è scaduto
       failure:
         description: Abbiamo avuto un problema nel generare il nuovo QR Code.
         action: Riprova
-        toast: Puoi riprovare tra {{ time }}
+        toast: "Puoi riprovare tra {{time}} {{timeUnit}}"
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
