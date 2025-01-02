@@ -15,7 +15,9 @@ import {
 import { itwTrustmarkMachine } from "../machine";
 
 const onInit = jest.fn();
+const storeWalletInstanceAttestation = jest.fn();
 const handleSessionExpired = jest.fn();
+const showRetryFailureToast = jest.fn();
 
 const getWalletAttestationActor = jest.fn();
 const getCredentialTrustmarkActor = jest.fn();
@@ -26,7 +28,9 @@ const hasValidWalletInstanceAttestation = jest.fn();
 const mockedMachine = itwTrustmarkMachine.provide({
   actions: {
     onInit: assign(onInit),
-    handleSessionExpired
+    storeWalletInstanceAttestation,
+    handleSessionExpired,
+    showRetryFailureToast
   },
   actors: {
     getWalletAttestationActor: fromPromise<GetWalletAttestationActorOutput>(
@@ -117,7 +121,9 @@ describe("itwTrustmarkMachine", () => {
       credential: ItwStoredCredentialsMocks.mdl,
       trustmarkUrl: "T_URL",
       expirationDate: new Date(1732099618000 + 10 * 1000),
-      expirationSeconds: 10
+      expirationSeconds: 10,
+      attempts: undefined,
+      nextAttemptAt: undefined
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
@@ -134,7 +140,9 @@ describe("itwTrustmarkMachine", () => {
       credential: ItwStoredCredentialsMocks.mdl,
       trustmarkUrl: undefined,
       expirationDate: undefined,
-      expirationSeconds: undefined
+      expirationSeconds: undefined,
+      attempts: undefined,
+      nextAttemptAt: undefined
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
@@ -317,7 +325,10 @@ describe("itwTrustmarkMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual({
       credentialType: "MDL",
       walletInstanceAttestation: "T_WIA",
-      credential: ItwStoredCredentialsMocks.mdl
+      credential: ItwStoredCredentialsMocks.mdl,
+      attempts: 1,
+      failure: expect.anything(),
+      nextAttemptAt: new Date(1732099618000 + 1 * 1000)
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
   });
