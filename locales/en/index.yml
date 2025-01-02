@@ -3240,6 +3240,8 @@ features:
         empty:
           title: Nessuna ricevuta trovata
           subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
+        emptyPayer: 
+          title: Qui vedrai le ricevute dei pagamenti fatti in app
     details:
       payPal:
         banner:
