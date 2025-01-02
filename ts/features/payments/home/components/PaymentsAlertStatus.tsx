@@ -22,7 +22,9 @@ export const PaymentsAlertStatus = () => {
 
   const handleOnPressAlertStatusInfo = (_: GestureResponderEvent) => {
     if (alertInfo && alertInfo.web_url && alertInfo.web_url[getFullLocale()]) {
-      openWebUrl(alertInfo.web_url[getFullLocale()]);
+      openWebUrl(
+        alertInfo.web_url[getFullLocale()] ?? alertInfo.web_url["it-IT"]
+      );
     }
   };
 
@@ -33,7 +35,9 @@ export const PaymentsAlertStatus = () => {
       layout={Layout.duration(200)}
     >
       <Alert
-        content={alertInfo.message[getFullLocale()]}
+        content={
+          alertInfo.message[getFullLocale()] ?? alertInfo.message["it-IT"]
+        }
         variant={getAlertVariant(alertInfo.level)}
         action={actionLabel}
         onPress={

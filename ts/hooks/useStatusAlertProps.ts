@@ -5,7 +5,10 @@ import * as O from "fp-ts/lib/Option";
 import { GestureResponderEvent } from "react-native";
 import { useIOSelector } from "../store/hooks";
 import { statusMessageByRouteSelector } from "../store/reducers/backendStatus/statusMessages";
-import { getFullLocale } from "../utils/locale";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../utils/locale";
 import { LevelEnum } from "../../definitions/content/StatusMessage";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
@@ -33,6 +36,7 @@ export const useStatusAlertProps = (
     statusMessageByRouteSelector(routeName)
   );
   const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   return useMemo(() => {
     if (!currentStatusMessage || currentStatusMessage.length === 0) {
@@ -48,15 +52,15 @@ export const useStatusAlertProps = (
         () => ({}),
         url => ({
           action: I18n.t("global.sectionStatus.moreInfo"),
-          onPress: () => openWebUrl(url[locale])
+          onPress: () => openWebUrl(url[localeFallback])
         })
       )
     );
 
     return {
-      content: firstAlert.message[locale],
+      content: firstAlert.message[localeFallback],
       variant: statusVariantMap[firstAlert.level],
       ...statusAction
     };
-  }, [currentStatusMessage, locale]);
+  }, [currentStatusMessage, localeFallback]);
 };
