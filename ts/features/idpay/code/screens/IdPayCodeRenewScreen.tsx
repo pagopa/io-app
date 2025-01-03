@@ -8,7 +8,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Alert, View } from "react-native";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -55,31 +55,31 @@ export const IdPayCodeRenewScreen = () => {
     );
   };
 
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
     <>
-      <TopScreenComponent
-        customGoBack={false}
-        dark={false}
-        goBack={true}
-        contextualHelp={emptyContextualHelp}
-      >
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2>{I18n.t("idpay.code.renew.screen.header")}</H2>
-          <VSpacer size={16} />
-          <Body>{I18n.t("idpay.code.renew.screen.body")}</Body>
-          <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
-            {I18n.t("idpay.code.renew.screen.link")}
-          </Body>
-          <VSpacer size={16} />
-          <ListItemAction
-            label={I18n.t("idpay.code.renew.screen.generateCTA")}
-            onPress={() => customAlert(handleConfirm)}
-            icon="change"
-            accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
-            variant="danger"
-          />
-        </View>
-      </TopScreenComponent>
+      <View style={IOStyles.horizontalContentPadding}>
+        <H2>{I18n.t("idpay.code.renew.screen.header")}</H2>
+        <VSpacer size={16} />
+        <Body>{I18n.t("idpay.code.renew.screen.body")}</Body>
+        <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
+          {I18n.t("idpay.code.renew.screen.link")}
+        </Body>
+        <VSpacer size={16} />
+        <ListItemAction
+          label={I18n.t("idpay.code.renew.screen.generateCTA")}
+          onPress={() => customAlert(handleConfirm)}
+          icon="change"
+          accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
+          variant="danger"
+        />
+      </View>
       {bottomSheet}
     </>
   );

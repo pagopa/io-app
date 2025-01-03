@@ -9,7 +9,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -23,15 +23,16 @@ const CompletionScreen = () => {
 
   const handleClosePress = () => machine.send({ type: "close" });
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.headerTitle"),
+    canGoBack: isLoading,
+    headerShown: isLoading
+  });
+
   if (isLoading) {
     return (
       <SafeAreaView style={IOStyles.flex}>
-        <BaseScreenComponent
-          goBack={true}
-          headerTitle={I18n.t("idpay.onboarding.headerTitle")}
-        >
-          <LoadingSpinnerOverlay isLoading={true} />
-        </BaseScreenComponent>
+        <LoadingSpinnerOverlay isLoading />
       </SafeAreaView>
     );
   }
