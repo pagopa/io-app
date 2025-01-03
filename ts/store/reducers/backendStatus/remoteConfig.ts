@@ -1,13 +1,13 @@
 import * as O from "fp-ts/lib/Option";
-import { getType } from "typesafe-actions";
-import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { Action } from "../../actions/types";
-import { backendStatusLoadSuccess } from "../../actions/backendStatus";
-import { GlobalState } from "../types";
-import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
+import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayConfig";
+import { Banner } from "../../../../definitions/content/Banner";
+import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -15,12 +15,12 @@ import {
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled
 } from "../../../config";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayConfig";
+import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
+import { backendStatusLoadSuccess } from "../../actions/backendStatus";
+import { Action } from "../../actions/types";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
-import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
 import { isIdPayTestEnabledSelector } from "../persistedPreferences";
-import { Banner } from "../../../../definitions/content/Banner";
+import { GlobalState } from "../types";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -295,44 +295,6 @@ export const isIdPayEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
-
-/**
- * Return the remote config about IT-WALLET enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (IT-WALLET disabled)
- */
-export const isItwEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
-      remoteConfig,
-      O.map(
-        config =>
-          isVersionSupported(
-            Platform.OS === "ios"
-              ? config.itw.min_app_version.ios
-              : config.itw.min_app_version.android,
-            getAppVersion()
-          ) && config.itw.enabled
-      ),
-      O.getOrElse(() => false)
-    )
-);
-
-/**
- * Returns the authentication methods that are disabled.
- * If there is no data, an empty array is returned as the default value.
- */
-export const itwDisabledIdentificationMethodsSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): ReadonlyArray<string> =>
-    pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.itw.disabled_identification_methods),
-      O.getOrElse(() => emptyArray)
-    )
-);
-
 /**
  * Return the remote feature flag about the payment feedback banner enabled/disabled
  * that is shown after a successful payment.
@@ -375,57 +337,3 @@ export const landingScreenBannerOrderSelector = (state: GlobalState) =>
     O.chainNullableK(banners => banners.priority_order),
     O.getOrElse(() => emptyArray)
   );
-
-/**
- * Return whether the IT Wallet feedback banner is remotely enabled.
- */
-export const isItwFeedbackBannerEnabledSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.itw.feedback_banner_visible),
-      O.getOrElse(() => false)
-    )
-);
-
-/**
- * Return whether the Wallet activation is disabled.
- * This is purely a "cosmetic" configuration to disable UI elements,
- * it does not disable the entire IT Wallet feature.
- */
-export const isItwActivationDisabledSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
-    pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.itw.wallet_activation_disabled),
-      O.getOrElse(() => false)
-    )
-);
-
-/**
- * Return IT Wallet credentials that have been disabled remotely.
- */
-export const itwDisabledCredentialsSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
-    pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.itw.disabled_credentials),
-      O.getOrElse(() => emptyArray)
-    )
-);
-
-/**
- * Return the remote config content for the deferred issuance screen content.
- */
-export const itwDeferredIssuanceScreenContentSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
-    pipe(
-      remoteConfig,
-      O.map(config => config.itw.deferred_issuance_screen_content),
-      O.toUndefined
-    )
-);
