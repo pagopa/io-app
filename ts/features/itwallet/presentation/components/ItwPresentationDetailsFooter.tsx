@@ -90,6 +90,7 @@ const ItwPresentationDetailsFooter = ({
     <View>
       {credentialActions}
       <ListItemAction
+        testID="requestAssistanceActionTestID"
         variant="primary"
         icon="message"
         label={I18n.t(
