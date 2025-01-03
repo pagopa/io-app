@@ -1,3 +1,4 @@
+import { ItwIdentificationModeSelectionScreenNavigationParams } from "../identification/screens/ItwIdentificationModeSelectionScreen";
 import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/screens/ItwPresentationCredentialAttachmentScreen";
@@ -13,7 +14,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: undefined;
+  [ITW_ROUTES.IDENTIFICATION
+    .MODE_SELECTION]: ItwIdentificationModeSelectionScreenNavigationParams;
   // IDENTIFICATION SPID
   [ITW_ROUTES.IDENTIFICATION.IDP_SELECTION]: undefined;
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;
@@ -46,6 +48,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_CARD_MODAL]: ItwPresentationCredentialCardModalNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL]: undefined;
+  [ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED]: undefined;
   // PLAYGROUNDS
   [ITW_ROUTES.PLAYGROUNDS]: undefined;
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
