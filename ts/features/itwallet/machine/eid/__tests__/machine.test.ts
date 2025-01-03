@@ -64,6 +64,7 @@ describe("itwEidIssuanceMachine", () => {
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
   const revokeWalletInstance = jest.fn();
+  const isReissuingAndSessionExpired = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -119,7 +120,8 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      isReissuingAndSessionExpired
     }
   });
 
@@ -1001,6 +1003,8 @@ describe("itwEidIssuanceMachine", () => {
 
     // eslint-disable-next-line functional/immutable-data
     actor.getSnapshot().context = initialContext;
+
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
