@@ -3,7 +3,6 @@ import {
   ContentWrapper,
   FooterActionsInline,
   H2,
-  IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -13,8 +12,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -102,15 +101,6 @@ const UnsubscriptionConfirmationScreen = () => {
     }
   }, [navigation, isFailure, isSuccess]);
 
-  const closeButton = (
-    <IconButton
-      icon="closeLarge"
-      color="neutral"
-      onPress={handleClosePress}
-      accessibilityLabel={I18n.t("global.buttons.close")}
-    />
-  );
-
   const confirmModal = useIOBottomSheetAutoresizableModal(
     {
       title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
@@ -180,18 +170,20 @@ const UnsubscriptionConfirmationScreen = () => {
     </SafeAreaView>
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.unsubscription.headerTitle"),
+    goBack: handleClosePress,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("idpay.unsubscription.headerTitle")}
-      customGoBack={closeButton}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <LoadingSpinnerOverlay isLoading={isLoading}>
         {!isLoading && body}
       </LoadingSpinnerOverlay>
       {confirmModal.bottomSheet}
-    </BaseScreenComponent>
+    </>
   );
 };
 

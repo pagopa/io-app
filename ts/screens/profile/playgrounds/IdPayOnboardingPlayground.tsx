@@ -1,9 +1,9 @@
 import {
   Body,
   BodyMonospace,
+  BodySmall,
   H4,
   IOColors,
-  BodySmall,
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -12,8 +12,8 @@ import React from "react";
 import { Button, ScrollView, View } from "react-native";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IdPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/routes";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -39,38 +39,41 @@ const IdPayOnboardingPlayground = () => {
     }
   };
 
+  useHeaderSecondLevel({
+    title: "Playground",
+    canGoBack: true
+  });
+
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"Playground"}>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
-        <LabelledItem
-          label={"Service ID"}
-          inputProps={{
-            keyboardType: "default",
-            returnKeyType: "done",
-            autoFocus: true,
-            onChangeText: text => setServiceId(text),
-            value: serviceId
-          }}
-        />
-        <VSpacer size={16} />
-        <Button onPress={handleServiceSubmit} title="Start onboarding" />
-        {isDevEnv && (
-          <>
-            <VSpacer size={24} />
-            <H4>Iniziative di test</H4>
-            <Body>Iniziative disponibili tramite io-dev-server</Body>
-            {testServices.map(srv => (
-              <TestServiceItem
-                key={srv.serviceId}
-                service={srv}
-                onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
-              />
-            ))}
-          </>
-        )}
-        <VSpacer size={32} />
-      </ScrollView>
-    </BaseScreenComponent>
+    <ScrollView style={IOStyles.horizontalContentPadding}>
+      <LabelledItem
+        label={"Service ID"}
+        inputProps={{
+          keyboardType: "default",
+          returnKeyType: "done",
+          autoFocus: true,
+          onChangeText: text => setServiceId(text),
+          value: serviceId
+        }}
+      />
+      <VSpacer size={16} />
+      <Button onPress={handleServiceSubmit} title="Start onboarding" />
+      {isDevEnv && (
+        <>
+          <VSpacer size={24} />
+          <H4>Iniziative di test</H4>
+          <Body>Iniziative disponibili tramite io-dev-server</Body>
+          {testServices.map(srv => (
+            <TestServiceItem
+              key={srv.serviceId}
+              service={srv}
+              onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
+            />
+          ))}
+        </>
+      )}
+      <VSpacer size={32} />
+    </ScrollView>
   );
 };
 

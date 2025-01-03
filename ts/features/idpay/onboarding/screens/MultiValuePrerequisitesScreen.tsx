@@ -14,7 +14,7 @@ import { default as React } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
@@ -87,36 +87,36 @@ const MultiValuePrerequisiteItemScreenContent = ({
   };
   const handleGoBack = () => machine.send({ type: "back" });
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.headerTitle"),
+    goBack: handleGoBack
+  });
+
   return (
     <>
-      <BaseScreenComponent
-        goBack={handleGoBack}
-        headerTitle={I18n.t("idpay.onboarding.headerTitle")}
-      >
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
-          <VSpacer size={16} />
-          <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-          {/* TODO: Add a proper `onPress` function to the following link.
+      <View style={IOStyles.horizontalContentPadding}>
+        <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
+        <VSpacer size={16} />
+        <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
+        {/* TODO: Add a proper `onPress` function to the following link.
           It was a `<Link>` without anything else before */}
-          {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-          <Body weight="Semibold" asLink onPress={() => {}}>
-            {I18n.t("idpay.onboarding.multiPrerequisites.link")}
-          </Body>
-          <VSpacer size={24} />
-          <H6>{selfDeclaration.description}</H6>
-          <ScrollView>
-            {selfDeclaration.value.map((answer, index) => (
-              <CustomListItem
-                key={index}
-                text={answer}
-                checked={index === selectedIndex}
-                onPress={() => setSelectedIndex(index)}
-              />
-            ))}
-          </ScrollView>
-        </View>
-      </BaseScreenComponent>
+        {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+        <Body weight="Semibold" asLink onPress={() => {}}>
+          {I18n.t("idpay.onboarding.multiPrerequisites.link")}
+        </Body>
+        <VSpacer size={24} />
+        <H6>{selfDeclaration.description}</H6>
+        <ScrollView>
+          {selfDeclaration.value.map((answer, index) => (
+            <CustomListItem
+              key={index}
+              text={answer}
+              checked={index === selectedIndex}
+              onPress={() => setSelectedIndex(index)}
+            />
+          ))}
+        </ScrollView>
+      </View>
       <FooterActionsInline
         startAction={{
           color: "primary",
