@@ -12,6 +12,9 @@ type GuardsImplementationOptions = Partial<{
   bypassIdentityMatch: boolean;
 }>;
 
+const checkSessionExpired = ({ event }: { event: EidIssuanceEvents }) =>
+  "error" in event && event.error instanceof ItwSessionExpiredError;
+
 export const createEidIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>,
   options?: GuardsImplementationOptions
@@ -35,7 +38,10 @@ export const createEidIssuanceGuardsImplementation = (
   },
 
   isSessionExpired: ({ event }: { event: EidIssuanceEvents }) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError,
+    checkSessionExpired({ event }),
+
+  isReissuingAndSessionExpired: ({ context, event }: { context: Context, event: EidIssuanceEvents }) =>
+    context.isReissuing === true && checkSessionExpired({ event }),
 
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(

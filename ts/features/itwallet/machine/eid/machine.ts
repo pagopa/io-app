@@ -56,6 +56,7 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented,
+    assignWalletInstanceAttestationToContext: notImplemented,
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -95,6 +96,7 @@ export const itwEidIssuanceMachine = setup({
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
+    isReissuingAndSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
@@ -129,7 +131,7 @@ export const itwEidIssuanceMachine = setup({
           target: "WalletInstanceRevocation"
         },
         "start-reissuing": {
-          target: "UserIdentification",
+          target: "CheckingWalletInstanceAttestation",
           actions: "setIsReissuing"
         }
       }
@@ -153,6 +155,19 @@ export const itwEidIssuanceMachine = setup({
           }
         ]
       }
+    },
+    CheckingWalletInstanceAttestation: {
+      description:
+        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not and then proceed with the user identification",
+      always: [
+        {
+          guard: not("hasValidWalletInstanceAttestation"),
+          target: "WalletInstanceAttestationObtainment"
+        },
+        {
+          target: "UserIdentification"
+        }
+      ]
     },
     WalletInstanceCreation: {
       description:
@@ -219,16 +234,29 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "getWalletAttestation",
         input: ({ context }) => ({ integrityKeyTag: context.integrityKeyTag }),
-        onDone: {
-          actions: [
-            assign(({ event }) => ({
-              walletInstanceAttestation: event.output
-            })),
-            { type: "storeWalletInstanceAttestation" }
-          ],
-          target: "IpzsPrivacyAcceptance"
-        },
+        onDone: [
+          {
+            guard: "isReissuing",
+            actions: [
+              "assignWalletInstanceAttestationToContext",
+              { type: "storeWalletInstanceAttestation" }
+            ],
+            target: "UserIdentification" 
+          },
+          {
+            actions: [
+              "assignWalletInstanceAttestationToContext",
+              { type: "storeWalletInstanceAttestation" }
+            ],
+            target: "IpzsPrivacyAcceptance" 
+          }
+        ],
         onError: [
+          {
+            guard: "isReissuingAndSessionExpired",
+            actions: ["handleSessionExpired", "closeIssuance"],
+            target: "#itwEidIssuanceMachine.Idle"
+          },
           {
             guard: "isSessionExpired",
             actions: "handleSessionExpired",

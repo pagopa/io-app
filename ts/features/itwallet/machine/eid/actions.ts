@@ -220,6 +220,10 @@ export const createEidIssuanceActionsImplementation = (
     trackItwDeactivated(store.getState());
   },
 
+  assignWalletInstanceAttestationToContext: assign(({ event }) => ({
+    walletInstanceAttestation: event.output
+  })),
+
   onInit: assign<Context, EidIssuanceEvents, unknown, EidIssuanceEvents, any>(
     () => {
       const state = store.getState();
