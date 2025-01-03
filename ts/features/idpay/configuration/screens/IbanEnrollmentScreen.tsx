@@ -4,6 +4,7 @@ import {
   FooterActions,
   FooterActionsInline,
   H2,
+  RadioGroup,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -11,7 +12,6 @@ import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
@@ -136,25 +136,6 @@ export const IbanEnrollmentScreen = () => {
     );
   };
 
-  const renderIbanList = () =>
-    ibanList.map(iban => {
-      const isSelected = iban.iban === selectedIban?.iban;
-
-      return (
-        <ListItemComponent
-          key={iban.iban}
-          title={iban.description}
-          subTitle={iban.iban}
-          iconName={isSelected ? "legRadioOn" : "legRadioOff"}
-          smallIconSize={true}
-          accessible={true}
-          accessibilityRole={"radiogroup"}
-          accessibilityState={{ checked: true }}
-          onPress={() => !isSelected && handleSelectIban(iban)}
-        />
-      );
-    });
-
   useHeaderSecondLevel({
     title: I18n.t(
       isIbanOnly
@@ -173,7 +154,18 @@ export const IbanEnrollmentScreen = () => {
         <VSpacer size={8} />
         <Body>{I18n.t("idpay.configuration.iban.enrollment.subTitle")}</Body>
         <VSpacer size={24} />
-        {renderIbanList()}
+        <RadioGroup<IbanDTO>
+          type="radioListItem"
+          key="check_income"
+          items={Array.from(ibanList, el => ({
+            ...el,
+            id: el,
+            value: el.iban,
+            description: el.description
+          }))}
+          selectedItem={selectedIban}
+          onPress={iban => handleSelectIban(iban)}
+        />
         <VSpacer size={16} />
         <FeatureInfo
           iconName="profile"
