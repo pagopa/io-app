@@ -56,7 +56,6 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceRevocation: notImplemented,
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     onInit: notImplemented,
-    assignWalletInstanceAttestationToContext: notImplemented,
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -238,14 +237,18 @@ export const itwEidIssuanceMachine = setup({
           {
             guard: "isReissuing",
             actions: [
-              "assignWalletInstanceAttestationToContext",
+              assign(({ event }) => ({
+                walletInstanceAttestation: event.output
+              })),
               { type: "storeWalletInstanceAttestation" }
             ],
             target: "UserIdentification" 
           },
           {
             actions: [
-              "assignWalletInstanceAttestationToContext",
+              assign(({ event }) => ({
+                walletInstanceAttestation: event.output
+              })),
               { type: "storeWalletInstanceAttestation" }
             ],
             target: "IpzsPrivacyAcceptance" 
