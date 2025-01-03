@@ -242,7 +242,7 @@ export const itwEidIssuanceMachine = setup({
               })),
               { type: "storeWalletInstanceAttestation" }
             ],
-            target: "UserIdentification" 
+            target: "UserIdentification"
           },
           {
             actions: [
@@ -251,7 +251,7 @@ export const itwEidIssuanceMachine = setup({
               })),
               { type: "storeWalletInstanceAttestation" }
             ],
-            target: "IpzsPrivacyAcceptance" 
+            target: "IpzsPrivacyAcceptance"
           }
         ],
         onError: [

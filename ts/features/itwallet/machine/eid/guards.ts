@@ -40,8 +40,13 @@ export const createEidIssuanceGuardsImplementation = (
   isSessionExpired: ({ event }: { event: EidIssuanceEvents }) =>
     checkSessionExpired({ event }),
 
-  isReissuingAndSessionExpired: ({ context, event }: { context: Context; event: EidIssuanceEvents }) =>
-    context.isReissuing === true && checkSessionExpired({ event }),
+  isReissuingAndSessionExpired: ({
+    context,
+    event
+  }: {
+    context: Context;
+    event: EidIssuanceEvents;
+  }) => context.isReissuing === true && checkSessionExpired({ event }),
 
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
