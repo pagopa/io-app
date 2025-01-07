@@ -1,5 +1,5 @@
 import { HStack, IOColors, IOText, Tag } from "@pagopa/io-app-design-system";
-import React, { useMemo } from "react";
+import React from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import Color from "color";
 import { AnimatedImage } from "../../../../components/AnimatedImage";
@@ -29,39 +29,44 @@ type StyleProps = {
   tagColorScheme: TagColorScheme;
 };
 
+const getStyleProps = (
+  credentialType: string,
+  status: ItwCredentialStatus
+): StyleProps => {
+  const isValid = validCredentialStatuses.includes(status);
+
+  const theme = getThemeColorByCredentialType(credentialType);
+  const [on, off, na] = credentialCardBackgrounds[credentialType];
+
+  if (status === "unknown") {
+    return {
+      cardBackgroundSource: na,
+      titleColor: Color(theme.textColor).grayscale().hex(),
+      titleOpacity: 0.5,
+      tagColorScheme: "greyscale"
+    };
+  }
+  if (isValid) {
+    return {
+      cardBackgroundSource: on,
+      titleColor: theme.textColor,
+      titleOpacity: 1,
+      tagColorScheme: "default"
+    };
+  }
+  return {
+    cardBackgroundSource: off,
+    titleColor: theme.textColor,
+    titleOpacity: 0.5,
+    tagColorScheme: "faded"
+  };
+};
+
 export const ItwCredentialCard = ({
   status = "valid",
   credentialType
 }: ItwCredentialCard) => {
-  const isValid = validCredentialStatuses.includes(status);
-
-  const styleProps = useMemo((): StyleProps => {
-    const theme = getThemeColorByCredentialType(credentialType);
-    const [on, off, na] = credentialCardBackgrounds[credentialType];
-
-    if (status === "unknown") {
-      return {
-        cardBackgroundSource: na,
-        titleColor: Color(theme.textColor).grayscale().hex(),
-        titleOpacity: 0.5,
-        tagColorScheme: "greyscale"
-      };
-    }
-    if (isValid) {
-      return {
-        cardBackgroundSource: on,
-        titleColor: theme.textColor,
-        titleOpacity: 1,
-        tagColorScheme: "default"
-      };
-    }
-    return {
-      cardBackgroundSource: off,
-      titleColor: theme.textColor,
-      titleOpacity: 0.5,
-      tagColorScheme: "faded"
-    };
-  }, [credentialType, status, isValid]);
+  const styleProps = getStyleProps(credentialType, status);
 
   const statusTagProps = tagPropsByStatus[status];
 

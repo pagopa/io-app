@@ -6,7 +6,7 @@ import {
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import Color from "color";
-import React, { useMemo } from "react";
+import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../i18n";
 
@@ -22,41 +22,49 @@ type CredentialTypesProps = {
   foreground: string;
 };
 
-const mapCredentialTypes: Record<string, CredentialTypesProps> = {
-  MDL: {
-    foreground: "#5E303E",
-    background: "#FADCF5"
-  },
-  EuropeanDisabilityCard: {
-    foreground: "#01527F",
-    background: "#E8EEF4"
-  },
-  EuropeanHealthInsuranceCard: {
-    foreground: "#032D5C",
-    background: "#ABD8F2"
+const getColorPropsByScheme = (
+  credentialType: string,
+  colorScheme: TagColorScheme
+) => {
+  const mapCredentialTypes: Record<string, CredentialTypesProps> = {
+    MDL: {
+      foreground: "#5E303E",
+      background: "#FADCF5"
+    },
+    EuropeanDisabilityCard: {
+      foreground: "#01527F",
+      background: "#E8EEF4"
+    },
+    EuropeanHealthInsuranceCard: {
+      foreground: "#032D5C",
+      background: "#ABD8F2"
+    }
+  };
+
+  const baseColorProps = mapCredentialTypes[credentialType];
+
+  if (!baseColorProps) {
+    return;
   }
+
+  if (colorScheme === "greyscale") {
+    return {
+      foreground: Color(baseColorProps.foreground).grayscale().hex(),
+      background: Color(baseColorProps.background).grayscale().hex()
+    };
+  }
+
+  return baseColorProps;
 };
 
 const ItwDigitalVersionBadge = ({
   credentialType,
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
-  const colorProps = useMemo(() => {
-    const baseColorProps = mapCredentialTypes[credentialType];
-    if (!baseColorProps) {
-      return;
-    }
-    if (colorScheme === "greyscale") {
-      return {
-        foreground: Color(baseColorProps.foreground).grayscale().hex(),
-        background: Color(baseColorProps.background).grayscale().hex()
-      };
-    }
-    return baseColorProps;
-  }, [credentialType, colorScheme]);
+  const colorProps = getColorPropsByScheme(credentialType, colorScheme);
 
+  // If a credential does not have the color configuration means that we should not display the badge
   if (!colorProps) {
-    // If a credential does not have the color configuration means that we should not display the badge
     return null;
   }
 
