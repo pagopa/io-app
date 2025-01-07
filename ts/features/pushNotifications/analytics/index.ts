@@ -117,13 +117,11 @@ export const trackPushNotificationsBannerTap = (
   void mixpanelTrack(eventName, props);
 };
 
-export const trackPushNotificationsBannerClosure = (
-  bannerPage: typeof MESSAGES_ROUTES.MESSAGES_HOME | typeof ROUTES.SETTINGS_MAIN
-) => {
+export const trackPushNotificationsBannerClosure = () => {
   const eventName = "CLOSE_BANNER";
   const props = buildEventProperties("UX", "action", {
     banner_id: "push_notif_activation",
-    banner_page: bannerPage,
+    banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
     banner_landing: "os_notification_settings"
   });
   void mixpanelTrack(eventName, props);

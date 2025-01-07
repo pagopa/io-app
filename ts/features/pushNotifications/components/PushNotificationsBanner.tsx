@@ -19,6 +19,12 @@ import {
   shouldResetNotificationBannerDismissStateSelector,
   timesPushNotificationBannerDismissedSelector
 } from "../store/selectors/notificationsBannerDismissed";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import {
+  trackPushNotificationsBannerClosure,
+  trackPushNotificationsBannerTap,
+  trackPushNotificationsBannerVisualized
+} from "../analytics";
 type Props = {
   closeHandler: () => void;
 };
@@ -34,6 +40,9 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
       dispatch(resetNotificationBannerDismissState());
     }
   }, [dispatch, shouldResetDismissState]);
+  React.useEffect(() => {
+    trackPushNotificationsBannerVisualized(MESSAGES_ROUTES.MESSAGES_HOME);
+  }, []);
 
   const dismissionCount = useIOSelector(
     timesPushNotificationBannerDismissedSelector
@@ -41,6 +50,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   const discardModal = usePushNotificationsBannerBottomSheet(closeHandler);
 
   const onClose = () => {
+    trackPushNotificationsBannerClosure();
     if (dismissionCount >= 2) {
       discardModal.present();
     } else {
@@ -48,6 +58,11 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
       closeHandler();
     }
   };
+
+  const onPress = React.useCallback(() => {
+    trackPushNotificationsBannerTap(MESSAGES_ROUTES.MESSAGES_HOME);
+    openSystemNotificationSettingsScreen();
+  }, []);
 
   return (
     <View style={styles.margins} testID="pushnotif-bannerContainer">
@@ -61,7 +76,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
         size="big"
         onClose={onClose}
         labelClose={I18n.t("global.buttons.close")}
-        onPress={openSystemNotificationSettingsScreen}
+        onPress={onPress}
       />
       {discardModal.bottomSheet}
     </View>

@@ -281,22 +281,21 @@ describe("pushNotifications analytics", () => {
         banner_landing: "os_notification_settings"
       });
     });
-    it(`'trackPushNotificationsBannerClosure' should have expected event name and properties for '${route}'`, () => {
-      const mockMixpanelTrack = getMockMixpanelTrack();
+  });
+  it(`'trackPushNotificationsBannerClosure' should have expected event name and properties`, () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
 
-      void trackPushNotificationsBannerClosure(route);
+    void trackPushNotificationsBannerClosure(route);
 
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("CLOSE_BANNER");
-      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "action",
-        banner_id: "push_notif_activation",
-        banner_page:
-          route === "MESSAGES_HOME" ? "MESSAGES_HOME" : "SETTINGS_MAIN",
-        banner_landing: "os_notification_settings"
-      });
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe("CLOSE_BANNER");
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "UX",
+      event_type: "action",
+      banner_id: "push_notif_activation",
+      banner_page: "MESSAGES_HOME",
+      banner_landing: "os_notification_settings"
     });
   });
   it(`'trackPushNotificationSystemPopupShown' should have expected event name and properties`, () => {
