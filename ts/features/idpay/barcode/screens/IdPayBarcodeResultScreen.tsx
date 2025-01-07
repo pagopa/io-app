@@ -1,12 +1,11 @@
 import {
   Body,
-  H2,
+  BodySmall,
   H3,
   HeaderSecondLevel,
   IOColors,
   IOStyles,
   IOVisualCostants,
-  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -18,18 +17,18 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayBarcodeExpireProgressBar } from "../components/BarcodeExpirationProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
-import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { idPayGenerateBarcode } from "../store/actions";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 
 // -------------------- types --------------------
 
@@ -122,7 +121,8 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
         }}
         goBack={goBack}
       />
-      <IOScrollView
+      <IOScrollViewWithLargeHeader
+        includeContentMargins
         actions={{
           type: "TwoButtons",
           primary: {
@@ -138,15 +138,14 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
             onPress: goBack
           }
         }}
+        title={{
+          label: I18n.t("idpay.barCode.resultScreen.success.header")
+        }}
+        description={I18n.t("idpay.barCode.resultScreen.success.body", {
+          initiativeName: barcode.initiativeName
+        })}
       >
-        <H2>{I18n.t("idpay.barCode.resultScreen.success.header")}</H2>
         <VSpacer size={16} />
-        <Body>
-          {I18n.t("idpay.barCode.resultScreen.success.body", {
-            initiativeName: barcode.initiativeName
-          })}
-        </Body>
-        <VSpacer size={24} />
         <View style={styles.barcodeContainer}>
           <View style={[IOStyles.row, { alignSelf: "center" }]}>
             <BodySmall weight="Regular" color="black">
@@ -166,7 +165,7 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
             setIsExpired={setIsBarcodeExpired}
           />
         </View>
-      </IOScrollView>
+      </IOScrollViewWithLargeHeader>
     </>
   );
 };
