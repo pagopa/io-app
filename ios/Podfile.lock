@@ -1444,7 +1444,7 @@ PODS:
     - React
   - react-native-get-random-values (1.11.0):
     - React-Core
-  - react-native-image-picker (7.2.2):
+  - react-native-image-picker (7.2.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2501,7 +2501,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: a2e1577d26b9758ef3092e66f5d67f6e8c7454d9
   react-native-fingerprint-scanner: 91bf6825709dd7bd3abc4588a4772eb097a2b2d8
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
-  react-native-image-picker: 19a8d8471a239890675726f88f9c18dd213656d5
+  react-native-image-picker: 130fad649d07e4eec8faaed361d3bba570e1e5ff
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-notifications-utils: 2684eeb23e47ea5d892b151c28ae07840d1448d1
   react-native-pager-view: 8bd7d72d1c260ef565952ac617ab6e492c457894

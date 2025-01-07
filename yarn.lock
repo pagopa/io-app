@@ -13693,7 +13693,7 @@ __metadata:
     react-native-haptic-feedback: ^2.3.3
     react-native-i18n: ^2.0.15
     react-native-image-pan-zoom: ^2.1.11
-    react-native-image-picker: 7.2.2
+    react-native-image-picker: 7.2.3
     react-native-keychain: ^4.0.5
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
@@ -19007,13 +19007,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-picker@npm:7.2.2":
-  version: 7.2.2
-  resolution: "react-native-image-picker@npm:7.2.2"
+"react-native-image-picker@npm:7.2.3":
+  version: 7.2.3
+  resolution: "react-native-image-picker@npm:7.2.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 34289e29a28c3f8d869db46fdf5bfdeec8b37221ee4dcd9a63698b106f0097d11f4c40f3a2789c23a728dc94e37e02a0cf61add80aa04ffe60a6cf82115cddea
+  checksum: 96d67516e8e1c1768c593ca1b0a507d5212d8ac5df2610ad9d6f38c188b8d0720966559867849f74b6c19d2500664ce17c907e5fa37ab72487abd363cf493e7d
   languageName: node
   linkType: hard
 

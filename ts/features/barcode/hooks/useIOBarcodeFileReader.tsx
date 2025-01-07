@@ -1,5 +1,4 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -19,13 +18,7 @@ import {
   ImageLibraryOptions
 } from "react-native-image-picker";
 import I18n from "../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { requestMediaPermission } from "../../../utils/permission";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
@@ -118,7 +111,6 @@ const useIOBarcodeFileReader = ({
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
   const [isFilePickerVisible, setFilePickerVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     setIsLoading(false);
@@ -176,12 +168,6 @@ const useIOBarcodeFileReader = ({
   };
 
   const showImagePicker = async () => {
-    const permissionGranted = await requestMediaPermission();
-    if (!permissionGranted) {
-      navigation.navigate(ROUTES.GALLERY_PERMISSION_INSTRUCTIONS);
-      return;
-    }
-
     setIsLoading(true);
 
     void launchImageLibrary(imageLibraryOptions, onImageSelected);
