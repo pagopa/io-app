@@ -2366,11 +2366,16 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >

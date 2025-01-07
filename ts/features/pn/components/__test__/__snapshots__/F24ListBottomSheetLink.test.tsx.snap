@@ -428,11 +428,16 @@ exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] =
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >
@@ -3191,11 +3196,16 @@ exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] =
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >
@@ -3690,11 +3700,16 @@ exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = 
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >

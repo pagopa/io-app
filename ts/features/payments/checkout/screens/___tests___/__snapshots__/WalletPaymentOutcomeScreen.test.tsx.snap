@@ -978,11 +978,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -2911,11 +2916,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -4825,11 +4835,16 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -6724,11 +6739,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -8637,11 +8657,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -10185,11 +10210,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -10621,11 +10651,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -12141,11 +12176,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -12577,11 +12617,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -14476,11 +14521,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -16325,11 +16375,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -18258,11 +18313,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -20171,11 +20231,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -22104,11 +22169,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -23652,11 +23722,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -24088,11 +24163,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -26021,11 +26101,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -27954,11 +28039,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -29895,11 +29985,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -31808,11 +31903,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -33358,11 +33458,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -33794,11 +33899,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -35707,11 +35817,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -37305,11 +37420,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -37741,11 +37861,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -39808,11 +39933,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -41359,11 +41489,16 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -41795,11 +41930,16 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -43407,11 +43547,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >
@@ -43843,11 +43988,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -45742,11 +45892,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -47683,11 +47838,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -49596,11 +49756,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >
@@ -51529,11 +51694,16 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "600",
-                                                "lineHeight": undefined,
+                                                "lineHeight": 20,
                                               },
-                                              {
-                                                "color": undefined,
-                                              },
+                                              [
+                                                {
+                                                  "color": undefined,
+                                                },
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                              ],
                                             ]
                                           }
                                         >

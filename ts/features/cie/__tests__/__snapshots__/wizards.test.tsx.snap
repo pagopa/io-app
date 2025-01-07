@@ -202,11 +202,16 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -563,11 +568,16 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -781,11 +791,16 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -1125,11 +1140,16 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
-                      "lineHeight": undefined,
+                      "lineHeight": 20,
                     },
-                    {
-                      "color": undefined,
-                    },
+                    [
+                      {
+                        "color": undefined,
+                      },
+                      {
+                        "textAlign": "auto",
+                      },
+                    ],
                   ]
                 }
               >
@@ -1487,11 +1507,16 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >
@@ -2870,11 +2895,16 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "600",
-                    "lineHeight": undefined,
+                    "lineHeight": 20,
                   },
-                  {
-                    "color": undefined,
-                  },
+                  [
+                    {
+                      "color": undefined,
+                    },
+                    {
+                      "textAlign": "auto",
+                    },
+                  ],
                 ]
               }
             >

@@ -594,11 +594,16 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -1562,11 +1567,16 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >

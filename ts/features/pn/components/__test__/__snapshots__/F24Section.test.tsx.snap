@@ -513,11 +513,16 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
-                                    "lineHeight": undefined,
+                                    "lineHeight": 20,
                                   },
-                                  {
-                                    "color": undefined,
-                                  },
+                                  [
+                                    {
+                                      "color": undefined,
+                                    },
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                  ],
                                 ]
                               }
                             >

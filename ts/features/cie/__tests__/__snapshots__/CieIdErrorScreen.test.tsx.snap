@@ -466,11 +466,16 @@ exports[`CieIdErrorScreen where device doesn't support NFC Should match the snap
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
-                      "lineHeight": undefined,
+                      "lineHeight": 20,
                     },
-                    {
-                      "color": undefined,
-                    },
+                    [
+                      {
+                        "color": undefined,
+                      },
+                      {
+                        "textAlign": "auto",
+                      },
+                    ],
                   ]
                 }
               >
@@ -953,11 +958,16 @@ Insert the CIE PIN and bring it close to the device to allow the data to be read
                       "fontSize": 16,
                       "fontStyle": "normal",
                       "fontWeight": "600",
-                      "lineHeight": undefined,
+                      "lineHeight": 20,
                     },
-                    {
-                      "color": undefined,
-                    },
+                    [
+                      {
+                        "color": undefined,
+                      },
+                      {
+                        "textAlign": "auto",
+                      },
+                    ],
                   ]
                 }
               >

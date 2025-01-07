@@ -573,11 +573,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": undefined,
+                                      "lineHeight": 20,
                                     },
-                                    {
-                                      "color": undefined,
-                                    },
+                                    [
+                                      {
+                                        "color": undefined,
+                                      },
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -1283,11 +1288,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": undefined,
+                                      "lineHeight": 20,
                                     },
-                                    {
-                                      "color": undefined,
-                                    },
+                                    [
+                                      {
+                                        "color": undefined,
+                                      },
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                    ],
                                   ]
                                 }
                               >
@@ -4175,11 +4185,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
-                                      "lineHeight": undefined,
+                                      "lineHeight": 20,
                                     },
-                                    {
-                                      "color": undefined,
-                                    },
+                                    [
+                                      {
+                                        "color": undefined,
+                                      },
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                    ],
                                   ]
                                 }
                               >

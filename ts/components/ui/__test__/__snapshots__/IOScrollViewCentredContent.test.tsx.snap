@@ -653,11 +653,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -1580,11 +1585,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -2050,11 +2060,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -2731,11 +2746,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -3091,11 +3111,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -4957,11 +4982,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -5892,11 +5922,16 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -6550,11 +6585,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -7454,11 +7494,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -7924,11 +7969,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -8582,11 +8632,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -8942,11 +8997,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -10762,11 +10822,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -11674,11 +11739,16 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
