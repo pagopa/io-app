@@ -1,7 +1,9 @@
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import { mixpanelTrack } from "../../../mixpanel";
+import ROUTES from "../../../navigation/routes";
 import { buildEventProperties } from "../../../utils/analytics";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(
@@ -87,6 +89,78 @@ export const trackNotificationPermissionsStatus = (
   const eventName = "PUSH_NOTIF_STATE_UPDATED";
   const props = buildEventProperties("TECH", undefined, {
     new_notification_status: systemNotificationPermissionsEnabled
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationsBannerVisualized = (
+  bannerPage: typeof MESSAGES_ROUTES.MESSAGES_HOME | typeof ROUTES.SETTINGS_MAIN
+) => {
+  const eventName = "BANNER";
+  const props = buildEventProperties("UX", "screen_view", {
+    banner_id: "push_notif_activation",
+    banner_page: bannerPage,
+    banner_landing: "os_notification_settings"
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationsBannerTap = (
+  bannerPage: typeof MESSAGES_ROUTES.MESSAGES_HOME | typeof ROUTES.SETTINGS_MAIN
+) => {
+  const eventName = "TAP_BANNER";
+  const props = buildEventProperties("UX", "action", {
+    banner_id: "push_notif_activation",
+    banner_page: bannerPage,
+    banner_landing: "os_notification_settings"
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationsBannerClosure = (
+  bannerPage: typeof MESSAGES_ROUTES.MESSAGES_HOME | typeof ROUTES.SETTINGS_MAIN
+) => {
+  const eventName = "CLOSE_BANNER";
+  const props = buildEventProperties("UX", "action", {
+    banner_id: "push_notif_activation",
+    banner_page: bannerPage,
+    banner_landing: "os_notification_settings"
+  });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationSystemPopupShown = () => {
+  const eventName = "PUSH_NOTIF_SYSTEM_ALERT";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationBannerDismissAlert = () => {
+  const eventName = "PUSH_NOTIF_THIRD_DISMISS_ALERT";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationBannerDismissOutcome = (
+  outcome: "deactivate" | "dismiss" | "remind_later"
+) => {
+  const eventName = "PUSH_NOTIF_THIRD_DISMISS_ALERT_INTERACTION";
+  const props = buildEventProperties("UX", "action", { outcome });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationBannerForceShow = () => {
+  const eventName = "PUSH_NOTIF_BANNER_FORCE_SHOW";
+  const props = buildEventProperties("TECH", undefined);
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackPushNotificationBannerStillHidden = (
+  unreadMessagesCount: number
+) => {
+  const eventName = "PUSH_NOTIF_BANNER_STILL_HIDDEN";
+  const props = buildEventProperties("TECH", undefined, {
+    unread_count: unreadMessagesCount
   });
   void mixpanelTrack(eventName, props);
 };

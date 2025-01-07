@@ -7,6 +7,14 @@ import {
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInReminderStatus,
   trackNotificationsOptInSkipSystemPermissions,
+  trackPushNotificationBannerDismissAlert,
+  trackPushNotificationBannerDismissOutcome,
+  trackPushNotificationBannerForceShow,
+  trackPushNotificationBannerStillHidden,
+  trackPushNotificationsBannerClosure,
+  trackPushNotificationsBannerTap,
+  trackPushNotificationsBannerVisualized,
+  trackPushNotificationSystemPopupShown,
   trackPushNotificationTokenUploadFailure,
   trackPushNotificationTokenUploadSucceeded,
   trackSystemNotificationPermissionScreenOutcome,
@@ -15,6 +23,8 @@ import {
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import * as Mixpanel from "../../../../mixpanel";
+import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 describe("pushNotifications analytics", () => {
   beforeEach(() => {
@@ -234,6 +244,138 @@ describe("pushNotifications analytics", () => {
     expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
       event_category: "TECH",
       new_notification_status: notificationPermissionsEnabled
+    });
+  });
+  [MESSAGES_ROUTES.MESSAGES_HOME, ROUTES.SETTINGS_MAIN].forEach(route => {
+    it(`'trackPushNotificationsBannerVisualized' should have expected event name and properties for '${route}'`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
+
+      void trackPushNotificationsBannerVisualized(route);
+
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("BANNER");
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view",
+        banner_id: "push_notif_activation",
+        banner_page:
+          route === "MESSAGES_HOME" ? "MESSAGES_HOME" : "SETTINGS_MAIN",
+        banner_landing: "os_notification_settings"
+      });
+    });
+    it(`'trackPushNotificationsBannerTap' should have expected event name and properties for '${route}'`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
+
+      void trackPushNotificationsBannerTap(route);
+
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("TAP_BANNER");
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action",
+        banner_id: "push_notif_activation",
+        banner_page:
+          route === "MESSAGES_HOME" ? "MESSAGES_HOME" : "SETTINGS_MAIN",
+        banner_landing: "os_notification_settings"
+      });
+    });
+    it(`'trackPushNotificationsBannerClosure' should have expected event name and properties for '${route}'`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
+
+      void trackPushNotificationsBannerClosure(route);
+
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("CLOSE_BANNER");
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action",
+        banner_id: "push_notif_activation",
+        banner_page:
+          route === "MESSAGES_HOME" ? "MESSAGES_HOME" : "SETTINGS_MAIN",
+        banner_landing: "os_notification_settings"
+      });
+    });
+  });
+  it(`'trackPushNotificationSystemPopupShown' should have expected event name and properties`, () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+
+    void trackPushNotificationSystemPopupShown();
+
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_SYSTEM_ALERT");
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "UX",
+      event_type: "screen_view"
+    });
+  });
+  it(`'trackPushNotificationBannerDismissAlert' should have expected event name and properties`, () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+
+    void trackPushNotificationBannerDismissAlert();
+
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+      "PUSH_NOTIF_THIRD_DISMISS_ALERT"
+    );
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "UX",
+      event_type: "screen_view"
+    });
+  });
+  ["deactivate" as const, "dismiss" as const, "remind_later" as const].forEach(
+    outcome =>
+      it(`'trackPushNotificationBannerDismissOutcome' should have expected event name and properties for '${outcome}'`, () => {
+        const mockMixpanelTrack = getMockMixpanelTrack();
+
+        void trackPushNotificationBannerDismissOutcome(outcome);
+
+        expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+        expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+          "PUSH_NOTIF_THIRD_DISMISS_ALERT_INTERACTION"
+        );
+        expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "action",
+          outcome
+        });
+      })
+  );
+  it(`'trackPushNotificationBannerForceShow' should have expected event name and properties`, () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+
+    void trackPushNotificationBannerForceShow();
+
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+      "PUSH_NOTIF_BANNER_FORCE_SHOW"
+    );
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "TECH",
+      event_type: undefined
+    });
+  });
+  it(`'trackPushNotificationBannerStillHidden' should have expected event name and properties`, () => {
+    const mockMixpanelTrack = getMockMixpanelTrack();
+    const unreadMessagesCount = 3;
+
+    void trackPushNotificationBannerStillHidden(unreadMessagesCount);
+
+    expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+    expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+    expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+      "PUSH_NOTIF_BANNER_STILL_HIDDEN"
+    );
+    expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+      event_category: "TECH",
+      event_type: undefined,
+      unread_count: unreadMessagesCount
     });
   });
 });

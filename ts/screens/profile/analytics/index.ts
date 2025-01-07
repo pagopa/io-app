@@ -1,4 +1,5 @@
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { MESSAGES_ROUTES } from "../../../features/messages/navigation/routes";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
@@ -223,4 +224,31 @@ export async function trackNotificationPreferenceConfiguration(
       flow
     )
   );
+}
+
+export function trackSettingsDiscoverBannerVisualized() {
+  const eventName = "BANNER";
+  const props = buildEventProperties("UX", "screen_view", {
+    banner_id: "settingsDiscoveryBanner",
+    banner_page: MESSAGES_ROUTES.MESSAGES_HOME
+  });
+  void mixpanelTrack(eventName, props);
+}
+
+export function trackSettingsDiscoverBannerTap() {
+  const eventName = "TAP_BANNER";
+  const props = buildEventProperties("UX", "action", {
+    banner_id: "settingsDiscoveryBanner",
+    banner_page: MESSAGES_ROUTES.MESSAGES_HOME
+  });
+  void mixpanelTrack(eventName, props);
+}
+
+export function trackSettingsDiscoverBannerClosure() {
+  const eventName = "CLOSE_BANNER";
+  const props = buildEventProperties("UX", "action", {
+    banner_id: "settingsDiscoveryBanner",
+    banner_page: MESSAGES_ROUTES.MESSAGES_HOME
+  });
+  void mixpanelTrack(eventName, props);
 }
