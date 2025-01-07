@@ -1,20 +1,11 @@
-import {
-  Body,
-  FeatureInfo,
-  FooterActions,
-  FooterActionsInline,
-  H2,
-  RadioGroup,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { FeatureInfo, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import React, { ComponentProps } from "react";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
   isLoadingSelector,
@@ -99,61 +90,58 @@ export const IbanEnrollmentScreen = () => {
     machine.send({ type: "new-iban-onboarding" });
   };
 
-  const renderFooter = () => {
+  const renderActionProps = (): ComponentProps<
+    typeof IOScrollView
+  >["actions"] => {
     if (isIbanOnly) {
-      return (
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t("idpay.configuration.iban.button.addNew"),
-              disabled: isUpsertingIban,
-              onPress: handleAddNewIbanPress,
-              testID: "addIbanButtonTestID"
-            }
-          }}
-        />
-      );
-    }
-
-    return (
-      <FooterActionsInline
-        startAction={{
-          color: "primary",
+      return {
+        type: "SingleButton",
+        primary: {
           label: I18n.t("idpay.configuration.iban.button.addNew"),
           disabled: isUpsertingIban,
           onPress: handleAddNewIbanPress,
           testID: "addIbanButtonTestID"
-        }}
-        endAction={{
-          label: I18n.t("global.buttons.continue"),
-          disabled: !selectedIban || isUpsertingIban,
-          loading: isUpsertingIban,
-          onPress: handleContinuePress,
-          testID: "continueButtonTestID"
-        }}
-      />
-    );
+        }
+      };
+    }
+
+    return {
+      type: "TwoButtons",
+      primary: {
+        label: I18n.t("idpay.configuration.iban.button.addNew"),
+        disabled: isUpsertingIban,
+        onPress: handleAddNewIbanPress,
+        testID: "addIbanButtonTestID"
+      },
+      secondary: {
+        label: I18n.t("global.buttons.continue"),
+        disabled: !selectedIban || isUpsertingIban,
+        // loading: isUpsertingIban,
+        onPress: handleContinuePress,
+        testID: "continueButtonTestID"
+      }
+    };
   };
 
-  useHeaderSecondLevel({
-    title: I18n.t(
-      isIbanOnly
-        ? "idpay.configuration.iban.title"
-        : "idpay.configuration.headerTitle"
-    ),
-    goBack: handleBackPress,
-    contextualHelp: emptyContextualHelp,
-    supportRequest: true
-  });
-
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-      <ScrollView style={styles.container}>
-        <H2>{I18n.t("idpay.configuration.iban.enrollment.header")}</H2>
-        <VSpacer size={8} />
-        <Body>{I18n.t("idpay.configuration.iban.enrollment.subTitle")}</Body>
-        <VSpacer size={24} />
+    <IOScrollViewWithLargeHeader
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.configuration.iban.enrollment.header"),
+        section: isIbanOnly ? "" : I18n.t("idpay.configuration.headerTitle"),
+        accessibilityLabel: isIbanOnly
+          ? ""
+          : I18n.t("idpay.configuration.headerTitle")
+      }}
+      goBack={handleBackPress}
+      headerActionsProp={{
+        showHelp: true
+      }}
+      contextualHelp={emptyContextualHelp}
+      actions={renderActionProps()}
+      description={I18n.t("idpay.configuration.iban.enrollment.subTitle")}
+    >
+      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
         <RadioGroup<IbanDTO>
           type="radioListItem"
           key="check_income"
@@ -171,15 +159,7 @@ export const IbanEnrollmentScreen = () => {
           iconName="profile"
           body={I18n.t("idpay.configuration.iban.enrollment.footer")}
         />
-      </ScrollView>
-      <SafeAreaView>{renderFooter()}</SafeAreaView>
-    </LoadingSpinnerOverlay>
+      </LoadingSpinnerOverlay>
+    </IOScrollViewWithLargeHeader>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: customVariables.contentPadding
-  }
-});
