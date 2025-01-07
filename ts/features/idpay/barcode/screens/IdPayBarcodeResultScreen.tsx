@@ -1,6 +1,5 @@
 import {
   Body,
-  GradientScrollView,
   H2,
   H3,
   HeaderSecondLevel,
@@ -30,6 +29,7 @@ import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { idPayGenerateBarcode } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 // -------------------- types --------------------
 
@@ -122,18 +122,21 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
         }}
         goBack={goBack}
       />
-      <GradientScrollView
-        primaryActionProps={{
-          label: I18n.t("idpay.barCode.resultScreen.success.saveImageCta"),
-          accessibilityLabel: I18n.t(
-            "idpay.barCode.resultScreen.success.saveImageCta"
-          ),
-          onPress: () => null
-        }}
-        secondaryActionProps={{
-          label: I18n.t("global.buttons.close"),
-          accessibilityLabel: I18n.t("global.buttons.close"),
-          onPress: goBack
+      <IOScrollView
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: I18n.t("idpay.barCode.resultScreen.success.saveImageCta"),
+            accessibilityLabel: I18n.t(
+              "idpay.barCode.resultScreen.success.saveImageCta"
+            ),
+            onPress: () => null
+          },
+          secondary: {
+            label: I18n.t("global.buttons.close"),
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: goBack
+          }
         }}
       >
         <H2>{I18n.t("idpay.barCode.resultScreen.success.header")}</H2>
@@ -163,7 +166,7 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
             setIsExpired={setIsBarcodeExpired}
           />
         </View>
-      </GradientScrollView>
+      </IOScrollView>
     </>
   );
 };
