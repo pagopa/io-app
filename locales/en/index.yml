@@ -527,6 +527,22 @@ profile:
       appearance:
         title: Appearance
         subtitle: Customise the app interface
+        typefaceStyle:
+          title: Typeface style
+          comfortable:
+            title: Comfortable
+            description: Designed for better text readability
+          standard:
+            title: Standard
+            description: The usual style with narrow, geometric shapes
+        theme:
+          title: Theme
+          comingSoon: Coming soon
+          automatic:
+            title: Automatic
+            description: Based on system settings
+          light: Light
+          dark: Dark
       language:
         title: Language
         subtitle: Choose language

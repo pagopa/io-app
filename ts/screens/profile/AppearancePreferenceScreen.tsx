@@ -8,7 +8,7 @@ import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
 
-type TypefaceChoice = "comfortable" | "traditional";
+type TypefaceChoice = "comfortable" | "standard";
 
 type ColorModeChoice = "system" | "dark" | "light";
 
@@ -28,13 +28,21 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const typefaceOptions = [
     {
       id: "comfortable" as TypefaceChoice,
-      value: "Confortevole",
-      description: "Progettato per una migliore leggibilità dei testi"
+      value: I18n.t(
+        "profile.preferences.list.appearance.typefaceStyle.comfortable.title"
+      ),
+      description: I18n.t(
+        "profile.preferences.list.appearance.typefaceStyle.comfortable.description"
+      )
     },
     {
-      id: "traditional" as TypefaceChoice,
-      value: "Standard",
-      description: "Lo stile di sempre, con forme strette e geometriche"
+      id: "standard" as TypefaceChoice,
+      value: I18n.t(
+        "profile.preferences.list.appearance.typefaceStyle.standard.title"
+      ),
+      description: I18n.t(
+        "profile.preferences.list.appearance.typefaceStyle.standard.description"
+      )
     }
   ];
 
@@ -42,18 +50,22 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const colorModeOptions = [
     {
       id: "system" as ColorModeChoice,
-      value: "Automatico",
-      description: "Cambia in base alle impostazioni di sistema",
-      disabled: true
-    },
-    {
-      id: "dark" as ColorModeChoice,
-      value: "Scuro",
+      value: I18n.t(
+        "profile.preferences.list.appearance.theme.automatic.title"
+      ),
+      description: I18n.t(
+        "profile.preferences.list.appearance.theme.automatic.description"
+      ),
       disabled: true
     },
     {
       id: "light" as ColorModeChoice,
-      value: "Chiaro",
+      value: I18n.t("profile.preferences.list.appearance.theme.light"),
+      disabled: true
+    },
+    {
+      id: "dark" as ColorModeChoice,
+      value: I18n.t("profile.preferences.list.appearance.theme.dark"),
       disabled: true
     }
   ];
@@ -68,7 +80,11 @@ const AppearancePreferenceScreen = (): ReactElement => {
     >
       <VStack space={24}>
         <View>
-          <ListItemHeader label={"Stile carattere"} />
+          <ListItemHeader
+            label={I18n.t(
+              "profile.preferences.list.appearance.typefaceStyle.title"
+            )}
+          />
           <RadioGroup<TypefaceChoice>
             type="radioListItem"
             items={typefaceOptions}
@@ -79,11 +95,13 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
         <View>
           <ListItemHeader
-            label={"Tema"}
+            label={I18n.t("profile.preferences.list.appearance.theme.title")}
             endElement={{
               type: "badge",
               componentProps: {
-                text: "In arrivo",
+                text: I18n.t(
+                  "profile.preferences.list.appearance.theme.comingSoon"
+                ),
                 variant: "info"
               }
             }}
