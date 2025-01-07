@@ -1,9 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistConfig, persistReducer } from "redux-persist";
+import _ from "lodash";
+import {
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  createMigrate,
+  persistReducer
+} from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { walletSetCategoryFilter } from "../actions/preferences";
+import { isDevEnv } from "../../../../utils/environment";
 import { WalletCardCategoryFilter } from "../../types";
+import { walletSetCategoryFilter } from "../actions/preferences";
 
 export type WalletPreferencesState = {
   categoryFilter?: WalletCardCategoryFilter;
@@ -25,12 +33,20 @@ const reducer = (
   return state;
 };
 
-const CURRENT_REDUX_WALLET_PREFERENCES_STORE_VERSION = -1;
+const CURRENT_REDUX_WALLET_PREFERENCES_STORE_VERSION = 0;
+
+const migrations: MigrationManifest = {
+  // Removed categoryFilter persistance requirement
+  "0": (state: PersistedState): PersistedState =>
+    _.set(state, "preferences", {})
+};
 
 const persistConfig: PersistConfig = {
   key: "walletPreferences",
   storage: AsyncStorage,
-  version: CURRENT_REDUX_WALLET_PREFERENCES_STORE_VERSION
+  version: CURRENT_REDUX_WALLET_PREFERENCES_STORE_VERSION,
+  blacklist: ["categoryFilter"],
+  migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
 export const walletReducerPersistor = persistReducer<
