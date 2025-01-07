@@ -16,7 +16,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { Layout } from "react-native-reanimated";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
@@ -205,7 +205,7 @@ const IdPayInitiativeDetailsScreen = () => {
                 <ContentWrapper>
                   <VSpacer size={8} />
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
-                  <Animated.View layout={Layout.duration(200)}>
+                  <Animated.View layout={LinearTransition.duration(200)}>
                     <InitiativeTimelineComponent
                       initiativeId={initiative.initiativeId}
                       size={5}
