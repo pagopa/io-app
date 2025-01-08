@@ -97,7 +97,7 @@ export const CgnMerchantCategoriesListScreen = () => {
               countAvailable ? (
                 <View style={IOStyles.rowSpaceBetween}>
                   <H6>{I18n.t(s.nameKey)}</H6>
-                  <Badge text={`${category.newDiscounts}`} variant="purple" />
+                  <Badge text={`${category.newDiscounts}`} variant="cgn" />
                 </View>
               ) : (
                 I18n.t(s.nameKey)

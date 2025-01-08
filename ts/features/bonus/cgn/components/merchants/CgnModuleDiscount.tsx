@@ -1,14 +1,14 @@
 import {
   Badge,
   H6,
-  HStack,
+  HSpacer,
   IOColors,
   IOModuleStyles,
   IOStyles,
   Icon,
   Tag,
-  VStack,
-  useIOTheme,
+  VSpacer,
+  useIOExperimentalDesign,
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -21,7 +21,7 @@ import I18n from "../../../../../i18n";
 import { getCategorySpecs } from "../../utils/filters";
 import { isValidDiscount, normalizedDiscountPercentage } from "./utils";
 
-export type ModuleCgnDiscount = {
+type Props = {
   onPress: () => void;
   discount: Discount;
 };
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     borderWidth: 1
   }
 });
-
 type CategoryTagProps = {
   category: ProductCategory;
 };
@@ -48,19 +47,24 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
   const categorySpecs = getCategorySpecs(category);
 
   return O.isSome(categorySpecs) ? (
-    <Tag
-      text={I18n.t(categorySpecs.value.nameKey)}
-      variant="custom"
-      icon={{
-        name: categorySpecs.value.icon,
-        color: "lightGrey"
-      }}
-    />
+    <>
+      <View>
+        <Tag
+          text={I18n.t(categorySpecs.value.nameKey)}
+          variant="custom"
+          icon={{
+            name: categorySpecs.value.icon,
+            color: "lightGrey"
+          }}
+        />
+        <VSpacer size={4} />
+      </View>
+      <HSpacer size={4} />
+    </>
   ) : null;
 };
-
-export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
-  const theme = useIOTheme();
+export const CgnModuleDiscount = ({ onPress, discount }: Props) => {
+  const { isExperimental } = useIOExperimentalDesign();
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
 
@@ -88,37 +92,37 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
             { alignItems: "center", justifyContent: "space-between" }
           ]}
         >
-          <VStack space={8} style={{ flexShrink: 1 }}>
-            {(discount.discount || discount.isNew) && (
-              <HStack space={8} style={{ flexWrap: "wrap" }}>
-                {discount.isNew && (
+          <View style={IOStyles.flex}>
+            <View style={[IOStyles.flex, IOStyles.row]}>
+              {discount.isNew && (
+                <>
                   <Badge
                     variant="cgn"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
                   />
-                )}
-                {isValidDiscount(discount.discount) && (
-                  <Badge
-                    variant="cgn"
-                    outline
-                    text={`-${normalizedDiscountPercentage(
-                      discount.discount
-                    )}%`}
-                  />
-                )}
-              </HStack>
-            )}
-
+                  <HSpacer size={8} />
+                </>
+              )}
+              {isValidDiscount(discount.discount) && (
+                <Badge
+                  variant="cgn"
+                  outline
+                  text={`-${normalizedDiscountPercentage(discount.discount)}%`}
+                />
+              )}
+            </View>
+            <VSpacer size={8} />
             <H6>{discount.name}</H6>
-            <HStack space={4} style={{ flexWrap: "wrap" }}>
+            <VSpacer size={8} />
+            <View style={[{ flexWrap: "wrap" }, IOStyles.row]}>
               {discount.productCategories.map(categoryKey => (
                 <CategoryTag key={categoryKey} category={categoryKey} />
               ))}
-            </HStack>
-          </VStack>
+            </View>
+          </View>
           <Icon
             name="chevronRightListItem"
-            color={theme["interactiveElem-default"]}
+            color={isExperimental ? "blueIO-500" : "blue"}
             size={24}
           />
         </View>

@@ -141,7 +141,7 @@ export default class ListItemComponent extends React.Component<Props> {
                     {/* Use marginTop to align the badge
                   to the text. TODO: Replace it with a
                   more robust approach. */}
-                    <Badge variant="blue" text={this.props.titleBadge} />
+                    <Badge variant="default" text={this.props.titleBadge} />
                     <HSpacer size={4} />
                   </View>
                 )}
