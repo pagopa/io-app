@@ -5,7 +5,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import React, { useCallback, useMemo } from "react";
-import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { cieFlowForDevServerEnabled } from "../../../cieLogin/utils";
@@ -17,15 +17,19 @@ import {
 import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 
-export type ItwIdentificationModeSelectionScreenNavigationParams =
-  | {
-      eidReissuing?: boolean;
-    }
-  | undefined;
+export type ItwIdentificationModeSelectionScreenNavigationParams = {
+  eidReissuing?: boolean;
+};
 
-export const ItwIdentificationModeSelectionScreen = () => {
+type ScreenProps = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_IDENTIFICATION_MODE_SELECTION"
+>
+
+export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
     isCIEAuthenticationSupportedSelector
@@ -52,15 +56,9 @@ export const ItwIdentificationModeSelectionScreen = () => {
     [isCieAuthenticationSupported]
   );
 
-  const route =
-    useRoute<
-      Route<
-        typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-        ItwIdentificationModeSelectionScreenNavigationParams
-      >
-    >();
+  const { eidReissuing }  = params.route.params;
 
-  const { eidReissuing } = route.params || {};
+  console.log("eidReissuing", eidReissuing);
 
   useFocusEffect(
     useCallback(() => {
