@@ -26,7 +26,7 @@ const DSEnableSwitch = () => {
 
   return (
     <ListItemSwitch
-      label={I18n.t("profile.main.designSystemEnvironment")}
+      label={I18n.t("profile.main.experimentalEnvironment")}
       value={isDesignSystemEnabled && isExperimental}
       onSwitchValueChange={onSwitchValueChange}
     />

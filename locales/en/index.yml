@@ -478,7 +478,7 @@ profile:
     cieID:
       cieIdTest:
         title: CieID
-    designSystemEnvironment: Experimental Design System
+    experimentalEnvironment: Experimental interface
     newScanSection: New 'Scan' feature
     sessionRefresh: Activate Session Refresh
     appVersion: Version
