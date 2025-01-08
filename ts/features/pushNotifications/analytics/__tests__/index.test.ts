@@ -285,7 +285,7 @@ describe("pushNotifications analytics", () => {
   it(`'trackPushNotificationsBannerClosure' should have expected event name and properties`, () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
 
-    void trackPushNotificationsBannerClosure(route);
+    void trackPushNotificationsBannerClosure();
 
     expect(mockMixpanelTrack.mock.calls.length).toBe(1);
     expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);

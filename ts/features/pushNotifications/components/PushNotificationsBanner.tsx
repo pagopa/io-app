@@ -21,6 +21,9 @@ import {
 } from "../store/selectors/notificationsBannerDismissed";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import {
+  trackPushNotificationBannerDismissAlert,
+  trackPushNotificationBannerDismissOutcome,
+  trackPushNotificationBannerForceShow,
   trackPushNotificationsBannerClosure,
   trackPushNotificationsBannerTap,
   trackPushNotificationsBannerVisualized
@@ -37,6 +40,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
 
   React.useEffect(() => {
     if (shouldResetDismissState) {
+      trackPushNotificationBannerForceShow();
       dispatch(resetNotificationBannerDismissState());
     }
   }, [dispatch, shouldResetDismissState]);
@@ -52,6 +56,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   const onClose = () => {
     trackPushNotificationsBannerClosure();
     if (dismissionCount >= 2) {
+      trackPushNotificationBannerDismissAlert();
       discardModal.present();
     } else {
       dispatch(setUserDismissedNotificationsBanner());
@@ -88,8 +93,18 @@ const usePushNotificationsBannerBottomSheet = (
 ) => {
   const dispatch = useIODispatch();
 
-  const fullCloseHandler = () =>
+  const internalRemindLaterHandler = () => {
+    trackPushNotificationBannerDismissOutcome("remind_later");
+    remindLaterHandler();
+  };
+
+  const fullCloseHandler = () => {
+    trackPushNotificationBannerDismissOutcome("deactivate");
     dispatch(setPushNotificationBannerForceDismissed());
+  };
+
+  const onCancelHandler = () =>
+    trackPushNotificationBannerDismissOutcome("dismiss");
 
   return useIOBottomSheetModal({
     title: I18n.t(
@@ -103,7 +118,7 @@ const usePushNotificationsBannerBottomSheet = (
             label: I18n.t(
               "features.messages.pushNotifications.banner.bottomSheet.cta"
             ),
-            onPress: remindLaterHandler
+            onPress: internalRemindLaterHandler
           },
           secondary: {
             label: I18n.t(
@@ -119,7 +134,8 @@ const usePushNotificationsBannerBottomSheet = (
         {I18n.t("features.messages.pushNotifications.banner.bottomSheet.body")}
       </Body>
     ),
-    snapPoint: [300]
+    snapPoint: [300],
+    onDismiss: onCancelHandler
   });
 };
 const styles = StyleSheet.create({

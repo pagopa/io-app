@@ -21,7 +21,8 @@ describe("index", () => {
       event_category: "UX",
       event_type: "screen_view",
       banner_id: "settingsDiscoveryBanner",
-      banner_page: "MESSAGES_HOME"
+      banner_page: "MESSAGES_HOME",
+      banner_landing: "SETTINGS_MAIN"
     });
   });
   it(`'trackSettingsDiscoverBannerClosure' should have expected event name and properties`, () => {
@@ -36,7 +37,8 @@ describe("index", () => {
       event_category: "UX",
       event_type: "action",
       banner_id: "settingsDiscoveryBanner",
-      banner_page: "MESSAGES_HOME"
+      banner_page: "MESSAGES_HOME",
+      banner_landing: "SETTINGS_MAIN"
     });
   });
   it(`'trackSettingsDiscoverBannerTap' should have expected event name and properties`, () => {
@@ -51,7 +53,8 @@ describe("index", () => {
       event_category: "UX",
       event_type: "action",
       banner_id: "settingsDiscoveryBanner",
-      banner_page: "MESSAGES_HOME"
+      banner_page: "MESSAGES_HOME",
+      banner_landing: "SETTINGS_MAIN"
     });
   });
 });
