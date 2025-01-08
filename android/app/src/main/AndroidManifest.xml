@@ -40,9 +40,6 @@
   <!-- Required for local notifications -->
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-    <!-- Media permission for Android API Level 33+-->
-  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:requestLegacyExternalStorage="true" android:theme="@style/AppTheme" android:supportsRtl="true" android:largeHeap="true">
 
     <!-- START Required by react-native-push-notification -->
@@ -130,6 +127,19 @@
         <data android:host="continua.io.pagopa.it" />
       </intent-filter>
     </activity>
+
+    <!-- Trigger Google Play services to install the backported photo picker module. -->
+    <!-- This is needed by react-native-image-picker because we target a minSdkVersion < 30. In can be removed when we target minSdkVersion >= 30. 
+    https://developer.android.com/training/data-storage/shared/photopicker#device-availability -->
+    <service android:name="com.google.android.gms.metadata.ModuleDependencies"
+            android:enabled="false"
+            android:exported="false"
+            tools:ignore="MissingClass">
+      <intent-filter>
+          <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+      </intent-filter>
+      <meta-data android:name="photopicker_activity:0:required" android:value="" />
+    </service>
   </application>
 
 </manifest>

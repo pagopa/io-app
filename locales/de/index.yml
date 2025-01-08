@@ -3218,24 +3218,6 @@ transaction:
       subject: "Zahlungsgrund"
       noticeCode: "Kodex der Zahlungsmitteilung"
       taxCode: "Steuernummer Körperschaft"
-permissionRequest:
-  gallery:
-    title: "Erlaube IO den Zugriff auf deine Fotos"
-    subtitle: "Dazu musst du die Rechte in den Einstellungen deines Geräts ändern."
-    caption: "So geht's:"
-    step: "Schritt {{step}}"
-    steps:
-      android:
-        1: "Geh zu 'Einstellungen'"
-        2: "Wähle 'Apps'"
-        3: "Wähle 'IO'"
-        4: "Wähle den Punkt App-Berechtigungen"
-        5: "Lass den Zugriff auf Dateien und Medien zu"
-      ios:
-        1: "Geh zu 'Einstellungen'"
-        2: "Wähle 'IO'"
-        3: "Wähle 'Fotos' und erlaube den Zugriff"
-    cta: "Öffne Einstellungen"
 FIMS:
   updateApp:
     header: "Aktualisiere die App, um fortzufahren"
