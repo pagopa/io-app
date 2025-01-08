@@ -134,6 +134,16 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
+    if (
+      paragraph.children.length > 0 &&
+      paragraph.children[0].type === "Image"
+    ) {
+      return (
+        <View key={getTxtNodeKey(paragraph)}>
+          {paragraph.children.map(render)}
+        </View>
+      );
+    }
     return (
       <Body key={getTxtNodeKey(paragraph)}>
         {paragraph.children.map(render)}
@@ -216,6 +226,10 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         setImageSize({ width: maxScreenWidth, aspectRatio });
       });
     }, [screenWidth, image.url]);
+
+    if (image.parent?.type !== "Paragraph") {
+      return null;
+    }
 
     return (
       <Image

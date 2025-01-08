@@ -63,3 +63,61 @@ function integrateParent<T extends AnyTxtNode>(
       }
     : { ...node, parent: parentLight };
 }
+
+export const sanitizeMarkdownForImages = (
+  inputMarkdownContent: string
+): string => {
+  const markdownImageRegex = /!\[.*?\]\((.*?)\)/g;
+
+  const reversedMatches: Array<RegExpExecArray> = [];
+  // eslint-disable-next-line functional/no-let
+  let match: RegExpExecArray | null;
+  while ((match = markdownImageRegex.exec(inputMarkdownContent)) !== null) {
+    // eslint-disable-next-line functional/immutable-data
+    reversedMatches.push(match);
+  }
+  // eslint-disable-next-line functional/immutable-data
+  reversedMatches.reverse();
+
+  return reversedMatches.reduce(
+    (sanitizedMarkdownContent, innerMatch) =>
+      insertNewLinesIfNeededOnMatch(sanitizedMarkdownContent, innerMatch),
+    inputMarkdownContent
+  );
+};
+
+export const insertNewLinesIfNeededOnMatch = (
+  markdownContent: string,
+  imageMatch: RegExpExecArray
+): string => {
+  const matchStartIndex = imageMatch.index;
+  const matchEndIndex = matchStartIndex + imageMatch[0].length;
+  const sanitizedMarkdownContent = insertNewLineAtIndexIfNeeded(
+    markdownContent,
+    matchEndIndex
+  );
+  return insertNewLineAtIndexIfNeeded(
+    sanitizedMarkdownContent,
+    matchStartIndex - 1,
+    true
+  );
+};
+
+const insertNewLineAtIndexIfNeeded = (
+  markdownContent: string,
+  baseIndex: number,
+  insertAfterIndex: boolean = false
+) => {
+  if (baseIndex >= 0 && baseIndex < markdownContent.length) {
+    const character = markdownContent[baseIndex];
+    if (character !== "\n") {
+      const index = insertAfterIndex ? baseIndex + 1 : baseIndex;
+      return [
+        markdownContent.slice(0, index),
+        "\n\n",
+        markdownContent.slice(index)
+      ].join("");
+    }
+  }
+  return markdownContent;
+};
