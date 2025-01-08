@@ -22,11 +22,6 @@ export const DSAlert = () => {
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Title + Content</H4>
-          {renderTitlePlusContent()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Content + Action</H4>
           {renderContentPlusAction()}
         </VStack>
@@ -57,36 +52,6 @@ const renderContentOnly = () => (
     />
     <Alert
       variant="success"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-  </VStack>
-);
-
-const renderTitlePlusContent = () => (
-  <VStack space={componentInnerMargin}>
-    <Alert
-      variant="error"
-      title="Alert title"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-    <Alert
-      variant="warning"
-      title="Alert title"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-    <Alert
-      variant="info"
-      title="Alert title"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-    <Alert
-      variant="success"
-      title="Alert title"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-    <Alert
-      variant="info"
-      title="A very very very looooooooooong title"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
   </VStack>
