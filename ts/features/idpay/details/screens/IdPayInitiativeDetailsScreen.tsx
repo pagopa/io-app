@@ -303,6 +303,7 @@ const IdPayInitiativeDetailsScreen = () => {
 
   return (
     <BonusCardScreenComponent
+      title={initiativeName ?? ""}
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,
