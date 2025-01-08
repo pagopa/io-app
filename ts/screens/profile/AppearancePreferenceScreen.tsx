@@ -1,6 +1,7 @@
 import {
   ListItemHeader,
   RadioGroup,
+  useIONewTypeface,
   VStack
 } from "@pagopa/io-app-design-system";
 import React, { ReactElement, useState } from "react";
@@ -18,8 +19,15 @@ type ColorModeChoice = "system" | "dark" | "light";
  * @constructor
  */
 const AppearancePreferenceScreen = (): ReactElement => {
-  const [selectedTypeface, setSelectedTypeface] =
-    useState<TypefaceChoice>("comfortable");
+  const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
+
+  const selectedTypeface: TypefaceChoice = newTypefaceEnabled
+    ? "comfortable"
+    : "standard";
+
+  const handleTypefaceChange = (choice: TypefaceChoice) => {
+    setNewTypefaceEnabled(choice === "comfortable");
+  };
 
   const [selectedColorMode, setSelectedColorMode] =
     useState<ColorModeChoice>("light");
@@ -89,7 +97,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
             type="radioListItem"
             items={typefaceOptions}
             selectedItem={selectedTypeface}
-            onPress={setSelectedTypeface}
+            onPress={handleTypefaceChange}
           />
         </View>
 

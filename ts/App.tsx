@@ -1,6 +1,7 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   IODSExperimentalContextProvider,
+  IONewTypefaceContextProvider,
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
@@ -68,23 +69,25 @@ const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
       <IODSExperimentalContextProvider>
-        <IOThemeContextProvider theme={"light"}>
-          <ToastProvider>
-            <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <StatusMessages>
-                      <RootContainer
-                        routingInstumentation={navigationIntegration}
-                      />
-                    </StatusMessages>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
-            </Provider>
-          </ToastProvider>
-        </IOThemeContextProvider>
+        <IONewTypefaceContextProvider>
+          <IOThemeContextProvider theme={"light"}>
+            <ToastProvider>
+              <Provider store={store}>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <StatusMessages>
+                        <RootContainer
+                          routingInstumentation={navigationIntegration}
+                        />
+                      </StatusMessages>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </Provider>
+            </ToastProvider>
+          </IOThemeContextProvider>
+        </IONewTypefaceContextProvider>
       </IODSExperimentalContextProvider>
     </SafeAreaProvider>
   </GestureHandlerRootView>
