@@ -183,7 +183,6 @@ const IdpSelectionScreen = (): ReactElement => {
           <Banner
             viewRef={viewRef}
             color="neutral"
-            size="small"
             content={
               isFastLoginFeatureFlagEnabled
                 ? I18n.t("login.expiration_info_FL")

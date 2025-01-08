@@ -30,7 +30,6 @@ export const ItwWalletReadyBanner = () => {
       )}
       pictogramName="itWallet"
       color="turquoise"
-      size="big"
       onPress={handleOnPress}
     />
   );

@@ -144,7 +144,6 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
           onPress={handleOnAddMethodPress}
-          size="big"
           color="neutral"
           viewRef={bannerRef}
           labelClose={I18n.t("global.buttons.close")}

@@ -53,7 +53,6 @@ export const ProfileMainScreenTopBanner = () => {
             action={I18n.t("profile.main.banner.action")}
             pictogramName={"help"}
             color={"neutral"}
-            size={"big"}
             onPress={navigateToProfile}
             onClose={handleCloseBanner}
             labelClose={I18n.t("profile.main.banner.close")}

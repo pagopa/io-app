@@ -219,7 +219,6 @@ const LanguagesPreferencesScreen = () => {
           <Banner
             viewRef={viewRef}
             color="neutral"
-            size="big"
             content={bannerInfoSelector.message[getFullLocale()]}
             pictogramName="charity"
             action={I18n.t(

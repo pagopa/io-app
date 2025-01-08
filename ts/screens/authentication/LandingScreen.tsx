@@ -154,7 +154,6 @@ export const LandingScreen = () => {
           action={I18n.t(
             "authentication.landing.cie_bottom_sheet.help_banner.action"
           )}
-          size="small"
         />
         <VSpacer />
       </View>

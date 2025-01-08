@@ -76,7 +76,6 @@ export const ItwDiscoveryBanner = ({
         action={I18n.t("features.itWallet.discovery.banner.home.action")}
         pictogramName="itWallet"
         color="turquoise"
-        size="big"
         onClose={closable ? handleClose : undefined}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}

@@ -40,7 +40,6 @@ const WalletPaymentFeebackBanner = () => {
       <Banner
         color="neutral"
         pictogramName="feedback"
-        size="big"
         viewRef={bannerViewRef}
         title={feedbackBannerConfig.title?.[locale]}
         content={feedbackBannerConfig.description[locale]}

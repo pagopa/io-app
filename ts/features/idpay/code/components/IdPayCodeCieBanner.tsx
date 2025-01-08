@@ -58,7 +58,6 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
           title={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.title"
           )}
-          size="big"
           content={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.body"
           )}

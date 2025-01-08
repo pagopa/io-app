@@ -55,7 +55,6 @@ const RemoveAccountInfo = () => {
       <ContentWrapper>
         <Banner
           color="neutral"
-          size="big"
           pictogramName="attention"
           content={I18n.t("profile.main.privacy.removeAccount.info.banner")}
         />

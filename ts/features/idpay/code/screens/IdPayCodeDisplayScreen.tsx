@@ -98,7 +98,6 @@ const IdPayCodeDisplayScreen = () => {
             <Banner
               color="neutral"
               pictogramName="security"
-              size="big"
               viewRef={bannerRef}
               title={I18n.t("idpay.code.onboarding.banner.header")}
               content={I18n.t("idpay.code.onboarding.banner.body")}
