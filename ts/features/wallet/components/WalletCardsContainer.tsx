@@ -7,7 +7,6 @@ import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { isItwEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import {
   ItwEidInfoBottomSheetContent,
@@ -26,8 +25,10 @@ import {
   selectWalletCardsByCategory,
   selectWalletCategories,
   selectWalletOtherCards,
+  shouldRenderItwCardsContainerSelector,
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
+import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { withWalletCategoryFilter } from "../utils";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
@@ -47,6 +48,9 @@ const WalletCardsContainer = () => {
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
+  const shouldRenderItwCardsContainer = useIOSelector(
+    shouldRenderItwCardsContainerSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -64,17 +68,22 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={IOStyles.flex}>
-        <ItwWalletCardsContainer />
+        {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
     );
-  }, [shouldRenderEmptyState, shouldRenderLoadingState]);
+  }, [
+    shouldRenderEmptyState,
+    shouldRenderLoadingState,
+    shouldRenderItwCardsContainer
+  ]);
 
   return (
     <Animated.View
       style={IOStyles.flex}
       layout={LinearTransition.duration(200)}
     >
+      <ItwWalletNotAvailableBanner />
       <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
@@ -101,7 +110,6 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     selectWalletCardsByCategory(state, "itw")
   );
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwEnabled = useIOSelector(isItwEnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const isEidExpired = eidStatus === "jwtExpired";
@@ -109,7 +117,6 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   useDebugInfo({
     itw: {
       isItwValid,
-      isItwEnabled,
       eidStatus,
       cards
     }
@@ -156,10 +163,6 @@ const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       }
     };
   }, [isItwValid, isEidExpired, eidInfoBottomSheet.present]);
-
-  if (!isItwEnabled) {
-    return null;
-  }
 
   return (
     <>

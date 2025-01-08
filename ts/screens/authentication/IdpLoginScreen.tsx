@@ -52,6 +52,8 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
+import { standardLoginRequestInfoSelector } from "../../features/spidLogin/store/selectors";
+import { setStandardLoginRequestState } from "../../features/spidLogin/store/actions";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 enum ErrorType {
@@ -79,7 +81,9 @@ const styles = StyleSheet.create({
  */
 const IdpLoginScreen = () => {
   const dispatch = useIODispatch();
-  const { navigate } = useIONavigation();
+  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
+  // ensuring the re-execution of the `useLollipopLoginSource` hook.
+  const { replace } = useIONavigation();
   const selectedIdp = useIOSelector(selectedIdentityProviderSelector, _isEqual);
   const selectedIdpTextData = useIOSelector(
     idpContextualHelpDataFromIdSelector(selectedIdp?.id),
@@ -95,25 +99,27 @@ const IdpLoginScreen = () => {
     _isEqual
   );
 
-  const [requestState, setRequestState] = useState<pot.Pot<true, ErrorType>>(
-    pot.noneLoading
-  );
+  const { requestState } = useIOSelector(standardLoginRequestInfoSelector);
   const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
     string | undefined
   >(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
 
+  const setRequestState = useCallback(
+    (req: pot.Pot<true, ErrorType>) => {
+      dispatch(setStandardLoginRequestState(req));
+    },
+    [dispatch]
+  );
+
   const handleOnLollipopCheckFailure = useCallback(() => {
     setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
-  }, []);
+  }, [setRequestState]);
 
   const idpId = loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
-  const {
-    retryLollipopLogin,
-    shouldBlockUrlNavigationWhileCheckingLollipop,
-    webviewSource
-  } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
+  const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
+    useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
@@ -138,7 +144,7 @@ const IdpLoginScreen = () => {
         setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
       }
     },
-    [loggedOutWithIdpAuth?.idp.id]
+    [loggedOutWithIdpAuth?.idp.id, setRequestState]
   );
 
   const handleLoginFailure = useCallback(
@@ -170,7 +176,7 @@ const IdpLoginScreen = () => {
       setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
       setErrorCodeOrMessage(code || message);
     },
-    [dispatch, choosenTool, idp]
+    [dispatch, choosenTool, idp, setRequestState]
   );
 
   const handleLoginSuccess = useCallback(
@@ -182,11 +188,6 @@ const IdpLoginScreen = () => {
     },
     [choosenTool, dispatch, idp]
   );
-
-  const onRetryButtonPressed = useCallback((): void => {
-    setRequestState(pot.noneLoading);
-    retryLollipopLogin();
-  }, [retryLollipopLogin]);
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
@@ -212,7 +213,7 @@ const IdpLoginScreen = () => {
         event.loading || isAssertion ? pot.noneLoading : pot.some(true)
       );
     },
-    [dispatch, loginTrace]
+    [dispatch, loginTrace, setRequestState]
   );
 
   const handleShouldStartLoading = useCallback(
@@ -265,16 +266,17 @@ const IdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    navigate(ROUTES.AUTHENTICATION, {
+    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
+    // ensuring the re-execution of the `useLollipopLoginSource` hook.
+    replace(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTH_ERROR_SCREEN,
       params: {
         errorCodeOrMessage,
         authMethod: "SPID",
-        authLevel: "L2",
-        onRetry: onRetryButtonPressed
+        authLevel: "L2"
       }
     });
-  }, [errorCodeOrMessage, onRetryButtonPressed, navigate]);
+  }, [errorCodeOrMessage, replace]);
 
   useEffect(() => {
     if (pot.isError(requestState)) {

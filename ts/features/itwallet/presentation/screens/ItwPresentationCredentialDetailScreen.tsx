@@ -34,6 +34,7 @@ import {
 } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
 import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
+import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -87,6 +88,10 @@ const ItwPresentationCredentialDetail = ({
         credential.storedStatusAttestation?.credentialStatus || "not_valid"
     });
   });
+
+  if (status === "unknown") {
+    return <ItwPresentationCredentialUnknownStatus credential={credential} />;
+  }
 
   if (status === "jwtExpired") {
     return (
