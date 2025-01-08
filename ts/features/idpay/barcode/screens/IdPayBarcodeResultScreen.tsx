@@ -2,7 +2,6 @@ import {
   Body,
   BodySmall,
   H3,
-  HeaderSecondLevel,
   IOColors,
   IOStyles,
   IOVisualCostants,
@@ -109,64 +108,50 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
     return <BarcodeExpiredContent initiativeId={barcode.initiativeId} />;
   }
   return (
-    <>
-      <HeaderSecondLevel
-        backAccessibilityLabel={I18n.t("global.buttons.back")}
-        title=""
-        type="singleAction"
-        firstAction={{
-          icon: "closeLarge",
+    <IOScrollViewWithLargeHeader
+      includeContentMargins
+      actions={{
+        type: "TwoButtons",
+        primary: {
+          label: I18n.t("idpay.barCode.resultScreen.success.saveImageCta"),
+          accessibilityLabel: I18n.t(
+            "idpay.barCode.resultScreen.success.saveImageCta"
+          ),
+          onPress: () => null
+        },
+        secondary: {
+          label: I18n.t("global.buttons.close"),
           accessibilityLabel: I18n.t("global.buttons.close"),
           onPress: goBack
-        }}
-        goBack={goBack}
-      />
-      <IOScrollViewWithLargeHeader
-        includeContentMargins
-        actions={{
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("idpay.barCode.resultScreen.success.saveImageCta"),
-            accessibilityLabel: I18n.t(
-              "idpay.barCode.resultScreen.success.saveImageCta"
-            ),
-            onPress: () => null
-          },
-          secondary: {
-            label: I18n.t("global.buttons.close"),
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: goBack
-          }
-        }}
-        title={{
-          label: I18n.t("idpay.barCode.resultScreen.success.header")
-        }}
-        description={I18n.t("idpay.barCode.resultScreen.success.body", {
-          initiativeName: barcode.initiativeName
-        })}
-      >
-        <VSpacer size={16} />
-        <View style={styles.barcodeContainer}>
-          <View style={[IOStyles.row, { alignSelf: "center" }]}>
-            <BodySmall weight="Regular" color="black">
-              {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
-            </BodySmall>
-            <BodySmall weight="Semibold" color="black">
-              {formatNumberCurrencyCents(barcode.residualBudgetCents)}
-            </BodySmall>
-          </View>
-          <VSpacer size={4} />
-          <Barcode format="CODE128" value={trx} />
-          <H3 style={{ alignSelf: "center" }}>{trx}</H3>
-          <VSpacer size={32} />
-          <IdPayBarcodeExpireProgressBar
-            secondsExpirationTotal={barcode.trxExpirationSeconds}
-            secondsToExpiration={secondsTillExpire}
-            setIsExpired={setIsBarcodeExpired}
-          />
+        }
+      }}
+      title={{
+        label: I18n.t("idpay.barCode.resultScreen.success.header")
+      }}
+      description={I18n.t("idpay.barCode.resultScreen.success.body", {
+        initiativeName: barcode.initiativeName
+      })}
+    >
+      <View style={styles.barcodeContainer}>
+        <View style={[IOStyles.row, { alignSelf: "center" }]}>
+          <BodySmall weight="Regular" color="black">
+            {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
+          </BodySmall>
+          <BodySmall weight="Semibold" color="black">
+            {formatNumberCurrencyCents(barcode.residualBudgetCents)}
+          </BodySmall>
         </View>
-      </IOScrollViewWithLargeHeader>
-    </>
+        <VSpacer size={4} />
+        <Barcode format="CODE128" value={trx} />
+        <H3 style={{ alignSelf: "center" }}>{trx}</H3>
+        <VSpacer size={32} />
+        <IdPayBarcodeExpireProgressBar
+          secondsExpirationTotal={barcode.trxExpirationSeconds}
+          secondsToExpiration={secondsTillExpire}
+          setIsExpired={setIsBarcodeExpired}
+        />
+      </View>
+    </IOScrollViewWithLargeHeader>
   );
 };
 
@@ -181,6 +166,7 @@ const BarcodeExpiredContent = ({
   };
   return (
     <OperationResultScreenContent
+      isHeaderVisible
       title={I18n.t("idpay.barCode.resultScreen.success.expired.header")}
       action={{
         label: I18n.t("idpay.barCode.resultScreen.success.expired.CTA"),
