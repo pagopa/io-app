@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.7](https://github.com/pagopa/io-app/compare/2.80.0-rc.6...2.80.0-rc.7) (2025-01-07)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1934](https://pagopa.atlassian.net/browse/SIW-1934)] Cleanup the integrityKeyTag if getWalletAttestation throws an error ([#6569](https://github.com/pagopa/io-app/issues/6569)) ([dcde5de](https://github.com/pagopa/io-app/commit/dcde5de8423d95ad7fcc24c059032596b3e85cb2))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1937](https://pagopa.atlassian.net/browse/SIW-1937)] Improve wallet category filters ([#6570](https://github.com/pagopa/io-app/issues/6570)) ([9321272](https://github.com/pagopa/io-app/commit/9321272753c124be4627f8cd00830e2d591f520d))
+
 ## [2.80.0-rc.6](https://github.com/pagopa/io-app/compare/2.80.0-rc.5...2.80.0-rc.6) (2024-12-19)
 
 

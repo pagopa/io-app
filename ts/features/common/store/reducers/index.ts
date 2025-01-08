@@ -56,6 +56,10 @@ import {
   landingScreenBannersReducer,
   LandingScreenBannerState
 } from "../../../landingScreenMultiBanner/store/reducer";
+import {
+  spidLoginReducer,
+  SpidLoginState
+} from "../../../spidLogin/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -63,6 +67,7 @@ type LoginFeaturesState = {
   fastLogin: FastLoginState;
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
+  spidLogin: SpidLoginState;
 };
 
 export type FeaturesState = {
@@ -96,7 +101,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginPersistor,
-    loginInfo: loginInfoReducer
+    loginInfo: loginInfoReducer,
+    spidLogin: spidLoginReducer
   }),
   wallet: walletReducer,
   fims: fimsReducer,
