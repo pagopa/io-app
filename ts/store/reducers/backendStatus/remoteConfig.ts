@@ -296,6 +296,26 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const absolutePortalLinksFallback = {
+  io_web: "https://ioapp.it/",
+  io_showcase: "https://io.italia.it/"
+};
+
+/**
+ * returns the absolute URLs for showcase and logout (io-web) sites
+ */
+export const absolutePortalLinksSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): { io_web: string; io_showcase: string } =>
+    pipe(
+      remoteConfig,
+      O.map(
+        config => config.absolutePortalLinks ?? absolutePortalLinksFallback
+      ),
+      O.getOrElse(() => absolutePortalLinksFallback)
+    )
+);
+
 /**
  * Return the remote config about IT-WALLET enabled/disabled
  * if there is no data or the local Feature Flag is disabled,

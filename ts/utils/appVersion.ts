@@ -12,6 +12,7 @@ export const storeUrl = Platform.select({
   android: "market://details?id=it.pagopa.io.app",
   default: ioWebSiteUrl
 });
+
 export const webStoreURL = Platform.select({
   ios: "https://apps.apple.com/it/app/io/id1501681835",
   android: "https://play.google.com/store/apps/details?id=it.pagopa.io.app",

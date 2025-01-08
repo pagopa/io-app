@@ -295,6 +295,10 @@ export const baseRawBackendStatus: BackendStatus = {
       tos_url: "https://www.example.com",
       tos_version: 3.2
     },
+    absolutePortalLinks: {
+      io_web: "https://ioapp.it/it/accedi/",
+      io_showcase: "https://io.italia.it/"
+    },
     itw: {
       enabled: false,
       min_app_version: {
@@ -302,6 +306,7 @@ export const baseRawBackendStatus: BackendStatus = {
         ios: "0.0.0.0"
       },
       feedback_banner_visible: true,
+      ipatente_cta_visible: true,
       disabled_identification_methods: [],
       disabled_credentials: []
     }
@@ -394,6 +399,7 @@ export const baseBackendConfig: Config = {
       ios: "0.0.0.0"
     },
     feedback_banner_visible: true,
+    ipatente_cta_visible: true,
     disabled_credentials: [],
     disabled_identification_methods: []
   }
