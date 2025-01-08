@@ -133,7 +133,7 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     const mockNavigation = new Proxy(
       {},
       {
-        get: (_, prop) => jest.fn()
+        get: _ => jest.fn()
       }
     ) as unknown as IOStackNavigationProp<
       ItwParamsList,
