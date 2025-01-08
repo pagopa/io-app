@@ -81,8 +81,6 @@ export type AppParamsList = {
 
   [ROUTES.BARCODE_SCAN]: undefined;
 
-  [ROUTES.GALLERY_PERMISSION_INSTRUCTIONS]: undefined;
-
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
   [CGN_ROUTES.EYCA.ACTIVATION
