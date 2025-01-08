@@ -173,6 +173,21 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "nativeLogin": {
       "enabled": true,
     },
+    "spidLogin": {
+      "nativeLogin": {
+        "requestInfo": {
+          "nativeAttempts": 0,
+          "requestState": "LOADING",
+        },
+      },
+      "standardLogin": {
+        "requestInfo": {
+          "requestState": {
+            "kind": "PotNoneLoading",
+          },
+        },
+      },
+    },
     "testLogin": {
       "kind": "idle",
     },
