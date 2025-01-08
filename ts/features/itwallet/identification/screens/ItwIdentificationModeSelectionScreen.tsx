@@ -27,7 +27,7 @@ export type ItwIdentificationModeSelectionScreenNavigationParams = {
 type ScreenProps = IOStackNavigationRouteProps<
   ItwParamsList,
   "ITW_IDENTIFICATION_MODE_SELECTION"
->
+>;
 
 export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -56,7 +56,7 @@ export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
     [isCieAuthenticationSupported]
   );
 
-  const { eidReissuing }  = params.route.params;
+  const { eidReissuing } = params.route.params;
 
   console.log("eidReissuing", eidReissuing);
 
