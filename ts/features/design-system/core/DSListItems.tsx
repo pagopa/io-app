@@ -126,7 +126,7 @@ const renderListItemNav = () => (
         topElement={{
           badgeProps: {
             text: "Novità",
-            variant: "blue"
+            variant: "default"
           }
         }}
       />
@@ -146,7 +146,7 @@ const renderListItemNav = () => (
         topElement={{
           badgeProps: {
             text: "Novità",
-            variant: "blue"
+            variant: "default"
           }
         }}
         hideChevron
@@ -610,18 +610,6 @@ const renderListItemTransaction = () => (
           amountAccessibilityLabel: "1000 euro"
         }}
         showChevron
-        onPress={onButtonPress}
-      />
-    </DSComponentViewerBox>
-
-    <DSComponentViewerBox name="ListItemTransaction, refunded">
-      <ListItemTransaction
-        title="Refunded transaction"
-        subtitle="This one has a custom icon and transaction amount with a green color"
-        transaction={{
-          badge: getBadgePropsByTransactionStatus("refunded")
-        }}
-        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>

@@ -120,12 +120,6 @@ const renderFullWidth = () => (
       <Alert
         fullWidth
         variant="info"
-        title="Alert title"
-        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
-      />
-      <Alert
-        fullWidth
-        variant="info"
         action="Alert action"
         onPress={() => {
           alert("Action triggered");

@@ -106,7 +106,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
           />
         ) : (
           <Badge
-            variant="turquoise"
+            variant="highlight"
             text={I18n.t(
               `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
             )}

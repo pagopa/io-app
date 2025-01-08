@@ -31,7 +31,7 @@ const disabledBadge: Badge = {
 };
 
 const requestedBadge: Badge = {
-  variant: "info",
+  variant: "highlight",
   text: I18n.t("features.wallet.onboarding.badge.requested")
 };
 

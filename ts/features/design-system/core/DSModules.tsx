@@ -390,7 +390,7 @@ const renderModuleCredential = () => (
         onPress={onButtonPress}
         badge={{
           text: "predefinita",
-          variant: "info"
+          variant: "highlight"
         }}
       />
     </DSComponentViewerBox>
@@ -401,7 +401,7 @@ const renderModuleCredential = () => (
         onPress={onButtonPress}
         badge={{
           text: "predefinita",
-          variant: "info"
+          variant: "highlight"
         }}
       />
     </DSComponentViewerBox>
@@ -455,7 +455,7 @@ const renderModuleNavigation = () => (
         onPress={onButtonPress}
         badge={{
           text: "In arrivo",
-          variant: "blue",
+          variant: "default",
           outline: true
         }}
       />
@@ -468,7 +468,7 @@ const renderModuleNavigation = () => (
         onPress={onButtonPress}
         badge={{
           text: "In arrivo",
-          variant: "blue",
+          variant: "default",
           outline: true
         }}
       />

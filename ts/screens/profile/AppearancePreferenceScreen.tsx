@@ -110,7 +110,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
                 text: I18n.t(
                   "profile.preferences.list.appearance.theme.comingSoon"
                 ),
-                variant: "info"
+                variant: "highlight"
               }
             }}
           />

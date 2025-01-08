@@ -58,7 +58,7 @@ const getInstrumentPaymentMethodBage = (
       text: I18n.t(
         `idpay.configuration.instruments.paymentMethods.badge.active`
       ),
-      variant: "info"
+      variant: "highlight"
     } as Badge;
   }
   switch (status) {
