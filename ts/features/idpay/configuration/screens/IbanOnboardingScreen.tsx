@@ -83,7 +83,7 @@ export const IbanOnboardingScreen = () => {
             }
           ]}
         >
-          <Icon name="profile" size={30} color="bluegrey" />
+          <Icon name="profile" size={24} color="bluegrey" />
           <HSpacer size={16} />
           <BodySmall color="bluegrey" weight="Regular">
             {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
