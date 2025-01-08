@@ -13,9 +13,9 @@ import DocumentPicker, {
   types
 } from "react-native-document-picker";
 import {
-  ImageLibraryOptions,
+  launchImageLibrary,
   ImagePickerResponse,
-  launchImageLibrary
+  ImageLibraryOptions
 } from "react-native-image-picker";
 import I18n from "../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";

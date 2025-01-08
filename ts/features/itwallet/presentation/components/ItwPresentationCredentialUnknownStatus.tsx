@@ -4,6 +4,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+
 type Props = {
   credential: StoredCredential;
 };
