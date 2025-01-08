@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.8](https://github.com/pagopa/io-app/compare/2.80.0-rc.7...2.80.0-rc.8) (2025-01-08)
+
+
+### Chores
+
+* [[IOPLT-787](https://pagopa.atlassian.net/browse/IOPLT-787)] Upgrade react-native-image-picker to fix android policy issue ([#6482](https://github.com/pagopa/io-app/issues/6482)) ([3467298](https://github.com/pagopa/io-app/commit/346729841d1bb66b1918224ff4bf7ed75cd7f870))
+
 ## [2.80.0-rc.7](https://github.com/pagopa/io-app/compare/2.80.0-rc.6...2.80.0-rc.7) (2025-01-07)
 
 

@@ -49,7 +49,6 @@ import ServicesNavigator from "../features/services/common/navigation/navigator"
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
 import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
 import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
@@ -185,14 +184,6 @@ const AuthenticatedStackNavigator = () => {
           headerShown: false,
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: false
-        }}
-      />
-
-      <Stack.Screen
-        name={ROUTES.GALLERY_PERMISSION_INSTRUCTIONS}
-        component={GalleryPermissionInstructionsScreen}
-        options={{
-          gestureEnabled: isGestureEnabled
         }}
       />
 
