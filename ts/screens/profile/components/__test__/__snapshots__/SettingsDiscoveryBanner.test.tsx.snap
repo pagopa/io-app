@@ -382,11 +382,10 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                   "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "flexDirection": "row",
+                                  "padding": 16,
                                 },
                                 {
                                   "backgroundColor": "#F4F5F8",
-                                  "paddingHorizontal": 16,
-                                  "paddingVertical": 16,
                                 },
                                 {
                                   "transform": [
@@ -414,15 +413,15 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                               }
                             >
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -458,17 +457,17 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0B3EE3",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -645,10 +644,10 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -664,15 +663,15 @@ exports[`settingsDiscoveryBanner should match snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

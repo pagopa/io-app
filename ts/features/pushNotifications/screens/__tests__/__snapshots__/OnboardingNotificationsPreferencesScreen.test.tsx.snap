@@ -209,15 +209,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -236,15 +236,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -452,16 +452,16 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -472,15 +472,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     You have a notice due soon
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -544,6 +544,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -551,17 +552,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -604,7 +605,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -612,14 +613,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -632,15 +633,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -660,9 +661,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -671,7 +672,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -734,6 +735,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -741,17 +743,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -794,7 +796,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -802,14 +804,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -822,15 +824,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -860,11 +862,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "flexDirection": "row",
+                                    "padding": 16,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
-                                    "paddingHorizontal": 16,
-                                    "paddingVertical": 12,
                                   },
                                 ]
                               }
@@ -884,15 +885,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -918,11 +919,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   color="#00C5CA"
                                   focusable={false}
-                                  height={64}
+                                  height={80}
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -934,15 +935,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 64,
-                                        "width": 64,
+                                        "height": 80,
+                                        "width": 80,
                                       },
                                     ]
                                   }
                                   tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
-                                  width={64}
+                                  width={80}
                                 >
                                   <RNSVGGroup
                                     fill={
@@ -1045,15 +1046,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -1132,22 +1133,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderRadius": 4,
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 16,
+                                  "paddingHorizontal": 24,
                                   "textAlignVertical": "center",
+                                },
+                                {
+                                  "height": 48,
                                 },
                                 {
                                   "overflow": "hidden",
                                 },
-                                false,
                                 {
-                                  "height": 40,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0073E6",
+                                  "backgroundColor": "#0B3EE3",
                                 },
                                 false,
                                 {
@@ -1157,13 +1161,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <View
-                              entering={[Function]}
                               style={
                                 [
                                   {
                                     "alignItems": "center",
                                     "flexDirection": "row",
                                     "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   false,
                                 ]
@@ -1172,17 +1178,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1272,15 +1278,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1301,14 +1307,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -1372,10 +1376,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1391,15 +1395,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -1667,15 +1671,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1694,15 +1698,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1910,16 +1914,16 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -1930,15 +1934,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     You have a new message
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -2002,6 +2006,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -2009,17 +2014,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2062,7 +2067,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -2070,14 +2075,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -2090,15 +2095,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2118,9 +2123,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -2129,7 +2134,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2192,6 +2197,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -2199,17 +2205,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -2252,7 +2258,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -2260,14 +2266,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -2280,15 +2286,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -2318,11 +2324,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "flexDirection": "row",
+                                    "padding": 16,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
-                                    "paddingHorizontal": 16,
-                                    "paddingVertical": 12,
                                   },
                                 ]
                               }
@@ -2342,15 +2347,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2376,11 +2381,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   color="#00C5CA"
                                   focusable={false}
-                                  height={64}
+                                  height={80}
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -2392,15 +2397,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 64,
-                                        "width": 64,
+                                        "height": 80,
+                                        "width": 80,
                                       },
                                     ]
                                   }
                                   tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
-                                  width={64}
+                                  width={80}
                                 >
                                   <RNSVGGroup
                                     fill={
@@ -2503,15 +2508,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -2590,22 +2595,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderRadius": 4,
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 16,
+                                  "paddingHorizontal": 24,
                                   "textAlignVertical": "center",
+                                },
+                                {
+                                  "height": 48,
                                 },
                                 {
                                   "overflow": "hidden",
                                 },
-                                false,
                                 {
-                                  "height": 40,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0073E6",
+                                  "backgroundColor": "#0B3EE3",
                                 },
                                 false,
                                 {
@@ -2623,6 +2631,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -2630,17 +2641,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2730,15 +2741,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2759,14 +2770,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -2830,10 +2839,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -2849,15 +2858,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -3125,15 +3134,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -3152,15 +3161,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -3368,16 +3377,16 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3388,15 +3397,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     You have a notice due tomorrow
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -3460,6 +3469,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -3467,17 +3477,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3520,7 +3530,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -3528,14 +3538,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -3548,15 +3558,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3576,9 +3586,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -3587,7 +3597,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -3650,6 +3660,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -3657,17 +3668,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -3710,7 +3721,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -3718,14 +3729,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -3738,15 +3749,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -3776,11 +3787,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "flexDirection": "row",
+                                    "padding": 16,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
-                                    "paddingHorizontal": 16,
-                                    "paddingVertical": 12,
                                   },
                                 ]
                               }
@@ -3800,15 +3810,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3834,11 +3844,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   color="#00C5CA"
                                   focusable={false}
-                                  height={64}
+                                  height={80}
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -3850,15 +3860,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 64,
-                                        "width": 64,
+                                        "height": 80,
+                                        "width": 80,
                                       },
                                     ]
                                   }
                                   tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
-                                  width={64}
+                                  width={80}
                                 >
                                   <RNSVGGroup
                                     fill={
@@ -3961,15 +3971,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -4048,22 +4058,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderRadius": 4,
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 16,
+                                  "paddingHorizontal": 24,
                                   "textAlignVertical": "center",
+                                },
+                                {
+                                  "height": 48,
                                 },
                                 {
                                   "overflow": "hidden",
                                 },
-                                false,
                                 {
-                                  "height": 40,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0073E6",
+                                  "backgroundColor": "#0B3EE3",
                                 },
                                 false,
                                 {
@@ -4081,6 +4094,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -4088,17 +4104,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4188,15 +4204,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4217,14 +4233,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -4288,10 +4302,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -4307,15 +4321,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -4583,15 +4597,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -4610,15 +4624,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -4826,16 +4840,16 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4846,15 +4860,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     Comune di Ipazia
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -4918,6 +4932,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -4925,17 +4940,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -4978,7 +4993,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -4986,14 +5001,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="previewsPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={true}
                                   />
                                 </View>
@@ -5006,15 +5021,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -5034,9 +5049,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -5045,7 +5060,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5108,6 +5123,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -5115,17 +5131,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 >
                                   <Text
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -5168,7 +5184,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     onChange={[Function]}
                                     onResponderTerminationRequest={[Function]}
                                     onStartShouldSetResponder={[Function]}
-                                    onTintColor="#0073E6"
+                                    onTintColor="#0B3EE3"
                                     style={
                                       [
                                         {
@@ -5176,14 +5192,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                           "width": 51,
                                         },
                                         {
-                                          "backgroundColor": "#F5F6F7",
+                                          "backgroundColor": "#555C70",
                                           "borderRadius": 16,
                                         },
                                       ]
                                     }
                                     testID="remindersPreferenceSwitch"
                                     thumbTintColor="#FFFFFF"
-                                    tintColor="#F5F6F7"
+                                    tintColor="#555C70"
                                     value={false}
                                   />
                                 </View>
@@ -5196,15 +5212,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -5234,11 +5250,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "flexDirection": "row",
+                                    "padding": 16,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
-                                    "paddingHorizontal": 16,
-                                    "paddingVertical": 12,
                                   },
                                 ]
                               }
@@ -5258,15 +5273,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -5292,11 +5307,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   color="#00C5CA"
                                   focusable={false}
-                                  height={64}
+                                  height={80}
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -5308,15 +5323,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 64,
-                                        "width": 64,
+                                        "height": 80,
+                                        "width": 80,
                                       },
                                     ]
                                   }
                                   tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
-                                  width={64}
+                                  width={80}
                                 >
                                   <RNSVGGroup
                                     fill={
@@ -5419,15 +5434,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -5506,22 +5521,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderRadius": 4,
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 16,
+                                  "paddingHorizontal": 24,
                                   "textAlignVertical": "center",
+                                },
+                                {
+                                  "height": 48,
                                 },
                                 {
                                   "overflow": "hidden",
                                 },
-                                false,
                                 {
-                                  "height": 40,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0073E6",
+                                  "backgroundColor": "#0B3EE3",
                                 },
                                 false,
                                 {
@@ -5539,6 +5557,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     "flexDirection": "row",
                                     "justifyContent": "center",
                                   },
+                                  {
+                                    "columnGap": 8,
+                                  },
                                   false,
                                 ]
                               }
@@ -5546,17 +5567,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#FFFFFF",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5646,15 +5667,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -5675,14 +5696,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -5746,10 +5765,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -5765,15 +5784,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -6041,15 +6060,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="largeTitle"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 28,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -6068,15 +6087,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -6284,16 +6303,16 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   }
                                 >
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6304,15 +6323,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     You have a notice due soon
                                   </Text>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -6376,6 +6395,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -6383,17 +6403,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 >
                                   <Text
                                     accessible={true}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6610,15 +6630,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -6638,9 +6658,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               />
                               <Text
                                 accessibilityRole="link"
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 onPress={[Function]}
                                 style={
                                   [
@@ -6649,7 +6669,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     },
                                     {
                                       "color": "#0B3EE3",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 12,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -6712,6 +6732,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   style={
                                     {
                                       "alignItems": "center",
+                                      "columnGap": 18,
                                       "flex": 1,
                                       "flexDirection": "row",
                                     }
@@ -6719,17 +6740,17 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 >
                                   <Text
                                     accessible={true}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     importantForAccessibility="yes"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
-                                          "fontSize": 17,
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
                                           "lineHeight": 24,
@@ -6946,15 +6967,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               />
                               <Text
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#555C70",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "400",
@@ -6984,11 +7005,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     "borderCurve": "continuous",
                                     "borderRadius": 8,
                                     "flexDirection": "row",
+                                    "padding": 16,
                                   },
                                   {
                                     "backgroundColor": "#F4F5F8",
-                                    "paddingHorizontal": 16,
-                                    "paddingVertical": 12,
                                   },
                                 ]
                               }
@@ -7008,15 +7028,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -7042,11 +7062,11 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               >
                                 <RNSVGSvgView
                                   align="xMidYMid"
-                                  bbHeight={64}
-                                  bbWidth={64}
+                                  bbHeight={80}
+                                  bbWidth={80}
                                   color="#00C5CA"
                                   focusable={false}
-                                  height={64}
+                                  height={80}
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -7058,15 +7078,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 64,
-                                        "width": 64,
+                                        "height": 80,
+                                        "width": 80,
                                       },
                                     ]
                                   }
                                   tintColor="#00C5CA"
                                   vbHeight={240}
                                   vbWidth={240}
-                                  width={64}
+                                  width={80}
                                 >
                                   <RNSVGGroup
                                     fill={
@@ -7169,15 +7189,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               >
                                 <View>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#555C70",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
@@ -7256,22 +7276,25 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderRadius": 4,
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
                                   "elevation": 0,
                                   "flexDirection": "row",
                                   "justifyContent": "center",
-                                  "paddingHorizontal": 16,
+                                  "paddingHorizontal": 24,
                                   "textAlignVertical": "center",
+                                },
+                                {
+                                  "height": 48,
                                 },
                                 {
                                   "overflow": "hidden",
                                 },
-                                false,
                                 {
-                                  "height": 40,
+                                  "paddingHorizontal": 16,
                                 },
                                 {
-                                  "backgroundColor": "#0073E6",
+                                  "backgroundColor": "#0B3EE3",
                                 },
                                 false,
                                 {
@@ -7281,7 +7304,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             }
                           >
                             <View
-                              entering={[Function]}
                               exiting={[Function]}
                               style={
                                 {
@@ -7544,15 +7566,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7573,14 +7595,12 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -7644,10 +7664,10 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -7663,15 +7683,15 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

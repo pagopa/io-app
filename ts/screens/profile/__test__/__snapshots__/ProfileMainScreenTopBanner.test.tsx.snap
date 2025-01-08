@@ -55,13 +55,8 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       style={
         [
           {
-            "alignContent": "center",
-            "alignItems": "flex-start",
-            "flexDirection": "row",
-          },
-          {
             "borderCurve": "continuous",
-            "borderRadius": 8,
+            "borderRadius": 12,
             "padding": 16,
           },
           {
@@ -80,8 +75,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       <View
         style={
           {
-            "alignSelf": "flex-start",
-            "marginRight": 12,
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+            "gap": 18,
           }
         }
       >
@@ -90,10 +87,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           accessibilityLabel=""
           accessible={false}
           align="xMidYMid"
-          bbHeight={24}
-          bbWidth={24}
+          bbHeight={36}
+          bbWidth={36}
           focusable={false}
-          height={24}
+          height={36}
           importantForAccessibility="no-hide-descendants"
           meetOrSlice={0}
           minX={0}
@@ -109,15 +106,15 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               },
               {
                 "flex": 0,
-                "height": 24,
-                "width": 24,
+                "height": 36,
+                "width": 36,
               },
             ]
           }
           tintColor="#5D1313"
           vbHeight={24}
           vbWidth={24}
-          width={24}
+          width={36}
         >
           <RNSVGGroup
             color="#5D1313"
@@ -146,68 +143,70 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             />
           </RNSVGGroup>
         </RNSVGSvgView>
-      </View>
-      <View
-        style={
-          [
-            false,
-            false,
-            {
-              "flex": 1,
-            },
-          ]
-        }
-      >
-        <Text
-          accessibilityRole="text"
-          allowFontScaling={false}
-          dynamicTypeRamp="body"
-          maxFontSizeMultiplier={1.25}
-          onTextLayout={[Function]}
-          style={
-            [
-              {},
-              {
-                "color": "#5D1313",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "400",
-                "lineHeight": 24,
-              },
-            ]
-          }
-        >
-          Turn on push notifications to know when you get a message on IO.
-        </Text>
         <View
           style={
-            {
-              "height": 8,
-            }
-          }
-        />
-        <Text
-          allowFontScaling={false}
-          ellipsizeMode="tail"
-          maxFontSizeMultiplier={1.25}
-          numberOfLines={1}
-          style={
             [
-              {},
+              false,
               {
-                "color": "#5D1313",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 20,
+                "flex": 1,
               },
             ]
           }
         >
-          Turn on push notifications
-        </Text>
+          <View
+            style={
+              {
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": 12,
+              }
+            }
+          >
+            <Text
+              accessibilityRole="text"
+              allowFontScaling={true}
+              dynamicTypeRamp="body"
+              maxFontSizeMultiplier={1.5}
+              onTextLayout={[Function]}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#5D1313",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                ]
+              }
+            >
+              Turn on push notifications to know when you get a message on IO.
+            </Text>
+            <Text
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              maxFontSizeMultiplier={1.5}
+              numberOfLines={1}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#5D1313",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": 20,
+                  },
+                ]
+              }
+            >
+              Turn on push notifications
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   </View>
@@ -270,11 +269,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "borderCurve": "continuous",
             "borderRadius": 8,
             "flexDirection": "row",
+            "padding": 16,
           },
           {
             "backgroundColor": "#F4F5F8",
-            "paddingHorizontal": 16,
-            "paddingVertical": 16,
           },
           {
             "transform": [
@@ -302,16 +300,16 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
         }
       >
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="headline"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           style={
             [
               {},
               {
                 "color": "#031344",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 17,
+                "fontFamily": "Titillio",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -346,17 +344,17 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           <Text
             accessibilityElementsHidden={true}
             accessible={false}
-            allowFontScaling={false}
+            allowFontScaling={true}
             ellipsizeMode="tail"
             importantForAccessibility="no-hide-descendants"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             numberOfLines={1}
             style={
               [
                 {},
                 {
                   "color": "#0B3EE3",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "600",
@@ -575,10 +573,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   "color": undefined,
                 }
               }
-              bbHeight={24}
-              bbWidth={24}
+              bbHeight={36}
+              bbWidth={36}
               focusable={false}
-              height={24}
+              height={36}
               importantForAccessibility="no-hide-descendants"
               meetOrSlice={0}
               minX={0}
@@ -594,15 +592,15 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                   },
                   {
                     "flex": 0,
-                    "height": 24,
-                    "width": 24,
+                    "height": 36,
+                    "width": 36,
                   },
                 ]
               }
               tintColor="#0E0F13"
               vbHeight={24}
               vbWidth={24}
-              width={24}
+              width={36}
             >
               <RNSVGGroup
                 color="#0E0F13"

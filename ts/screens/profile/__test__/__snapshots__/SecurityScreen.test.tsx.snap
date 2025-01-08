@@ -369,16 +369,16 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             <Text
                               accessibilityLabel="Security and login"
                               accessibilityRole="header"
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title1"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 28,
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 26,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
                                     "lineHeight": 34,
@@ -404,15 +404,15 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -508,21 +508,22 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   <View
                                     style={
                                       {
-                                        "flex": 1,
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
                                       }
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -533,15 +534,15 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       Change the unlock code
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -558,10 +559,10 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -577,15 +578,15 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0B3EE3"
@@ -694,21 +695,22 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                   <View
                                     style={
                                       {
-                                        "flex": 1,
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
                                       }
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -719,15 +721,15 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       Controlla i tuoi accessi
                                     </Text>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -744,10 +746,10 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -763,15 +765,15 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0B3EE3"

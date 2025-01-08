@@ -353,15 +353,15 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         }
                       />
                       <Text
-                        allowFontScaling={false}
+                        allowFontScaling={true}
                         dynamicTypeRamp="title2"
-                        maxFontSizeMultiplier={1.25}
+                        maxFontSizeMultiplier={1.5}
                         style={
                           [
                             {},
                             {
                               "color": "#0E0F13",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 22,
                               "fontStyle": "normal",
                               "fontWeight": "600",
@@ -381,15 +381,15 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                         }
                       />
                       <Text
-                        allowFontScaling={false}
+                        allowFontScaling={true}
                         dynamicTypeRamp="footnote"
-                        maxFontSizeMultiplier={1.25}
+                        maxFontSizeMultiplier={1.5}
                         style={
                           [
                             {},
                             {
                               "color": "#555C70",
-                              "fontFamily": "Titillium Sans Pro",
+                              "fontFamily": "Titillio",
                               "fontSize": 14,
                               "fontStyle": "normal",
                               "fontWeight": "400",
@@ -433,15 +433,15 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
@@ -453,16 +453,16 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                             Ċentru tas-Saħħa
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             onPress={[Function]}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",

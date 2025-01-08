@@ -523,15 +523,15 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -643,7 +643,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -652,13 +652,13 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -685,15 +685,15 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0073E6",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1191,7 +1191,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
@@ -1200,13 +1200,13 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={16}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1259,15 +1259,15 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0073E6",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
@@ -1421,15 +1421,15 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
                                   <Text
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 14,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",

@@ -419,15 +419,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             >
                               <Text
                                 accessible={true}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 dynamicTypeRamp="title2"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#2B2E38",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 22,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -490,7 +490,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "bottom": 0,
-                                "height": 4,
+                                "height": 0,
                                 "position": "absolute",
                                 "shadowColor": "#0E0F13",
                                 "shadowOffset": {
@@ -555,22 +555,25 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -580,13 +583,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -595,17 +600,17 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -734,10 +739,10 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -753,15 +758,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
                                   tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
                                     color="#0E0F13"
@@ -808,15 +813,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -837,14 +842,12 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -908,10 +911,10 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -927,15 +930,15 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"
@@ -1416,15 +1419,15 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -1446,15 +1449,15 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -1581,10 +1584,10 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -1600,15 +1603,15 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
                                   tintColor="#0E0F13"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
                                     color="#0E0F13"
@@ -1655,15 +1658,15 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             >
                               <Text
                                 accessible={false}
-                                allowFontScaling={false}
-                                maxFontSizeMultiplier={1.25}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -1684,14 +1687,12 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             </View>
                             <View
                               style={
-                                [
-                                  {
-                                    "flexDirection": "row",
-                                  },
-                                  {
-                                    "flexShrink": 0,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
                               }
                             >
                               <View
@@ -1755,10 +1756,10 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1774,15 +1775,15 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#0E0F13"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#0E0F13"

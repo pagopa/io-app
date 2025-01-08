@@ -2,15 +2,15 @@
 
 exports[`Test LinkedText component should render a LinkedText component with props correctly 1`] = `
 <Text
-  allowFontScaling={false}
+  allowFontScaling={true}
   dynamicTypeRamp="title3"
-  maxFontSizeMultiplier={1.25}
+  maxFontSizeMultiplier={1.5}
   style={
     [
       {},
       {
         "color": "#0E0F13",
-        "fontFamily": "Titillium Sans Pro",
+        "fontFamily": "Titillio",
         "fontSize": 20,
         "fontStyle": "normal",
         "fontWeight": "600",
@@ -20,16 +20,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   }
 >
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -38,16 +38,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -58,16 +58,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     C
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -78,16 +78,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     l
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -98,16 +98,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     a
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -118,16 +118,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     u
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -138,16 +138,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     s
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -158,16 +158,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     e
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -178,16 +178,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
      
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -198,16 +198,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     t
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -218,16 +218,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     i
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -238,16 +238,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     t
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -258,16 +258,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     l
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -278,16 +278,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     e
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -298,16 +298,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
      
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,
@@ -318,16 +318,16 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     1
   </Text>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 17,
+          "fontFamily": "Titillio",
+          "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 24,

@@ -515,15 +515,15 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                               />
                             </View>
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#0E0F13",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 22,
                                     "fontStyle": "normal",
                                     "fontWeight": "600",
@@ -545,15 +545,15 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                               }
                             />
                             <Text
-                              allowFontScaling={false}
+                              allowFontScaling={true}
                               dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
                                   {},
                                   {
                                     "color": "#555C70",
-                                    "fontFamily": "Titillium Sans Pro",
+                                    "fontFamily": "Titillio",
                                     "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -626,22 +626,23 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderRadius": 4,
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 8,
                                           "elevation": 0,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
-                                          "paddingHorizontal": 16,
+                                          "paddingHorizontal": 24,
                                           "textAlignVertical": "center",
+                                        },
+                                        {
+                                          "height": 48,
                                         },
                                         {
                                           "overflow": "hidden",
                                         },
                                         false,
                                         {
-                                          "height": 40,
-                                        },
-                                        {
-                                          "backgroundColor": "#0073E6",
+                                          "backgroundColor": "#0B3EE3",
                                         },
                                         false,
                                         {
@@ -651,13 +652,15 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
                                         ]
@@ -666,17 +669,17 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                       <Text
                                         accessibilityElementsHidden={true}
                                         accessible={false}
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         ellipsizeMode="tail"
                                         importantForAccessibility="no-hide-descendants"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#FFFFFF",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "600",
@@ -773,6 +776,9 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                           "columnGap": 8,
                                         },
                                         {},
+                                        {
+                                          "columnGap": 8,
+                                        },
                                         false,
                                       ]
                                     }
@@ -780,25 +786,30 @@ exports[`FimsUpdateAppAlert should match snapshot 1`] = `
                                     <Text
                                       accessibilityElementsHidden={true}
                                       accessible={false}
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": undefined,
+                                            "lineHeight": 20,
                                           },
-                                          {
-                                            "color": undefined,
-                                          },
+                                          [
+                                            {
+                                              "color": undefined,
+                                            },
+                                            {
+                                              "textAlign": "auto",
+                                            },
+                                          ],
                                         ]
                                       }
                                     >

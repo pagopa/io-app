@@ -3,15 +3,15 @@
 exports[`IOMarkdown Should match snapshot 1`] = `
 <View>
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="largeTitle"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 28,
           "fontStyle": "normal",
           "fontWeight": "600",
@@ -30,16 +30,16 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="title1"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#0E0F13",
-          "fontFamily": "Titillium Sans Pro",
-          "fontSize": 28,
+          "fontFamily": "Titillio",
+          "fontSize": 26,
           "fontStyle": "normal",
           "fontWeight": "600",
           "lineHeight": 34,
@@ -57,15 +57,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
@@ -104,15 +104,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
@@ -168,15 +168,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -208,15 +208,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -238,15 +238,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -278,15 +278,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -308,15 +308,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -348,15 +348,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -387,15 +387,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
@@ -451,15 +451,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -492,15 +492,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -522,15 +522,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -563,15 +563,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -593,15 +593,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           }
         >
           <Text
-            allowFontScaling={false}
+            allowFontScaling={true}
             dynamicTypeRamp="body"
-            maxFontSizeMultiplier={1.25}
+            maxFontSizeMultiplier={1.5}
             style={
               [
                 {},
                 {
                   "color": "#555C70",
-                  "fontFamily": "Titillium Sans Pro",
+                  "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
                   "fontWeight": "400",
@@ -634,15 +634,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
             }
           >
             <Text
-              allowFontScaling={false}
+              allowFontScaling={true}
               dynamicTypeRamp="body"
-              maxFontSizeMultiplier={1.25}
+              maxFontSizeMultiplier={1.5}
               style={
                 [
                   {},
                   {
                     "color": "#555C70",
-                    "fontFamily": "Titillium Sans Pro",
+                    "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
                     "fontWeight": "400",
@@ -673,15 +673,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
@@ -693,9 +693,9 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     Here is a link: 
     <Text
       accessibilityRole="link"
-      allowFontScaling={false}
+      allowFontScaling={true}
       dynamicTypeRamp="body"
-      maxFontSizeMultiplier={1.25}
+      maxFontSizeMultiplier={1.5}
       onPress={[Function]}
       style={
         [
@@ -704,7 +704,7 @@ exports[`IOMarkdown Should match snapshot 1`] = `
           },
           {
             "color": "#0B3EE3",
-            "fontFamily": "Titillium Sans Pro",
+            "fontFamily": "Titillio",
             "fontSize": 16,
             "fontStyle": "normal",
             "fontWeight": "600",
@@ -724,15 +724,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",
@@ -768,15 +768,15 @@ exports[`IOMarkdown Should match snapshot 1`] = `
     }
   />
   <Text
-    allowFontScaling={false}
+    allowFontScaling={true}
     dynamicTypeRamp="body"
-    maxFontSizeMultiplier={1.25}
+    maxFontSizeMultiplier={1.5}
     style={
       [
         {},
         {
           "color": "#555C70",
-          "fontFamily": "Titillium Sans Pro",
+          "fontFamily": "Titillio",
           "fontSize": 16,
           "fontStyle": "normal",
           "fontWeight": "400",

@@ -310,15 +310,15 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
             >
               <Text
                 accessible={true}
-                allowFontScaling={false}
+                allowFontScaling={true}
                 dynamicTypeRamp="title2"
-                maxFontSizeMultiplier={1.25}
+                maxFontSizeMultiplier={1.5}
                 style={
                   [
                     {},
                     {
                       "color": "#2B2E38",
-                      "fontFamily": "Titillium Sans Pro",
+                      "fontFamily": "Titillio",
                       "fontSize": 22,
                       "fontStyle": "normal",
                       "fontWeight": "600",
@@ -384,24 +384,28 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                     [
                       {
                         "alignItems": "center",
-                        "borderRadius": 4,
+                        "borderCurve": "continuous",
+                        "borderRadius": 8,
                         "elevation": 0,
                         "flexDirection": "row",
                         "justifyContent": "center",
-                        "paddingHorizontal": 16,
+                        "paddingHorizontal": 24,
                         "textAlignVertical": "center",
                       },
-                      false,
                       {
-                        "borderWidth": 1,
+                        "height": 48,
                       },
                       {
-                        "height": 40,
+                        "borderWidth": 2,
                       },
                       false,
                       {
-                        "backgroundColor": "rgba(0,115,230,0)",
-                        "borderColor": "#0073E6",
+                        "columnGap": 8,
+                      },
+                      false,
+                      {
+                        "backgroundColor": "rgba(231,236,252,0)",
+                        "borderColor": "#0B3EE3",
                       },
                       false,
                       {
@@ -414,17 +418,17 @@ exports[`CieIdLoginScreen Should match snapshot 1`] = `
                   <Text
                     accessibilityElementsHidden={true}
                     accessible={false}
-                    allowFontScaling={false}
+                    allowFontScaling={true}
                     ellipsizeMode="tail"
                     importantForAccessibility="no-hide-descendants"
-                    maxFontSizeMultiplier={1.25}
+                    maxFontSizeMultiplier={1.5}
                     numberOfLines={1}
                     style={
                       [
                         {},
                         {
                           "color": "#0E0F13",
-                          "fontFamily": "Titillium Sans Pro",
+                          "fontFamily": "Titillio",
                           "fontSize": 16,
                           "fontStyle": "normal",
                           "fontWeight": "600",

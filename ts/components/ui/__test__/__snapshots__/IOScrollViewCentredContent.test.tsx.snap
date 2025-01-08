@@ -513,15 +513,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -536,15 +536,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -629,6 +629,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -636,25 +639,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -840,22 +848,25 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -865,13 +876,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -880,17 +893,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1435,15 +1448,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1458,15 +1471,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1551,6 +1564,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -1558,25 +1574,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -1762,22 +1783,25 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -1787,13 +1811,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -1802,17 +1828,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -1875,24 +1901,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "borderWidth": 1,
+                                    "height": 48,
                                   },
                                   {
-                                    "height": 40,
+                                    "borderWidth": 2,
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   false,
                                   {
-                                    "backgroundColor": "rgba(0,115,230,0)",
-                                    "borderColor": "#0073E6",
+                                    "backgroundColor": "rgba(231,236,252,0)",
+                                    "borderColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -1905,17 +1937,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -2013,6 +2045,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -2020,25 +2055,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -2575,15 +2615,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2598,15 +2638,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2691,6 +2731,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -2698,25 +2741,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -2902,22 +2950,25 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -2927,13 +2978,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -2942,17 +2995,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3046,6 +3099,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -3053,25 +3109,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -3608,15 +3669,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -3631,15 +3692,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3832,22 +3893,25 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -3857,13 +3921,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -3872,17 +3938,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4427,15 +4493,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4450,15 +4516,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -4651,22 +4717,25 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -4676,13 +4745,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -4691,17 +4762,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -4764,24 +4835,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "borderWidth": 1,
+                                    "height": 48,
                                   },
                                   {
-                                    "height": 40,
+                                    "borderWidth": 2,
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   false,
                                   {
-                                    "backgroundColor": "rgba(0,115,230,0)",
-                                    "borderColor": "#0073E6",
+                                    "backgroundColor": "rgba(231,236,252,0)",
+                                    "borderColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -4794,17 +4871,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -4902,6 +4979,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -4909,25 +4989,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -5464,15 +5549,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -5487,15 +5572,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                   This is a title
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -5688,22 +5773,25 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -5713,13 +5801,15 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -5728,17 +5818,17 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -5832,6 +5922,9 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -5839,25 +5932,30 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -6394,15 +6492,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -6487,6 +6585,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -6494,25 +6595,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -6698,22 +6804,25 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -6723,13 +6832,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -6738,17 +6849,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -7293,15 +7404,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -7386,6 +7497,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -7393,25 +7507,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -7597,22 +7716,25 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -7622,13 +7744,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -7637,17 +7761,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -7710,24 +7834,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "borderWidth": 1,
+                                    "height": 48,
                                   },
                                   {
-                                    "height": 40,
+                                    "borderWidth": 2,
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   false,
                                   {
-                                    "backgroundColor": "rgba(0,115,230,0)",
-                                    "borderColor": "#0073E6",
+                                    "backgroundColor": "rgba(231,236,252,0)",
+                                    "borderColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -7740,17 +7870,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -7848,6 +7978,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -7855,25 +7988,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -8410,15 +8548,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -8503,6 +8641,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                         "columnGap": 8,
                                       },
                                       {},
+                                      {
+                                        "columnGap": 8,
+                                      },
                                       false,
                                     ]
                                   }
@@ -8510,25 +8651,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                   <Text
                                     accessibilityElementsHidden={true}
                                     accessible={false}
-                                    allowFontScaling={false}
+                                    allowFontScaling={true}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
-                                    maxFontSizeMultiplier={1.25}
+                                    maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
                                           "color": "#0E0F13",
-                                          "fontFamily": "Titillium Sans Pro",
+                                          "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": undefined,
-                                        },
+                                        [
+                                          {
+                                            "color": undefined,
+                                          },
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                        ],
                                       ]
                                     }
                                   >
@@ -8714,22 +8860,25 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -8739,13 +8888,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -8754,17 +8905,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -8858,6 +9009,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -8865,25 +9019,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -9420,15 +9579,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -9621,22 +9780,25 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -9646,13 +9808,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -9661,17 +9825,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -10216,15 +10380,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -10417,22 +10581,25 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -10442,13 +10609,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -10457,17 +10626,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -10530,24 +10699,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "borderWidth": 1,
+                                    "height": 48,
                                   },
                                   {
-                                    "height": 40,
+                                    "borderWidth": 2,
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "columnGap": 8,
                                   },
                                   false,
                                   {
-                                    "backgroundColor": "rgba(0,115,230,0)",
-                                    "borderColor": "#0073E6",
+                                    "backgroundColor": "rgba(231,236,252,0)",
+                                    "borderColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -10560,17 +10735,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               <Text
                                 accessibilityElementsHidden={true}
                                 accessible={false}
-                                allowFontScaling={false}
+                                allowFontScaling={true}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.25}
+                                maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
                                       "color": "#0E0F13",
-                                      "fontFamily": "Titillium Sans Pro",
+                                      "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
                                       "fontWeight": "600",
@@ -10668,6 +10843,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -10675,25 +10853,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >
@@ -11230,15 +11413,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 22,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -11431,22 +11614,25 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 [
                                   {
                                     "alignItems": "center",
-                                    "borderRadius": 4,
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
                                     "elevation": 0,
                                     "flexDirection": "row",
                                     "justifyContent": "center",
-                                    "paddingHorizontal": 16,
+                                    "paddingHorizontal": 24,
                                     "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "height": 48,
                                   },
                                   {
                                     "overflow": "hidden",
                                   },
-                                  false,
                                   {
-                                    "height": 40,
+                                    "paddingHorizontal": 16,
                                   },
                                   {
-                                    "backgroundColor": "#0073E6",
+                                    "backgroundColor": "#0B3EE3",
                                   },
                                   false,
                                   {
@@ -11456,13 +11642,15 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
                                       "flexDirection": "row",
                                       "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
                                     },
                                     false,
                                   ]
@@ -11471,17 +11659,17 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -11575,6 +11763,9 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                       "columnGap": 8,
                                     },
                                     {},
+                                    {
+                                      "columnGap": 8,
+                                    },
                                     false,
                                   ]
                                 }
@@ -11582,25 +11773,30 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "lineHeight": 20,
                                       },
-                                      {
-                                        "color": undefined,
-                                      },
+                                      [
+                                        {
+                                          "color": undefined,
+                                        },
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                      ],
                                     ]
                                   }
                                 >

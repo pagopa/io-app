@@ -344,16 +344,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -435,10 +435,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -450,22 +450,22 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0073E6"
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -508,11 +508,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -526,15 +531,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -546,17 +551,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Place of Birth
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -591,11 +596,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -609,15 +619,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -629,17 +639,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Institution Number (TEAM)
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -674,11 +684,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -692,15 +707,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -712,17 +727,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Date of Birth
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -757,11 +772,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -775,15 +795,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -795,17 +815,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Province
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -840,11 +860,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -858,15 +883,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -878,17 +903,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Nation
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -923,11 +948,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -941,15 +971,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -961,17 +991,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Sex
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1006,11 +1036,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -1024,15 +1059,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1044,17 +1079,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Expiry Date
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1089,11 +1124,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -1107,15 +1147,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1127,17 +1167,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Document Number (TEAM)
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1172,11 +1212,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -1190,15 +1235,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1210,17 +1255,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   First Name
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1255,11 +1300,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -1273,15 +1323,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1293,17 +1343,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Fiscal Code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1338,11 +1388,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -1356,15 +1411,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1376,17 +1431,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Family Name
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1421,11 +1476,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -1439,15 +1499,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -1459,17 +1519,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Emissione versione digitale
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -1481,13 +1541,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "marginLeft": 16,
-                                }
-                              }
-                            >
+                            <View>
                               <View
                                 accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
@@ -1549,10 +1603,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -1564,22 +1618,22 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -1661,16 +1715,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 >
                                   <View>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -1691,15 +1745,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       style={{}}
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -1733,15 +1787,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       />
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -1767,9 +1821,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           </Text>
                                           <Text
                                             accessibilityRole="link"
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="body"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             onPress={[Function]}
                                             style={
@@ -1779,7 +1833,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                                 },
                                                 {
                                                   "color": "#0B3EE3",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 16,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",
@@ -2195,16 +2249,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2286,10 +2340,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       "color": undefined,
                                     }
                                   }
-                                  bbHeight={24}
-                                  bbWidth={24}
+                                  bbHeight={36}
+                                  bbWidth={36}
                                   focusable={false}
-                                  height={24}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
                                   meetOrSlice={0}
                                   minX={0}
@@ -2301,22 +2355,22 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "borderWidth": 0,
                                       },
                                       {
-                                        "color": "#0073E6",
+                                        "color": "#0B3EE3",
                                       },
                                       {
                                         "flex": 0,
-                                        "height": 24,
-                                        "width": 24,
+                                        "height": 36,
+                                        "width": 36,
                                       },
                                     ]
                                   }
-                                  tintColor="#0073E6"
+                                  tintColor="#0B3EE3"
                                   vbHeight={24}
                                   vbWidth={24}
-                                  width={24}
+                                  width={36}
                                 >
                                   <RNSVGGroup
-                                    color="#0073E6"
+                                    color="#0B3EE3"
                                     fill={
                                       {
                                         "payload": 4278190080,
@@ -2359,11 +2413,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2377,15 +2436,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2397,17 +2456,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Place of Birth
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2442,11 +2501,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2460,15 +2524,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2480,17 +2544,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Institution Number (TEAM)
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2525,11 +2589,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2543,15 +2612,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2563,17 +2632,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Date of Birth
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2608,11 +2677,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2626,15 +2700,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2646,17 +2720,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Province
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2691,11 +2765,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2709,15 +2788,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2729,17 +2808,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Nation
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2774,11 +2853,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2792,15 +2876,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2812,17 +2896,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Sex
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2857,11 +2941,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -2875,15 +2964,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -2895,17 +2984,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Expiry Date
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -2917,13 +3006,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "marginLeft": 16,
-                                }
-                              }
-                            >
+                            <View>
                               <View
                                 accessible={true}
                                 style={
@@ -2931,11 +3014,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     {
                                       "alignItems": "center",
                                       "borderCurve": "continuous",
-                                      "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "paddingHorizontal": 8,
-                                      "paddingVertical": 4,
+                                    },
+                                    {
+                                      "borderRadius": 36,
+                                      "paddingHorizontal": 12,
+                                      "paddingVertical": 6,
                                     },
                                     {
                                       "backgroundColor": "#E1F4E1",
@@ -2944,16 +3029,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   ellipsizeMode="tail"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#224021",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 12,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
@@ -2995,11 +3080,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -3013,15 +3103,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3033,17 +3123,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Document Number (TEAM)
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3078,11 +3168,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -3096,15 +3191,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3116,17 +3211,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   First Name
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3161,11 +3256,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -3179,15 +3279,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3199,17 +3299,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Fiscal Code
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3244,11 +3344,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -3262,15 +3367,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3282,17 +3387,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Family Name
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3327,11 +3432,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         >
                           <View
                             style={
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "space-between",
-                              }
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                                {
+                                  "columnGap": 18,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -3345,15 +3455,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 accessible={true}
                               >
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#555C70",
-                                        "fontFamily": "Titillium Sans Pro",
+                                        "fontFamily": "Titillio",
                                         "fontSize": 14,
                                         "fontStyle": "normal",
                                         "fontWeight": "400",
@@ -3365,17 +3475,17 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   Emissione versione digitale
                                 </Text>
                                 <Text
-                                  allowFontScaling={false}
+                                  allowFontScaling={true}
                                   dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.25}
+                                  maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
                                   style={
                                     [
                                       {},
                                       {
                                         "color": "#0E0F13",
-                                        "fontFamily": "Titillium Sans Pro",
-                                        "fontSize": 17,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
                                         "fontStyle": "normal",
                                         "fontWeight": "600",
                                         "lineHeight": 24,
@@ -3387,13 +3497,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 </Text>
                               </View>
                             </View>
-                            <View
-                              style={
-                                {
-                                  "marginLeft": 16,
-                                }
-                              }
-                            >
+                            <View>
                               <View
                                 accessibilityLabel="Info Emissione versione digitale"
                                 accessibilityRole="button"
@@ -3455,10 +3559,10 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         "color": undefined,
                                       }
                                     }
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -3470,22 +3574,22 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           "borderWidth": 0,
                                         },
                                         {
-                                          "color": "#0073E6",
+                                          "color": "#0B3EE3",
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
-                                    tintColor="#0073E6"
+                                    tintColor="#0B3EE3"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
-                                      color="#0073E6"
+                                      color="#0B3EE3"
                                       fill={
                                         {
                                           "payload": 4278190080,
@@ -3567,16 +3671,16 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 >
                                   <View>
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="headline"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#0E0F13",
-                                            "fontFamily": "Titillium Sans Pro",
-                                            "fontSize": 17,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
                                             "lineHeight": 24,
@@ -3597,15 +3701,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                       style={{}}
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -3639,15 +3743,15 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                         }
                                       />
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         style={
                                           [
                                             {},
                                             {
                                               "color": "#555C70",
-                                              "fontFamily": "Titillium Sans Pro",
+                                              "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
                                               "fontWeight": "400",
@@ -3673,9 +3777,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                           </Text>
                                           <Text
                                             accessibilityRole="link"
-                                            allowFontScaling={false}
+                                            allowFontScaling={true}
                                             dynamicTypeRamp="body"
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={1.5}
                                             numberOfLines={1}
                                             onPress={[Function]}
                                             style={
@@ -3685,7 +3789,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                                 },
                                                 {
                                                   "color": "#0B3EE3",
-                                                  "fontFamily": "Titillium Sans Pro",
+                                                  "fontFamily": "Titillio",
                                                   "fontSize": 16,
                                                   "fontStyle": "normal",
                                                   "fontWeight": "600",

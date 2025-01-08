@@ -352,15 +352,15 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
@@ -372,16 +372,16 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             #### organization_name ####
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             onPress={[Function]}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#0B3EE3",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",

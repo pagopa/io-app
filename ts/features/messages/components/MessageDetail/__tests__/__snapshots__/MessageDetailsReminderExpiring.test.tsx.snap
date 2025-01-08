@@ -372,13 +372,8 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           style={
                             [
                               {
-                                "alignContent": "center",
-                                "alignItems": "flex-start",
-                                "flexDirection": "row",
-                              },
-                              {
                                 "borderCurve": "continuous",
-                                "borderRadius": 8,
+                                "borderRadius": 12,
                                 "padding": 16,
                               },
                               {
@@ -397,8 +392,10 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                           <View
                             style={
                               {
-                                "alignSelf": "flex-start",
-                                "marginRight": 12,
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "row",
+                                "gap": 18,
                               }
                             }
                           >
@@ -407,10 +404,10 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               accessibilityLabel=""
                               accessible={false}
                               align="xMidYMid"
-                              bbHeight={24}
-                              bbWidth={24}
+                              bbHeight={36}
+                              bbWidth={36}
                               focusable={false}
-                              height={24}
+                              height={36}
                               importantForAccessibility="no-hide-descendants"
                               meetOrSlice={0}
                               minX={0}
@@ -426,15 +423,15 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                   },
                                   {
                                     "flex": 0,
-                                    "height": 24,
-                                    "width": 24,
+                                    "height": 36,
+                                    "width": 36,
                                   },
                                 ]
                               }
                               tintColor="#614C15"
                               vbHeight={24}
                               vbWidth={24}
-                              width={24}
+                              width={36}
                             >
                               <RNSVGGroup
                                 color="#614C15"
@@ -463,68 +460,70 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                                 />
                               </RNSVGGroup>
                             </RNSVGSvgView>
-                          </View>
-                          <View
-                            style={
-                              [
-                                false,
-                                false,
-                                {
-                                  "flex": 1,
-                                },
-                              ]
-                            }
-                          >
-                            <Text
-                              accessibilityRole="text"
-                              allowFontScaling={false}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.25}
-                              onTextLayout={[Function]}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#614C15",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
-                              Expires on 21/03/2024 at 10:33
-                            </Text>
                             <View
                               style={
-                                {
-                                  "height": 8,
-                                }
-                              }
-                            />
-                            <Text
-                              allowFontScaling={false}
-                              ellipsizeMode="tail"
-                              maxFontSizeMultiplier={1.25}
-                              numberOfLines={1}
-                              style={
                                 [
-                                  {},
+                                  false,
                                   {
-                                    "color": "#614C15",
-                                    "fontFamily": "Titillium Sans Pro",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 20,
+                                    "flex": 1,
                                   },
                                 ]
                               }
                             >
-                              Add reminder
-                            </Text>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 12,
+                                  }
+                                }
+                              >
+                                <Text
+                                  accessibilityRole="text"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  onTextLayout={[Function]}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#614C15",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Expires on 21/03/2024 at 10:33
+                                </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#614C15",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 20,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Add reminder
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
                       </View>

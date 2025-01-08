@@ -491,16 +491,16 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -511,15 +511,15 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             You have a new message
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1036,16 +1036,16 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1056,15 +1056,15 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                             You have a notice due tomorrow
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -1581,16 +1581,16 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -1601,15 +1601,15 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             Comune di Ipazia
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",
@@ -2126,16 +2126,16 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           }
                         >
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="headline"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#0E0F13",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 17,
+                                  "fontFamily": "Titillio",
+                                  "fontSize": 16,
                                   "fontStyle": "normal",
                                   "fontWeight": "600",
                                   "lineHeight": 24,
@@ -2146,15 +2146,15 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                             You have a notice due soon
                           </Text>
                           <Text
-                            allowFontScaling={false}
+                            allowFontScaling={true}
                             dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={1.5}
                             style={
                               [
                                 {},
                                 {
                                   "color": "#555C70",
-                                  "fontFamily": "Titillium Sans Pro",
+                                  "fontFamily": "Titillio",
                                   "fontSize": 14,
                                   "fontStyle": "normal",
                                   "fontWeight": "400",

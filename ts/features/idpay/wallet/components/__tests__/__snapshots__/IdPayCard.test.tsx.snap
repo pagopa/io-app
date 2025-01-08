@@ -44,18 +44,18 @@ exports[`IdPayCard should match the snapshot 1`] = `
         }
       >
         <Text
-          allowFontScaling={false}
+          allowFontScaling={true}
           dynamicTypeRamp="headline"
           ellipsizeMode="tail"
-          maxFontSizeMultiplier={1.25}
+          maxFontSizeMultiplier={1.5}
           numberOfLines={1}
           style={
             [
               {},
               {
                 "color": "#001F3D",
-                "fontFamily": "Titillium Sans Pro",
-                "fontSize": 17,
+                "fontFamily": "Titillio",
+                "fontSize": 16,
                 "fontStyle": "normal",
                 "fontWeight": "600",
                 "lineHeight": 24,
@@ -129,15 +129,15 @@ exports[`IdPayCard should match the snapshot 1`] = `
         }
       />
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
             {
               "color": "#0E0F13",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
@@ -149,15 +149,15 @@ exports[`IdPayCard should match the snapshot 1`] = `
         Disponibile
       </Text>
       <Text
-        allowFontScaling={false}
+        allowFontScaling={true}
         dynamicTypeRamp="title2"
-        maxFontSizeMultiplier={1.25}
+        maxFontSizeMultiplier={1.5}
         style={
           [
             {},
             {
               "color": "#0066CC",
-              "fontFamily": "Titillium Sans Pro",
+              "fontFamily": "Titillio",
               "fontSize": 22,
               "fontStyle": "normal",
               "fontWeight": "600",
@@ -170,15 +170,15 @@ exports[`IdPayCard should match the snapshot 1`] = `
       </Text>
     </View>
     <Text
-      allowFontScaling={false}
+      allowFontScaling={true}
       dynamicTypeRamp="body"
-      maxFontSizeMultiplier={1.25}
+      maxFontSizeMultiplier={1.5}
       style={
         [
           {},
           {
             "color": "#001F3D",
-            "fontFamily": "Titillium Sans Pro",
+            "fontFamily": "Titillio",
             "fontSize": 16,
             "fontStyle": "normal",
             "fontWeight": "600",

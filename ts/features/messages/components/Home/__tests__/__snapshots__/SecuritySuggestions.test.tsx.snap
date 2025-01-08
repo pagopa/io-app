@@ -379,17 +379,12 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                               <View>
                                 <View
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexDirection": "row",
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                    ]
+                                    {
+                                      "alignItems": "center",
+                                      "display": "flex",
+                                      "flexDirection": "row",
+                                      "gap": 24,
+                                    }
                                   }
                                 >
                                   <RNSVGSvgView
@@ -397,10 +392,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -416,15 +411,15 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#BBC2D6"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#BBC2D6"
@@ -456,30 +451,23 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
-                                        "width": 24,
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      {
                                         "display": "flex",
                                         "flexDirection": "column",
                                         "flexShrink": 1,
-                                        "gap": 4,
+                                        "gap": 6,
                                       }
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -502,17 +490,12 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 />
                                 <View
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexDirection": "row",
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                    ]
+                                    {
+                                      "alignItems": "center",
+                                      "display": "flex",
+                                      "flexDirection": "row",
+                                      "gap": 24,
+                                    }
                                   }
                                 >
                                   <RNSVGSvgView
@@ -520,10 +503,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -539,15 +522,15 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#BBC2D6"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#BBC2D6"
@@ -576,30 +559,23 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
-                                        "width": 24,
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      {
                                         "display": "flex",
                                         "flexDirection": "column",
                                         "flexShrink": 1,
-                                        "gap": 4,
+                                        "gap": 6,
                                       }
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -615,10 +591,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityElementsHidden={false}
                                       accessibilityRole="link"
                                       accessible={true}
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
                                       importantForAccessibility="yes"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       onPress={[Function]}
                                       style={
                                         [
@@ -627,7 +603,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           },
                                           {
                                             "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -649,17 +625,12 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 />
                                 <View
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexDirection": "row",
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                    ]
+                                    {
+                                      "alignItems": "center",
+                                      "display": "flex",
+                                      "flexDirection": "row",
+                                      "gap": 24,
+                                    }
                                   }
                                 >
                                   <RNSVGSvgView
@@ -667,10 +638,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -686,15 +657,15 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#BBC2D6"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#BBC2D6"
@@ -726,30 +697,23 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
-                                        "width": 24,
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      {
                                         "display": "flex",
                                         "flexDirection": "column",
                                         "flexShrink": 1,
-                                        "gap": 4,
+                                        "gap": 6,
                                       }
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -765,10 +729,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityElementsHidden={false}
                                       accessibilityRole="link"
                                       accessible={true}
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
                                       importantForAccessibility="yes"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       onPress={[Function]}
                                       style={
                                         [
@@ -777,7 +741,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           },
                                           {
                                             "color": "#0B3EE3",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
@@ -799,17 +763,12 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 />
                                 <View
                                   style={
-                                    [
-                                      {
-                                        "flex": 1,
-                                      },
-                                      {
-                                        "flexDirection": "row",
-                                      },
-                                      {
-                                        "alignItems": "center",
-                                      },
-                                    ]
+                                    {
+                                      "alignItems": "center",
+                                      "display": "flex",
+                                      "flexDirection": "row",
+                                      "gap": 24,
+                                    }
                                   }
                                 >
                                   <RNSVGSvgView
@@ -817,10 +776,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
+                                    bbHeight={36}
+                                    bbWidth={36}
                                     focusable={false}
-                                    height={24}
+                                    height={36}
                                     importantForAccessibility="no-hide-descendants"
                                     meetOrSlice={0}
                                     minX={0}
@@ -836,15 +795,15 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         },
                                         {
                                           "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
+                                          "height": 36,
+                                          "width": 36,
                                         },
                                       ]
                                     }
                                     tintColor="#BBC2D6"
                                     vbHeight={24}
                                     vbWidth={24}
-                                    width={24}
+                                    width={36}
                                   >
                                     <RNSVGGroup
                                       color="#BBC2D6"
@@ -873,30 +832,23 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                   <View
                                     style={
                                       {
-                                        "width": 24,
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      {
                                         "display": "flex",
                                         "flexDirection": "column",
                                         "flexShrink": 1,
-                                        "gap": 4,
+                                        "gap": 6,
                                       }
                                     }
                                   >
                                     <Text
-                                      allowFontScaling={false}
+                                      allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.25}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
                                         [
                                           {},
                                           {
                                             "color": "#555C70",
-                                            "fontFamily": "Titillium Sans Pro",
+                                            "fontFamily": "Titillio",
                                             "fontSize": 14,
                                             "fontStyle": "normal",
                                             "fontWeight": "400",

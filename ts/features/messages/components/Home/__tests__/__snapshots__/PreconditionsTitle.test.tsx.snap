@@ -690,15 +690,15 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
                         }
                       >
                         <Text
-                          allowFontScaling={false}
+                          allowFontScaling={true}
                           dynamicTypeRamp="title2"
-                          maxFontSizeMultiplier={1.25}
+                          maxFontSizeMultiplier={1.5}
                           style={
                             [
                               {},
                               {
                                 "color": "#0E0F13",
-                                "fontFamily": "Titillium Sans Pro",
+                                "fontFamily": "Titillio",
                                 "fontSize": 22,
                                 "fontStyle": "normal",
                                 "fontWeight": "600",

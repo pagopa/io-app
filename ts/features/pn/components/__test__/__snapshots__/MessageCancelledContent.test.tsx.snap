@@ -347,13 +347,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -365,8 +360,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -375,10 +372,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -394,15 +391,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -431,40 +428,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -827,13 +833,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -845,8 +846,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -855,10 +858,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -874,15 +877,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -911,40 +914,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -1307,13 +1319,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -1325,8 +1332,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -1335,10 +1344,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -1354,15 +1363,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -1391,40 +1400,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -1787,13 +1805,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -1805,8 +1818,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -1815,10 +1830,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -1834,15 +1849,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -1871,40 +1886,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -2267,13 +2291,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -2285,8 +2304,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -2295,10 +2316,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -2314,15 +2335,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -2351,40 +2372,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -2747,13 +2777,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -2765,8 +2790,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -2775,10 +2802,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -2794,15 +2821,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -2831,40 +2858,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -3227,13 +3263,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -3245,8 +3276,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -3255,10 +3288,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -3274,15 +3307,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -3311,40 +3344,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -3707,13 +3749,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -3725,8 +3762,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -3735,10 +3774,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -3754,15 +3793,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -3791,40 +3830,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto. Per l'eventuale rimborso di pagamenti, rivolgiti all'ente.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
@@ -4187,13 +4235,8 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         style={
                           [
                             {
-                              "alignContent": "center",
-                              "alignItems": "flex-start",
-                              "flexDirection": "row",
-                            },
-                            {
                               "borderCurve": "continuous",
-                              "borderRadius": 8,
+                              "borderRadius": 12,
                               "padding": 16,
                             },
                             {
@@ -4205,8 +4248,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                         <View
                           style={
                             {
-                              "alignSelf": "flex-start",
-                              "marginRight": 12,
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "row",
+                              "gap": 18,
                             }
                           }
                         >
@@ -4215,10 +4260,10 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             accessibilityLabel=""
                             accessible={false}
                             align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
+                            bbHeight={36}
+                            bbWidth={36}
                             focusable={false}
-                            height={24}
+                            height={36}
                             importantForAccessibility="no-hide-descendants"
                             meetOrSlice={0}
                             minX={0}
@@ -4234,15 +4279,15 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                                 },
                                 {
                                   "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
+                                  "height": 36,
+                                  "width": 36,
                                 },
                               ]
                             }
                             tintColor="#614C15"
                             vbHeight={24}
                             vbWidth={24}
-                            width={24}
+                            width={36}
                           >
                             <RNSVGGroup
                               color="#614C15"
@@ -4271,40 +4316,49 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                               />
                             </RNSVGGroup>
                           </RNSVGSvgView>
-                        </View>
-                        <View
-                          style={
-                            [
-                              false,
-                              false,
-                              {
-                                "flex": 1,
-                              },
-                            ]
-                          }
-                        >
-                          <Text
-                            accessibilityRole="text"
-                            allowFontScaling={false}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.25}
-                            onTextLayout={[Function]}
+                          <View
                             style={
                               [
-                                {},
+                                false,
                                 {
-                                  "color": "#614C15",
-                                  "fontFamily": "Titillium Sans Pro",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
+                                  "flex": 1,
                                 },
                               ]
                             }
                           >
-                            Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
-                          </Text>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 12,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityRole="text"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onTextLayout={[Function]}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#614C15",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto.
+                              </Text>
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </View>
