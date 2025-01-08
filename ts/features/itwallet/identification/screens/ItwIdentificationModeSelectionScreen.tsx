@@ -58,8 +58,6 @@ export const ItwIdentificationModeSelectionScreen = (params: ScreenProps) => {
 
   const { eidReissuing } = params.route.params;
 
-  console.log("eidReissuing", eidReissuing);
-
   useFocusEffect(
     useCallback(() => {
       if (eidReissuing) {
