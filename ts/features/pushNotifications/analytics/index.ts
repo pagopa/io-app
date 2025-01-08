@@ -140,7 +140,7 @@ export const trackPushNotificationBannerDismissAlert = () => {
 };
 
 export const trackPushNotificationBannerDismissOutcome = (
-  outcome: "deactivate" | "dismiss" | "remind_later"
+  outcome: "deactivate" | "remind_later"
 ) => {
   const eventName = "PUSH_NOTIF_THIRD_DISMISS_ALERT_INTERACTION";
   const props = buildEventProperties("UX", "action", { outcome });

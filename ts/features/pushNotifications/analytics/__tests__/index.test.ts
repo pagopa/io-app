@@ -326,24 +326,23 @@ describe("pushNotifications analytics", () => {
       event_type: "screen_view"
     });
   });
-  ["deactivate" as const, "dismiss" as const, "remind_later" as const].forEach(
-    outcome =>
-      it(`'trackPushNotificationBannerDismissOutcome' should have expected event name and properties for '${outcome}'`, () => {
-        const mockMixpanelTrack = getMockMixpanelTrack();
+  ["deactivate" as const, "remind_later" as const].forEach(outcome =>
+    it(`'trackPushNotificationBannerDismissOutcome' should have expected event name and properties for '${outcome}'`, () => {
+      const mockMixpanelTrack = getMockMixpanelTrack();
 
-        void trackPushNotificationBannerDismissOutcome(outcome);
+      void trackPushNotificationBannerDismissOutcome(outcome);
 
-        expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-        expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-        expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
-          "PUSH_NOTIF_THIRD_DISMISS_ALERT_INTERACTION"
-        );
-        expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-          event_category: "UX",
-          event_type: "action",
-          outcome
-        });
-      })
+      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+        "PUSH_NOTIF_THIRD_DISMISS_ALERT_INTERACTION"
+      );
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action",
+        outcome
+      });
+    })
   );
   it(`'trackPushNotificationBannerForceShow' should have expected event name and properties`, () => {
     const mockMixpanelTrack = getMockMixpanelTrack();

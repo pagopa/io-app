@@ -103,9 +103,6 @@ const usePushNotificationsBannerBottomSheet = (
     dispatch(setPushNotificationBannerForceDismissed());
   };
 
-  const onCancelHandler = () =>
-    trackPushNotificationBannerDismissOutcome("dismiss");
-
   return useIOBottomSheetModal({
     title: I18n.t(
       "features.messages.pushNotifications.banner.bottomSheet.title"
@@ -134,8 +131,7 @@ const usePushNotificationsBannerBottomSheet = (
         {I18n.t("features.messages.pushNotifications.banner.bottomSheet.body")}
       </Body>
     ),
-    snapPoint: [300],
-    onDismiss: onCancelHandler
+    snapPoint: [300]
   });
 };
 const styles = StyleSheet.create({
