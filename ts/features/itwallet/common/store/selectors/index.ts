@@ -4,6 +4,7 @@ import {
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector
@@ -49,7 +50,7 @@ export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
 
 /**
  * Returns if the wallet ready banner should be visible. The banner is visible if:
- * - The Wallet has valid Wallet Instance and a valid eID
+ * - The Wallet has valid Wallet Instance with a known status, and a valid eID
  * - The eID is not expired
  * - The Wallet is empty
  * @param state the application global state
@@ -57,5 +58,6 @@ export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state) &&
+  !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwIsWalletEmptySelector(state);

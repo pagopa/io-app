@@ -154,7 +154,7 @@ describe("WalletCardsContainer", () => {
         .mockImplementation(() => [T_CARDS["4"], T_CARDS["5"]]);
 
       jest
-        .spyOn(configSelectors, "isItwEnabledSelector")
+        .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
         .mockImplementation(() => true);
       jest
         .spyOn(walletSelectors, "selectIsWalletLoading")
@@ -214,7 +214,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockImplementation(() => true);
     jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
       .mockImplementation(() => false);
 
     const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
@@ -224,9 +224,6 @@ describe("ItwWalletCardsContainer", () => {
   it("should render the wallet ready banner", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-    jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
@@ -241,7 +238,7 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
       .mockImplementation(() => true);
     jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(walletSelectors, "selectWalletCardsByCategory")
@@ -254,12 +251,6 @@ describe("ItwWalletCardsContainer", () => {
   });
 
   it("should render the feedback banner", () => {
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
-    jest
-      .spyOn(configSelectors, "isItwEnabledSelector")
-      .mockImplementation(() => true);
     jest
       .spyOn(itwSelectors, "itwShouldRenderFeedbackBannerSelector")
       .mockImplementation(() => true);
