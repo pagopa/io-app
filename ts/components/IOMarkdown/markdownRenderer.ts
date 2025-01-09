@@ -1,6 +1,16 @@
 import { parse as textLintParse } from "@textlint/markdown-to-ast";
-import { AnyTxtNode, TxtParentNode } from "@textlint/ast-node-types";
+import {
+  AnyTxtNode,
+  TxtHeaderNode,
+  TxtLinkNode,
+  TxtListNode,
+  TxtNode,
+  TxtParagraphNode,
+  TxtParentNode,
+  TxtStrNode
+} from "@textlint/ast-node-types";
 import { omit } from "lodash";
+import { isIos } from "../../utils/platform";
 import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
 
 /**
@@ -121,3 +131,70 @@ const insertNewLineAtIndexIfNeeded = (
   }
   return markdownContent;
 };
+
+export const isTxtParentNode = (node: TxtNode): node is TxtParentNode =>
+  node.type === "Paragraph" ||
+  node.type === "Header" ||
+  node.type === "BlockQuote" ||
+  node.type === "List" ||
+  node.type === "ListItem" ||
+  node.type === "Table" ||
+  node.type === "TableRow" ||
+  node.type === "TableCell" ||
+  node.type === "Emphasis" ||
+  node.type === "Strong" ||
+  node.type === "Delete" ||
+  node.type === "Link";
+export const isTxtLinkNode = (node: TxtNode): node is TxtLinkNode =>
+  node.type === "Link";
+export const isTxtStrNode = (node: TxtNode): node is TxtStrNode =>
+  node.type === "Str";
+
+export type LinkData = {
+  text: string;
+  url: string;
+};
+
+export const extractAllLinksFromRootNode = (
+  node: TxtHeaderNode | TxtListNode | TxtParagraphNode
+): ReadonlyArray<LinkData> => {
+  const allLinkData: Array<LinkData> = [];
+  if (node.parent?.type === "Document" && isIos) {
+    extractAllLinksFromNodeWithChildren(node, allLinkData);
+  }
+  return allLinkData;
+};
+
+export const extractAllLinksFromNodeWithChildren = (
+  nodeWithChildren: Readonly<TxtParentNode>,
+  allLinks: Array<LinkData>
+) => {
+  nodeWithChildren.children.forEach(node => {
+    if (isTxtLinkNode(node)) {
+      const composedLink: Array<string> = [];
+      extractLinkDataFromRootNode(node, composedLink);
+      const text = composedLink.join("");
+      const url = node.url;
+      // eslint-disable-next-line functional/immutable-data
+      allLinks.push({
+        text,
+        url
+      });
+    } else if (isTxtParentNode(node)) {
+      extractAllLinksFromNodeWithChildren(node, allLinks);
+    }
+  });
+};
+
+export const extractLinkDataFromRootNode = (
+  inputNode: Readonly<TxtParentNode>,
+  links: Array<string>
+): void =>
+  inputNode.children.forEach(node => {
+    if (isTxtStrNode(node)) {
+      // eslint-disable-next-line functional/immutable-data
+      links.push(node.value);
+    } else if (isTxtParentNode(node)) {
+      extractLinkDataFromRootNode(node, links);
+    }
+  });

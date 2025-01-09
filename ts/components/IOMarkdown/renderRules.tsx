@@ -36,10 +36,12 @@ import {
   TxtStrongNode
 } from "@textlint/ast-node-types";
 import React, { Fragment, useLayoutEffect, useState } from "react";
-import { Dimensions, Image, Text, View } from "react-native";
+import { Dimensions, Image, Pressable, Text, View } from "react-native";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
+import { isAndroid } from "../../utils/platform";
 import { IOMarkdownRenderRules, Renderer } from "./types";
+import { extractAllLinksFromRootNode, LinkData } from "./markdownRenderer";
 
 const BULLET_ITEM_FULL = "\u2022";
 const BULLET_ITEM_EMPTY = "\u25E6";
@@ -109,6 +111,34 @@ export function getTxtNodeKey(txtNode: AnyTxtNode): string {
   return `${txtNode.type}_${encoded}`;
 }
 
+export const generateAccesibilityLinkViewsIfNeeded = (
+  allLinkData: ReadonlyArray<LinkData>,
+  nodeKey: string,
+  onPress: (url: string) => void
+) => {
+  if (allLinkData.length === 0 || isAndroid) {
+    return undefined;
+  }
+  return allLinkData.map((link, index) => (
+    <Pressable
+      accessible={true}
+      accessibilityLabel={link.text}
+      accessibilityRole="link"
+      collapsable={false}
+      collapsableChildren={false}
+      style={{ height: 1 }}
+      key={`${nodeKey}_${index}`}
+      onPress={() => onPress(link.url)}
+    />
+  ));
+};
+
+export const handleOpenLink = (url: string) => {
+  openWebUrl(url, () => {
+    IOToast.error(I18n.t("global.jserror.title"));
+  });
+};
+
 /**
  * This object has as key a`TxtNodeType` and as value a render function related to the `TxtNode` element to display.
  */
@@ -144,10 +174,19 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
         </View>
       );
     }
+
+    const allLinkData = extractAllLinksFromRootNode(paragraph);
+    const nodeKey = getTxtNodeKey(paragraph);
+
     return (
-      <Body key={getTxtNodeKey(paragraph)}>
-        {paragraph.children.map(render)}
-      </Body>
+      <>
+        <Body key={nodeKey}>{paragraph.children.map(render)}</Body>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink
+        )}
+      </>
     );
   },
   /**
@@ -188,18 +227,12 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Link(link: TxtLinkNode, render: Renderer) {
-    const handleOpenLink = () => {
-      openWebUrl(link.url, () => {
-        IOToast.error(I18n.t("global.jserror.title"));
-      });
-    };
-
     return (
       <Body
         weight="Semibold"
         asLink
         key={getTxtNodeKey(link)}
-        onPress={handleOpenLink}
+        onPress={() => handleOpenLink(link.url)}
       >
         {link.children.map(render)}
       </Body>
@@ -264,27 +297,41 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       return <Body>{bulletItem}</Body>;
     }
 
+    const allLinkData = extractAllLinksFromRootNode(list);
+    const nodeKey = getTxtNodeKey(list);
+
     return (
-      <View key={getTxtNodeKey(list)}>
-        {isFirstList && <VSpacer size={8} />}
-        <View style={IOStyles.row}>
-          {isFirstList && <HSpacer size={12} />}
-          <View
-            style={[IOStyles.flex, { flexGrow: 1 }]}
-            accessible={true}
-            accessibilityRole="list"
-          >
-            {list.children.map((child, i) => (
-              <View accessible key={`${child.type}_${i}`} style={IOStyles.row}>
-                {getLeftAdornment(i)}
-                <HSpacer size={8} />
-                {render(child)}
-              </View>
-            ))}
+      <>
+        <View key={nodeKey}>
+          {isFirstList && <VSpacer size={8} />}
+          <View style={IOStyles.row}>
+            {isFirstList && <HSpacer size={12} />}
+            <View
+              style={[IOStyles.flex, { flexGrow: 1 }]}
+              accessible={true}
+              accessibilityRole="list"
+            >
+              {list.children.map((child, i) => (
+                <View
+                  accessible
+                  key={`${child.type}_${i}`}
+                  style={IOStyles.row}
+                >
+                  {getLeftAdornment(i)}
+                  <HSpacer size={8} />
+                  {render(child)}
+                </View>
+              ))}
+            </View>
           </View>
+          {isFirstList && <VSpacer size={8} />}
         </View>
-        {isFirstList && <VSpacer size={8} />}
-      </View>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          handleOpenLink
+        )}
+      </>
     );
   },
   /**

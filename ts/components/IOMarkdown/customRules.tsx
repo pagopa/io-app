@@ -5,8 +5,12 @@ import { isIoInternalLink } from "../ui/Markdown/handlers/link";
 import { handleInternalLink } from "../../utils/internalLink";
 import { openWebUrl } from "../../utils/url";
 import I18n from "../../i18n";
-import { getTxtNodeKey } from "./renderRules";
+import {
+  generateAccesibilityLinkViewsIfNeeded,
+  getTxtNodeKey
+} from "./renderRules";
 import { IOMarkdownRenderRules, Renderer } from "./types";
+import { extractAllLinksFromRootNode } from "./markdownRenderer";
 
 const HEADINGS_MAP = {
   1: MdH1,
@@ -17,35 +21,43 @@ const HEADINGS_MAP = {
   6: Body
 };
 
+const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
+  if (isIoInternalLink(url)) {
+    handleInternalLink(linkTo, url);
+  } else {
+    openWebUrl(url, () => {
+      IOToast.error(I18n.t("global.jserror.title"));
+    });
+  }
+};
+
 export const generateMessagesAndServicesRules = (
   linkTo: (path: string) => void
 ): Partial<IOMarkdownRenderRules> => ({
   Header(header: TxtHeaderNode, render: Renderer) {
     const Heading = HEADINGS_MAP[header.depth];
 
+    const allLinkData = extractAllLinksFromRootNode(header);
+    const nodeKey = getTxtNodeKey(header);
+
     return (
-      <Heading key={getTxtNodeKey(header)}>
-        {header.children.map(render)}
-      </Heading>
+      <>
+        <Heading key={nodeKey}>{header.children.map(render)}</Heading>
+        {generateAccesibilityLinkViewsIfNeeded(
+          allLinkData,
+          nodeKey,
+          (url: string) => handleOpenLink(linkTo, url)
+        )}
+      </>
     );
   },
   Link(link: TxtLinkNode, render: Renderer) {
-    const handlePress = () => {
-      if (isIoInternalLink(link.url)) {
-        handleInternalLink(linkTo, link.url);
-      } else {
-        openWebUrl(link.url, () => {
-          IOToast.error(I18n.t("global.jserror.title"));
-        });
-      }
-    };
-
     return (
       <Body
         weight="Semibold"
         asLink
         key={getTxtNodeKey(link)}
-        onPress={handlePress}
+        onPress={() => handleOpenLink(linkTo, link.url)}
       >
         {link.children.map(render)}
       </Body>
