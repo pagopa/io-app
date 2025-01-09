@@ -6,6 +6,9 @@ import { currentRouteSelector } from "./navigation";
 
 export const screenBlackList = new Set([
   PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD as string,
+  ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN,
+  ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+  ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW,
   ...Object.values(ITW_ROUTES.PRESENTATION)
 ]);
 
