@@ -26,10 +26,11 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { getFullLocale } from "../../../../utils/locale";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
+import { itwUnflagCredentialAsRequested } from "../../common/store/actions/preferences.ts";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -57,6 +58,7 @@ type ContentViewProps = { failure: CredentialIssuanceFailure };
  * Renders the content of the screen
  */
 const ContentView = ({ failure }: ContentViewProps) => {
+  const store = useIOStore();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
@@ -133,6 +135,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
           };
         // Dynamic errors extracted from the entity configuration, with fallback
         case CredentialIssuanceFailureType.INVALID_STATUS:
+          // Unflag the credential since the user is not entitled to it or it's not available
+          pipe(
+            credentialType,
+            O.map(value => {
+              store.dispatch(itwUnflagCredentialAsRequested(value));
+            })
+          );
+
           return {
             title:
               invalidStatusDetails.message?.title ??
