@@ -90,7 +90,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
       <VStack space={24}>
         <View>
           <ListItemHeader
-            iconName="gallery"
+            iconName="typeface"
             label={I18n.t(
               "profile.preferences.list.appearance.typefaceStyle.title"
             )}
@@ -105,7 +105,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
         <View>
           <ListItemHeader
-            iconName="gallery"
+            iconName="theme"
             label={I18n.t("profile.preferences.list.appearance.theme.title")}
             endElement={{
               type: "badge",
