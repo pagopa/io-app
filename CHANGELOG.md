@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.9](https://github.com/pagopa/io-app/compare/2.80.0-rc.8...2.80.0-rc.9) (2025-01-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1638](https://pagopa.atlassian.net/browse/SIW-1638)] Handle unknown credential status ([#6576](https://github.com/pagopa/io-app/issues/6576)) ([694b118](https://github.com/pagopa/io-app/commit/694b1189b8866db5527522b4ab51dfa1e4cac988))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1639](https://pagopa.atlassian.net/browse/SIW-1639)] Show error banner when wallet instance status check fails ([#6568](https://github.com/pagopa/io-app/issues/6568)) ([b490c39](https://github.com/pagopa/io-app/commit/b490c39da56b8688c042d760dc5d71ffef87a852))
+
+## [2.80.0-rc.8](https://github.com/pagopa/io-app/compare/2.80.0-rc.7...2.80.0-rc.8) (2025-01-08)
+
+
+### Chores
+
+* [[IOPLT-787](https://pagopa.atlassian.net/browse/IOPLT-787)] Upgrade react-native-image-picker to fix android policy issue ([#6482](https://github.com/pagopa/io-app/issues/6482)) ([3467298](https://github.com/pagopa/io-app/commit/346729841d1bb66b1918224ff4bf7ed75cd7f870))
+
 ## [2.80.0-rc.7](https://github.com/pagopa/io-app/compare/2.80.0-rc.6...2.80.0-rc.7) (2025-01-07)
 
 

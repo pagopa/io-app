@@ -284,4 +284,16 @@ describe("getCredentialStatus", () => {
       expect(getCredentialStatus(mockCredential)).toEqual("valid");
     });
   });
+
+  describe("unknown", () => {
+    it("should return unknown when the status attestation could not be fetched", () => {
+      const mockCredential: StoredCredential = {
+        ...ItwStoredCredentialsMocks.eid,
+        storedStatusAttestation: {
+          credentialStatus: "unknown"
+        }
+      };
+      expect(getCredentialStatus(mockCredential)).toEqual("unknown");
+    });
+  });
 });

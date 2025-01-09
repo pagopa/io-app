@@ -16,7 +16,8 @@ describe("ItwCredentialCard", () => {
     "valid",
     "expired",
     "expiring",
-    "pending"
+    "pending",
+    "unknown"
   ] as ReadonlyArray<ItwCredentialStatus>)(
     "should match snapshot when status is %p",
     status => {
