@@ -188,5 +188,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
-  return <OperationResultScreenContent {...resultScreenProps} />;
+  return (
+    <OperationResultScreenContent
+      {...resultScreenProps}
+      subtitleProps={{ textBreakStrategy: "simple" }}
+    />
+  );
 };
