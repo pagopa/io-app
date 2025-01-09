@@ -525,8 +525,8 @@ profile:
         title: Inoltro dei messaggi via email
         subtitle: Ricevi un’anteprima dei messaggi
       appearance:
-        title: Aspetto
-        subtitle: Personalizza l'interfaccia dell'app
+        title: Aspetto dell'app
+        subtitle: Scegli come personalizzare l’interfaccia
         typefaceStyle:
           title: Stile carattere
           comfortable:
