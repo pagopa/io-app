@@ -36,8 +36,6 @@ const decodedSuccessResponse = {
   headers: {}
 };
 
-const successResponse = E.right(decodedSuccessResponse) as ResponseType;
-
 const action = fimsHistoryGet.request({});
 
 describe("handleGetFimsHistorySaga", () => {
@@ -52,6 +50,7 @@ describe("handleGetFimsHistorySaga", () => {
       .spyOn(TRACK_FAILURE, "trackHistoryFailure")
       .mockImplementation(mockTrackFailure);
 
+    const successResponse = E.right(decodedSuccessResponse) as ResponseType;
     const resultPromiseSuccess = Promise.resolve(successResponse);
     const mockSuccessClient = () => resultPromiseSuccess;
     testSaga(handleGetFimsHistorySaga, mockSuccessClient, "MOCK_BEARER", action)
@@ -160,6 +159,7 @@ describe("handleGetFimsHistorySaga", () => {
 
 describe("extractFimsHistoryResponseAction", () => {
   it("Should return fimsHistoryGet.success if the response is [right], with a 200 status", () => {
+    const successResponse = E.right(decodedSuccessResponse) as ResponseType;
     expect(extractFimsHistoryResponseAction(successResponse)).toEqual(
       fimsHistoryGet.success(decodedSuccessResponse.value)
     );
