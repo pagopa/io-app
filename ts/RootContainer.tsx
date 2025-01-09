@@ -5,7 +5,6 @@ import {
   AppState,
   AppStateStatus,
   NativeEventSubscription,
-  Platform,
   StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
@@ -101,7 +100,7 @@ class RootContainer extends React.PureComponent<Props> {
           barStyle={"dark-content"}
           backgroundColor={customVariables.androidStatusBarColor}
         />
-        {Platform.OS === "android" && <FlagSecureComponent />}
+        <FlagSecureComponent />
 
         <IONavigationContainer
           routingInstrumentation={this.props.routingInstumentation}

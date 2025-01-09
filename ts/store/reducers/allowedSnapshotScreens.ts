@@ -1,10 +1,12 @@
 import { createSelector } from "reselect";
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { isDebugModeEnabledSelector } from "./debug";
 import { currentRouteSelector } from "./navigation";
 
 export const screenBlackList = new Set([
-  PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD as string
+  PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD as string,
+  ...Object.values(ITW_ROUTES.PRESENTATION)
 ]);
 
 /**
