@@ -1,4 +1,5 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { TrustmarkFailure } from "./failure";
 
 export type Context = {
   /**
@@ -25,4 +26,16 @@ export type Context = {
    * The trustmark url
    */
   trustmarkUrl?: string;
+  /**
+   * The failure of the trustmark machine
+   */
+  failure?: TrustmarkFailure;
+  /**
+   * The number of attempts made by the user to get the trustmark
+   */
+  attempts?: number;
+  /**
+   * Time after which the user can attempt again to get the trustmark
+   */
+  nextAttemptAt?: Date;
 };

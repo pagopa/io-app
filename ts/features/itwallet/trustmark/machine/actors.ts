@@ -5,10 +5,9 @@ import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../../store/reducers/authentication";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
-import { getCredentialTrustmark } from "../../common/utils/itwTrustmarkUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
+import * as itwTrustmarkUtils from "../utils";
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
@@ -20,7 +19,7 @@ export type GetCredentialTrustmarkUrlActorInput = {
 };
 
 export type GetCredentialTrustmarkUrlActorOutput = Awaited<
-  ReturnType<typeof getCredentialTrustmark>
+  ReturnType<typeof itwTrustmarkUtils.getCredentialTrustmark>
 >;
 
 /**
@@ -45,17 +44,10 @@ export const createItwTrustmarkActorsImplementation = (
       /**
        * Get the wallet instance attestation
        */
-      const wia = await itwAttestationUtils.getAttestation(
+      return await itwAttestationUtils.getAttestation(
         integrityKeyTag.value,
         sessionToken
       );
-
-      /**
-       * Store the wallet instance attestation in the store to persist it across sessions
-       */
-      store.dispatch(itwWalletInstanceAttestationStore(wia));
-
-      return wia;
     });
 
   const getCredentialTrustmarkActor = fromPromise<
@@ -69,7 +61,7 @@ export const createItwTrustmarkActorsImplementation = (
     assert(input.credential, "credential is undefined");
 
     // Generate trustmark url to be presented
-    return await getCredentialTrustmark(
+    return await itwTrustmarkUtils.getCredentialTrustmark(
       input.walletInstanceAttestation,
       input.credential,
       itwEaaVerifierBaseUrl
