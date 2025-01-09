@@ -1,13 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import {
-  H6,
-  IOColors,
-  IOStyles,
-  Icon,
-  PressableListItemBase
-} from "@pagopa/io-app-design-system";
+import { H6, IOStyles, RadioGroup } from "@pagopa/io-app-design-system";
 import { default as React } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -17,12 +11,6 @@ import {
   multiRequiredCriteriaSelector,
   selectCurrentMultiSelfDeclarationPage
 } from "../machine/selectors";
-
-type ListItemProps = {
-  text: string;
-  checked: boolean;
-  onPress: () => void;
-};
 
 const MultiValuePrerequisitesScreen = () => {
   const pagerRef = React.useRef<PagerView>(null);
@@ -65,17 +53,17 @@ const MultiValuePrerequisiteItemScreenContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
-  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
+  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(
     undefined
   );
 
   const handleContinuePress = () => {
-    if (selectedIndex !== undefined) {
+    if (selectedValue !== undefined) {
       machine.send({
         type: "select-multi-consent",
         data: {
           _type: selfDeclaration._type,
-          value: selfDeclaration.value[selectedIndex],
+          value: selectedValue,
           code: selfDeclaration.code
         }
       });
@@ -95,7 +83,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
         type: "SingleButton",
         primary: {
           onPress: handleContinuePress,
-          disabled: selectedIndex === undefined,
+          disabled: selectedValue === undefined,
           label: I18n.t("global.buttons.continue")
         }
       }}
@@ -118,43 +106,17 @@ const MultiValuePrerequisiteItemScreenContent = ({
       ]}
     >
       <H6>{selfDeclaration.description}</H6>
-      {selfDeclaration.value.map((answer, index) => (
-        <CustomListItem
-          key={index}
-          text={answer}
-          checked={index === selectedIndex}
-          onPress={() => setSelectedIndex(index)}
-        />
-      ))}
+      <RadioGroup<string>
+        type="radioListItem"
+        items={selfDeclaration.value.map((answer, index) => ({
+          id: index.toString(),
+          value: answer
+        }))}
+        selectedItem={selectedValue}
+        onPress={value => setSelectedValue(value)}
+      />
     </IOScrollViewWithLargeHeader>
   );
 };
-
-const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
-  <View style={styles.outerListItem}>
-    <PressableListItemBase onPress={onPress}>
-      <View
-        style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.innerListItem]}
-      >
-        <H6 color={"bluegreyDark"}>{text}</H6>
-        <Icon
-          name={checked ? "legRadioOn" : "legRadioOff"}
-          size={24}
-          color={checked ? "blue" : "bluegrey"}
-        />
-      </View>
-    </PressableListItemBase>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  outerListItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: IOColors["grey-100"]
-  },
-  innerListItem: {
-    paddingVertical: 4
-  }
-});
 
 export default MultiValuePrerequisitesScreen;
