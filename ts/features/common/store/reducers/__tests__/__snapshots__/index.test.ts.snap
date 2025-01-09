@@ -132,7 +132,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "walletInstance": {
       "attestation": undefined,
-      "status": undefined,
+      "status": {
+        "kind": "PotNone",
+      },
     },
   },
   "landingBanners": {
