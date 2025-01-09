@@ -6,6 +6,8 @@ import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
 import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/selectors";
 import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../../itwallet/walletInstance/store/selectors";
+import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   WalletCard,
   WalletCardCategory,
@@ -163,3 +165,10 @@ export const shouldRenderWalletCategorySelector = createSelector(
   (isFilteringEnabled, filter, category) =>
     !isFilteringEnabled || filter === undefined || filter === category
 );
+
+/**
+ * Determines whether the IT Wallet cards section is rendered in the wallet screen.
+ */
+export const shouldRenderItwCardsContainerSelector = (state: GlobalState) =>
+  isItwEnabledSelector(state) &&
+  !itwIsWalletInstanceStatusFailureSelector(state);
