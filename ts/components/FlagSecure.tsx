@@ -9,8 +9,9 @@ type Props = ReturnType<typeof mapStateToProps>;
 
 /**
  *
- * Disable screenshots on iOS. The library implementation uses a hidden secure text field,
- * as iOS does not expose an API to disable screenshots.
+ * Disable screenshots.
+ * On Android, it enables or disables FLAG_SECURE based on the isAllowedSnapshotCurrentScreen prop.
+ * On iOS, uses a hidden secure text field as iOS does not expose an API to disable screenshots.
  *
  * @param props
  * @constructor

@@ -118,7 +118,6 @@
     "react-native-easing-gradient": "^1.1.1",
     "react-native-exception-handler": "^2.10.8",
     "react-native-fingerprint-scanner": "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d",
-    "react-native-flag-secure-android": "^1.0.3",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^2.18.1",
     "react-native-haptic-feedback": "^2.3.3",

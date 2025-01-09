@@ -11,8 +11,7 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-    "useUnknownInCatchVariables": true,
-    "moduleSuffixes": [".android", ".ios", ""]
+    "useUnknownInCatchVariables": true
   },
   "exclude": [
     "android",
