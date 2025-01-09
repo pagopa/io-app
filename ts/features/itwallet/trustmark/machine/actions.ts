@@ -71,15 +71,17 @@ export const createItwTrustmarkActionsImplementation = (
       timeDiffInSeconds > 60
         ? Math.ceil(timeDiffInSeconds / 60)
         : timeDiffInSeconds;
-    const timeUnit =
-      timeDiffInSeconds > 60
-        ? I18n.t(`date.time.minute${time > 1 ? "s" : ""}`)
-        : I18n.t(`date.time.second${time > 1 ? "s" : ""}`);
+
+    const timeUnit = timeDiffInSeconds > 60 ? "minutes" : "seconds";
+
+    const timeString = I18n.t(`date.time.${timeUnit}`, {
+      defaultValue: I18n.t(`date.time.${timeUnit}.other`, { count: time }),
+      count: time
+    });
 
     toast.error(
       I18n.t("features.itWallet.trustmark.failure.toast", {
-        time,
-        timeUnit
+        time: timeString
       })
     );
   };

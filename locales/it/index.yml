@@ -58,10 +58,14 @@ date:
     - "am"
     - "pm"
   time:
-    minute: "minuto"
-    minutes: "minuti"
-    second: "secondo"
-    seconds: "secondi"
+    minutes:
+      zero: "0 minuti"
+      one: "1 minuto"
+      other: "{{count}} minuti"
+    seconds:
+      zero: "0 secondi"
+      one: "1 secondo"
+      other: "{{count}} secondi"
 global:
   why: "Perché?"
   you: "TU"
@@ -3245,7 +3249,7 @@ features:
         empty:
           title: Nessuna ricevuta trovata
           subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
-        emptyPayer: 
+        emptyPayer:
           title: Qui vedrai le ricevute dei pagamenti fatti in app
     details:
       payPal:
@@ -3550,7 +3554,7 @@ features:
       failure:
         description: Abbiamo avuto un problema nel generare il nuovo QR Code.
         action: Riprova
-        toast: "Puoi riprovare tra {{time}} {{timeUnit}}"
+        toast: "Puoi riprovare tra {{time}}"
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
