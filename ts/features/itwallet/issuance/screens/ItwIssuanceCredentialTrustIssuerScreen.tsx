@@ -53,8 +53,9 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { itwIpzsPrivacyUrl } from "../../../../config";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -101,6 +102,9 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
+  const privacyUrl = useIOSelector(state =>
+    replaceBaseUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -208,7 +212,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           onLinkOpen={trackOpenItwTos}
         >
           {I18n.t("features.itWallet.issuance.credentialAuth.tos", {
-            privacyUrl: itwIpzsPrivacyUrl
+            privacyUrl
           })}
         </ItwMarkdown>
       </ContentWrapper>

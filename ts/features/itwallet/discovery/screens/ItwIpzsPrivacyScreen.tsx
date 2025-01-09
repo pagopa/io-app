@@ -6,13 +6,17 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
 import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { trackOpenItwTosAccepted } from "../../analytics";
-import { itwIpzsPrivacyUrl } from "../../../../config";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIOSelector } from "../../../../store/hooks";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-
+  const privacyUrl = useIOSelector(state =>
+    replaceBaseUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
   const handleContinuePress = () => {
     trackOpenItwTosAccepted();
     machineRef.send({ type: "accept-ipzs-privacy" });
@@ -50,7 +54,7 @@ const ItwIpzsPrivacyScreen = () => {
       </ContentWrapper>
       <ItwPrivacyWebViewComponent
         source={{
-          uri: itwIpzsPrivacyUrl
+          uri: privacyUrl
         }}
         onAcceptTos={handleContinuePress}
         onLoadEnd={onLoadEnd}

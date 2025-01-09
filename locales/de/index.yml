@@ -110,7 +110,6 @@ global:
       open:
         label: "Kontextbezogene Hilfe"
         hint: "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
-  ioWebSite: "https://io.italia.it"
   symbols:
     question: "?"
     asterisk: "*"

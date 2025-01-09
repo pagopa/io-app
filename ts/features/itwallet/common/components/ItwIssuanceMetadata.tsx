@@ -10,7 +10,9 @@ import {
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
-import { itwIpzsPrivacyUrl } from "../../../../config";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
+import { useIOSelector } from "../../../../store/hooks";
+import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
@@ -98,6 +100,9 @@ export const ItwIssuanceMetadata = ({
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
   const authSource = getAuthSource(credential);
+  const privacyUrl = useIOSelector(state =>
+    replaceBaseUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+  );
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
@@ -108,7 +113,7 @@ export const ItwIssuanceMetadata = ({
         contentBody: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.about.subtitle",
           {
-            privacyUrl: itwIpzsPrivacyUrl
+            privacyUrl
           }
         ),
         onPress: () =>
@@ -116,7 +121,7 @@ export const ItwIssuanceMetadata = ({
             CREDENTIALS_MAP[credential.credentialType]
           )
       }),
-      [credential.credentialType]
+      [credential.credentialType, privacyUrl]
     );
 
   const authSourceBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =

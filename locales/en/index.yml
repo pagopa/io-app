@@ -110,7 +110,6 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
-  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
     asterisk: "*"

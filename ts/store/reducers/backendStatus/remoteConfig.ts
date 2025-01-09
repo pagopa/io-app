@@ -306,7 +306,7 @@ export const absolutePortalLinksFallback = {
  */
 export const absolutePortalLinksSelector = createSelector(
   remoteConfigSelector,
-  (remoteConfig): { io_web: string; io_showcase: string } =>
+  remoteConfig =>
     pipe(
       remoteConfig,
       O.map(
@@ -316,6 +316,33 @@ export const absolutePortalLinksSelector = createSelector(
     )
 );
 
+type hostType = keyof ReturnType<typeof absolutePortalLinksSelector>;
+
+/**
+ * Selector to generate a complete URL by replacing the base domain with a dynamic value from absolutePortalLinks.
+ * This is useful when URLs need to be dynamically constructed based on remote configuration or state.
+ */
+export const replaceBaseUrlSelector = createSelector(
+  // Step 1: Input selector that retrieves the absolutePortalLinks object from the state.
+  absolutePortalLinksSelector,
+
+  // Step 2: Extract the base URL (host key) from the input parameters.
+  (_: GlobalState, baseUrl: hostType) => baseUrl,
+
+  // Step 3: Extract the body URL (the path to append to the base URL) from the input parameters.
+  (_: GlobalState, __: hostType, bodyUrl: string) => bodyUrl,
+
+  // Step 4: Combine the absolutePortalLinks object, the base URL key, and the body URL to create the full URL.
+  (absolutePortalLinks, baseUrl, bodyUrl) => {
+    try {
+      // Concatenate the base URL with the body URL.
+      return `${absolutePortalLinks[baseUrl]}${bodyUrl}`;
+    } catch (error) {
+      // In case of any error (e.g., missing body URL key), return the base URL as a fallback.
+      return baseUrl;
+    }
+  }
+);
 /**
  * Return the remote config about IT-WALLET enabled/disabled
  * if there is no data or the local Feature Flag is disabled,

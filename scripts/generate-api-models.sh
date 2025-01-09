@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IO_BACKEND_VERSION=v16.4.0-RELEASE
-IO_SERVICES_METADATA_VERSION=1.0.51
+IO_SERVICES_METADATA_VERSION=IOPID-2581-add-portal-links
 
 declare -a apis=(
   # Backend APIs

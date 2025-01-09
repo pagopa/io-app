@@ -1,18 +1,28 @@
 import * as React from "react";
 import { Modal } from "react-native";
 import I18n from "../../../i18n";
-import { unsupportedDeviceLearnMoreUrl } from "../../../config";
 import { openWebUrl } from "../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-
-const handleLearnMorePress = () => {
-  openWebUrl(unsupportedDeviceLearnMoreUrl);
-};
+import { useIOSelector } from "../../../store/hooks";
+import { replaceBaseUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { UNSUPPORTED_DEVICE_FAQ_URL_BODY } from "../../../urls";
 
 // This component Represents a blocking error screen that you can only escape with the rendered button(s).
 const UnsupportedDeviceScreen = () => {
   useAvoidHardwareBackButton();
+
+  const unsupportedDeviceLearnMoreUrl = useIOSelector(state =>
+    replaceBaseUrlSelector(
+      state,
+      "io_showcase",
+      UNSUPPORTED_DEVICE_FAQ_URL_BODY
+    )
+  );
+
+  const handleLearnMorePress = () => {
+    openWebUrl(unsupportedDeviceLearnMoreUrl);
+  };
 
   const title = I18n.t("unsupportedDevice.title");
   const subtitle = I18n.t("unsupportedDevice.subtitle");
