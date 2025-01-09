@@ -5,13 +5,16 @@ import {
   IOColors,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
+import Color from "color";
 import React from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import I18n from "../../../../i18n";
 
+export type TagColorScheme = "default" | "faded" | "greyscale";
+
 type DigitalVersionBadgeProps = {
   credentialType: string;
-  isFaded?: boolean;
+  colorScheme: TagColorScheme;
 };
 
 type CredentialTypesProps = {
@@ -19,14 +22,11 @@ type CredentialTypesProps = {
   foreground: string;
 };
 
-const ItwDigitalVersionBadge = ({
-  credentialType,
-  isFaded = false
-}: DigitalVersionBadgeProps) => {
-  const mapCredentialTypes: Record<
-    NonNullable<string>,
-    CredentialTypesProps
-  > = {
+const getColorPropsByScheme = (
+  credentialType: string,
+  colorScheme: TagColorScheme
+) => {
+  const mapCredentialTypes: Record<string, CredentialTypesProps> = {
     MDL: {
       foreground: "#5E303E",
       background: "#FADCF5"
@@ -41,9 +41,30 @@ const ItwDigitalVersionBadge = ({
     }
   };
 
-  const colorProps = mapCredentialTypes[credentialType];
+  const baseColorProps = mapCredentialTypes[credentialType];
+
+  if (!baseColorProps) {
+    return;
+  }
+
+  if (colorScheme === "greyscale") {
+    return {
+      foreground: Color(baseColorProps.foreground).grayscale().hex(),
+      background: Color(baseColorProps.background).grayscale().hex()
+    };
+  }
+
+  return baseColorProps;
+};
+
+const ItwDigitalVersionBadge = ({
+  credentialType,
+  colorScheme = "default"
+}: DigitalVersionBadgeProps) => {
+  const colorProps = getColorPropsByScheme(credentialType, colorScheme);
+
+  // If a credential does not have the color configuration means that we should not display the badge
   if (!colorProps) {
-    // If a credential does not have the color configuration means that we should not display the badge
     return null;
   }
 
@@ -52,7 +73,7 @@ const ItwDigitalVersionBadge = ({
   return (
     <View style={styles.wrapper}>
       <View style={[styles.badge, { backgroundColor: background }]}>
-        {isFaded && <View style={styles.faded} />}
+        {colorScheme !== "default" && <View style={styles.faded} />}
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"
