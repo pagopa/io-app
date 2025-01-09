@@ -50,7 +50,7 @@ export const useItwWalletInstanceRevocationAlert = () => {
           itwDocsOnIOMultipleDevicesUrl,
           walletInstanceStatus.revocation_reason
         );
-        dispatch(itwUpdateWalletInstanceStatus(undefined));
+        dispatch(itwUpdateWalletInstanceStatus.cancel());
       }
     }, [
       walletInstanceStatus,

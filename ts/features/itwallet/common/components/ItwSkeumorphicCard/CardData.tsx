@@ -75,7 +75,7 @@ const MdlFrontData = ({ claims }: DataComponentProps) => {
         position={{ left: `${cols[0]}%`, top: `${rows[5]}%` }}
       />
       <CardClaim
-        claim={claims["driving_privileges_details"]}
+        claim={claims["driving_privileges"]}
         position={{ left: "8%", bottom: "17.9%" }}
       />
     </View>
