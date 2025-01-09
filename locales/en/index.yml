@@ -3292,6 +3292,7 @@ features:
         invalid: Non valida
         verificationExpiring: Verifica
         verificationExpired: Verifica
+        unknown: Non disponibile
       digital: Versione digitale
     generic:
       error:
@@ -3309,6 +3310,9 @@ features:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
+      walletNotAvailable:
+        message: Abbiamo avuto un problema nel recuperare i tuoi documenti.
+        cta: Chiudi e riapri l'app per riprovare.
     verifiableCredentials:
       claims:
         uniqueId: "ID univoco"
@@ -3545,6 +3549,10 @@ features:
         openPdf: Show document
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
+      statusAttestationUnknown:
+        title: Non siamo riusciti a caricare {{credentialName}}
+        content: Chiudi e riapri l'app per riprovare.
+        primaryAction: Ho capito
     trustmark:
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
       qrCode: QR code autenticità credenziale
