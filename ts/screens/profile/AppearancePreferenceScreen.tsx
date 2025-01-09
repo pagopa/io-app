@@ -80,15 +80,17 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
   return (
     <IOScrollViewWithLargeHeader
-      includeContentMargins
       title={{
         label: I18n.t("profile.preferences.list.appearance.title")
       }}
+      description={I18n.t("profile.preferences.list.appearance.subtitle")}
       headerActionsProp={{ showHelp: true }}
+      includeContentMargins
     >
       <VStack space={24}>
         <View>
           <ListItemHeader
+            iconName="gallery"
             label={I18n.t(
               "profile.preferences.list.appearance.typefaceStyle.title"
             )}
@@ -103,6 +105,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
         <View>
           <ListItemHeader
+            iconName="gallery"
             label={I18n.t("profile.preferences.list.appearance.theme.title")}
             endElement={{
               type: "badge",
