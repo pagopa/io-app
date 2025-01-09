@@ -28,6 +28,7 @@ type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string | Array<BodyProps>;
+  subtitleProps?: Pick<BodyProps, "textBreakStrategy" | "lineBreakStrategyIOS">;
   action?: Pick<
     ButtonSolidProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
@@ -52,7 +53,8 @@ const OperationResultScreenContent = forwardRef<
       secondaryAction,
       children,
       testID,
-      isHeaderVisible
+      isHeaderVisible,
+      subtitleProps
     },
     ref
   ) => (
@@ -81,7 +83,9 @@ const OperationResultScreenContent = forwardRef<
           <>
             <VSpacer size={8} />
             {typeof subtitle === "string" ? (
-              <Body style={{ textAlign: "center" }}>{subtitle}</Body>
+              <Body style={{ textAlign: "center" }} {...subtitleProps}>
+                {subtitle}
+              </Body>
             ) : (
               <ComposedBodyFromArray body={subtitle} textAlign="center" />
             )}
