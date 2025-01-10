@@ -129,14 +129,15 @@ export type ItwCed = "not_available" | "valid" | "not_valid" | "expiring";
  */
 export const ID_STATUS_MAP: Record<
   ItwCredentialStatus,
-  "valid" | "not_valid" | "expiring"
+  "valid" | "not_valid" | "expiring" | "unknown"
 > = {
   valid: "valid",
   invalid: "not_valid",
   expired: "not_valid",
   expiring: "expiring",
   jwtExpired: "not_valid",
-  jwtExpiring: "expiring"
+  jwtExpiring: "expiring",
+  unknown: "unknown"
 };
 
 // #region SCREEN VIEW EVENTS
