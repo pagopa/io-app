@@ -526,7 +526,7 @@ profile:
         subtitle: Receive message previews
       appearance:
         title: Appearance
-        subtitle: Choose how to customise the style of the app
+        subtitle: Choose how to customise the app
         typefaceStyle:
           title: Typeface style
           comfortable:
