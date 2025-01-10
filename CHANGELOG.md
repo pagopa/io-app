@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.80.0-rc.10](https://github.com/pagopa/io-app/compare/2.80.0-rc.9...2.80.0-rc.10) (2025-01-09)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1933](https://pagopa.atlassian.net/browse/SIW-1933)] Handle Trustmark QR code generation failures ([#6558](https://github.com/pagopa/io-app/issues/6558)) ([b207270](https://github.com/pagopa/io-app/commit/b207270adeb6b14bee81ee1e5a02344ff1b98aca))
+* **IT Wallet:** [[SIW-1949](https://pagopa.atlassian.net/browse/SIW-1949)] Display email address in the same line in issuance failure screen ([#6589](https://github.com/pagopa/io-app/issues/6589)) ([22ca3e6](https://github.com/pagopa/io-app/commit/22ca3e692394a3d5395646f6f299293e4f62f480))
+
 ## [2.80.0-rc.9](https://github.com/pagopa/io-app/compare/2.80.0-rc.8...2.80.0-rc.9) (2025-01-08)
 
 
