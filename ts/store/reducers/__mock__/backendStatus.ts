@@ -389,6 +389,10 @@ export const baseBackendConfig: Config = {
     optInServiceId: ""
   },
   payments: {},
+  absolutePortalLinks: {
+    io_showcase: "https://io.italia.it/",
+    io_web: "https://ioapp.it/"
+  },
   tos: {
     tos_url: "https://www.example.com",
     tos_version: 3.2

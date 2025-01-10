@@ -309,9 +309,7 @@ export const absolutePortalLinksSelector = createSelector(
   remoteConfig =>
     pipe(
       remoteConfig,
-      O.map(
-        config => config.absolutePortalLinks ?? absolutePortalLinksFallback
-      ),
+      O.map(config => config.absolutePortalLinks),
       O.getOrElse(() => absolutePortalLinksFallback)
     )
 );
