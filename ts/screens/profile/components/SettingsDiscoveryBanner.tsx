@@ -54,6 +54,7 @@ export const SettingsDiscoveryBanner = ({
         onClose={closeHandler}
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
+        testID="settingsDiscoveryBannerCTA"
       />
     </View>
   );
