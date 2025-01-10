@@ -1,9 +1,7 @@
 import {
-  H6,
   ListItemHeader,
   ListItemNav,
-  ListItemNavAlert,
-  VSpacer
+  ListItemNavAlert
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";

@@ -4,7 +4,6 @@ import {
   ContentWrapper,
   H6,
   LabelMini,
-  ListItemHeader,
   Pictogram,
   Tag,
   VSpacer
