@@ -15,6 +15,8 @@ export type QrCodeImageProps = {
   correctionLevel?: QRCodeProps["ecl"];
   // Accessibility
   accessibilityLabel?: string;
+  // Callback to handle the error if the QR Code generation fails
+  onError?: (error: Error) => void;
 };
 
 const defaultAccessibilityLabel = "QR Code";
@@ -27,7 +29,8 @@ const QrCodeImage = ({
   size = 200,
   backgroundColor,
   correctionLevel = "H",
-  accessibilityLabel = defaultAccessibilityLabel
+  accessibilityLabel = defaultAccessibilityLabel,
+  onError
 }: QrCodeImageProps) => {
   const { width } = useWindowDimensions();
   const realSize = useMemo<number>(() => {
@@ -49,6 +52,7 @@ const QrCodeImage = ({
         size={realSize}
         ecl={correctionLevel}
         backgroundColor={backgroundColor}
+        onError={onError}
       />
     </View>
   ) : (
