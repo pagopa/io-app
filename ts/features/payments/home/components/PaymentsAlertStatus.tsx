@@ -1,12 +1,19 @@
-import * as React from "react";
-import { constVoid } from "fp-ts/lib/function";
 import { Alert } from "@pagopa/io-app-design-system";
-import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
+import { constVoid } from "fp-ts/lib/function";
+import * as React from "react";
 import { GestureResponderEvent } from "react-native";
+import Animated, {
+  FadeIn,
+  FadeOut,
+  LinearTransition
+} from "react-native-reanimated";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
-import { getFullLocale } from "../../../../utils/locale";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
 import { openWebUrl } from "../../../../utils/url";
 import { getAlertVariant } from "../../common/utils";
 
@@ -23,7 +30,7 @@ export const PaymentsAlertStatus = () => {
   const handleOnPressAlertStatusInfo = (_: GestureResponderEvent) => {
     if (alertInfo && alertInfo.web_url && alertInfo.web_url[getFullLocale()]) {
       openWebUrl(
-        alertInfo.web_url[getFullLocale()] ?? alertInfo.web_url["it-IT"]
+        alertInfo.web_url[fallbackForLocalizedMessageKeys(getFullLocale())]
       );
     }
   };
@@ -32,11 +39,11 @@ export const PaymentsAlertStatus = () => {
     <Animated.View
       entering={FadeIn.duration(200)}
       exiting={FadeOut.duration(200)}
-      layout={Layout.duration(200)}
+      layout={LinearTransition.duration(200)}
     >
       <Alert
         content={
-          alertInfo.message[getFullLocale()] ?? alertInfo.message["it-IT"]
+          alertInfo.message[fallbackForLocalizedMessageKeys(getFullLocale())]
         }
         variant={getAlertVariant(alertInfo.level)}
         action={actionLabel}
