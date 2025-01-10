@@ -1,9 +1,6 @@
 import { Credential } from "@pagopa/io-react-native-wallet";
-import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
-import {
-  getCredentialDocumentNumber,
-  getCredentialTrustmark
-} from "../itwTrustmarkUtils";
+import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import { getCredentialDocumentNumber, getCredentialTrustmark } from "..";
 
 jest.mock("@pagopa/io-react-native-wallet", () => ({
   ...jest.requireActual("@pagopa/io-react-native-wallet"),
@@ -14,7 +11,7 @@ jest.mock("@pagopa/io-react-native-wallet", () => ({
   }
 }));
 
-describe("itwTrustmarkUtils", () => {
+describe("ITW trustmark utils", () => {
   describe("getCredentialDocumentNumber", () => {
     it.each([
       ["MDL", ItwStoredCredentialsMocks.mdl, "RM8375131N"],
