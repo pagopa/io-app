@@ -38,7 +38,7 @@ describe("settingsDiscoveryBanner", () => {
       <SettingsDiscoveryBanner handleOnClose={() => null} />
     );
     const cta = component.getByTestId("settingsDiscoveryBannerCTA");
-    fireEvent(cta, "press");
+    fireEvent(cta, "onPress");
     expect(spyOnMockedTrackSettingsDiscoverBannerTap).toHaveBeenCalledTimes(1);
   });
   it("should have called 'trackSettingsDiscoverBannerClosure' on first rendering", () => {
@@ -51,7 +51,7 @@ describe("settingsDiscoveryBanner", () => {
     const closeButton = component.getByA11yLabel(
       I18n.t("global.buttons.close")
     );
-    fireEvent(closeButton, "press");
+    fireEvent(closeButton, "onPress");
     expect(spyOnMockedTrackSettingsDiscoverBannerClosure).toHaveBeenCalledTimes(
       1
     );
