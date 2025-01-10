@@ -1,3 +1,4 @@
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { createActorContext } from "@xstate/react";
 import React from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -20,9 +21,10 @@ export const ItwTrustmarkMachineProvider = ({
 }: Props) => {
   const store = useIOStore();
   const navigation = useIONavigation();
+  const toast = useIOToast();
 
   const trustmarkMachine = itwTrustmarkMachine.provide({
-    actions: createItwTrustmarkActionsImplementation(store, navigation),
+    actions: createItwTrustmarkActionsImplementation(store, navigation, toast),
     actors: createItwTrustmarkActorsImplementation(store),
     guards: createItwTrustmarkGuardsImplementation()
   });
