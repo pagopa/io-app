@@ -268,7 +268,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     rewardRuleRow
   ];
 
-  const renderTableRow = (data: Array<TableRow>, removeLast = false) =>
+  const renderTableRow = (data: Array<TableRow>) =>
     data.map((row, i) => (
       <>
         <ListItemInfo
@@ -277,7 +277,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           value={row.value}
           testID={row.testID}
         />
-        {removeLast ? i !== data.length - 1 && <Divider /> : <Divider />}
+        {i !== data.length - 1 && <Divider />}
       </>
     ));
 
@@ -288,11 +288,6 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
       />
       {renderTableRow(summaryData)}
-      <ListItemInfo
-        label={I18n.t("idpay.initiative.beneficiaryDetails.status")}
-        value={statusString}
-        testID={"statusTestID"}
-      />
       <VSpacer size={8} />
       <BodySmall weight="Regular" color="bluegrey">
         {lastUpdateString}
@@ -301,11 +296,11 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       <ListItemHeader
         label={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
       />
-      {renderTableRow(spendingRulesData, true)}
+      {renderTableRow(spendingRulesData)}
       <ListItemHeader
         label={I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails")}
       />
-      {renderTableRow(enrollmentData, true)}
+      {renderTableRow(enrollmentData)}
       <VSpacer size={16} />
       <Body weight="Semibold" asLink onPress={handlePrivacyLinkPress}>
         {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
