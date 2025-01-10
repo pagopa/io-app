@@ -1,20 +1,19 @@
 import {
   Alert,
-  Body,
-  H6,
-  HSpacer,
+  Divider,
+  ListItemHeader,
+  ListItemInfo,
   ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
@@ -69,65 +68,46 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
     <View style={IOStyles.flex}>
       <VSpacer size={8} />
       {statusAlertComponent}
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t(
-            "idpay.initiative.operationDetails.discount.details.labels.totalAmount"
-          )}
-        </Body>
-        <Body weight="Semibold">{formattedAmount}</Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t(
-            "idpay.initiative.operationDetails.discount.details.labels.idpayAmount"
-          )}
-        </Body>
-        <Body weight="Semibold">
-          {formatNumberCentsToAmount(transaction.accruedCents, true)}
-        </Body>
-      </View>
-      <ItemSeparatorComponent noPadded={true} />
-      <VSpacer size={24} />
-      <H6>
-        {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
-      </H6>
-      <VSpacer size={4} />
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t(
-            "idpay.initiative.operationDetails.discount.details.labels.business"
-          )}
-        </Body>
-        <HSpacer size={16} />
-        <Body
-          weight="Semibold"
-          numberOfLines={2}
-          style={{ flex: 1, textAlign: "right" }}
-        >
-          {businessName}
-        </Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t(
-            "idpay.initiative.operationDetails.discount.details.labels.status"
-          )}
-        </Body>
-        <Body weight="Semibold">
-          {I18n.t(
-            `idpay.initiative.operationDetails.discount.labels.${transaction.status}`
-          )}
-        </Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.transaction.date")}
-        </Body>
-        <Body weight="Semibold">
-          {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
-        </Body>
-      </View>
+      <ListItemInfo
+        label={I18n.t(
+          "idpay.initiative.operationDetails.discount.details.labels.totalAmount"
+        )}
+        value={formattedAmount}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t(
+          "idpay.initiative.operationDetails.discount.details.labels.idpayAmount"
+        )}
+        value={formatNumberCentsToAmount(transaction.accruedCents, true)}
+      />
+      <ListItemHeader
+        label={I18n.t(
+          "idpay.initiative.operationDetails.transaction.infoTitle"
+        )}
+      />
+      <ListItemInfo
+        label={I18n.t(
+          "idpay.initiative.operationDetails.discount.details.labels.business"
+        )}
+        value={businessName}
+        numberOfLines={2}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t(
+          "idpay.initiative.operationDetails.discount.details.labels.status"
+        )}
+        value={I18n.t(
+          `idpay.initiative.operationDetails.discount.labels.${transaction.status}`
+        )}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.initiative.operationDetails.transaction.date")}
+        value={format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
+      />
+      <Divider />
       <ListItemInfoCopy
         label={I18n.t(
           "idpay.initiative.operationDetails.discount.details.labels.transactionID"
@@ -140,14 +120,5 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  detailRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 8
-  }
-});
 
 export { TimelineDiscountTransactionDetailsComponent };
