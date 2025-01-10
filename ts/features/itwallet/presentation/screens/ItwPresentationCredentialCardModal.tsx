@@ -50,7 +50,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
       trackCredentialCardModal(CREDENTIALS_MAP[credential.credentialType]);
     }, [credential.credentialType])
   );
-  
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
