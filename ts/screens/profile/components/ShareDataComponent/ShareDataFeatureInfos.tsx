@@ -131,7 +131,7 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
 
 const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
   const ioSuppliersUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(state, "io_web", IO_SUPPLIERS_URL_BODY)
+    replaceBaseUrlSelector(state, "io_showcase", IO_SUPPLIERS_URL_BODY)
   );
   const handleOnPress = () => {
     trackAction(TrackingInfo.SUPPLIERS);
