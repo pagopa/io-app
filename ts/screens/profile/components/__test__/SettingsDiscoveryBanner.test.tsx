@@ -1,6 +1,7 @@
 import * as React from "react";
 import { createStore } from "redux";
 import { constUndefined } from "fp-ts/lib/function";
+import { fireEvent } from "@testing-library/react-native";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -8,7 +9,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { SettingsDiscoveryBanner } from "../SettingsDiscoveryBanner";
 import * as analytics from "../../analytics";
-import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../../../i18n";
 
 describe("settingsDiscoveryBanner", () => {
