@@ -1866,8 +1866,27 @@ PODS:
     - Yoga
   - RNI18n (2.0.15):
     - React
-  - RNKeychain (4.0.5):
-    - React
+  - RNKeychain (9.2.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNPermissions (4.0.0):
     - React-Core
   - RNQrGenerator (1.4.0):
@@ -2550,7 +2569,7 @@ SPEC CHECKSUMS:
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 27a63f2218affdf1a426d56682f9b174904838b3
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
-  RNKeychain: ffd0513e676445c637410b47249460cbf56bc9cb
+  RNKeychain: bd09fc5dcf4e0c4166a5d4012beaf2e093fcd9f5
   RNPermissions: a4ae2524bd9cfb86f9c490b200b17f8dadb12e5a
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: 00ba111b82aa266bb3ee1aa576831c2ea9a9dfad
