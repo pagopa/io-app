@@ -421,7 +421,9 @@ export const getPaymentOutcomeCodeDescription = (
       outcomeCodes[maybeOutcomeCodeKey.right] as OutcomeCode,
       O.fromNullable,
       O.chainNullableK(oc => oc.description),
-      O.map(description => description[getFullLocale()])
+      O.map(
+        description => description[getFullLocale() as keyof typeof description]
+      )
     );
   }
   return O.none;
