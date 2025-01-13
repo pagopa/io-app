@@ -24,7 +24,7 @@ import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { useIOSelector } from "../../../../store/hooks";
-import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 
 export const ItwIssuanceEidFailureScreen = () => {
@@ -49,7 +49,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const toast = useIOToast();
 
   const FAQ_URL = useIOSelector(state =>
-    replaceBaseUrlSelector(
+    generateDynamicUrlSelector(
       state,
       "io_showcase",
       DOCUMENTS_ON_IO_FAQ_12_URL_BODY

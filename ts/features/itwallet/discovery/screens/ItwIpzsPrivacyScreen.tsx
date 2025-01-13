@@ -8,14 +8,14 @@ import { ItwEidIssuanceMachineContext } from "../../machine/provider";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import ItwMarkdown from "../../common/components/ItwMarkdown";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOSelector } from "../../../../store/hooks";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const privacyUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
   const handleContinuePress = () => {
     trackOpenItwTosAccepted();

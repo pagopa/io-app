@@ -7,7 +7,7 @@ import { itwWalletInstanceStatusSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwUpdateWalletInstanceStatus } from "../store/actions";
 import { openWebUrl } from "../../../../utils/url";
-import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   DOCUMENTS_ON_IO_FAQ_12_URL_BODY,
   DOCUMENTS_ON_IO_FAQ_14_URL_BODY
@@ -28,14 +28,14 @@ export const useItwWalletInstanceRevocationAlert = () => {
   const dispatch = useIODispatch();
 
   const itwMinIntegrityReqUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(
+    generateDynamicUrlSelector(
       state,
       "io_showcase",
       DOCUMENTS_ON_IO_FAQ_12_URL_BODY
     )
   );
   const itwDocsOnIOMultipleDevicesUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(
+    generateDynamicUrlSelector(
       state,
       "io_showcase",
       DOCUMENTS_ON_IO_FAQ_14_URL_BODY

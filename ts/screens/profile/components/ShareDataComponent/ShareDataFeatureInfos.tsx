@@ -10,7 +10,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { openWebUrl } from "../../../../utils/url";
 import { TrackingInfo } from "../../analytics/mixpanel/mixpanelAnalytics";
 import { useIOSelector } from "../../../../store/hooks";
-import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IO_SUPPLIERS_URL_BODY } from "../../../../urls";
 
 export type FeatureProps = {
@@ -131,7 +131,7 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
 
 const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
   const ioSuppliersUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(state, "io_showcase", IO_SUPPLIERS_URL_BODY)
+    generateDynamicUrlSelector(state, "io_showcase", IO_SUPPLIERS_URL_BODY)
   );
   const handleOnPress = () => {
     trackAction(TrackingInfo.SUPPLIERS);

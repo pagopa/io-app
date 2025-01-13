@@ -317,27 +317,36 @@ export const absolutePortalLinksSelector = createSelector(
 type hostType = keyof ReturnType<typeof absolutePortalLinksSelector>;
 
 /**
- * Selector to generate a complete URL by replacing the base domain with a dynamic value from absolutePortalLinks.
- * This is useful when URLs need to be dynamically constructed based on remote configuration or state.
+ * Selector to dynamically generate a complete URL by combining a base URL and a path.
+ * This selector is useful when constructing URLs based on configuration or application state.
  */
-export const replaceBaseUrlSelector = createSelector(
+export const generateDynamicUrlSelector = createSelector(
   // Step 1: Input selector that retrieves the absolutePortalLinks object from the state.
   absolutePortalLinksSelector,
 
-  // Step 2: Extract the base URL (host key) from the input parameters.
-  (_: GlobalState, baseUrl: hostType) => baseUrl,
+  // Step 2: Input parameter to specify the key for the desired base URL.
+  (_: GlobalState, baseUrlKey: hostType) => baseUrlKey,
 
-  // Step 3: Extract the body URL (the path to append to the base URL) from the input parameters.
-  (_: GlobalState, __: hostType, bodyUrl: string) => bodyUrl,
+  // Step 3: Input parameter to specify the path to append to the base URL.
+  (_: GlobalState, __: hostType, path: string) => path,
 
-  // Step 4: Combine the absolutePortalLinks object, the base URL key, and the body URL to create the full URL.
-  (absolutePortalLinks, baseUrl, bodyUrl) => {
+  // Step 4: Combine the absolutePortalLinks object, the base URL key, and the path to create the full URL.
+  (absolutePortalLinks, baseUrlKey, path) => {
     try {
-      // Concatenate the base URL with the body URL.
-      return `${absolutePortalLinks[baseUrl]}${bodyUrl}`;
+      // Retrieve the base URL using the specified key.
+      // eslint-disable-next-line functional/no-let
+      let baseUrl = absolutePortalLinks[baseUrlKey];
+
+      // Ensure the base URL ends with a slash.
+      if (!baseUrl.endsWith("/")) {
+        baseUrl += "/";
+      }
+
+      // Append the provided path to the base URL.
+      return `${baseUrl}${path}`;
     } catch (error) {
-      // In case of any error (e.g., missing body URL key), return the base URL as a fallback.
-      return baseUrl;
+      // In case of an error (e.g., missing key or invalid path), return the base URL key as a fallback.
+      return baseUrlKey;
     }
   }
 );

@@ -5,7 +5,7 @@ import { openWebUrl } from "../../../utils/url";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../store/hooks";
-import { replaceBaseUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { UNSUPPORTED_DEVICE_FAQ_URL_BODY } from "../../../urls";
 
 // This component Represents a blocking error screen that you can only escape with the rendered button(s).
@@ -13,7 +13,7 @@ const UnsupportedDeviceScreen = () => {
   useAvoidHardwareBackButton();
 
   const unsupportedDeviceLearnMoreUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(
+    generateDynamicUrlSelector(
       state,
       "io_showcase",
       UNSUPPORTED_DEVICE_FAQ_URL_BODY

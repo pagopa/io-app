@@ -12,7 +12,7 @@ import {
 } from "../../analytics";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { useIOSelector } from "../../../../store/hooks";
-import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
@@ -101,7 +101,7 @@ export const ItwIssuanceMetadata = ({
     credential.issuerConf.federation_entity.organization_name;
   const authSource = getAuthSource(credential);
   const privacyUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =

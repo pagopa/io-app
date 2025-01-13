@@ -55,7 +55,7 @@ import {
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { replaceBaseUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const ItwIssuanceCredentialTrustIssuerScreen = () => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -103,7 +103,7 @@ type ContentViewProps = {
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
   const privacyUrl = useIOSelector(state =>
-    replaceBaseUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
+    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
   useFocusEffect(
