@@ -57,6 +57,15 @@ date:
   meridian:
     - "am"
     - "pm"
+  time:
+    minutes:
+      zero: "0 minuti"
+      one: "1 minuto"
+      other: "{{count}} minuti"
+    seconds:
+      zero: "0 secondi"
+      one: "1 secondo"
+      other: "{{count}} secondi"
 global:
   why: "Perché?"
   you: "TU"
@@ -3240,7 +3249,7 @@ features:
         empty:
           title: Nessuna ricevuta trovata
           subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
-        emptyPayer: 
+        emptyPayer:
           title: Qui vedrai le ricevute dei pagamenti fatti in app
     details:
       payPal:
@@ -3283,6 +3292,7 @@ features:
         invalid: Non valida
         verificationExpiring: Verifica
         verificationExpired: Verifica
+        unknown: Non disponibile
       digital: Versione digitale
     generic:
       error:
@@ -3300,6 +3310,9 @@ features:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
+      walletNotAvailable:
+        message: Abbiamo avuto un problema nel recuperare i tuoi documenti.
+        cta: Chiudi e riapri l'app per riprovare.
     verifiableCredentials:
       claims:
         uniqueId: "ID univoco"
@@ -3533,6 +3546,7 @@ features:
           content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
           primaryAction: Inizia
       ctas:
+        trustmark: Mostra certificato di autenticità
         openPdf: "Mostra documento"
         shareButton: Salva o condividi
         fiscalCode: Il tuo Codice Fiscale
@@ -3543,11 +3557,20 @@ features:
           contentBold: Documenti su IO
           contentEnd: "."
           primaryAction: Inizia
+      statusAttestationUnknown:
+        title: Non siamo riusciti a caricare {{credentialName}}
+        content: Chiudi e riapri l'app per riprovare.
+        primaryAction: Ho capito
     trustmark:
-      cta: Mostra certificato di autenticità
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
-      expiration: Il QR Code si rinnova tra
       qrCode: QR code autenticità credenziale
+      timer:
+        expiresIn: Il QR Code si rinnova tra **{{time}}**
+        expired: Il QR Code è scaduto
+      failure:
+        description: Abbiamo avuto un problema nel generare il nuovo QR Code.
+        action: Riprova
+        toast: "Puoi riprovare tra {{time}}"
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
@@ -3570,7 +3593,7 @@ features:
         cta: Scopri di più
         closeButton: Chiudi
         closeButtonAlt: Ho capito
-        revokedByWalletProvider: 
+        revokedByWalletProvider:
           title: Documenti su IO è stata disattivata
           content: Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi "Scopri di più".
         newWalletInstanceCreated:
