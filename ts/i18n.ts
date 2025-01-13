@@ -19,7 +19,8 @@ export const localeToLocalizedMessageKey = new Map<
   LocalizedMessageKeys
 >([
   ["it", "it-IT"],
-  ["en", "en-EN"]
+  ["en", "en-EN"],
+  ["de", "de-DE"]
 ]);
 
 export const localeToPreferredLanguageMapping = new Map<
