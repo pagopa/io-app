@@ -8,7 +8,10 @@ import {
   isPaymentsFeedbackBannerEnabledSelector,
   paymentsFeedbackBannerConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { getFullLocale } from "../../../../utils/locale";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
 
 const WalletPaymentFeebackBanner = () => {
   const bannerViewRef = useRef<View>(null);
@@ -19,6 +22,7 @@ const WalletPaymentFeebackBanner = () => {
     paymentsFeedbackBannerConfigSelector
   );
   const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
   const handleBannerPress = () => {
     if (!feedbackBannerConfig?.action) {
@@ -42,9 +46,9 @@ const WalletPaymentFeebackBanner = () => {
         pictogramName="feedback"
         size="big"
         viewRef={bannerViewRef}
-        title={feedbackBannerConfig.title?.[locale]}
-        content={feedbackBannerConfig.description[locale]}
-        action={feedbackBannerConfig.action?.label[locale]}
+        title={feedbackBannerConfig.title?.[localeFallback]}
+        content={feedbackBannerConfig.description[localeFallback]}
+        action={feedbackBannerConfig.action?.label[localeFallback]}
         onPress={handleBannerPress}
       />
     </>
