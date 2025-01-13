@@ -7,7 +7,6 @@ import { FooterActions } from "../../../../components/ui/FooterActions";
 import { useFooterActionsMeasurements } from "../../../../hooks/useFooterActionsMeasurements";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { FimsHistoryListItem } from "../components/FimsHistoryListItem";
 import { LoadingFimsHistoryItemsFooter } from "../components/FimsHistoryLoaders";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
 import {
@@ -15,6 +14,7 @@ import {
   isFimsHistoryLoadingSelector
 } from "../store/selectors";
 import { FimsHistoryHeaderComponent } from "./FimsHistoryHeaderComponent";
+import { FimsHistoryListItemPicker } from "./FimsHistoryListItemPicker";
 
 export const FimsHistoryNonEmptyContent = ({
   accesses,
@@ -53,7 +53,7 @@ export const FimsHistoryNonEmptyContent = ({
         }}
         ItemSeparatorComponent={Divider}
         keyExtractor={item => item.id}
-        renderItem={item => <FimsHistoryListItem item={item.item} />}
+        renderItem={item => <FimsHistoryListItemPicker item={item.item} />}
         onEndReached={fetchMore}
         ListFooterComponent={LoadingFooter}
       />
