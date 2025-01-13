@@ -129,10 +129,17 @@ export const itwEidIssuanceMachine = setup({
         "revoke-wallet-instance": {
           target: "WalletInstanceRevocation"
         },
-        "start-reissuing": {
-          target: "CheckingWalletInstanceAttestation",
-          actions: "setIsReissuing"
-        }
+        "start-reissuing": [
+          {
+            guard: not("hasValidWalletInstanceAttestation"),
+            actions: "setIsReissuing",
+            target: "WalletInstanceAttestationObtainment"
+          },
+          {
+            actions: "setIsReissuing",
+            target: "UserIdentification"
+          }
+        ]
       }
     },
     TosAcceptance: {
@@ -154,19 +161,6 @@ export const itwEidIssuanceMachine = setup({
           }
         ]
       }
-    },
-    CheckingWalletInstanceAttestation: {
-      description:
-        "This is a state with the only purpose of checking the WIA and decide weather to get a new one or not and then proceed with the user identification",
-      always: [
-        {
-          guard: not("hasValidWalletInstanceAttestation"),
-          target: "WalletInstanceAttestationObtainment"
-        },
-        {
-          target: "UserIdentification"
-        }
-      ]
     },
     WalletInstanceCreation: {
       description:
@@ -602,23 +596,18 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
+          entry: [
+            "storeEidCredential",
+            "setWalletInstanceToValid",
+            "trackWalletInstanceCreation"
+          ],
           on: {
             "add-to-wallet": [
               {
                 guard: "isReissuing",
-                actions: [
-                  "storeEidCredential",
-                  "setWalletInstanceToValid",
-                  "trackWalletInstanceCreation",
-                  "navigateToWallet"
-                ]
+                actions: "navigateToWallet"
               },
               {
-                actions: [
-                  "storeEidCredential",
-                  "setWalletInstanceToValid",
-                  "trackWalletInstanceCreation"
-                ],
                 target: "#itwEidIssuanceMachine.Success"
               }
             ],
