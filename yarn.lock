@@ -3839,10 +3839,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/react-native-cie@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@pagopa/react-native-cie@npm:1.4.0"
-  checksum: 742b53251d0bd5a530ee63dcb7a9e604b7a06fc848f4a5643b3fdc841935c92fa5f8453e3c7cb8006bcab7c27563ff88efb53528a1df0256cf53cb7c57f251b1
+"@pagopa/react-native-cie@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@pagopa/react-native-cie@npm:1.4.2"
+  checksum: f56778630c4512c627298614d2c84e9a7b6976dec7085124294e7ef631d07dd35f9c39b730edf9bf4b01bfe44ef5610cded3266b42cd35b996a0e23668717979
   languageName: node
   linkType: hard
 
@@ -13569,7 +13569,7 @@ __metadata:
     "@pagopa/io-react-native-wallet": ^0.27.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^14.0.0
-    "@pagopa/react-native-cie": ^1.4.0
+    "@pagopa/react-native-cie": ^1.4.2
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-clipboard/clipboard": ^1.14.0
