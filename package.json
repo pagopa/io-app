@@ -64,7 +64,7 @@
     "@pagopa/io-react-native-secure-storage": "^0.2.0",
     "@pagopa/io-react-native-wallet": "^0.27.0",
     "@pagopa/io-react-native-zendesk": "^0.3.29",
-    "@pagopa/react-native-cie": "^1.4.0",
+    "@pagopa/react-native-cie": "^1.4.2",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-clipboard/clipboard": "^1.14.0",
