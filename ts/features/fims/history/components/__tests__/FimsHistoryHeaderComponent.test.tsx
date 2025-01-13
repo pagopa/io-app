@@ -4,6 +4,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { FimsHistoryHeaderComponent } from "../FimsHistoryHeaderComponent";
+import { FIMS_ROUTES } from "../../../common/navigation";
 
 describe("FimsHistoryHeaderComponent", () => {
   it("should match snapshot", () => {
@@ -14,7 +15,7 @@ describe("FimsHistoryHeaderComponent", () => {
 const renderComponent = () =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     FimsHistoryHeaderComponent,
-    "DUMMY",
+    FIMS_ROUTES.HISTORY,
     {},
     createStore(appReducer, applicationChangeState("active") as any)
   );

@@ -150,7 +150,7 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                     }
                   }
                 >
-                  DUMMY
+                  FIMS_HISTORY
                 </Text>
               </View>
               <View

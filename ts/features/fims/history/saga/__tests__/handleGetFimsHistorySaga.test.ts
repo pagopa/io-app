@@ -44,7 +44,7 @@ describe("handleGetFimsHistorySaga", () => {
     jest.resetAllMocks();
   });
 
-  it("Should dispatch fimsHistoryGet.success if status is 200 and the response is [right]", () => {
+  it("Should dispatch fimsHistoryGet.success if status is 200 and the response is [right], while passing the correct parameters to the client", () => {
     const mockTrackFailure = jest.fn();
     jest
       .spyOn(TRACK_FAILURE, "trackHistoryFailure")
@@ -52,7 +52,7 @@ describe("handleGetFimsHistorySaga", () => {
 
     const successResponse = E.right(decodedSuccessResponse) as ResponseType;
     const resultPromiseSuccess = Promise.resolve(successResponse);
-    const mockSuccessClient = () => resultPromiseSuccess;
+    const mockSuccessClient = jest.fn(() => resultPromiseSuccess);
     testSaga(handleGetFimsHistorySaga, mockSuccessClient, "MOCK_BEARER", action)
       .next()
       .select(PERSISTED_SELECTORS.preferredLanguageSelector)
@@ -66,7 +66,11 @@ describe("handleGetFimsHistorySaga", () => {
       .put(fimsHistoryGet.success(decodedSuccessResponse.value))
       .next()
       .isDone();
-
+    expect(mockSuccessClient).toHaveBeenCalledWith({
+      Bearer: "Bearer MOCK_BEARER",
+      "Accept-Language": "it",
+      page: action.payload.continuationToken
+    });
     expect(mockTrackFailure).not.toHaveBeenCalled();
   });
   it("Should dispatch fimsHistoryGet.failure if status is not 200 and the response is [right]", () => {
