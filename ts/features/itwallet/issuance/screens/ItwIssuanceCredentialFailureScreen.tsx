@@ -30,6 +30,13 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -65,6 +72,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
     selectIssuerConfigurationOption
   );
   const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
   const deferredIssuanceScreenContent = useIOSelector(
     itwDeferredIssuanceScreenContentSelector
   );
@@ -118,10 +126,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
         case CredentialIssuanceFailureType.ASYNC_ISSUANCE:
           return {
             title:
-              deferredIssuanceScreenContent?.title?.[locale] ??
+              deferredIssuanceScreenContent?.title?.[localeFallback] ??
               I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
             subtitle:
-              deferredIssuanceScreenContent?.description?.[locale] ??
+              deferredIssuanceScreenContent?.description?.[localeFallback] ??
               I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
             pictogram: "pending",
             action: {
