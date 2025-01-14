@@ -7,6 +7,7 @@ import {
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
@@ -21,7 +22,6 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
-import { useFocusEffect } from "@react-navigation/native";
 import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../analytics";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {

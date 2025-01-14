@@ -11,6 +11,7 @@ import React, { useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -19,7 +20,6 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
 } from "../../credentials/store/selectors";
-import { useFocusEffect } from "@react-navigation/native";
 import { trackCredentialCardModal } from "../../analytics";
 
 /**

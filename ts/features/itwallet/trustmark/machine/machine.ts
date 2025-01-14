@@ -2,6 +2,10 @@ import { addSeconds, differenceInSeconds, isPast } from "date-fns";
 import { assign, fromPromise, not, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
 import {
+  CREDENTIALS_MAP,
+  trackItwTrustmarkRenewFailure
+} from "../../analytics";
+import {
   GetCredentialTrustmarkUrlActorInput,
   GetCredentialTrustmarkUrlActorOutput,
   GetWalletAttestationActorOutput
@@ -10,10 +14,6 @@ import { Context } from "./context";
 import { TrustmarkEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 import { Input } from "./input";
-import {
-  CREDENTIALS_MAP,
-  trackItwTrustmarkRenewFailure
-} from "../../analytics";
 
 const notImplemented = () => {
   throw new Error("Not implemented");

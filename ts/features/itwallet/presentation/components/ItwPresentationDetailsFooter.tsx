@@ -26,7 +26,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
 };
-//Consts for trackAuthenticationStart function
+// Consts for trackAuthenticationStart function
 const serviceId = "01JEXVQSRV2XRX9XDWQ5XQ6A8T" as ServiceId;
 const serviceOrganizationName =
   "Ministero delle infrastrutture e dei trasporti";
