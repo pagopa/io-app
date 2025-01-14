@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Alert, StatusBar, View } from "react-native";
+import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -236,11 +236,6 @@ const BarcodeScanScreen = () => {
 
   return (
     <>
-      {/* <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      /> */}
       <BarcodeScanBaseScreenComponent
         barcodeFormats={barcodeFormats}
         barcodeTypes={barcodeTypes}

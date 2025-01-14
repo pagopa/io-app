@@ -1,11 +1,10 @@
 /**
  * A customized Header component.
  */
-import * as React from "react";
-import { View, ColorValue, ViewProps, StatusBar } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStyles, IOVisualCostants } from "@pagopa/io-app-design-system";
-import variables from "../../theme/variables";
+import * as React from "react";
+import { ColorValue, View, ViewProps } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = ViewProps & {
   backgroundColor?: ColorValue;
