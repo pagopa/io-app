@@ -1,8 +1,8 @@
 /**
  * A saga to manage session invalidation
  */
-import { put, select } from "typed-redux-saga/macro";
-import { sessionInvalid } from "../store/actions/authentication";
+import { call, select } from "typed-redux-saga/macro";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
 import { ReduxSagaEffect } from "../types/utils";
 
@@ -20,7 +20,7 @@ export function* previousInstallationDataDeleteSaga(): Generator<
   > = yield* select(isFirstRunAfterInstallSelector);
 
   if (isFirstRunAfterInstall) {
-    // invalidate the session
-    yield* put(sessionInvalid());
+    // remove authentication data from the storage
+    yield* call(AsyncStorage.removeItem, "persist:authentication");
   }
 }
