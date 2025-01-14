@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
         <item name="android:forceDarkAllowed">false</item>
@@ -16,8 +15,9 @@
 
     <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">
         <item name="android:statusBarColor">@color/ic_launcher_background</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:navigationBarColor">@color/ic_launcher_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
