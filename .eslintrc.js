@@ -136,8 +136,7 @@ module.exports = {
             message:
               'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.'
           }
-        ],
-        patterns: [{}]
+        ]
       }
     ]
   },
