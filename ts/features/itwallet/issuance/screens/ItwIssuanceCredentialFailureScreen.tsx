@@ -33,6 +33,7 @@ import {
   getFullLocale
 } from "../../../../utils/locale";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -95,6 +96,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
+  const supportModal = useItwFailureSupportModal({
+    failure
+  });
 
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
@@ -145,6 +149,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
               invalidStatusDetails.message?.description ??
               defaultInvalidStatusMessage.description,
             pictogram: "accessDenied",
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: supportModal.present
+            },
             action: {
               label: I18n.t(
                 "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
@@ -168,10 +176,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   const resultScreenProps = getOperationResultScreenContentProps();
   return (
-    <OperationResultScreenContent
-      {...resultScreenProps}
-      subtitleProps={{ textBreakStrategy: "simple" }}
-    />
+    <>
+      <OperationResultScreenContent
+        {...resultScreenProps}
+        subtitleProps={{ textBreakStrategy: "simple" }}
+      />
+      {supportModal.bottomSheet}
+    </>
   );
 };
 

@@ -23,6 +23,7 @@ import { KoState, trackWalletCreationFailed } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 
 const FAQ_URL = "https://io.italia.it/documenti-su-io/faq/#n1_12";
 
@@ -49,6 +50,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
+  });
+  const supportModal = useItwFailureSupportModal({
+    failure
   });
 
   const closeIssuance = (errorConfig: KoState) => {
@@ -78,6 +82,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
                   cta_category: "custom_1",
                   cta_id: I18n.t("global.buttons.close")
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: supportModal.present
             }
           };
         case IssuanceFailureType.ISSUER_GENERIC:
@@ -189,9 +197,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const resultScreenProps = getOperationResultScreenContentProps();
 
   return (
-    <OperationResultScreenContent
-      {...resultScreenProps}
-      subtitleProps={{ textBreakStrategy: "simple" }}
-    />
+    <>
+      <OperationResultScreenContent
+        {...resultScreenProps}
+        subtitleProps={{ textBreakStrategy: "simple" }}
+      />
+      {supportModal.bottomSheet}
+    </>
   );
 };

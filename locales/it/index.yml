@@ -3294,6 +3294,15 @@ features:
         verificationExpired: Verifica
         unknown: Non disponibile
       digital: Versione digitale
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      landline: Da telefono fisso
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
