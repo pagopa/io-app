@@ -2,12 +2,14 @@ import {
   ButtonLink,
   ContentWrapper,
   H2,
+  IOColors,
   IOPictograms,
   IOStyles,
   IconButton,
   Pictogram,
   ToastNotification,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
@@ -19,14 +21,19 @@ import {
   Alert,
   ColorSchemeName,
   Modal,
-  Platform,
   StatusBar,
   StyleSheet,
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
+import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
+import {
+  hasTwoMinutesElapsedSinceLastActivitySelector,
+  isFastLoginEnabledSelector
+} from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import {
   identificationCancel,
@@ -46,7 +53,6 @@ import {
 import { profileNameSelector } from "../../store/reducers/profile";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { biometricAuthenticationRequest } from "../../utils/biometrics";
-import { useAppBackgroundAccentColorName } from "../../utils/hooks/theme";
 import { useBiometricType } from "../../utils/hooks/useBiometricType";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
@@ -54,12 +60,6 @@ import {
   IdentificationInstructionsComponent,
   getBiometryIconName
 } from "../../utils/identification";
-import {
-  hasTwoMinutesElapsedSinceLastActivitySelector,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
-import { areTwoMinElapsedFromLastActivity } from "../../features/fastLogin/store/actions/sessionRefreshActions";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
@@ -71,13 +71,12 @@ const onRequestCloseHandler = () => undefined;
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
+  const theme = useIOTheme();
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
-
-  const blueColor = useAppBackgroundAccentColorName();
 
   const appState = useIOSelector(appCurrentStateSelector);
   const previousAppState = usePrevious(appState);
@@ -379,7 +378,12 @@ const IdentificationModal = () => {
       onRequestClose={onRequestCloseHandler}
     >
       <StatusBar barStyle={"light-content"} translucent />
-      <View style={[styles.contentWrapper, { backgroundColor: blueColor }]}>
+      <View
+        style={[
+          styles.contentWrapper,
+          { backgroundColor: IOColors[theme["appBackground-accent"]] }
+        ]}
+      >
         {isValidatingTask && (
           <View
             accessible
