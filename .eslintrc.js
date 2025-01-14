@@ -124,24 +124,20 @@ module.exports = {
     "no-restricted-imports": [
       "error",
       {
-        "paths": [
+        paths: [
           {
             name: "i18n-js",
-            message: 'Importing I18n from "i18n-js" is not allowed. Import it from "ts/i18n.ts" instead.',
-          }, 
+            message:
+              'Importing I18n from "i18n-js" is not allowed. Import it from "ts/i18n.ts" instead.'
+          },
           {
             name: "@pagopa/ts-commons",
             importNames: ["pot"],
-            message: 'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.',
+            message:
+              'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.'
           }
         ],
-        patterns: [
-          {
-            group: ["**/config"],
-            importNames: ["privacyUrl"],
-            message: 'Importing "privacyUrl" from "config.ts" module is restricted. Please use "tosConfigSelector" to obtain it instead.'
-          }
-        ]          
+        patterns: [{}]
       }
     ]
   },
