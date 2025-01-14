@@ -328,11 +328,7 @@ const BarcodeScanBaseScreenComponent = ({
       >
         <SafeAreaView>
           {/* This overrides BaseHeader status bar configuration */}
-          <FocusAwareStatusBar
-            barStyle={"light-content"}
-            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
-            translucent={false}
-          />
+          <FocusAwareStatusBar barStyle={"light-content"} translucent={true} />
           {/* FIXME: replace with new header */}
           <BaseHeader
             hideSafeArea={true}

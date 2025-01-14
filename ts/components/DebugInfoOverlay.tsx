@@ -8,8 +8,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
-import { Platform, Pressable, SafeAreaView, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
 import { useIOSelector } from "../store/hooks";
@@ -30,7 +31,7 @@ const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 const styles = StyleSheet.create({
   versionContainer: {
     ...StyleSheet.absoluteFillObject,
-    top: Platform.OS === "android" ? 0 : -8,
+    // top: Platform.OS === "android" ? 0 : -8,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000
@@ -63,11 +64,16 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const [isDebugDataVisibile, showDebugData] = useState(false);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
+  const insets = useSafeAreaInsets();
+
   const appVersionText = `v. ${appVersion}`;
 
   return (
     <>
-      <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
+      <View
+        style={[styles.versionContainer, { paddingTop: insets.top }]}
+        pointerEvents="box-none"
+      >
         <VStack space={4} style={{ alignItems: "center" }}>
           <HStack space={4}>
             <Pressable
@@ -113,7 +119,7 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
             onPress={() => showDebugData(prevState => !prevState)}
           />
         </VStack>
-      </SafeAreaView>
+      </View>
       {isDebugDataVisibile && (
         <DebugDataOverlay onDismissed={() => showDebugData(false)} />
       )}

@@ -22,10 +22,6 @@ const AppHeader = (props: React.PropsWithChildren<Props>) => {
         backgroundColor: props.backgroundColor
       }}
     >
-      <StatusBar
-        barStyle={"dark-content"}
-        backgroundColor={variables.androidStatusBarColor}
-      />
       <View
         style={{
           ...IOStyles.row,

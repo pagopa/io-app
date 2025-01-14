@@ -27,7 +27,6 @@ import {
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
-import customVariables from "./theme/variables";
 import { ReactNavigationInstrumentation } from "./App";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -98,8 +97,9 @@ class RootContainer extends React.PureComponent<Props> {
     return (
       <>
         <StatusBar
+          translucent
           barStyle={"dark-content"}
-          backgroundColor={customVariables.androidStatusBarColor}
+          backgroundColor={"transparent"}
         />
         {Platform.OS === "android" && <FlagSecureComponent />}
 
