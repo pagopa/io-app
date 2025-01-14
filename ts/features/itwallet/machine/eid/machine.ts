@@ -596,18 +596,23 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
-          entry: [
-            "storeEidCredential",
-            "setWalletInstanceToValid",
-            "trackWalletInstanceCreation"
-          ],
           on: {
             "add-to-wallet": [
               {
                 guard: "isReissuing",
-                actions: "navigateToWallet"
+                actions: [
+                  "storeEidCredential",
+                  "setWalletInstanceToValid",
+                  "trackWalletInstanceCreation",
+                  "navigateToWallet"
+                ]
               },
               {
+                actions: [
+                  "storeEidCredential",
+                  "setWalletInstanceToValid",
+                  "trackWalletInstanceCreation"
+                ],
                 target: "#itwEidIssuanceMachine.Success"
               }
             ],
