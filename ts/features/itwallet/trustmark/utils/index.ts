@@ -2,9 +2,12 @@ import {
   createCryptoContextFor,
   Credential
 } from "@pagopa/io-react-native-wallet";
-import { WellKnownClaim } from "./itwClaimsUtils";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
-import { WIA_KEYTAG } from "./itwCryptoContextUtils";
+import {
+  ParsedCredential,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
+import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
 
 /**
  * Returns the document number for a credential, if applicable

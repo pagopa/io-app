@@ -1,4 +1,4 @@
-import { addYears, isFuture, isPast } from "date-fns";
+import { addHours, isFuture, isPast } from "date-fns";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwPreferencesState } from "../reducers/preferences";
@@ -45,6 +45,7 @@ export const itwRequestedCredentialsSelector = createSelector(
       // This acts as a soft boolean flag: it is unlikely to happen that a credential remains
       // in the "requested" status for this long. This allows for flexibility to adjust the
       // timeframe in the future if needed.
-      .filter(([_, requestedAt]) => isFuture(addYears(requestedAt, 1)))
+      // 09/01/25: The timeframe has been adjusted to 24 hours to match the new requirements.
+      .filter(([_, requestedAt]) => isFuture(addHours(requestedAt, 24)))
       .map(([credentialType]) => credentialType)
 );
