@@ -4,7 +4,7 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
@@ -21,6 +21,8 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
+import { useFocusEffect } from "@react-navigation/native";
+import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../analytics";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
@@ -42,6 +44,12 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const theme = useIOTheme();
 
   useMaxBrightness({ useSmoothTransition: true });
+
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialCardModal(CREDENTIALS_MAP[credential.credentialType]);
+    }, [credential.credentialType])
+  );
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

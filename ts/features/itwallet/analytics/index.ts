@@ -493,6 +493,15 @@ export function trackIssuanceCredentialScrollToBottom(
   );
 }
 
+export function trackCredentialCardModal(
+  credential: MixPanelCredential,
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_CARD_MODAL,
+    buildEventProperties("UX", "action", { credential , credential_status: "valid" })
+  );
+}
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -648,6 +657,27 @@ export const trackItwAlreadyActivated = () => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
     buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwStatusWalletAttestationFailure = () => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_STATUS_WALLET_ATTESTATION_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+export const trackItwStatusCredentialAttestationFailure = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_STATUS_CREDENTIAL_ATTESTATION_FAILURE,
+    buildEventProperties("KO", "error", { credential })
+  );
+};
+
+export const trackItwTrustmarkRenewFailure = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_TRUSTMARK_RENEW_FAILURE,
+    buildEventProperties("KO", "error", { credential })
   );
 };
 

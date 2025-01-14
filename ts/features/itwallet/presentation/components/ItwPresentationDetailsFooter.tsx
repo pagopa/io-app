@@ -20,10 +20,17 @@ import {
 import { itwIsIPatenteCtaEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
+import { trackAuthenticationStart } from "../../../fims/common/analytics";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
 };
+//Consts for trackAuthenticationStart function 
+const serviceId = "01JEXVQSRV2XRX9XDWQ5XQ6A8T" as ServiceId;
+const serviceOrganizationName = "Ministero delle infrastrutture e dei trasporti";
+const serviceOrganizationFiscalCode = "97532760580";
+const serviceName = "Motorizzazione Civile - Le mie patenti";
 
 const ItwPresentationDetailsFooter = ({
   credential
@@ -148,6 +155,14 @@ const IPatenteListItemAction = () => {
       icon="externalLink"
       label={label}
       onPress={() => {
+        trackAuthenticationStart(
+          serviceId,
+          serviceName,
+          serviceOrganizationName,
+          serviceOrganizationFiscalCode,
+          label,
+          "message_detail"
+        );
         NavigationService.navigate(FIMS_ROUTES.MAIN, {
           screen: FIMS_ROUTES.CONSENTS,
           params: {
