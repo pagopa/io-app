@@ -3922,10 +3922,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/react-native-cie@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@pagopa/react-native-cie@npm:1.4.0"
-  checksum: 742b53251d0bd5a530ee63dcb7a9e604b7a06fc848f4a5643b3fdc841935c92fa5f8453e3c7cb8006bcab7c27563ff88efb53528a1df0256cf53cb7c57f251b1
+"@pagopa/react-native-cie@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@pagopa/react-native-cie@npm:1.4.2"
+  checksum: f56778630c4512c627298614d2c84e9a7b6976dec7085124294e7ef631d07dd35f9c39b730edf9bf4b01bfe44ef5610cded3266b42cd35b996a0e23668717979
   languageName: node
   linkType: hard
 
@@ -13669,7 +13669,7 @@ __metadata:
     "@pagopa/io-react-native-wallet": ^0.27.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^14.0.0
-    "@pagopa/react-native-cie": ^1.4.0
+    "@pagopa/react-native-cie": ^1.4.2
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-clipboard/clipboard": ^1.14.0
@@ -13795,7 +13795,7 @@ __metadata:
     react-native-i18n: ^2.0.15
     react-native-image-pan-zoom: ^2.1.11
     react-native-image-picker: 7.2.3
-    react-native-keychain: ^4.0.5
+    react-native-keychain: ^9.2.2
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
     react-native-masked-text: ^1.13.0
@@ -19118,10 +19118,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-keychain@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "react-native-keychain@npm:4.0.5"
-  checksum: 4a4079f97b43a19dbb50155cbbc011fac8f3e0322dd5564f0c62a22ca3b726ca3951ea50cbb896616c4c02f10ea3d561fd4d342f36f34dfb31deea0aacd949de
+"react-native-keychain@npm:^9.2.2":
+  version: 9.2.2
+  resolution: "react-native-keychain@npm:9.2.2"
+  checksum: e361df1e792766bb4d3f60b850608979667357365328d36e1665a077728b8d68f7d33de0d31e3c666f115a0f9e1f53be48b4e678bf73f07aecefcca35766d98d
   languageName: node
   linkType: hard
 
