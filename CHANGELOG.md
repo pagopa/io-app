@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.0](https://github.com/pagopa/io-app/compare/2.80.0-rc.10...2.81.0-rc.0) (2025-01-14)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1944](https://pagopa.atlassian.net/browse/SIW-1944)] Remove the ongoing badge when errors occur ([#6592](https://github.com/pagopa/io-app/issues/6592)) ([ea2663f](https://github.com/pagopa/io-app/commit/ea2663f0628960da0a352aa0f4a721c63028a9cf))
+
+
+### Bug Fixes
+
+* [[IOBP-1100](https://pagopa.atlassian.net/browse/IOBP-1100)] German FAQ strings ([#6579](https://github.com/pagopa/io-app/issues/6579)) ([7e5ca4a](https://github.com/pagopa/io-app/commit/7e5ca4a918ec36b82e77837987da34db647bffdf))
+
+
+### Chores
+
+* [[IOAPPX-454](https://pagopa.atlassian.net/browse/IOAPPX-454)] Parametrize the use of `Kotlin` and `OkHttp` versions to be used from libraries if needed ([#6574](https://github.com/pagopa/io-app/issues/6574)) ([272db91](https://github.com/pagopa/io-app/commit/272db916e415a951675738427bccbe94c3eab2e7))
+* [[IOPID-2575](https://pagopa.atlassian.net/browse/IOPID-2575)] Bump `rn-keychain` and force `AES_GCM_NO_AUTH` ([#6587](https://github.com/pagopa/io-app/issues/6587)) ([1059177](https://github.com/pagopa/io-app/commit/1059177fb10f9ffa9cf7994e113ccd845f4aef2a))
+* **Cross:** [[IOAPPX-346](https://pagopa.atlassian.net/browse/IOAPPX-346)] Remove manually linked deps ([#5972](https://github.com/pagopa/io-app/issues/5972)) ([f2659cf](https://github.com/pagopa/io-app/commit/f2659cfd53feff5976397807916b84e234287d04))
+
 ## [2.80.0-rc.10](https://github.com/pagopa/io-app/compare/2.80.0-rc.9...2.80.0-rc.10) (2025-01-09)
 
 
