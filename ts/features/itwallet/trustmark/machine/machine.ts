@@ -10,7 +10,10 @@ import { Context } from "./context";
 import { TrustmarkEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 import { Input } from "./input";
-import { CREDENTIALS_MAP, trackItwTrustmarkRenewFailure } from "../../analytics";
+import {
+  CREDENTIALS_MAP,
+  trackItwTrustmarkRenewFailure
+} from "../../analytics";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -54,9 +57,9 @@ export const itwTrustmarkMachine = setup({
       nextAttemptAt: undefined
     }),
     setFailure: assign({
-      failure: ({ event, context}) => {
+      failure: ({ event, context }) => {
         const failure = mapEventToFailure(event);
-        trackItwTrustmarkRenewFailure((CREDENTIALS_MAP[context.credentialType]));
+        trackItwTrustmarkRenewFailure(CREDENTIALS_MAP[context.credentialType]);
         return failure;
       }
     }),
