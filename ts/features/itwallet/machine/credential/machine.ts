@@ -57,7 +57,8 @@ export const itwCredentialIssuanceMachine = setup({
   guards: {
     isSessionExpired: notImplemented,
     isDeferredIssuance: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented
+    hasValidWalletInstanceAttestation: notImplemented,
+    isStatusError: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -249,6 +250,10 @@ export const itwCredentialIssuanceMachine = setup({
         {
           guard: "isDeferredIssuance",
           actions: "flagCredentialAsRequested"
+        },
+        {
+          guard: "isStatusError",
+          actions: "unflagCredentialAsRequested"
         }
       ],
       on: {
