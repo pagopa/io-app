@@ -18,5 +18,8 @@ export const createCredentialIssuanceGuardsImplementation = () => ({
       O.fromNullable(context.walletInstanceAttestation),
       O.map(isWalletInstanceAttestationValid),
       O.getOrElse(() => false)
-    )
+    ),
+
+  isStatusError: ({ context }: { context: Context }) =>
+    context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS
 });
