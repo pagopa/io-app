@@ -51,8 +51,8 @@ describe("itwIsDiscoveryBannerHiddenSelector", () => {
 });
 
 describe("itwRequestedCredentialsSelector", () => {
-  it("should return the list of requested credentials in the past 7 days", () => {
-    MockDate.set("2024-11-14T20:43:21.361Z");
+  it("should return the list of requested credentials in the past 24 hours", () => {
+    MockDate.set("2023-11-15T20:43:21.361Z");
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -62,7 +62,7 @@ describe("itwRequestedCredentialsSelector", () => {
           requestedCredentials: {
             MDL: "2023-11-14T20:43:21.362Z",
             EuropeanDisabilityCard: "2023-11-14T20:43:21.360Z",
-            EuropeanHealthInsuranceCard: "2023-11-10T20:43:21.361Z"
+            EuropeanHealthInsuranceCard: "2023-11-14T20:43:21.361Z"
           }
         })
       )
