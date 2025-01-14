@@ -378,7 +378,7 @@ const IdentificationModal = () => {
       transparent
       onRequestClose={onRequestCloseHandler}
     >
-      {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
+      <StatusBar barStyle={"light-content"} translucent />
       <View style={[styles.contentWrapper, { backgroundColor: blueColor }]}>
         {isValidatingTask && (
           <View
