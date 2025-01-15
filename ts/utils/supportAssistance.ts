@@ -19,7 +19,7 @@ export type JwtIdentity = ZendDesk.JwtIdentity;
 export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 
 // Id of the log customField
-export const logId = "4413845142673";
+const logId = "4413845142673";
 
 export const anonymousAssistanceAddress = "io@assistenza.pagopa.it";
 

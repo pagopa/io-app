@@ -21,8 +21,9 @@ import {
   addTicketCustomField,
   zendeskItWalletFailureCode,
   zendeskItWalletCategory,
-  logId,
-  zendeskCategoryId
+  zendeskCategoryId,
+  appendLog,
+  resetLog
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -41,6 +42,12 @@ type Params = {
 type ItwFailureSupportModal = (params: Params) => {
   bottomSheet: JSX.Element;
   present: () => void;
+};
+
+// The subcategory is fixed for now. In the future it can be made dynamic depending on the error type.
+const ZENDESK_SUBCATEGORY = {
+  id: "29326690756369",
+  value: "it_wallet_aggiunta_documenti"
 };
 
 const extractErrorCode = (failure: Params["failure"]) => {
@@ -62,9 +69,13 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
+    resetLog();
+
     addTicketCustomField(zendeskCategoryId, zendeskItWalletCategory.value);
+    addTicketCustomField(ZENDESK_SUBCATEGORY.id, ZENDESK_SUBCATEGORY.value);
     addTicketCustomField(zendeskItWalletFailureCode, code);
-    addTicketCustomField(logId, JSON.stringify(failure));
+    appendLog(JSON.stringify(failure));
+
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
