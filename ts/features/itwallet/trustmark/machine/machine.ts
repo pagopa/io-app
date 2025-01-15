@@ -181,10 +181,7 @@ export const itwTrustmarkMachine = setup({
     },
     Failure: {
       description: "This state is reached when an error occurs",
-      entry: [
-        "incrementAttempts", 
-        "trackTrustmarkFailure"
-      ],
+      entry: ["incrementAttempts", "trackTrustmarkFailure"],
       on: {
         retry: [
           {
