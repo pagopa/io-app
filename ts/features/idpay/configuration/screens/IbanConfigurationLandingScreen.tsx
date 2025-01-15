@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -45,12 +45,15 @@ export const IbanConfigurationLanding = () => {
     130
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.configuration.headerTitle"),
+    goBack: customGoBack,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={customGoBack}
-      headerTitle={I18n.t("idpay.configuration.headerTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <View
         style={[
           IOStyles.flex,
@@ -84,7 +87,7 @@ export const IbanConfigurationLanding = () => {
         />
       </SafeAreaView>
       {bottomSheet}
-    </BaseScreenComponent>
+    </>
   );
 };
 

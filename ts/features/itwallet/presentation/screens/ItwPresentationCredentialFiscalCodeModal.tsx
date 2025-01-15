@@ -21,6 +21,7 @@ import {
   selectNameSurnameFromEid
 } from "../../credentials/store/selectors";
 import { trackCredentialCardModal } from "../../analytics";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 /**
  * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
@@ -74,6 +75,7 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
   const nameSurname = useIOSelector(selectNameSurnameFromEid);
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   useFocusEffect(

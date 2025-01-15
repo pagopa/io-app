@@ -23,6 +23,7 @@ import {
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
 import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../analytics";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
@@ -43,6 +44,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const [isFlipped, setFlipped] = React.useState(false);
   const theme = useIOTheme();
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   useFocusEffect(
