@@ -1,7 +1,7 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
   OperationResultScreenContent,
@@ -9,11 +9,19 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackWalletCreationFailed } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
@@ -26,14 +34,6 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwDeferredIssuanceScreenContentSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import {
-  fallbackForLocalizedMessageKeys,
-  getFullLocale
-} from "../../../../utils/locale";
-import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =

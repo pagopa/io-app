@@ -3542,6 +3542,7 @@ features:
           requestAssistance: "Qualcosa non torna?"
           showClaimValues: "Mostra gli attributi del documento"
           hideClaimValues: "Nascondi gli attributi del documento"
+          openIPatente: "Vai al saldo punti patente"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?
