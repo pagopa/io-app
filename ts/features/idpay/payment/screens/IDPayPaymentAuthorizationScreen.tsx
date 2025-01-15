@@ -16,7 +16,7 @@ import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
@@ -92,12 +92,15 @@ const IDPayPaymentAuthorizationScreen = () => {
     return <AuthorizationScreenSkeleton />;
   };
 
+  useHeaderSecondLevel({
+    title: "Autorizza operazione",
+    canGoBack: false,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      headerTitle="Autorizza operazione"
-      contextualHelp={emptyContextualHelp}
-      goBack={false}
-    >
+    <>
       <SafeAreaView style={IOStyles.flex}>
         <View style={IOStyles.flex}>
           <ContentWrapper>
@@ -122,7 +125,7 @@ const IDPayPaymentAuthorizationScreen = () => {
           disabled: isLoading
         }}
       />
-    </BaseScreenComponent>
+    </>
   );
 };
 
