@@ -108,14 +108,14 @@ export const itwDeferredIssuanceScreenContentSelector = createSelector(
 );
 
 /**
- * Return the remote config content for the deferred issuance screen content.
+ * Return the remote config about iPatente CTA inside the MDL credential details screen.
  */
-export const itwIsIPatenteCtaEnabledSelector = createSelector(
+export const itwIPatenteCtaSelector = createSelector(
   itwRemoteConfigSelector,
   itwConfig =>
     pipe(
       itwConfig,
-      O.map(itw => itw.ipatente_cta_visible),
-      O.getOrElse(() => false)
+      O.map(itw => itw.ipatente_cta),
+      O.toUndefined
     )
 );

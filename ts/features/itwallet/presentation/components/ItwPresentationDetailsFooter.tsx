@@ -17,7 +17,7 @@ import {
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
-import { itwIsIPatenteCtaEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { itwIPatenteCtaSelector } from "../../common/store/selectors/remoteConfig";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
 import { trackAuthenticationStart } from "../../../fims/common/analytics";
@@ -26,12 +26,6 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
 };
-// Consts for trackAuthenticationStart function
-const serviceId = "01JEXVQSRV2XRX9XDWQ5XQ6A8T" as ServiceId;
-const serviceOrganizationName =
-  "Ministero delle infrastrutture e dei trasporti";
-const serviceOrganizationFiscalCode = "97532760580";
-const serviceName = "Motorizzazione Civile - Le mie patenti";
 
 const ItwPresentationDetailsFooter = ({
   credential
@@ -139,15 +133,26 @@ const getCredentialActions = (credentialType: string): React.ReactNode =>
  * Renders the IPatente service action item
  */
 const IPatenteListItemAction = () => {
-  const isIPatenteEnabled = useIOSelector(itwIsIPatenteCtaEnabledSelector);
+  const iPatenteCtaSelector = useIOSelector(itwIPatenteCtaSelector);
 
-  if (!isIPatenteEnabled) {
+  if (!iPatenteCtaSelector?.visibility) {
     return null;
   }
 
   const label = I18n.t(
     "features.itWallet.presentation.credentialDetails.actions.openIPatente"
   );
+
+  const trackIPatenteAuthenticationStart = (label: string) =>
+    trackAuthenticationStart(
+      iPatenteCtaSelector.service_id as ServiceId,
+      iPatenteCtaSelector.service_name,
+      iPatenteCtaSelector.service_organization_name,
+      iPatenteCtaSelector.service_organization_fiscal_code,
+      label,
+      //TODO Change with a new source
+      "message_detail"
+    );
 
   return (
     <ListItemAction
@@ -156,19 +161,12 @@ const IPatenteListItemAction = () => {
       icon="externalLink"
       label={label}
       onPress={() => {
-        trackAuthenticationStart(
-          serviceId,
-          serviceName,
-          serviceOrganizationName,
-          serviceOrganizationFiscalCode,
-          label,
-          "message_detail"
-        );
+        trackIPatenteAuthenticationStart(label);
         NavigationService.navigate(FIMS_ROUTES.MAIN, {
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaText: label,
-            ctaUrl: "https://licences.ipatente.io.pagopa.it/licences"
+            ctaUrl: iPatenteCtaSelector.url
           }
         });
       }}
