@@ -53,6 +53,7 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { itwIpzsPrivacyUrl } from "../../../../config";
 import { ITW_ROUTES } from "../../navigation/routes";
 
@@ -68,6 +69,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     selectCredentialTypeOption
   );
 
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
