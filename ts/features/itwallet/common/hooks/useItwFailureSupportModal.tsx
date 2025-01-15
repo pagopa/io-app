@@ -67,9 +67,12 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        assistanceForFci: false
+        assistanceType: {
+          itWallet: true,
+          payment: false,
+          card: false,
+          fci: false
+        }
       })
     );
     dispatch(zendeskSelectedCategory(defaultZendeskItWalletCategory));

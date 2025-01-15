@@ -123,9 +123,12 @@ const usePaymentFailureSupportModal = ({
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
-        assistanceForPayment: true,
-        assistanceForCard: false,
-        assistanceForFci: false
+        assistanceType: {
+          payment: true,
+          card: false,
+          fci: false,
+          itWallet: false
+        }
       })
     );
     dispatch(zendeskSelectedCategory(defaultZendeskPaymentCategory));

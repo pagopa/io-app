@@ -226,9 +226,7 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelp,
     contextualHelpMarkdown,
     startingRoute,
-    assistanceForPayment,
-    assistanceForCard,
-    assistanceForFci
+    assistanceType
   } = route.params || {};
   //   !contextualHelpMarkdown
   // );
@@ -247,46 +245,19 @@ const ZendeskSupportHelpCenter = () => {
     if (O.isNone(maybeProfile)) {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-        params: {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
-        }
+        params: { assistanceType }
       });
     } else {
       navigation.navigate(ZENDESK_ROUTES.MAIN, {
         screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-        params: {
-          assistanceForPayment,
-          assistanceForCard,
-          assistanceForFci
-        }
+        params: { assistanceType }
       });
     }
-  }, [
-    assistanceForCard,
-    assistanceForFci,
-    assistanceForPayment,
-    maybeProfile,
-    navigation
-  ]);
+  }, [assistanceType, maybeProfile, navigation]);
 
   const handleContactSupportPress = useCallback(
-    () =>
-      handleContactSupport(
-        navigation,
-        assistanceForPayment,
-        assistanceForCard,
-        assistanceForFci,
-        zendeskRemoteConfig
-      ),
-    [
-      navigation,
-      assistanceForPayment,
-      assistanceForCard,
-      assistanceForFci,
-      zendeskRemoteConfig
-    ]
+    () => handleContactSupport(navigation, assistanceType, zendeskRemoteConfig),
+    [navigation, assistanceType, zendeskRemoteConfig]
   );
 
   const handleButtonPress = React.useCallback(

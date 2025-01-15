@@ -7,16 +7,15 @@ import { isReady } from "../../../common/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { ZendeskConfig } from "../store/reducers";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { type ZendeskAssistanceType } from "../store/actions";
 
 export const handleContactSupport = (
   navigation: IOStackNavigationProp<AppParamsList>,
-  assistanceForPayment: boolean,
-  assistanceForCard: boolean,
-  assistanceForFci: boolean,
+  assistanceType: ZendeskAssistanceType,
   zendeskRemoteConfig: ZendeskConfig
 ) => {
   const canSkipCategoryChoice: boolean =
-    !isReady(zendeskRemoteConfig) || assistanceForPayment;
+    !isReady(zendeskRemoteConfig) || assistanceType.payment;
 
   if (isPanicModeActive(zendeskRemoteConfig)) {
     // Go to panic mode screen
@@ -29,12 +28,12 @@ export const handleContactSupport = (
   if (canSkipCategoryChoice) {
     navigation.navigate(ZENDESK_ROUTES.MAIN, {
       screen: ZENDESK_ROUTES.ASK_PERMISSIONS,
-      params: { assistanceForPayment, assistanceForCard, assistanceForFci }
+      params: { assistanceType }
     });
   } else {
     navigation.navigate(ZENDESK_ROUTES.MAIN, {
       screen: ZENDESK_ROUTES.CHOOSE_CATEGORY,
-      params: { assistanceForPayment, assistanceForCard, assistanceForFci }
+      params: { assistanceType }
     });
   }
 };
