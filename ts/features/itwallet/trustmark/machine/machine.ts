@@ -57,13 +57,12 @@ export const itwTrustmarkMachine = setup({
       nextAttemptAt: undefined
     }),
     setFailure: assign({
-      failure: ({ event, context }) => {
-        const failure = mapEventToFailure(event);
-        trackItwTrustmarkRenewFailure(CREDENTIALS_MAP[context.credentialType]);
-        return failure;
-      }
+      failure: ({ event }) => mapEventToFailure(event)
     }),
-    showRetryFailureToast: notImplemented
+    showRetryFailureToast: notImplemented,
+    trackTrustmarkFailure: ({ context }) => {
+      trackItwTrustmarkRenewFailure(CREDENTIALS_MAP[context.credentialType]);
+    }
   },
   actors: {
     getWalletAttestationActor:
@@ -182,7 +181,10 @@ export const itwTrustmarkMachine = setup({
     },
     Failure: {
       description: "This state is reached when an error occurs",
-      entry: "incrementAttempts",
+      entry: [
+        "incrementAttempts", 
+        "trackTrustmarkFailure"
+      ],
       on: {
         retry: [
           {
