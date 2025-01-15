@@ -53,6 +53,7 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -69,6 +70,7 @@ const ItwIssuanceCredentialTrustIssuerScreen = () => {
     selectCredentialTypeOption
   );
 
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
