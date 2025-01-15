@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { assertEvent, assign, fromPromise, not, setup } from "xstate";
+import { assertEvent, assign, fromPromise, not, setup, and } from "xstate";
 import { assert } from "../../../../utils/assert";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -95,7 +95,6 @@ export const itwEidIssuanceMachine = setup({
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,
     isSessionExpired: notImplemented,
-    isReissuingAndSessionExpired: notImplemented,
     isOperationAborted: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
@@ -250,7 +249,7 @@ export const itwEidIssuanceMachine = setup({
         ],
         onError: [
           {
-            guard: "isReissuingAndSessionExpired",
+            guard: and(["isReissuing", "isSessionExpired"]),
             actions: ["handleSessionExpired", "closeIssuance"],
             target: "#itwEidIssuanceMachine.Idle"
           },
