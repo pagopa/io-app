@@ -17,7 +17,7 @@ import {
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
-import { itwIPatenteCtaSelector } from "../../common/store/selectors/remoteConfig";
+import { itwIPatenteCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
 import { trackAuthenticationStart } from "../../../fims/common/analytics";
@@ -133,9 +133,9 @@ const getCredentialActions = (credentialType: string): React.ReactNode =>
  * Renders the IPatente service action item
  */
 const IPatenteListItemAction = () => {
-  const iPatenteCtaSelector = useIOSelector(itwIPatenteCtaSelector);
+  const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
 
-  if (!iPatenteCtaSelector?.visibility) {
+  if (!ctaConfig?.visibility) {
     return null;
   }
 
@@ -145,10 +145,10 @@ const IPatenteListItemAction = () => {
 
   const trackIPatenteAuthenticationStart = (label: string) =>
     trackAuthenticationStart(
-      iPatenteCtaSelector.service_id as ServiceId,
-      iPatenteCtaSelector.service_name,
-      iPatenteCtaSelector.service_organization_name,
-      iPatenteCtaSelector.service_organization_fiscal_code,
+      ctaConfig.service_id as ServiceId,
+      ctaConfig.service_name,
+      ctaConfig.service_organization_name,
+      ctaConfig.service_organization_fiscal_code,
       label,
       //TODO Change with a new source
       "message_detail"
@@ -166,7 +166,7 @@ const IPatenteListItemAction = () => {
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaText: label,
-            ctaUrl: iPatenteCtaSelector.url
+            ctaUrl: ctaConfig.url
           }
         });
       }}
