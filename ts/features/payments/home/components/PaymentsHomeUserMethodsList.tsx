@@ -73,7 +73,12 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
   }, [dispatch, paymentMethodsPot]);
 
-  const handleOnMethodPress = (walletId: string) => () => {
+  const handleOnMethodPress = (walletId: string, isExpired: boolean) => () => {
+    analytics.trackPaymentWalletMethodDetail({
+      payment_method_selected: paymentAnalyticsData?.selectedPaymentMethod,
+      payment_method_status: isExpired ? "invalid" : "valid"
+    });
+
     navigation.navigate(
       PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
       {
@@ -107,7 +112,10 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const userMethods = paymentMethods.map(
     (method: WalletInfo): PaymentCardSmallProps => ({
       ...getPaymentCardPropsFromWalletInfo(method),
-      onPress: handleOnMethodPress(method.walletId)
+      onPress: handleOnMethodPress(
+        method.walletId,
+        getPaymentCardPropsFromWalletInfo(method)?.isExpired ?? false
+      )
     })
   );
 
