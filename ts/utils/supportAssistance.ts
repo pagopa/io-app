@@ -19,7 +19,7 @@ export type JwtIdentity = ZendDesk.JwtIdentity;
 export type AnonymousIdentity = ZendDesk.AnonymousIdentity;
 
 // Id of the log customField
-const logId = "4413845142673";
+export const logId = "4413845142673";
 
 export const anonymousAssistanceAddress = "io@assistenza.pagopa.it";
 
@@ -142,7 +142,7 @@ export const zendeskFCICategory: ZendeskCategory = {
     "de-DE": "Firma con IO"
   }
 };
-export const defaultZendeskItWalletCategory: ZendeskCategory = {
+export const zendeskItWalletCategory: ZendeskCategory = {
   value: "it_wallet",
   description: {
     "it-IT": "Documenti su IO",

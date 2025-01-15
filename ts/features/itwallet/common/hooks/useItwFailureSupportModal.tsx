@@ -19,9 +19,10 @@ import {
   assistanceToolRemoteConfig,
   resetCustomFields,
   addTicketCustomField,
-  appendLog,
   zendeskItWalletFailureCode,
-  defaultZendeskItWalletCategory
+  zendeskItWalletCategory,
+  logId,
+  zendeskCategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -61,9 +62,9 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
-
+    addTicketCustomField(zendeskCategoryId, zendeskItWalletCategory.value);
     addTicketCustomField(zendeskItWalletFailureCode, code);
-    appendLog(JSON.stringify(failure));
+    addTicketCustomField(logId, JSON.stringify(failure));
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
@@ -75,7 +76,7 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
         }
       })
     );
-    dispatch(zendeskSelectedCategory(defaultZendeskItWalletCategory));
+    dispatch(zendeskSelectedCategory(zendeskItWalletCategory));
   };
 
   const handleAskAssistance = () => {
