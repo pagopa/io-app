@@ -453,6 +453,10 @@ const IdentificationModal = () => {
               <VSpacer size={32} />
               <View style={IOStyles.selfCenter}>
                 <ButtonLink
+                  textAlign="center"
+                  /* Don't limit number of lines
+                    when larger text is enabled */
+                  numberOfLines={0}
                   accessibilityLabel={forgotCodeLabel}
                   color="contrast"
                   label={forgotCodeLabel}

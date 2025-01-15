@@ -841,9 +841,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -862,9 +862,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Due date 01/01/2024
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -894,9 +894,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     >
                                       <Text
                                         accessibilityLabel="1.99 €"
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1067,9 +1067,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1088,9 +1088,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1125,11 +1125,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#F4F5F8",
@@ -1138,9 +1140,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -1318,9 +1320,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1339,9 +1341,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1376,11 +1378,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#F4F5F8",
@@ -1389,9 +1393,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -1569,9 +1573,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1590,9 +1594,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1627,11 +1631,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#E1F5FE",
@@ -1640,9 +1646,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -1820,9 +1826,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -1841,9 +1847,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -1878,11 +1884,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#E1F4E1",
@@ -1891,9 +1899,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -2071,9 +2079,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2092,9 +2100,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -2129,11 +2137,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#FFD9D9",
@@ -2142,9 +2152,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
@@ -2322,9 +2332,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       }
                                     >
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="footnote"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={1}
                                         style={
                                           [
@@ -2343,9 +2353,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         Notice code
                                       </Text>
                                       <Text
-                                        allowFontScaling={false}
+                                        allowFontScaling={true}
                                         dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={1.5}
                                         numberOfLines={2}
                                         style={
                                           [
@@ -2380,11 +2390,13 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                             {
                                               "alignItems": "center",
                                               "borderCurve": "continuous",
-                                              "borderRadius": 24,
                                               "flexDirection": "row",
                                               "justifyContent": "center",
-                                              "paddingHorizontal": 8,
-                                              "paddingVertical": 4,
+                                            },
+                                            {
+                                              "borderRadius": 36,
+                                              "paddingHorizontal": 12,
+                                              "paddingVertical": 6,
                                             },
                                             {
                                               "backgroundColor": "#FFD9D9",
@@ -2393,9 +2405,9 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         }
                                       >
                                         <Text
-                                          allowFontScaling={false}
+                                          allowFontScaling={true}
                                           ellipsizeMode="tail"
-                                          maxFontSizeMultiplier={1.25}
+                                          maxFontSizeMultiplier={1.5}
                                           numberOfLines={1}
                                           style={
                                             [
