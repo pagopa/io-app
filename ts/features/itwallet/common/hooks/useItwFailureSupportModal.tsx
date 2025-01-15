@@ -19,7 +19,9 @@ import {
   assistanceToolRemoteConfig,
   resetCustomFields,
   addTicketCustomField,
-  appendLog
+  appendLog,
+  zendeskItWalletFailureCode,
+  defaultZendeskItWalletCategory
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -40,15 +42,12 @@ type ItwFailureSupportModal = (params: Params) => {
   present: () => void;
 };
 
-const extractErrorMetadata = (failure: Params["failure"]) => {
+const extractErrorCode = (failure: Params["failure"]) => {
   const rawError = failure.reason;
-  return {
-    type: failure.type, // not needed
-    code:
-      isWalletProviderResponseError(rawError) || isIssuerResponseError(rawError)
-        ? rawError.code ?? failure.type
-        : failure.type
-  };
+  return isWalletProviderResponseError(rawError) ||
+    isIssuerResponseError(rawError)
+    ? rawError.code ?? failure.type
+    : failure.type;
 };
 
 export const useItwFailureSupportModal: ItwFailureSupportModal = ({
@@ -58,12 +57,12 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
 
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  const { code } = extractErrorMetadata(failure);
+  const code = extractErrorCode(failure);
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
 
-    addTicketCustomField("123456", code);
+    addTicketCustomField(zendeskItWalletFailureCode, code);
     appendLog(JSON.stringify(failure));
     dispatch(
       zendeskSupportStart({
@@ -73,7 +72,7 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
         assistanceForFci: false
       })
     );
-    dispatch(zendeskSelectedCategory("test"));
+    dispatch(zendeskSelectedCategory(defaultZendeskItWalletCategory));
   };
 
   const handleAskAssistance = () => {
