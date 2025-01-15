@@ -19,6 +19,7 @@ import {
 import { ParsedCredential } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { trackWalletCredentialFAC_SIMILE } from "../../analytics";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 // We currently only support PDF files, extend this if needed
 type SupportedAttachmentType = "application/pdf";
@@ -49,6 +50,7 @@ export const ItwPresentationCredentialAttachmentScreen = ({
       safeBottomAreaHeight: 0
     });
 
+  usePreventScreenCapture();
   useFocusEffect(trackWalletCredentialFAC_SIMILE);
 
   useHeaderSecondLevel({
