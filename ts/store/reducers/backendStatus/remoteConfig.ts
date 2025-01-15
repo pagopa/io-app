@@ -350,42 +350,7 @@ export const generateDynamicUrlSelector = createSelector(
     }
   }
 );
-/**
- * Return the remote config about IT-WALLET enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (IT-WALLET disabled)
- */
-export const isItwEnabledSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): boolean =>
-    pipe(
-      remoteConfig,
-      O.map(
-        config =>
-          isVersionSupported(
-            Platform.OS === "ios"
-              ? config.itw.min_app_version.ios
-              : config.itw.min_app_version.android,
-            getAppVersion()
-          ) && config.itw.enabled
-      ),
-      O.getOrElse(() => false)
-    )
-);
 
-/**
- * Returns the authentication methods that are disabled.
- * If there is no data, an empty array is returned as the default value.
- */
-export const itwDisabledIdentificationMethodsSelector = createSelector(
-  remoteConfigSelector,
-  (remoteConfig): ReadonlyArray<string> =>
-    pipe(
-      remoteConfig,
-      O.chainNullableK(config => config.itw.disabled_identification_methods),
-      O.getOrElse(() => emptyArray)
-    )
-);
 /**
  * Return the remote feature flag about the payment feedback banner enabled/disabled
  * that is shown after a successful payment.
