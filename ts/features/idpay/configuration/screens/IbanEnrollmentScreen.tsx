@@ -147,6 +147,17 @@ export const IbanEnrollmentScreen = () => {
     supportRequest: true
   });
 
+  useHeaderSecondLevel({
+    title: I18n.t(
+      isIbanOnly
+        ? "idpay.configuration.iban.title"
+        : "idpay.configuration.headerTitle"
+    ),
+    goBack: handleBackPress,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <ScrollView style={styles.container}>
