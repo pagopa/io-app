@@ -150,8 +150,7 @@ const IPatenteListItemAction = () => {
       ctaConfig.service_organization_name,
       ctaConfig.service_organization_fiscal_code,
       label,
-      //TODO Change with a new source
-      "message_detail"
+      "credential_details"
     );
 
   return (
