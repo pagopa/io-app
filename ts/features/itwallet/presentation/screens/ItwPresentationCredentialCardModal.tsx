@@ -21,6 +21,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
@@ -41,6 +42,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   useLayoutEffect(() => {

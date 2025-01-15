@@ -2,6 +2,7 @@ import {
   Body,
   FooterActionsInline,
   H2,
+  ListItemSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
@@ -9,7 +10,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { dpr28Dec2000Url } from "../../../../urls";
@@ -70,18 +70,12 @@ const InitiativeSelfDeclarationsScreen = () => {
             {I18n.t("idpay.onboarding.boolPrerequisites.link")}
           </Body>
           <VSpacer size={24} />
-          {selfCriteriaBool.map((criteria, index) => (
+          {selfCriteriaBool.map(criteria => (
             <View key={criteria.code}>
-              <ListItemComponent
-                key={index}
-                title={criteria.description}
-                switchValue={getSelfCriteriaBoolAnswer(criteria)}
-                accessibilityRole={"switch"}
-                accessibilityState={{
-                  checked: getSelfCriteriaBoolAnswer(criteria)
-                }}
-                isLongPressEnabled={true}
-                onSwitchValueChanged={toggleCriteria(criteria)}
+              <ListItemSwitch
+                label={criteria.description}
+                onSwitchValueChange={toggleCriteria(criteria)}
+                value={getSelfCriteriaBoolAnswer(criteria)}
               />
               <VSpacer size={16} />
             </View>

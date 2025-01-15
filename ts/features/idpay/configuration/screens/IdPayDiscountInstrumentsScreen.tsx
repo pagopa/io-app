@@ -10,7 +10,7 @@ import { useMemo, useCallback } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -71,7 +71,7 @@ export const IdPayDiscountInstrumentsScreen = () => {
   const isLoadingIdPayCodeInstrument = useIOSelector(state =>
     idPayIsLoadingInitiativeInstrumentSelector(
       state,
-      idPayCodeInstrument?.instrumentId || ""
+      idPayCodeInstrument?.instrumentId ?? ""
     )
   );
 
@@ -97,53 +97,57 @@ export const IdPayDiscountInstrumentsScreen = () => {
         screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING,
         params: { initiativeId }
       });
-    } else {
-      if (idPayCodeInstrument && initiativeId) {
-        dispatch(
-          idpayInitiativeInstrumentDelete.request({
-            initiativeId,
-            instrumentId: idPayCodeInstrument.instrumentId
-          })
-        );
-      }
+    } else if (idPayCodeInstrument && initiativeId) {
+      dispatch(
+        idpayInitiativeInstrumentDelete.request({
+          initiativeId,
+          instrumentId: idPayCodeInstrument.instrumentId
+        })
+      );
     }
   };
 
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    transparent: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
     <>
-      <TopScreenComponent goBack contextualHelp={emptyContextualHelp}>
-        <LoadingSpinnerOverlay
-          isLoading={isLoadingInstruments}
-          loadingOpacity={1}
-        >
-          <ScrollView style={styles.container}>
-            <H1>
-              {I18n.t("idpay.configuration.instruments.paymentMethods.header")}
-            </H1>
-            <VSpacer size={8} />
-            <Body>
-              {I18n.t("idpay.configuration.instruments.paymentMethods.body", {
-                initiativeName: initiativeName ?? ""
-              })}
-            </Body>
-            <VSpacer size={24} />
-            <IdPayDiscountInstrumentEnrollmentSwitch
-              instrumentType={InstrumentTypeEnum.IDPAYCODE}
-              onValueChange={handleCieValueChange}
-              onPressAction={presentCieBottomSheet}
-              status={idPayCodeInstrument?.status}
-              isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
-              value={idPayCodeInstrument ? true : false}
-            />
-            <Divider />
-            <IdPayDiscountInstrumentEnrollmentSwitch
-              instrumentType={InstrumentTypeEnum.APP_IO_PAYMENT}
-            />
-            <VSpacer size={16} />
-          </ScrollView>
-        </LoadingSpinnerOverlay>
-        {bottomSheet}
-      </TopScreenComponent>
+      <LoadingSpinnerOverlay
+        isLoading={isLoadingInstruments}
+        loadingOpacity={1}
+      >
+        <ScrollView style={styles.container}>
+          <H1>
+            {I18n.t("idpay.configuration.instruments.paymentMethods.header")}
+          </H1>
+          <VSpacer size={8} />
+          <Body>
+            {I18n.t("idpay.configuration.instruments.paymentMethods.body", {
+              initiativeName: initiativeName ?? ""
+            })}
+          </Body>
+          <VSpacer size={24} />
+          <IdPayDiscountInstrumentEnrollmentSwitch
+            instrumentType={InstrumentTypeEnum.IDPAYCODE}
+            onValueChange={handleCieValueChange}
+            onPressAction={presentCieBottomSheet}
+            status={idPayCodeInstrument?.status}
+            isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
+            value={!!idPayCodeInstrument}
+          />
+          <Divider />
+          <IdPayDiscountInstrumentEnrollmentSwitch
+            instrumentType={InstrumentTypeEnum.APP_IO_PAYMENT}
+          />
+          <VSpacer size={16} />
+        </ScrollView>
+      </LoadingSpinnerOverlay>
+      {bottomSheet}
     </>
   );
 };

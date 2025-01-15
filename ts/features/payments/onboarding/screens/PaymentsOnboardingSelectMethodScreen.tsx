@@ -11,8 +11,11 @@ import { PaymentsOnboardingRoutes } from "../navigation/routes";
 import { paymentsOnboardingGetMethodsAction } from "../store/actions";
 import { selectPaymentOnboardingMethods } from "../store/selectors";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 const PaymentsOnboardingSelectMethodScreen = () => {
+  usePreventScreenCapture();
+
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 

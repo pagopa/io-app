@@ -12,6 +12,11 @@ export type PaymentHomeAnalyticsProps = {
   add_entry_point: PaymentsAnalyticsHomeAddWalletEntryPoint;
 };
 
+type PaymentMethodAnalyticsProps = {
+  payment_method_selected: string;
+  payment_method_status: "valid" | "invalid";
+};
+
 export const trackPaymentsHome = (
   props: Partial<PaymentHomeAnalyticsProps>
 ) => {
@@ -55,6 +60,17 @@ export const trackPaymentWalletAddStart = (
 ) => {
   void mixpanelTrack(
     "WALLET_ADD_START",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
+export const trackPaymentWalletMethodDetail = (
+  props: Partial<PaymentMethodAnalyticsProps>
+) => {
+  void mixpanelTrack(
+    "WALLET_PAYMENT_METHOD_DETAIL",
     buildEventProperties("UX", "action", {
       ...props
     })

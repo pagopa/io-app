@@ -13,7 +13,7 @@ import { pipe } from "fp-ts/lib/function";
 import { useState, useCallback, useEffect } from "react";
 import { ScrollView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { Wallet } from "../../../../types/pagopa";
@@ -222,48 +222,47 @@ export const InstrumentsEnrollmentScreen = () => {
     O.toUndefined
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t(
+      isInstrumentsOnlyMode
+        ? "idpay.configuration.instruments.title"
+        : "idpay.configuration.headerTitle"
+    ),
+    goBack: handleBackPress,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
     <>
-      <BaseScreenComponent
-        goBack={handleBackPress}
-        headerTitle={I18n.t(
-          isInstrumentsOnlyMode
-            ? "idpay.configuration.instruments.title"
-            : "idpay.configuration.headerTitle"
-        )}
-        contextualHelp={emptyContextualHelp}
-      >
-        <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <ScrollView
-            style={[IOStyles.flex, IOStyles.horizontalContentPadding]}
-          >
-            <VSpacer size={16} />
-            <H2>{I18n.t("idpay.configuration.instruments.header")}</H2>
-            <VSpacer size={8} />
-            <Body>
-              {I18n.t("idpay.configuration.instruments.body", {
-                initiativeName
-              })}
-            </Body>
-            <VSpacer size={24} />
-            {walletInstruments.map(walletInstrument => (
-              <InstrumentEnrollmentSwitch
-                key={walletInstrument.idWallet}
-                wallet={walletInstrument}
-                isStaged={stagedWalletId === walletInstrument.idWallet}
-                onValueChange={handleInstrumentValueChange(walletInstrument)}
-              />
-            ))}
-            <VSpacer size={16} />
-            <FeatureInfo
-              iconName="navWallet"
-              body={I18n.t("idpay.configuration.instruments.footer")}
+      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+        <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+          <VSpacer size={16} />
+          <H2>{I18n.t("idpay.configuration.instruments.header")}</H2>
+          <VSpacer size={8} />
+          <Body>
+            {I18n.t("idpay.configuration.instruments.body", {
+              initiativeName
+            })}
+          </Body>
+          <VSpacer size={24} />
+          {walletInstruments.map(walletInstrument => (
+            <InstrumentEnrollmentSwitch
+              key={walletInstrument.idWallet}
+              wallet={walletInstrument}
+              isStaged={stagedWalletId === walletInstrument.idWallet}
+              onValueChange={handleInstrumentValueChange(walletInstrument)}
             />
-            <VSpacer size={16} />
-          </ScrollView>
-          {renderFooterButtons()}
-        </LoadingSpinnerOverlay>
-      </BaseScreenComponent>
+          ))}
+          <VSpacer size={16} />
+          <FeatureInfo
+            iconName="navWallet"
+            body={I18n.t("idpay.configuration.instruments.footer")}
+          />
+          <VSpacer size={16} />
+        </ScrollView>
+        {renderFooterButtons()}
+      </LoadingSpinnerOverlay>
       {enrollmentBottomSheetModal.bottomSheet}
     </>
   );

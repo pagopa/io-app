@@ -35,6 +35,7 @@ import {
 import { ItwCredentialTrustmark } from "../../trustmark/components/ItwCredentialTrustmark";
 import ItwCredentialNotFound from "../../common/components/ItwCredentialNotFound";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -80,6 +81,7 @@ const ItwPresentationCredentialDetail = ({
   );
 
   useDebugInfo(credential);
+  usePreventScreenCapture();
 
   useFocusEffect(() => {
     trackCredentialDetail({

@@ -14,7 +14,7 @@ import { useEffect, createRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
@@ -76,35 +76,40 @@ const IdPayCodeDisplayScreen = () => {
     ? I18n.t("global.buttons.continue")
     : I18n.t("global.buttons.close");
 
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
     <>
       <LoadingSpinnerOverlay isLoading={isGeneratingCode} loadingOpacity={1}>
-        <TopScreenComponent contextualHelp={emptyContextualHelp}>
-          <ContentWrapper>
-            <H2>{I18n.t("idpay.code.onboarding.header")}</H2>
-            <VSpacer size={16} />
-            <Body color="grey-700" weight="Regular">
-              {I18n.t("idpay.code.onboarding.body1")}
-            </Body>
-            <Body color="grey-700" weight="Semibold">
-              {I18n.t("idpay.code.onboarding.bodyBold")}
-            </Body>
-            <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
-              {I18n.t("idpay.code.onboarding.bodyCta")}
-            </Body>
-            <VSpacer size={24} />
-            <CodeDisplayComponent code={idPayCode} />
-            <VSpacer size={24} />
-            <Banner
-              color="neutral"
-              pictogramName="security"
-              size="big"
-              viewRef={bannerRef}
-              title={I18n.t("idpay.code.onboarding.banner.header")}
-              content={I18n.t("idpay.code.onboarding.banner.body")}
-            />
-          </ContentWrapper>
-        </TopScreenComponent>
+        <ContentWrapper>
+          <H2>{I18n.t("idpay.code.onboarding.header")}</H2>
+          <VSpacer size={16} />
+          <Body color="grey-700" weight="Regular">
+            {I18n.t("idpay.code.onboarding.body1")}
+          </Body>
+          <Body color="grey-700" weight="Semibold">
+            {I18n.t("idpay.code.onboarding.bodyBold")}
+          </Body>
+          <Body weight="Semibold" asLink onPress={presentCieBottomSheet}>
+            {I18n.t("idpay.code.onboarding.bodyCta")}
+          </Body>
+          <VSpacer size={24} />
+          <CodeDisplayComponent code={idPayCode} />
+          <VSpacer size={24} />
+          <Banner
+            color="neutral"
+            pictogramName="security"
+            size="big"
+            viewRef={bannerRef}
+            title={I18n.t("idpay.code.onboarding.banner.header")}
+            content={I18n.t("idpay.code.onboarding.banner.body")}
+          />
+        </ContentWrapper>
         <SafeAreaView style={IOStyles.horizontalContentPadding}>
           <ButtonSolid
             accessibilityLabel={buttonLabel}

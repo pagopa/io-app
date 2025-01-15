@@ -33,6 +33,7 @@ import {
   selectCredentialOption,
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -45,6 +46,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
     selectCredentialOption
   );
 
+  usePreventScreenCapture();
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 

@@ -5,14 +5,12 @@ import {
   AppState,
   AppStateStatus,
   NativeEventSubscription,
-  Platform,
   StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./features/pushNotifications/utils/configurePushNotification";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
-import FlagSecureComponent from "./components/FlagSecure";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
 import { setLocale } from "./i18n";
@@ -101,7 +99,6 @@ class RootContainer extends PureComponent<Props> {
           barStyle={"dark-content"}
           backgroundColor={customVariables.androidStatusBarColor}
         />
-        {Platform.OS === "android" && <FlagSecureComponent />}
 
         <IONavigationContainer
           routingInstrumentation={this.props.routingInstumentation}

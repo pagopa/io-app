@@ -1,5 +1,6 @@
 import {
   Body,
+  BodySmall,
   FooterActions,
   H1,
   H6,
@@ -7,21 +8,14 @@ import {
   IOIcons,
   IOStyles,
   Icon,
-  BodySmall,
   VSpacer,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import {
-  RouteProp,
-  useFocusEffect,
-  useNavigation,
-  useRoute
-} from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -40,7 +34,6 @@ type RouteProps = RouteProp<
 >;
 
 export const InitiativeConfigurationIntroScreen = () => {
-  const navigation = useNavigation();
   const { params } = useRoute<RouteProps>();
   const { initiativeId, mode } = params;
   const { useActorRef, useSelector } = IdPayConfigurationMachineContext;
@@ -51,12 +44,6 @@ export const InitiativeConfigurationIntroScreen = () => {
   const handleContinuePress = () => {
     machine.send({ type: "next" });
   };
-
-  const customGoBack = (
-    <TouchableDefaultOpacity onPress={navigation.goBack}>
-      <Icon name="closeLarge" />
-    </TouchableDefaultOpacity>
-  );
 
   useFocusEffect(
     useCallback(() => {
@@ -70,58 +57,56 @@ export const InitiativeConfigurationIntroScreen = () => {
     }, [machine, initiativeId, mode])
   );
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.configuration.headerTitle"),
+    canGoBack: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={true}
-      customGoBack={customGoBack}
-      headerTitle={I18n.t("idpay.configuration.headerTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <LoadingSpinnerOverlay isLoading={isLoading}>
-        <SafeAreaView style={IOStyles.flex}>
-          <ScrollView style={IOStyles.flex}>
-            <View style={IOStyles.horizontalContentPadding}>
-              <VSpacer size={16} />
-              <H1>{I18n.t("idpay.configuration.intro.title")}</H1>
-              <VSpacer size={8} />
-              <Body>{I18n.t("idpay.configuration.intro.body")}</Body>
-              <VSpacer size={24} />
-              <H6 color="bluegrey">
-                {I18n.t("idpay.configuration.intro.requiredData.title")}
-              </H6>
-              <VSpacer size={8} />
-              <RequiredDataItem
-                icon="creditCard"
-                title={I18n.t(
-                  "idpay.configuration.intro.requiredData.ibanTitle"
-                )}
-                subTitle={I18n.t(
-                  "idpay.configuration.intro.requiredData.ibanSubtitle"
-                )}
-              />
-              <RequiredDataItem
-                icon="institution"
-                title={I18n.t(
-                  "idpay.configuration.intro.requiredData.instrumentTitle"
-                )}
-                subTitle={I18n.t(
-                  "idpay.configuration.intro.requiredData.instrumentSubtitle"
-                )}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-        <FooterActions
-          actions={{
-            type: "SingleButton",
-            primary: {
-              label: I18n.t("idpay.configuration.intro.buttons.continue"),
-              onPress: handleContinuePress
-            }
-          }}
-        />
-      </LoadingSpinnerOverlay>
-    </BaseScreenComponent>
+    <LoadingSpinnerOverlay isLoading={isLoading}>
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={IOStyles.flex}>
+          <View style={IOStyles.horizontalContentPadding}>
+            <VSpacer size={16} />
+            <H1>{I18n.t("idpay.configuration.intro.title")}</H1>
+            <VSpacer size={8} />
+            <Body>{I18n.t("idpay.configuration.intro.body")}</Body>
+            <VSpacer size={24} />
+            <H6 color="bluegrey">
+              {I18n.t("idpay.configuration.intro.requiredData.title")}
+            </H6>
+            <VSpacer size={8} />
+            <RequiredDataItem
+              icon="creditCard"
+              title={I18n.t("idpay.configuration.intro.requiredData.ibanTitle")}
+              subTitle={I18n.t(
+                "idpay.configuration.intro.requiredData.ibanSubtitle"
+              )}
+            />
+            <RequiredDataItem
+              icon="institution"
+              title={I18n.t(
+                "idpay.configuration.intro.requiredData.instrumentTitle"
+              )}
+              subTitle={I18n.t(
+                "idpay.configuration.intro.requiredData.instrumentSubtitle"
+              )}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("idpay.configuration.intro.buttons.continue"),
+            onPress: handleContinuePress
+          }
+        }}
+      />
+    </LoadingSpinnerOverlay>
   );
 };
 

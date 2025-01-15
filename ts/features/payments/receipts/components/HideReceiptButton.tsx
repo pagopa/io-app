@@ -3,10 +3,10 @@ import { Alert, View } from "react-native";
 import { useDispatch } from "react-redux";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import * as analytics from "../analytics";
-import { hidePaymentsReceiptAction } from "../store/actions";
 import { useIOSelector } from "../../../../store/hooks";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
+import { hidePaymentsReceiptAction } from "../store/actions";
 
 type Props = {
   transactionId: string;
@@ -22,7 +22,10 @@ const HideReceiptButton = (props: Props) => {
     analytics.trackHideReceipt({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      payment_status: "paid"
     });
   };
 
@@ -30,7 +33,10 @@ const HideReceiptButton = (props: Props) => {
     analytics.trackHideReceiptConfirm({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
-      user: paymentAnalyticsData?.receiptUser
+      user: paymentAnalyticsData?.receiptUser,
+      organization_fiscal_code:
+        paymentAnalyticsData?.verifiedData?.paFiscalCode,
+      payment_status: "paid"
     });
   };
 

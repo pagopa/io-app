@@ -1,10 +1,10 @@
 import {
   Body,
+  BodySmall,
   FooterActions,
   H2,
   HSpacer,
   Icon,
-  BodySmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -14,7 +14,7 @@ import { ScrollView, View } from "react-native";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
@@ -23,7 +23,6 @@ import { IdPayConfigurationMachineContext } from "../machine/provider";
 export const IbanOnboardingScreen = () => {
   const machine = IdPayConfigurationMachineContext.useActorRef();
 
-  const customGoBack = () => machine.send({ type: "back" });
   const [iban, setIban] = useState<{
     text: string;
     value: O.Option<string>;
@@ -35,12 +34,15 @@ export const IbanOnboardingScreen = () => {
 
   const isInputValid = O.isSome(iban.value) && ibanName.length > 0;
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.configuration.headerTitle"),
+    canGoBack: true,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   return (
-    <BaseScreenComponent
-      goBack={customGoBack}
-      headerTitle={I18n.t("idpay.configuration.headerTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         <VSpacer size={16} />
         <H2>{I18n.t("idpay.configuration.iban.onboarding.header")}</H2>
@@ -111,6 +113,6 @@ export const IbanOnboardingScreen = () => {
           }
         }}
       />
-    </BaseScreenComponent>
+    </>
   );
 };
