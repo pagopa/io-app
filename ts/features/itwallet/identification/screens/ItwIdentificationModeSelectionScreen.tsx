@@ -14,11 +14,11 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
 
 export type ItwIdentificationModeSelectionScreenNavigationParams = {
   eidReissuing?: boolean;
