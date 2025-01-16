@@ -1,9 +1,7 @@
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
 import { mixpanelTrack } from "../../../mixpanel";
-import ROUTES from "../../../navigation/routes";
 import { buildEventProperties } from "../../../utils/analytics";
-import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(
@@ -93,35 +91,31 @@ export const trackNotificationPermissionsStatus = (
   void mixpanelTrack(eventName, props);
 };
 
-export const trackPushNotificationsBannerVisualized = (
-  bannerPage: typeof MESSAGES_ROUTES.MESSAGES_HOME | typeof ROUTES.SETTINGS_MAIN
-) => {
+export const trackPushNotificationsBannerVisualized = (route: string) => {
   const eventName = "BANNER";
   const props = buildEventProperties("UX", "screen_view", {
     banner_id: "push_notif_activation",
-    banner_page: bannerPage,
+    banner_page: route,
     banner_landing: "os_notification_settings"
   });
   void mixpanelTrack(eventName, props);
 };
 
-export const trackPushNotificationsBannerTap = (
-  bannerPage: typeof MESSAGES_ROUTES.MESSAGES_HOME | typeof ROUTES.SETTINGS_MAIN
-) => {
+export const trackPushNotificationsBannerTap = (route: string) => {
   const eventName = "TAP_BANNER";
   const props = buildEventProperties("UX", "action", {
     banner_id: "push_notif_activation",
-    banner_page: bannerPage,
+    banner_page: route,
     banner_landing: "os_notification_settings"
   });
   void mixpanelTrack(eventName, props);
 };
 
-export const trackPushNotificationsBannerClosure = () => {
+export const trackPushNotificationsBannerClosure = (route: string) => {
   const eventName = "CLOSE_BANNER";
   const props = buildEventProperties("UX", "action", {
     banner_id: "push_notif_activation",
-    banner_page: MESSAGES_ROUTES.MESSAGES_HOME,
+    banner_page: route,
     banner_landing: "os_notification_settings"
   });
   void mixpanelTrack(eventName, props);

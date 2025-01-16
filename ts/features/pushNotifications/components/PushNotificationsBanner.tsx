@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -19,7 +20,6 @@ import {
   shouldResetNotificationBannerDismissStateSelector,
   timesPushNotificationBannerDismissedSelector
 } from "../store/selectors/notificationsBannerDismissed";
-import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import {
   trackPushNotificationBannerDismissAlert,
   trackPushNotificationBannerDismissOutcome,
@@ -33,6 +33,7 @@ type Props = {
 };
 
 export const PushNotificationsBanner = ({ closeHandler }: Props) => {
+  const route = useRoute();
   const dispatch = useIODispatch();
   const shouldResetDismissState = useIOSelector(
     shouldResetNotificationBannerDismissStateSelector
@@ -45,8 +46,8 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
     }
   }, [dispatch, shouldResetDismissState]);
   React.useEffect(() => {
-    trackPushNotificationsBannerVisualized(MESSAGES_ROUTES.MESSAGES_HOME);
-  }, []);
+    trackPushNotificationsBannerVisualized(route.name);
+  }, [route.name]);
 
   const dismissionCount = useIOSelector(
     timesPushNotificationBannerDismissedSelector
@@ -54,7 +55,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   const discardModal = usePushNotificationsBannerBottomSheet(closeHandler);
 
   const onClose = () => {
-    trackPushNotificationsBannerClosure();
+    trackPushNotificationsBannerClosure(route.name);
     if (dismissionCount >= 2) {
       trackPushNotificationBannerDismissAlert();
       discardModal.present();
@@ -65,9 +66,9 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   };
 
   const onPress = React.useCallback(() => {
-    trackPushNotificationsBannerTap(MESSAGES_ROUTES.MESSAGES_HOME);
+    trackPushNotificationsBannerTap(route.name);
     openSystemNotificationSettingsScreen();
-  }, []);
+  }, [route.name]);
 
   return (
     <View style={styles.margins} testID="pushnotif-bannerContainer">
