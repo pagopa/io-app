@@ -15,6 +15,7 @@ import {
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
+  clearCurrentSession,
   idpLoginUrlChanged,
   idpSelected,
   loginFailure,
@@ -130,6 +131,7 @@ const trackAction =
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):
+      case getType(clearCurrentSession):
       case getType(logoutSuccess):
       // identification
       // identificationSuccess is handled separately
