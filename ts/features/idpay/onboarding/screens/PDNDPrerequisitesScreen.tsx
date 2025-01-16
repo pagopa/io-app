@@ -9,8 +9,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -47,14 +47,14 @@ export const PDNDPrerequisitesScreen = () => {
         "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
       ),
       component: (
-        <LegacyMarkdown>
-          {I18n.t(
+        <IOMarkdown
+          content={I18n.t(
             "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
             {
               provider: authority
             }
           )}
-        </LegacyMarkdown>
+        />
       ),
       footer: (
         <ContentWrapper>

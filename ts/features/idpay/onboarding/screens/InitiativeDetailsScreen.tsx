@@ -5,15 +5,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
-import {
-  OnboardingDescriptionMarkdown,
-  OnboardingDescriptionMarkdownSkeleton
-} from "../components/OnboardingDescriptionMarkdown";
+import { OnboardingDescriptionMarkdownSkeleton } from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -46,7 +44,6 @@ export const InitiativeDetailsScreen = () => {
 
   const initiative = useSelector(selectInitiative);
   const isLoading = useSelector(isLoadingSelector);
-  const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
 
   const handleGoBackPress = () => machine.send({ type: "close" });
   const handleContinuePress = () => machine.send({ type: "next" });
@@ -65,12 +62,7 @@ export const InitiativeDetailsScreen = () => {
     initiative,
     O.fold(
       () => <OnboardingDescriptionMarkdownSkeleton />,
-      ({ description }) => (
-        <OnboardingDescriptionMarkdown
-          onLoadEnd={() => setDescriptionLoaded(true)}
-          description={description}
-        />
-      )
+      ({ description }) => <IOMarkdown content={description} />
     )
   );
 
@@ -84,7 +76,6 @@ export const InitiativeDetailsScreen = () => {
   return (
     <ForceScrollDownView
       threshold={50}
-      scrollEnabled={isDescriptionLoaded}
       contentContainerStyle={styles.scrollContainer}
     >
       <View style={styles.container}>
