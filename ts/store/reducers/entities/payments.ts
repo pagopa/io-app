@@ -8,6 +8,11 @@ import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../../features/payments/checkout/store/actions/orchestration";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import {
+  updatePaymentForMessage,
+  UpdatePaymentForMessageFailure
+} from "../../../features/messages/store/actions";
+import { isPaidPaymentFromDetailV2Enum } from "../../../utils/payment";
 
 export type PaidReason = Readonly<
   | {
@@ -44,6 +49,13 @@ export const paymentByRptIdReducer = (
           transactionId: undefined
         }
       };
+    // This action is dispatched by the payment status update
+    // saga that is trigger upon entering message details
+    case getType(updatePaymentForMessage.failure):
+      return paymentByRptIdStateFromUpdatePaymentForMessageFailure(
+        action.payload,
+        state
+      );
     // clear state if the current profile is different from the previous one
     case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
@@ -51,6 +63,27 @@ export const paymentByRptIdReducer = (
     default:
       return state;
   }
+};
+
+const paymentByRptIdStateFromUpdatePaymentForMessageFailure = (
+  payload: UpdatePaymentForMessageFailure,
+  state: PaymentByRptIdState
+): PaymentByRptIdState => {
+  const isPaidPayment = isPaidPaymentFromDetailV2Enum(payload.details);
+  if (!isPaidPayment) {
+    return state;
+  }
+  const rptId = payload.paymentId;
+  const inMemoryPaymentData = state[rptId];
+  if (inMemoryPaymentData != null) {
+    return state;
+  }
+  return {
+    ...state,
+    [rptId]: {
+      kind: "DUPLICATED"
+    }
+  };
 };
 
 // Selectors
