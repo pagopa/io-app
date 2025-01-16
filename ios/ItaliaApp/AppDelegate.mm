@@ -3,6 +3,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <UserNotifications/UserNotifications.h> // react-native-push-notification-ios
 #import <RNCPushNotificationIOS.h> // react-native-push-notification-ios
+#import <TSBackgroundFetch/TSBackgroundFetch.h> // react-native-background-fetch
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -15,6 +16,9 @@
   // react-native-push-notification-ios
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
+  
+  // react-native-background-fetch
+  [[TSBackgroundFetch sharedInstance] didFinishLaunching];
   
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

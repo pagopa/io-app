@@ -13674,6 +13674,7 @@ __metadata:
     react: 18.3.1
     react-native: 0.75.4
     react-native-android-open-settings: ^1.3.0
+    react-native-background-fetch: ^4.2.7
     react-native-background-timer: 2.1.1
     react-native-barcode-builder: ^2.0.0
     react-native-blob-util: 0.15.0
@@ -18753,6 +18754,13 @@ __metadata:
   version: 1.3.0
   resolution: "react-native-android-open-settings@npm:1.3.0"
   checksum: 80e2279b2601295c8aad27b20c5fdc31ccfba405e0b2b1ceec135ed0bfd79c7978b23125ecf2125f9db15fcc6e684de0d04d609c1a19cb94d35756d8b0c2b17d
+  languageName: node
+  linkType: hard
+
+"react-native-background-fetch@npm:^4.2.7":
+  version: 4.2.7
+  resolution: "react-native-background-fetch@npm:4.2.7"
+  checksum: c4aa6965a37126a5fc389293e0a8615fb4ee263cefbb3a8249377f22452f72e5ee43d391fac12c3cfa24e912e78f034a7f96507b0f3690077ce3bc6224a872bb
   languageName: node
   linkType: hard
 

@@ -1810,6 +1810,8 @@ PODS:
     - React-utils (= 0.75.4)
   - ReactNativeExceptionHandler (2.10.8):
     - React
+  - RNBackgroundFetch (4.2.7):
+    - React-Core
   - RNCalendarEvents (2.2.0):
     - React
   - RNCAsyncStorage (2.0.0):
@@ -2186,6 +2188,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
@@ -2421,6 +2424,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  RNBackgroundFetch:
+    :path: "../node_modules/react-native-background-fetch"
   RNCalendarEvents:
     :path: "../node_modules/react-native-calendar-events"
   RNCAsyncStorage:
@@ -2565,6 +2570,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 8b5341ecb61898b8bd40a73ebc443c6bf2d14423
   ReactCommon: 36d48f542b4010786d6b2bcee615fe5f906b7105
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
+  RNBackgroundFetch: 005d4742a64a511ea54cf2929ace9f0804a7c511
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: 40367e8d25522dca9c3513c7b9815a184669bd97
   RNCClipboard: 47593431a9e763a71950798683b28f691f16b98d
