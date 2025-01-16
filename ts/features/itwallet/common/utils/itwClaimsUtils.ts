@@ -13,6 +13,7 @@ import { Locales } from "../../../../../locales/locales";
 import I18n from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { copyableAttributesByCredentialType } from "./itwCredentialUtils";
 
 /**
  *
@@ -71,6 +72,7 @@ export type ClaimDisplayFormat = {
   id: string;
   label: string;
   value: unknown;
+  isCopyable?: boolean;
 };
 
 /**
@@ -83,13 +85,24 @@ export type ClaimDisplayFormat = {
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
  * @param options.exclude - an array of keys to exclude from the claims. TODO [SIW-1383]: remove this dirty hack
+ * @param credentialType - optional, the credential type, if specified, copyable attributes for that credential will be included.
  * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
  */
 export const parseClaims = (
   parsedCredential: ParsedCredential,
-  options: { exclude?: Array<string> } = {}
+  options: { exclude?: Array<string> } = {},
+  credentialType?: string
 ): Array<ClaimDisplayFormat> => {
   const { exclude = [] } = options;
+
+  /**
+   * Determine copyableAttributes only if credentialType is defined.
+   * Fallback to an empty Set when credentialType is valid but not found in the mapping.
+   */
+  const copyableAttributes = credentialType
+    ? copyableAttributesByCredentialType[credentialType] || new Set()
+    : null;
+
   return Object.entries(parsedCredential)
     .filter(([key]) => !exclude.includes(key))
     .map(([key, attribute]) => {
@@ -98,7 +111,14 @@ export const parseClaims = (
           ? attribute.name
           : attribute.name?.[getClaimsFullLocale()] || key;
 
-      return { label: attributeName, value: attribute.value, id: key };
+      const claim: ClaimDisplayFormat = {
+        label: attributeName,
+        value: attribute.value,
+        id: key,
+        ...(copyableAttributes?.has(key) && { isCopyable: true })
+      };
+
+      return claim;
     });
 };
 

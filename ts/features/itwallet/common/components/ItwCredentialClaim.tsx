@@ -1,4 +1,8 @@
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  ListItemInfo,
+  ListItemInfoCopy
+} from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -26,6 +30,7 @@ import {
   StringClaim
 } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const HIDDEN_CLAIM = "******";
 
@@ -70,28 +75,36 @@ const BoolClaimItem = ({ label, claim }: { label: string; claim: boolean }) => {
  * Component which renders a generic text type claim.
  * @param label - the label of the claim
  * @param claim - the claim value
+ * @param isCopyable - optional, render a copy button if true
  */
 const PlainTextClaimItem = ({
   label,
-  claim
+  claim,
+  isCopyable
 }: {
   label: string;
   claim: string;
+  isCopyable?: boolean;
 }) => {
   const safeValue = getSafeText(claim);
-  return (
-    <ListItemInfo
-      numberOfLines={2}
-      label={label}
-      value={safeValue}
-      accessibilityLabel={`${label} ${
-        claim === HIDDEN_CLAIM
-          ? I18n.t(
-              "features.itWallet.presentation.credentialDetails.hiddenClaim"
-            )
-          : safeValue
-      }`}
+  const listItemInfoCommonProps = {
+    numberOfLines: 2,
+    label,
+    value: safeValue,
+    accessibilityLabel: `${label} ${
+      claim === HIDDEN_CLAIM
+        ? I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim")
+        : safeValue
+    }`
+  };
+
+  return isCopyable ? (
+    <ListItemInfoCopy
+      {...listItemInfoCommonProps}
+      onPress={() => clipboardSetStringWithFeedback(safeValue)}
     />
+  ) : (
+    <ListItemInfo {...listItemInfoCommonProps} />
   );
 };
 
@@ -364,7 +377,13 @@ export const ItwCredentialClaim = ({
           if (hidden && EmptyStringClaim.is(_decoded)) {
             return null;
           }
-          return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
+          return (
+            <PlainTextClaimItem
+              label={claim.label}
+              claim={decoded}
+              isCopyable={claim.isCopyable}
+            />
+          ); // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
           return <UnknownClaimItem label={claim.label} _claim={decoded} />;
         }
