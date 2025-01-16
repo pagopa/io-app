@@ -1,6 +1,7 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import { View } from "react-native";
 import { createStore } from "redux";
+import { Provider } from "react-redux";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../authentication/UnlockAccessComponent";
@@ -91,18 +92,21 @@ describe("UnlockAccessComponent", () => {
 });
 
 const renderComponent = (authLevel?: "L2" | "L3") => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
   if (authLevel) {
     const props: UnlockAccessProps = { authLevel };
-    return render(<UnlockAccessComponent {...props} />);
-  } else {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
 
-    return renderScreenWithNavigationStoreContext(
-      UnlockAccessComponent,
-      "DUMMY",
-      {},
-      store
+    return render(
+      <Provider store={store}>
+        <UnlockAccessComponent {...props} />
+      </Provider>
     );
   }
+  return renderScreenWithNavigationStoreContext(
+    UnlockAccessComponent,
+    "DUMMY",
+    {},
+    store
+  );
 };

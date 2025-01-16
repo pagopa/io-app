@@ -295,6 +295,62 @@ export const isIdPayEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+export const absolutePortalLinksFallback = {
+  io_web: "https://ioapp.it/",
+  io_showcase: "https://io.italia.it/"
+};
+
+/**
+ * returns the absolute URLs for showcase and logout (io-web) sites
+ */
+export const absolutePortalLinksSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.absolutePortalLinks),
+      O.getOrElse(() => absolutePortalLinksFallback)
+    )
+);
+
+type hostType = keyof ReturnType<typeof absolutePortalLinksSelector>;
+
+/**
+ * Selector to dynamically generate a complete URL by combining a base URL and a path.
+ * This selector is useful when constructing URLs based on configuration or application state.
+ */
+export const generateDynamicUrlSelector = createSelector(
+  // Step 1: Input selector that retrieves the absolutePortalLinks object from the state.
+  absolutePortalLinksSelector,
+
+  // Step 2: Input parameter to specify the key for the desired base URL.
+  (_: GlobalState, baseUrlKey: hostType) => baseUrlKey,
+
+  // Step 3: Input parameter to specify the path to append to the base URL.
+  (_: GlobalState, __: hostType, path: string) => path,
+
+  // Step 4: Combine the absolutePortalLinks object, the base URL key, and the path to create the full URL.
+  (absolutePortalLinks, baseUrlKey, path) => {
+    try {
+      // Retrieve the base URL using the specified key.
+      // eslint-disable-next-line functional/no-let
+      let baseUrl = absolutePortalLinks[baseUrlKey];
+
+      // Ensure the base URL ends with a slash.
+      if (!baseUrl.endsWith("/")) {
+        baseUrl += "/";
+      }
+
+      // Append the provided path to the base URL.
+      return `${baseUrl}${path}`;
+    } catch (error) {
+      // In case of an error (e.g., missing key or invalid path), return the base URL key as a fallback.
+      return baseUrlKey;
+    }
+  }
+);
+
 /**
  * Return the remote feature flag about the payment feedback banner enabled/disabled
  * that is shown after a successful payment.

@@ -335,6 +335,10 @@ const commonSetup = ({
         tos_version: CurrentTestToSVersion,
         tos_url: "https://www.example.com"
       },
+      absolutePortalLinks: {
+        io_web: "https://ioapp.it/it/accedi/",
+        io_showcase: "https://io.italia.it/"
+      },
       itw: {
         enabled: true,
         min_app_version: {

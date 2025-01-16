@@ -139,14 +139,6 @@ module.exports = {
             message:
               'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.'
           }
-        ],
-        patterns: [
-          {
-            group: ["**/config"],
-            importNames: ["privacyUrl"],
-            message:
-              'Importing "privacyUrl" from "config.ts" module is restricted. Please use "tosConfigSelector" to obtain it instead.'
-          }
         ]
       }
     ]

@@ -22,8 +22,9 @@ import { KoState, trackWalletCreationFailed } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-
-const FAQ_URL = "https://io.italia.it/documenti-su-io/faq/#n1_12";
+import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const failureOption =
@@ -45,6 +46,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const toast = useIOToast();
+
+  const FAQ_URL = useIOSelector(state =>
+    generateDynamicUrlSelector(
+      state,
+      "io_showcase",
+      DOCUMENTS_ON_IO_FAQ_12_URL_BODY
+    )
+  );
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
