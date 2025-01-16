@@ -7,7 +7,6 @@ import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/r
 import { itwLifecycleIsValidSelector } from "../../../itwallet/lifecycle/store/selectors";
 import { paymentsWalletUserMethodsSelector } from "../../../payments/wallet/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../itwallet/walletInstance/store/selectors";
-import { isItwEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   WalletCard,
   WalletCardCategory,
@@ -15,6 +14,7 @@ import {
   walletCardCategories
 } from "../../types";
 import { WalletCardCategoryFilter } from "../../types/index";
+import { isItwEnabledSelector } from "../../../itwallet/common/store/selectors/remoteConfig";
 
 /**
  * Returns the list of cards excluding hidden cards
