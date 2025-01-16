@@ -13,8 +13,8 @@ import { pipe } from "fp-ts/lib/function";
 import { useState, Fragment } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -58,14 +58,14 @@ export const PDNDPrerequisitesScreen = () => {
         "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
       ),
       component: (
-        <LegacyMarkdown>
-          {I18n.t(
+        <IOMarkdown
+          content={I18n.t(
             "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
             {
               provider: authority
             }
           )}
-        </LegacyMarkdown>
+        />
       ),
       footer: (
         <ContentWrapper>
