@@ -653,15 +653,17 @@ authentication:
     privacyLink: Privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
-    card1-title: All messages in one place
-    card1-content: Display all the incoming communications from Public Administrations
-    card2-title: Use your favourite payment methods
-    card2-content: You can pay a tax or a penalty by your bank account and your cards
-    card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice
-    card5-title: Welcome to IO!
-    card5-content: What can you do?
-    card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
+    card0-title: Ti diamo il benvenuto su IO!
+    card0-content: Scorri per sapere cosa puoi fare in app.
+    card0-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card1-title: Conserva al sicuro i tuoi documenti personali
+    card1-content: Con Documenti su IO hai sempre a portata di mano la versione digitale dei tuoi documenti, come Patente e Tessera Sanitaria
+    card2-title: Ricevi comunicazioni, anche a valore legale
+    card2-content: "Leggi le comunicazioni in arrivo dagli enti: se attivi il servizio SEND, ricevi anche quelle a valore legale e risparmi sui costi di notifica"
+    card3-title: Paga gli avvisi pagoPA con il metodo che preferisci
+    card3-content: Su IO consulti e scarichi le ricevute dei tuoi pagamenti pagoPA, anche se non hai pagato in app
+    card4-title: Accedi ai servizi che più ti interessano
+    card4-content: Accedi direttamente a servizi della Pubblica Amministrazone dedicati a salute, educazione, mobilità, lavoro e molto altro
     expiredCardTitle: The CIE verification failed
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: The card used is no longer valid or has expired. Use SPID to enter the app.
