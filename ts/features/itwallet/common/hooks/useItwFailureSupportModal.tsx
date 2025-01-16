@@ -2,6 +2,7 @@ import React from "react";
 import { Linking, View } from "react-native";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
+  Body,
   Divider,
   ListItemAction,
   ListItemHeader,
@@ -30,19 +31,22 @@ import {
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { IssuanceFailure } from "../../machine/eid/failure";
-import { CredentialIssuanceFailure } from "../../machine/credential/failure";
+import {
+  IssuanceFailure,
+  IssuanceFailureType
+} from "../../machine/eid/failure";
+import {
+  CredentialIssuanceFailure,
+  CredentialIssuanceFailureType
+} from "../../machine/credential/failure";
 
 const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
-type Params = {
-  failure: IssuanceFailure | CredentialIssuanceFailure;
-};
-
-type ItwFailureSupportModal = (params: Params) => {
-  bottomSheet: JSX.Element;
-  present: () => void;
-};
+type SupportContactMethods = Partial<{
+  email: string;
+  mobile: string;
+  landline: string;
+}>;
 
 // The subcategory is fixed for now. In the future it can be made dynamic depending on the error type.
 const ZENDESK_SUBCATEGORY = {
@@ -50,7 +54,29 @@ const ZENDESK_SUBCATEGORY = {
   value: "it_wallet_aggiunta_documenti"
 };
 
-const extractErrorCode = (failure: Params["failure"]) => {
+// Errors that allow a user to send a support request to Zendesk
+const zendeskAssistanceErrors = [
+  IssuanceFailureType.UNEXPECTED,
+  IssuanceFailureType.WALLET_PROVIDER_GENERIC,
+  CredentialIssuanceFailureType.UNEXPECTED,
+  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC
+];
+
+const contactMethodsByCredentialType: Record<
+  string,
+  SupportContactMethods | undefined
+> = {
+  MDL: {
+    mobile: "06.4577.5927",
+    landline: "800 232323",
+    email: "uco.dgmot@mit.gov.it"
+  },
+  EuropeanHealthInsuranceCard: {
+    landline: "800 030070"
+  }
+};
+
+const extractErrorCode = (failure: Props["failure"]) => {
   const rawError = failure.reason;
   return isWalletProviderResponseError(rawError) ||
     isIssuerResponseError(rawError)
@@ -58,9 +84,18 @@ const extractErrorCode = (failure: Params["failure"]) => {
     : failure.type;
 };
 
-export const useItwFailureSupportModal: ItwFailureSupportModal = ({
-  failure
-}) => {
+const isDefined = <T,>(x: T | undefined | null | ""): x is T => Boolean(x);
+
+type Props = {
+  failure: IssuanceFailure | CredentialIssuanceFailure;
+  credentialType?: string;
+  dismissModal: () => void;
+};
+
+/**
+ * Renders several support methods. The component is standalone for easier testing.
+ */
+const ItwSupportModal = ({ failure, credentialType, dismissModal }: Props) => {
   const dispatch = useIODispatch();
 
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -98,38 +133,84 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
     }
   };
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal({
-    title: "",
-    component: (
-      <VStack space={24}>
-        <View>
-          <ListItemHeader
-            label={I18n.t("features.itWallet.support.supportTitle")}
-          />
-          <ListItemAction
-            variant="primary"
-            icon="phone"
-            label="Chiama 06.12.12.12"
-            onPress={() => Linking.openURL(`tel:100.12.12.12`)}
-          />
-          <Divider />
-          <ListItemAction
-            variant="primary"
-            icon="chat"
-            label={I18n.t("features.itWallet.support.chat")}
-            onPress={() => {
-              dismiss();
-              handleAskAssistance();
-            }}
-          />
-          <Divider />
-          <ListItemInfo
-            icon="phone"
-            label={I18n.t("features.itWallet.support.landline")}
-            value="800.232323"
-          />
-        </View>
+  const renderContactMethods = (): Array<JSX.Element> => {
+    if (zendeskAssistanceErrors.includes(failure.type)) {
+      return [
+        <ListItemAction
+          key="contact-method-chat"
+          testID="contact-method-chat"
+          variant="primary"
+          icon="chat"
+          label={I18n.t("features.itWallet.support.chat")}
+          onPress={() => {
+            dismissModal();
+            handleAskAssistance();
+          }}
+        />
+      ];
+    }
 
+    const contactMethods = credentialType
+      ? contactMethodsByCredentialType[credentialType]
+      : undefined;
+
+    if (!contactMethods) {
+      return [];
+    }
+
+    return [
+      contactMethods.mobile && (
+        <ListItemAction
+          testID="contact-method-mobile"
+          variant="primary"
+          icon="phone"
+          label={I18n.t("features.itWallet.support.phone", {
+            phoneNumber: contactMethods.mobile
+          })}
+          onPress={() => Linking.openURL(`tel:${contactMethods.mobile}`)}
+        />
+      ),
+      contactMethods.email && (
+        <ListItemAction
+          testID="contact-method-email"
+          variant="primary"
+          icon="chat"
+          label={I18n.t("features.itWallet.support.email")}
+          onPress={() => Linking.openURL(`mailto:${contactMethods.email}`)}
+        />
+      ),
+      contactMethods.landline && (
+        <ListItemInfo
+          testID="contact-method-landline"
+          icon="phone"
+          label={I18n.t("features.itWallet.support.landline")}
+          value={contactMethods.landline}
+        />
+      )
+    ]
+      .filter(isDefined)
+      .map((component, index, list) => (
+        <React.Fragment key={`contact-method-${index}`}>
+          {component}
+          {index < list.length - 1 && <Divider />}
+        </React.Fragment>
+      ));
+  };
+
+  const contactMethodsComponents = renderContactMethods();
+
+  return (
+    <VStack space={16}>
+      <Body>{I18n.t("features.itWallet.support.supportDescription")}</Body>
+      <VStack space={24}>
+        {contactMethodsComponents.length > 0 && (
+          <View>
+            <ListItemHeader
+              label={I18n.t("features.itWallet.support.supportTitle")}
+            />
+            {contactMethodsComponents}
+          </View>
+        )}
         {code && (
           <View>
             <ListItemHeader
@@ -145,8 +226,34 @@ export const useItwFailureSupportModal: ItwFailureSupportModal = ({
           </View>
         )}
       </VStack>
+    </VStack>
+  );
+};
+
+type ItwFailureSupportModal = (params: Omit<Props, "dismissModal">) => {
+  bottomSheet: JSX.Element;
+  present: () => void;
+};
+
+/**
+ * Hook that exposes the `ItwSupportModal` component in a bottom sheet.
+ */
+const useItwFailureSupportModal: ItwFailureSupportModal = ({
+  failure,
+  credentialType
+}) => {
+  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal({
+    title: "",
+    component: (
+      <ItwSupportModal
+        failure={failure}
+        credentialType={credentialType}
+        dismissModal={() => dismiss()}
+      />
     )
   });
 
-  return { bottomSheet, present };
+  return { bottomSheet, present, dismiss };
 };
+
+export { useItwFailureSupportModal, ItwSupportModal };

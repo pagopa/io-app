@@ -105,6 +105,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.issuance.genericError.primaryAction"
                   )
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: supportModal.present
             }
           };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:

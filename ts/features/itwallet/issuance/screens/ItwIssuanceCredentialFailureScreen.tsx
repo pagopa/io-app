@@ -97,7 +97,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure: serializeFailureReason(failure)
   });
   const supportModal = useItwFailureSupportModal({
-    failure
+    failure,
+    credentialType: O.toUndefined(credentialType)
   });
 
   const getOperationResultScreenContentProps =
@@ -120,6 +121,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.issuance.genericError.primaryAction"
                   )
                 )
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
+              onPress: supportModal.present
             }
           };
         // NOTE: only the mDL supports the async flow, so this error message is specific to mDL

@@ -3295,13 +3295,14 @@ features:
         unknown: Non disponibile
       digital: Versione digitale
     support:
-      button: "Contatta l'assistenza"
+      button: "Maggiori informazioni"
       supportTitle: Contatta l'assistenza
+      supportDescription: Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
       phone: Chiama {{phoneNumber}}
       landline: Da telefono fisso
       chat: Chiedi aiuto in chat
+      email: Scrivi una mail
       additionalDataTitle: "Dati aggiuntivi"
-      copyAll: Copia tutti
       errorCode: Codice errore
     generic:
       error:
