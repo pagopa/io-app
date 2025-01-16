@@ -4,19 +4,22 @@ import {
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
+import * as Sentry from "@sentry/react-native";
+import { ErrorEvent, TransactionEvent } from "@sentry/types";
 import * as React from "react";
+import { useEffect } from "react";
+import BackgroundFetch from "react-native-background-fetch";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import * as Sentry from "@sentry/react-native";
-import { ErrorEvent, TransactionEvent } from "@sentry/types";
 import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
+import { StatusMessages } from "./components/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { sentryDsn } from "./config";
 import { isDevEnv } from "./utils/environment";
-import { StatusMessages } from "./components/StatusMessages";
+import { useBackgroundFetch } from "./hooks/useBackgroundFetch";
 
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
@@ -64,31 +67,35 @@ export type AppDispatch = typeof store.dispatch;
  * Main component of the application
  * @constructor
  */
-const App = (): JSX.Element => (
-  <GestureHandlerRootView style={{ flex: 1 }}>
-    <SafeAreaProvider>
-      <IODSExperimentalContextProvider>
-        <IOThemeContextProvider theme={"light"}>
-          <ToastProvider>
-            <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <StatusMessages>
-                      <RootContainer
-                        routingInstumentation={navigationIntegration}
-                      />
-                    </StatusMessages>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
-            </Provider>
-          </ToastProvider>
-        </IOThemeContextProvider>
-      </IODSExperimentalContextProvider>
-    </SafeAreaProvider>
-  </GestureHandlerRootView>
-);
+const App = (): JSX.Element => {
+  useBackgroundFetch();
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <IODSExperimentalContextProvider>
+          <IOThemeContextProvider theme={"light"}>
+            <ToastProvider>
+              <Provider store={store}>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <StatusMessages>
+                        <RootContainer
+                          routingInstumentation={navigationIntegration}
+                        />
+                      </StatusMessages>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </Provider>
+            </ToastProvider>
+          </IOThemeContextProvider>
+        </IODSExperimentalContextProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+};
 
 /**
  * We wrap the main app component with the sentry utility function to handle
