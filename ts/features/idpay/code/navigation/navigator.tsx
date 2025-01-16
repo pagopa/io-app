@@ -16,7 +16,7 @@ const Stack = createStackNavigator<IdPayCodeParamsList>();
 export const IdPayCodeNavigator = () => (
   <Stack.Navigator
     initialRouteName={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
-    screenOptions={{ gestureEnabled: false, headerShown: false }}
+    screenOptions={{ gestureEnabled: false }}
   >
     <Stack.Screen
       name={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
@@ -32,6 +32,7 @@ export const IdPayCodeNavigator = () => (
       component={IdPayCodeRenewScreen}
     />
     <Stack.Screen
+      options={{ headerShown: false }}
       name={IdPayCodeRoutes.IDPAY_CODE_RESULT}
       component={IdPayCodeResultScreen}
     />
