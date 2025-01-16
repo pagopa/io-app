@@ -21,6 +21,7 @@ import ModalSectionStatusComponent from "../../../components/SectionStatus/modal
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import {
   trackIngressCdnSystemError,
+  trackIngressNoInternetConnection,
   trackIngressServicesSlowDown,
   trackIngressTimeout
 } from "../analytics";
@@ -72,6 +73,7 @@ export const IngressScreen = () => {
     void fetchNetInfo()
       .then(info => {
         if (!info.isConnected) {
+          void trackIngressNoInternetConnection();
           timeouts.forEach(clearTimeout);
         }
         setNetInfo(info);
