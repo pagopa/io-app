@@ -5,7 +5,6 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import I18n from "../../../../../i18n";
 
 export const CgnMerchantListViewRenderItem =
   (props: {
@@ -23,7 +22,7 @@ export const CgnMerchantListViewRenderItem =
                 <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
                   <Badge
                     variant="purple"
-                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                    text={String(item.numberOfNewDiscounts)}
                   />
                 </View>
               )}
