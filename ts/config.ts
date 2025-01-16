@@ -150,28 +150,10 @@ export const totMessageFetchWorkers = pipe(
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
 
-export const privacyUrl: string = pipe(
-  Config.PRIVACY_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/app-content/tos_privacy.html")
-);
-
 export const zendeskPrivacyUrl: string = pipe(
   Config.ZENDESK_PRIVACY_URL,
   t.string.decode,
   E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
-);
-
-export const unsupportedDeviceMoreInfoUrl: string = pipe(
-  Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
-  NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
-);
-
-export const unsupportedDeviceLearnMoreUrl: string = pipe(
-  Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
-  NonEmptyString.decode,
-  E.getOrElse(() => "https://io.italia.it/faq/#n1_15")
 );
 
 export const cieSpidMoreInfoUrl: string = pipe(
@@ -247,8 +229,3 @@ export const itwEaaVerifierBaseUrl = Config.ITW_EAA_VERIFIER_BASE_URL;
 export const itwBypassIdentityMatch =
   Config.ITW_BYPASS_IDENTITY_MATCH === "YES";
 export const itwIdpHintTest = Config.ITW_IDP_HINT_TEST === "YES";
-export const itwIpzsPrivacyUrl: string = pipe(
-  Config.ITW_IPZS_PRIVACY_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/informativa-ipzs")
-);
