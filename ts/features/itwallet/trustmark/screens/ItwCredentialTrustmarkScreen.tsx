@@ -9,6 +9,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
+import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -22,6 +23,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 export const ItwCredentialTrustmarkScreen = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
 
+  usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
 
   return (

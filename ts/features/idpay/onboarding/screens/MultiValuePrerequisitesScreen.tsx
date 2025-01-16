@@ -4,29 +4,21 @@ import {
   FooterActionsInline,
   H1,
   H6,
-  IOColors,
   IOStyles,
-  Icon,
-  PressableListItemBase,
+  RadioGroup,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { default as React } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   multiRequiredCriteriaSelector,
   selectCurrentMultiSelfDeclarationPage
 } from "../machine/selectors";
-
-type ListItemProps = {
-  text: string;
-  checked: boolean;
-  onPress: () => void;
-};
 
 const MultiValuePrerequisitesScreen = () => {
   const pagerRef = React.useRef<PagerView>(null);
@@ -69,17 +61,17 @@ const MultiValuePrerequisiteItemScreenContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
-  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
+  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(
     undefined
   );
 
   const handleContinuePress = () => {
-    if (selectedIndex !== undefined) {
+    if (selectedValue !== undefined) {
       machine.send({
         type: "select-multi-consent",
         data: {
           _type: selfDeclaration._type,
-          value: selfDeclaration.value[selectedIndex],
+          value: selectedValue,
           code: selfDeclaration.code
         }
       });
@@ -87,36 +79,37 @@ const MultiValuePrerequisiteItemScreenContent = ({
   };
   const handleGoBack = () => machine.send({ type: "back" });
 
+  useHeaderSecondLevel({
+    title: I18n.t("idpay.onboarding.headerTitle"),
+    goBack: handleGoBack
+  });
+
   return (
     <>
-      <BaseScreenComponent
-        goBack={handleGoBack}
-        headerTitle={I18n.t("idpay.onboarding.headerTitle")}
-      >
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
-          <VSpacer size={16} />
-          <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
-          {/* TODO: Add a proper `onPress` function to the following link.
+      <View style={IOStyles.horizontalContentPadding}>
+        <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
+        <VSpacer size={16} />
+        <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
+        {/* TODO: Add a proper `onPress` function to the following link.
           It was a `<Link>` without anything else before */}
-          {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-          <Body weight="Semibold" asLink onPress={() => {}}>
-            {I18n.t("idpay.onboarding.multiPrerequisites.link")}
-          </Body>
-          <VSpacer size={24} />
-          <H6>{selfDeclaration.description}</H6>
-          <ScrollView>
-            {selfDeclaration.value.map((answer, index) => (
-              <CustomListItem
-                key={index}
-                text={answer}
-                checked={index === selectedIndex}
-                onPress={() => setSelectedIndex(index)}
-              />
-            ))}
-          </ScrollView>
-        </View>
-      </BaseScreenComponent>
+        {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+        <Body weight="Semibold" asLink onPress={() => {}}>
+          {I18n.t("idpay.onboarding.multiPrerequisites.link")}
+        </Body>
+        <VSpacer size={24} />
+        <H6>{selfDeclaration.description}</H6>
+        <ScrollView>
+          <RadioGroup<string>
+            type="radioListItem"
+            items={selfDeclaration.value.map((answer, index) => ({
+              id: index.toString(),
+              value: answer
+            }))}
+            selectedItem={selectedValue}
+            onPress={value => setSelectedValue(value)}
+          />
+        </ScrollView>
+      </View>
       <FooterActionsInline
         startAction={{
           color: "primary",
@@ -125,39 +118,12 @@ const MultiValuePrerequisiteItemScreenContent = ({
         }}
         endAction={{
           onPress: handleContinuePress,
-          disabled: selectedIndex === undefined,
+          disabled: selectedValue === undefined,
           label: I18n.t("global.buttons.continue")
         }}
       />
     </>
   );
 };
-
-const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
-  <View style={styles.outerListItem}>
-    <PressableListItemBase onPress={onPress}>
-      <View
-        style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.innerListItem]}
-      >
-        <H6 color={"bluegreyDark"}>{text}</H6>
-        <Icon
-          name={checked ? "legRadioOn" : "legRadioOff"}
-          size={24}
-          color={checked ? "blue" : "bluegrey"}
-        />
-      </View>
-    </PressableListItemBase>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  outerListItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: IOColors["grey-100"]
-  },
-  innerListItem: {
-    paddingVertical: 4
-  }
-});
 
 export default MultiValuePrerequisitesScreen;
