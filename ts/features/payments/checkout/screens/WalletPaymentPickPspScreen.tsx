@@ -154,6 +154,7 @@ const WalletPaymentPickPspScreen = () => {
     () => ({
       type: "buttonLink",
       componentProps: {
+        testID: "wallet-payment-pick-psp-sort-button",
         label: I18n.t("wallet.payment.psp.pspSortButton"),
         accessibilityLabel: I18n.t("wallet.payment.psp.pspSortButton"),
         onPress: present
