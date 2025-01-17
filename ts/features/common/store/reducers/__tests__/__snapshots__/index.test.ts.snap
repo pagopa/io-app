@@ -132,7 +132,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "walletInstance": {
       "attestation": undefined,
-      "status": undefined,
+      "status": {
+        "kind": "PotNone",
+      },
     },
   },
   "landingBanners": {
@@ -170,6 +172,21 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "nativeLogin": {
       "enabled": true,
+    },
+    "spidLogin": {
+      "nativeLogin": {
+        "requestInfo": {
+          "nativeAttempts": 0,
+          "requestState": "LOADING",
+        },
+      },
+      "standardLogin": {
+        "requestInfo": {
+          "requestState": {
+            "kind": "PotNoneLoading",
+          },
+        },
+      },
     },
     "testLogin": {
       "kind": "idle",

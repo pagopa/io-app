@@ -2,6 +2,90 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.3](https://github.com/pagopa/io-app/compare/2.81.0-rc.2...2.81.0-rc.3) (2025-01-16)
+
+
+### Chores
+
+* [[IOPID-2579](https://pagopa.atlassian.net/browse/IOPID-2579)] add management of remote portal urls ([#6594](https://github.com/pagopa/io-app/issues/6594)) ([c3b2f95](https://github.com/pagopa/io-app/commit/c3b2f952487771747ad9ae89a2613bd7a966fbdb))
+
+## [2.81.0-rc.2](https://github.com/pagopa/io-app/compare/2.81.0-rc.1...2.81.0-rc.2) (2025-01-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1918](https://pagopa.atlassian.net/browse/SIW-1918)] Add iPatente CTA in MDL details screen ([#6577](https://github.com/pagopa/io-app/issues/6577)) ([40f6224](https://github.com/pagopa/io-app/commit/40f6224246d1e6a352c07180365fc629dd9185ca))
+
+
+### Bug Fixes
+
+* [[IOBP-1101](https://pagopa.atlassian.net/browse/IOBP-1101)] Add missing `Mixpanel` events/properties ([#6581](https://github.com/pagopa/io-app/issues/6581)) ([ea95f85](https://github.com/pagopa/io-app/commit/ea95f85220fb4dbdca0a68de0560b0dd1396d912))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1945](https://pagopa.atlassian.net/browse/SIW-1945)] Disable screenshots and recordings on ITW screens ([#6595](https://github.com/pagopa/io-app/issues/6595)) ([9382eeb](https://github.com/pagopa/io-app/commit/9382eebb070c7cf337ff9dd71b5f3ad666814cf9))
+
+## [2.81.0-rc.1](https://github.com/pagopa/io-app/compare/2.81.0-rc.0...2.81.0-rc.1) (2025-01-14)
+
+## [2.81.0-rc.0](https://github.com/pagopa/io-app/compare/2.80.0-rc.10...2.81.0-rc.0) (2025-01-14)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1944](https://pagopa.atlassian.net/browse/SIW-1944)] Remove the ongoing badge when errors occur ([#6592](https://github.com/pagopa/io-app/issues/6592)) ([ea2663f](https://github.com/pagopa/io-app/commit/ea2663f0628960da0a352aa0f4a721c63028a9cf))
+
+
+### Bug Fixes
+
+* [[IOBP-1100](https://pagopa.atlassian.net/browse/IOBP-1100)] German FAQ strings ([#6579](https://github.com/pagopa/io-app/issues/6579)) ([7e5ca4a](https://github.com/pagopa/io-app/commit/7e5ca4a918ec36b82e77837987da34db647bffdf))
+
+
+### Chores
+
+* [[IOAPPX-454](https://pagopa.atlassian.net/browse/IOAPPX-454)] Parametrize the use of `Kotlin` and `OkHttp` versions to be used from libraries if needed ([#6574](https://github.com/pagopa/io-app/issues/6574)) ([272db91](https://github.com/pagopa/io-app/commit/272db916e415a951675738427bccbe94c3eab2e7))
+* [[IOPID-2575](https://pagopa.atlassian.net/browse/IOPID-2575)] Bump `rn-keychain` and force `AES_GCM_NO_AUTH` ([#6587](https://github.com/pagopa/io-app/issues/6587)) ([1059177](https://github.com/pagopa/io-app/commit/1059177fb10f9ffa9cf7994e113ccd845f4aef2a))
+* **Cross:** [[IOAPPX-346](https://pagopa.atlassian.net/browse/IOAPPX-346)] Remove manually linked deps ([#5972](https://github.com/pagopa/io-app/issues/5972)) ([f2659cf](https://github.com/pagopa/io-app/commit/f2659cfd53feff5976397807916b84e234287d04))
+
+## [2.80.0-rc.10](https://github.com/pagopa/io-app/compare/2.80.0-rc.9...2.80.0-rc.10) (2025-01-09)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1933](https://pagopa.atlassian.net/browse/SIW-1933)] Handle Trustmark QR code generation failures ([#6558](https://github.com/pagopa/io-app/issues/6558)) ([b207270](https://github.com/pagopa/io-app/commit/b207270adeb6b14bee81ee1e5a02344ff1b98aca))
+* **IT Wallet:** [[SIW-1949](https://pagopa.atlassian.net/browse/SIW-1949)] Display email address in the same line in issuance failure screen ([#6589](https://github.com/pagopa/io-app/issues/6589)) ([22ca3e6](https://github.com/pagopa/io-app/commit/22ca3e692394a3d5395646f6f299293e4f62f480))
+
+## [2.80.0-rc.9](https://github.com/pagopa/io-app/compare/2.80.0-rc.8...2.80.0-rc.9) (2025-01-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1638](https://pagopa.atlassian.net/browse/SIW-1638)] Handle unknown credential status ([#6576](https://github.com/pagopa/io-app/issues/6576)) ([694b118](https://github.com/pagopa/io-app/commit/694b1189b8866db5527522b4ab51dfa1e4cac988))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1639](https://pagopa.atlassian.net/browse/SIW-1639)] Show error banner when wallet instance status check fails ([#6568](https://github.com/pagopa/io-app/issues/6568)) ([b490c39](https://github.com/pagopa/io-app/commit/b490c39da56b8688c042d760dc5d71ffef87a852))
+
+## [2.80.0-rc.8](https://github.com/pagopa/io-app/compare/2.80.0-rc.7...2.80.0-rc.8) (2025-01-08)
+
+
+### Chores
+
+* [[IOPLT-787](https://pagopa.atlassian.net/browse/IOPLT-787)] Upgrade react-native-image-picker to fix android policy issue ([#6482](https://github.com/pagopa/io-app/issues/6482)) ([3467298](https://github.com/pagopa/io-app/commit/346729841d1bb66b1918224ff4bf7ed75cd7f870))
+
+## [2.80.0-rc.7](https://github.com/pagopa/io-app/compare/2.80.0-rc.6...2.80.0-rc.7) (2025-01-07)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-1934](https://pagopa.atlassian.net/browse/SIW-1934)] Cleanup the integrityKeyTag if getWalletAttestation throws an error ([#6569](https://github.com/pagopa/io-app/issues/6569)) ([dcde5de](https://github.com/pagopa/io-app/commit/dcde5de8423d95ad7fcc24c059032596b3e85cb2))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1937](https://pagopa.atlassian.net/browse/SIW-1937)] Improve wallet category filters ([#6570](https://github.com/pagopa/io-app/issues/6570)) ([9321272](https://github.com/pagopa/io-app/commit/9321272753c124be4627f8cd00830e2d591f520d))
+
 ## [2.80.0-rc.6](https://github.com/pagopa/io-app/compare/2.80.0-rc.5...2.80.0-rc.6) (2024-12-19)
 
 

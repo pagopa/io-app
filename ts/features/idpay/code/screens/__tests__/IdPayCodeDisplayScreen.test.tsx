@@ -25,7 +25,8 @@ jest.mock("@react-navigation/native", () => {
       addListener: () => jest.fn(),
       removeListener: () => jest.fn(),
       getParent: () => undefined,
-      pop: mockPop
+      pop: mockPop,
+      setOptions: jest.fn
     })
   };
 });
@@ -62,9 +63,12 @@ describe("IdPayCodeDisplayScreen", () => {
 
       fireEvent(button, "onPress");
 
-      expect(mockReplace).toBeCalledWith(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
-        screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
-      });
+      expect(mockReplace).toHaveBeenCalledWith(
+        IdPayCodeRoutes.IDPAY_CODE_MAIN,
+        {
+          screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
+        }
+      );
     });
   });
 
@@ -82,7 +86,7 @@ describe("IdPayCodeDisplayScreen", () => {
 
       fireEvent(button, "onPress");
 
-      expect(mockPop).toBeCalled();
+      expect(mockPop).toHaveBeenCalled();
     });
   });
 });

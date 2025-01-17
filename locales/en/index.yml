@@ -57,6 +57,15 @@ date:
   meridian:
     - "am"
     - "pm"
+  time:
+    minutes:
+      zero: "0 minutes"
+      one: "1 minute"
+      other: "{{count}} minutes"
+    seconds:
+      zero: "0 seconds"
+      one: "1 second"
+      other: "{{count}} seconds"
 global:
   why: "Perché?"
   you: "YOU"
@@ -110,7 +119,6 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
-  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
     asterisk: "*"
@@ -3240,7 +3248,7 @@ features:
         empty:
           title: Nessuna ricevuta trovata
           subtitle: Se stai cercando la ricevuta di un avviso pagoPA che hai pagato in passato, rivolgiti all’ente creditore.
-        emptyPayer: 
+        emptyPayer:
           title: Qui vedrai le ricevute dei pagamenti fatti in app
     details:
       payPal:
@@ -3283,6 +3291,7 @@ features:
         invalid: Non valida
         verificationExpiring: Verifica
         verificationExpired: Verifica
+        unknown: Non disponibile
       digital: Versione digitale
     generic:
       error:
@@ -3300,6 +3309,9 @@ features:
         claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
+      walletNotAvailable:
+        message: Abbiamo avuto un problema nel recuperare i tuoi documenti.
+        cta: Chiudi e riapri l'app per riprovare.
     verifiableCredentials:
       claims:
         uniqueId: "ID univoco"
@@ -3520,6 +3532,7 @@ features:
           requestAssistance: "Something wrong?"
           showClaimValues: "Show claim values"
           hideClaimValues: "Hide claim values"
+          openIPatente: "Vai al saldo punti patente"
         dialogs:
           remove:
             title: Vuoi rimuovere il documento dal Portafoglio?
@@ -3532,14 +3545,24 @@ features:
           content: È un passaggio di sicurezza necessario per continuare ad usare la tua {{credentialName}} su IO.
           primaryAction: Inizia
       ctas:
-        openPdf: "Show document"
+        trustmark: Mostra certificato di autenticità
+        openPdf: Show document
         shareButton: Save or share
         fiscalCode: Your Fiscal Code
+      statusAttestationUnknown:
+        title: Non siamo riusciti a caricare {{credentialName}}
+        content: Chiudi e riapri l'app per riprovare.
+        primaryAction: Ho capito
     trustmark:
-      cta: Mostra certificato di autenticità
       description: Mostra il QR Code per attestare l’autenticità del documento quando ti viene richiesto.
-      expiration: Il QR Code si rinnova tra
       qrCode: QR code autenticità credenziale
+      timer:
+        expiresIn: Il QR Code si rinnova tra **{{time}}**
+        expired: Il QR Code è scaduto
+      failure:
+        description: Abbiamo avuto un problema nel generare il nuovo QR Code.
+        action: Riprova
+        toast: "Puoi riprovare tra {{time}}"
     walletRevocation:
       cta: Disattiva Documenti su IO
       confirmScreen:
@@ -3562,7 +3585,7 @@ features:
         cta: Scopri di più
         closeButton: Chiudi
         closeButtonAlt: Ho capito
-        revokedByWalletProvider: 
+        revokedByWalletProvider:
           title: Documenti su IO è stata disattivata
           content: Per verificare i requisiti richiesti per continuare a usare la funzionalità sul tuo dispositivo, premi "Scopri di più".
         newWalletInstanceCreated:
@@ -4189,24 +4212,6 @@ transaction:
       subject: Oggetto del pagamento
       noticeCode: Codice avviso
       taxCode: Codice Fiscale Ente
-permissionRequest:
-  gallery:
-    title: Consenti a IO di accedere alle tue foto
-    subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
-    caption: "Ecco come:"
-    step: Step {{step}}
-    steps:
-      android:
-        1: Vai su “Impostazioni”
-        2: Seleziona “Applicazioni”
-        3: Seleziona “IO”
-        4: Seleziona la voce relativa alle autorizzazioni
-        5: Consenti l’accesso a file e media
-      ios:
-        1: Vai su “Impostazioni”
-        2: Seleziona “IO”
-        3: Seleziona “Foto” e consenti l’accesso
-    cta: Apri Impostazioni
 FIMS:
   updateApp:
     header: "Aggiorna l’app per proseguire"

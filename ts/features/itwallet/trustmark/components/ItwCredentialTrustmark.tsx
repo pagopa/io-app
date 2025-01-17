@@ -300,7 +300,9 @@ export const ItwCredentialTrustmark = ({
       onPress={onPressWithTrackEvent}
       testID={testID}
       accessible={true}
-      accessibilityLabel={I18n.t("features.itWallet.trustmark.cta")}
+      accessibilityLabel={I18n.t(
+        "features.itWallet.presentation.ctas.trustmark"
+      )}
       accessibilityRole="button"
       onPressIn={onPressIn}
       onPressOut={onPressOut}
@@ -321,7 +323,9 @@ export const ItwCredentialTrustmark = ({
         <View style={styles.buttonInnerBorder} />
         <View style={styles.content}>
           <Caption>
-            {I18n.t("features.itWallet.trustmark.cta").toUpperCase()}
+            {I18n.t(
+              "features.itWallet.presentation.ctas.trustmark"
+            ).toUpperCase()}
           </Caption>
           {!enableIridescence && (
             <Image
@@ -342,8 +346,7 @@ const styles = StyleSheet.create({
     height: TRUSTMARK_HEIGHT,
     borderCurve: "continuous",
     borderRadius: buttonBorderRadius,
-    overflow: "hidden",
-    marginVertical: 8
+    overflow: "hidden"
   },
   gradientView: {
     ...StyleSheet.absoluteFillObject

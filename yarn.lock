@@ -3839,10 +3839,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/react-native-cie@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@pagopa/react-native-cie@npm:1.4.0"
-  checksum: 742b53251d0bd5a530ee63dcb7a9e604b7a06fc848f4a5643b3fdc841935c92fa5f8453e3c7cb8006bcab7c27563ff88efb53528a1df0256cf53cb7c57f251b1
+"@pagopa/react-native-cie@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@pagopa/react-native-cie@npm:1.4.2"
+  checksum: f56778630c4512c627298614d2c84e9a7b6976dec7085124294e7ef631d07dd35f9c39b730edf9bf4b01bfe44ef5610cded3266b42cd35b996a0e23668717979
   languageName: node
   linkType: hard
 
@@ -13569,7 +13569,7 @@ __metadata:
     "@pagopa/io-react-native-wallet": ^0.27.0
     "@pagopa/io-react-native-zendesk": ^0.3.29
     "@pagopa/openapi-codegen-ts": ^14.0.0
-    "@pagopa/react-native-cie": ^1.4.0
+    "@pagopa/react-native-cie": ^1.4.2
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-clipboard/clipboard": ^1.14.0
@@ -13686,15 +13686,14 @@ __metadata:
     react-native-easing-gradient: ^1.1.1
     react-native-exception-handler: ^2.10.8
     react-native-fingerprint-scanner: "git+https://github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803d"
-    react-native-flag-secure-android: ^1.0.3
     react-native-fs: ^2.18.0
     react-native-gesture-handler: ^2.18.1
     react-native-get-random-values: ^1.11.0
     react-native-haptic-feedback: ^2.3.3
     react-native-i18n: ^2.0.15
     react-native-image-pan-zoom: ^2.1.11
-    react-native-image-picker: 4.10.3
-    react-native-keychain: ^4.0.5
+    react-native-image-picker: 7.2.3
+    react-native-keychain: ^9.2.2
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
     react-native-masked-text: ^1.13.0
@@ -13711,6 +13710,7 @@ __metadata:
     react-native-safe-area-context: ^4.10.5
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: ^3.35.0
+    react-native-screenshot-prevent: ^1.2.1
     react-native-share: ^10.2.1
     react-native-splash-screen: ^3.2.0
     react-native-store-review: ^0.4.3
@@ -18908,13 +18908,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-flag-secure-android@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "react-native-flag-secure-android@npm:1.0.3"
-  checksum: 1b95bc83a040e924d4b913284b914559891d35b52505acb981c18ad82ea3139e3a48e7f710a6c52f9fe0bf32374b45fb7c3cd9a18a35f2c1b5f61f49c0a4737c
-  languageName: node
-  linkType: hard
-
 "react-native-fs@npm:^2.18.0":
   version: 2.18.0
   resolution: "react-native-fs@npm:2.18.0"
@@ -19007,20 +19000,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-picker@npm:4.10.3":
-  version: 4.10.3
-  resolution: "react-native-image-picker@npm:4.10.3"
+"react-native-image-picker@npm:7.2.3":
+  version: 7.2.3
+  resolution: "react-native-image-picker@npm:7.2.3"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 1f1c5cae5950790cfbdab2e1f547cfe065de9949c7cf0102dec512f43889f586eed1c265e1ecbc88df106696650b3dc5bf936b862078906787aca7e9ca2f145c
+  checksum: 96d67516e8e1c1768c593ca1b0a507d5212d8ac5df2610ad9d6f38c188b8d0720966559867849f74b6c19d2500664ce17c907e5fa37ab72487abd363cf493e7d
   languageName: node
   linkType: hard
 
-"react-native-keychain@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "react-native-keychain@npm:4.0.5"
-  checksum: 4a4079f97b43a19dbb50155cbbc011fac8f3e0322dd5564f0c62a22ca3b726ca3951ea50cbb896616c4c02f10ea3d561fd4d342f36f34dfb31deea0aacd949de
+"react-native-keychain@npm:^9.2.2":
+  version: 9.2.2
+  resolution: "react-native-keychain@npm:9.2.2"
+  checksum: e361df1e792766bb4d3f60b850608979667357365328d36e1665a077728b8d68f7d33de0d31e3c666f115a0f9e1f53be48b4e678bf73f07aecefcca35766d98d
   languageName: node
   linkType: hard
 
@@ -19269,6 +19262,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: cb8a0c8d8a41a8a1065cc2253e4272a970366a7d80bc54e889b2f48de7ccccd3e828e2701de39c0453a67956ec0cad140fb506324cce04419b5e2eb495c038c2
+  languageName: node
+  linkType: hard
+
+"react-native-screenshot-prevent@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "react-native-screenshot-prevent@npm:1.2.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 5563adea419627ce1a066495c7779ffdfa85bdb9c180b47eb25215175a02fc4af402bf24cea684d208ae18651df9396fb545998dd3c566afe67f119ecfa62a4a
   languageName: node
   linkType: hard
 

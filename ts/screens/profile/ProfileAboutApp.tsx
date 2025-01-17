@@ -11,11 +11,17 @@ import { View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../components/ui/IOScrollViewWithLargeHeader";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
+import { useIOSelector } from "../../store/hooks";
+import { absolutePortalLinksSelector } from "../../store/reducers/backendStatus/remoteConfig";
 
 const ProfileAboutApp = () => {
   const viewRef = createRef<View>();
-  const IOSiteRef = "https://io.italia.it";
-  const onNavigateToIOSite = useCallback(() => openWebUrl(IOSiteRef), []);
+  const absolutePortalLinks = useIOSelector(absolutePortalLinksSelector);
+
+  const onNavigateToIOSite = useCallback(
+    () => openWebUrl(absolutePortalLinks.io_showcase),
+    [absolutePortalLinks.io_showcase]
+  );
 
   const bodyPropsArray = useMemo(
     () =>

@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -19,11 +20,20 @@ import {
   shouldResetNotificationBannerDismissStateSelector,
   timesPushNotificationBannerDismissedSelector
 } from "../store/selectors/notificationsBannerDismissed";
+import {
+  trackPushNotificationBannerDismissAlert,
+  trackPushNotificationBannerDismissOutcome,
+  trackPushNotificationBannerForceShow,
+  trackPushNotificationsBannerClosure,
+  trackPushNotificationsBannerTap,
+  trackPushNotificationsBannerVisualized
+} from "../analytics";
 type Props = {
   closeHandler: () => void;
 };
 
 export const PushNotificationsBanner = ({ closeHandler }: Props) => {
+  const route = useRoute();
   const dispatch = useIODispatch();
   const shouldResetDismissState = useIOSelector(
     shouldResetNotificationBannerDismissStateSelector
@@ -31,9 +41,13 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
 
   React.useEffect(() => {
     if (shouldResetDismissState) {
+      trackPushNotificationBannerForceShow();
       dispatch(resetNotificationBannerDismissState());
     }
   }, [dispatch, shouldResetDismissState]);
+  React.useEffect(() => {
+    trackPushNotificationsBannerVisualized(route.name);
+  }, [route.name]);
 
   const dismissionCount = useIOSelector(
     timesPushNotificationBannerDismissedSelector
@@ -41,13 +55,20 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   const discardModal = usePushNotificationsBannerBottomSheet(closeHandler);
 
   const onClose = () => {
+    trackPushNotificationsBannerClosure(route.name);
     if (dismissionCount >= 2) {
+      trackPushNotificationBannerDismissAlert();
       discardModal.present();
     } else {
       dispatch(setUserDismissedNotificationsBanner());
       closeHandler();
     }
   };
+
+  const onPress = React.useCallback(() => {
+    trackPushNotificationsBannerTap(route.name);
+    openSystemNotificationSettingsScreen();
+  }, [route.name]);
 
   return (
     <View style={styles.margins} testID="pushnotif-bannerContainer">
@@ -61,7 +82,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
         size="big"
         onClose={onClose}
         labelClose={I18n.t("global.buttons.close")}
-        onPress={openSystemNotificationSettingsScreen}
+        onPress={onPress}
       />
       {discardModal.bottomSheet}
     </View>
@@ -73,8 +94,15 @@ const usePushNotificationsBannerBottomSheet = (
 ) => {
   const dispatch = useIODispatch();
 
-  const fullCloseHandler = () =>
+  const internalRemindLaterHandler = () => {
+    trackPushNotificationBannerDismissOutcome("remind_later");
+    remindLaterHandler();
+  };
+
+  const fullCloseHandler = () => {
+    trackPushNotificationBannerDismissOutcome("deactivate");
     dispatch(setPushNotificationBannerForceDismissed());
+  };
 
   return useIOBottomSheetModal({
     title: I18n.t(
@@ -88,7 +116,7 @@ const usePushNotificationsBannerBottomSheet = (
             label: I18n.t(
               "features.messages.pushNotifications.banner.bottomSheet.cta"
             ),
-            onPress: remindLaterHandler
+            onPress: internalRemindLaterHandler
           },
           secondary: {
             label: I18n.t(

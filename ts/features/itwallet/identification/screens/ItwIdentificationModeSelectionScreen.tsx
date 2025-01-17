@@ -14,9 +14,9 @@ import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../analytics";
-import { itwDisabledIdentificationMethodsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { isCIEAuthenticationSupportedSelector } from "../../machine/eid/selectors";
+import { itwDisabledIdentificationMethodsSelector } from "../../common/store/selectors/remoteConfig";
 
 export const ItwIdentificationModeSelectionScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();

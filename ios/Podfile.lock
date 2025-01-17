@@ -1444,8 +1444,27 @@ PODS:
     - React
   - react-native-get-random-values (1.11.0):
     - React-Core
-  - react-native-image-picker (4.10.3):
+  - react-native-image-picker (7.2.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-netinfo (11.4.1):
     - React-Core
   - react-native-notifications-utils (0.3.0):
@@ -1847,8 +1866,27 @@ PODS:
     - Yoga
   - RNI18n (2.0.15):
     - React
-  - RNKeychain (4.0.5):
-    - React
+  - RNKeychain (9.2.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNPermissions (4.0.0):
     - React-Core
   - RNQrGenerator (1.4.0):
@@ -1984,6 +2022,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNScreenshotPrevent (1.2.1):
+    - React
   - RNSentry (6.4.0):
     - DoubleConversion
     - glog
@@ -2161,6 +2201,7 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNScreenshotPrevent (from `../node_modules/react-native-screenshot-prevent`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNStoreReview (from `../node_modules/react-native-store-review`)
@@ -2410,6 +2451,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNScreenshotPrevent:
+    :path: "../node_modules/react-native-screenshot-prevent"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
   RNShare:
@@ -2482,7 +2525,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: a2e1577d26b9758ef3092e66f5d67f6e8c7454d9
   react-native-fingerprint-scanner: 91bf6825709dd7bd3abc4588a4772eb097a2b2d8
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
-  react-native-image-picker: 1f5318beec2ebed6695454ffb9bea8c4152f1598
+  react-native-image-picker: 130fad649d07e4eec8faaed361d3bba570e1e5ff
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-notifications-utils: 2684eeb23e47ea5d892b151c28ae07840d1448d1
   react-native-pager-view: 8bd7d72d1c260ef565952ac617ab6e492c457894
@@ -2531,12 +2574,13 @@ SPEC CHECKSUMS:
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 27a63f2218affdf1a426d56682f9b174904838b3
   RNI18n: 11ec5086508673ef71b5b567da3e8bcca8a926e1
-  RNKeychain: ffd0513e676445c637410b47249460cbf56bc9cb
+  RNKeychain: bd09fc5dcf4e0c4166a5d4012beaf2e093fcd9f5
   RNPermissions: a4ae2524bd9cfb86f9c490b200b17f8dadb12e5a
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
   RNReactNativeHapticFeedback: 00ba111b82aa266bb3ee1aa576831c2ea9a9dfad
   RNReanimated: 26a5a401a5de1c0cf1a3226873825b00ffa85377
   RNScreens: 35bb8e81aeccf111baa0ea01a54231390dbbcfd9
+  RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNSentry: c5075bc124ebc8afa84e037c7fe257053a0b2cda
   RNShare: 694e19d7f74ac4c04de3a8af0649e9ccc03bd8b1
   RNStoreReview: 613c43e9132998ed41a65946e20c223c91b36464
