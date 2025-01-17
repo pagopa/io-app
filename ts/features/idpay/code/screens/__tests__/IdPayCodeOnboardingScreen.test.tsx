@@ -51,9 +51,12 @@ describe("IdPayCodeOnboardingScreen", () => {
 
         fireEvent(button, "onPress");
 
-        expect(mockReplace).toBeCalledWith(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
-          screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
-        });
+        expect(mockReplace).toHaveBeenCalledWith(
+          IdPayCodeRoutes.IDPAY_CODE_MAIN,
+          {
+            screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
+          }
+        );
       });
     });
   });
@@ -69,7 +72,7 @@ describe("IdPayCodeOnboardingScreen", () => {
 
         fireEvent(button, "onPress");
 
-        expect(mockReplace).not.toBeCalled();
+        expect(mockReplace).not.toHaveBeenCalled();
 
         // ! We are unable to test the identification request
       });

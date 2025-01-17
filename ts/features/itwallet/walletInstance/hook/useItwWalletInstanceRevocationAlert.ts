@@ -7,6 +7,11 @@ import { itwWalletInstanceStatusSelector } from "../store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwUpdateWalletInstanceStatus } from "../store/actions";
 import { openWebUrl } from "../../../../utils/url";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  DOCUMENTS_ON_IO_FAQ_12_URL_BODY,
+  DOCUMENTS_ON_IO_FAQ_14_URL_BODY
+} from "../../../../urls";
 
 const closeButtonText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.closeButton"
@@ -15,10 +20,6 @@ const alertCtaText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.cta"
 );
 
-const itwMinIntegrityReqUrl = "https://io.italia.it/documenti-su-io/faq/#n1_12";
-const itwDocsOnIOMultipleDevicesUrl =
-  "https://io.italia.it/documenti-su-io/faq/#n1_14";
-
 /**
  * Hook to monitor wallet instance status and display alerts if revoked.
  */
@@ -26,13 +27,37 @@ export const useItwWalletInstanceRevocationAlert = () => {
   const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
   const dispatch = useIODispatch();
 
+  const itwMinIntegrityReqUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(
+      state,
+      "io_showcase",
+      DOCUMENTS_ON_IO_FAQ_12_URL_BODY
+    )
+  );
+  const itwDocsOnIOMultipleDevicesUrl = useIOSelector(state =>
+    generateDynamicUrlSelector(
+      state,
+      "io_showcase",
+      DOCUMENTS_ON_IO_FAQ_14_URL_BODY
+    )
+  );
+
   useOnFirstRender(
     useCallback(() => {
       if (walletInstanceStatus?.is_revoked) {
-        showWalletRevocationAlert(walletInstanceStatus.revocation_reason);
+        showWalletRevocationAlert(
+          itwMinIntegrityReqUrl,
+          itwDocsOnIOMultipleDevicesUrl,
+          walletInstanceStatus.revocation_reason
+        );
         dispatch(itwUpdateWalletInstanceStatus.cancel());
       }
-    }, [walletInstanceStatus, dispatch])
+    }, [
+      walletInstanceStatus,
+      itwMinIntegrityReqUrl,
+      itwDocsOnIOMultipleDevicesUrl,
+      dispatch
+    ])
   );
 };
 
@@ -40,6 +65,8 @@ export const useItwWalletInstanceRevocationAlert = () => {
  * Displays an alert based on the revocation reason.
  */
 const showWalletRevocationAlert = (
+  itwMinIntegrityReqUrl: string,
+  itwDocsOnIOMultipleDevicesUrl: string,
   revocationReason?: WalletInstanceRevocationReason
 ) => {
   switch (revocationReason) {

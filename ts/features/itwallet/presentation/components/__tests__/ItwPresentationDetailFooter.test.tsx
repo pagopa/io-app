@@ -27,12 +27,8 @@ describe("ItwPresentationDetailsFooter", () => {
 
   it("should render iPatente action", () => {
     jest
-      .spyOn(remoteConfigSelectors, "itwIPatenteCtaConfigSelector")
-      .mockImplementation(() => ({
-        visibility: true,
-        url: "",
-        service_id: ""
-      }));
+      .spyOn(remoteConfigSelectors, "itwIsIPatenteCtaEnabledSelector")
+      .mockImplementation(() => true);
 
     const { queryByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
 

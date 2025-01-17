@@ -4,7 +4,7 @@ import {
   ContentWrapper,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { setShowProfileBanner } from "../../features/profileSettings/store/actions";
 import { profileBannerToShowSelector } from "../../features/profileSettings/store/selectors";
 import { openSystemNotificationSettingsScreen } from "../../features/pushNotifications/utils";
@@ -12,6 +12,10 @@ import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import {
+  trackPushNotificationsBannerTap,
+  trackPushNotificationsBannerVisualized
+} from "../../features/pushNotifications/analytics";
 
 export const ProfileMainScreenTopBanner = () => {
   const bannerToShow = useIOSelector(profileBannerToShowSelector);
@@ -30,6 +34,17 @@ export const ProfileMainScreenTopBanner = () => {
     [navigation]
   );
 
+  const onPressNotifications = React.useCallback(() => {
+    trackPushNotificationsBannerTap(ROUTES.SETTINGS_MAIN);
+    openSystemNotificationSettingsScreen();
+  }, []);
+
+  useEffect(() => {
+    if (bannerToShow === "NOTIFICATIONS") {
+      trackPushNotificationsBannerVisualized(ROUTES.SETTINGS_MAIN);
+    }
+  }, [bannerToShow]);
+
   switch (bannerToShow) {
     case "NOTIFICATIONS":
       return (
@@ -38,7 +53,7 @@ export const ProfileMainScreenTopBanner = () => {
           <Alert
             content={I18n.t("notifications.profileBanner.title")}
             action={I18n.t("notifications.profileBanner.cta")}
-            onPress={openSystemNotificationSettingsScreen}
+            onPress={onPressNotifications}
             variant="error"
             testID="notifications-banner"
           />

@@ -1,22 +1,21 @@
 import {
   Alert,
-  Body,
-  H6,
-  HSpacer,
+  Divider,
+  IOLogoPaymentType,
+  ListItemHeader,
+  ListItemInfo,
   ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import {
   TransactionDetailDTO,
   OperationTypeEnum as TransactionTypeEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
@@ -66,59 +65,47 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
   return (
     <View style={IOStyles.flex}>
       {reversalAlertComponent}
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.transaction.instrument")}
-        </Body>
-        <View style={[IOStyles.row, IOStyles.alignCenter]}>
-          <LogoPaymentWithFallback
-            brand={transaction.brand}
-            isExtended={false}
-          />
-          <HSpacer size={8} />
-          <Body weight="Semibold">
-            {I18n.t("idpay.initiative.operationDetails.transaction.maskedPan", {
-              lastDigits: transaction.maskedPan
-            })}
-          </Body>
-        </View>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.transaction.amountLabel")}
-        </Body>
-        <Body weight="Semibold">{formattedAmount}</Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t(
-            "idpay.initiative.operationDetails.transaction.accruedAmountLabel"
-          )}
-        </Body>
-        <Body weight="Semibold">{formattedAccrued}</Body>
-      </View>
-      <ItemSeparatorComponent noPadded={true} />
-      <VSpacer size={24} />
-      <H6>
-        {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
-      </H6>
-      <VSpacer size={4} />
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.transaction.date")}
-        </Body>
-        <Body weight="Semibold">
-          {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
-        </Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.transaction.circuit")}
-        </Body>
-        <Body weight="Semibold">
-          {getLabelForCircuitType(transaction.circuitType)}
-        </Body>
-      </View>
+      <ListItemInfo
+        label={I18n.t("transaction.details.info.paymentMethod")}
+        value={I18n.t(
+          "idpay.initiative.operationDetails.transaction.maskedPan",
+          {
+            lastDigits: transaction.maskedPan
+          }
+        )}
+        paymentLogoIcon={
+          getLabelForCircuitType(transaction.circuitType) as IOLogoPaymentType
+        }
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t(
+          "idpay.initiative.operationDetails.transaction.amountLabel"
+        )}
+        value={formattedAmount}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t(
+          "idpay.initiative.operationDetails.transaction.accruedAmountLabel"
+        )}
+        value={formattedAccrued}
+      />
+      <ListItemHeader
+        label={I18n.t(
+          "idpay.initiative.operationDetails.transaction.infoTitle"
+        )}
+      />
+      <ListItemInfo
+        label={I18n.t("idpay.initiative.operationDetails.transaction.date")}
+        value={format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.initiative.operationDetails.transaction.circuit")}
+        value={getLabelForCircuitType(transaction.circuitType)}
+      />
+      <Divider />
       <ListItemInfoCopy
         label={I18n.t(
           "idpay.initiative.operationDetails.transaction.acquirerId"
@@ -128,6 +115,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
           clipboardSetStringWithFeedback(idTrxAcquirer);
         }}
       />
+      <Divider />
       <ListItemInfoCopy
         label={I18n.t("idpay.initiative.operationDetails.transaction.issuerId")}
         value={idTrxIssuer}
@@ -138,13 +126,5 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  detailRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 8
-  }
-});
 
 export { TimelineTransactionDetailsComponent };

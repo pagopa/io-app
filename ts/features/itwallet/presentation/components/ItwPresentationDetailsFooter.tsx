@@ -17,11 +17,9 @@ import {
   trackItwCredentialDelete,
   trackWalletCredentialSupport
 } from "../../analytics";
-import { itwIPatenteCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
+import { itwIsIPatenteCtaEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove } from "../../credentials/store/actions";
-import { trackAuthenticationStart } from "../../../fims/common/analytics";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -133,25 +131,15 @@ const getCredentialActions = (credentialType: string): React.ReactNode =>
  * Renders the IPatente service action item
  */
 const IPatenteListItemAction = () => {
-  const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
+  const isIPatenteEnabled = useIOSelector(itwIsIPatenteCtaEnabledSelector);
 
-  if (!ctaConfig?.visibility) {
+  if (!isIPatenteEnabled) {
     return null;
   }
 
   const label = I18n.t(
     "features.itWallet.presentation.credentialDetails.actions.openIPatente"
   );
-
-  const trackIPatenteAuthenticationStart = (label: string) =>
-    trackAuthenticationStart(
-      ctaConfig.service_id as ServiceId,
-      ctaConfig.service_name,
-      ctaConfig.service_organization_name,
-      ctaConfig.service_organization_fiscal_code,
-      label,
-      "credential_details"
-    );
 
   return (
     <ListItemAction
@@ -160,12 +148,11 @@ const IPatenteListItemAction = () => {
       icon="externalLink"
       label={label}
       onPress={() => {
-        trackIPatenteAuthenticationStart(label);
         NavigationService.navigate(FIMS_ROUTES.MAIN, {
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaText: label,
-            ctaUrl: ctaConfig.url
+            ctaUrl: "https://licences.ipatente.io.pagopa.it/licences"
           }
         });
       }}

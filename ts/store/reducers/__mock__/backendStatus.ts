@@ -2,6 +2,7 @@ import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { absolutePortalLinksFallback } from "../backendStatus/remoteConfig";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -43,8 +44,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.critical,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -57,8 +58,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.normal,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -71,8 +72,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.critical,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -85,8 +86,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.critical,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -295,6 +296,10 @@ export const baseRawBackendStatus: BackendStatus = {
       tos_url: "https://www.example.com",
       tos_version: 3.2
     },
+    absolutePortalLinks: {
+      io_web: "https://ioapp.it/it/accedi/",
+      io_showcase: "https://io.italia.it/"
+    },
     itw: {
       enabled: false,
       min_app_version: {
@@ -304,11 +309,7 @@ export const baseRawBackendStatus: BackendStatus = {
       feedback_banner_visible: true,
       disabled_identification_methods: [],
       disabled_credentials: [],
-      ipatente_cta: {
-        visibility: true,
-        url: "https://www.ipatente.com",
-        service_id: "0010101010101"
-      },
+      ipatente_cta_visible: true
     }
   }
 };
@@ -388,6 +389,10 @@ export const baseBackendConfig: Config = {
     optInServiceId: ""
   },
   payments: {},
+  absolutePortalLinks: {
+    io_showcase: "https://io.italia.it/",
+    io_web: "https://ioapp.it/"
+  },
   tos: {
     tos_url: "https://www.example.com",
     tos_version: 3.2
@@ -401,10 +406,6 @@ export const baseBackendConfig: Config = {
     feedback_banner_visible: true,
     disabled_credentials: [],
     disabled_identification_methods: [],
-    ipatente_cta: {
-      visibility: true,
-      url: "https://www.ipatente.com",
-      service_id: "0010101010101"
-    }
+    ipatente_cta_visible: true
   }
 };

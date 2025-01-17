@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.81.0-rc.3](https://github.com/pagopa/io-app/compare/2.81.0-rc.2...2.81.0-rc.3) (2025-01-16)
+
+
+### Chores
+
+* [[IOPID-2579](https://pagopa.atlassian.net/browse/IOPID-2579)] add management of remote portal urls ([#6594](https://github.com/pagopa/io-app/issues/6594)) ([c3b2f95](https://github.com/pagopa/io-app/commit/c3b2f952487771747ad9ae89a2613bd7a966fbdb))
+
+## [2.81.0-rc.2](https://github.com/pagopa/io-app/compare/2.81.0-rc.1...2.81.0-rc.2) (2025-01-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-1918](https://pagopa.atlassian.net/browse/SIW-1918)] Add iPatente CTA in MDL details screen ([#6577](https://github.com/pagopa/io-app/issues/6577)) ([40f6224](https://github.com/pagopa/io-app/commit/40f6224246d1e6a352c07180365fc629dd9185ca))
+
+
+### Bug Fixes
+
+* [[IOBP-1101](https://pagopa.atlassian.net/browse/IOBP-1101)] Add missing `Mixpanel` events/properties ([#6581](https://github.com/pagopa/io-app/issues/6581)) ([ea95f85](https://github.com/pagopa/io-app/commit/ea95f85220fb4dbdca0a68de0560b0dd1396d912))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-1945](https://pagopa.atlassian.net/browse/SIW-1945)] Disable screenshots and recordings on ITW screens ([#6595](https://github.com/pagopa/io-app/issues/6595)) ([9382eeb](https://github.com/pagopa/io-app/commit/9382eebb070c7cf337ff9dd71b5f3ad666814cf9))
+
 ## [2.81.0-rc.1](https://github.com/pagopa/io-app/compare/2.81.0-rc.0...2.81.0-rc.1) (2025-01-14)
 
 ## [2.81.0-rc.0](https://github.com/pagopa/io-app/compare/2.80.0-rc.10...2.81.0-rc.0) (2025-01-14)
