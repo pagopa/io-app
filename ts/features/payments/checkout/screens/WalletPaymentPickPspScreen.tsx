@@ -76,7 +76,7 @@ const WalletPaymentPickPspScreen = () => {
     if (
       isError &&
       (pspListPot.error as WalletPaymentFailure)?.faultCodeCategory ===
-      FaultCodeCategoryEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR
+        FaultCodeCategoryEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR
     ) {
       navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE,
@@ -193,12 +193,12 @@ const WalletPaymentPickPspScreen = () => {
       primaryActionProps={
         canContinue
           ? {
-            label: I18n.t("wallet.payment.psp.continueButton"),
-            accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-            onPress: handleContinue,
-            disabled: isLoading,
-            loading: isLoading
-          }
+              label: I18n.t("wallet.payment.psp.continueButton"),
+              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+              onPress: handleContinue,
+              disabled: isLoading,
+              loading: isLoading
+            }
           : undefined
       }
     >

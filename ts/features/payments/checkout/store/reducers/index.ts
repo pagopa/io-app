@@ -226,10 +226,10 @@ const reducer = (
           state.pspList,
           action.payload.kind === "notFound"
             ? {
-              faultCodeCategory:
-                PaymentMethodNotAvailableEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
-              faultCodeDetail: ""
-            }
+                faultCodeCategory:
+                  PaymentMethodNotAvailableEnum.PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR,
+                faultCodeDetail: ""
+              }
             : action.payload
         )
       };

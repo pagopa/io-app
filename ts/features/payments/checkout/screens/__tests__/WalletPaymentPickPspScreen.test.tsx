@@ -105,7 +105,6 @@ describe("WalletPaymentPickPspScreen", () => {
     expect(getAllByText("BANCO di NAPOLI")).toBeTruthy();
   });
 
-
   it("shows the featured reason if there is a psp with the onUs flag", () => {
     const { getByText, store } = renderComponent();
     store.dispatch(

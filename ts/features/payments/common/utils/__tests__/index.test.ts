@@ -25,7 +25,6 @@ describe("isPaymentMethodExpired", () => {
   });
 });
 
-
 describe("getSortedPspList", () => {
   const CHEAPER_VALUE = 123;
   const MIDDLE_VALUE = 456;
@@ -86,4 +85,3 @@ describe("getSortedPspList", () => {
     expect(result).toEqual(MOCKED_PSP_LIST_WITHOUT_ONUS);
   });
 });
-
