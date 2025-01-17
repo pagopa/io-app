@@ -5,12 +5,8 @@ import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestat
 import { useIOStore } from "../../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
-import { CredentialIssuanceEvents, SelectCredential } from "./events";
+import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
-
-const isSelectCredentialEvent = (
-  event: CredentialIssuanceEvents
-): event is SelectCredential => event.type === "select-credential";
 
 export const createCredentialIssuanceGuardsImplementation = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -34,7 +30,7 @@ export const createCredentialIssuanceGuardsImplementation = () => {
       context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
     isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) =>
-      isSelectCredentialEvent(event) && event.skipNavigation === true,
+      event.type === "select-credential" && event.skipNavigation === true,
 
     isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
   };
