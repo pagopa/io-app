@@ -45,6 +45,7 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
       dispatch(resetNotificationBannerDismissState());
     }
   }, [dispatch, shouldResetDismissState]);
+
   useEffect(() => {
     trackPushNotificationsBannerVisualized(route.name);
   }, [route.name]);
