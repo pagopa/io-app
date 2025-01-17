@@ -3,10 +3,16 @@ import * as O from "fp-ts/lib/Option";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { Context } from "./context";
-import { CredentialIssuanceEvents } from "./events";
+import { CredentialIssuanceEvents, SelectCredential } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
 import { useIOStore } from "../../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+
+const isSelectCredentialEvent = (
+  event: CredentialIssuanceEvents
+): event is SelectCredential => {
+  return event.type === "select-credential";
+};
 
 export const createCredentialIssuanceGuardsImplementation = () => {
   const store = useIOStore();
@@ -28,8 +34,8 @@ export const createCredentialIssuanceGuardsImplementation = () => {
     isStatusError: ({ context }: { context: Context }) =>
       context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
-    isSkipNavigation: ({ event }: { event: { skipNavigation: boolean } }) => {
-      return event.skipNavigation === true;
+    isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) => {
+      return isSelectCredentialEvent(event) && event.skipNavigation === true;
     },
 
     isWalletValid: () => {

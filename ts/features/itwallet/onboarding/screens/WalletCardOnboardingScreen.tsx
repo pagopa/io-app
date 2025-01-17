@@ -41,7 +41,6 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/provider";
 import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 // List of available credentials to show to the user
 const availableCredentials = [
