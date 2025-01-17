@@ -48,7 +48,7 @@ export function* handleGetFimsHistorySaga(
   }
 }
 
-const extractFimsHistoryResponseAction = (
+export const extractFimsHistoryResponseAction = (
   historyResult: SagaCallReturnType<FimsHistoryClient["getAccessHistory"]>
 ) =>
   pipe(

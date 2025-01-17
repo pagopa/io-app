@@ -1,8 +1,9 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import {
   Alert,
-  Badge,
-  Body,
+  Divider,
+  ListItemHeader,
+  ListItemInfo,
   ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,13 +12,11 @@ import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleSheet, View } from "react-native";
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import { useIOSelector } from "../../../../store/hooks";
-import themeVariables from "../../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
@@ -85,44 +84,41 @@ const TimelineRefundDetailsComponent = (props: Props) => {
   return (
     <>
       {rejectedAlertComponent}
-      <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.refund.iban")}</Body>
-        <Body weight="Semibold">{refund.iban}</Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.refund.amount")}</Body>
-        <Body weight="Semibold">{formattedAmount}</Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>
-          {I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
-        </Body>
-        {refund.operationType === OperationTypeEnum.REJECTED_REFUND ? (
-          <Badge
-            variant="error"
-            text={I18n.t(
+      <ListItemInfo
+        label={I18n.t("idpay.initiative.operationDetails.refund.iban")}
+        value={refund.iban}
+      />
+      <Divider />
+      <ListItemInfo
+        label={I18n.t("idpay.initiative.operationDetails.refund.amount")}
+        value={formattedAmount}
+      />
+      <VSpacer size={8} />
+      <ListItemHeader
+        label={I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
+        endElement={{
+          type: "badge",
+          componentProps: {
+            variant:
+              refund.operationType === OperationTypeEnum.REJECTED_REFUND
+                ? "error"
+                : "turquoise",
+            text: I18n.t(
               `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
-            )}
-          />
-        ) : (
-          <Badge
-            variant="turquoise"
-            text={I18n.t(
-              `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
-            )}
-          />
-        )}
-      </View>
-      <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
-        <Body weight="Semibold">{getRefundPeriodDateString(refund)}</Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>Data rimborso</Body>
-        <Body weight="Semibold">
-          {format(refund.operationDate, "DD MMM YYYY, HH:mm")}
-        </Body>
-      </View>
+            )
+          }
+        }}
+      />
+      <ListItemInfo
+        label={I18n.t("idpay.initiative.operationDetails.refund.period")}
+        value={getRefundPeriodDateString(refund)}
+      />
+      <Divider />
+      <ListItemInfo
+        label={"Data rimborso"}
+        value={format(refund.operationDate, "DD MMM YYYY, HH:mm")}
+      />
+      <Divider />
       <ListItemInfoCopy
         label={"CRO"}
         value={refund.cro}
@@ -133,14 +129,5 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  detailRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: themeVariables.spacerSmallHeight,
-    paddingBottom: themeVariables.spacerSmallHeight
-  }
-});
 
 export { TimelineRefundDetailsComponent };

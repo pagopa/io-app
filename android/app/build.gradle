@@ -119,8 +119,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154905
-        versionName "2.80.0.10"
+        versionCode 100154909
+        versionName "2.81.0.3"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -184,24 +184,19 @@ android {
 }
 
 dependencies {
-    implementation project(':jail-monkey')
-    implementation project(':react-native-linear-gradient')
-    implementation project(':react-native-share')
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
  
     implementation project(':react-native-cie')
 
-    implementation ("com.squareup.okhttp3:okhttp:4.9.2")
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
+    implementation ("com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpVersion}")
+    implementation ("com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okhttpVersion}")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
     }
-    
-    implementation project(':react-native-fingerprint-scanner')
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.41"
     implementation('com.google.firebase:firebase-iid:21.1.0') {
         because "Firebase messaging 22.0.0 removes Firebase Instance ID API but out current version of the mixpanel sdk requires it https://github.com/mixpanel/mixpanel-android/issues/744 https://firebase.google.com/support/release-notes/android#messaging_v22-0-0"
