@@ -101,24 +101,15 @@ const ItwCredentialOnboardingSection = () => {
 
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
 
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const navigation = useIONavigation();
-
   const beginCredentialIssuance = useCallback(
     (type: string) => {
-      if (!isWalletValid) {
-        navigation.navigate(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
-        });
-      } else {
-        machineRef.send({
-          type: "select-credential",
-          credentialType: type,
-          skipNavigation: true
-        });
-      }
+      machineRef.send({
+        type: "select-credential",
+        credentialType: type,
+        skipNavigation: true
+      });
     },
-    [machineRef, isWalletValid, navigation]
+    [machineRef]
   );
 
   return (

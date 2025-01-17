@@ -5,21 +5,35 @@ import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestat
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
+import { useIOStore } from "../../../../store/hooks";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
-export const createCredentialIssuanceGuardsImplementation = () => ({
-  isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError,
+export const createCredentialIssuanceGuardsImplementation = () => {
+  const store = useIOStore();
 
-  isDeferredIssuance: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE,
+  return {
+    isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
+      "error" in event && event.error instanceof ItwSessionExpiredError,
 
-  hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
-    pipe(
-      O.fromNullable(context.walletInstanceAttestation),
-      O.map(isWalletInstanceAttestationValid),
-      O.getOrElse(() => false)
-    ),
+    isDeferredIssuance: ({ context }: { context: Context }) =>
+      context.failure?.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE,
 
-  isStatusError: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS
-});
+    hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
+      pipe(
+        O.fromNullable(context.walletInstanceAttestation),
+        O.map(isWalletInstanceAttestationValid),
+        O.getOrElse(() => false)
+      ),
+
+    isStatusError: ({ context }: { context: Context }) =>
+      context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
+
+    isSkipNavigation: ({ event }: { event: { skipNavigation: boolean } }) => {
+      return event.skipNavigation === true;
+    },
+
+    isWalletValid: () => {
+      return itwLifecycleIsValidSelector(store.getState())
+    }
+  };
+};

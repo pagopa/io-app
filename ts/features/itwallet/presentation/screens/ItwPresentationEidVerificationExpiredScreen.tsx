@@ -3,16 +3,10 @@ import { BodyProps } from "@pagopa/io-app-design-system";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
-
-  useHeaderSecondLevel({
-    title: "",
-    headerShown: false
-  });
 
   const startEidReissuing = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {

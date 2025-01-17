@@ -229,6 +229,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         component={ItwPresentationEidVerificationExpiredScreen}
+        options={{ headerShown: false}}
       />
     </Stack.Navigator>
   );

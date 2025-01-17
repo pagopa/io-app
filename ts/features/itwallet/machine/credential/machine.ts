@@ -1,4 +1,4 @@
-import { assign, fromPromise, not, setup } from "xstate";
+import { and, assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
@@ -28,6 +28,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
+    navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
@@ -58,7 +59,9 @@ export const itwCredentialIssuanceMachine = setup({
     isSessionExpired: notImplemented,
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
-    isStatusError: notImplemented
+    isStatusError: notImplemented,
+    isWalletValid: notImplemented,
+    isSkipNavigation: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -72,7 +75,12 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "select-credential": [
           {
-            guard: ({ event }) => event.skipNavigation === true,
+            guard: and([not("isWalletValid"), "isSkipNavigation"]),
+            actions: "navigateToEidVerificationExpiredScreen",
+            target: "Idle"
+          },
+          {
+            guard: "isSkipNavigation",
             target: "CheckingWalletInstanceAttestation",
             actions: [
               assign(({ event }) => ({
