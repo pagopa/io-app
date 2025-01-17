@@ -11,7 +11,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -154,6 +154,7 @@ const WalletPaymentPickPspScreen = () => {
     () => ({
       type: "buttonLink",
       componentProps: {
+        testID: "wallet-payment-pick-psp-sort-button",
         label: I18n.t("wallet.payment.psp.pspSortButton"),
         accessibilityLabel: I18n.t("wallet.payment.psp.pspSortButton"),
         onPress: present

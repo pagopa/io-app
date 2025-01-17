@@ -203,18 +203,15 @@ const IdPayInitiativeDetailsScreen = () => {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return (
                 <ContentWrapper>
-                  <VSpacer size={8} />
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
                   <Animated.View layout={LinearTransition.duration(200)}>
                     <InitiativeTimelineComponent
                       initiativeId={initiative.initiativeId}
                       size={5}
                     />
-                    <VSpacer size={32} />
                     <InitiativeDiscountSettingsComponent
                       initiative={initiative}
                     />
-                    <VSpacer size={16} />
                   </Animated.View>
                 </ContentWrapper>
               );
