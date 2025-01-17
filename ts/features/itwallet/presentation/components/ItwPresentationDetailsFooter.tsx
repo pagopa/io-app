@@ -135,7 +135,7 @@ const getCredentialActions = (credentialType: string): React.ReactNode =>
 const IPatenteListItemAction = () => {
   const ctaConfig = useIOSelector(itwIPatenteCtaConfigSelector);
 
-  if (!ctaConfig.visibility) {
+  if (!ctaConfig?.visibility) {
     return null;
   }
 
