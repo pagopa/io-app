@@ -1,28 +1,32 @@
 /* eslint-disable no-console */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import BackgroundFetch from "react-native-background-fetch";
 
+/**
+ * To add a new task, add the ID to the enum
+ *
+ * **On iOS**, you need to add it in the Info.plist file under BGTaskSchedulerPermittedIdentifiers
+ */
+enum BackgroundFetchTaskId {
+  REACT_NATIVE_BACKGROUND_FETCH = "react-native-background-fetch",
+  ITW_CHECK = "com.pagopa.io.itw_check"
+}
+
 export const useBackgroundFetch = () => {
-  const [events, setEvents] = useState<
-    ReadonlyArray<{ taskId: string; timestamp: string }>
-  >([]);
-
-  const addEvent = async (taskId: string) => {
-    setEvents(currentEvents => [
-      ...currentEvents,
-      {
-        taskId,
-        timestamp: new Date().toString()
-      }
-    ]);
-  };
-
   const initBackgroundFetch = useCallback(async () => {
     // BackgroundFetch event handler.
     const onEvent = async (taskId: string) => {
-      console.log("[BackgroundFetch] task: ", taskId);
+      console.log("[BackgroundFetch] task: ", taskId, new Date().toString());
       // Do your background work...
-      await addEvent(taskId);
+
+      switch (taskId) {
+        case BackgroundFetchTaskId.REACT_NATIVE_BACKGROUND_FETCH:
+          break;
+        case BackgroundFetchTaskId.ITW_CHECK:
+          console.log("itw check");
+          break;
+      }
+
       // IMPORTANT:  You must signal to the OS that your task is complete.
       BackgroundFetch.finish(taskId);
     };
@@ -30,33 +34,27 @@ export const useBackgroundFetch = () => {
     // Timeout callback is executed when your Task has exceeded its allowed running-time.
     // You must stop what you're doing immediately BackgroundFetch.finish(taskId)
     const onTimeout = async (taskId: string) => {
-      console.warn("[BackgroundFetch] TIMEOUT task: ", taskId);
       BackgroundFetch.finish(taskId);
     };
 
     // Initialize BackgroundFetch only once when component mounts.
-    const status = await BackgroundFetch.configure(
-      { minimumFetchInterval: 15 },
+    await BackgroundFetch.configure(
+      { minimumFetchInterval: 30 },
       onEvent,
       onTimeout
     );
 
-    console.log("[BackgroundFetch] configure status: ", status);
-
     await BackgroundFetch.scheduleTask({
-      taskId: "com.pagopa.io.itw_check",
+      taskId: BackgroundFetchTaskId.ITW_CHECK,
       forceAlarmManager: true,
       delay: 5000,
       periodic: true,
+      requiresNetworkConnectivity: true,
       requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY,
       stopOnTerminate: false,
       startOnBoot: true
     });
   }, []);
-
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
 
   useEffect(() => {
     void initBackgroundFetch();
