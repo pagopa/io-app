@@ -3,7 +3,8 @@ import {
   Divider,
   H6,
   BodySmall,
-  VSpacer
+  VSpacer,
+  ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
@@ -73,8 +74,20 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
 
   return (
     <View testID="IDPayTimelineTestID">
-      <TimelineHeaderComponent onShowMorePress={navigateToOperationsList} />
-      <VSpacer size={8} />
+      <ListItemHeader
+        label={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+        )}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+            ),
+            onPress: navigateToOperationsList
+          }
+        }}
+      />
       {renderTimelineContent()}
       {detailsBottomSheet.bottomSheet}
     </View>
