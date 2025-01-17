@@ -21,7 +21,7 @@ const INITIAL_STATE: DebugState = {
   debugData: {}
 };
 
-export function debugReducer(
+function debugReducer(
   state: DebugState = INITIAL_STATE,
   action: Action
 ): DebugState {
