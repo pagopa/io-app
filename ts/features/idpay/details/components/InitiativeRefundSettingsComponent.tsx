@@ -1,8 +1,7 @@
 import {
-  H6,
+  ListItemHeader,
   ListItemNav,
-  ListItemNavAlert,
-  VSpacer
+  ListItemNavAlert
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
@@ -171,12 +170,11 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
 
   return (
     <View testID={"IDPayDetailsSettingsTestID"}>
-      <H6>
-        {I18n.t(
+      <ListItemHeader
+        label={I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
         )}
-      </H6>
-      <VSpacer size={8} />
+      />
       {instrumentsSettingsButton}
       {ibanSettingsButton}
     </View>
