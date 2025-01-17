@@ -1,4 +1,3 @@
-import React from "react";
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";

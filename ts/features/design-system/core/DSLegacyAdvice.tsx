@@ -1,5 +1,4 @@
 import { Body, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import * as React from "react";
 
 /* Types */
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";

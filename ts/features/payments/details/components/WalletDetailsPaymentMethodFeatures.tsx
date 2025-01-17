@@ -1,5 +1,4 @@
 import { Alert } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";

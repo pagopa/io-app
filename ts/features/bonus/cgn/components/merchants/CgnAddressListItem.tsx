@@ -1,4 +1,3 @@
-import React from "react";
 import { ListItemInfo, ListItemInfoCopy } from "@pagopa/io-app-design-system";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import I18n from "../../../../../i18n";

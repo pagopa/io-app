@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Image } from "react-native";
 import paypalLogoImage from "../../../img/wallet/payment-methods/paypal-logo.png";
 // sadly no svg is available for paypal, since on Figma an image is used

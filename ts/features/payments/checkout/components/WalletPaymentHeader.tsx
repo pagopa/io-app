@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import React from "react";
+import { useCallback } from "react";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -38,7 +38,7 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
     contextualHelp: emptyContextualHelp
   });
 
-  const handleGoBack = React.useCallback(() => {
+  const handleGoBack = useCallback(() => {
     if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
       analytics.trackPaymentBack(
         WalletPaymentStepScreenNames[WalletPaymentStepEnum.PICK_PAYMENT_METHOD]

@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useEffect } from "react";
 import { TransactionInfo } from "../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -25,14 +25,14 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
 
   // This flag is used to avoid triggering the effect everytime this hook is mounted
   // It is set to false as soon the transaction is activated and avoids any other activation
-  const requiresActivation = React.useRef(true);
+  const requiresActivation = useRef(true);
 
   // Polling
-  const delayRef = React.useRef(INITIAL_DELAY);
-  const countRef = React.useRef(0);
+  const delayRef = useRef(INITIAL_DELAY);
+  const countRef = useRef(0);
 
   /* eslint-disable functional/immutable-data */
-  React.useEffect(() => {
+  useEffect(() => {
     if (!requiresActivation.current) {
       // Skips the activation if the transactions is already activated for this payment istance
       return undefined;

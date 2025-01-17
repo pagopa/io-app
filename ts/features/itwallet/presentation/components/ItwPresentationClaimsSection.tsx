@@ -4,15 +4,15 @@ import {
   IconButton,
   IOStyles
 } from "@pagopa/io-app-design-system";
-import { default as React, useMemo } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { ItwCredentialClaim } from "../../common/components/ItwCredentialClaim";
 import { ItwIssuanceMetadata } from "../../common/components/ItwIssuanceMetadata";
 import { ItwQrCodeClaimImage } from "../../common/components/ItwQrCodeClaimImage";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 type ItwPresentationClaimsSectionProps = {
   credential: StoredCredential;
@@ -21,7 +21,7 @@ type ItwPresentationClaimsSectionProps = {
 export const ItwPresentationClaimsSection = ({
   credential
 }: ItwPresentationClaimsSectionProps) => {
-  const [valuesHidden, setValuesHidden] = React.useState(false);
+  const [valuesHidden, setValuesHidden] = useState(false);
 
   const credentialStatus = useMemo(
     () => getCredentialStatus(credential),
@@ -77,7 +77,7 @@ export const ItwPresentationClaimsSection = ({
         }
 
         return (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             {index !== 0 && <Divider />}
             <ItwCredentialClaim
               claim={claim}
@@ -85,7 +85,7 @@ export const ItwPresentationClaimsSection = ({
               hidden={valuesHidden}
               credentialStatus={credentialStatus}
             />
-          </React.Fragment>
+          </Fragment>
         );
       })}
       {claims.length > 0 && <Divider />}

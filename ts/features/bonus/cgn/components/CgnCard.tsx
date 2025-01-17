@@ -1,6 +1,5 @@
 import { H6, IOColors, BodySmall, Tag } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   CodeInput,
   H2,
@@ -20,22 +20,22 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 const PIN_LENGTH = 6;
 
 export const DSNumberPad = () => {
-  const [value, setValue] = React.useState("");
-  const [darkBackground, setDarkBackground] = React.useState(false);
+  const [value, setValue] = useState("");
+  const [darkBackground, setDarkBackground] = useState(false);
 
   const insets = useSafeAreaInsets();
 
   const navigation = useNavigation();
 
-  const onValueChange = React.useCallback((v: number) => {
+  const onValueChange = useCallback((v: number) => {
     setValue(prev => (prev.length < PIN_LENGTH ? `${prev}${v}` : prev));
   }, []);
 
-  const onDeletePress = React.useCallback(() => {
+  const onDeletePress = useCallback(() => {
     setValue((prev: string) => prev.slice(0, -1));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: darkBackground

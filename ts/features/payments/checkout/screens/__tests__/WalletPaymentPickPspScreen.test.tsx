@@ -1,20 +1,19 @@
-import { View } from "react-native";
-import React from "react";
 import { fireEvent } from "@testing-library/react-native";
+import { View } from "react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import I18n from "../../../../../i18n";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { WalletPaymentPickPspScreen } from "../WalletPaymentPickPspScreen";
-import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
-import I18n from "../../../../../i18n";
 
 jest.mock("../../analytics");
 jest.mock("../../../../../utils/hooks/bottomSheet");

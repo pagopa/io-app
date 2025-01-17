@@ -1,6 +1,5 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../i18n";
 

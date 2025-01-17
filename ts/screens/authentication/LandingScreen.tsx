@@ -13,7 +13,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import React, {
+import {
   useState,
   useEffect,
   useMemo,

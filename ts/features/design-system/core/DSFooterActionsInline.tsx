@@ -5,7 +5,6 @@ import {
   H1,
   useFooterActionsInlineMeasurements
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
 
 export const DSFooterActionsInline = () => {

@@ -1,5 +1,4 @@
 import { IOStyles, ListItemAction } from "@pagopa/io-app-design-system";
-import React from "react";
 import { Alert, View } from "react-native";
 import { useDispatch } from "react-redux";
 import I18n from "../../../../i18n";

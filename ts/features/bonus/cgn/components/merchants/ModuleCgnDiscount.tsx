@@ -12,7 +12,6 @@ import {
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";

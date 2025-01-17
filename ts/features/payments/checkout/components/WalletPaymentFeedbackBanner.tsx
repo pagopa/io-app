@@ -1,6 +1,6 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { default as React } from "react";
+import { useRef } from "react";
 import { View } from "react-native";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,7 +14,7 @@ import {
 } from "../../../../utils/locale";
 
 const WalletPaymentFeebackBanner = () => {
-  const bannerViewRef = React.useRef<View>(null);
+  const bannerViewRef = useRef<View>(null);
   const isBannerEnabled = useIOSelector(
     isPaymentsFeedbackBannerEnabledSelector
   );

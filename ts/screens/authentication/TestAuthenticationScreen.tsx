@@ -13,7 +13,7 @@ import * as T from "fp-ts/lib/Task";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { PasswordLogin } from "../../../definitions/session_manager/PasswordLogin";
 import { IOStyles } from "../../components/core/variables/IOStyles";

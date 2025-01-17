@@ -7,7 +7,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import { Fragment, useState } from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -24,7 +24,7 @@ export const PDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
-  const [authority, setAuthority] = React.useState<string | undefined>();
+  const [authority, setAuthority] = useState<string | undefined>();
   const serviceId = useSelector(selectServiceId);
 
   const serviceName = pipe(
@@ -100,7 +100,7 @@ export const PDNDPrerequisitesScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       {pdndCriteria.map((criteria, index) => (
-        <React.Fragment key={index}>
+        <Fragment key={index}>
           <ModuleSummary
             label={I18n.t(
               `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
@@ -112,7 +112,7 @@ export const PDNDPrerequisitesScreen = () => {
             }}
           />
           <VSpacer size={16} />
-        </React.Fragment>
+        </Fragment>
       ))}
       {bottomSheet}
     </IOScrollViewWithLargeHeader>

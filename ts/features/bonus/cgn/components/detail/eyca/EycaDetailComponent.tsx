@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import {
@@ -53,9 +53,7 @@ const EycaDetailComponent = (props: Props) => {
     />
   );
 
-  const renderComponentEycaStatus = (
-    eyca: EycaCard
-  ): React.JSX.Element | null => {
+  const renderComponentEycaStatus = (eyca: EycaCard): JSX.Element | null => {
     switch (eyca.status) {
       case "ACTIVATED":
       case "REVOKED":

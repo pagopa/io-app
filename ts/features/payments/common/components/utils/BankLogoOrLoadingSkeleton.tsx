@@ -1,5 +1,5 @@
 import { IOColors } from "@pagopa/io-app-design-system";
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { Image } from "react-native";
 import Placeholder from "rn-placeholder";
 import { getBankLogosCdnUri } from "../../../../../components/ui/utils/strings";
@@ -24,10 +24,10 @@ export const BankLogoOrSkeleton = ({
   placeHolderColor = "grey-200",
   imageA11yLabel
 }: BankLogoOrSkeletonProps) => {
-  const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const { height, width: maxWidth } = dimensions;
-  const [width, setWidth] = React.useState<number>(maxWidth);
-  React.useEffect(() => {
+  const [width, setWidth] = useState<number>(maxWidth);
+  useEffect(() => {
     // we pre-fetch the image to avoid having to render both items
     // at the same time, which looks like an untidy hack
     if (abiCode === undefined) {
