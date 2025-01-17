@@ -2,19 +2,18 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
+import { useIOStore } from "../../../../store/hooks";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents, SelectCredential } from "./events";
 import { CredentialIssuanceFailureType } from "./failure";
-import { useIOStore } from "../../../../store/hooks";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 
 const isSelectCredentialEvent = (
   event: CredentialIssuanceEvents
-): event is SelectCredential => {
-  return event.type === "select-credential";
-};
+): event is SelectCredential => event.type === "select-credential";
 
 export const createCredentialIssuanceGuardsImplementation = () => {
+// eslint-disable-next-line react-hooks/rules-of-hooks
   const store = useIOStore();
 
   return {
@@ -34,12 +33,9 @@ export const createCredentialIssuanceGuardsImplementation = () => {
     isStatusError: ({ context }: { context: Context }) =>
       context.failure?.type === CredentialIssuanceFailureType.INVALID_STATUS,
 
-    isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) => {
-      return isSelectCredentialEvent(event) && event.skipNavigation === true;
-    },
+    isSkipNavigation: ({ event }: { event: CredentialIssuanceEvents }) =>
+      isSelectCredentialEvent(event) && event.skipNavigation === true,
 
-    isWalletValid: () => {
-      return itwLifecycleIsValidSelector(store.getState());
-    }
+    isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
   };
 };
