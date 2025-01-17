@@ -33,7 +33,7 @@ export const createCredentialIssuanceGuardsImplementation = () => {
     },
 
     isWalletValid: () => {
-      return itwLifecycleIsValidSelector(store.getState())
+      return itwLifecycleIsValidSelector(store.getState());
     }
   };
 };
